@@ -1,0 +1,5 @@
+package mathrandom
+
+class MathRandomTest {
+    
+}
