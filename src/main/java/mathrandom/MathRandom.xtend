@@ -29,12 +29,14 @@
 package mathrandom
 
 import java.math.BigDecimal
-import java.util.Random
-import org.eclipse.xtend.lib.annotations.ToString
+import java.math.BigInteger
 import java.util.ArrayList
 import java.util.List
-import org.apache.commons.math3.fraction.Fraction
-import org.apache.commons.math3.complex.Complex
+import java.util.Random
+import number.Fraction
+import number.RealComplexNumber
+import number.SimpleComplexNumber
+import org.eclipse.xtend.lib.annotations.ToString
 
 @ToString
 class MathRandom {
@@ -55,21 +57,21 @@ class MathRandom {
     }
 
     def createPositiveInts(int bound, int howMany) {
-        var ints = newArrayOfSize(howMany)
+        var ints = newIntArrayOfSize(howMany)
         for (var i = 0; i < howMany; i++)
             ints.set(i, createPositiveInt(bound))
         ints
     }
 
     def createNegativeInts(int bound, int howMany) {
-        var ints = newArrayOfSize(howMany)
+        var ints = newIntArrayOfSize(howMany)
         for (var i = 0; i < howMany; i++)
             ints.set(i, createNegativeInt(bound))
         ints
     }
 
     def createInts(int bound, int howMany) {
-        var ints = newArrayOfSize(howMany)
+        var ints = newIntArrayOfSize(howMany)
         for (var i = 0; i < howMany; i++)
             ints.set(i, createInt(bound))
         ints
@@ -128,11 +130,15 @@ class MathRandom {
     }
 
     def createPositiveFraction(int bound) {
-        new Fraction(random.nextInt(bound), random.nextInt(bound - 1) + 1)
+        val numerator = BigInteger.valueOf(random.nextInt(bound))
+        val denominator = BigInteger.valueOf(random.nextInt(bound - 1) + 1)
+        new Fraction(numerator, denominator)
     }
 
     def createNegativeFraction(int bound) {
-        new Fraction(random.nextInt(bound), random.nextInt(bound - 1) + 1).negate
+        val numerator = BigInteger.valueOf(random.nextInt(bound))
+        val denominator = BigInteger.valueOf(random.nextInt(bound - 1) + 1)
+        new Fraction(numerator, denominator).negate
     }
 
     def createFraction(int bound) {
@@ -142,34 +148,87 @@ class MathRandom {
     }
 
     def createPositiveFractions(int bound, int howMany) {
-        val List<Fraction> fractions = new ArrayList(howMany)
+        val List<Fraction> fractions = newArrayList
         for (var i = 0; i < howMany; i++)
             fractions.add(createPositiveFraction(bound))
         fractions
     }
 
     def createNegativeFractions(int bound, int howMany) {
-        val List<Fraction> fractions = new ArrayList(howMany)
+        val List<Fraction> fractions = newArrayList
         for (var i = 0; i < howMany; i++)
             fractions.add(createNegativeFraction(bound))
         fractions
     }
 
     def createFractions(int bound, int howMany) {
-        val List<Fraction> fractions = new ArrayList(howMany)
+        val List<Fraction> fractions = newArrayList
         for (var i = 0; i < howMany; i++)
             fractions.add(createFraction(bound))
         fractions
     }
 
-    def createComplexNumber(int bound) {
-        new Complex(createInt(bound), createInt(bound))
+    def createInvertiblePositiveFraction(int bound) {
+        val newBound = bound - 1
+        val numerator = BigInteger.valueOf(random.nextInt(newBound) + 1)
+        val denominator = BigInteger.valueOf(random.nextInt(newBound) + 1)
+        new Fraction(numerator, denominator)
     }
-    
-    def createComplexNumbers(int bound, int howMany) {
-        var List<Complex> complexes = new ArrayList(howMany)
+
+    def createInvertibleNegativeFraction(int bound) {
+        createInvertiblePositiveFraction(bound).negate
+    }
+
+    def createInvertibleFraction(int bound) {
+        if (random.nextBoolean)
+            return createInvertibleNegativeFraction(bound)
+        createInvertiblePositiveFraction(bound)
+    }
+
+    def createInvertiblePositiveFractions(int bound, int howMany) {
+        val List<Fraction> fractions = newArrayList
         for (var i = 0; i < howMany; i++)
-            complexes.add(createComplexNumber(bound))
-        complexes
+            fractions.add(createInvertiblePositiveFraction(bound))
+        fractions
+    }
+
+    def createInvertibleNegativeFractions(int bound, int howMany) {
+        val List<Fraction> fractions = newArrayList
+        for (var i = 0; i < howMany; i++)
+            fractions.add(createInvertibleNegativeFraction(bound))
+        fractions
+    }
+
+    def createInvertibleFractions(int bound, int howMany) {
+        val List<Fraction> fractions = new ArrayList
+        for (var i = 0; i < howMany; i++)
+            fractions.add(createInvertibleFraction(bound))
+        fractions
+    }
+
+    def createSimpleComplexNumber(int bound) {
+        val real = BigInteger.valueOf(createInt(bound))
+        val imaginary = BigInteger.valueOf(createInt(bound))
+        new SimpleComplexNumber(real, imaginary)
+    }
+
+    def createSimpleComplexNumbers(int bound, int howMany) {
+        var List<SimpleComplexNumber> complexNumbers = newArrayList()
+        for (var i = 0; i < howMany; i++)
+            complexNumbers.add(createSimpleComplexNumber(bound))
+        complexNumbers
+    }
+
+    def createRealComplexNumber(int bound) {
+        val real = BigDecimal.valueOf(createInt(bound))
+        val imaginary = BigDecimal.valueOf(createInt(bound))
+        new RealComplexNumber(real, imaginary)
+    }
+
+    def createRealComplexNumbers(int bound, int howMany) {
+        var List<RealComplexNumber> complexNumbers = newArrayList()
+        for (var i = 0; i < howMany; i++)
+            complexNumbers.add(createRealComplexNumber(bound))
+        complexNumbers
     }
 }

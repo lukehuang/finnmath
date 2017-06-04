@@ -1,19 +1,19 @@
 /*
  * BSD 2-Clause License
- *
+ * 
  * Copyright (c) 2017, togliu
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- *
+ * 
  * * Redistributions of source code must retain the above copyright notice, this
  * list of conditions and the following disclaimer.
- *
+ * 
  * * Redistributions in binary form must reproduce the above copyright notice,
  * this list of conditions and the following disclaimer in the documentation
  * and/or other materials provided with the distribution.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -26,48 +26,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-buildscript {
-	repositories { maven { url 'https://plugins.gradle.org/m2/' } }
+package number
 
-	dependencies { classpath 'org.xtext:xtext-gradle-plugin:1.0.17' }
-}
+interface ComplexNumber<S, T> {
+    def S absPow2()
 
-apply plugin: 'org.xtext.xtend'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-
-description = 'MathRandom'
-group = 'togliu'
-version = '0.0.1-SNAPSHOT'
-
-repositories {
-	jcenter()
-	mavenCentral()
-}
-
-dependencies {
-	compile 'com.google.guava:guava:22.0'
-	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.12.0'
-	testCompile 'junit:junit:4.12'
-}
-
-uploadArchives {
-	repositories {
-		mavenLocal()
-	}
-}
-
-eclipse {
-	classpath {
-		downloadJavadoc true
-		downloadSources true
-	}
-}
-
-idea {
-	module {
-		downloadJavadoc true
-		downloadSources true
-	}
+    def T conjugate()
 }
