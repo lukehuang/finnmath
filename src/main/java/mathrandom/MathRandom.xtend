@@ -29,13 +29,12 @@
 package mathrandom
 
 import java.math.BigDecimal
-import java.math.BigInteger
+import java.util.Random
+import org.eclipse.xtend.lib.annotations.ToString
 import java.util.ArrayList
 import java.util.List
-import java.util.Random
-import number.Fraction
-import number.SimpleComplexNumber
-import org.eclipse.xtend.lib.annotations.ToString
+import org.apache.commons.math3.fraction.Fraction
+import org.apache.commons.math3.complex.Complex
 
 @ToString
 class MathRandom {
@@ -129,15 +128,11 @@ class MathRandom {
     }
 
     def createPositiveFraction(int bound) {
-        val numerator = BigInteger.valueOf(random.nextInt(bound))
-        val denominator = BigInteger.valueOf(random.nextInt(bound - 1) + 1)
-        new Fraction(numerator, denominator)
+        new Fraction(random.nextInt(bound), random.nextInt(bound - 1) + 1)
     }
 
     def createNegativeFraction(int bound) {
-        val numerator = BigInteger.valueOf(random.nextInt(bound))
-        val denominator = BigInteger.valueOf(random.nextInt(bound - 1) + 1)
-        new Fraction(numerator, denominator).negate
+        new Fraction(random.nextInt(bound), random.nextInt(bound - 1) + 1).negate
     }
 
     def createFraction(int bound) {
@@ -167,16 +162,14 @@ class MathRandom {
         fractions
     }
 
-    def createSimpleComplexNumber(int bound) {
-        val real = BigInteger.valueOf(random.nextInt(bound))
-        val imaginary = BigInteger.valueOf(random.nextInt(bound))
-        new SimpleComplexNumber(real, imaginary)
+    def createComplexNumber(int bound) {
+        new Complex(createInt(bound), createInt(bound))
     }
-
-    def createSimpleComplexNumbers(int bound, int howMany) {
-        var List<SimpleComplexNumber> complexNumbers = new ArrayList(howMany)
+    
+    def createComplexNumbers(int bound, int howMany) {
+        var List<Complex> complexes = new ArrayList(howMany)
         for (var i = 0; i < howMany; i++)
-            complexNumbers.add(createSimpleComplexNumber(bound))
-        complexNumbers
+            complexes.add(createComplexNumber(bound))
+        complexes
     }
 }

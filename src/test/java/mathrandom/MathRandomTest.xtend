@@ -1,5 +1,0 @@
-package mathrandom
-
-class MathRandomTest {
-    
-}

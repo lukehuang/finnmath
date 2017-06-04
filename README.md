@@ -1,7 +1,7 @@
-# mathmyday-lib
+# mathrandom
 
 Language: Xtend
 
 Build automation tool: Gradle
 
-Dependencies: Guava, AssertJ and JUnit
+Dependencies: Commons Math, AssertJ and JUnit
