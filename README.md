@@ -1,4 +1,4 @@
-# mathrandom
+# mathmyday-lib
 
 Language: Xtend
 
