@@ -32,6 +32,7 @@ import java.math.BigDecimal
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
+import static java.util.Objects.requireNonNull
 
 @Data
 class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<BigDecimal, RealComplexNumber> {
@@ -41,15 +42,23 @@ class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<
     BigDecimal real
     BigDecimal imaginary
 
+    new(BigDecimal real, BigDecimal imaginary) {
+        this.real = requireNonNull(real)
+        this.imaginary = requireNonNull(imaginary)
+    }
+
     override add(RealComplexNumber summand) {
+        requireNonNull(summand)
         new RealComplexNumber(real + summand.real, imaginary + summand.imaginary)
     }
 
     override subtract(RealComplexNumber subtrahend) {
+        requireNonNull(subtrahend)
         new RealComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
     }
 
     override multiply(RealComplexNumber factor) {
+        requireNonNull(factor)
         val newReal = real * factor.real - imaginary * factor.imaginary
         val newImaginary = real * factor.imaginary + imaginary * factor.real
         new RealComplexNumber(newReal, newImaginary)
@@ -92,5 +101,6 @@ class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<
     }
 
     def divide(SimpleComplexNumber divisor) {
+        requireNonNull(divisor)
     }
 }

@@ -32,6 +32,7 @@ import java.math.BigInteger
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
+import static java.util.Objects.requireNonNull
 
 @Data
 class Fraction implements MathNumber<Fraction> {
@@ -42,23 +43,26 @@ class Fraction implements MathNumber<Fraction> {
 
     new(BigInteger numerator, BigInteger denominator) {
         checkArgument(denominator != BigInteger.ZERO, "denominator = 0")
-        this.numerator = numerator
-        this.denominator = denominator
+        this.numerator = requireNonNull(numerator)
+        this.denominator = requireNonNull(denominator)
     }
 
     override add(Fraction summand) {
+        requireNonNull(summand)
         val newNumerator = summand.denominator * numerator + denominator * summand.numerator
         val newDenominator = denominator * summand.denominator
         new Fraction(newNumerator, newDenominator)
     }
 
     override subtract(Fraction subtrahend) {
+        requireNonNull(subtrahend)
         val newNumerator = subtrahend.denominator * numerator - denominator * subtrahend.numerator
         val newDenominator = denominator * subtrahend.denominator
         new Fraction(newNumerator, newDenominator)
     }
 
     override multiply(Fraction factor) {
+        requireNonNull(factor)
         val newNumerator = numerator * factor.numerator
         val newDenominator = denominator * factor.denominator
         new Fraction(newNumerator, newDenominator)
@@ -84,6 +88,7 @@ class Fraction implements MathNumber<Fraction> {
     }
 
     def divide(Fraction divisor) {
+        requireNonNull(divisor)
         this.multiply(divisor.invert)
     }
 
@@ -93,6 +98,7 @@ class Fraction implements MathNumber<Fraction> {
     }
 
     def min(Fraction other) {
+        requireNonNull(other)
         val newNumerator = other.denominator * numerator
         val newOtherNumerator = denominator * other.numerator
         if (newOtherNumerator < newNumerator)
@@ -101,6 +107,7 @@ class Fraction implements MathNumber<Fraction> {
     }
 
     def max(Fraction other) {
+        requireNonNull(other)
         val newNumerator = other.denominator * numerator
         val newOtherNumerator = denominator * other.numerator
         if (newOtherNumerator > newNumerator)
@@ -122,6 +129,7 @@ class Fraction implements MathNumber<Fraction> {
     }
 
     def equivalent(Fraction other) {
+        requireNonNull(other)
         other.reduce == this.reduce
     }
 }
