@@ -130,6 +130,6 @@ class Fraction implements MathNumber<Fraction> {
 
     def equivalent(Fraction other) {
         requireNonNull(other)
-        other.reduce == this.reduce
+        other.reduce == reduce
     }
 }
