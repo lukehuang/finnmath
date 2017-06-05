@@ -75,7 +75,7 @@ class Fraction implements MathNumber<Fraction> {
     override pow(int exponent) {
         checkArgument(exponent >= 0, "exponent < 0")
         if (exponent > 1)
-            return this.multiply(pow(exponent - 1))
+            return multiply(pow(exponent - 1))
         else if (exponent == 1)
             return this
         ZERO
@@ -89,7 +89,7 @@ class Fraction implements MathNumber<Fraction> {
 
     def divide(Fraction divisor) {
         requireNonNull(divisor)
-        this.multiply(divisor.invert)
+        multiply(divisor.invert)
     }
 
     def invert() {
