@@ -41,11 +41,11 @@ class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<
     BigDecimal real
     BigDecimal imaginary
 
-    override def add(RealComplexNumber summand) {
+    override add(RealComplexNumber summand) {
         new RealComplexNumber(real + summand.real, imaginary + summand.imaginary)
     }
 
-    override def subtract(RealComplexNumber subtrahend) {
+    override subtract(RealComplexNumber subtrahend) {
         new RealComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
     }
 
@@ -55,7 +55,7 @@ class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<
         new RealComplexNumber(newReal, newImaginary)
     }
 
-    override def pow(int exponent) {
+    override pow(int exponent) {
         checkArgument(exponent >= 0, "exponent < 0")
         if (exponent > 1)
             return this.multiply(pow(exponent - 1))
@@ -64,11 +64,11 @@ class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<
         ZERO
     }
 
-    override def negate() {
+    override negate() {
         new RealComplexNumber(-real, -imaginary)
     }
 
-    override def asString() {
+    override asString() {
         if (real != BigDecimal.ZERO)
             if (imaginary > BigDecimal.ZERO)
                 return '''«real» + «imaginary»i'''
@@ -83,11 +83,11 @@ class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<
         "0"
     }
 
-    override def absPow2() {
+    override absPow2() {
         real.pow(2) + imaginary.pow(2)
     }
 
-    override def conjugate() {
+    override conjugate() {
         new RealComplexNumber(real, -imaginary)
     }
 

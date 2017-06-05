@@ -57,21 +57,21 @@ class MathRandom {
     }
 
     def createPositiveInts(int bound, int howMany) {
-        var ints = newIntArrayOfSize(howMany)
+        val ints = newIntArrayOfSize(howMany)
         for (var i = 0; i < howMany; i++)
             ints.set(i, createPositiveInt(bound))
         ints
     }
 
     def createNegativeInts(int bound, int howMany) {
-        var ints = newIntArrayOfSize(howMany)
+        val ints = newIntArrayOfSize(howMany)
         for (var i = 0; i < howMany; i++)
             ints.set(i, createNegativeInt(bound))
         ints
     }
 
     def createInts(int bound, int howMany) {
-        var ints = newIntArrayOfSize(howMany)
+        val ints = newIntArrayOfSize(howMany)
         for (var i = 0; i < howMany; i++)
             ints.set(i, createInt(bound))
         ints
@@ -109,21 +109,21 @@ class MathRandom {
     }
 
     def createPositiveDecimals(int bound, int scale, int howMany) {
-        var List<BigDecimal> decimals = new ArrayList(howMany)
+        val List<BigDecimal> decimals = new ArrayList(howMany)
         for (var i = 0; i < howMany; i++)
             decimals.add(createPositiveDecimal(bound, scale))
         decimals
     }
 
     def createNegativeDecimals(int bound, int scale, int howMany) {
-        var List<BigDecimal> decimals = new ArrayList(howMany)
+        val List<BigDecimal> decimals = new ArrayList(howMany)
         for (var i = 0; i < howMany; i++)
             decimals.add(createNegativeDecimal(bound, scale))
         decimals
     }
 
     def createDecimals(int bound, int scale, int howMany) {
-        var List<BigDecimal> decimals = new ArrayList(howMany)
+        val List<BigDecimal> decimals = new ArrayList(howMany)
         for (var i = 0; i < howMany; i++)
             decimals.add(createDecimal(bound, scale))
         decimals
@@ -213,7 +213,7 @@ class MathRandom {
     }
 
     def createSimpleComplexNumbers(int bound, int howMany) {
-        var List<SimpleComplexNumber> complexNumbers = newArrayList()
+        val List<SimpleComplexNumber> complexNumbers = newArrayList()
         for (var i = 0; i < howMany; i++)
             complexNumbers.add(createSimpleComplexNumber(bound))
         complexNumbers
@@ -226,7 +226,7 @@ class MathRandom {
     }
 
     def createRealComplexNumbers(int bound, int howMany) {
-        var List<RealComplexNumber> complexNumbers = newArrayList()
+        val List<RealComplexNumber> complexNumbers = newArrayList()
         for (var i = 0; i < howMany; i++)
             complexNumbers.add(createRealComplexNumber(bound))
         complexNumbers

@@ -41,21 +41,21 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNum
     BigInteger real
     BigInteger imaginary
 
-    override def add(SimpleComplexNumber summand) {
+    override add(SimpleComplexNumber summand) {
         new SimpleComplexNumber(real + summand.real, imaginary + summand.imaginary)
     }
 
-    override def subtract(SimpleComplexNumber subtrahend) {
+    override subtract(SimpleComplexNumber subtrahend) {
         new SimpleComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
     }
 
-    override def multiply(SimpleComplexNumber factor) {
+    override multiply(SimpleComplexNumber factor) {
         val newReal = real * factor.real - imaginary * factor.imaginary
         val newImaginary = real * factor.imaginary + imaginary * factor.real
         new SimpleComplexNumber(newReal, newImaginary)
     }
 
-    override def pow(int exponent) {
+    override pow(int exponent) {
         checkArgument(exponent >= 0, "exponent < 0")
         if (exponent > 1)
             return this.multiply(pow(exponent - 1))
@@ -64,11 +64,11 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNum
         ZERO
     }
 
-    override def negate() {
+    override negate() {
         new SimpleComplexNumber(-real, -imaginary)
     }
 
-    override def asString() {
+    override asString() {
         if (real != BigInteger.ZERO)
             if (imaginary > BigInteger.ZERO)
                 return '''«real» + «imaginary»i'''
@@ -83,11 +83,11 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNum
         "0"
     }
 
-    override def absPow2() {
+    override absPow2() {
         real.pow(2) + imaginary.pow(2)
     }
 
-    override def conjugate() {
+    override conjugate() {
         new SimpleComplexNumber(real, -imaginary)
     }
 
