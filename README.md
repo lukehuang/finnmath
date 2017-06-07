@@ -1,7 +1,7 @@
 # mathmyday-lib
 
-Language: Xtend
+Language: Xtend (main) and Groovy (tests)
 
 Build automation tool: Gradle
 
-Dependencies: Guava and JUnit
+Dependencies: Guava and Spock
