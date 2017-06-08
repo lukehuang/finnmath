@@ -28,6 +28,7 @@
 
 package number
 
+import java.math.BigDecimal
 import java.math.BigInteger
 import org.eclipse.xtend.lib.annotations.Data
 
@@ -70,7 +71,7 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNum
             return multiply(pow(exponent - 1))
         else if (exponent == 1)
             return this
-        ZERO
+        ONE
     }
 
     override negate() {
@@ -98,9 +99,5 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNum
 
     override conjugate() {
         new SimpleComplexNumber(real, -imaginary)
-    }
-
-    def divide(SimpleComplexNumber divisor) {
-        requireNonNull(divisor)
     }
 }
