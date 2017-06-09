@@ -38,8 +38,8 @@ apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-description = 'MathRandom library'
-group = 'togliu'
+description = 'MathMyDay library'
+group = 'mathmyday'
 version = '0.0.1-SNAPSHOT'
 
 repositories {

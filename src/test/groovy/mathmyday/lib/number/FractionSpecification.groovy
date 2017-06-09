@@ -26,9 +26,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package number
+package mathmyday.lib.number
 
-import mathrandom.MathRandom
+import mathmyday.lib.util.MathRandom
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -91,9 +91,20 @@ class FractionSpecification extends Specification {
 		denominator = fraction.denominator * other.denominator
 	}
 
+	def pow() {
+		expect:
+		fraction.pow(3) == fraction.multiply(fraction.multiply(fraction))
+		fraction.pow(2) == fraction.multiply(fraction)
+		fraction.pow(1) == fraction
+		fraction.pow(0) == Fraction.ONE
+
+		where:
+		fraction << fractions
+	}
+
 	def negate() {
 		expect:
-		fraction.negate() == new Fraction(fraction.numerator.negate(), fraction.denominator)
+		fraction.negate() == new Fraction(-fraction.numerator, fraction.denominator)
 
 		where:
 		fraction << fractions
@@ -104,7 +115,7 @@ class FractionSpecification extends Specification {
 		Fraction.ZERO.invert()
 
 		then:
-		thrown(IllegalArgumentException)
+		thrown(ArithmeticException)
 	}
 
 	def invert() {

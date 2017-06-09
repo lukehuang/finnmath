@@ -26,10 +26,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package number
+package mathmyday.lib.number
 
-interface ComplexNumber<S, T> {
-    def S absPow2()
+interface MathNumber<T> {
+  def T add(T summand)
 
-    def T conjugate()
+  def T subtract(T subtrahend)
+
+  def T multiply(T factor)
+
+  def T pow(int exponent)
+
+  def T negate()
+
+  def String asString()
 }

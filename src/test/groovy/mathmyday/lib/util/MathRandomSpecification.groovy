@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package mathrandom
+package mathmyday.lib.util
 
 import spock.lang.Shared
 import spock.lang.Specification
