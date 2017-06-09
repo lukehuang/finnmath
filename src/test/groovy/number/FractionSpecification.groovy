@@ -125,7 +125,7 @@ class FractionSpecification extends Specification {
 
 	def signum() {
 		expect:
-		fraction.signum == fraction.numerator.signum * fraction.denominator.signum
+		fraction.signum() == fraction.numerator.signum * fraction.denominator.signum
 
 		where:
 		fraction << fractions

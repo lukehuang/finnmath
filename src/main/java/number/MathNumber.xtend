@@ -29,15 +29,15 @@
 package number
 
 interface MathNumber<T> {
-  def T add(T summand)
+    def T add(T summand)
 
-  def T subtract(T subtrahend)
+    def T subtract(T subtrahend)
 
-  def T multiply(T factor)
+    def T multiply(T factor)
 
-  def T pow(int exponent)
+    def T pow(int exponent)
 
-  def T negate()
+    def T negate()
 
-  def String asString()
+    def String asString()
 }

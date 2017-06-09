@@ -40,7 +40,7 @@ class Fraction implements MathNumber<Fraction> {
     public static val ONE = new Fraction(BigInteger.ONE, BigInteger.ONE)
     BigInteger numerator
     BigInteger denominator
-       
+
     new(BigInteger numerator, BigInteger denominator) {
         checkArgument(denominator != BigInteger.ZERO, "denominator = 0")
         this.numerator = requireNonNull(numerator)
@@ -78,12 +78,12 @@ class Fraction implements MathNumber<Fraction> {
             return multiply(pow(exponent - 1))
         else if (exponent == 1)
             return this
-        ONE
+        ZERO
     }
 
     override asString() {
-        if (signum < 0)
-            return '''-(«numerator» / «denominator»)'''
+        if (denominator < BigInteger.ZERO)
+            return '''«numerator» / («denominator»)'''
         '''«numerator» / «denominator»'''
     }
 
@@ -93,45 +93,25 @@ class Fraction implements MathNumber<Fraction> {
     }
 
     def invert() {
-        checkNumeratorNotZero
+        checkArgument(numerator != BigInteger.ZERO, "numerator = 0")
         new Fraction(denominator, numerator)
     }
 
     def min(Fraction other) {
         requireNonNull(other)
-        if (positive && other.negative)
-          return other
-        if (negative && other.positive)
-          return this
-        val newNumerator = other.denominator.abs * numerator.abs
-        val newOtherNumerator = denominator.abs * other.numerator.abs
-        if (negative && other.negative) {
-          if (newNumerator < newOtherNumerator)
+        val newNumerator = other.denominator * numerator
+        val newOtherNumerator = denominator * other.numerator
+        if (newOtherNumerator < newNumerator)
             return other
-          else
-            return this
-        }
-        if (newNumerator > newOtherNumerator)
-          return other
         this
     }
 
     def max(Fraction other) {
         requireNonNull(other)
-        if (negative && other.positive)
-          return other
-        if (positive && other.negative)
-          return this
-        val newNumerator = other.denominator.abs * numerator.abs
-        val newOtherNumerator = denominator.abs * other.numerator.abs
-        if (negative && other.negative) {
-          if (newNumerator > newOtherNumerator)
+        val newNumerator = other.denominator * numerator
+        val newOtherNumerator = denominator * other.numerator
+        if (newOtherNumerator > newNumerator)
             return other
-          else
-            return this
-        }
-        if (newNumerator < newOtherNumerator)
-          return other
         this
     }
 
@@ -151,22 +131,5 @@ class Fraction implements MathNumber<Fraction> {
     def equivalent(Fraction other) {
         requireNonNull(other)
         other.reduce == reduce
-    }
-    
-    def isInvertible() {
-      numerator.signum != 0
-    }
-    
-    def isPositive() {
-      signum >= 0
-    }
-    
-    def isNegative() {
-      !positive
-    }
-    
-    def checkNumeratorNotZero() {
-      if (!invertible)
-        throw new ArithmeticException("numerator = 0")
     }
 }
