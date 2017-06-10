@@ -51,8 +51,8 @@ class MathRandomSpecification extends Specification {
 		def random = new Random()
 		for (i in 0..howMany - 1) {
 			bounds[i] = random.nextInt(Integer.MAX_VALUE)
-			scales[i] = random.nextInt(10)
-			sizes[i] = i + 1
+			scales[i] = random.nextInt(9) + 1
+			sizes[i] = i + 2
 		}
 	}
 

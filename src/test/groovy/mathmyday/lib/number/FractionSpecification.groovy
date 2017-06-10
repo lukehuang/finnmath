@@ -115,7 +115,7 @@ class FractionSpecification extends Specification {
 		Fraction.ZERO.invert()
 
 		then:
-		thrown(ArithmeticException)
+		thrown(IllegalStateException)
 	}
 
 	def invert() {

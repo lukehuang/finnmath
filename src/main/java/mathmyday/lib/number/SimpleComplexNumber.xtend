@@ -36,71 +36,71 @@ import static java.util.Objects.requireNonNull
 
 @Data
 class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNumber<BigInteger, SimpleComplexNumber> {
-  public static val ZERO = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ZERO)
-  public static val SimpleComplexNumber ONE = new SimpleComplexNumber(BigInteger.ONE, BigInteger.ZERO)
-  public static val I = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ONE)
-  BigInteger real
-  BigInteger imaginary
+    public static val ZERO = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ZERO)
+    public static val SimpleComplexNumber ONE = new SimpleComplexNumber(BigInteger.ONE, BigInteger.ZERO)
+    public static val I = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ONE)
+    BigInteger real
+    BigInteger imaginary
 
-  new(BigInteger real, BigInteger imaginary) {
-    this.real = requireNonNull(real)
-    this.imaginary = requireNonNull(imaginary)
-  }
+    new(BigInteger real, BigInteger imaginary) {
+        this.real = requireNonNull(real)
+        this.imaginary = requireNonNull(imaginary)
+    }
 
-  override add(SimpleComplexNumber summand) {
-    requireNonNull(summand)
-    new SimpleComplexNumber(real + summand.real, imaginary + summand.imaginary)
-  }
+    override add(SimpleComplexNumber summand) {
+        requireNonNull(summand)
+        new SimpleComplexNumber(real + summand.real, imaginary + summand.imaginary)
+    }
 
-  override subtract(SimpleComplexNumber subtrahend) {
-    requireNonNull(subtrahend)
-    new SimpleComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
-  }
+    override subtract(SimpleComplexNumber subtrahend) {
+        requireNonNull(subtrahend)
+        new SimpleComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
+    }
 
-  override multiply(SimpleComplexNumber factor) {
-    requireNonNull(factor)
-    val newReal = real * factor.real - imaginary * factor.imaginary
-    val newImaginary = real * factor.imaginary + imaginary * factor.real
-    new SimpleComplexNumber(newReal, newImaginary)
-  }
+    override multiply(SimpleComplexNumber factor) {
+        requireNonNull(factor)
+        val newReal = real * factor.real - imaginary * factor.imaginary
+        val newImaginary = real * factor.imaginary + imaginary * factor.real
+        new SimpleComplexNumber(newReal, newImaginary)
+    }
 
-  override pow(int exponent) {
-    checkArgument(exponent >= 0, "exponent < 0")
-    if(exponent > 1)
-      return multiply(pow(exponent - 1))
-    else if(exponent == 1)
-      return this
-    ONE
-  }
+    override pow(int exponent) {
+        checkArgument(exponent >= 0)
+        if (exponent > 1)
+            return multiply(pow(exponent - 1))
+        else if (exponent == 1)
+            return this
+        ONE
+    }
 
-  override negate() {
-    new SimpleComplexNumber(-real, -imaginary)
-  }
+    override negate() {
+        new SimpleComplexNumber(-real, -imaginary)
+    }
 
-  override asString() {
-    if(real != BigInteger.ZERO)
-      if(imaginary > BigInteger.ZERO)
-        return '''«real» + «imaginary»i'''
-      else if(imaginary < BigInteger.ZERO)
-        return '''«real» - «imaginary»i'''
-      else
-        return '''«real»'''
-    if(imaginary > BigInteger.ZERO)
-      return '''«imaginary»i'''
-    else if(imaginary < BigInteger.ZERO)
-      return '''- «imaginary»i'''
-    "0"
-  }
+    override asString() {
+        if (real != BigInteger.ZERO)
+            if (imaginary > BigInteger.ZERO)
+                return '''«real» + «imaginary»i'''
+            else if (imaginary < BigInteger.ZERO)
+                return '''«real» - «imaginary»i'''
+            else
+                return '''«real»'''
+        if (imaginary > BigInteger.ZERO)
+            return '''«imaginary»i'''
+        else if (imaginary < BigInteger.ZERO)
+            return '''- «imaginary»i'''
+        "0"
+    }
 
-  override absPow2() {
-    real ** 2 + imaginary ** 2
-  }
+    override absPow2() {
+        real ** 2 + imaginary ** 2
+    }
 
-  override conjugate() {
-    new SimpleComplexNumber(real, -imaginary)
-  }
+    override conjugate() {
+        new SimpleComplexNumber(real, -imaginary)
+    }
 
-  def divide(SimpleComplexNumber divisor) {
-    requireNonNull(divisor)
-  }
+    def divide(SimpleComplexNumber divisor) {
+        requireNonNull(divisor)
+    }
 }
