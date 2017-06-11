@@ -35,10 +35,10 @@ import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Data
-class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNumber<BigInteger, SimpleComplexNumber> {
-    public static val ZERO = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ZERO)
-    public static val SimpleComplexNumber ONE = new SimpleComplexNumber(BigInteger.ONE, BigInteger.ZERO)
-    public static val I = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ONE)
+class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealComplexNumber>, ComplexNumber<BigInteger, SimpleComplexNumber> {
+    public static val ZERO = new SimpleComplexNumber(0BI, 0BI)
+    public static val SimpleComplexNumber ONE = new SimpleComplexNumber(1BI, 0BI)
+    public static val I = new SimpleComplexNumber(0BI, 1BI)
     BigInteger real
     BigInteger imaginary
 
@@ -64,6 +64,11 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNum
         new SimpleComplexNumber(newReal, newImaginary)
     }
 
+    override divide(SimpleComplexNumber divisor) {
+        requireNonNull(divisor)
+        RealComplexNumber.ZERO
+    }
+
     override pow(int exponent) {
         checkArgument(exponent >= 0)
         if (exponent > 1)
@@ -78,18 +83,18 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNum
     }
 
     override asString() {
-        if (real != BigInteger.ZERO)
-            if (imaginary > BigInteger.ZERO)
+        if (real != 0BI)
+            if (imaginary > 0BI)
                 return '''«real» + «imaginary»i'''
-            else if (imaginary < BigInteger.ZERO)
+            else if (imaginary < 0BI)
                 return '''«real» - «imaginary»i'''
             else
                 return '''«real»'''
-        if (imaginary > BigInteger.ZERO)
+        if (imaginary > 0BI)
             return '''«imaginary»i'''
-        else if (imaginary < BigInteger.ZERO)
+        else if (imaginary < 0BI)
             return '''- «imaginary»i'''
-        "0"
+        '0'
     }
 
     override absPow2() {
@@ -98,9 +103,5 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber>, ComplexNum
 
     override conjugate() {
         new SimpleComplexNumber(real, -imaginary)
-    }
-
-    def divide(SimpleComplexNumber divisor) {
-        requireNonNull(divisor)
     }
 }

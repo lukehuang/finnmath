@@ -36,14 +36,14 @@ import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Data
-class Fraction implements MathNumber<Fraction> {
-    public static val ZERO = new Fraction(BigInteger.ZERO, BigInteger.ONE)
-    public static val ONE = new Fraction(BigInteger.ONE, BigInteger.ONE)
+class Fraction implements MathNumber<Fraction, Fraction> {
+    public static val ZERO = new Fraction(0BI, 1BI)
+    public static val ONE = new Fraction(1BI, 1BI)
     BigInteger numerator
     BigInteger denominator
 
     new(BigInteger numerator, BigInteger denominator) {
-        checkArgument(denominator != BigInteger.ZERO)
+        checkArgument(denominator != 0BI)
         this.numerator = requireNonNull(numerator)
         this.denominator = requireNonNull(denominator)
     }
@@ -69,6 +69,11 @@ class Fraction implements MathNumber<Fraction> {
         new Fraction(newNumerator, newDenominator)
     }
 
+    override divide(Fraction divisor) {
+        requireNonNull(divisor)
+        multiply(divisor.invert)
+    }
+
     override negate() {
         new Fraction(-numerator, denominator)
     }
@@ -83,31 +88,26 @@ class Fraction implements MathNumber<Fraction> {
     }
 
     override asString() {
-        if (denominator < BigInteger.ZERO)
+        if (denominator < 0BI)
             return '''«numerator» / («denominator»)'''
         '''«numerator» / «denominator»'''
     }
 
-    def divide(Fraction divisor) {
-        requireNonNull(divisor)
-        multiply(divisor.invert)
-    }
-
     def invert() {
-        checkState(numerator != BigInteger.ZERO)
+        checkState(numerator != 0BI)
         new Fraction(denominator, numerator)
     }
 
     def min(Fraction other) {
         requireNonNull(other)
-        if (other.strictGreaterThan)
+        if (strictGreaterThan(other))
             return other
         this
     }
 
     def max(Fraction other) {
         requireNonNull(other)
-        if (other.strictLowerThan)
+        if (strictLowerThan(other))
             return other
         this
     }
@@ -116,12 +116,12 @@ class Fraction implements MathNumber<Fraction> {
         requireNonNull(other)
         val normalized = normalize
         val normalizedOther = other.normalize
-        normalizedOther.denominator * normalized.numerator <= normalized.denominator * normalizedOther.denominator
+        normalizedOther.denominator * normalized.numerator <= normalized.denominator * normalizedOther.numerator
     }
 
     def greaterThan(Fraction other) {
         requireNonNull(other)
-        strictGreaterThan(other) || equivalent(other)
+        !lowerThan(other) || equivalent(other)
     }
 
     def strictLowerThan(Fraction other) {

@@ -28,16 +28,18 @@
 
 package mathmyday.lib.number
 
-interface MathNumber<T> {
-  def T add(T summand)
+interface MathNumber<S, T> {
+    def S add(S summand)
 
-  def T subtract(T subtrahend)
+    def S subtract(S subtrahend)
 
-  def T multiply(T factor)
+    def S multiply(S factor)
 
-  def T pow(int exponent)
+    def T divide(S divisor)
 
-  def T negate()
+    def S pow(int exponent)
 
-  def String asString()
+    def S negate()
+
+    def String asString()
 }

@@ -35,10 +35,10 @@ import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Data
-class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<BigDecimal, RealComplexNumber> {
-    public static val ZERO = new RealComplexNumber(BigDecimal.ZERO, BigDecimal.ZERO)
-    public static val ONE = new RealComplexNumber(BigDecimal.ONE, BigDecimal.ZERO)
-    public static val I = new RealComplexNumber(BigDecimal.ZERO, BigDecimal.ONE)
+class RealComplexNumber implements MathNumber<RealComplexNumber, RealComplexNumber>, ComplexNumber<BigDecimal, RealComplexNumber> {
+    public static val ZERO = new RealComplexNumber(0BD, 0BD)
+    public static val ONE = new RealComplexNumber(1BD, 0BD)
+    public static val I = new RealComplexNumber(0BD, 1BD)
     BigDecimal real
     BigDecimal imaginary
 
@@ -64,6 +64,11 @@ class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<
         new RealComplexNumber(newReal, newImaginary)
     }
 
+    override divide(RealComplexNumber divisor) {
+        requireNonNull(divisor)
+        ZERO
+    }
+
     override pow(int exponent) {
         checkArgument(exponent >= 0)
         if (exponent > 1)
@@ -78,18 +83,18 @@ class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<
     }
 
     override asString() {
-        if (real != BigDecimal.ZERO)
-            if (imaginary > BigDecimal.ZERO)
+        if (real != 0BD)
+            if (imaginary > 0BD)
                 return '''«real» + «imaginary»i'''
-            else if (imaginary < BigDecimal.ZERO)
+            else if (imaginary < 0BD)
                 return '''«real» - «imaginary»i'''
             else
                 return '''«real»'''
-        if (imaginary > BigDecimal.ZERO)
+        if (imaginary > 0BD)
             return '''«imaginary»i'''
-        else if (imaginary < BigDecimal.ZERO)
+        else if (imaginary < 0BD)
             return '''- «imaginary»i'''
-        "0"
+        '0'
     }
 
     override absPow2() {
@@ -98,9 +103,5 @@ class RealComplexNumber implements MathNumber<RealComplexNumber>, ComplexNumber<
 
     override conjugate() {
         new RealComplexNumber(real, -imaginary)
-    }
-
-    def divide(SimpleComplexNumber divisor) {
-        requireNonNull(divisor)
     }
 }
