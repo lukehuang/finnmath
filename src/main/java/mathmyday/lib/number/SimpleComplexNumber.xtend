@@ -33,6 +33,7 @@ import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
+import java.math.BigDecimal
 
 @Data
 class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealComplexNumber>, ComplexNumber<BigInteger, SimpleComplexNumber> {
@@ -66,7 +67,7 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealComplex
 
     override divide(SimpleComplexNumber divisor) {
         requireNonNull(divisor)
-        RealComplexNumber.ZERO
+        new RealComplexNumber(this).divide(new RealComplexNumber(divisor))
     }
 
     override pow(int exponent) {

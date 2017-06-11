@@ -42,6 +42,12 @@ class RealComplexNumber implements MathNumber<RealComplexNumber, RealComplexNumb
     BigDecimal real
     BigDecimal imaginary
 
+    new(SimpleComplexNumber complexNumber) {
+        requireNonNull(complexNumber)
+        real = new BigDecimal(complexNumber.real)
+        imaginary = new BigDecimal(complexNumber.imaginary)
+    }
+    
     new(BigDecimal real, BigDecimal imaginary) {
         this.real = requireNonNull(real)
         this.imaginary = requireNonNull(imaginary)
@@ -66,7 +72,10 @@ class RealComplexNumber implements MathNumber<RealComplexNumber, RealComplexNumb
 
     override divide(RealComplexNumber divisor) {
         requireNonNull(divisor)
-        ZERO
+        val denominator = divisor.real**2 + divisor.imaginary**2
+        val newReal = (real * divisor.real + imaginary * divisor.imaginary) / denominator
+        val newImaginary = (imaginary * divisor.real - real * divisor.imaginary) / denominator
+        new RealComplexNumber(newReal, newImaginary)
     }
 
     override pow(int exponent) {
