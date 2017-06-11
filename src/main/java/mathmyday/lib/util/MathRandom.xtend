@@ -66,7 +66,7 @@ class MathRandom {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
         val ints = newIntArrayOfSize(howMany)
-        for (var i = 0; i < howMany; i++)
+        for (i : 0 ..< howMany)
             ints.set(i, createPositiveInt(bound))
         ints
     }
@@ -75,7 +75,7 @@ class MathRandom {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
         val ints = newIntArrayOfSize(howMany)
-        for (var i = 0; i < howMany; i++)
+        for (i : 0 ..< howMany)
             ints.set(i, createNegativeInt(bound))
         ints
     }
@@ -84,7 +84,7 @@ class MathRandom {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
         val ints = newIntArrayOfSize(howMany)
-        for (var i = 0; i < howMany; i++)
+        for (i : 0 ..< howMany)
             ints.set(i, createInt(bound))
         ints
     }
@@ -133,8 +133,8 @@ class MathRandom {
         checkArgument(scale > 0)
         checkArgument(howMany > 1)
         val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (var i = 0; i < howMany; i++)
-            decimals.add(createPositiveDecimal(bound, scale))
+        for (i : 0 ..< howMany)
+            decimals += createPositiveDecimal(bound, scale)
         decimals
     }
 
@@ -143,8 +143,8 @@ class MathRandom {
         checkArgument(scale > 0)
         checkArgument(howMany > 1)
         val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (var i = 0; i < howMany; i++)
-            decimals.add(createNegativeDecimal(bound, scale))
+        for (i : 0 ..< howMany)
+            decimals += createNegativeDecimal(bound, scale)
         decimals
     }
 
@@ -153,8 +153,8 @@ class MathRandom {
         checkArgument(scale > 0)
         checkArgument(howMany > 1)
         val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (var i = 0; i < howMany; i++)
-            decimals.add(createDecimal(bound, scale))
+        for (i : 0 ..< howMany)
+            decimals += createDecimal(bound, scale)
         decimals
     }
 
@@ -182,27 +182,27 @@ class MathRandom {
     def createPositiveFractions(int bound, int howMany) {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
-        val List<Fraction> fractions = newArrayList
-        for (var i = 0; i < howMany; i++)
-            fractions.add(createPositiveFraction(bound))
+        val List<Fraction> fractions = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            fractions += createPositiveFraction(bound)
         fractions
     }
 
     def createNegativeFractions(int bound, int howMany) {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
-        val List<Fraction> fractions = newArrayList
-        for (var i = 0; i < howMany; i++)
-            fractions.add(createNegativeFraction(bound))
+        val List<Fraction> fractions = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            fractions += createNegativeFraction(bound)
         fractions
     }
 
     def createFractions(int bound, int howMany) {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
-        val List<Fraction> fractions = newArrayList
-        for (var i = 0; i < howMany; i++)
-            fractions.add(createFraction(bound))
+        val List<Fraction> fractions = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            fractions += createFraction(bound)
         fractions
     }
 
@@ -229,27 +229,27 @@ class MathRandom {
     def createInvertiblePositiveFractions(int bound, int howMany) {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
-        val List<Fraction> fractions = newArrayList
-        for (var i = 0; i < howMany; i++)
-            fractions.add(createInvertiblePositiveFraction(bound))
+        val List<Fraction> fractions = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            fractions += createInvertiblePositiveFraction(bound)
         fractions
     }
 
     def createInvertibleNegativeFractions(int bound, int howMany) {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
-        val List<Fraction> fractions = newArrayList
-        for (var i = 0; i < howMany; i++)
-            fractions.add(createInvertibleNegativeFraction(bound))
+        val List<Fraction> fractions = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            fractions += createInvertibleNegativeFraction(bound)
         fractions
     }
 
     def createInvertibleFractions(int bound, int howMany) {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
-        val List<Fraction> fractions = new ArrayList
-        for (var i = 0; i < howMany; i++)
-            fractions.add(createInvertibleFraction(bound))
+        val List<Fraction> fractions = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            fractions += createInvertibleFraction(bound)
         fractions
     }
 
@@ -263,9 +263,9 @@ class MathRandom {
     def createSimpleComplexNumbers(int bound, int howMany) {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
-        val List<SimpleComplexNumber> complexNumbers = newArrayList()
-        for (var i = 0; i < howMany; i++)
-            complexNumbers.add(createSimpleComplexNumber(bound))
+        val List<SimpleComplexNumber> complexNumbers = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            complexNumbers += createSimpleComplexNumber(bound)
         complexNumbers
     }
 
@@ -280,8 +280,8 @@ class MathRandom {
         checkArgument(bound > 0)
         checkArgument(howMany > 1)
         val List<RealComplexNumber> complexNumbers = newArrayList()
-        for (var i = 0; i < howMany; i++)
-            complexNumbers.add(createRealComplexNumber(bound))
+        for (i : 0 ..< howMany)
+            complexNumbers += createRealComplexNumber(bound)
         complexNumbers
     }
 }
