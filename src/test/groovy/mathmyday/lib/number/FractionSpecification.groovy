@@ -34,6 +34,9 @@ import spock.lang.Specification
 
 class FractionSpecification extends Specification {
 	@Shared
+	Fraction ZERO = Fraction.ZERO
+
+	@Shared
 	List<Fraction> fractions
 
 	@Shared
@@ -57,7 +60,7 @@ class FractionSpecification extends Specification {
 		then:
 		thrown(NullPointerException)
 	}
-	
+
 	def newDenominatorNull() {
 		when:
 		new Fraction(0, null)
@@ -76,7 +79,7 @@ class FractionSpecification extends Specification {
 
 	def addNull() {
 		when:
-		Fraction.ZERO.add(null)
+		ZERO.add(null)
 
 		then:
 		thrown(NullPointerException)
@@ -95,7 +98,7 @@ class FractionSpecification extends Specification {
 
 	def subtractNull() {
 		when:
-		Fraction.ZERO.subtract(null)
+		ZERO.subtract(null)
 
 		then:
 		thrown(NullPointerException)
@@ -114,7 +117,7 @@ class FractionSpecification extends Specification {
 
 	def multiplyNull() {
 		when:
-		Fraction.ZERO.multiply(null)
+		ZERO.multiply(null)
 
 		then:
 		thrown(NullPointerException)
@@ -141,7 +144,7 @@ class FractionSpecification extends Specification {
 
 	def powNegativeExponent() {
 		when:
-		Fraction.ZERO.pow(-1)
+		ZERO.pow(-1)
 
 		then:
 		thrown(IllegalArgumentException)
@@ -160,7 +163,7 @@ class FractionSpecification extends Specification {
 
 	def divideNull() {
 		when:
-		Fraction.ZERO.divide(null)
+		ZERO.divide(null)
 
 		then:
 		thrown(NullPointerException)
@@ -179,7 +182,7 @@ class FractionSpecification extends Specification {
 
 	def invertNumeratorIsZero() {
 		when:
-		Fraction.ZERO.invert()
+		ZERO.invert()
 
 		then:
 		thrown(IllegalStateException)
@@ -195,7 +198,7 @@ class FractionSpecification extends Specification {
 
 	def minNull() {
 		when:
-		Fraction.ZERO.min(null)
+		ZERO.min(null)
 
 		then:
 		thrown(NullPointerException)
@@ -215,7 +218,7 @@ class FractionSpecification extends Specification {
 
 	def maxNull() {
 		when:
-		Fraction.ZERO.max(null)
+		ZERO.max(null)
 
 		then:
 		thrown(NullPointerException)
@@ -235,7 +238,7 @@ class FractionSpecification extends Specification {
 
 	def lowerThanNull() {
 		when:
-		Fraction.ZERO.lowerThan(null)
+		ZERO.lowerThan(null)
 
 		then:
 		thrown(NullPointerException)
@@ -255,7 +258,7 @@ class FractionSpecification extends Specification {
 
 	def greaterThanNull() {
 		when:
-		Fraction.ZERO.greaterThan(null)
+		ZERO.greaterThan(null)
 
 		then:
 		thrown(NullPointerException)
@@ -275,7 +278,7 @@ class FractionSpecification extends Specification {
 
 	def strictLowerThanNull() {
 		when:
-		Fraction.ZERO.strictLowerThan(null)
+		ZERO.strictLowerThan(null)
 
 		then:
 		thrown(NullPointerException)
@@ -295,7 +298,7 @@ class FractionSpecification extends Specification {
 
 	def strictGreaterThanNull() {
 		when:
-		Fraction.ZERO.strictGreaterThan(null)
+		ZERO.strictGreaterThan(null)
 
 		then:
 		thrown(NullPointerException)
@@ -311,16 +314,6 @@ class FractionSpecification extends Specification {
 		fraction << fractions
 		lower = fraction.subtract(Fraction.ONE)
 		greater = fraction.add(Fraction.ONE)
-	}
-
-	def normalize() {
-		if (signum < 0)
-			return new Fraction(-numerator.abs, denominator.abs)
-		if (signum == 0)
-			return ZERO
-		if (numerator.signum < 0)
-			return new Fraction(numerator.abs, denominator.abs)
-		this
 	}
 
 	def abs() {
@@ -352,7 +345,7 @@ class FractionSpecification extends Specification {
 
 	def quivalentNull() {
 		when:
-		Fraction.ZERO.equivalent(null)
+		ZERO.equivalent(null)
 
 		then:
 		thrown(NullPointerException)
