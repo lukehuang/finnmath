@@ -29,10 +29,10 @@
 package mathmyday.lib.number
 
 import java.math.BigInteger
+import lombok.NonNull
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
-import static java.util.Objects.requireNonNull
 
 @Data
 class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealComplexNumber>, ComplexNumber<BigInteger, SimpleComplexNumber> {
@@ -42,30 +42,26 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealComplex
   BigInteger real
   BigInteger imaginary
 
-  new(BigInteger real, BigInteger imaginary) {
-    this.real = requireNonNull(real)
-    this.imaginary = requireNonNull(imaginary)
+  new(@NonNull BigInteger real, @NonNull BigInteger imaginary) {
+    this.real = real
+    this.imaginary = imaginary
   }
 
-  override add(SimpleComplexNumber summand) {
-    requireNonNull(summand)
+  override add(@NonNull SimpleComplexNumber summand) {
     new SimpleComplexNumber(real + summand.real, imaginary + summand.imaginary)
   }
 
-  override subtract(SimpleComplexNumber subtrahend) {
-    requireNonNull(subtrahend)
+  override subtract(@NonNull SimpleComplexNumber subtrahend) {
     new SimpleComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
   }
 
-  override multiply(SimpleComplexNumber factor) {
-    requireNonNull(factor)
+  override multiply(@NonNull SimpleComplexNumber factor) {
     val newReal = real * factor.real - imaginary * factor.imaginary
     val newImaginary = real * factor.imaginary + imaginary * factor.real
     new SimpleComplexNumber(newReal, newImaginary)
   }
 
-  override divide(SimpleComplexNumber divisor) {
-    requireNonNull(divisor)
+  override divide(@NonNull SimpleComplexNumber divisor) {
     new RealComplexNumber(this).divide(new RealComplexNumber(divisor))
   }
 

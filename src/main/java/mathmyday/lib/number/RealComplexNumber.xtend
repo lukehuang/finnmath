@@ -29,88 +29,83 @@
 package mathmyday.lib.number
 
 import java.math.BigDecimal
+import lombok.NonNull
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
-import static java.util.Objects.requireNonNull
 
 @Data
 class RealComplexNumber implements MathNumber<RealComplexNumber, RealComplexNumber>, ComplexNumber<BigDecimal, RealComplexNumber> {
-    public static val ZERO = new RealComplexNumber(0BD, 0BD)
-    public static val ONE = new RealComplexNumber(1BD, 0BD)
-    public static val I = new RealComplexNumber(0BD, 1BD)
-    BigDecimal real
-    BigDecimal imaginary
+  public static val ZERO = new RealComplexNumber(0BD, 0BD)
+  public static val ONE = new RealComplexNumber(1BD, 0BD)
+  public static val I = new RealComplexNumber(0BD, 1BD)
+  BigDecimal real
+  BigDecimal imaginary
 
-    new(SimpleComplexNumber complexNumber) {
-        requireNonNull(complexNumber)
-        real = new BigDecimal(complexNumber.real)
-        imaginary = new BigDecimal(complexNumber.imaginary)
-    }
-    
-    new(BigDecimal real, BigDecimal imaginary) {
-        this.real = requireNonNull(real)
-        this.imaginary = requireNonNull(imaginary)
-    }
+  new(@NonNull SimpleComplexNumber complexNumber) {
+    real = new BigDecimal(complexNumber.real)
+    imaginary = new BigDecimal(complexNumber.imaginary)
+  }
 
-    override add(RealComplexNumber summand) {
-        requireNonNull(summand)
-        new RealComplexNumber(real + summand.real, imaginary + summand.imaginary)
-    }
+  new(@NonNull BigDecimal real, @NonNull BigDecimal imaginary) {
+    this.real = real
+    this.imaginary = imaginary
+  }
 
-    override subtract(RealComplexNumber subtrahend) {
-        requireNonNull(subtrahend)
-        new RealComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
-    }
+  override add(@NonNull RealComplexNumber summand) {
+    new RealComplexNumber(real + summand.real, imaginary + summand.imaginary)
+  }
 
-    override multiply(RealComplexNumber factor) {
-        requireNonNull(factor)
-        val newReal = real * factor.real - imaginary * factor.imaginary
-        val newImaginary = real * factor.imaginary + imaginary * factor.real
-        new RealComplexNumber(newReal, newImaginary)
-    }
+  override subtract(@NonNull RealComplexNumber subtrahend) {
+    new RealComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
+  }
 
-    override divide(RealComplexNumber divisor) {
-        requireNonNull(divisor)
-        val denominator = divisor.real**2 + divisor.imaginary**2
-        val newReal = (real * divisor.real + imaginary * divisor.imaginary) / denominator
-        val newImaginary = (imaginary * divisor.real - real * divisor.imaginary) / denominator
-        new RealComplexNumber(newReal, newImaginary)
-    }
+  override multiply(@NonNull RealComplexNumber factor) {
+    val newReal = real * factor.real - imaginary * factor.imaginary
+    val newImaginary = real * factor.imaginary + imaginary * factor.real
+    new RealComplexNumber(newReal, newImaginary)
+  }
 
-    override pow(int exponent) {
-        checkArgument(exponent >= 0)
-        if (exponent > 1)
-            return multiply(pow(exponent - 1))
-        else if (exponent == 1)
-            return this
-        ONE
-    }
+  override divide(@NonNull RealComplexNumber divisor) {
+    val denominator = divisor.real ** 2 + divisor.imaginary ** 2
+    val newReal = (real * divisor.real + imaginary * divisor.imaginary) / denominator
+    val newImaginary = (imaginary * divisor.real - real * divisor.imaginary) / denominator
+    new RealComplexNumber(newReal, newImaginary)
+  }
 
-    override negate() {
-        new RealComplexNumber(-real, -imaginary)
-    }
+  override pow(int exponent) {
+    checkArgument(exponent >= 0)
+    if(exponent > 1)
+      return multiply(pow(exponent - 1))
+    else if(exponent == 1)
+      return this
+    ONE
+  }
 
-    override asString() {
-        if (real != 0BD)
-            if (imaginary > 0BD)
-                return '''«real» + «imaginary»i'''
-            else if (imaginary < 0BD)
-                return '''«real» - «imaginary»i'''
-            else
-                return '''«real»'''
-        if (imaginary > 0BD)
-            return '''«imaginary»i'''
-        else if (imaginary < 0BD)
-            return '''- «imaginary»i'''
-        '0'
-    }
+  override negate() {
+    new RealComplexNumber(-real, -imaginary)
+  }
 
-    override absPow2() {
-        real ** 2 + imaginary ** 2
-    }
+  override asString() {
+    if(real != 0BD)
+      if(imaginary > 0BD)
+        return '''«real» + «imaginary»i'''
+      else if(imaginary < 0BD)
+        return '''«real» - «imaginary»i'''
+      else
+        return '''«real»'''
+    if(imaginary > 0BD)
+      return '''«imaginary»i'''
+    else if(imaginary < 0BD)
+      return '''- «imaginary»i'''
+    '0'
+  }
 
-    override conjugate() {
-        new RealComplexNumber(real, -imaginary)
-    }
+  override absPow2() {
+    real ** 2 + imaginary ** 2
+  }
+
+  override conjugate() {
+    new RealComplexNumber(real, -imaginary)
+  }
 }

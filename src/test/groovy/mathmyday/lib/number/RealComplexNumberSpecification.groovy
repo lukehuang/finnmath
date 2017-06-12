@@ -1,3 +1,31 @@
+/*
+ * BSD 2-Clause License
+ *
+ * Copyright (c) 2017, togliu
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 package mathmyday.lib.number
 
 import mathmyday.lib.util.MathRandom
@@ -5,6 +33,9 @@ import spock.lang.Shared
 import spock.lang.Specification
 
 class RealComplexNumberSpecification extends Specification {
+	@Shared
+	RealComplexNumber ZERO = RealComplexNumber.ZERO
+
 	@Shared
 	List<RealComplexNumber> complexNumbers
 
@@ -18,6 +49,30 @@ class RealComplexNumberSpecification extends Specification {
 		others = mathRandom.createRealComplexNumbers(Integer.MAX_VALUE, size)
 	}
 
+	def newRealNull() {
+		when:
+		new RealComplexNumber(null, 0)
+
+		then:
+		thrown(NullPointerException)
+	}
+
+	def newImaginaryNull() {
+		when:
+		new RealComplexNumber(0, null)
+
+		then:
+		thrown(NullPointerException)
+	}
+
+	def addNull() {
+		when:
+		ZERO.add(null)
+
+		then:
+		thrown(NullPointerException)
+	}
+
 	def add() {
 		expect:
 		complexNumber.add(other) == new RealComplexNumber(real, imaginary)
@@ -29,6 +84,14 @@ class RealComplexNumberSpecification extends Specification {
 		imaginary = complexNumber.imaginary + other.imaginary
 	}
 
+	def subtractNull() {
+		when:
+		ZERO.subtract(null)
+
+		then:
+		thrown(NullPointerException)
+	}
+
 	def subtract() {
 		expect:
 		complexNumber.subtract(other) == new RealComplexNumber(real, imaginary)
@@ -38,6 +101,14 @@ class RealComplexNumberSpecification extends Specification {
 		other << others
 		real = complexNumber.real - other.real
 		imaginary = complexNumber.imaginary - other.imaginary
+	}
+
+	def multiplyNull() {
+		when:
+		ZERO.multiply(null)
+
+		then:
+		thrown(NullPointerException)
 	}
 
 	def multiply() {

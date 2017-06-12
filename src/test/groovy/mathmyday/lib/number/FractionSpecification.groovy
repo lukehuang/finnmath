@@ -50,7 +50,23 @@ class FractionSpecification extends Specification {
 		invertibles = mathRandom.createInvertibleFractions(Integer.MAX_VALUE, size)
 	}
 
-	def newDenominatorIsZero() {
+	def newNumeratorNull() {
+		when:
+		new Fraction(null, 0)
+
+		then:
+		thrown(NullPointerException)
+	}
+	
+	def newDenominatorNull() {
+		when:
+		new Fraction(0, null)
+
+		then:
+		thrown(NullPointerException)
+	}
+
+	def newDenominatorZero() {
 		when:
 		new Fraction(0, 0)
 
@@ -227,9 +243,9 @@ class FractionSpecification extends Specification {
 
 	def lowerThan() {
 		expect:
-		fraction.lowerThan(greater) == true
-		fraction.lowerThan(lower) == false
-		fraction.lowerThan(fraction) == true
+		fraction.lowerThan(greater)
+		!fraction.lowerThan(lower)
+		fraction.lowerThan(fraction)
 
 		where:
 		fraction << fractions
@@ -247,9 +263,9 @@ class FractionSpecification extends Specification {
 
 	def greaterThan() {
 		expect:
-		fraction.greaterThan(lower) == true
-		fraction.greaterThan(greater) == false
-		fraction.greaterThan(fraction) == true
+		fraction.greaterThan(lower)
+		!fraction.greaterThan(greater)
+		fraction.greaterThan(fraction)
 
 		where:
 		fraction << fractions
@@ -267,9 +283,9 @@ class FractionSpecification extends Specification {
 
 	def strictLowerThan() {
 		expect:
-		fraction.strictLowerThan(greater) == true
-		fraction.strictLowerThan(lower) == false
-		fraction.strictLowerThan(fraction) == false
+		fraction.strictLowerThan(greater)
+		!fraction.strictLowerThan(lower)
+		!fraction.strictLowerThan(fraction)
 
 		where:
 		fraction << fractions
@@ -287,9 +303,9 @@ class FractionSpecification extends Specification {
 
 	def strictGreaterThan() {
 		expect:
-		fraction.strictGreaterThan(lower) == true
-		fraction.strictGreaterThan(greater) == false
-		fraction.strictGreaterThan(fraction) == false
+		fraction.strictGreaterThan(lower)
+		!fraction.strictGreaterThan(greater)
+		!fraction.strictGreaterThan(fraction)
 
 		where:
 		fraction << fractions

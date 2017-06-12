@@ -29,136 +29,125 @@
 package mathmyday.lib.number
 
 import java.math.BigInteger
+import lombok.NonNull
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
-import static java.util.Objects.requireNonNull
 
 @Data
 class Fraction implements MathNumber<Fraction, Fraction> {
-    public static val ZERO = new Fraction(0BI, 1BI)
-    public static val ONE = new Fraction(1BI, 1BI)
-    BigInteger numerator
-    BigInteger denominator
+  public static val ZERO = new Fraction(0BI, 1BI)
+  public static val ONE = new Fraction(1BI, 1BI)
+  BigInteger numerator
+  BigInteger denominator
 
-    new(BigInteger numerator, BigInteger denominator) {
-        checkArgument(denominator != 0BI)
-        this.numerator = requireNonNull(numerator)
-        this.denominator = requireNonNull(denominator)
-    }
+  new(@NonNull BigInteger numerator, @NonNull BigInteger denominator) {
+    checkArgument(denominator != 0BI)
+    this.numerator = numerator
+    this.denominator = denominator
+  }
 
-    override add(Fraction summand) {
-        requireNonNull(summand)
-        val newNumerator = summand.denominator * numerator + denominator * summand.numerator
-        val newDenominator = denominator * summand.denominator
-        new Fraction(newNumerator, newDenominator)
-    }
+  override add(@NonNull Fraction summand) {
+    val newNumerator = summand.denominator * numerator + denominator * summand.numerator
+    val newDenominator = denominator * summand.denominator
+    new Fraction(newNumerator, newDenominator)
+  }
 
-    override subtract(Fraction subtrahend) {
-        requireNonNull(subtrahend)
-        val newNumerator = subtrahend.denominator * numerator - denominator * subtrahend.numerator
-        val newDenominator = denominator * subtrahend.denominator
-        new Fraction(newNumerator, newDenominator)
-    }
+  override subtract(@NonNull Fraction subtrahend) {
+    val newNumerator = subtrahend.denominator * numerator - denominator * subtrahend.numerator
+    val newDenominator = denominator * subtrahend.denominator
+    new Fraction(newNumerator, newDenominator)
+  }
 
-    override multiply(Fraction factor) {
-        requireNonNull(factor)
-        val newNumerator = numerator * factor.numerator
-        val newDenominator = denominator * factor.denominator
-        new Fraction(newNumerator, newDenominator)
-    }
+  override multiply(@NonNull Fraction factor) {
+    val newNumerator = numerator * factor.numerator
+    val newDenominator = denominator * factor.denominator
+    new Fraction(newNumerator, newDenominator)
+  }
 
-    override divide(Fraction divisor) {
-        requireNonNull(divisor)
-        multiply(divisor.invert)
-    }
+  override divide(@NonNull Fraction divisor) {
+    multiply(divisor.invert)
+  }
 
-    override negate() {
-        new Fraction(-numerator, denominator)
-    }
+  override negate() {
+    new Fraction(-numerator, denominator)
+  }
 
-    override pow(int exponent) {
-        checkArgument(exponent >= 0)
-        if (exponent > 1)
-            return multiply(pow(exponent - 1))
-        else if (exponent == 1)
-            return this
-        ONE
-    }
+  override pow(int exponent) {
+    checkArgument(exponent >= 0)
+    if(exponent > 1)
+      return multiply(pow(exponent - 1))
+    else if(exponent == 1)
+      return this
+    ONE
+  }
 
-    override asString() {
-        if (denominator < 0BI)
-            return '''«numerator» / («denominator»)'''
-        '''«numerator» / «denominator»'''
-    }
+  override asString() {
+    if(denominator < 0BI)
+      return '''«numerator» / («denominator»)'''
+    '''«numerator» / «denominator»'''
+  }
 
-    def invert() {
-        checkState(numerator != 0BI)
-        new Fraction(denominator, numerator)
-    }
+  def invert() {
+    checkState(numerator != 0BI)
+    new Fraction(denominator, numerator)
+  }
 
-    def min(Fraction other) {
-        requireNonNull(other)
-        if (strictGreaterThan(other))
-            return other
-        this
-    }
+  def min(@NonNull Fraction other) {
+    if(strictGreaterThan(other))
+      return other
+    this
+  }
 
-    def max(Fraction other) {
-        requireNonNull(other)
-        if (strictLowerThan(other))
-            return other
-        this
-    }
+  def max(@NonNull Fraction other) {
+    if(strictLowerThan(other))
+      return other
+    this
+  }
 
-    def lowerThan(Fraction other) {
-        requireNonNull(other)
-        val normalized = normalize
-        val normalizedOther = other.normalize
-        normalizedOther.denominator * normalized.numerator <= normalized.denominator * normalizedOther.numerator
-    }
+  def lowerThan(@NonNull Fraction other) {
+    val normalized = normalize
+    val normalizedOther = other.normalize
+    normalizedOther.denominator * normalized.numerator <= normalized.denominator * normalizedOther.numerator
+  }
 
-    def greaterThan(Fraction other) {
-        requireNonNull(other)
-        !lowerThan(other) || equivalent(other)
-    }
+  def greaterThan(@NonNull Fraction other) {
+    !lowerThan(other) || equivalent(other)
+  }
 
-    def strictLowerThan(Fraction other) {
-        requireNonNull(other)
-        !greaterThan(other)
-    }
+  def strictLowerThan(@NonNull Fraction other) {
+    !greaterThan(other)
+  }
 
-    def strictGreaterThan(Fraction other) {
-        requireNonNull(other)
-        !lowerThan(other)
-    }
+  def strictGreaterThan(@NonNull Fraction other) {
+    !lowerThan(other)
+  }
 
-    def normalize() {
-        if (signum < 0)
-            return new Fraction(-numerator.abs, denominator.abs)
-        if (signum == 0)
-            return ZERO
-        if (numerator.signum < 0)
-            return new Fraction(numerator.abs, denominator.abs)
-        this
-    }
+  def normalize() {
+    if(signum < 0)
+      return new Fraction(-numerator.abs, denominator.abs)
+    if(signum == 0)
+      return ZERO
+    if(numerator.signum < 0)
+      return new Fraction(numerator.abs, denominator.abs)
+    this
+  }
 
-    def abs() {
-        new Fraction(numerator.abs, denominator.abs)
-    }
+  def abs() {
+    new Fraction(numerator.abs, denominator.abs)
+  }
 
-    def signum() {
-        numerator.signum * denominator.signum
-    }
+  def signum() {
+    numerator.signum * denominator.signum
+  }
 
-    def reduce() {
-        val gcd = numerator.gcd(denominator)
-        new Fraction(numerator / gcd, denominator / gcd)
-    }
+  def reduce() {
+    val gcd = numerator.gcd(denominator)
+    new Fraction(numerator / gcd, denominator / gcd)
+  }
 
-    def equivalent(Fraction other) {
-        requireNonNull(other)
-        other.normalize.reduce == normalize.reduce
-    }
+  def equivalent(@NonNull Fraction other) {
+    other.normalize.reduce == normalize.reduce
+  }
 }
