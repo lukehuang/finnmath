@@ -37,6 +37,9 @@ class RealComplexNumberSpecification extends Specification {
 	RealComplexNumber ZERO = RealComplexNumber.ZERO
 
 	@Shared
+	RealComplexNumber ONE = RealComplexNumber.ONE
+
+	@Shared
 	List<RealComplexNumber> complexNumbers
 
 	@Shared
@@ -127,7 +130,7 @@ class RealComplexNumberSpecification extends Specification {
 		complexNumber.pow(3) == complexNumber.multiply(complexNumber.multiply(complexNumber))
 		complexNumber.pow(2) == complexNumber.multiply(complexNumber)
 		complexNumber.pow(1) == complexNumber
-		complexNumber.pow(0) == RealComplexNumber.ONE
+		complexNumber.pow(0) == ONE
 
 		where:
 		complexNumber << complexNumbers

@@ -37,6 +37,9 @@ class SimpleComplexNumberSpecification extends Specification {
 	SimpleComplexNumber ZERO = SimpleComplexNumber.ZERO
 
 	@Shared
+	SimpleComplexNumber ONE = SimpleComplexNumber.ONE
+
+	@Shared
 	List<SimpleComplexNumber> complexNumbers
 
 	@Shared
@@ -127,7 +130,7 @@ class SimpleComplexNumberSpecification extends Specification {
 		complexNumber.pow(3) == complexNumber.multiply(complexNumber.multiply(complexNumber))
 		complexNumber.pow(2) == complexNumber.multiply(complexNumber)
 		complexNumber.pow(1) == complexNumber
-		complexNumber.pow(0) == SimpleComplexNumber.ONE
+		complexNumber.pow(0) == ONE
 
 		where:
 		complexNumber << complexNumbers

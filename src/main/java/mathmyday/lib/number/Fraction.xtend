@@ -129,7 +129,7 @@ class Fraction implements MathNumber<Fraction, Fraction> {
       return new Fraction(-numerator.abs, denominator.abs)
     if(signum == 0)
       return ZERO
-    if(numerator.signum < 0)
+    if(numerator < 0BI)
       return new Fraction(numerator.abs, denominator.abs)
     this
   }

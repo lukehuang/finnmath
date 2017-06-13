@@ -37,6 +37,9 @@ class FractionSpecification extends Specification {
 	Fraction ZERO = Fraction.ZERO
 
 	@Shared
+	Fraction ONE = Fraction.ONE
+
+	@Shared
 	List<Fraction> fractions
 
 	@Shared
@@ -155,7 +158,7 @@ class FractionSpecification extends Specification {
 		fraction.pow(3) == fraction.multiply(fraction.multiply(fraction))
 		fraction.pow(2) == fraction.multiply(fraction)
 		fraction.pow(1) == fraction
-		fraction.pow(0) == Fraction.ONE
+		fraction.pow(0) == ONE
 
 		where:
 		fraction << fractions
@@ -212,8 +215,8 @@ class FractionSpecification extends Specification {
 
 		where:
 		fraction << fractions
-		minimum = fraction.subtract(Fraction.ONE)
-		maximum = fraction.add(Fraction.ONE)
+		minimum = fraction.subtract(ONE)
+		maximum = fraction.add(ONE)
 	}
 
 	def maxNull() {
@@ -232,8 +235,8 @@ class FractionSpecification extends Specification {
 
 		where:
 		fraction << fractions
-		maximum = fraction.add(Fraction.ONE)
-		minimum = fraction.subtract(Fraction.ONE)
+		maximum = fraction.add(ONE)
+		minimum = fraction.subtract(ONE)
 	}
 
 	def lowerThanNull() {
@@ -252,8 +255,8 @@ class FractionSpecification extends Specification {
 
 		where:
 		fraction << fractions
-		greater = fraction.add(Fraction.ONE)
-		lower = fraction.subtract(Fraction.ONE)
+		greater = fraction.add(ONE)
+		lower = fraction.subtract(ONE)
 	}
 
 	def greaterThanNull() {
@@ -272,8 +275,8 @@ class FractionSpecification extends Specification {
 
 		where:
 		fraction << fractions
-		lower = fraction.subtract(Fraction.ONE)
-		greater = fraction.add(Fraction.ONE)
+		lower = fraction.subtract(ONE)
+		greater = fraction.add(ONE)
 	}
 
 	def strictLowerThanNull() {
@@ -292,8 +295,8 @@ class FractionSpecification extends Specification {
 
 		where:
 		fraction << fractions
-		greater = fraction.add(Fraction.ONE)
-		lower = fraction.subtract(Fraction.ONE)
+		greater = fraction.add(ONE)
+		lower = fraction.subtract(ONE)
 	}
 
 	def strictGreaterThanNull() {
@@ -312,8 +315,8 @@ class FractionSpecification extends Specification {
 
 		where:
 		fraction << fractions
-		lower = fraction.subtract(Fraction.ONE)
-		greater = fraction.add(Fraction.ONE)
+		lower = fraction.subtract(ONE)
+		greater = fraction.add(ONE)
 	}
 
 	def abs() {
@@ -343,7 +346,7 @@ class FractionSpecification extends Specification {
 		denominator = (fraction.denominator / gcd).toBigInteger()
 	}
 
-	def quivalentNull() {
+	def equivalentNull() {
 		when:
 		ZERO.equivalent(null)
 

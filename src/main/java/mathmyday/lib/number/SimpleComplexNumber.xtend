@@ -32,8 +32,6 @@ import java.math.BigInteger
 import lombok.NonNull
 import org.eclipse.xtend.lib.annotations.Data
 
-import static com.google.common.base.Preconditions.checkArgument
-
 @Data
 class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealComplexNumber>, ComplexNumber<BigInteger, SimpleComplexNumber> {
   public static val ZERO = new SimpleComplexNumber(0BI, 0BI)
@@ -66,7 +64,6 @@ class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealComplex
   }
 
   override pow(int exponent) {
-    checkArgument(exponent >= 0)
     if(exponent > 1)
       return multiply(pow(exponent - 1))
     else if(exponent == 1)
