@@ -3,15 +3,15 @@ package mathmyday.lib.linear
 import com.google.common.collect.ImmutableTable
 import java.math.BigInteger
 import java.util.Map
-import lombok.NonNull
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Data
-class BigIntMatrix extends AbstractMatrix<BigInteger> {
-    override add(@NonNull Matrix<BigInteger> summand) {
+final class BigIntMatrix extends AbstractMatrix<BigInteger> {
+    override add(Matrix<BigInteger> summand) {
+        requireNonNull(summand)
         checkArgument(rowSize == summand.rowSize)
         checkArgument(columnSize == summand.columnSize)
         val builder = BigIntMatrix.builder(rowSize, columnSize)
@@ -21,7 +21,8 @@ class BigIntMatrix extends AbstractMatrix<BigInteger> {
         builder.build
     }
 
-    override subtract(@NonNull Matrix<BigInteger> subtrahend) {
+    override subtract(Matrix<BigInteger> subtrahend) {
+        requireNonNull(subtrahend)
         checkArgument(rowSize == subtrahend.rowSize)
         checkArgument(columnSize == subtrahend.columnSize)
         val builder = BigIntMatrix.builder(rowSize, columnSize)
@@ -31,7 +32,8 @@ class BigIntMatrix extends AbstractMatrix<BigInteger> {
         builder.build
     }
 
-    override multiply(@NonNull Matrix<BigInteger> factor) {
+    override multiply(Matrix<BigInteger> factor) {
+        requireNonNull(factor)
         checkArgument(columnSize == factor.rowSize)
         val builder = BigIntMatrix.builder(rowSize, factor.columnSize)
         rowIndexes.forEach [ rowIndex |
@@ -43,10 +45,14 @@ class BigIntMatrix extends AbstractMatrix<BigInteger> {
         builder.build
     }
 
-    override multiplyVector(@NonNull Vector<BigInteger> vector) {
+    override multiplyVector(Vector<BigInteger> vector) {
+        requireNonNull(vector)
+        null
     }
 
-    def multiplyRowWithColumn(@NonNull Map<Integer, BigInteger> row, @NonNull Map<Integer, BigInteger> column) {
+    def multiplyRowWithColumn(Map<Integer, BigInteger> row, Map<Integer, BigInteger> column) {
+        requireNonNull(row)
+        requireNonNull(column)
         var result = 0BI
         for (i : (1 .. row.size)) {
             result += row.get(i) * column.get(i)
@@ -65,9 +71,11 @@ class BigIntMatrix extends AbstractMatrix<BigInteger> {
     }
 
     override tr() {
+        0BI
     }
 
     override det() {
+        0BI
     }
 
     override squareMatrix() {
@@ -99,11 +107,13 @@ class BigIntMatrix extends AbstractMatrix<BigInteger> {
     }
 
     def static builder(int rowSize, int columnSize) {
+        checkArgument(rowSize > 0)
+        checkArgument(columnSize > 0)
         new BigIntMatrixBuilder(rowSize, columnSize)
     }
 
     static class BigIntMatrixBuilder extends AbstractMatrixBuilder<BigInteger> implements MatrixBuilder<BigIntMatrix> {
-        new(int rowSize, int columnSize) {
+        private new(int rowSize, int columnSize) {
             super(rowSize, columnSize)
         }
 
