@@ -9,8 +9,8 @@ import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Data
-final class BigIntMatrix extends AbstractMatrix<BigInteger> {
-    override add(Matrix<BigInteger> summand) {
+final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigIntVector> {
+    override add(BigIntMatrix summand) {
         requireNonNull(summand)
         checkArgument(rowSize == summand.rowSize)
         checkArgument(columnSize == summand.columnSize)
@@ -21,7 +21,7 @@ final class BigIntMatrix extends AbstractMatrix<BigInteger> {
         builder.build
     }
 
-    override subtract(Matrix<BigInteger> subtrahend) {
+    override subtract(BigIntMatrix subtrahend) {
         requireNonNull(subtrahend)
         checkArgument(rowSize == subtrahend.rowSize)
         checkArgument(columnSize == subtrahend.columnSize)
@@ -32,7 +32,7 @@ final class BigIntMatrix extends AbstractMatrix<BigInteger> {
         builder.build
     }
 
-    override multiply(Matrix<BigInteger> factor) {
+    override multiply(BigIntMatrix factor) {
         requireNonNull(factor)
         checkArgument(columnSize == factor.rowSize)
         val builder = BigIntMatrix.builder(rowSize, factor.columnSize)
@@ -45,12 +45,12 @@ final class BigIntMatrix extends AbstractMatrix<BigInteger> {
         builder.build
     }
 
-    override multiplyVector(Vector<BigInteger> vector) {
+    override multiplyVector(BigIntVector vector) {
         requireNonNull(vector)
         null
     }
 
-    def multiplyRowWithColumn(Map<Integer, BigInteger> row, Map<Integer, BigInteger> column) {
+    override multiplyRowWithColumn(Map<Integer, BigInteger> row, Map<Integer, BigInteger> column) {
         requireNonNull(row)
         requireNonNull(column)
         var result = 0BI

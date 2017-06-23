@@ -1,4 +1,9 @@
 package mathmyday.lib.linear
 
-class Vector<T> {
+interface Vector<V, E> {
+    def V negate()
+
+    def E abs()
+
+    def int size()
 }

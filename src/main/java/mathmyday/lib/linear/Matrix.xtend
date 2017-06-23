@@ -5,31 +5,33 @@ import java.math.BigInteger
 import java.util.Map
 import java.util.Set
 
-interface Matrix<T> {
-    def Matrix<T> add(Matrix<T> summand)
+interface Matrix<M, E, V> {
+    def M add(M summand)
 
-    def Matrix<T> subtract(Matrix<T> summand)
+    def M subtract(M subtrahend)
 
-    def Matrix<T> multiply(Matrix<T> summand)
+    def M multiply(M factor)
 
-    def Matrix<T> multiplyVector(Vector<T> summand)
-
-    def Matrix<T> negate()
-
-    def T tr()
-
-    def T det()
+    def M multiplyVector(V vector)
     
+    def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
+    
+    def M negate()
+
+    def E tr()
+
+    def E det()
+
     def Set<Integer> rowIndexes()
-    
+
     def Set<Integer> columnIndexes()
 
-    def T get(Integer row, Integer column)
+    def E get(Integer rowIndex, Integer columnIndex)
 
-    def Map<Integer, T> row(Integer row)
+    def Map<Integer, E> row(Integer rowIndex)
 
-    def Map<Integer, T> column(Integer column)
-    
+    def Map<Integer, E> column(Integer columnIndex)
+
     def BigInteger size()
 
     def int rowSize()
@@ -48,5 +50,5 @@ interface Matrix<T> {
 
     def boolean id()
 
-    def Table<Integer, Integer, T> getTable()
+    def Table<Integer, Integer, E> getTable()
 }

@@ -6,32 +6,38 @@ import com.google.common.collect.Table
 import java.math.BigInteger
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
-@EqualsHashCode
-abstract class AbstractMatrix<T> implements Matrix<T> {
-    Table<Integer, Integer, T> table
+import static com.google.common.base.Preconditions.checkArgument
 
-    protected new(Table<Integer, Integer, T> table) {
+@EqualsHashCode
+abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
+    Table<Integer, Integer, E> table
+
+    protected new(Table<Integer, Integer, E> table) {
         this.table = ImmutableTable.copyOf(table)
     }
-    
+
     override rowIndexes() {
         table.rowKeySet
     }
-    
+
     override columnIndexes() {
         table.columnKeySet
     }
 
-    override get(Integer row, Integer column) {
-        table.get(row, column)
+    override get(Integer rowIndex, Integer columnIndex) {
+        checkArgument(table.rowKeySet.contains(rowIndex))
+        checkArgument(table.columnKeySet.contains(columnIndex))
+        table.get(rowIndex, columnIndex)
     }
 
-    override row(Integer row) {
-        ImmutableMap.copyOf(table.row(row))
+    override row(Integer rowIndex) {
+        checkArgument(table.rowKeySet.contains(rowIndex))
+        ImmutableMap.copyOf(table.row(rowIndex))
     }
 
-    override column(Integer column) {
-        ImmutableMap.copyOf(table.column(column))
+    override column(Integer columnIndex) {
+        checkArgument(table.columnKeySet.contains(columnIndex))
+        ImmutableMap.copyOf(table.column(columnIndex))
     }
 
     override size() {
