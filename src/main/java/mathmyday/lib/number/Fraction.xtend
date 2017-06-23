@@ -29,44 +29,49 @@
 package mathmyday.lib.number
 
 import java.math.BigInteger
-import lombok.NonNull
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
+import static java.util.Objects.requireNonNull
 
 @Data
-class Fraction implements MathNumber<Fraction, Fraction> {
+final class Fraction implements MathNumber<Fraction, Fraction> {
   public static val ZERO = new Fraction(0BI, 1BI)
   public static val ONE = new Fraction(1BI, 1BI)
   BigInteger numerator
   BigInteger denominator
 
-  new(@NonNull BigInteger numerator, @NonNull BigInteger denominator) {
+  new(BigInteger numerator, BigInteger denominator) {
     checkArgument(denominator != 0BI)
-    this.numerator = numerator
-    this.denominator = denominator
+    this.numerator = requireNonNull(numerator)
+    this.denominator = requireNonNull(denominator)
   }
 
-  override add(@NonNull Fraction summand) {
+  override add(Fraction summand) {
+    requireNonNull(summand)
     val newNumerator = summand.denominator * numerator + denominator * summand.numerator
     val newDenominator = denominator * summand.denominator
     new Fraction(newNumerator, newDenominator)
   }
 
-  override subtract(@NonNull Fraction subtrahend) {
+  override subtract(Fraction subtrahend) {
+    requireNonNull((subtrahend))
     val newNumerator = subtrahend.denominator * numerator - denominator * subtrahend.numerator
     val newDenominator = denominator * subtrahend.denominator
     new Fraction(newNumerator, newDenominator)
   }
 
-  override multiply(@NonNull Fraction factor) {
+  override multiply(Fraction factor) {
+    requireNonNull(factor)
     val newNumerator = numerator * factor.numerator
     val newDenominator = denominator * factor.denominator
     new Fraction(newNumerator, newDenominator)
   }
 
-  override divide(@NonNull Fraction divisor) {
+  override divide(Fraction divisor) {
+    requireNonNull(divisor)
+    checkArgument(divisor.numerator != 0BI)
     multiply(divisor.invert)
   }
 
@@ -75,7 +80,7 @@ class Fraction implements MathNumber<Fraction, Fraction> {
   }
 
   override pow(int exponent) {
-    checkArgument(exponent >= 0)
+    checkArgument(exponent > -1)
     if(exponent > 1)
       return multiply(pow(exponent - 1))
     else if(exponent == 1)
@@ -94,34 +99,40 @@ class Fraction implements MathNumber<Fraction, Fraction> {
     new Fraction(denominator, numerator)
   }
 
-  def min(@NonNull Fraction other) {
-    if(strictGreaterThan(other))
-      return other
-    this
-  }
-
-  def max(@NonNull Fraction other) {
-    if(strictLowerThan(other))
-      return other
-    this
-  }
-
-  def lowerThan(@NonNull Fraction other) {
+  def lowerThan(Fraction other) {
+    requireNonNull(other)
     val normalized = normalize
     val normalizedOther = other.normalize
     normalizedOther.denominator * normalized.numerator <= normalized.denominator * normalizedOther.numerator
   }
 
-  def greaterThan(@NonNull Fraction other) {
+  def greaterThan(Fraction other) {
+    requireNonNull(other)
     !lowerThan(other) || equivalent(other)
   }
 
-  def strictLowerThan(@NonNull Fraction other) {
+  def strictlyLowerThan(Fraction other) {
+    requireNonNull(other)
     !greaterThan(other)
   }
 
-  def strictGreaterThan(@NonNull Fraction other) {
+  def strictlyGreaterThan(Fraction other) {
+    requireNonNull(other)
     !lowerThan(other)
+  }
+
+  def min(Fraction other) {
+    requireNonNull(other)
+    if(strictlyGreaterThan(other))
+      return other
+    this
+  }
+
+  def max(Fraction other) {
+    requireNonNull(other)
+    if(strictlyLowerThan(other))
+      return other
+    this
   }
 
   def normalize() {
@@ -147,7 +158,8 @@ class Fraction implements MathNumber<Fraction, Fraction> {
     new Fraction(numerator / gcd, denominator / gcd)
   }
 
-  def equivalent(@NonNull Fraction other) {
-    other.normalize.reduce == normalize.reduce
+  def equivalent(Fraction other) {
+    requireNonNull(other)
+    normalize.reduce == other.normalize.reduce
   }
 }

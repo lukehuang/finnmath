@@ -35,13 +35,14 @@ import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
 
-class RealComplexNumberTest {
+final class RealComplexNumberTest {
+  static val ZERO = RealComplexNumber::ZERO
   static List<RealComplexNumber> complexNumbers
   static List<RealComplexNumber> others
 
   @BeforeClass
   def static void setUpClass() {
-    val size = 100
+    val size = 10
     val mathRandom = new MathRandom
     complexNumbers = mathRandom.createRealComplexNumbers(Integer.MAX_VALUE, size)
     others = mathRandom.createRealComplexNumbers(Integer.MAX_VALUE, size)
@@ -49,17 +50,18 @@ class RealComplexNumberTest {
 
   @Test(expected=NullPointerException)
   def void divideException() {
-    RealComplexNumber.ZERO.divide(null)
+    ZERO.divide(null)
   }
 
   @Test
   def divideTest() {
     complexNumbers.forEach [
-      val other = others.get(complexNumbers.indexOf(it))
-      val denominator = other.real ** 2 + other.imaginary ** 2
-      val newReal = (real * other.real + imaginary * other.imaginary) / denominator
-      val newImaginary = (imaginary * other.real - real * other.imaginary) / denominator
-      assertThat(divide(other)).isEqualTo(new RealComplexNumber(newReal, newImaginary))
+      others.forEach [ other |
+        val denominator = other.real ** 2 + other.imaginary ** 2
+        val newReal = (real * other.real + imaginary * other.imaginary) / denominator
+        val newImaginary = (imaginary * other.real - real * other.imaginary) / denominator
+        assertThat(divide(other)).isEqualTo(new RealComplexNumber(newReal, newImaginary))
+      ]
     ]
   }
 }

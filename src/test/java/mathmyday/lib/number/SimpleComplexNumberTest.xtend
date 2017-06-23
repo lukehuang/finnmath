@@ -35,33 +35,136 @@ import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
+import static org.assertj.core.api.Assertions.assertThatThrownBy
 
-class SimpleComplexNumberTest {
+final class SimpleComplexNumberTest {
+  static val ZERO = SimpleComplexNumber::ZERO
+  static val ONE = SimpleComplexNumber::ONE
   static List<SimpleComplexNumber> complexNumbers
   static List<SimpleComplexNumber> others
 
   @BeforeClass
   def static void setUpClass() {
-    val size = 100
     val mathRandom = new MathRandom
-    complexNumbers = mathRandom.createSimpleComplexNumbers(Integer.MAX_VALUE, size)
-    others = mathRandom.createSimpleComplexNumbers(Integer.MAX_VALUE, size)
+    val bound = 10
+    val howMany = 10
+    complexNumbers = mathRandom.createSimpleComplexNumbers(bound, howMany)
+    others = mathRandom.createSimpleComplexNumbers(bound, howMany)
   }
-
-  @Test(expected=NullPointerException)
-  def void divideException() {
-    SimpleComplexNumber.ZERO.divide(null)
+  
+  @Test
+  def void newRealNullShouldThrowException() {
+    assertThatThrownBy[
+      new SimpleComplexNumber(null, 0BI)
+    ].isInstanceOf(NullPointerException)
+  }
+  
+  @Test
+  def void newImaginaryNullShouldThrowException() {
+    assertThatThrownBy[
+      new SimpleComplexNumber(0BI, null)
+    ].isInstanceOf(NullPointerException)
+  }
+  
+  @Test
+  def void addNullShouldThrowException() {
+    assertThatThrownBy[
+      ZERO.add(null)
+    ].isInstanceOf(NullPointerException)
+  }
+  
+  @Test
+  def void testAdd() {
+    complexNumbers.forEach[
+      others.forEach[ other |
+        val expectedReal = real + other.real
+        val expectedImaginary = imaginary + other.imaginary
+        assertThat(add(other)).isEqualTo(new SimpleComplexNumber(expectedReal, expectedImaginary))
+      ]
+    ]
+  }
+  
+  @Test
+  def void subtractNullShouldThrowException() {
+    assertThatThrownBy[
+      ZERO.subtract(null)
+    ].isInstanceOf(NullPointerException)
+  }
+  
+  @Test
+  def void testSubtract() {
+    complexNumbers.forEach[
+      others.forEach[ other |
+        val expectedReal = real - other.real
+        val expectedImaginary = imaginary - other.imaginary
+        assertThat(subtract(other)).isEqualTo(new SimpleComplexNumber(expectedReal, expectedImaginary))
+      ]
+    ]
+  }
+  
+  @Test
+  def void multiplyNullShouldThrowException() {
+    assertThatThrownBy[
+      ZERO.multiply(null)
+    ].isInstanceOf(NullPointerException)
+  }
+  
+  @Test
+  def void testMultiply() {
+    complexNumbers.forEach[
+      others.forEach[ other |
+        val expectedReal = real * other.real - imaginary * other.imaginary
+        val expectedImaginary = imaginary * other.real + real * other.imaginary
+        assertThat(multiply(other)).isEqualTo(new SimpleComplexNumber(expectedReal, expectedImaginary))
+      ]
+    ]
+  }
+  
+  @Test
+  def void divideNullShouldThrowException() {
+    assertThatThrownBy[
+      ZERO.divide(null)
+    ].isInstanceOf(NullPointerException)
   }
 
   @Test
   def divideTest() {
     complexNumbers.forEach [
-      val other = others.get(complexNumbers.indexOf(it))
-      val denominator = new BigDecimal(other.real ** 2 + other.imaginary ** 2)
-      val newReal = new BigDecimal(real * other.real + imaginary * other.imaginary) / denominator
-      val newImaginary = new BigDecimal(imaginary * other.real - real * other.imaginary) / denominator
-      new RealComplexNumber(newReal, newImaginary)
-      assertThat(divide(other)).isEqualTo(new RealComplexNumber(newReal, newImaginary))
+      others.forEach [ other |
+        val denominator = new BigDecimal(other.real ** 2 + other.imaginary ** 2)
+        val newReal = new BigDecimal(real * other.real + imaginary * other.imaginary) / denominator
+        val newImaginary = new BigDecimal(imaginary * other.real - real * other.imaginary) / denominator
+        new RealComplexNumber(newReal, newImaginary)
+        assertThat(divide(other)).isEqualTo(new RealComplexNumber(newReal, newImaginary))
+      ]
     ]
   }
+  
+  @Test
+  def void powNegativeExponentShouldThrowException() {
+    assertThatThrownBy[
+      ZERO.pow(-1)
+    ].isInstanceOf(IllegalArgumentException)
+  }
+  
+   @Test
+  def void testPow() {
+    complexNumbers.forEach [
+      assertThat(pow(3)).isEqualTo(multiply(multiply(it)))
+      assertThat(pow(2)).isEqualTo(multiply(it))
+      assertThat(pow(1)).isSameAs(it)
+      assertThat(pow(0)).isSameAs(ONE)
+    ]
+    assertThat(ONE.pow(3)).isEqualTo(ONE)
+    assertThat(ZERO.pow(0)).isEqualTo(ONE)
+  }
+  
+  @Test
+  def void testNegate() {
+    complexNumbers.forEach[
+      assertThat(negate).isEqualTo(new SimpleComplexNumber(-real, -imaginary))
+    ]
+  }
+  
+  
 }

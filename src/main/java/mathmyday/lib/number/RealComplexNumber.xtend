@@ -29,44 +29,49 @@
 package mathmyday.lib.number
 
 import java.math.BigDecimal
-import lombok.NonNull
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
+import static java.util.Objects.requireNonNull
 
 @Data
-class RealComplexNumber implements MathNumber<RealComplexNumber, RealComplexNumber>, ComplexNumber<BigDecimal, RealComplexNumber> {
+final class RealComplexNumber implements MathNumber<RealComplexNumber, RealComplexNumber>, ComplexNumber<BigDecimal, RealComplexNumber> {
   public static val ZERO = new RealComplexNumber(0BD, 0BD)
   public static val ONE = new RealComplexNumber(1BD, 0BD)
   public static val I = new RealComplexNumber(0BD, 1BD)
   BigDecimal real
   BigDecimal imaginary
 
-  new(@NonNull SimpleComplexNumber complexNumber) {
+  new(SimpleComplexNumber complexNumber) {
+    requireNonNull(complexNumber)
     real = new BigDecimal(complexNumber.real)
     imaginary = new BigDecimal(complexNumber.imaginary)
   }
 
-  new(@NonNull BigDecimal real, @NonNull BigDecimal imaginary) {
-    this.real = real
-    this.imaginary = imaginary
+  new(BigDecimal real, BigDecimal imaginary) {
+    this.real = requireNonNull(real)
+    this.imaginary = requireNonNull(imaginary)
   }
 
-  override add(@NonNull RealComplexNumber summand) {
+  override add(RealComplexNumber summand) {
+    requireNonNull(summand)
     new RealComplexNumber(real + summand.real, imaginary + summand.imaginary)
   }
 
-  override subtract(@NonNull RealComplexNumber subtrahend) {
+  override subtract(RealComplexNumber subtrahend) {
+    requireNonNull(subtrahend)
     new RealComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
   }
 
-  override multiply(@NonNull RealComplexNumber factor) {
+  override multiply(RealComplexNumber factor) {
+    requireNonNull(factor)
     val newReal = real * factor.real - imaginary * factor.imaginary
     val newImaginary = real * factor.imaginary + imaginary * factor.real
     new RealComplexNumber(newReal, newImaginary)
   }
 
-  override divide(@NonNull RealComplexNumber divisor) {
+  override divide(RealComplexNumber divisor) {
+    requireNonNull(divisor)
     val denominator = divisor.real ** 2 + divisor.imaginary ** 2
     val newReal = (real * divisor.real + imaginary * divisor.imaginary) / denominator
     val newImaginary = (imaginary * divisor.real - real * divisor.imaginary) / denominator
@@ -74,7 +79,7 @@ class RealComplexNumber implements MathNumber<RealComplexNumber, RealComplexNumb
   }
 
   override pow(int exponent) {
-    checkArgument(exponent >= 0)
+    checkArgument(exponent > -1)
     if(exponent > 1)
       return multiply(pow(exponent - 1))
     else if(exponent == 1)

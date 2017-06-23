@@ -29,22 +29,17 @@
 buildscript {
 	repositories { maven { url 'https://plugins.gradle.org/m2/' } }
 
-	dependencies {
-		classpath 'org.xtext:xtext-gradle-plugin:1.0.17'
-		classpath 'io.franzbecker:gradle-lombok:1.8'
-	}
+	dependencies { classpath 'org.xtext:xtext-gradle-plugin:1.0.17' }
 }
 
 apply plugin: 'org.xtext.xtend'
-apply plugin: 'io.franzbecker.gradle-lombok'
-apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-description = 'MathMyDay library'
-group = 'mathmyday'
-version = '0.0.1-SNAPSHOT'
+description 'MathMyDay library'
+group 'mathmyday'
+version '0.0.1-SNAPSHOT'
 
 repositories {
 	jcenter()
@@ -54,9 +49,6 @@ repositories {
 dependencies {
 	compile 'com.google.guava:guava:22.0'
 	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.12.0'
-	compileOnly 'org.projectlombok:lombok:1.16.16'
-	testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
-	testCompile 'org.codehaus.groovy:groovy-all:2.4.3'
 	testCompile 'org.assertj:assertj-core:3.8.0'
 	testCompile 'junit:junit:4.12'
 }
