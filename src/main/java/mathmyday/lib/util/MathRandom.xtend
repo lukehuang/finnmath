@@ -30,18 +30,19 @@ package mathmyday.lib.util
 
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.util.ArrayList
 import java.util.List
 import java.util.Random
-import lombok.NonNull
 import mathmyday.lib.number.Fraction
 import mathmyday.lib.number.RealComplexNumber
 import mathmyday.lib.number.SimpleComplexNumber
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
+import static java.util.Objects.requireNonNull
 
 @ToString
-class MathRandom {
+final class MathRandom {
   val random = new Random
 
   def createPositiveInt(int bound) {
@@ -113,24 +114,25 @@ class MathRandom {
     keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP)
   }
 
-  def keepDecimalInBound(@NonNull BigDecimal decimal, int bound) {
+  def keepDecimalInBound(BigDecimal decimal, int bound) {
+    requireNonNull(decimal)
     checkArgument(bound > 0)
-    var value = decimal
+    var it = decimal
     val decimalBound = BigDecimal.valueOf(bound)
-    if(value >= 0BD)
-      while(value >= decimalBound)
-        value -= decimalBound
+    if(it >= 0BD)
+      while(it >= decimalBound)
+        it -= decimalBound
     else
-      while(value.abs >= decimalBound)
-        value += decimalBound
-    value
+      while(abs >= decimalBound)
+        it += decimalBound
+    it
   }
 
   def createPositiveDecimals(int bound, int scale, int howMany) {
     checkArgument(bound > 0)
     checkArgument(scale > 0)
     checkArgument(howMany > 1)
-    val List<BigDecimal> decimals = newArrayList
+    val List<BigDecimal> decimals = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       decimals += createPositiveDecimal(bound, scale)
     decimals
@@ -140,7 +142,7 @@ class MathRandom {
     checkArgument(bound > 0)
     checkArgument(scale > 0)
     checkArgument(howMany > 1)
-    val List<BigDecimal> decimals = newArrayList
+    val List<BigDecimal> decimals = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       decimals += createNegativeDecimal(bound, scale)
     decimals
@@ -150,62 +152,60 @@ class MathRandom {
     checkArgument(bound > 0)
     checkArgument(scale > 0)
     checkArgument(howMany > 1)
-    val List<BigDecimal> decimals = newArrayList
+    val List<BigDecimal> decimals = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       decimals += createDecimal(bound, scale)
     decimals
   }
 
   def createPositiveFraction(int bound) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     val numerator = BigInteger.valueOf(random.nextInt(bound))
     val denominator = BigInteger.valueOf(random.nextInt(bound - 1) + 1)
     new Fraction(numerator, denominator)
   }
 
   def createNegativeFraction(int bound) {
-    checkArgument(bound > 0)
-    val numerator = BigInteger.valueOf(random.nextInt(bound))
-    val denominator = BigInteger.valueOf(random.nextInt(bound - 1) + 1)
-    new Fraction(numerator, denominator).negate
+    checkArgument(bound > 1)
+    createPositiveFraction(bound).negate
   }
 
   def createFraction(int bound) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     if(random.nextBoolean)
       return createNegativeFraction(bound)
     createPositiveFraction(bound)
   }
 
   def createPositiveFractions(int bound, int howMany) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     checkArgument(howMany > 1)
-    val List<Fraction> fractions = newArrayList
+    val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createPositiveFraction(bound)
     fractions
   }
 
   def createNegativeFractions(int bound, int howMany) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     checkArgument(howMany > 1)
-    val List<Fraction> fractions = newArrayList
+    val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createNegativeFraction(bound)
     fractions
   }
 
   def createFractions(int bound, int howMany) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     checkArgument(howMany > 1)
-    val List<Fraction> fractions = newArrayList
+    val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createFraction(bound)
     fractions
   }
 
   def createInvertiblePositiveFraction(int bound) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     val newBound = bound - 1
     val numerator = BigInteger.valueOf(random.nextInt(newBound) + 1)
     val denominator = BigInteger.valueOf(random.nextInt(newBound) + 1)
@@ -213,39 +213,39 @@ class MathRandom {
   }
 
   def createInvertibleNegativeFraction(int bound) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     createInvertiblePositiveFraction(bound).negate
   }
 
   def createInvertibleFraction(int bound) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     if(random.nextBoolean)
       return createInvertibleNegativeFraction(bound)
     createInvertiblePositiveFraction(bound)
   }
 
   def createInvertiblePositiveFractions(int bound, int howMany) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     checkArgument(howMany > 1)
-    val List<Fraction> fractions = newArrayList
+    val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createInvertiblePositiveFraction(bound)
     fractions
   }
 
   def createInvertibleNegativeFractions(int bound, int howMany) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     checkArgument(howMany > 1)
-    val List<Fraction> fractions = newArrayList
+    val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createInvertibleNegativeFraction(bound)
     fractions
   }
 
   def createInvertibleFractions(int bound, int howMany) {
-    checkArgument(bound > 0)
+    checkArgument(bound > 1)
     checkArgument(howMany > 1)
-    val List<Fraction> fractions = newArrayList
+    val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createInvertibleFraction(bound)
     fractions
@@ -261,7 +261,7 @@ class MathRandom {
   def createSimpleComplexNumbers(int bound, int howMany) {
     checkArgument(bound > 0)
     checkArgument(howMany > 1)
-    val List<SimpleComplexNumber> complexNumbers = newArrayList
+    val List<SimpleComplexNumber> complexNumbers = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       complexNumbers += createSimpleComplexNumber(bound)
     complexNumbers
@@ -277,7 +277,7 @@ class MathRandom {
   def createRealComplexNumbers(int bound, int howMany) {
     checkArgument(bound > 0)
     checkArgument(howMany > 1)
-    val List<RealComplexNumber> complexNumbers = newArrayList
+    val List<RealComplexNumber> complexNumbers = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       complexNumbers += createRealComplexNumber(bound)
     complexNumbers
