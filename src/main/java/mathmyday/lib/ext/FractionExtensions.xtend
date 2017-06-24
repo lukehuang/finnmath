@@ -34,6 +34,9 @@ import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 final class FractionExtensions {
+    static val ZERO = Fraction::ZERO
+    static val ONE = Fraction::ONE
+
     static def +(Fraction x, Fraction y) {
         requireNonNull(x)
         requireNonNull(y)
@@ -55,6 +58,7 @@ final class FractionExtensions {
     static def /(Fraction x, Fraction y) {
         requireNonNull(x)
         requireNonNull(y)
+        checkArgument(y != ZERO)
         x.divide(y)
     }
 
@@ -86,5 +90,45 @@ final class FractionExtensions {
         requireNonNull(x)
         checkArgument(exponent > -1)
         x.pow(exponent)
+    }
+
+    static def -(Fraction x) {
+        requireNonNull(x)
+        x.negate
+    }
+
+    static def ++(Fraction x) {
+        requireNonNull(x)
+        x.add(ONE)
+    }
+
+    static def --(Fraction x) {
+        requireNonNull(x)
+        x.subtract(ONE)
+    }
+
+    static def +=(Fraction x, Fraction y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        x + y
+    }
+
+    static def -=(Fraction x, Fraction y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        x - y
+    }
+
+    static def *=(Fraction x, Fraction y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        x * y
+    }
+
+    static def /=(Fraction x, Fraction y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        checkArgument(y != ZERO)
+        x / y
     }
 }

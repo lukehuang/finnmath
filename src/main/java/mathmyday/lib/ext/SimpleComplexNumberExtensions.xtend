@@ -34,6 +34,9 @@ import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 final class SimpleComplexNumberExtensions {
+    static val ZERO = SimpleComplexNumber::ZERO
+    static val ONE = SimpleComplexNumber::ONE
+
     static def +(SimpleComplexNumber x, SimpleComplexNumber y) {
         requireNonNull(x)
         requireNonNull(y)
@@ -55,6 +58,7 @@ final class SimpleComplexNumberExtensions {
     static def /(SimpleComplexNumber x, SimpleComplexNumber y) {
         requireNonNull(x)
         requireNonNull(y)
+        checkArgument(y != ZERO)
         x.divide(y)
     }
 
@@ -62,5 +66,45 @@ final class SimpleComplexNumberExtensions {
         requireNonNull(x)
         checkArgument(exponent > -1)
         x.pow(exponent)
+    }
+
+    static def -(SimpleComplexNumber x) {
+        requireNonNull(x)
+        x.negate
+    }
+
+    static def ++(SimpleComplexNumber x) {
+        requireNonNull(x)
+        x.add(ONE)
+    }
+
+    static def --(SimpleComplexNumber x) {
+        requireNonNull(x)
+        x.subtract(ONE)
+    }
+
+    static def +=(SimpleComplexNumber x, SimpleComplexNumber y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        x + y
+    }
+
+    static def -=(SimpleComplexNumber x, SimpleComplexNumber y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        x - y
+    }
+
+    static def *=(SimpleComplexNumber x, SimpleComplexNumber y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        x * y
+    }
+
+    static def /=(SimpleComplexNumber x, SimpleComplexNumber y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        checkArgument(y != ZERO)
+        x / y
     }
 }

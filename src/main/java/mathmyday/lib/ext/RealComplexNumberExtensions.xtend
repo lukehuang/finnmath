@@ -34,6 +34,9 @@ import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 final class RealComplexNumberExtensions {
+    static val ZERO = RealComplexNumber::ZERO
+    static val ONE = RealComplexNumber::ONE
+
     static def +(RealComplexNumber x, RealComplexNumber y) {
         requireNonNull(x)
         requireNonNull(y)
@@ -55,6 +58,7 @@ final class RealComplexNumberExtensions {
     static def /(RealComplexNumber x, RealComplexNumber y) {
         requireNonNull(x)
         requireNonNull(y)
+        checkArgument(y != ZERO)
         x.divide(y)
     }
 
@@ -62,5 +66,45 @@ final class RealComplexNumberExtensions {
         requireNonNull(x)
         checkArgument(exponent > -1)
         x.pow(exponent)
+    }
+
+    static def -(RealComplexNumber x) {
+        requireNonNull(x)
+        x.negate
+    }
+
+    static def ++(RealComplexNumber x) {
+        requireNonNull(x)
+        x.add(ONE)
+    }
+
+    static def --(RealComplexNumber x) {
+        requireNonNull(x)
+        x.subtract(ONE)
+    }
+
+    static def +=(RealComplexNumber x, RealComplexNumber y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        x + y
+    }
+
+    static def -=(RealComplexNumber x, RealComplexNumber y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        x - y
+    }
+
+    static def *=(RealComplexNumber x, RealComplexNumber y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        x * y
+    }
+
+    static def /=(RealComplexNumber x, RealComplexNumber y) {
+        requireNonNull(x)
+        requireNonNull(y)
+        checkArgument(y != ZERO)
+        x / y
     }
 }
