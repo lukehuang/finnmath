@@ -55,21 +55,21 @@ final class RealComplexNumberTest {
     def void newRealNullShouldThrowException() {
         assertThatThrownBy[
             new RealComplexNumber(null, 0BD)
-        ].isInstanceOf(NullPointerException)
+        ].isExactlyInstanceOf(NullPointerException)
     }
 
     @Test
     def void newImaginaryNullShouldThrowException() {
         assertThatThrownBy[
             new RealComplexNumber(0BD, null)
-        ].isInstanceOf(NullPointerException)
+        ].isExactlyInstanceOf(NullPointerException)
     }
 
     @Test
     def void addNullShouldThrowException() {
         assertThatThrownBy[
             ZERO.add(null)
-        ].isInstanceOf(NullPointerException)
+        ].isExactlyInstanceOf(NullPointerException)
     }
 
     @Test
@@ -87,7 +87,7 @@ final class RealComplexNumberTest {
     def void subtractNullShouldThrowException() {
         assertThatThrownBy[
             ZERO.subtract(null)
-        ].isInstanceOf(NullPointerException)
+        ].isExactlyInstanceOf(NullPointerException)
     }
 
     @Test
@@ -105,7 +105,7 @@ final class RealComplexNumberTest {
     def void multiplyNullShouldThrowException() {
         assertThatThrownBy[
             ZERO.multiply(null)
-        ].isInstanceOf(NullPointerException)
+        ].isExactlyInstanceOf(NullPointerException)
     }
 
     @Test
@@ -123,7 +123,7 @@ final class RealComplexNumberTest {
     def void divideNullShouldThrowException() {
         assertThatThrownBy[
             ZERO.divide(null)
-        ].isInstanceOf(NullPointerException)
+        ].isExactlyInstanceOf(NullPointerException)
     }
 
     @Test
@@ -143,7 +143,7 @@ final class RealComplexNumberTest {
     def void powNegativeExponentShouldThrowException() {
         assertThatThrownBy[
             ZERO.pow(-1)
-        ].isInstanceOf(IllegalArgumentException)
+        ].isExactlyInstanceOf(IllegalArgumentException)
     }
 
     @Test
