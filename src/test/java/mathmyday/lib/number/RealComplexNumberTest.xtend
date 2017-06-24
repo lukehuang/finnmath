@@ -130,9 +130,10 @@ final class RealComplexNumberTest {
     def divideTest() {
         complexNumbers.forEach [
             others.forEach [ other |
-                val denominator = other.real ** 2 + other.imaginary ** 2
-                val expectedReal = (real * other.real + imaginary * other.imaginary) / denominator
-                val expectedImaginary = (imaginary * other.real - real * other.imaginary) / denominator
+                val suitable = if(other == ZERO) other.add(ONE) else other
+                val denominator = suitable.real ** 2 + suitable.imaginary ** 2
+                val expectedReal = (real * suitable.real + imaginary * suitable.imaginary) / denominator
+                val expectedImaginary = (imaginary * suitable.real - real * suitable.imaginary) / denominator
                 new RealComplexNumber(expectedReal, expectedImaginary)
                 assertThat(divide(other)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
             ]
