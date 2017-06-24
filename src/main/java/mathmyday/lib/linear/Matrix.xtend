@@ -1,10 +1,12 @@
 package mathmyday.lib.linear
 
+import com.google.common.annotations.Beta
 import com.google.common.collect.Table
 import java.math.BigInteger
 import java.util.Map
 import java.util.Set
 
+@Beta
 interface Matrix<M, E, V> {
     def M add(M summand)
 
@@ -13,9 +15,9 @@ interface Matrix<M, E, V> {
     def M multiply(M factor)
 
     def M multiplyVector(V vector)
-    
+
     def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
-    
+
     def M negate()
 
     def E tr()

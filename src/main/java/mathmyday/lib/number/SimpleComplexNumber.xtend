@@ -28,80 +28,82 @@
 
 package mathmyday.lib.number
 
+import com.google.common.annotations.Beta
 import java.math.BigInteger
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
+@Beta
 @Data
 final class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealComplexNumber>, ComplexNumber<BigInteger, SimpleComplexNumber> {
-  public static val ZERO = new SimpleComplexNumber(0BI, 0BI)
-  public static val SimpleComplexNumber ONE = new SimpleComplexNumber(1BI, 0BI)
-  public static val I = new SimpleComplexNumber(0BI, 1BI)
-  BigInteger real
-  BigInteger imaginary
+    public static val ZERO = new SimpleComplexNumber(0BI, 0BI)
+    public static val SimpleComplexNumber ONE = new SimpleComplexNumber(1BI, 0BI)
+    public static val I = new SimpleComplexNumber(0BI, 1BI)
+    BigInteger real
+    BigInteger imaginary
 
-  new(BigInteger real, BigInteger imaginary) {
-    this.real = requireNonNull(real)
-    this.imaginary = requireNonNull(imaginary)
-  }
+    new(BigInteger real, BigInteger imaginary) {
+        this.real = requireNonNull(real)
+        this.imaginary = requireNonNull(imaginary)
+    }
 
-  override add(SimpleComplexNumber summand) {
-    requireNonNull(summand)
-    new SimpleComplexNumber(real + summand.real, imaginary + summand.imaginary)
-  }
+    override add(SimpleComplexNumber summand) {
+        requireNonNull(summand)
+        new SimpleComplexNumber(real + summand.real, imaginary + summand.imaginary)
+    }
 
-  override subtract(SimpleComplexNumber subtrahend) {
-    requireNonNull(subtrahend)
-    new SimpleComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
-  }
+    override subtract(SimpleComplexNumber subtrahend) {
+        requireNonNull(subtrahend)
+        new SimpleComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
+    }
 
-  override multiply(SimpleComplexNumber factor) {
-    requireNonNull(factor)
-    val newReal = real * factor.real - imaginary * factor.imaginary
-    val newImaginary = real * factor.imaginary + imaginary * factor.real
-    new SimpleComplexNumber(newReal, newImaginary)
-  }
+    override multiply(SimpleComplexNumber factor) {
+        requireNonNull(factor)
+        val newReal = real * factor.real - imaginary * factor.imaginary
+        val newImaginary = real * factor.imaginary + imaginary * factor.real
+        new SimpleComplexNumber(newReal, newImaginary)
+    }
 
-  override divide(SimpleComplexNumber divisor) {
-    requireNonNull(divisor)
-    new RealComplexNumber(this).divide(new RealComplexNumber(divisor))
-  }
+    override divide(SimpleComplexNumber divisor) {
+        requireNonNull(divisor)
+        new RealComplexNumber(this).divide(new RealComplexNumber(divisor))
+    }
 
-  override pow(int exponent) {
-    checkArgument(exponent > -1)
-    if(exponent > 1)
-      return multiply(pow(exponent - 1))
-    else if(exponent == 1)
-      return this
-    ONE
-  }
+    override pow(int exponent) {
+        checkArgument(exponent > -1)
+        if (exponent > 1)
+            return multiply(pow(exponent - 1))
+        else if (exponent == 1)
+            return this
+        ONE
+    }
 
-  override negate() {
-    new SimpleComplexNumber(-real, -imaginary)
-  }
+    override negate() {
+        new SimpleComplexNumber(-real, -imaginary)
+    }
 
-  override asString() {
-    if(real != 0BI)
-      if(imaginary > 0BI)
-        return '''«real» + «imaginary»i'''
-      else if(imaginary < 0BI)
-        return '''«real» - «imaginary»i'''
-      else
-        return '''«real»'''
-    if(imaginary > 0BI)
-      return '''«imaginary»i'''
-    else if(imaginary < 0BI)
-      return '''- «imaginary»i'''
-    '0'
-  }
+    override asString() {
+        if (real != 0BI)
+            if (imaginary > 0BI)
+                return '''«real» + «imaginary»i'''
+            else if (imaginary < 0BI)
+                return '''«real» - «imaginary»i'''
+            else
+                return '''«real»'''
+        if (imaginary > 0BI)
+            return '''«imaginary»i'''
+        else if (imaginary < 0BI)
+            return '''- «imaginary»i'''
+        '0'
+    }
 
-  override absPow2() {
-    real ** 2 + imaginary ** 2
-  }
+    override absPow2() {
+        real ** 2 + imaginary ** 2
+    }
 
-  override conjugate() {
-    new SimpleComplexNumber(real, -imaginary)
-  }
+    override conjugate() {
+        new SimpleComplexNumber(real, -imaginary)
+    }
 }

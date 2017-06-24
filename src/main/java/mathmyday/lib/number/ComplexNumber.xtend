@@ -28,8 +28,11 @@
 
 package mathmyday.lib.number
 
-interface ComplexNumber<S, T> {
-  def S absPow2()
+import com.google.common.annotations.Beta
 
-  def T conjugate()
+@Beta
+interface ComplexNumber<S, T> {
+    def S absPow2()
+
+    def T conjugate()
 }

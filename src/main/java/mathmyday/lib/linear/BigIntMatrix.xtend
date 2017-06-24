@@ -1,5 +1,6 @@
 package mathmyday.lib.linear
 
+import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableTable
 import java.math.BigInteger
 import java.util.Map
@@ -8,6 +9,7 @@ import org.eclipse.xtend.lib.annotations.Data
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
+@Beta
 @Data
 final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigIntVector> {
     override add(BigIntMatrix summand) {

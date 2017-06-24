@@ -28,6 +28,9 @@
 
 package mathmyday.lib.number
 
+import com.google.common.annotations.Beta
+
+@Beta
 interface MathNumber<S, T> {
     def S add(S summand)
 

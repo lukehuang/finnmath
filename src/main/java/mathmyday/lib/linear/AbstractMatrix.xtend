@@ -1,5 +1,6 @@
 package mathmyday.lib.linear
 
+import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
@@ -8,6 +9,7 @@ import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
 
+@Beta
 @EqualsHashCode
 abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
     Table<Integer, Integer, E> table
