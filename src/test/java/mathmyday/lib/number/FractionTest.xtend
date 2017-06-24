@@ -167,20 +167,56 @@ final class FractionTest {
     }
 
     @Test
-    def void lowerThanNullShouldThrowException() {
+    def void lessThanOrEqualToNullShouldThrowException() {
         assertThatThrownBy[
-            ZERO.lowerThan(null)
+            ZERO.lessThanOrEqualTo(null)
         ].isExactlyInstanceOf(NullPointerException)
     }
 
     @Test
-    def void testLowerThan() {
+    def void testLessThanOrEqualTo() {
         fractions.forEach [
             val greater = add(ONE)
             val lower = subtract(ONE)
-            assertTrue(lowerThan(greater))
-            assertFalse(lowerThan(lower))
-            assertTrue(lowerThan(it))
+            assertTrue(lessThanOrEqualTo(greater))
+            assertFalse(lessThanOrEqualTo(lower))
+            assertTrue(lessThanOrEqualTo(it))
+        ]
+    }
+
+    @Test
+    def void greaterThanOrEqualToNullShouldThrowException() {
+        assertThatThrownBy[
+            ZERO.greaterThanOrEqualTo(null)
+        ].isExactlyInstanceOf(NullPointerException)
+    }
+
+    @Test
+    def void testGreaterThanOrEqualTo() {
+        fractions.forEach [
+            val lower = subtract(ONE)
+            val greater = add(ONE)
+            assertTrue(greaterThanOrEqualTo(lower))
+            assertFalse(greaterThanOrEqualTo(greater))
+            assertTrue(greaterThanOrEqualTo(it))
+        ]
+    }
+
+    @Test
+    def void lessThanNullShouldThrowException() {
+        assertThatThrownBy[
+            ZERO.lessThan(null)
+        ].isExactlyInstanceOf(NullPointerException)
+    }
+
+    @Test
+    def void testLessThan() {
+        fractions.forEach [
+            val greater = add(ONE)
+            val lower = subtract(ONE)
+            assertTrue(lessThan(greater))
+            assertFalse(lessThan(lower))
+            assertFalse(lessThan(it))
         ]
     }
 
@@ -198,43 +234,7 @@ final class FractionTest {
             val greater = add(ONE)
             assertTrue(greaterThan(lower))
             assertFalse(greaterThan(greater))
-            assertTrue(greaterThan(it))
-        ]
-    }
-
-    @Test
-    def void strictlyLowerThanNullShouldThrowException() {
-        assertThatThrownBy[
-            ZERO.strictlyLowerThan(null)
-        ].isExactlyInstanceOf(NullPointerException)
-    }
-
-    @Test
-    def void testStrictlyLowerThan() {
-        fractions.forEach [
-            val greater = add(ONE)
-            val lower = subtract(ONE)
-            assertTrue(strictlyLowerThan(greater))
-            assertFalse(strictlyLowerThan(lower))
-            assertFalse(strictlyLowerThan(it))
-        ]
-    }
-
-    @Test
-    def void strictlyGreaterThanNullShouldThrowException() {
-        assertThatThrownBy[
-            ZERO.strictlyGreaterThan(null)
-        ].isExactlyInstanceOf(NullPointerException)
-    }
-
-    @Test
-    def void testStrictlyGreaterThan() {
-        fractions.forEach [
-            val lower = subtract(ONE)
-            val greater = add(ONE)
-            assertTrue(strictlyGreaterThan(lower))
-            assertFalse(strictlyGreaterThan(greater))
-            assertFalse(strictlyGreaterThan(it))
+            assertFalse(greaterThan(it))
         ]
     }
 

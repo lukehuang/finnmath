@@ -101,38 +101,38 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
         new Fraction(denominator, numerator)
     }
 
-    def lowerThan(Fraction other) {
+    def lessThanOrEqualTo(Fraction other) {
         requireNonNull(other)
         val normalized = normalize
         val normalizedOther = other.normalize
         normalizedOther.denominator * normalized.numerator <= normalized.denominator * normalizedOther.numerator
     }
 
+    def greaterThanOrEqualTo(Fraction other) {
+        requireNonNull(other)
+        !lessThanOrEqualTo(other) || equivalent(other)
+    }
+
+    def lessThan(Fraction other) {
+        requireNonNull(other)
+        !greaterThanOrEqualTo(other)
+    }
+
     def greaterThan(Fraction other) {
         requireNonNull(other)
-        !lowerThan(other) || equivalent(other)
-    }
-
-    def strictlyLowerThan(Fraction other) {
-        requireNonNull(other)
-        !greaterThan(other)
-    }
-
-    def strictlyGreaterThan(Fraction other) {
-        requireNonNull(other)
-        !lowerThan(other)
+        !lessThanOrEqualTo(other)
     }
 
     def min(Fraction other) {
         requireNonNull(other)
-        if (strictlyGreaterThan(other))
+        if (greaterThan(other))
             return other
         this
     }
 
     def max(Fraction other) {
         requireNonNull(other)
-        if (strictlyLowerThan(other))
+        if (lessThan(other))
             return other
         this
     }
