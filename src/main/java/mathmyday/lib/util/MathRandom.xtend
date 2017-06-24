@@ -35,6 +35,7 @@ import java.util.ArrayList
 import java.util.List
 import java.util.Random
 import mathmyday.lib.number.Fraction
+import mathmyday.lib.number.NumberAndSqrt
 import mathmyday.lib.number.RealComplexNumber
 import mathmyday.lib.number.SimpleComplexNumber
 import org.eclipse.xtend.lib.annotations.ToString
@@ -283,5 +284,23 @@ final class MathRandom {
         for (i : 0 ..< howMany)
             complexNumbers += createRealComplexNumber(bound)
         complexNumbers
+    }
+
+    def createBigIntAndSqrt(int bound) {
+        checkArgument(bound > 0)
+        val it = BigInteger.valueOf(createPositiveInt(bound))
+        new NumberAndSqrt(it ** 2, it)
+    }
+
+    def createFractionAndSqrt(int bound) {
+        checkArgument(bound > 1)
+        val it = createPositiveFraction(bound)
+        new NumberAndSqrt(pow(2), it)
+    }
+
+    def createSimpleComplexNumberAndSqrt(int bound) {
+        checkArgument(bound > 0)
+        val it = createSimpleComplexNumber(bound)
+        new NumberAndSqrt(pow(2), it)
     }
 }

@@ -334,4 +334,43 @@ final class MathRandomTest {
         val it = mathRandom.createRealComplexNumbers(bound, howMany)
         assertEquals(howMany, size)
     }
+
+    @Test
+    def void createBigIntAndSqrtBoundTooLowShouldThrowException() {
+        assertThatThrownBy[
+            mathRandom.createBigIntAndSqrt(0)
+        ].isExactlyInstanceOf(IllegalArgumentException)
+    }
+
+    @Test
+    def void testCreateBigIntAndSqrt() {
+        val it = mathRandom.createBigIntAndSqrt(bound)
+        assertThat(number).isEqualTo(sqrt ** 2)
+    }
+
+    @Test
+    def void createFractionAndSqrtBoundTooLowShouldThrowException() {
+        assertThatThrownBy[
+            mathRandom.createFractionAndSqrt(1)
+        ].isExactlyInstanceOf(IllegalArgumentException)
+    }
+
+    @Test
+    def void createFractionAndSqrt() {
+        val it = mathRandom.createFractionAndSqrt(bound)
+        assertThat(number).isEqualTo(sqrt.pow(2))
+    }
+
+    @Test
+    def void createSimpleComplexNumberAndSqrtBoundTooLowShouldThrowException() {
+        assertThatThrownBy[
+            mathRandom.createSimpleComplexNumberAndSqrt(0)
+        ].isExactlyInstanceOf(IllegalArgumentException)
+    }
+
+    @Test
+    def void createSimpleComplexNumberAndSqrt() {
+        val it = mathRandom.createSimpleComplexNumberAndSqrt(bound)
+        assertThat(number).isEqualTo(sqrt.pow(2))
+    }
 }
