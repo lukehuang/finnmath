@@ -135,7 +135,7 @@ final class RealComplexNumberTest {
                 val expectedReal = (real * suitable.real + imaginary * suitable.imaginary) / denominator
                 val expectedImaginary = (imaginary * suitable.real - real * suitable.imaginary) / denominator
                 new RealComplexNumber(expectedReal, expectedImaginary)
-                assertThat(divide(other)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
+                assertThat(divide(suitable)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
             ]
         ]
     }

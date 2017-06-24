@@ -137,7 +137,7 @@ final class SimpleComplexNumberTest {
                 val expectedImaginary = new BigDecimal(imaginary * suitable.real - real * suitable.imaginary) /
                     denominator
                 new RealComplexNumber(expectedReal, expectedImaginary)
-                assertThat(divide(other)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
+                assertThat(divide(suitable)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
             ]
         ]
     }
