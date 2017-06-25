@@ -35,6 +35,7 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
+import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
@@ -65,7 +66,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
     override multiply(BigIntMatrix factor) {
         requireNonNull(factor)
         checkArgument(columnSize == factor.rowSize)
-        val builder = BigIntMatrix.builder(rowSize, factor.columnSize)
+        val builder = BigIntMatrix::builder(rowSize, factor.columnSize)
         rowIndexes.forEach [ rowIndex |
             factor.columnIndexes.forEach [ columnIndex |
                 val entry = multiplyRowWithColumn(table.row(rowIndex), factor.column(columnIndex))
@@ -77,7 +78,15 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
 
     override multiplyVector(BigIntVector vector) {
         requireNonNull(vector)
-        null
+        val builder = BigIntVector::builder
+        table.rowMap.forEach [ rowIndex, row |
+            row.forEach [ columnIndex, matrixEntry |
+                vector.map.forEach [ vectorIndex, vectorEntry |
+                    builder.addPut(rowIndex, matrixEntry * vectorEntry)
+                ]
+            ]
+        ]
+        builder.build
     }
 
     override multiplyRowWithColumn(Map<Integer, BigInteger> row, Map<Integer, BigInteger> column) {
@@ -101,15 +110,19 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
     }
 
     override tr() {
-        0BI
+        checkState(square)
+        var result = 0BI
+        for (i : 1 .. rowSize)
+            result += table.get(i, i)
+        result
     }
 
     override det() {
         0BI
     }
 
-    override squareMatrix() {
-        false
+    override square() {
+        rowSize == columnSize
     }
 
     override triangular() {
@@ -125,10 +138,6 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
     }
 
     override diagonal() {
-        false
-    }
-
-    override id() {
         false
     }
 

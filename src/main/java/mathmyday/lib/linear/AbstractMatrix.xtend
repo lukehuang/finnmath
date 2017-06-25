@@ -69,6 +69,14 @@ abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
         checkArgument(table.columnKeySet.contains(columnIndex))
         ImmutableMap.copyOf(table.column(columnIndex))
     }
+    
+    override rows() {
+        ImmutableMap.copyOf(table.rowMap)
+    }
+    
+    override columns() {
+        ImmutableMap.copyOf(table.columnMap)
+    }
 
     override size() {
         BigInteger.valueOf(rowSize) * BigInteger.valueOf(columnSize)

@@ -30,9 +30,21 @@ package mathmyday.lib.linear
 
 import com.google.common.annotations.Beta
 import java.math.BigInteger
+import java.util.Map
+import org.eclipse.xtend.lib.annotations.Data
+
+import static java.util.Objects.requireNonNull
 
 @Beta
+@Data
 final class BigIntVector implements Vector<BigIntVector, BigInteger> {
+    val Map<Integer, BigInteger> map
+
+    new(Map<Integer, BigInteger> map) {
+        requireNonNull(map)
+        this.map = map
+    }
+
     override negate() {
         null
     }
@@ -43,5 +55,24 @@ final class BigIntVector implements Vector<BigIntVector, BigInteger> {
 
     override size() {
         0
+    }
+
+    static def builder() {
+        new BigIntVectorBuilder
+    }
+
+    @Data
+    static class BigIntVectorBuilder extends AbstractVectorBuilder<BigInteger> implements VectorBuilder<BigIntVector, BigInteger> {
+        override addPut(Integer index, BigInteger entry) {
+            requireNonNull(entry)
+            map.put(index, map.get(index) + entry)
+        }
+
+        override build() {
+            map.forEach [ index, entry |
+                requireNonNull(entry)
+            ]
+            new BigIntVector(map)
+        }
     }
 }

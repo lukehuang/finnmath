@@ -29,58 +29,23 @@
 package mathmyday.lib.linear
 
 import com.google.common.annotations.Beta
-import com.google.common.collect.Table
-import java.math.BigInteger
 import java.util.Map
-import java.util.Set
+
+import static com.google.common.base.Preconditions.checkArgument
+import static java.util.Objects.requireNonNull
 
 @Beta
-interface Matrix<M, E, V> {
-    def M add(M summand)
+abstract class AbstractVectorBuilder<T> {
+    protected val Map<Integer, T> map = newHashMap
 
-    def M subtract(M subtrahend)
+    def put(T entry) {
+        requireNonNull(entry)
+        map.put(map.size + 1, entry)
+    }
 
-    def M multiply(M factor)
-
-    def V multiplyVector(V vector)
-
-    def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
-
-    def M negate()
-
-    def E tr()
-
-    def E det()
-
-    def Set<Integer> rowIndexes()
-
-    def Set<Integer> columnIndexes()
-
-    def Map<Integer, Map<Integer, E>> rows()
-
-    def Map<Integer, Map<Integer, E>> columns()
-
-    def E get(Integer rowIndex, Integer columnIndex)
-
-    def Map<Integer, E> row(Integer rowIndex)
-
-    def Map<Integer, E> column(Integer columnIndex)
-
-    def BigInteger size()
-
-    def int rowSize()
-
-    def int columnSize()
-
-    def boolean square()
-
-    def boolean triangular()
-
-    def boolean upperTriangular()
-
-    def boolean lowerTriangular()
-
-    def boolean diagonal()
-
-    def Table<Integer, Integer, E> getTable()
+    def put(Integer index, T entry) {
+        checkArgument(map.containsKey(index))
+        requireNonNull(entry)
+        map.put(index, entry)
+    }
 }

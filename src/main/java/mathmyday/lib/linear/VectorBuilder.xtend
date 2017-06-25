@@ -29,58 +29,10 @@
 package mathmyday.lib.linear
 
 import com.google.common.annotations.Beta
-import com.google.common.collect.Table
-import java.math.BigInteger
-import java.util.Map
-import java.util.Set
 
 @Beta
-interface Matrix<M, E, V> {
-    def M add(M summand)
+interface VectorBuilder<V, E> {
+    def void addPut(Integer index, E entry)
 
-    def M subtract(M subtrahend)
-
-    def M multiply(M factor)
-
-    def V multiplyVector(V vector)
-
-    def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
-
-    def M negate()
-
-    def E tr()
-
-    def E det()
-
-    def Set<Integer> rowIndexes()
-
-    def Set<Integer> columnIndexes()
-
-    def Map<Integer, Map<Integer, E>> rows()
-
-    def Map<Integer, Map<Integer, E>> columns()
-
-    def E get(Integer rowIndex, Integer columnIndex)
-
-    def Map<Integer, E> row(Integer rowIndex)
-
-    def Map<Integer, E> column(Integer columnIndex)
-
-    def BigInteger size()
-
-    def int rowSize()
-
-    def int columnSize()
-
-    def boolean square()
-
-    def boolean triangular()
-
-    def boolean upperTriangular()
-
-    def boolean lowerTriangular()
-
-    def boolean diagonal()
-
-    def Table<Integer, Integer, E> getTable()
+    def V build()
 }
