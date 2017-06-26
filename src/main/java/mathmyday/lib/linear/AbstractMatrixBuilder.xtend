@@ -31,24 +31,26 @@ package mathmyday.lib.linear
 import com.google.common.annotations.Beta
 import com.google.common.collect.ArrayTable
 import com.google.common.collect.Table
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
-import static java.util.Objects.requireNonNull
+import static com.google.common.base.Preconditions.checkNotNull
 
 @Beta
+@EqualsHashCode
 abstract class AbstractMatrixBuilder<T> {
-    protected Table<Integer, Integer, T> table
+  protected Table<Integer, Integer, T> table
 
-    new(int rowSize, int columnSize) {
-        checkArgument(rowSize > 0)
-        checkArgument(columnSize > 0)
-        table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))
-    }
+  new(int rowSize, int columnSize) {
+    checkArgument(rowSize > 0, "Row size has to be greater than zero but is %s.", rowSize)
+    checkArgument(columnSize > 0, "Column size has to be greater than zero but is %s.", columnSize)
+    table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))
+  }
 
-    def put(int rowIndex, int columnIndex, T entry) {
-        requireNonNull(entry)
-        checkArgument(table.rowKeySet.contains(rowIndex))
-        checkArgument(table.columnKeySet.contains(columnIndex))
-        table.put(rowIndex, columnIndex, entry)
-    }
+  def put(int rowIndex, int columnIndex, T entry) {
+    checkNotNull(entry, "Entry is not allowed to be null but is %s.", entry)
+    checkArgument(table.rowKeySet.contains(rowIndex), "invalid row index")
+    checkArgument(table.columnKeySet.contains(columnIndex), "invalid row index")
+    table.put(rowIndex, columnIndex, entry)
+  }
 }

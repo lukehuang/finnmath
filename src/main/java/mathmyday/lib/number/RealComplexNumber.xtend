@@ -33,86 +33,87 @@ import java.math.BigDecimal
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
-import static java.util.Objects.requireNonNull
+import static com.google.common.base.Preconditions.checkNotNull
 
 @Beta
 @Data
 final class RealComplexNumber implements MathNumber<RealComplexNumber, RealComplexNumber>, ComplexNumber<BigDecimal, RealComplexNumber> {
-    public static val ZERO = new RealComplexNumber(0BD, 0BD)
-    public static val ONE = new RealComplexNumber(1BD, 0BD)
-    public static val I = new RealComplexNumber(0BD, 1BD)
-    BigDecimal real
-    BigDecimal imaginary
+  public static val ZERO = new RealComplexNumber(0BD, 0BD)
+  public static val ONE = new RealComplexNumber(1BD, 0BD)
+  public static val I = new RealComplexNumber(0BD, 1BD)
+  BigDecimal real
+  BigDecimal imaginary
 
-    new(SimpleComplexNumber complexNumber) {
-        requireNonNull(complexNumber)
-        real = new BigDecimal(complexNumber.real)
-        imaginary = new BigDecimal(complexNumber.imaginary)
-    }
+  new(SimpleComplexNumber complexNumber) {
+    checkNotNull(complexNumber, "The simple complex number is not allowed to be null but is %s.", complexNumber)
+    real = new BigDecimal(complexNumber.real)
+    imaginary = new BigDecimal(complexNumber.imaginary)
+  }
 
-    new(BigDecimal real, BigDecimal imaginary) {
-        this.real = requireNonNull(real)
-        this.imaginary = requireNonNull(imaginary)
-    }
+  new(BigDecimal real, BigDecimal imaginary) {
+    this.real = checkNotNull(real, "The real part is not allowed to be null but is %s.", real)
+    this.imaginary = checkNotNull(imaginary, "The imaginary part is not allowed to be null but is %s.", imaginary)
+  }
 
-    override add(RealComplexNumber summand) {
-        requireNonNull(summand)
-        new RealComplexNumber(real + summand.real, imaginary + summand.imaginary)
-    }
+  override add(RealComplexNumber summand) {
+    checkNotNull(summand, "The summand is not allowed to be null but is %s.", summand)
+    new RealComplexNumber(real + summand.real, imaginary + summand.imaginary)
+  }
 
-    override subtract(RealComplexNumber subtrahend) {
-        requireNonNull(subtrahend)
-        new RealComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
-    }
+  override subtract(RealComplexNumber subtrahend) {
+    checkNotNull(subtrahend, "The subtrahend is not allowed to be null but is %s.", subtrahend)
+    new RealComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
+  }
 
-    override multiply(RealComplexNumber factor) {
-        requireNonNull(factor)
-        val newReal = real * factor.real - imaginary * factor.imaginary
-        val newImaginary = real * factor.imaginary + imaginary * factor.real
-        new RealComplexNumber(newReal, newImaginary)
-    }
+  override multiply(RealComplexNumber factor) {
+    checkNotNull(factor, "The factor is not allowed to be null but is %s.", factor)
+    val newReal = real * factor.real - imaginary * factor.imaginary
+    val newImaginary = real * factor.imaginary + imaginary * factor.real
+    new RealComplexNumber(newReal, newImaginary)
+  }
 
-    override divide(RealComplexNumber divisor) {
-        requireNonNull(divisor)
-        val denominator = divisor.real ** 2 + divisor.imaginary ** 2
-        val newReal = (real * divisor.real + imaginary * divisor.imaginary) / denominator
-        val newImaginary = (imaginary * divisor.real - real * divisor.imaginary) / denominator
-        new RealComplexNumber(newReal, newImaginary)
-    }
+  override divide(RealComplexNumber divisor) {
+    checkNotNull(divisor, "The divisor is not allowed to be null but is %s.", divisor)
+    checkArgument(divisor != ZERO, "The divisor is not allowed to be equal to zero but is %s.", divisor)
+    val denominator = divisor.real ** 2 + divisor.imaginary ** 2
+    val newReal = (real * divisor.real + imaginary * divisor.imaginary) / denominator
+    val newImaginary = (imaginary * divisor.real - real * divisor.imaginary) / denominator
+    new RealComplexNumber(newReal, newImaginary)
+  }
 
-    override pow(int exponent) {
-        checkArgument(exponent > -1)
-        if (exponent > 1)
-            return multiply(pow(exponent - 1))
-        else if (exponent == 1)
-            return this
-        ONE
-    }
+  override pow(int exponent) {
+    checkArgument(exponent > -1, "The exponent is not allowed to be negative but is %s.", exponent)
+    if(exponent > 1)
+      return multiply(pow(exponent - 1))
+    else if(exponent == 1)
+      return this
+    ONE
+  }
 
-    override negate() {
-        new RealComplexNumber(-real, -imaginary)
-    }
+  override negate() {
+    new RealComplexNumber(-real, -imaginary)
+  }
 
-    override asString() {
-        if (real != 0BD)
-            if (imaginary > 0BD)
-                return '''«real» + «imaginary»i'''
-            else if (imaginary < 0BD)
-                return '''«real» - «imaginary»i'''
-            else
-                return '''«real»'''
-        if (imaginary > 0BD)
-            return '''«imaginary»i'''
-        else if (imaginary < 0BD)
-            return '''- «imaginary»i'''
-        '0'
-    }
+  override asString() {
+    if(real != 0BD)
+      if(imaginary > 0BD)
+        return '''«real» + «imaginary»i'''
+      else if(imaginary < 0BD)
+        return '''«real» - «imaginary»i'''
+      else
+        return '''«real»'''
+    if(imaginary > 0BD)
+      return '''«imaginary»i'''
+    else if(imaginary < 0BD)
+      return '''- «imaginary»i'''
+    '0'
+  }
 
-    override absPow2() {
-        real ** 2 + imaginary ** 2
-    }
+  override absPow2() {
+    real ** 2 + imaginary ** 2
+  }
 
-    override conjugate() {
-        new RealComplexNumber(real, -imaginary)
-    }
+  override conjugate() {
+    new RealComplexNumber(real, -imaginary)
+  }
 }

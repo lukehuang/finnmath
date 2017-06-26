@@ -30,22 +30,24 @@ package mathmyday.lib.linear
 
 import com.google.common.annotations.Beta
 import java.util.Map
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
-import static java.util.Objects.requireNonNull
+import static com.google.common.base.Preconditions.checkNotNull
 
 @Beta
+@EqualsHashCode
 abstract class AbstractVectorBuilder<T> {
-    protected val Map<Integer, T> map = newHashMap
+  protected val Map<Integer, T> map = newHashMap
 
-    def put(T entry) {
-        requireNonNull(entry)
-        map.put(map.size + 1, entry)
-    }
+  def put(T entry) {
+    checkNotNull(entry, "Entry is not allowed to be null but is %s.", entry)
+    map.put(map.size + 1, entry)
+  }
 
-    def put(Integer index, T entry) {
-        checkArgument(map.containsKey(index))
-        requireNonNull(entry)
-        map.put(index, entry)
-    }
+  def put(Integer index, T entry) {
+    checkArgument(map.containsKey(index), "invalid index")
+    checkNotNull(entry, "Entry is not allowed to be null but is %s.", entry)
+    map.put(index, entry)
+  }
 }

@@ -35,132 +35,139 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
+import static com.google.common.base.Preconditions.checkNotNull
 import static com.google.common.base.Preconditions.checkState
-import static java.util.Objects.requireNonNull
 
 @Beta
 @Data
 final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigIntVector> {
-    override add(BigIntMatrix summand) {
-        requireNonNull(summand)
-        checkArgument(rowSize == summand.rowSize)
-        checkArgument(columnSize == summand.columnSize)
-        val builder = BigIntMatrix.builder(rowSize, columnSize)
-        table.cellSet.forEach [
-            builder.put(rowKey, columnKey, value + summand.get(rowKey, columnKey))
+  override add(BigIntMatrix summand) {
+    checkNotNull(summand, "The summand is not allowed to be null but is %s.", summand)
+    checkArgument(table.rowKeySet.size == summand.rowSize, "Both row sizes have to be equal but %s is not equal to %s",
+      table.rowKeySet.size, summand.rowSize)
+    checkArgument(table.columnKeySet.size == summand.columnSize,
+      "Both column sizes have to be equal but %s is not equal to %s.", table.columnKeySet.size, summand.columnSize)
+    val builder = BigIntMatrix.builder(rowSize, columnSize)
+    table.cellSet.forEach [
+      builder.put(rowKey, columnKey, value + summand.get(rowKey, columnKey))
+    ]
+    builder.build
+  }
+
+  override subtract(BigIntMatrix subtrahend) {
+    checkNotNull(subtrahend, "The subtrahend is not allowed to be null but is %s.", subtrahend)
+    checkArgument(table.rowKeySet.size == subtrahend.rowSize,
+      "Both row sizes have to be equal but %s is not equal to %s", table.rowKeySet.size, subtrahend.rowSize)
+    checkArgument(table.columnKeySet.size == subtrahend.columnSize,
+      "Both column sizes have to be equal but %s is not equal to %s.", table.columnKeySet.size, subtrahend.columnSize)
+    val builder = BigIntMatrix.builder(rowSize, columnSize)
+    table.cellSet.forEach [
+      builder.put(rowKey, columnKey, value - subtrahend.get(rowKey, columnKey))
+    ]
+    builder.build
+  }
+
+  override multiply(BigIntMatrix factor) {
+    checkNotNull(factor, "The factor is not allowed to be null but is %s.", factor)
+    checkArgument(table.columnKeySet.size == factor.rowSize,
+      "The column size and the factor's row size has to be equal but %s is not equal to %s.", table.columnKeySet.size,
+      factor.rowSize)
+    val builder = BigIntMatrix::builder(rowSize, factor.columnSize)
+    rowIndexes.forEach [ rowIndex |
+      factor.columnIndexes.forEach [ columnIndex |
+        val entry = multiplyRowWithColumn(table.row(rowIndex), factor.column(columnIndex))
+        builder.put(rowIndex, columnIndex, entry)
+      ]
+    ]
+    builder.build
+  }
+
+  override multiplyVector(BigIntVector vector) {
+    checkNotNull(vector, "The vector is not allowed to be null but is %s.", vector)
+    val builder = BigIntVector::builder
+    table.rowMap.forEach [ rowIndex, row |
+      row.forEach [ columnIndex, matrixEntry |
+        vector.map.forEach [ vectorIndex, vectorEntry |
+          builder.addPut(rowIndex, matrixEntry * vectorEntry)
         ]
-        builder.build
+      ]
+    ]
+    builder.build
+  }
+
+  override multiplyRowWithColumn(Map<Integer, BigInteger> row, Map<Integer, BigInteger> column) {
+    checkNotNull(row, "The row is not allowed to be null but is %s.", row)
+    checkNotNull(column, "The column is not allowed to be null but is %s.", column)
+    var result = 0BI
+    for (i : (1 .. row.size)) {
+      result += row.get(i) * column.get(i)
+    }
+    result
+  }
+
+  override negate() {
+    val builder = BigIntMatrix.builder(rowSize, columnSize)
+    rowIndexes.forEach [ rowIndex |
+      columnIndexes.forEach [ columnIndex |
+        builder.put(rowIndex, columnIndex, -get(rowIndex, columnIndex))
+      ]
+    ]
+    builder.build
+  }
+
+  override tr() {
+    checkState(square, "The trace can be calculated only for square matrixes. row size = %s; column size = %s",
+      table.rowKeySet.size, table.columnKeySet.size)
+    var result = 0BI
+    for (i : 1 .. rowSize)
+      result += table.get(i, i)
+    result
+  }
+
+  override det() {
+    0BI
+  }
+
+  override square() {
+    table.rowKeySet.size == table.columnKeySet.size
+  }
+
+  override triangular() {
+    false
+  }
+
+  override upperTriangular() {
+    false
+  }
+
+  override lowerTriangular() {
+    false
+  }
+
+  override diagonal() {
+    false
+  }
+
+  override getTable() {
+    ImmutableTable.copyOf(table)
+  }
+
+  def static builder(int rowSize, int columnSize) {
+    checkArgument(rowSize > 0, "The row size has to be greater than zero but is %s.", rowSize)
+    checkArgument(columnSize > 0, "The column size has to be greater than zero but is %s.", columnSize)
+    new BigIntMatrixBuilder(rowSize, columnSize)
+  }
+
+  static class BigIntMatrixBuilder extends AbstractMatrixBuilder<BigInteger> implements MatrixBuilder<BigIntMatrix> {
+    private new(int rowSize, int columnSize) {
+      super(rowSize, columnSize)
     }
 
-    override subtract(BigIntMatrix subtrahend) {
-        requireNonNull(subtrahend)
-        checkArgument(rowSize == subtrahend.rowSize)
-        checkArgument(columnSize == subtrahend.columnSize)
-        val builder = BigIntMatrix.builder(rowSize, columnSize)
-        table.cellSet.forEach [
-            builder.put(rowKey, columnKey, value - subtrahend.get(rowKey, columnKey))
-        ]
-        builder.build
+    override build() {
+      table.cellSet.forEach [
+        checkNotNull(value, "Entries are not allowed to be null but this one is %s.", value)
+      ]
+      new BigIntMatrix(table)
     }
-
-    override multiply(BigIntMatrix factor) {
-        requireNonNull(factor)
-        checkArgument(columnSize == factor.rowSize)
-        val builder = BigIntMatrix::builder(rowSize, factor.columnSize)
-        rowIndexes.forEach [ rowIndex |
-            factor.columnIndexes.forEach [ columnIndex |
-                val entry = multiplyRowWithColumn(table.row(rowIndex), factor.column(columnIndex))
-                builder.put(rowIndex, columnIndex, entry)
-            ]
-        ]
-        builder.build
-    }
-
-    override multiplyVector(BigIntVector vector) {
-        requireNonNull(vector)
-        val builder = BigIntVector::builder
-        table.rowMap.forEach [ rowIndex, row |
-            row.forEach [ columnIndex, matrixEntry |
-                vector.map.forEach [ vectorIndex, vectorEntry |
-                    builder.addPut(rowIndex, matrixEntry * vectorEntry)
-                ]
-            ]
-        ]
-        builder.build
-    }
-
-    override multiplyRowWithColumn(Map<Integer, BigInteger> row, Map<Integer, BigInteger> column) {
-        requireNonNull(row)
-        requireNonNull(column)
-        var result = 0BI
-        for (i : (1 .. row.size)) {
-            result += row.get(i) * column.get(i)
-        }
-        result
-    }
-
-    override negate() {
-        val builder = BigIntMatrix.builder(rowSize, columnSize)
-        rowIndexes.forEach [ rowIndex |
-            columnIndexes.forEach [ columnIndex |
-                builder.put(rowIndex, columnIndex, -get(rowIndex, columnIndex))
-            ]
-        ]
-        builder.build
-    }
-
-    override tr() {
-        checkState(square)
-        var result = 0BI
-        for (i : 1 .. rowSize)
-            result += table.get(i, i)
-        result
-    }
-
-    override det() {
-        0BI
-    }
-
-    override square() {
-        rowSize == columnSize
-    }
-
-    override triangular() {
-        false
-    }
-
-    override upperTriangular() {
-        false
-    }
-
-    override lowerTriangular() {
-        false
-    }
-
-    override diagonal() {
-        false
-    }
-
-    override getTable() {
-        ImmutableTable.copyOf(table)
-    }
-
-    def static builder(int rowSize, int columnSize) {
-        checkArgument(rowSize > 0)
-        checkArgument(columnSize > 0)
-        new BigIntMatrixBuilder(rowSize, columnSize)
-    }
-
-    static class BigIntMatrixBuilder extends AbstractMatrixBuilder<BigInteger> implements MatrixBuilder<BigIntMatrix> {
-        private new(int rowSize, int columnSize) {
-            super(rowSize, columnSize)
-        }
-
-        override build() {
-            table.cellSet.forEach [
-                requireNonNull(value)
-            ]
-            new BigIntMatrix(table)
-        }
-    }
+  }
 }

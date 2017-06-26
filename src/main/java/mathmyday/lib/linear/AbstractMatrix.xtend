@@ -40,53 +40,54 @@ import static com.google.common.base.Preconditions.checkArgument
 @Beta
 @EqualsHashCode
 abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
-    Table<Integer, Integer, E> table
+  Table<Integer, Integer, E> table
 
-    protected new(Table<Integer, Integer, E> table) {
-        this.table = ImmutableTable.copyOf(table)
-    }
+  protected new(Table<Integer, Integer, E> table) {
+    this.table = ImmutableTable.copyOf(table)
+  }
 
-    override rowIndexes() {
-        table.rowKeySet
-    }
+  override rowIndexes() {
+    table.rowKeySet
+  }
 
-    override columnIndexes() {
-        table.columnKeySet
-    }
+  override columnIndexes() {
+    table.columnKeySet
+  }
 
-    override get(Integer rowIndex, Integer columnIndex) {
-        checkArgument(table.rowKeySet.contains(rowIndex))
-        checkArgument(table.columnKeySet.contains(columnIndex))
-        table.get(rowIndex, columnIndex)
-    }
+  override get(Integer rowIndex, Integer columnIndex) {
+    checkArgument(table.rowKeySet.contains(rowIndex), "invalid row index; index = %s; size = %s", rowIndex,
+      table.rowKeySet.size)
+    checkArgument(table.columnKeySet.contains(columnIndex), "invalid column index")
+    table.get(rowIndex, columnIndex)
+  }
 
-    override row(Integer rowIndex) {
-        checkArgument(table.rowKeySet.contains(rowIndex))
-        ImmutableMap.copyOf(table.row(rowIndex))
-    }
+  override row(Integer rowIndex) {
+    checkArgument(table.rowKeySet.contains(rowIndex), "invalid row index")
+    ImmutableMap.copyOf(table.row(rowIndex))
+  }
 
-    override column(Integer columnIndex) {
-        checkArgument(table.columnKeySet.contains(columnIndex))
-        ImmutableMap.copyOf(table.column(columnIndex))
-    }
-    
-    override rows() {
-        ImmutableMap.copyOf(table.rowMap)
-    }
-    
-    override columns() {
-        ImmutableMap.copyOf(table.columnMap)
-    }
+  override column(Integer columnIndex) {
+    checkArgument(table.columnKeySet.contains(columnIndex), "invalid column index")
+    ImmutableMap.copyOf(table.column(columnIndex))
+  }
 
-    override size() {
-        BigInteger.valueOf(rowSize) * BigInteger.valueOf(columnSize)
-    }
+  override rows() {
+    ImmutableMap.copyOf(table.rowMap)
+  }
 
-    override rowSize() {
-        table.rowKeySet.size
-    }
+  override columns() {
+    ImmutableMap.copyOf(table.columnMap)
+  }
 
-    override columnSize() {
-        table.columnKeySet.size
-    }
+  override size() {
+    BigInteger.valueOf(rowSize) * BigInteger.valueOf(columnSize)
+  }
+
+  override rowSize() {
+    table.rowKeySet.size
+  }
+
+  override columnSize() {
+    table.columnKeySet.size
+  }
 }

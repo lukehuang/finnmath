@@ -41,266 +41,266 @@ import mathmyday.lib.number.SimpleComplexNumber
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
-import static java.util.Objects.requireNonNull
+import static com.google.common.base.Preconditions.checkNotNull
 
 @Beta
 @ToString
 final class MathRandom {
-    val random = new Random
+  val random = new Random
 
-    def createPositiveInt(int bound) {
-        checkArgument(bound > 0)
-        random.nextInt(bound)
-    }
+  def createPositiveInt(int bound) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    random.nextInt(bound)
+  }
 
-    def createNegativeInt(int bound) {
-        checkArgument(bound > 0)
-        (-1) * random.nextInt(bound)
-    }
+  def createNegativeInt(int bound) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    (-1) * random.nextInt(bound)
+  }
 
-    def createInt(int bound) {
-        checkArgument(bound > 0)
-        if (random.nextBoolean)
-            return createNegativeInt(bound)
-        createPositiveInt(bound)
-    }
+  def createInt(int bound) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    if(random.nextBoolean)
+      return createNegativeInt(bound)
+    createPositiveInt(bound)
+  }
 
-    def createPositiveInts(int bound, int howMany) {
-        checkArgument(bound > 0)
-        checkArgument(howMany > 1)
-        val ints = newIntArrayOfSize(howMany)
-        for (i : 0 ..< howMany)
-            ints.set(i, createPositiveInt(bound))
-        ints
-    }
+  def createPositiveInts(int bound, int howMany) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val ints = newIntArrayOfSize(howMany)
+    for (i : 0 ..< howMany)
+      ints.set(i, createPositiveInt(bound))
+    ints
+  }
 
-    def createNegativeInts(int bound, int howMany) {
-        checkArgument(bound > 0)
-        checkArgument(howMany > 1)
-        val ints = newIntArrayOfSize(howMany)
-        for (i : 0 ..< howMany)
-            ints.set(i, createNegativeInt(bound))
-        ints
-    }
+  def createNegativeInts(int bound, int howMany) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val ints = newIntArrayOfSize(howMany)
+    for (i : 0 ..< howMany)
+      ints.set(i, createNegativeInt(bound))
+    ints
+  }
 
-    def createInts(int bound, int howMany) {
-        checkArgument(bound > 0)
-        checkArgument(howMany > 1)
-        val ints = newIntArrayOfSize(howMany)
-        for (i : 0 ..< howMany)
-            ints.set(i, createInt(bound))
-        ints
-    }
+  def createInts(int bound, int howMany) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val ints = newIntArrayOfSize(howMany)
+    for (i : 0 ..< howMany)
+      ints.set(i, createInt(bound))
+    ints
+  }
 
-    def createPositiveDecimal(int bound, int scale) {
-        checkArgument(bound > 0)
-        checkArgument(scale > 0)
-        val decimal = createDecimal(bound, scale)
-        if (decimal < 0BD)
-            return -decimal
-        decimal
-    }
+  def createPositiveDecimal(int bound, int scale) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(scale > 0)
+    val decimal = createDecimal(bound, scale)
+    if(decimal < 0BD)
+      return -decimal
+    decimal
+  }
 
-    def createNegativeDecimal(int bound, int scale) {
-        checkArgument(bound > 0)
-        checkArgument(scale > 0)
-        val decimal = createDecimal(bound, scale)
-        if (decimal > 0BD)
-            return -decimal
-        decimal
-    }
+  def createNegativeDecimal(int bound, int scale) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(scale > 0)
+    val decimal = createDecimal(bound, scale)
+    if(decimal > 0BD)
+      return -decimal
+    decimal
+  }
 
-    def createDecimal(int bound, int scale) {
-        checkArgument(bound > 0)
-        checkArgument(scale > 0)
-        val decimal = BigDecimal.valueOf(random.nextDouble)
-        keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP)
-    }
+  def createDecimal(int bound, int scale) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(scale > 0)
+    val decimal = BigDecimal.valueOf(random.nextDouble)
+    keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP)
+  }
 
-    def keepDecimalInBound(BigDecimal decimal, int bound) {
-        requireNonNull(decimal)
-        checkArgument(bound > 0)
-        var it = decimal
-        val decimalBound = BigDecimal.valueOf(bound)
-        if (it >= 0BD)
-            while (it >= decimalBound)
-                it -= decimalBound
-        else
-            while (abs >= decimalBound)
-                it += decimalBound
-        it
-    }
+  def keepDecimalInBound(BigDecimal decimal, int bound) {
+    checkNotNull(decimal, "The decimal number is not allowed to be null but is %s.", decimal)
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    var it = decimal
+    val decimalBound = BigDecimal.valueOf(bound)
+    if(it >= 0BD)
+      while(it >= decimalBound)
+        it -= decimalBound
+    else
+      while(abs >= decimalBound)
+        it += decimalBound
+    it
+  }
 
-    def createPositiveDecimals(int bound, int scale, int howMany) {
-        checkArgument(bound > 0)
-        checkArgument(scale > 0)
-        checkArgument(howMany > 1)
-        val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            decimals += createPositiveDecimal(bound, scale)
-        decimals
-    }
+  def createPositiveDecimals(int bound, int scale, int howMany) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(scale > 0)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<BigDecimal> decimals = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      decimals += createPositiveDecimal(bound, scale)
+    decimals
+  }
 
-    def createNegativeDecimals(int bound, int scale, int howMany) {
-        checkArgument(bound > 0)
-        checkArgument(scale > 0)
-        checkArgument(howMany > 1)
-        val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            decimals += createNegativeDecimal(bound, scale)
-        decimals
-    }
+  def createNegativeDecimals(int bound, int scale, int howMany) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(scale > 0)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<BigDecimal> decimals = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      decimals += createNegativeDecimal(bound, scale)
+    decimals
+  }
 
-    def createDecimals(int bound, int scale, int howMany) {
-        checkArgument(bound > 0)
-        checkArgument(scale > 0)
-        checkArgument(howMany > 1)
-        val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            decimals += createDecimal(bound, scale)
-        decimals
-    }
+  def createDecimals(int bound, int scale, int howMany) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(scale > 0)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<BigDecimal> decimals = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      decimals += createDecimal(bound, scale)
+    decimals
+  }
 
-    def createPositiveFraction(int bound) {
-        checkArgument(bound > 1)
-        val numerator = BigInteger.valueOf(random.nextInt(bound))
-        val denominator = BigInteger.valueOf(random.nextInt(bound - 1) + 1)
-        new Fraction(numerator, denominator)
-    }
+  def createPositiveFraction(int bound) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    val numerator = BigInteger.valueOf(random.nextInt(bound))
+    val denominator = BigInteger.valueOf(random.nextInt(bound - 1) + 1)
+    new Fraction(numerator, denominator)
+  }
 
-    def createNegativeFraction(int bound) {
-        checkArgument(bound > 1)
-        createPositiveFraction(bound).negate
-    }
+  def createNegativeFraction(int bound) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    createPositiveFraction(bound).negate
+  }
 
-    def createFraction(int bound) {
-        checkArgument(bound > 1)
-        if (random.nextBoolean)
-            return createNegativeFraction(bound)
-        createPositiveFraction(bound)
-    }
+  def createFraction(int bound) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    if(random.nextBoolean)
+      return createNegativeFraction(bound)
+    createPositiveFraction(bound)
+  }
 
-    def createPositiveFractions(int bound, int howMany) {
-        checkArgument(bound > 1)
-        checkArgument(howMany > 1)
-        val List<Fraction> fractions = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            fractions += createPositiveFraction(bound)
-        fractions
-    }
+  def createPositiveFractions(int bound, int howMany) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<Fraction> fractions = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      fractions += createPositiveFraction(bound)
+    fractions
+  }
 
-    def createNegativeFractions(int bound, int howMany) {
-        checkArgument(bound > 1)
-        checkArgument(howMany > 1)
-        val List<Fraction> fractions = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            fractions += createNegativeFraction(bound)
-        fractions
-    }
+  def createNegativeFractions(int bound, int howMany) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<Fraction> fractions = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      fractions += createNegativeFraction(bound)
+    fractions
+  }
 
-    def createFractions(int bound, int howMany) {
-        checkArgument(bound > 1)
-        checkArgument(howMany > 1)
-        val List<Fraction> fractions = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            fractions += createFraction(bound)
-        fractions
-    }
+  def createFractions(int bound, int howMany) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<Fraction> fractions = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      fractions += createFraction(bound)
+    fractions
+  }
 
-    def createInvertiblePositiveFraction(int bound) {
-        checkArgument(bound > 1)
-        val newBound = bound - 1
-        val numerator = BigInteger.valueOf(random.nextInt(newBound) + 1)
-        val denominator = BigInteger.valueOf(random.nextInt(newBound) + 1)
-        new Fraction(numerator, denominator)
-    }
+  def createInvertiblePositiveFraction(int bound) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    val newBound = bound - 1
+    val numerator = BigInteger.valueOf(random.nextInt(newBound) + 1)
+    val denominator = BigInteger.valueOf(random.nextInt(newBound) + 1)
+    new Fraction(numerator, denominator)
+  }
 
-    def createInvertibleNegativeFraction(int bound) {
-        checkArgument(bound > 1)
-        createInvertiblePositiveFraction(bound).negate
-    }
+  def createInvertibleNegativeFraction(int bound) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    createInvertiblePositiveFraction(bound).negate
+  }
 
-    def createInvertibleFraction(int bound) {
-        checkArgument(bound > 1)
-        if (random.nextBoolean)
-            return createInvertibleNegativeFraction(bound)
-        createInvertiblePositiveFraction(bound)
-    }
+  def createInvertibleFraction(int bound) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    if(random.nextBoolean)
+      return createInvertibleNegativeFraction(bound)
+    createInvertiblePositiveFraction(bound)
+  }
 
-    def createInvertiblePositiveFractions(int bound, int howMany) {
-        checkArgument(bound > 1)
-        checkArgument(howMany > 1)
-        val List<Fraction> fractions = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            fractions += createInvertiblePositiveFraction(bound)
-        fractions
-    }
+  def createInvertiblePositiveFractions(int bound, int howMany) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<Fraction> fractions = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      fractions += createInvertiblePositiveFraction(bound)
+    fractions
+  }
 
-    def createInvertibleNegativeFractions(int bound, int howMany) {
-        checkArgument(bound > 1)
-        checkArgument(howMany > 1)
-        val List<Fraction> fractions = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            fractions += createInvertibleNegativeFraction(bound)
-        fractions
-    }
+  def createInvertibleNegativeFractions(int bound, int howMany) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<Fraction> fractions = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      fractions += createInvertibleNegativeFraction(bound)
+    fractions
+  }
 
-    def createInvertibleFractions(int bound, int howMany) {
-        checkArgument(bound > 1)
-        checkArgument(howMany > 1)
-        val List<Fraction> fractions = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            fractions += createInvertibleFraction(bound)
-        fractions
-    }
+  def createInvertibleFractions(int bound, int howMany) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<Fraction> fractions = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      fractions += createInvertibleFraction(bound)
+    fractions
+  }
 
-    def createSimpleComplexNumber(int bound) {
-        checkArgument(bound > 0)
-        val real = BigInteger.valueOf(createInt(bound))
-        val imaginary = BigInteger.valueOf(createInt(bound))
-        new SimpleComplexNumber(real, imaginary)
-    }
+  def createSimpleComplexNumber(int bound) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    val real = BigInteger.valueOf(createInt(bound))
+    val imaginary = BigInteger.valueOf(createInt(bound))
+    new SimpleComplexNumber(real, imaginary)
+  }
 
-    def createSimpleComplexNumbers(int bound, int howMany) {
-        checkArgument(bound > 0)
-        checkArgument(howMany > 1)
-        val List<SimpleComplexNumber> complexNumbers = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            complexNumbers += createSimpleComplexNumber(bound)
-        complexNumbers
-    }
+  def createSimpleComplexNumbers(int bound, int howMany) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<SimpleComplexNumber> complexNumbers = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      complexNumbers += createSimpleComplexNumber(bound)
+    complexNumbers
+  }
 
-    def createRealComplexNumber(int bound) {
-        checkArgument(bound > 0)
-        val real = BigDecimal.valueOf(createInt(bound))
-        val imaginary = BigDecimal.valueOf(createInt(bound))
-        new RealComplexNumber(real, imaginary)
-    }
+  def createRealComplexNumber(int bound) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    val real = BigDecimal.valueOf(createInt(bound))
+    val imaginary = BigDecimal.valueOf(createInt(bound))
+    new RealComplexNumber(real, imaginary)
+  }
 
-    def createRealComplexNumbers(int bound, int howMany) {
-        checkArgument(bound > 0)
-        checkArgument(howMany > 1)
-        val List<RealComplexNumber> complexNumbers = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
-            complexNumbers += createRealComplexNumber(bound)
-        complexNumbers
-    }
+  def createRealComplexNumbers(int bound, int howMany) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    checkArgument(howMany > 1, "The number of numbers has to be greater than one but is %s.", howMany)
+    val List<RealComplexNumber> complexNumbers = new ArrayList(howMany)
+    for (i : 0 ..< howMany)
+      complexNumbers += createRealComplexNumber(bound)
+    complexNumbers
+  }
 
-    def createBigIntAndSqrt(int bound) {
-        checkArgument(bound > 0)
-        val it = BigInteger.valueOf(createPositiveInt(bound))
-        new NumberAndSqrt(it ** 2, it)
-    }
+  def createBigIntAndSqrt(int bound) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    val it = BigInteger.valueOf(createPositiveInt(bound))
+    new NumberAndSqrt(it ** 2, it)
+  }
 
-    def createFractionAndSqrt(int bound) {
-        checkArgument(bound > 1)
-        val it = createPositiveFraction(bound)
-        new NumberAndSqrt(pow(2), it)
-    }
+  def createFractionAndSqrt(int bound) {
+    checkArgument(bound > 1, "The bound has to be greater than one but is %s.", bound)
+    val it = createPositiveFraction(bound)
+    new NumberAndSqrt(pow(2), it)
+  }
 
-    def createSimpleComplexNumberAndSqrt(int bound) {
-        checkArgument(bound > 0)
-        val it = createSimpleComplexNumber(bound)
-        new NumberAndSqrt(pow(2), it)
-    }
+  def createSimpleComplexNumberAndSqrt(int bound) {
+    checkArgument(bound > 0, "The bound has to be greater than zero but is %s.", bound)
+    val it = createSimpleComplexNumber(bound)
+    new NumberAndSqrt(pow(2), it)
+  }
 }
