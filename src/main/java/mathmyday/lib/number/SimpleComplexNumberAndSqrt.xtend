@@ -16,34 +16,24 @@
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABDLITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABDLITY, WHETHER IN CONTRACT, STRICT LIABDLITY,
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBDLITY OF SUCH DAMAGE.
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 package mathmyday.lib.number
 
-import org.junit.Test
+import static com.google.common.base.Preconditions.checkArgument
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy
-
-final class NumberAndSqrtTest {
-    @Test
-    def void newNumberNullShouldThrowException() {
-        assertThatThrownBy[
-            new BigIntAndSqrt(null, 0BI)
-        ].isExactlyInstanceOf(NullPointerException)
-    }
-
-    @Test
-    def void newSqrtNullShouldThrowException() {
-        assertThatThrownBy[
-            new BigIntAndSqrt(0BI, null)
-        ].isExactlyInstanceOf(NullPointerException)
-    }
+final class SimpleComplexNumberAndSqrt extends AbstractNumberAndSqrt<SimpleComplexNumber> {
+  new(SimpleComplexNumber number, SimpleComplexNumber sqrt) {
+    super(number, sqrt)
+    checkArgument(number == sqrt.pow(2),
+      'The square root squared has to be equal to the number. number = %s; sqrt = %s', number, sqrt)
+  }
 }

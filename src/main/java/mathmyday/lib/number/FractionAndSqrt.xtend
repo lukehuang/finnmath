@@ -31,16 +31,14 @@ package mathmyday.lib.number
 import com.google.common.annotations.Beta
 import org.eclipse.xtend.lib.annotations.Data
 
-import static com.google.common.base.Preconditions.checkNotNull
+import static com.google.common.base.Preconditions.checkArgument
 
 @Beta
 @Data
-final class NumberAndSqrt<T> {
-  T number
-  T sqrt
-
-  new(T number, T sqrt) {
-    this.number = checkNotNull(number, 'The number is not allowed to be null but is %s.', number)
-    this.sqrt = checkNotNull(sqrt, 'The square root is not allowed to be null but is %s.', sqrt)
+final class FractionAndSqrt extends AbstractNumberAndSqrt<Fraction> {
+  new(Fraction number, Fraction sqrt) {
+    super(number, sqrt)
+    checkArgument(number == sqrt.pow(2),
+      'The square root squared has to be equal to the number. number = %s; sqrt = %s', number, sqrt)
   }
 }

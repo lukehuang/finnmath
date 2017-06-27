@@ -34,10 +34,12 @@ import java.math.BigInteger
 import java.util.ArrayList
 import java.util.List
 import java.util.Random
+import mathmyday.lib.number.BigIntAndSqrt
 import mathmyday.lib.number.Fraction
-import mathmyday.lib.number.NumberAndSqrt
+import mathmyday.lib.number.FractionAndSqrt
 import mathmyday.lib.number.RealComplexNumber
 import mathmyday.lib.number.SimpleComplexNumber
+import mathmyday.lib.number.SimpleComplexNumberAndSqrt
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
@@ -289,18 +291,18 @@ final class MathRandom {
   def createBigIntAndSqrt(int bound) {
     checkArgument(bound > 0, 'The bound has to be greater than zero but is %s.', bound)
     val it = BigInteger.valueOf(createPositiveInt(bound))
-    new NumberAndSqrt(it ** 2, it)
+    new BigIntAndSqrt(it ** 2, it)
   }
 
   def createFractionAndSqrt(int bound) {
     checkArgument(bound > 1, 'The bound has to be greater than one but is %s.', bound)
     val it = createPositiveFraction(bound)
-    new NumberAndSqrt(pow(2), it)
+    new FractionAndSqrt(pow(2), it)
   }
 
   def createSimpleComplexNumberAndSqrt(int bound) {
     checkArgument(bound > 0, 'The bound has to be greater than zero but is %s.', bound)
     val it = createSimpleComplexNumber(bound)
-    new NumberAndSqrt(pow(2), it)
+    new SimpleComplexNumberAndSqrt(pow(2), it)
   }
 }
