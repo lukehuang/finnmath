@@ -55,19 +55,22 @@ abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
   }
 
   override get(Integer rowIndex, Integer columnIndex) {
-    checkArgument(table.rowKeySet.contains(rowIndex), "invalid row index; index = %s; size = %s", rowIndex,
+    checkArgument(table.rowKeySet.contains(rowIndex), 'invalid row index; index = %s; size = %s', rowIndex,
       table.rowKeySet.size)
-    checkArgument(table.columnKeySet.contains(columnIndex), "invalid column index")
+    checkArgument(table.columnKeySet.contains(columnIndex), 'invalid column index; index = %s; size = %s', columnIndex,
+      table.columnKeySet.size)
     table.get(rowIndex, columnIndex)
   }
 
   override row(Integer rowIndex) {
-    checkArgument(table.rowKeySet.contains(rowIndex), "invalid row index")
+    checkArgument(table.rowKeySet.contains(rowIndex), 'invalid row index; index = %s; size = %s', rowIndex,
+      table.rowKeySet.size)
     ImmutableMap.copyOf(table.row(rowIndex))
   }
 
   override column(Integer columnIndex) {
-    checkArgument(table.columnKeySet.contains(columnIndex), "invalid column index")
+    checkArgument(table.columnKeySet.contains(columnIndex), 'invalid column index; index = %s; size = %s', columnIndex,
+      table.columnKeySet.size)
     ImmutableMap.copyOf(table.column(columnIndex))
   }
 

@@ -41,13 +41,13 @@ abstract class AbstractVectorBuilder<T> {
   protected val Map<Integer, T> map = newHashMap
 
   def put(T entry) {
-    checkNotNull(entry, "Entry is not allowed to be null but is %s.", entry)
+    checkNotNull(entry, 'Entry is not allowed to be null but is %s.', entry)
     map.put(map.size + 1, entry)
   }
 
   def put(Integer index, T entry) {
-    checkArgument(map.containsKey(index), "invalid index")
-    checkNotNull(entry, "Entry is not allowed to be null but is %s.", entry)
+    checkArgument(map.containsKey(index), 'invalid index')
+    checkNotNull(entry, 'Entry is not allowed to be null but is %s.', entry)
     map.put(index, entry)
   }
 }

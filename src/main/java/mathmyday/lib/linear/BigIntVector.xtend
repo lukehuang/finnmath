@@ -64,13 +64,13 @@ final class BigIntVector implements Vector<BigIntVector, BigInteger> {
   @Data
   static class BigIntVectorBuilder extends AbstractVectorBuilder<BigInteger> implements VectorBuilder<BigIntVector, BigInteger> {
     override addPut(Integer index, BigInteger entry) {
-      checkNotNull(entry, "The entry is not allowed to be null but is %s.", entry)
+      checkNotNull(entry, 'The entry is not allowed to be null but is %s.', entry)
       map.put(index, map.get(index) + entry)
     }
 
     override build() {
       map.forEach [ index, entry |
-        checkNotNull(entry, "Entries are not allowed to be null but is %s.", entry)
+        checkNotNull(entry, 'Entries are not allowed to be null but is %s.', entry)
       ]
       new BigIntVector(map)
     }

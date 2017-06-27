@@ -42,11 +42,11 @@ import static com.google.common.base.Preconditions.checkState
 @Data
 final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigIntVector> {
   override add(BigIntMatrix summand) {
-    checkNotNull(summand, "The summand is not allowed to be null but is %s.", summand)
-    checkArgument(table.rowKeySet.size == summand.rowSize, "Both row sizes have to be equal but %s is not equal to %s",
+    checkNotNull(summand, 'The summand is not allowed to be null but is %s.', summand)
+    checkArgument(table.rowKeySet.size == summand.rowSize, 'Both row sizes have to be equal but %s is not equal to %s',
       table.rowKeySet.size, summand.rowSize)
     checkArgument(table.columnKeySet.size == summand.columnSize,
-      "Both column sizes have to be equal but %s is not equal to %s.", table.columnKeySet.size, summand.columnSize)
+      'Both column sizes have to be equal but %s is not equal to %s.', table.columnKeySet.size, summand.columnSize)
     val builder = BigIntMatrix.builder(rowSize, columnSize)
     table.cellSet.forEach [
       builder.put(rowKey, columnKey, value + summand.get(rowKey, columnKey))
@@ -55,11 +55,11 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override subtract(BigIntMatrix subtrahend) {
-    checkNotNull(subtrahend, "The subtrahend is not allowed to be null but is %s.", subtrahend)
+    checkNotNull(subtrahend, 'The subtrahend is not allowed to be null but is %s.', subtrahend)
     checkArgument(table.rowKeySet.size == subtrahend.rowSize,
-      "Both row sizes have to be equal but %s is not equal to %s", table.rowKeySet.size, subtrahend.rowSize)
+      'Both row sizes have to be equal but %s is not equal to %s', table.rowKeySet.size, subtrahend.rowSize)
     checkArgument(table.columnKeySet.size == subtrahend.columnSize,
-      "Both column sizes have to be equal but %s is not equal to %s.", table.columnKeySet.size, subtrahend.columnSize)
+      'Both column sizes have to be equal but %s is not equal to %s.', table.columnKeySet.size, subtrahend.columnSize)
     val builder = BigIntMatrix.builder(rowSize, columnSize)
     table.cellSet.forEach [
       builder.put(rowKey, columnKey, value - subtrahend.get(rowKey, columnKey))
@@ -68,9 +68,9 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override multiply(BigIntMatrix factor) {
-    checkNotNull(factor, "The factor is not allowed to be null but is %s.", factor)
+    checkNotNull(factor, 'The factor is not allowed to be null but is %s.', factor)
     checkArgument(table.columnKeySet.size == factor.rowSize,
-      "The column size and the factor's row size has to be equal but %s is not equal to %s.", table.columnKeySet.size,
+      'The column size and the factor\'s row size has to be equal but %s is not equal to %s.', table.columnKeySet.size,
       factor.rowSize)
     val builder = BigIntMatrix::builder(rowSize, factor.columnSize)
     rowIndexes.forEach [ rowIndex |
@@ -83,7 +83,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override multiplyVector(BigIntVector vector) {
-    checkNotNull(vector, "The vector is not allowed to be null but is %s.", vector)
+    checkNotNull(vector, 'The vector is not allowed to be null but is %s.', vector)
     val builder = BigIntVector::builder
     table.rowMap.forEach [ rowIndex, row |
       row.forEach [ columnIndex, matrixEntry |
@@ -96,8 +96,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override multiplyRowWithColumn(Map<Integer, BigInteger> row, Map<Integer, BigInteger> column) {
-    checkNotNull(row, "The row is not allowed to be null but is %s.", row)
-    checkNotNull(column, "The column is not allowed to be null but is %s.", column)
+    checkNotNull(row, 'The row is not allowed to be null but is %s.', row)
+    checkNotNull(column, 'The column is not allowed to be null but is %s.', column)
     var result = 0BI
     for (i : (1 .. row.size)) {
       result += row.get(i) * column.get(i)
@@ -116,7 +116,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override tr() {
-    checkState(square, "The trace can be calculated only for square matrixes. row size = %s; column size = %s",
+    checkState(square, 'The trace can be calculated only for square matrixes. row size = %s; column size = %s',
       table.rowKeySet.size, table.columnKeySet.size)
     var result = 0BI
     for (i : 1 .. rowSize)
@@ -153,8 +153,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   def static builder(int rowSize, int columnSize) {
-    checkArgument(rowSize > 0, "The row size has to be greater than zero but is %s.", rowSize)
-    checkArgument(columnSize > 0, "The column size has to be greater than zero but is %s.", columnSize)
+    checkArgument(rowSize > 0, 'The row size has to be greater than zero but is %s.', rowSize)
+    checkArgument(columnSize > 0, 'The column size has to be greater than zero but is %s.', columnSize)
     new BigIntMatrixBuilder(rowSize, columnSize)
   }
 
@@ -165,7 +165,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
 
     override build() {
       table.cellSet.forEach [
-        checkNotNull(value, "Entries are not allowed to be null but this one is %s.", value)
+        checkNotNull(value, 'Entries are not allowed to be null but this one is %s.', value)
       ]
       new BigIntMatrix(table)
     }
