@@ -49,7 +49,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
       'Both column sizes have to be equal but %s is not equal to %s.', table.columnKeySet.size, summand.columnSize)
     val builder = BigIntMatrix.builder(rowSize, columnSize)
     table.cellSet.forEach [
-      builder.put(rowKey, columnKey, value + summand.get(rowKey, columnKey))
+      builder.put(rowKey, columnKey, value + summand.entry(rowKey, columnKey))
     ]
     builder.build
   }
@@ -60,9 +60,9 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
       'Both row sizes have to be equal but %s is not equal to %s', table.rowKeySet.size, subtrahend.rowSize)
     checkArgument(table.columnKeySet.size == subtrahend.columnSize,
       'Both column sizes have to be equal but %s is not equal to %s.', table.columnKeySet.size, subtrahend.columnSize)
-    val builder = BigIntMatrix.builder(rowSize, columnSize)
+    val builder = BigIntMatrix::builder(rowSize, columnSize)
     table.cellSet.forEach [
-      builder.put(rowKey, columnKey, value - subtrahend.get(rowKey, columnKey))
+      builder.put(rowKey, columnKey, value - subtrahend.entry(rowKey, columnKey))
     ]
     builder.build
   }
@@ -87,9 +87,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
     val builder = BigIntVector::builder
     table.rowMap.forEach [ rowIndex, row |
       row.forEach [ columnIndex, matrixEntry |
-        vector.map.forEach [ vectorIndex, vectorEntry |
-          builder.addPut(rowIndex, matrixEntry * vectorEntry)
-        ]
+        builder.addToEntryAndPut(rowIndex, matrixEntry * vector.entry(columnIndex))
+
       ]
     ]
     builder.build
@@ -99,8 +98,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
     checkNotNull(row, 'The row is not allowed to be null but is %s.', row)
     checkNotNull(column, 'The column is not allowed to be null but is %s.', column)
     var result = 0BI
-    for (i : (1 .. row.size)) {
-      result += row.get(i) * column.get(i)
+    for (index : (1 .. row.size)) {
+      result += row.get(index) * column.get(index)
     }
     result
   }
@@ -109,7 +108,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
     val builder = BigIntMatrix.builder(rowSize, columnSize)
     rowIndexes.forEach [ rowIndex |
       columnIndexes.forEach [ columnIndex |
-        builder.put(rowIndex, columnIndex, -get(rowIndex, columnIndex))
+        builder.put(rowIndex, columnIndex, -entry(rowIndex, columnIndex))
       ]
     ]
     builder.build
@@ -119,8 +118,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
     checkState(square, 'The trace can be calculated only for square matrixes. row size = %s; column size = %s',
       table.rowKeySet.size, table.columnKeySet.size)
     var result = 0BI
-    for (i : 1 .. rowSize)
-      result += table.get(i, i)
+    for (index : (1 .. rowSize))
+      result += table.get(index, index)
     result
   }
 
@@ -158,7 +157,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
     new BigIntMatrixBuilder(rowSize, columnSize)
   }
 
-  static class BigIntMatrixBuilder extends AbstractMatrixBuilder<BigInteger> implements MatrixBuilder<BigIntMatrix> {
+  static class BigIntMatrixBuilder extends AbstractMatrixBuilder<BigInteger> implements Builder<BigIntMatrix> {
     private new(int rowSize, int columnSize) {
       super(rowSize, columnSize)
     }

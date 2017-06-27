@@ -36,51 +36,51 @@ import java.util.Set
 
 @Beta
 interface Matrix<M, E, V> {
-    def M add(M summand)
+  def M add(M summand)
 
-    def M subtract(M subtrahend)
+  def M subtract(M subtrahend)
 
-    def M multiply(M factor)
+  def M multiply(M factor)
 
-    def V multiplyVector(V vector)
+  def V multiplyVector(V vector)
 
-    def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
+  def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
 
-    def M negate()
+  def M negate()
 
-    def E tr()
+  def E tr()
 
-    def E det()
+  def E det()
 
-    def Set<Integer> rowIndexes()
+  def Set<Integer> rowIndexes()
 
-    def Set<Integer> columnIndexes()
+  def Set<Integer> columnIndexes()
 
-    def Map<Integer, Map<Integer, E>> rows()
+  def Map<Integer, Map<Integer, E>> rows()
 
-    def Map<Integer, Map<Integer, E>> columns()
+  def Map<Integer, Map<Integer, E>> columns()
 
-    def E get(Integer rowIndex, Integer columnIndex)
+  def E entry(Integer rowIndex, Integer columnIndex)
 
-    def Map<Integer, E> row(Integer rowIndex)
+  def Map<Integer, E> row(Integer index)
 
-    def Map<Integer, E> column(Integer columnIndex)
+  def Map<Integer, E> column(Integer index)
 
-    def BigInteger size()
+  def BigInteger size()
 
-    def int rowSize()
+  def int rowSize()
 
-    def int columnSize()
+  def int columnSize()
 
-    def boolean square()
+  def boolean square()
 
-    def boolean triangular()
+  def boolean triangular()
 
-    def boolean upperTriangular()
+  def boolean upperTriangular()
 
-    def boolean lowerTriangular()
+  def boolean lowerTriangular()
 
-    def boolean diagonal()
+  def boolean diagonal()
 
-    def Table<Integer, Integer, E> getTable()
+  def Table<Integer, Integer, E> getTable()
 }

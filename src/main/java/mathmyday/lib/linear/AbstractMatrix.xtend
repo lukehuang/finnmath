@@ -54,7 +54,7 @@ abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
     table.columnKeySet
   }
 
-  override get(Integer rowIndex, Integer columnIndex) {
+  override entry(Integer rowIndex, Integer columnIndex) {
     checkArgument(table.rowKeySet.contains(rowIndex), 'invalid row index; index = %s; size = %s', rowIndex,
       table.rowKeySet.size)
     checkArgument(table.columnKeySet.contains(columnIndex), 'invalid column index; index = %s; size = %s', columnIndex,

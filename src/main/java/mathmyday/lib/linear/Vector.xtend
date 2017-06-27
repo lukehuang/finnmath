@@ -32,9 +32,9 @@ import com.google.common.annotations.Beta
 
 @Beta
 interface Vector<V, E> {
-    def V negate()
+  def V negate()
 
-    def E abs()
+  def E abs()
 
-    def int size()
+  def int size()
 }

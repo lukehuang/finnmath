@@ -30,20 +30,13 @@ package mathmyday.lib.linear
 
 import com.google.common.annotations.Beta
 import java.math.BigInteger
-import java.util.Map
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkNotNull
 
 @Beta
 @Data
-final class BigIntVector implements Vector<BigIntVector, BigInteger> {
-  val Map<Integer, BigInteger> map
-
-  private new(Map<Integer, BigInteger> map) {
-    this.map = map
-  }
-
+final class BigIntVector extends AbstractVector<BigInteger> implements Vector<BigIntVector, BigInteger> {
   override negate() {
     null
   }
@@ -62,9 +55,12 @@ final class BigIntVector implements Vector<BigIntVector, BigInteger> {
 
   @Beta
   @Data
-  static class BigIntVectorBuilder extends AbstractVectorBuilder<BigInteger> implements VectorBuilder<BigIntVector, BigInteger> {
-    override addPut(Integer index, BigInteger entry) {
-      checkNotNull(entry, 'The entry is not allowed to be null but is %s.', entry)
+  static class BigIntVectorBuilder extends AbstractVectorBuilder<BigInteger> implements Builder<BigIntVector> {
+    private new() {
+    }
+
+    override addToEntryAndPut(Integer index, BigInteger entry) {
+      super.addToEntryAndPut(index, entry)
       map.put(index, map.get(index) + entry)
     }
 

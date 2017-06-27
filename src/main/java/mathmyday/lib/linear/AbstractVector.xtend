@@ -28,11 +28,21 @@
 
 package mathmyday.lib.linear
 
-import com.google.common.annotations.Beta
+import java.util.Map
 
-@Beta
-interface VectorBuilder<V, E> {
-    def void addPut(Integer index, E entry)
+import static com.google.common.base.Preconditions.checkArgument
+import static com.google.common.base.Preconditions.checkNotNull
 
-    def V build()
+abstract class AbstractVector<T> {
+  protected val Map<Integer, T> map
+
+  protected new(Map<Integer, T> map) {
+    checkNotNull(map, 'map is not allowed to be null but is %s.', map)
+    this.map = map
+  }
+
+  def entry(Integer index) {
+    checkArgument(map.containsKey(index), 'invalid index; index = %s; size = %s', index, map.size)
+    map.get(index)
+  }
 }

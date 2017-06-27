@@ -46,8 +46,15 @@ abstract class AbstractVectorBuilder<T> {
   }
 
   def put(Integer index, T entry) {
-    checkArgument(map.containsKey(index), 'invalid index')
+    checkArgument(map.containsKey(index), 'invalid index; index = %s; size = map.size')
     checkNotNull(entry, 'Entry is not allowed to be null but is %s.', entry)
     map.put(index, entry)
+  }
+
+  def addToEntryAndPut(Integer index, T entry) {
+    checkArgument(map.containsKey(index), 'invalid index; index = %s; size = %s', index, map.size)
+    val existing = map.get(index)
+    checkNotNull(existing, 'The existing entry is not allowed to be null but is %s.', existing)
+    checkNotNull(entry, 'The given entry is not allowed to be null but is %s.', entry)
   }
 }
