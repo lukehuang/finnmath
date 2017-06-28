@@ -42,7 +42,7 @@ class AbstractNumberAndSqrt<T> {
   protected val T sqrt
 
   protected new(T number, T sqrt) {
-    this.number = checkNotNull(number, 'The number is not allowed to be null but is %s.', number)
-    this.sqrt = checkNotNull(sqrt, 'The square root is not allowed to be null but is %s.', sqrt)
+    this.number = checkNotNull(number, 'expected: not null but actual: %s', number)
+    this.sqrt = checkNotNull(sqrt, 'expected: not null but actual: %s', sqrt)
   }
 }

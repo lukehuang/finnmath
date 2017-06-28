@@ -66,7 +66,7 @@ final class BigIntVector extends AbstractVector<BigInteger> implements Vector<Bi
 
     override build() {
       map.forEach [ index, entry |
-        checkNotNull(entry, 'Entries are not allowed to be null but is %s.', entry)
+        checkNotNull(entry, 'expected: not null but actual: %s', entry)
       ]
       new BigIntVector(map)
     }

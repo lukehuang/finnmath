@@ -42,17 +42,17 @@ abstract class AbstractMatrixBuilder<T> {
   protected Table<Integer, Integer, T> table
 
   new(int rowSize, int columnSize) {
-    checkArgument(rowSize > 0, 'Row size has to be greater than zero but is %s.', rowSize)
-    checkArgument(columnSize > 0, 'Column size has to be greater than zero but is %s.', columnSize)
+    checkArgument(rowSize > 0, 'expected > 0 but %s <= 0', rowSize)
+    checkArgument(columnSize > 0, 'expected > 0 but %s <= 0', columnSize)
     table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))
   }
 
   def put(int rowIndex, int columnIndex, T entry) {
-    checkNotNull(entry, 'Entry is not allowed to be null but is %s.', entry)
-    checkArgument(table.rowKeySet.contains(rowIndex), 'invalid row index; index = %s; size = %s', rowIndex,
-      table.rowKeySet.size)
-    checkArgument(table.columnKeySet.contains(columnIndex), 'invalid row index; index = %s; size = %s', columnIndex,
-      table.columnKeySet.size)
+    checkNotNull(entry, 'expected: not null but actual: %s', entry)
+    checkArgument(table.rowKeySet.contains(rowIndex), 'expected: in [0, %s] but actual: %s', table.rowKeySet.size,
+      rowIndex)
+    checkArgument(table.columnKeySet.contains(columnIndex), 'expected: in [0, %s] but actual: %s',
+      table.columnKeySet.size, columnIndex)
     table.put(rowIndex, columnIndex, entry)
   }
 }

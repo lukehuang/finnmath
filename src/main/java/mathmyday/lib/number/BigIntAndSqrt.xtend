@@ -39,7 +39,6 @@ import static com.google.common.base.Preconditions.checkArgument
 final class BigIntAndSqrt extends AbstractNumberAndSqrt<BigInteger> {
   new(BigInteger number, BigInteger sqrt) {
     super(number, sqrt)
-    checkArgument(number == sqrt ** 2, 'The square root squared has to be equal to the number. number = %s; sqrt = %s',
-      number, sqrt)
+    checkArgument(sqrt ** 2 == number, 'expected: sqrt**2 == number but actual: %s**2 != %s', sqrt, number)
   }
 }

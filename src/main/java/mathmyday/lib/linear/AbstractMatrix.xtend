@@ -55,22 +55,22 @@ abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
   }
 
   override entry(Integer rowIndex, Integer columnIndex) {
-    checkArgument(table.rowKeySet.contains(rowIndex), 'invalid row index; index = %s; size = %s', rowIndex,
-      table.rowKeySet.size)
-    checkArgument(table.columnKeySet.contains(columnIndex), 'invalid column index; index = %s; size = %s', columnIndex,
-      table.columnKeySet.size)
+    checkArgument(table.rowKeySet.contains(rowIndex), 'expected: in [0, %s] but actual: %s', table.rowKeySet.size,
+      rowIndex)
+    checkArgument(table.columnKeySet.contains(columnIndex), 'expected: in [0, %s] but actual: %s',
+      table.columnKeySet.size, columnIndex)
     table.get(rowIndex, columnIndex)
   }
 
   override row(Integer rowIndex) {
-    checkArgument(table.rowKeySet.contains(rowIndex), 'invalid row index; index = %s; size = %s', rowIndex,
-      table.rowKeySet.size)
+    checkArgument(table.rowKeySet.contains(rowIndex), 'expected: in [0, %s] but actual: %s', table.rowKeySet.size,
+      rowIndex)
     ImmutableMap.copyOf(table.row(rowIndex))
   }
 
   override column(Integer columnIndex) {
-    checkArgument(table.columnKeySet.contains(columnIndex), 'invalid column index; index = %s; size = %s', columnIndex,
-      table.columnKeySet.size)
+    checkArgument(table.columnKeySet.contains(columnIndex), 'expected: in [0, %s] but actual: %s',
+      table.columnKeySet.size, columnIndex)
     ImmutableMap.copyOf(table.column(columnIndex))
   }
 

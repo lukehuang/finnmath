@@ -45,36 +45,35 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
   BigInteger denominator
 
   new(BigInteger numerator, BigInteger denominator) {
-    checkArgument(denominator != 0BI, 'The denominator is not allowed to be equal to zero but is %s.', denominator)
+    checkArgument(denominator != 0BI, 'expected: denominator != 0 but actual: %s.', denominator)
     this.numerator = checkNotNull(numerator, 'The numerator is not allowed to be null but is %s.', numerator)
     this.denominator = checkNotNull(denominator, 'The denominator is not allowed to be null but is %s.', denominator)
   }
 
   override add(Fraction summand) {
-    checkNotNull(summand, 'The summand is not allowed to be null but is %s.', summand)
+    checkNotNull(summand, 'expected: not null but actual: %s', summand)
     val newNumerator = summand.denominator * numerator + denominator * summand.numerator
     val newDenominator = denominator * summand.denominator
     new Fraction(newNumerator, newDenominator)
   }
 
   override subtract(Fraction subtrahend) {
-    checkNotNull(subtrahend, 'The subtrahend is not allowed to be null but is %s.', subtrahend)
+    checkNotNull(subtrahend, 'expected: not null but actual: %s', subtrahend)
     val newNumerator = subtrahend.denominator * numerator - denominator * subtrahend.numerator
     val newDenominator = denominator * subtrahend.denominator
     new Fraction(newNumerator, newDenominator)
   }
 
   override multiply(Fraction factor) {
-    checkNotNull(factor, 'The factor is not allowed to be null but is %s.', factor)
+    checkNotNull(factor, 'expected: not null but actual: %s', factor)
     val newNumerator = numerator * factor.numerator
     val newDenominator = denominator * factor.denominator
     new Fraction(newNumerator, newDenominator)
   }
 
   override divide(Fraction divisor) {
-    checkNotNull(divisor, 'The divisor is not allowed to be null but is %s.', divisor)
-    checkArgument(divisor.numerator != 0BI, 'The divisor\'s numerator is not allowed to be equal to zero but is %s.',
-      divisor.numerator)
+    checkNotNull(divisor, 'expected: not null but actual: %s', divisor)
+    checkArgument(divisor.numerator != 0BI, 'expected: != 0 but actual: %s.', divisor.numerator)
     multiply(divisor.invert)
   }
 
@@ -83,7 +82,7 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
   }
 
   override pow(int exponent) {
-    checkArgument(exponent > -1, 'The exponent is not allowed to be negative but is %s.', exponent)
+    checkArgument(exponent > -1, 'expected > -1 but actual: %s.', exponent)
     if(exponent > 1)
       return multiply(pow(exponent - 1))
     else if(exponent == 1)
@@ -98,42 +97,41 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
   }
 
   def invert() {
-    checkState(numerator != 0BI, 'Cannot invert because the numerator is not allowed to be equal to zero but is %s.',
-      numerator)
+    checkState(numerator != 0BI, 'expected: numerator != 0 but actual: %s.', numerator)
     new Fraction(denominator, numerator)
   }
 
   def lessThanOrEqualTo(Fraction other) {
-    checkNotNull(other, 'The other fraction is not allowed to be null but is %s.', other)
+    checkNotNull(other, 'expected: not null but actual: %s', other)
     val normalized = normalize
     val normalizedOther = other.normalize
     normalizedOther.denominator * normalized.numerator <= normalized.denominator * normalizedOther.numerator
   }
 
   def greaterThanOrEqualTo(Fraction other) {
-    checkNotNull(other, 'The other fraction is not allowed to be null but is %s.', other)
+    checkNotNull(other, 'expected: not null but actual: %s', other)
     !lessThanOrEqualTo(other) || equivalent(other)
   }
 
   def lessThan(Fraction other) {
-    checkNotNull(other, 'The other fraction is not allowed to be null but is %s.', other)
+    checkNotNull(other, 'expected: not null but actual: %s', other)
     !greaterThanOrEqualTo(other)
   }
 
   def greaterThan(Fraction other) {
-    checkNotNull(other, 'The other fraction is not allowed to be null but is %s.', other)
+    checkNotNull(other, 'expected: not null but actual: %s', other)
     !lessThanOrEqualTo(other)
   }
 
   def min(Fraction other) {
-    checkNotNull(other, 'The other fraction is not allowed to be null but is %s.', other)
+    checkNotNull(other, 'expected: not null but actual: %s', other)
     if(greaterThan(other))
       return other
     this
   }
 
   def max(Fraction other) {
-    checkNotNull(other, 'The other fraction is not allowed to be null but is %s.', other)
+    checkNotNull(other, 'expected: not null but actual: %s', other)
     if(lessThan(other))
       return other
     this
@@ -163,7 +161,7 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
   }
 
   def equivalent(Fraction other) {
-    checkNotNull(other, 'The other fraction is not allowed to be null but is %s.', other)
+    checkNotNull(other, 'expected: not null but actual: %s', other)
     normalize.reduce == other.normalize.reduce
   }
 }

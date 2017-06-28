@@ -45,36 +45,36 @@ final class RealComplexNumber implements MathNumber<RealComplexNumber, RealCompl
   BigDecimal imaginary
 
   new(SimpleComplexNumber complexNumber) {
-    checkNotNull(complexNumber, 'The simple complex number is not allowed to be null but is %s.', complexNumber)
+    checkNotNull(complexNumber, 'expected: not null but actual: %s', complexNumber)
     real = new BigDecimal(complexNumber.real)
     imaginary = new BigDecimal(complexNumber.imaginary)
   }
 
   new(BigDecimal real, BigDecimal imaginary) {
-    this.real = checkNotNull(real, 'The real part is not allowed to be null but is %s.', real)
-    this.imaginary = checkNotNull(imaginary, 'The imaginary part is not allowed to be null but is %s.', imaginary)
+    this.real = checkNotNull(real, 'expected: not null but actual: %s', real)
+    this.imaginary = checkNotNull(imaginary, 'expected: not null but actual: %s', imaginary)
   }
 
   override add(RealComplexNumber summand) {
-    checkNotNull(summand, 'The summand is not allowed to be null but is %s.', summand)
+    checkNotNull(summand, 'expected: not null but actual: %s', summand)
     new RealComplexNumber(real + summand.real, imaginary + summand.imaginary)
   }
 
   override subtract(RealComplexNumber subtrahend) {
-    checkNotNull(subtrahend, 'The subtrahend is not allowed to be null but is %s.', subtrahend)
+    checkNotNull(subtrahend, 'expected: not null but actual: %s', subtrahend)
     new RealComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
   }
 
   override multiply(RealComplexNumber factor) {
-    checkNotNull(factor, 'The factor is not allowed to be null but is %s.', factor)
+    checkNotNull(factor, 'expected: not null but actual: %s', factor)
     val newReal = real * factor.real - imaginary * factor.imaginary
     val newImaginary = real * factor.imaginary + imaginary * factor.real
     new RealComplexNumber(newReal, newImaginary)
   }
 
   override divide(RealComplexNumber divisor) {
-    checkNotNull(divisor, 'The divisor is not allowed to be null but is %s.', divisor)
-    checkArgument(divisor != ZERO, 'The divisor is not allowed to be equal to zero but is %s.', divisor)
+    checkNotNull(divisor, 'expected: not null but actual: %s', divisor)
+    checkArgument(divisor != ZERO, 'expected: != 0 but actual: %s.', divisor)
     val denominator = divisor.real ** 2 + divisor.imaginary ** 2
     val newReal = (real * divisor.real + imaginary * divisor.imaginary) / denominator
     val newImaginary = (imaginary * divisor.real - real * divisor.imaginary) / denominator
@@ -82,7 +82,7 @@ final class RealComplexNumber implements MathNumber<RealComplexNumber, RealCompl
   }
 
   override pow(int exponent) {
-    checkArgument(exponent > -1, 'The exponent is not allowed to be negative but is %s.', exponent)
+    checkArgument(exponent > -1, 'expected > -1 but actual: %s.', exponent)
     if(exponent > 1)
       return multiply(pow(exponent - 1))
     else if(exponent == 1)

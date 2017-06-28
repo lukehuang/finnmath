@@ -37,12 +37,12 @@ abstract class AbstractVector<T> {
   protected val Map<Integer, T> map
 
   protected new(Map<Integer, T> map) {
-    checkNotNull(map, 'map is not allowed to be null but is %s.', map)
+    checkNotNull(map, 'expected: not null but actual: %s', map)
     this.map = map
   }
 
   def entry(Integer index) {
-    checkArgument(map.containsKey(index), 'invalid index; index = %s; size = %s', index, map.size)
+    checkArgument(map.containsKey(index), 'expected: in [0, %s] but actual: %s', map.size, index)
     map.get(index)
   }
 }
