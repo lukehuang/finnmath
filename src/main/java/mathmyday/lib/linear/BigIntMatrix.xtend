@@ -32,6 +32,7 @@ import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableTable
 import java.math.BigInteger
 import java.util.Map
+import org.apache.commons.lang3.builder.Builder
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument

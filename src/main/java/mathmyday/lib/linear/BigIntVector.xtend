@@ -30,6 +30,7 @@ package mathmyday.lib.linear
 
 import com.google.common.annotations.Beta
 import java.math.BigInteger
+import org.apache.commons.lang3.builder.Builder
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkNotNull
