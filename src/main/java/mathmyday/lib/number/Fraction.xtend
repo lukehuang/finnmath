@@ -46,8 +46,8 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
 
   new(BigInteger numerator, BigInteger denominator) {
     checkArgument(denominator != 0BI, 'expected: denominator != 0 but actual: %s.', denominator)
-    this.numerator = checkNotNull(numerator, 'The numerator is not allowed to be null but is %s.', numerator)
-    this.denominator = checkNotNull(denominator, 'The denominator is not allowed to be null but is %s.', denominator)
+    this.numerator = checkNotNull(numerator, 'expected: not null but actual: %s', numerator)
+    this.denominator = checkNotNull(denominator, 'expected: not null but actual: %s', denominator)
   }
 
   override add(Fraction summand) {
