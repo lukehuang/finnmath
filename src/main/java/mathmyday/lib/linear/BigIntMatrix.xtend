@@ -121,8 +121,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   override tr() {
     checkState(square, 'expected square matrix but actual %s x %s', table.rowKeySet.size, table.columnKeySet.size)
     var result = 0BI
-    for (index : (1 .. rowSize))
-      result += table.get(index, index)
+    for (it : table.rowKeySet)
+      result += table.get(it, it)
     result
   }
 
@@ -164,8 +164,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
 
   override id() {
     if (diagonal) {
-      for (index : (1 .. table.rowKeySet.size))
-        if (table.get(index, index) != 1BI)
+      for (it : table.rowKeySet)
+        if (table.get(it, it) != 1BI)
           return false
       return true
     }
