@@ -33,6 +33,7 @@ import java.math.BigInteger
 import org.apache.commons.lang3.builder.Builder
 import org.eclipse.xtend.lib.annotations.Data
 
+import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Beta
@@ -60,8 +61,12 @@ final class BigIntVector extends AbstractVector<BigInteger> implements Vector<Bi
     private new() {
     }
 
-    override addToEntryAndPut(Integer index, BigInteger entry) {
-      super.addToEntryAndPut(index, entry)
+    def addToEntryAndPut(Integer index, BigInteger entry) {
+      requireNonNull(index, 'index')
+      checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
+      val existing = map.get(index)
+      requireNonNull(existing, 'existing')
+      requireNonNull(entry, 'entry')
       map.put(index, map.get(index) + entry)
     }
 

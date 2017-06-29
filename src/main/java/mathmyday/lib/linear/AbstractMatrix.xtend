@@ -56,21 +56,21 @@ abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
 
   override entry(Integer rowIndex, Integer columnIndex) {
     checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
-      table.rowKeySet.size, rowIndex)
+      table.rowKeySet.last, rowIndex)
     checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
-      table.columnKeySet.size, columnIndex)
+      table.columnKeySet.last, columnIndex)
     table.get(rowIndex, columnIndex)
   }
 
   override row(Integer rowIndex) {
     checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
-      table.rowKeySet.size, rowIndex)
+      table.rowKeySet.last, rowIndex)
     ImmutableMap.copyOf(table.row(rowIndex))
   }
 
   override column(Integer columnIndex) {
     checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
-      table.columnKeySet.size, columnIndex)
+      table.columnKeySet.last, columnIndex)
     ImmutableMap.copyOf(table.column(columnIndex))
   }
 

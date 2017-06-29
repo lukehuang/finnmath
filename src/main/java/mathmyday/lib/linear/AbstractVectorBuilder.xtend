@@ -45,14 +45,8 @@ abstract class AbstractVectorBuilder<T> {
   }
 
   def put(Integer index, T entry) {
+    requireNonNull(index, 'index')
     checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
     map.put(requireNonNull(index, 'index'), requireNonNull(entry, 'entry'))
-  }
-
-  def addToEntryAndPut(Integer index, T entry) {
-    checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
-    val existing = map.get(index)
-    requireNonNull(existing, 'existing')
-    requireNonNull(entry, 'entry')
   }
 }

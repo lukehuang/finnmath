@@ -42,17 +42,19 @@ abstract class AbstractMatrixBuilder<T> {
   protected Table<Integer, Integer, T> table
 
   new(int rowSize, int columnSize) {
-    checkArgument(rowSize > 0, 'expected row size > 0 but %s <= 0', rowSize)
-    checkArgument(columnSize > 0, 'expected column size > 0 but %s <= 0', columnSize)
+    checkArgument(rowSize > 0, 'expected row size > 0 but actual %s', rowSize)
+    checkArgument(columnSize > 0, 'expected column size > 0 but actual %s', columnSize)
     table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))
   }
 
-  def put(int rowIndex, int columnIndex, T entry) {
+  def put(Integer rowIndex, Integer columnIndex, T entry) {
     requireNonNull(entry, 'entry')
+    requireNonNull(rowIndex, 'rowIndex')
+    requireNonNull(columnIndex, 'columnIndex')
     checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
-      table.rowKeySet.size, rowIndex)
+      table.rowKeySet.last, rowIndex)
     checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
-      table.columnKeySet.size, columnIndex)
+      table.columnKeySet.last, columnIndex)
     table.put(rowIndex, columnIndex, entry)
   }
 }

@@ -46,6 +46,8 @@ interface Matrix<M, E, V> {
 
   def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
 
+  def M scalarMultiply(E scalar)
+
   def M negate()
 
   def E tr()
@@ -81,6 +83,18 @@ interface Matrix<M, E, V> {
   def boolean lowerTriangular()
 
   def boolean diagonal()
+
+  def boolean id()
+
+  def boolean invertible()
+
+  def M transpose()
+
+  def boolean symmetric()
+
+  def boolean skewSymmetric()
+
+  def M minor(Integer rowIndex, Integer columnIndex)
 
   def Table<Integer, Integer, E> getTable()
 }
