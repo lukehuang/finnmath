@@ -68,12 +68,12 @@ final class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealC
 
   override divide(SimpleComplexNumber divisor) {
     requireNonNull(divisor, 'divisor')
-    checkArgument(divisor != ZERO, 'expected != 0 but actual %s.', divisor)
+    checkArgument(divisor != ZERO, 'expected divisor != 0 but actual %s.', divisor)
     new RealComplexNumber(this).divide(new RealComplexNumber(divisor))
   }
 
   override pow(int exponent) {
-    checkArgument(exponent > -1, 'expected > -1 but actual %s.', exponent)
+    checkArgument(exponent > -1, 'expected exponent > -1 but actual %s.', exponent)
     if(exponent > 1)
       return multiply(pow(exponent - 1))
     else if(exponent == 1)

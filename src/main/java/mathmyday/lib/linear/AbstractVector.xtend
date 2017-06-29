@@ -41,7 +41,7 @@ abstract class AbstractVector<T> {
   }
 
   def entry(Integer index) {
-    checkArgument(map.containsKey(index), 'expected in [0, %s] but actual %s', map.size, index)
+    checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
     map.get(index)
   }
 }

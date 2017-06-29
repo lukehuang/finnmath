@@ -73,7 +73,7 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
 
   override divide(Fraction divisor) {
     requireNonNull(divisor, 'divisor')
-    checkArgument(divisor.numerator != 0BI, 'expected != 0 but actual %s.', divisor.numerator)
+    checkArgument(divisor.numerator != 0BI, 'expected divisor.numerator != 0 but actual %s.', divisor.numerator)
     multiply(divisor.invert)
   }
 
@@ -82,7 +82,7 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
   }
 
   override pow(int exponent) {
-    checkArgument(exponent > -1, 'expected > -1 but actual %s.', exponent)
+    checkArgument(exponent > -1, 'expected exponent > -1 but actual %s.', exponent)
     if(exponent > 1)
       return multiply(pow(exponent - 1))
     else if(exponent == 1)

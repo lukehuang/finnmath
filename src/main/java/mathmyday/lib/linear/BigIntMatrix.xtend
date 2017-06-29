@@ -44,10 +44,10 @@ import static java.util.Objects.requireNonNull
 final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigIntVector> {
   override add(BigIntMatrix summand) {
     requireNonNull(summand, 'summand')
-    checkArgument(table.rowKeySet.size == summand.rowSize, 'expected row sizes to be equal but actual %s != %s',
+    checkArgument(table.rowKeySet.size == summand.rowSize, 'equal row sizes expected but actual %s != %s',
       table.rowKeySet.size, summand.rowSize)
-    checkArgument(table.columnKeySet.size == summand.columnSize,
-      'expected column sizes to be equal but actual %s != %s', table.columnKeySet.size, summand.columnSize)
+    checkArgument(table.columnKeySet.size == summand.columnSize, 'column sizes expected equal but actual %s != %s',
+      table.columnKeySet.size, summand.columnSize)
     val builder = BigIntMatrix::builder(rowSize, columnSize)
     table.cellSet.forEach [
       builder.put(rowKey, columnKey, value + summand.entry(rowKey, columnKey))
@@ -57,10 +57,10 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
 
   override subtract(BigIntMatrix subtrahend) {
     requireNonNull(subtrahend, 'subtrahend')
-    checkArgument(table.rowKeySet.size == subtrahend.rowSize, 'expected row sizes to be equal but actual %s != %s',
+    checkArgument(table.rowKeySet.size == subtrahend.rowSize, 'equal row sizes expected but actual %s != %s',
       table.rowKeySet.size, subtrahend.rowSize)
-    checkArgument(table.columnKeySet.size == subtrahend.columnSize,
-      'expected column sizes to be equal but actual %s != %s', table.columnKeySet.size, subtrahend.columnSize)
+    checkArgument(table.columnKeySet.size == subtrahend.columnSize, 'equal column sizes expected but actual %s != %s',
+      table.columnKeySet.size, subtrahend.columnSize)
     val builder = BigIntMatrix::builder(rowSize, columnSize)
     table.cellSet.forEach [
       builder.put(rowKey, columnKey, value - subtrahend.entry(rowKey, columnKey))
@@ -150,8 +150,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   def static builder(int rowSize, int columnSize) {
-    checkArgument(rowSize > 0, 'expected > 0 but actual %s <= 0', rowSize)
-    checkArgument(columnSize > 0, 'expected > 0 but actual %s <= 0', columnSize)
+    checkArgument(rowSize > 0, 'expected row size > 0 but actual %s <= 0', rowSize)
+    checkArgument(columnSize > 0, 'expected column size > 0 but actual %s <= 0', columnSize)
     new BigIntMatrixBuilder(rowSize, columnSize)
   }
 

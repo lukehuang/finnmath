@@ -52,25 +52,25 @@ final class MathRandom {
   val random = new Random
 
   def createPositiveInt(long bound) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
     RandomUtils.nextLong(0, bound)
   }
 
   def createNegativeInt(long bound) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
     (-1) * RandomUtils.nextLong(0, bound)
   }
 
   def createInt(long bound) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
     if(random.nextBoolean)
       return createNegativeInt(bound)
     createPositiveInt(bound)
   }
 
   def createPositiveInts(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val ints = newLongArrayOfSize(howMany)
     for (i : 0 ..< howMany)
       ints.set(i, createPositiveInt(bound))
@@ -78,8 +78,8 @@ final class MathRandom {
   }
 
   def createNegativeInts(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val ints = newLongArrayOfSize(howMany)
     for (i : 0 ..< howMany)
       ints.set(i, createNegativeInt(bound))
@@ -87,8 +87,8 @@ final class MathRandom {
   }
 
   def createInts(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val ints = newLongArrayOfSize(howMany)
     for (i : 0 ..< howMany)
       ints.set(i, createInt(bound))
@@ -96,8 +96,8 @@ final class MathRandom {
   }
 
   def createPositiveDecimal(long bound, int scale) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(scale > 0, 'expected > 0 but actual %s.', scale)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(scale > 0, 'expected scale > 0 but actual %s.', scale)
     val decimal = createDecimal(bound, scale)
     if(decimal < 0BD)
       return -decimal
@@ -105,8 +105,8 @@ final class MathRandom {
   }
 
   def createNegativeDecimal(long bound, int scale) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(scale > 0, 'expected > 0 but actual %s.', scale)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(scale > 0, 'expected scale > 0 but actual %s.', scale)
     val decimal = createDecimal(bound, scale)
     if(decimal > 0BD)
       return -decimal
@@ -114,8 +114,8 @@ final class MathRandom {
   }
 
   def createDecimal(long bound, int scale) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(scale > 0, 'expected > 0 but actual %s.', scale)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(scale > 0, 'expected scale > 0 but actual %s.', scale)
     val decimal = BigDecimal.valueOf(RandomUtils.nextLong(0, bound))
     keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP)
   }
@@ -135,9 +135,9 @@ final class MathRandom {
   }
 
   def createPositiveDecimals(long bound, int scale, int howMany) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(scale > 0, 'expected > 0 but actual %s.', scale)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(scale > 0, 'expected scale > 0 but actual %s.', scale)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<BigDecimal> decimals = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       decimals += createPositiveDecimal(bound, scale)
@@ -145,9 +145,9 @@ final class MathRandom {
   }
 
   def createNegativeDecimals(long bound, int scale, int howMany) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(scale > 0, 'expected > 0 but actual %s.', scale)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(scale > 0, 'expected scale > 0 but actual %s.', scale)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<BigDecimal> decimals = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       decimals += createNegativeDecimal(bound, scale)
@@ -155,9 +155,9 @@ final class MathRandom {
   }
 
   def createDecimals(long bound, int scale, int howMany) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(scale > 0, 'expected > 0 but actual %s.', scale)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(scale > 0, 'expected scale > 0 but actual %s.', scale)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<BigDecimal> decimals = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       decimals += createDecimal(bound, scale)
@@ -165,27 +165,27 @@ final class MathRandom {
   }
 
   def createPositiveFraction(long bound) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
     val numerator = BigInteger.valueOf(RandomUtils.nextLong(0, bound))
     val denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
     new Fraction(numerator, denominator)
   }
 
   def createNegativeFraction(long bound) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
     createPositiveFraction(bound).negate
   }
 
   def createFraction(long bound) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
     if(random.nextBoolean)
       return createNegativeFraction(bound)
     createPositiveFraction(bound)
   }
 
   def createPositiveFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createPositiveFraction(bound)
@@ -193,8 +193,8 @@ final class MathRandom {
   }
 
   def createNegativeFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createNegativeFraction(bound)
@@ -202,8 +202,8 @@ final class MathRandom {
   }
 
   def createFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createFraction(bound)
@@ -211,27 +211,27 @@ final class MathRandom {
   }
 
   def createInvertiblePositiveFraction(long bound) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
     val numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
     val denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
     new Fraction(numerator, denominator)
   }
 
   def createInvertibleNegativeFraction(long bound) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
     createInvertiblePositiveFraction(bound).negate
   }
 
   def createInvertibleFraction(long bound) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
     if(random.nextBoolean)
       return createInvertibleNegativeFraction(bound)
     createInvertiblePositiveFraction(bound)
   }
 
   def createInvertiblePositiveFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createInvertiblePositiveFraction(bound)
@@ -239,8 +239,8 @@ final class MathRandom {
   }
 
   def createInvertibleNegativeFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createInvertibleNegativeFraction(bound)
@@ -248,8 +248,8 @@ final class MathRandom {
   }
 
   def createInvertibleFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<Fraction> fractions = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       fractions += createInvertibleFraction(bound)
@@ -257,15 +257,15 @@ final class MathRandom {
   }
 
   def createSimpleComplexNumber(long bound) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
     val real = BigInteger.valueOf(createInt(bound))
     val imaginary = BigInteger.valueOf(createInt(bound))
     new SimpleComplexNumber(real, imaginary)
   }
 
   def createSimpleComplexNumbers(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<SimpleComplexNumber> complexNumbers = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       complexNumbers += createSimpleComplexNumber(bound)
@@ -273,15 +273,15 @@ final class MathRandom {
   }
 
   def createRealComplexNumber(long bound) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
     val real = BigDecimal.valueOf(createInt(bound))
     val imaginary = BigDecimal.valueOf(createInt(bound))
     new RealComplexNumber(real, imaginary)
   }
 
   def createRealComplexNumbers(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
-    checkArgument(howMany > 1, 'expected > 1 but actual %s.', howMany)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s.', howMany)
     val List<RealComplexNumber> complexNumbers = new ArrayList(howMany)
     for (i : 0 ..< howMany)
       complexNumbers += createRealComplexNumber(bound)
@@ -289,19 +289,19 @@ final class MathRandom {
   }
 
   def createBigIntAndSqrt(long bound) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
     val it = BigInteger.valueOf(createPositiveInt(bound))
     new BigIntAndSqrt(it ** 2, it)
   }
 
   def createFractionAndSqrt(long bound) {
-    checkArgument(bound > 1, 'expected > 1 but actual %s.', bound)
+    checkArgument(bound > 1, 'expected bound > 1 but actual %s.', bound)
     val it = createPositiveFraction(bound)
     new FractionAndSqrt(pow(2), it)
   }
 
   def createSimpleComplexNumberAndSqrt(long bound) {
-    checkArgument(bound > 0, 'expected > 0 but actual %s.', bound)
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s.', bound)
     val it = createSimpleComplexNumber(bound)
     new SimpleComplexNumberAndSqrt(pow(2), it)
   }
