@@ -74,9 +74,9 @@ final class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealC
 
   override pow(int exponent) {
     checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
-    if(exponent > 1)
+    if (exponent > 1)
       return multiply(pow(exponent - 1))
-    else if(exponent == 1)
+    else if (exponent == 1)
       return this
     ONE
   }
@@ -86,16 +86,16 @@ final class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealC
   }
 
   override asString() {
-    if(real != 0BI)
-      if(imaginary > 0BI)
+    if (real != 0BI)
+      if (imaginary > 0BI)
         return '''«real» + «imaginary»i'''
-      else if(imaginary < 0BI)
+      else if (imaginary < 0BI)
         return '''«real» - «imaginary»i'''
       else
         return '''«real»'''
-    if(imaginary > 0BI)
+    if (imaginary > 0BI)
       return '''«imaginary»i'''
-    else if(imaginary < 0BI)
+    else if (imaginary < 0BI)
       return '''- «imaginary»i'''
     '0'
   }

@@ -83,15 +83,15 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
 
   override pow(int exponent) {
     checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
-    if(exponent > 1)
+    if (exponent > 1)
       return multiply(pow(exponent - 1))
-    else if(exponent == 1)
+    else if (exponent == 1)
       return this
     ONE
   }
 
   override asString() {
-    if(denominator < 0BI)
+    if (denominator < 0BI)
       return '''«numerator» / («denominator»)'''
     '''«numerator» / «denominator»'''
   }
@@ -125,24 +125,24 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
 
   def min(Fraction other) {
     requireNonNull(other, 'other')
-    if(greaterThan(other))
+    if (greaterThan(other))
       return other
     this
   }
 
   def max(Fraction other) {
     requireNonNull(other, 'other')
-    if(lessThan(other))
+    if (lessThan(other))
       return other
     this
   }
 
   def normalize() {
-    if(signum < 0)
+    if (signum < 0)
       return new Fraction(-numerator.abs, denominator.abs)
-    if(signum == 0)
+    if (signum == 0)
       return ZERO
-    if(numerator < 0BI)
+    if (numerator < 0BI)
       return new Fraction(numerator.abs, denominator.abs)
     this
   }

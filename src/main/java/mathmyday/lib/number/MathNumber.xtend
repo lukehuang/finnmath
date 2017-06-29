@@ -32,17 +32,17 @@ import com.google.common.annotations.Beta
 
 @Beta
 interface MathNumber<S, T> {
-    def S add(S summand)
+  def S add(S summand)
 
-    def S subtract(S subtrahend)
+  def S subtract(S subtrahend)
 
-    def S multiply(S factor)
+  def S multiply(S factor)
 
-    def T divide(S divisor)
+  def T divide(S divisor)
 
-    def S pow(int exponent)
+  def S pow(int exponent)
 
-    def S negate()
+  def S negate()
 
-    def String asString()
+  def String asString()
 }

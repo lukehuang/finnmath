@@ -145,17 +145,17 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override upperTriangular() {
-    if(square)
+    if (square)
       for (it : table.cellSet)
-        if(rowKey > columnKey && value != 0BI)
+        if (rowKey > columnKey && value != 0BI)
           return false
     true
   }
 
   override lowerTriangular() {
-    if(square)
+    if (square)
       for (it : table.cellSet)
-        if(rowKey < columnKey && value != 0BI)
+        if (rowKey < columnKey && value != 0BI)
           return false
     true
   }
@@ -165,9 +165,9 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override id() {
-    if(diagonal)
+    if (diagonal)
       for (index : (1 .. table.rowKeySet.size))
-        if(table.get(index, index) != 1BI)
+        if (table.get(index, index) != 1BI)
           return false
     true
   }
@@ -201,8 +201,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
       table.columnKeySet.last, columnIndex)
     val builder = builder(table.rowKeySet.size - 1, table.columnKeySet.size - 1)
     table.cellSet.forEach [
-      val newRowIndex = if(rowKey >= rowIndex) rowKey - 1 else rowKey
-      val newColumnIndex = if(columnKey >= columnIndex) columnKey - 1 else columnKey
+      val newRowIndex = if (rowKey >= rowIndex) rowKey - 1 else rowKey
+      val newColumnIndex = if (columnKey >= columnIndex) columnKey - 1 else columnKey
       builder.put(newRowIndex, newColumnIndex, value)
     ]
     builder.build

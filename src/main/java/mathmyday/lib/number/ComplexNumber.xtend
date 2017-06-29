@@ -32,7 +32,7 @@ import com.google.common.annotations.Beta
 
 @Beta
 interface ComplexNumber<S, T> {
-    def S absPow2()
+  def S absPow2()
 
-    def T conjugate()
+  def T conjugate()
 }

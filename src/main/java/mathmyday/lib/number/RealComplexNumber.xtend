@@ -83,9 +83,9 @@ final class RealComplexNumber implements MathNumber<RealComplexNumber, RealCompl
 
   override pow(int exponent) {
     checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
-    if(exponent > 1)
+    if (exponent > 1)
       return multiply(pow(exponent - 1))
-    else if(exponent == 1)
+    else if (exponent == 1)
       return this
     ONE
   }
@@ -95,16 +95,16 @@ final class RealComplexNumber implements MathNumber<RealComplexNumber, RealCompl
   }
 
   override asString() {
-    if(real != 0BD)
-      if(imaginary > 0BD)
+    if (real != 0BD)
+      if (imaginary > 0BD)
         return '''«real» + «imaginary»i'''
-      else if(imaginary < 0BD)
+      else if (imaginary < 0BD)
         return '''«real» - «imaginary»i'''
       else
         return '''«real»'''
-    if(imaginary > 0BD)
+    if (imaginary > 0BD)
       return '''«imaginary»i'''
-    else if(imaginary < 0BD)
+    else if (imaginary < 0BD)
       return '''- «imaginary»i'''
     '0'
   }

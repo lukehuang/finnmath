@@ -63,7 +63,7 @@ final class MathRandom {
 
   def createInt(long bound) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    if(random.nextBoolean)
+    if (random.nextBoolean)
       return createNegativeInt(bound)
     createPositiveInt(bound)
   }
@@ -99,7 +99,7 @@ final class MathRandom {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
     val decimal = createDecimal(bound, scale)
-    if(decimal < 0BD)
+    if (decimal < 0BD)
       return -decimal
     decimal
   }
@@ -108,7 +108,7 @@ final class MathRandom {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
     val decimal = createDecimal(bound, scale)
-    if(decimal > 0BD)
+    if (decimal > 0BD)
       return -decimal
     decimal
   }
@@ -125,11 +125,11 @@ final class MathRandom {
     checkArgument(bound > 0, 'expected > 0 but actual %s', bound)
     var it = decimal
     val decimalBound = BigDecimal.valueOf(bound)
-    if(it >= 0BD)
-      while(it >= decimalBound)
+    if (it >= 0BD)
+      while (it >= decimalBound)
         it -= decimalBound
     else
-      while(abs >= decimalBound)
+      while (abs >= decimalBound)
         it += decimalBound
     it
   }
@@ -178,7 +178,7 @@ final class MathRandom {
 
   def createFraction(long bound) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    if(random.nextBoolean)
+    if (random.nextBoolean)
       return createNegativeFraction(bound)
     createPositiveFraction(bound)
   }
@@ -224,7 +224,7 @@ final class MathRandom {
 
   def createInvertibleFraction(long bound) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    if(random.nextBoolean)
+    if (random.nextBoolean)
       return createInvertibleNegativeFraction(bound)
     createInvertiblePositiveFraction(bound)
   }
