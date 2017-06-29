@@ -150,8 +150,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   def static builder(int rowSize, int columnSize) {
-    checkArgument(rowSize > 0, 'expected row size > 0 but actual %s <= 0', rowSize)
-    checkArgument(columnSize > 0, 'expected column size > 0 but actual %s <= 0', columnSize)
+    checkArgument(rowSize > 0, 'expected row size > 0 but actual %s', rowSize)
+    checkArgument(columnSize > 0, 'expected column size > 0 but actual %s', columnSize)
     new BigIntMatrixBuilder(rowSize, columnSize)
   }
 

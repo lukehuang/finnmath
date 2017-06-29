@@ -74,7 +74,7 @@ final class RealComplexNumber implements MathNumber<RealComplexNumber, RealCompl
 
   override divide(RealComplexNumber divisor) {
     requireNonNull(divisor, 'divisor')
-    checkArgument(divisor != ZERO, 'expected divisor != 0 but actual %s.', divisor)
+    checkArgument(divisor != ZERO, 'expected divisor != 0 but actual %s', divisor)
     val denominator = divisor.real ** 2 + divisor.imaginary ** 2
     val newReal = (real * divisor.real + imaginary * divisor.imaginary) / denominator
     val newImaginary = (imaginary * divisor.real - real * divisor.imaginary) / denominator
@@ -82,7 +82,7 @@ final class RealComplexNumber implements MathNumber<RealComplexNumber, RealCompl
   }
 
   override pow(int exponent) {
-    checkArgument(exponent > -1, 'expected exponent > -1 but actual %s.', exponent)
+    checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
     if(exponent > 1)
       return multiply(pow(exponent - 1))
     else if(exponent == 1)

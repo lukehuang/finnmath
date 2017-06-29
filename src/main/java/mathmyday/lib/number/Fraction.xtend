@@ -45,7 +45,7 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
   BigInteger denominator
 
   new(BigInteger numerator, BigInteger denominator) {
-    checkArgument(denominator != 0BI, 'expected denominator != 0 but actual %s.', denominator)
+    checkArgument(denominator != 0BI, 'expected denominator != 0 but actual %s', denominator)
     this.numerator = requireNonNull(numerator, 'numerator')
     this.denominator = requireNonNull(denominator, 'denominator')
   }
@@ -73,7 +73,7 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
 
   override divide(Fraction divisor) {
     requireNonNull(divisor, 'divisor')
-    checkArgument(divisor.numerator != 0BI, 'expected divisor.numerator != 0 but actual %s.', divisor.numerator)
+    checkArgument(divisor.numerator != 0BI, 'expected divisor.numerator != 0 but actual %s', divisor.numerator)
     multiply(divisor.invert)
   }
 
@@ -82,7 +82,7 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
   }
 
   override pow(int exponent) {
-    checkArgument(exponent > -1, 'expected exponent > -1 but actual %s.', exponent)
+    checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
     if(exponent > 1)
       return multiply(pow(exponent - 1))
     else if(exponent == 1)
@@ -97,7 +97,7 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
   }
 
   def invert() {
-    checkState(numerator != 0BI, 'expected numerator != 0 but actual %s.', numerator)
+    checkState(numerator != 0BI, 'expected numerator != 0 but actual %s', numerator)
     new Fraction(denominator, numerator)
   }
 
