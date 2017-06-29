@@ -55,21 +55,21 @@ abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
   }
 
   override entry(Integer rowIndex, Integer columnIndex) {
-    checkArgument(table.rowKeySet.contains(rowIndex), 'expected: in [0, %s] but actual: %s', table.rowKeySet.size,
+    checkArgument(table.rowKeySet.contains(rowIndex), 'expected in [0, %s] but actual %s', table.rowKeySet.size,
       rowIndex)
-    checkArgument(table.columnKeySet.contains(columnIndex), 'expected: in [0, %s] but actual: %s',
+    checkArgument(table.columnKeySet.contains(columnIndex), 'expected in [0, %s] but actual %s',
       table.columnKeySet.size, columnIndex)
     table.get(rowIndex, columnIndex)
   }
 
   override row(Integer rowIndex) {
-    checkArgument(table.rowKeySet.contains(rowIndex), 'expected: in [0, %s] but actual: %s', table.rowKeySet.size,
+    checkArgument(table.rowKeySet.contains(rowIndex), 'expected in [0, %s] but actual %s', table.rowKeySet.size,
       rowIndex)
     ImmutableMap.copyOf(table.row(rowIndex))
   }
 
   override column(Integer columnIndex) {
-    checkArgument(table.columnKeySet.contains(columnIndex), 'expected: in [0, %s] but actual: %s',
+    checkArgument(table.columnKeySet.contains(columnIndex), 'expected in [0, %s] but actual %s',
       table.columnKeySet.size, columnIndex)
     ImmutableMap.copyOf(table.column(columnIndex))
   }

@@ -33,7 +33,7 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
-import static com.google.common.base.Preconditions.checkNotNull
+import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
@@ -41,20 +41,18 @@ abstract class AbstractVectorBuilder<T> {
   protected val Map<Integer, T> map = newHashMap
 
   def put(T entry) {
-    checkNotNull(entry, 'expected: not null but actual: %s', entry)
-    map.put(map.size + 1, entry)
+    map.put(map.size + 1, requireNonNull(entry, 'entry'))
   }
 
   def put(Integer index, T entry) {
-    checkArgument(map.containsKey(index), 'expected: in [0, %s] but actual: %s', map.size, index)
-    checkNotNull(entry, 'expected: not null but actual: %s', entry)
-    map.put(index, entry)
+    checkArgument(map.containsKey(index), 'expected in [0, %s] but actual %s', map.size, index)
+    map.put(requireNonNull(index, 'index'), requireNonNull(entry, 'entry'))
   }
 
   def addToEntryAndPut(Integer index, T entry) {
-    checkArgument(map.containsKey(index), 'expected: in [0, %s] but actual: %s', map.size, index)
+    checkArgument(map.containsKey(index), 'expected in [0, %s] but actual %s', map.size, index)
     val existing = map.get(index)
-    checkNotNull(existing, 'expected: not null but actual: %s', existing)
-    checkNotNull(entry, 'expected: not null but actual: %s', entry)
+    requireNonNull(existing, 'existing')
+    requireNonNull(entry, 'entry')
   }
 }

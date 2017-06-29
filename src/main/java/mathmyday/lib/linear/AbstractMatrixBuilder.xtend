@@ -34,7 +34,7 @@ import com.google.common.collect.Table
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
-import static com.google.common.base.Preconditions.checkNotNull
+import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
@@ -48,10 +48,10 @@ abstract class AbstractMatrixBuilder<T> {
   }
 
   def put(int rowIndex, int columnIndex, T entry) {
-    checkNotNull(entry, 'expected: not null but actual: %s', entry)
-    checkArgument(table.rowKeySet.contains(rowIndex), 'expected: in [0, %s] but actual: %s', table.rowKeySet.size,
+    requireNonNull(entry, 'entry')
+    checkArgument(table.rowKeySet.contains(rowIndex), 'expected in [0, %s] but actual %s', table.rowKeySet.size,
       rowIndex)
-    checkArgument(table.columnKeySet.contains(columnIndex), 'expected: in [0, %s] but actual: %s',
+    checkArgument(table.columnKeySet.contains(columnIndex), 'expected in [0, %s] but actual %s',
       table.columnKeySet.size, columnIndex)
     table.put(rowIndex, columnIndex, entry)
   }

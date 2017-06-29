@@ -32,7 +32,7 @@ import com.google.common.annotations.Beta
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
-import static com.google.common.base.Preconditions.checkNotNull
+import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
@@ -42,7 +42,7 @@ class AbstractNumberAndSqrt<T> {
   protected val T sqrt
 
   protected new(T number, T sqrt) {
-    this.number = checkNotNull(number, 'expected: not null but actual: %s', number)
-    this.sqrt = checkNotNull(sqrt, 'expected: not null but actual: %s', sqrt)
+    this.number = requireNonNull(number, 'number')
+    this.sqrt = requireNonNull(sqrt, 'sqrt')
   }
 }

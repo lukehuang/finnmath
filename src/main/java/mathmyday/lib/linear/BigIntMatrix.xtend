@@ -36,18 +36,18 @@ import org.apache.commons.lang3.builder.Builder
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
-import static com.google.common.base.Preconditions.checkNotNull
 import static com.google.common.base.Preconditions.checkState
+import static java.util.Objects.requireNonNull
 
 @Beta
 @Data
 final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigIntVector> {
   override add(BigIntMatrix summand) {
-    checkNotNull(summand, 'expected: not null but actual: %s', summand)
-    checkArgument(table.rowKeySet.size == summand.rowSize, 'expected: row sizes to be equal but actual: %s != %s',
+    requireNonNull(summand, 'summand')
+    checkArgument(table.rowKeySet.size == summand.rowSize, 'expected row sizes to be equal but actual %s != %s',
       table.rowKeySet.size, summand.rowSize)
     checkArgument(table.columnKeySet.size == summand.columnSize,
-      'expected: column sizes to be equal but actual: %s != %s', table.columnKeySet.size, summand.columnSize)
+      'expected column sizes to be equal but actual %s != %s', table.columnKeySet.size, summand.columnSize)
     val builder = BigIntMatrix::builder(rowSize, columnSize)
     table.cellSet.forEach [
       builder.put(rowKey, columnKey, value + summand.entry(rowKey, columnKey))
@@ -56,11 +56,11 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override subtract(BigIntMatrix subtrahend) {
-    checkNotNull(subtrahend, 'expected: not null but actual: %s', subtrahend)
-    checkArgument(table.rowKeySet.size == subtrahend.rowSize, 'expected: row sizes to be equal but actual: %s != %s',
+    requireNonNull(subtrahend, 'subtrahend')
+    checkArgument(table.rowKeySet.size == subtrahend.rowSize, 'expected row sizes to be equal but actual %s != %s',
       table.rowKeySet.size, subtrahend.rowSize)
     checkArgument(table.columnKeySet.size == subtrahend.columnSize,
-      'expected: column sizes to be equal but actual: %s != %s', table.columnKeySet.size, subtrahend.columnSize)
+      'expected column sizes to be equal but actual %s != %s', table.columnKeySet.size, subtrahend.columnSize)
     val builder = BigIntMatrix::builder(rowSize, columnSize)
     table.cellSet.forEach [
       builder.put(rowKey, columnKey, value - subtrahend.entry(rowKey, columnKey))
@@ -69,9 +69,9 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override multiply(BigIntMatrix factor) {
-    checkNotNull(factor, 'expected: not null but actual: %s', factor)
+    requireNonNull(factor, 'factor')
     checkArgument(table.columnKeySet.size == factor.rowSize,
-      'expected: columnSize == factor.rowSize but actual: %s != %s', table.columnKeySet.size, factor.rowSize)
+      'expected columnSize == factor.rowSize but actual %s != %s', table.columnKeySet.size, factor.rowSize)
     val builder = BigIntMatrix::builder(table.rowKeySet.size, factor.columnSize)
     rowIndexes.forEach [ rowIndex |
       factor.columnIndexes.forEach [ columnIndex |
@@ -83,7 +83,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override multiplyVector(BigIntVector vector) {
-    checkNotNull(vector, 'expected: not null but actual: %s', vector)
+    requireNonNull(vector, 'vector')
     val builder = BigIntVector::builder
     table.rowMap.forEach [ rowIndex, row |
       row.forEach [ columnIndex, matrixEntry |
@@ -94,8 +94,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override multiplyRowWithColumn(Map<Integer, BigInteger> row, Map<Integer, BigInteger> column) {
-    checkNotNull(row, 'expected: not null but actual: %s', row)
-    checkNotNull(column, 'expected: not null but actual: %s', column)
+    requireNonNull(row, 'row')
+    requireNonNull(column, 'column')
     var result = 0BI
     for (index : (1 .. row.size)) {
       result += row.get(index) * column.get(index)
@@ -114,7 +114,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override tr() {
-    checkState(square, 'expected: square matrix but actual: %s x %s', table.rowKeySet.size, table.columnKeySet.size)
+    checkState(square, 'expected square matrix but actual %s x %s', table.rowKeySet.size, table.columnKeySet.size)
     var result = 0BI
     for (index : (1 .. rowSize))
       result += table.get(index, index)
@@ -150,8 +150,8 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   def static builder(int rowSize, int columnSize) {
-    checkArgument(rowSize > 0, 'expected: > 0 but actual: %s <= 0', rowSize)
-    checkArgument(columnSize > 0, 'expected: > 0 but actual: %s <= 0', columnSize)
+    checkArgument(rowSize > 0, 'expected > 0 but actual %s <= 0', rowSize)
+    checkArgument(columnSize > 0, 'expected > 0 but actual %s <= 0', columnSize)
     new BigIntMatrixBuilder(rowSize, columnSize)
   }
 
@@ -162,7 +162,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
 
     override build() {
       table.cellSet.forEach [
-        checkNotNull(value, 'expected: not null but actual: %s', value)
+        requireNonNull(value, 'value')
       ]
       new BigIntMatrix(table)
     }

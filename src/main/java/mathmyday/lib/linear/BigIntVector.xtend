@@ -33,7 +33,7 @@ import java.math.BigInteger
 import org.apache.commons.lang3.builder.Builder
 import org.eclipse.xtend.lib.annotations.Data
 
-import static com.google.common.base.Preconditions.checkNotNull
+import static java.util.Objects.requireNonNull
 
 @Beta
 @Data
@@ -67,7 +67,7 @@ final class BigIntVector extends AbstractVector<BigInteger> implements Vector<Bi
 
     override build() {
       map.forEach [ index, entry |
-        checkNotNull(entry, 'expected: not null but actual: %s', entry)
+        requireNonNull(entry, 'entry')
       ]
       new BigIntVector(map)
     }

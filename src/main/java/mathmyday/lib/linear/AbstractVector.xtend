@@ -31,18 +31,17 @@ package mathmyday.lib.linear
 import java.util.Map
 
 import static com.google.common.base.Preconditions.checkArgument
-import static com.google.common.base.Preconditions.checkNotNull
+import static java.util.Objects.requireNonNull
 
 abstract class AbstractVector<T> {
   protected val Map<Integer, T> map
 
   protected new(Map<Integer, T> map) {
-    checkNotNull(map, 'expected: not null but actual: %s', map)
-    this.map = map
+    this.map = requireNonNull(map, 'map')
   }
 
   def entry(Integer index) {
-    checkArgument(map.containsKey(index), 'expected: in [0, %s] but actual: %s', map.size, index)
+    checkArgument(map.containsKey(index), 'expected in [0, %s] but actual %s', map.size, index)
     map.get(index)
   }
 }

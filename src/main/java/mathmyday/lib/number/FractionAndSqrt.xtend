@@ -38,6 +38,6 @@ import static com.google.common.base.Preconditions.checkArgument
 final class FractionAndSqrt extends AbstractNumberAndSqrt<Fraction> {
   new(Fraction number, Fraction sqrt) {
     super(number, sqrt)
-    checkArgument(sqrt.pow(2) == number, 'expected: sqrt**2 == number but actual: %s**2 != %s', sqrt, number)
+    checkArgument(sqrt.pow(2) == number, 'expected sqrt**2 == number but actual %s**2 != %s', sqrt, number)
   }
 }
