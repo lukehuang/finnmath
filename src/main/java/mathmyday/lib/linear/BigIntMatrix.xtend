@@ -115,13 +115,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override negate() {
-    val builder = BigIntMatrix::builder(rowSize, columnSize)
-    rowIndexes.forEach [ rowIndex |
-      columnIndexes.forEach [ columnIndex |
-        builder.put(rowIndex, columnIndex, -entry(rowIndex, columnIndex))
-      ]
-    ]
-    builder.build
+    scalarMultiply(-1BI)
   }
 
   override tr() {
@@ -145,19 +139,23 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override upperTriangular() {
-    if (square)
+    if (square) {
       for (it : table.cellSet)
         if (rowKey > columnKey && value != 0BI)
           return false
-    true
+      return true
+    }
+    false
   }
 
   override lowerTriangular() {
-    if (square)
+    if (square) {
       for (it : table.cellSet)
         if (rowKey < columnKey && value != 0BI)
           return false
-    true
+      return true
+    }
+    false
   }
 
   override diagonal() {
