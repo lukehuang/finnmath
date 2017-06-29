@@ -96,8 +96,10 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   override multiplyRowWithColumn(Map<Integer, BigInteger> row, Map<Integer, BigInteger> column) {
     requireNonNull(row, 'row')
     requireNonNull(column, 'column')
+    checkArgument(row.size == column.size, 'expected row size == column size but actual %s != %s', row.size,
+      column.size)
     var result = 0BI
-    for (index : (1 .. row.size)) {
+    for (index : row.keySet) {
       result += row.get(index) * column.get(index)
     }
     result
