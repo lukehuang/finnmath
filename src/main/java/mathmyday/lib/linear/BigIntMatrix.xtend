@@ -163,11 +163,13 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override id() {
-    if (diagonal)
+    if (diagonal) {
       for (index : (1 .. table.rowKeySet.size))
         if (table.get(index, index) != 1BI)
           return false
-    true
+      return true
+    }
+    false
   }
 
   override invertible() {
@@ -183,11 +185,11 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
   }
 
   override symmetric() {
-    equals(transpose)
+    square && equals(transpose)
   }
 
   override skewSymmetric() {
-    equals(transpose.negate)
+    square && equals(transpose.negate)
   }
 
   override minor(Integer rowIndex, Integer columnIndex) {
