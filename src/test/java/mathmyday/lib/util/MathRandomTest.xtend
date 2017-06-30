@@ -46,359 +46,359 @@ final class MathRandomTest {
   val bigBound = BigInteger.valueOf(bound)
 
   @Test
-  def void createPositiveIntBoundTooLowShouldThrowException() {
+  def void nextPositiveIntBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createPositiveInt(0)
+      mathRandom.nextPositiveLong(0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createPositiveIntShouldSucceed() {
-    val integer = mathRandom.createPositiveInt(bound)
+  def void nextPositiveIntShouldSucceed() {
+    val integer = mathRandom.nextPositiveLong(bound)
     assertTrue(0 <= integer)
     assertTrue(integer < bound)
   }
 
   @Test
-  def void createNegativeIntBoundTooLowShouldThrowException() {
+  def void nextNegativeIntBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createNegativeInt(0)
+      mathRandom.nextNegativeLong(0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createNegativeIntShouldSucceed() {
-    val it = mathRandom.createNegativeInt(bound)
+  def void nextNegativeIntShouldSucceed() {
+    val it = mathRandom.nextNegativeLong(bound)
     assertTrue(-bound < it)
     assertTrue(it <= 0)
   }
 
   @Test
-  def void createIntBoundTooLowShouldThrowException() {
+  def void nextIntBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createInt(0)
+      mathRandom.nextLong(0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createIntShouldSucceed() {
-    val it = mathRandom.createInt(bound)
+  def void nextIntShouldSucceed() {
+    val it = mathRandom.nextLong(bound)
     assertTrue(-bound < it)
     assertTrue(it < bound)
   }
 
   @Test
-  def void createPositiveIntsTooLessShoudThrowException() {
+  def void nextPositiveIntsTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createPositiveInts(bound, 1)
+      mathRandom.nextPositiveLongs(bound, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createPositiveIntsShouldSucceed() {
-    val it = mathRandom.createPositiveInts(bound, howMany)
+  def void nextPositiveIntsShouldSucceed() {
+    val it = mathRandom.nextPositiveLongs(bound, howMany)
     assertEquals(howMany, length)
   }
 
   @Test
-  def void createNegativeIntsTooLessShoudThrowException() {
+  def void nextNegativeIntsTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createNegativeInts(bound, 1)
+      mathRandom.nextNegativeLongs(bound, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createNegativeIntsShouldSucceed() {
-    val it = mathRandom.createNegativeInts(bound, howMany)
+  def void nextNegativeIntsShouldSucceed() {
+    val it = mathRandom.nextNegativeLongs(bound, howMany)
     assertEquals(howMany, length)
   }
 
   @Test
-  def void createIntsTooLessShoudThrowException() {
+  def void nextIntsTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createInts(bound, 1)
+      mathRandom.nextLongs(bound, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createIntsShouldSucceed() {
-    val it = mathRandom.createInts(bound, howMany)
+  def void nextIntsShouldSucceed() {
+    val it = mathRandom.nextLongs(bound, howMany)
     assertEquals(howMany, length)
   }
 
   @Test
-  def void createPositiveDecimalBoundTooLowShouldThrowException() {
+  def void nextPositiveDecimalBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createPositiveDecimal(0, givenScale)
+      mathRandom.nextPositiveDecimal(0, givenScale)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createPositiveDecimalScaleTooLowShouldThrowException() {
+  def void nextPositiveDecimalScaleTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createPositiveDecimal(bound, 0)
+      mathRandom.nextPositiveDecimal(bound, 0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createPositiveDecimalShouldSucceed() {
-    val it = mathRandom.createPositiveDecimal(bound, givenScale)
+  def void nextPositiveDecimalShouldSucceed() {
+    val it = mathRandom.nextPositiveDecimal(bound, givenScale)
     assertThat(it).isGreaterThanOrEqualTo(0BD).isLessThan(decimalBound)
     assertEquals(givenScale, scale)
   }
 
   @Test
-  def void createNegativeDecimalBoundTooLowShouldThrowException() {
+  def void nextNegativeDecimalBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createNegativeDecimal(0, givenScale)
+      mathRandom.nextNegativeDecimal(0, givenScale)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createNegativeDecimalScaleTooLowShouldThrowException() {
+  def void nextNegativeDecimalScaleTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createNegativeDecimal(bound, 0)
+      mathRandom.nextNegativeDecimal(bound, 0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createNegativeDecimalShouldSucceed() {
-    val it = mathRandom.createNegativeDecimal(bound, givenScale)
+  def void nextNegativeDecimalShouldSucceed() {
+    val it = mathRandom.nextNegativeDecimal(bound, givenScale)
     assertThat(it).isGreaterThan(-decimalBound).isLessThanOrEqualTo(0BD)
     assertEquals(givenScale, scale)
   }
 
   @Test
-  def void createDecimalBoundTooLowShouldThrowException() {
+  def void nextDecimalBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createDecimal(0, givenScale)
+      mathRandom.nextDecimal(0, givenScale)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createDecimalScaleTooLowShouldThrowException() {
+  def void nextDecimalScaleTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createDecimal(bound, 0)
+      mathRandom.nextDecimal(bound, 0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createDecimalShouldSucceed() {
-    val it = mathRandom.createDecimal(bound, givenScale)
+  def void nextDecimalShouldSucceed() {
+    val it = mathRandom.nextDecimal(bound, givenScale)
     assertThat(it).isGreaterThan(-decimalBound).isLessThan(decimalBound)
     assertEquals(givenScale, scale)
   }
 
   @Test
-  def void createPositiveDecimalsTooLessShoudThrowException() {
+  def void nextPositiveDecimalsTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createPositiveDecimals(bound, givenScale, 1)
+      mathRandom.nextPositiveDecimals(bound, givenScale, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createPositiveDecimalsShouldSucceed() {
-    val it = mathRandom.createPositiveDecimals(bound, givenScale, howMany)
+  def void nextPositiveDecimalsShouldSucceed() {
+    val it = mathRandom.nextPositiveDecimals(bound, givenScale, howMany)
     assertEquals(howMany, size)
   }
 
   @Test
-  def void createNegativeDecimalsTooLessShoudThrowException() {
+  def void nextNegativeDecimalsTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createNegativeDecimals(bound, givenScale, 1)
+      mathRandom.nextNegativeDecimals(bound, givenScale, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createNegativeDecimalsShouldSucceed() {
-    val it = mathRandom.createNegativeDecimals(bound, givenScale, howMany)
+  def void nextNegativeDecimalsShouldSucceed() {
+    val it = mathRandom.nextNegativeDecimals(bound, givenScale, howMany)
     assertEquals(howMany, size)
   }
 
   @Test
-  def void createDecimalsTooLessShoudThrowException() {
+  def void nextDecimalsTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createDecimals(bound, givenScale, 1)
+      mathRandom.nextDecimals(bound, givenScale, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createDecimalsShouldSucceed() {
-    val it = mathRandom.createDecimals(bound, givenScale, howMany)
+  def void nextDecimalsShouldSucceed() {
+    val it = mathRandom.nextDecimals(bound, givenScale, howMany)
     assertEquals(howMany, size)
   }
 
   @Test
-  def void createPositiveFractionBoundTooLowShouldThrowException() {
+  def void nextPositiveFractionBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createPositiveFraction(1)
+      mathRandom.nextPositiveFraction(1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createPositiveFractionShouldSucceed() {
-    val it = mathRandom.createPositiveFraction(bound)
+  def void nextPositiveFractionShouldSucceed() {
+    val it = mathRandom.nextPositiveFraction(bound)
     assertThat(numerator).isGreaterThanOrEqualTo(0BI).isLessThan(bigBound)
     assertThat(denominator).isGreaterThanOrEqualTo(0BI).isLessThan(bigBound)
   }
 
   @Test
-  def void createNegativeFractionBoundTooLowShouldThrowException() {
+  def void nextNegativeFractionBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createNegativeFraction(1)
+      mathRandom.nextNegativeFraction(1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createNegativeFractionShouldSucceed() {
-    val it = mathRandom.createNegativeFraction(bound)
+  def void nextNegativeFractionShouldSucceed() {
+    val it = mathRandom.nextNegativeFraction(bound)
     assertThat(numerator).isGreaterThan(-bigBound).isLessThanOrEqualTo(0BI)
     assertThat(denominator).isGreaterThanOrEqualTo(0BI).isLessThan(bigBound)
   }
 
   @Test
-  def void createFractionBoundTooLowShouldThrowException() {
+  def void nextFractionBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createFraction(1)
+      mathRandom.nextFraction(1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createFractionShouldSucceed() {
-    val it = mathRandom.createFraction(bound)
+  def void nextFractionShouldSucceed() {
+    val it = mathRandom.nextFraction(bound)
     assertThat(numerator).isGreaterThan(-bigBound).isLessThan(bigBound)
     assertThat(denominator).isGreaterThan(-bigBound).isLessThanOrEqualTo(bigBound)
   }
 
   @Test
-  def void createPositiveFractionsTooLessShoudThrowException() {
+  def void nextPositiveFractionsTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createPositiveFractions(bound, 1)
+      mathRandom.nextPositiveFractions(bound, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createPositiveFractionsShouldSucceed() {
-    val it = mathRandom.createPositiveFractions(bound, howMany)
+  def void nextPositiveFractionsShouldSucceed() {
+    val it = mathRandom.nextPositiveFractions(bound, howMany)
     assertEquals(howMany, size)
   }
 
   @Test
-  def void createNegativeFractionsTooLessShoudThrowException() {
+  def void nextNegativeFractionsTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createNegativeFractions(bound, 1)
+      mathRandom.nextNegativeFractions(bound, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createNegativeFractionsShouldSucceed() {
-    val it = mathRandom.createNegativeFractions(bound, howMany)
+  def void nextNegativeFractionsShouldSucceed() {
+    val it = mathRandom.nextNegativeFractions(bound, howMany)
     assertEquals(howMany, size)
   }
 
   @Test
-  def void createFractionsTooLessShoudThrowException() {
+  def void nextFractionsTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createFractions(bound, 1)
+      mathRandom.nextFractions(bound, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createFractionsShouldSucceed() {
-    val it = mathRandom.createFractions(bound, howMany)
+  def void nextFractionsShouldSucceed() {
+    val it = mathRandom.nextFractions(bound, howMany)
     assertEquals(howMany, size)
   }
 
   @Test
-  def void createSimpleComplexNumberBoundTooLowShouldThrowException() {
+  def void nextSimpleComplexNumberBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createSimpleComplexNumber(0)
+      mathRandom.nextSimpleComplexNumber(0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createSimpleComplexNumberShouldSucceed() {
-    val it = mathRandom.createSimpleComplexNumber(bound)
+  def void nextSimpleComplexNumberShouldSucceed() {
+    val it = mathRandom.nextSimpleComplexNumber(bound)
     assertThat(real).isGreaterThan(-bigBound).isLessThan(bigBound)
     assertThat(imaginary).isGreaterThan(-bigBound).isLessThan(bigBound)
   }
 
   @Test
-  def void createSimpleComplexNumbersTooLessShoudThrowException() {
+  def void nextSimpleComplexNumbersTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createSimpleComplexNumbers(bound, 1)
+      mathRandom.nextSimpleComplexNumbers(bound, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createSimpleComplexNumbersShouldSucceed() {
-    val it = mathRandom.createSimpleComplexNumbers(bound, howMany)
+  def void nextSimpleComplexNumbersShouldSucceed() {
+    val it = mathRandom.nextSimpleComplexNumbers(bound, howMany)
     assertEquals(howMany, size)
   }
 
   @Test
-  def void createRealComplexNumberBoundTooLowShouldThrowException() {
+  def void nextRealComplexNumberBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createRealComplexNumber(0)
+      mathRandom.nextRealComplexNumber(0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createRealComplexNumberShouldSucceed() {
-    val it = mathRandom.createRealComplexNumber(bound)
+  def void nextRealComplexNumberShouldSucceed() {
+    val it = mathRandom.nextRealComplexNumber(bound)
     assertThat(real).isGreaterThan(-decimalBound).isLessThan(decimalBound)
     assertThat(imaginary).isGreaterThan(-decimalBound).isLessThan(decimalBound)
   }
 
   @Test
-  def void createRealComplexNumbersTooLessShoudThrowException() {
+  def void nextRealComplexNumbersTooLessShoudThrowException() {
     assertThatThrownBy[
-      mathRandom.createRealComplexNumbers(bound, 1)
+      mathRandom.nextRealComplexNumbers(bound, 1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createRealComplexNumbersShouldSucceed() {
-    val it = mathRandom.createRealComplexNumbers(bound, howMany)
+  def void nextRealComplexNumbersShouldSucceed() {
+    val it = mathRandom.nextRealComplexNumbers(bound, howMany)
     assertEquals(howMany, size)
   }
 
   @Test
-  def void createBigIntAndSqrtBoundTooLowShouldThrowException() {
+  def void nextBigIntAndSqrtBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createBigIntAndSqrt(0)
+      mathRandom.nextBigIntAndSqrt(0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createBigIntAndSqrtShouldSucceed() {
-    val it = mathRandom.createBigIntAndSqrt(bound)
+  def void nextBigIntAndSqrtShouldSucceed() {
+    val it = mathRandom.nextBigIntAndSqrt(bound)
     assertThat(number).isEqualTo(sqrt ** 2)
   }
 
   @Test
-  def void createFractionAndSqrtBoundTooLowShouldThrowException() {
+  def void nextFractionAndSqrtBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createFractionAndSqrt(1)
+      mathRandom.nextFractionAndSqrt(1)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createFractionAndSqrtShouldSucceed() {
-    val it = mathRandom.createFractionAndSqrt(bound)
+  def void nextFractionAndSqrtShouldSucceed() {
+    val it = mathRandom.nextFractionAndSqrt(bound)
     assertThat(number).isEqualTo(sqrt.pow(2))
   }
 
   @Test
-  def void createSimpleComplexNumberAndSqrtBoundTooLowShouldThrowException() {
+  def void nextSimpleComplexNumberAndSqrtBoundTooLowShouldThrowException() {
     assertThatThrownBy[
-      mathRandom.createSimpleComplexNumberAndSqrt(0)
+      mathRandom.nextSimpleComplexNumberAndSqrt(0)
     ].isExactlyInstanceOf(IllegalArgumentException)
   }
 
   @Test
-  def void createSimpleComplexNumberAndSqrtShouldSucceed() {
-    val it = mathRandom.createSimpleComplexNumberAndSqrt(bound)
+  def void nextSimpleComplexNumberAndSqrtShouldSucceed() {
+    val it = mathRandom.nextSimpleComplexNumberAndSqrt(bound)
     assertThat(number).isEqualTo(sqrt.pow(2))
   }
 }

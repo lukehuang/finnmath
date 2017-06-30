@@ -30,31 +30,33 @@ package mathmyday.lib.linear
 
 import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableMap
+import com.google.common.collect.ImmutableSet
 import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
-import java.math.BigInteger
+import java.util.Map
+import java.util.Set
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
 
 @Beta
 @EqualsHashCode
-abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
+abstract class AbstractMatrix<M, E, V> {
   Table<Integer, Integer, E> table
 
   protected new(Table<Integer, Integer, E> table) {
     this.table = ImmutableTable.copyOf(table)
   }
 
-  override rowIndexes() {
-    table.rowKeySet
+  def rowIndexes() {
+    ImmutableSet.copyOf(table.rowKeySet) as Set<Integer>
   }
 
-  override columnIndexes() {
-    table.columnKeySet
+  def columnIndexes() {
+    ImmutableSet.copyOf(table.columnKeySet) as Set<Integer>
   }
 
-  override entry(Integer rowIndex, Integer columnIndex) {
+  def entry(Integer rowIndex, Integer columnIndex) {
     checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
       table.rowKeySet.last, rowIndex)
     checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
@@ -62,35 +64,39 @@ abstract class AbstractMatrix<M, E, V> implements Matrix<M, E, V> {
     table.get(rowIndex, columnIndex)
   }
 
-  override row(Integer rowIndex) {
+  def row(Integer rowIndex) {
     checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
       table.rowKeySet.last, rowIndex)
-    ImmutableMap.copyOf(table.row(rowIndex))
+    ImmutableMap.copyOf(table.row(rowIndex)) as Map<Integer, E>
   }
 
-  override column(Integer columnIndex) {
+  def column(Integer columnIndex) {
     checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
       table.columnKeySet.last, columnIndex)
-    ImmutableMap.copyOf(table.column(columnIndex))
+    ImmutableMap.copyOf(table.column(columnIndex)) as Map<Integer, E>
   }
 
-  override rows() {
-    ImmutableMap.copyOf(table.rowMap)
+  def rows() {
+    ImmutableMap.copyOf(table.rowMap) as Map<Integer, Map<Integer, E>>
   }
 
-  override columns() {
-    ImmutableMap.copyOf(table.columnMap)
+  def columns() {
+    ImmutableMap.copyOf(table.columnMap) as Map<Integer, Map<Integer, E>>
   }
 
-  override size() {
-    BigInteger.valueOf(rowSize) * BigInteger.valueOf(columnSize)
+  def size() {
+    Long.valueOf(rowSize) * Long.valueOf(columnSize)
   }
 
-  override rowSize() {
+  def rowSize() {
     table.rowKeySet.size
   }
 
-  override columnSize() {
+  def columnSize() {
     table.columnKeySet.size
+  }
+
+  def getTable() {
+    ImmutableTable.copyOf(table) as Table<Integer, Integer, E>
   }
 }

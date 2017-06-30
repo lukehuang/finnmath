@@ -40,15 +40,22 @@ import static java.util.Objects.requireNonNull
 @Data
 final class BigIntVector extends AbstractVector<BigInteger> implements Vector<BigIntVector, BigInteger> {
   override negate() {
-    null
+    val builder = builder
+    map.entrySet.forEach [
+      builder.put(-value)
+    ]
+    builder.build
   }
 
   override abs() {
-    null
+    var result = 0BI
+    for (it : map.entrySet)
+      result += value ** 2
+    result
   }
 
   override size() {
-    0
+    map.size
   }
 
   static def builder() {

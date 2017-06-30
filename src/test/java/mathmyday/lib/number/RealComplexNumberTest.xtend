@@ -41,14 +41,16 @@ final class RealComplexNumberTest {
   static val ONE = RealComplexNumber::ONE
   static List<RealComplexNumber> complexNumbers
   static List<RealComplexNumber> others
+  static List<RealComplexNumber> anotherOthers
 
   @BeforeClass
   def static void setUpClass() {
     val mathRandom = new MathRandom
     val bound = 10
     val howMany = 10
-    complexNumbers = mathRandom.createRealComplexNumbers(bound, howMany)
-    others = mathRandom.createRealComplexNumbers(bound, howMany)
+    complexNumbers = mathRandom.nextRealComplexNumbers(bound, howMany)
+    others = mathRandom.nextRealComplexNumbers(bound, howMany)
+    anotherOthers = mathRandom.nextRealComplexNumbers(bound, howMany)
   }
 
   @Test
@@ -79,6 +81,33 @@ final class RealComplexNumberTest {
         val expectedReal = real + other.real
         val expectedImaginary = imaginary + other.imaginary
         assertThat(add(other)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
+      ]
+    ]
+  }
+
+  @Test
+  def void addZeroShouldBeEqualToZero() {
+    complexNumbers.forEach [
+      assertThat(add(ZERO)).isEqualTo(it)
+    ]
+  }
+
+  @Test
+  def void addShouldBeCommutative() {
+    complexNumbers.forEach [
+      others.forEach [ other |
+        assertThat(add(other)).isEqualTo(other.add(it))
+      ]
+    ]
+  }
+
+  @Test
+  def void addShouldBeAssociative() {
+    complexNumbers.forEach [
+      others.forEach [ other |
+        anotherOthers.forEach [ anotherOther |
+          assertThat(add(other).add(anotherOther)).isEqualTo(add(other.add(anotherOther)))
+        ]
       ]
     ]
   }
@@ -120,6 +149,51 @@ final class RealComplexNumberTest {
   }
 
   @Test
+  def void multiplyOneShouldBeEqualToOne() {
+    complexNumbers.forEach [
+      assertThat(multiply(ONE)).isEqualTo(it)
+    ]
+  }
+
+  @Test
+  def void multiplyZeroShouldBeEqualToZero() {
+    complexNumbers.forEach [
+      assertThat(multiply(ZERO)).isEqualTo(ZERO)
+    ]
+  }
+
+  @Test
+  def void multiplyShouldBeCommutative() {
+    complexNumbers.forEach [
+      others.forEach [ other |
+        assertThat(multiply(other)).isEqualTo(other.multiply(it))
+      ]
+    ]
+  }
+
+  @Test
+  def void multiplyShouldBeAssociative() {
+    complexNumbers.forEach [
+      others.forEach [ other |
+        anotherOthers.forEach [ anotherOther |
+          assertThat(multiply(other).multiply(anotherOther)).isEqualTo(multiply(other.multiply(anotherOther)))
+        ]
+      ]
+    ]
+  }
+
+  @Test
+  def void addAndMultiplyShouldBeDistributive() {
+    complexNumbers.forEach [
+      others.forEach [ other |
+        anotherOthers.forEach [ anotherOther |
+          assertThat(multiply(other.add(anotherOther))).isEqualTo(multiply(other).add(multiply(anotherOther)))
+        ]
+      ]
+    ]
+  }
+
+  @Test
   def void divideNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.divide(null)
@@ -130,13 +204,20 @@ final class RealComplexNumberTest {
   def divideShouldSucceed() {
     complexNumbers.forEach [
       others.forEach [ other |
-        val suitable = if(other == ZERO) other.add(ONE) else other
+        val suitable = if (other == ZERO) other.add(ONE) else other
         val denominator = suitable.real ** 2 + suitable.imaginary ** 2
         val expectedReal = (real * suitable.real + imaginary * suitable.imaginary) / denominator
         val expectedImaginary = (imaginary * suitable.real - real * suitable.imaginary) / denominator
         new RealComplexNumber(expectedReal, expectedImaginary)
         assertThat(divide(suitable)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
       ]
+    ]
+  }
+
+  @Test
+  def divideOneShouldBeEqualToSelf() {
+    complexNumbers.forEach [
+      assertThat(divide(ONE)).isEqualTo(it)
     ]
   }
 
@@ -152,11 +233,31 @@ final class RealComplexNumberTest {
     complexNumbers.forEach [
       assertThat(pow(3)).isEqualTo(multiply(multiply(it)))
       assertThat(pow(2)).isEqualTo(multiply(it))
+    ]
+  }
+
+  @Test
+  def void powOneShouldBeTheSame() {
+    complexNumbers.forEach [
       assertThat(pow(1)).isSameAs(it)
+    ]
+  }
+
+  @Test
+  def void powZeroShouldBeSameAsOne() {
+    complexNumbers.forEach [
       assertThat(pow(0)).isSameAs(ONE)
     ]
+  }
+
+  @Test
+  def void powOfOneShouldBeEqualToOne() {
     assertThat(ONE.pow(3)).isEqualTo(ONE)
-    assertThat(ZERO.pow(0)).isEqualTo(ONE)
+  }
+
+  @Test
+  def void powOfZeroForExponentNotEqualToZeroShouldBeEqualToZero() {
+    assertThat(ZERO.pow(3)).isEqualTo(ZERO)
   }
 
   @Test
@@ -167,6 +268,11 @@ final class RealComplexNumberTest {
   }
 
   @Test
+  def void negateZeroShouldBeEqualToSelf() {
+    assertThat(ZERO.negate).isEqualTo(ZERO)
+  }
+
+  @Test
   def void absPow2ShouldSucceed() {
     complexNumbers.forEach [
       assertThat(absPow2).isEqualTo(real ** 2 + imaginary ** 2)
@@ -174,9 +280,32 @@ final class RealComplexNumberTest {
   }
 
   @Test
+  def void absPow2ZeroShouldBeEqualToZero() {
+    assertThat(ZERO.absPow2).isEqualTo(0BD)
+  }
+
+  @Test
+  def void absPow2OneShouldBeEqualToOne() {
+    assertThat(ONE.absPow2).isEqualTo(1BD)
+  }
+
+  @Test
+  def void absPow2MinusOneShouldBeSameAsOne() {
+    assertThat(ONE.negate.absPow2).isEqualTo(1BD)
+  }
+
+  @Test
   def void conjugateShouldSucceed() {
     complexNumbers.forEach [
       assertThat(conjugate).isEqualTo(new RealComplexNumber(real, -imaginary))
+    ]
+  }
+
+  @Test
+  def void conjugateRealNumberShouldBeEqualToSelf() {
+    complexNumbers.forEach [
+      val realNumber = new RealComplexNumber(real, 0BD)
+      assertThat(realNumber.conjugate).isEqualTo(realNumber)
     ]
   }
 }

@@ -30,9 +30,7 @@ package mathmyday.lib.linear
 
 import com.google.common.annotations.Beta
 import com.google.common.collect.Table
-import java.math.BigInteger
 import java.util.Map
-import java.util.Set
 
 @Beta
 interface Matrix<M, E, V> {
@@ -53,26 +51,6 @@ interface Matrix<M, E, V> {
   def E tr()
 
   def E det()
-
-  def Set<Integer> rowIndexes()
-
-  def Set<Integer> columnIndexes()
-
-  def Map<Integer, Map<Integer, E>> rows()
-
-  def Map<Integer, Map<Integer, E>> columns()
-
-  def E entry(Integer rowIndex, Integer columnIndex)
-
-  def Map<Integer, E> row(Integer index)
-
-  def Map<Integer, E> column(Integer index)
-
-  def BigInteger size()
-
-  def int rowSize()
-
-  def int columnSize()
 
   def boolean square()
 

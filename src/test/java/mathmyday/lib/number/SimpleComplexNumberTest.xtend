@@ -48,8 +48,8 @@ final class SimpleComplexNumberTest {
     val mathRandom = new MathRandom
     val bound = 10
     val howMany = 10
-    complexNumbers = mathRandom.createSimpleComplexNumbers(bound, howMany)
-    others = mathRandom.createSimpleComplexNumbers(bound, howMany)
+    complexNumbers = mathRandom.nextSimpleComplexNumbers(bound, howMany)
+    others = mathRandom.nextSimpleComplexNumbers(bound, howMany)
   }
 
   @Test

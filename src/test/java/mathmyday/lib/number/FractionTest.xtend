@@ -51,9 +51,9 @@ final class FractionTest {
     val it = new MathRandom
     val howMany = 10
     val bound = 10
-    fractions = createFractions(bound, howMany)
-    others = createFractions(bound, howMany)
-    invertibles = createInvertibleFractions(bound, howMany)
+    fractions = nextFractions(bound, howMany)
+    others = nextFractions(bound, howMany)
+    invertibles = nextInvertibleFractions(bound, howMany)
   }
 
   @Test
@@ -96,6 +96,33 @@ final class FractionTest {
   }
 
   @Test
+  def void addZeroShouldBeEqualToSelf() {
+    fractions.forEach [
+      assertThat(add(ZERO)).isEqualTo(it)
+    ]
+  }
+
+  @Test
+  def void addShouldBeCommutative() {
+    fractions.forEach [
+      others.forEach [ other |
+        assertThat(add(other)).isEqualTo(other.add(it))
+      ]
+    ]
+  }
+
+  @Test
+  def void addShouldBeAssociative() {
+    fractions.forEach [
+      others.forEach [ other |
+        invertibles.forEach [ invertible |
+          assertThat(add(other).add(invertible)).isEqualTo(add(other.add(invertible)))
+        ]
+      ]
+    ]
+  }
+
+  @Test
   def void subtractNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.subtract(null)
@@ -114,6 +141,13 @@ final class FractionTest {
   }
 
   @Test
+  def void subtractZeroShouldBeEqualToSelf() {
+    fractions.forEach [
+      assertThat(subtract(ZERO)).isEqualTo(it)
+    ]
+  }
+
+  @Test
   def void multiplyNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.multiply(null)
@@ -127,6 +161,51 @@ final class FractionTest {
         val expectedNumerator = numerator * other.numerator
         val expectedDenominator = denominator * other.denominator
         assertThat(multiply(other)).isEqualTo(new Fraction(expectedNumerator, expectedDenominator))
+      ]
+    ]
+  }
+
+  @Test
+  def void multiplyOneShouldBeEqualToSelf() {
+    fractions.forEach [
+      assertThat(multiply(ONE)).isEqualTo(it)
+    ]
+  }
+
+  @Test
+  def void multiplyZeroShouldBeEqualToZero() {
+    fractions.forEach [
+      assertThat(multiply(ZERO).reduce).isEqualTo(ZERO)
+    ]
+  }
+
+  @Test
+  def void multiplyShouldBeCommutative() {
+    fractions.forEach [
+      others.forEach [ other |
+        assertThat(multiply(other)).isEqualTo(other.multiply(it))
+      ]
+    ]
+  }
+
+  @Test
+  def void multiplyShouldBeAssociative() {
+    fractions.forEach [
+      others.forEach [ other |
+        invertibles.forEach [ invertible |
+          assertThat(multiply(other).multiply(invertible)).isEqualTo(multiply(other.multiply(invertible)))
+        ]
+      ]
+    ]
+  }
+
+  @Test
+  def void addAndMultiplyShouldBeDistributive() {
+    fractions.forEach [
+      others.forEach [ other |
+        invertibles.forEach [ invertible |
+          assertThat(multiply(other.add(invertible)).reduce).isEqualTo(multiply(other).add(multiply(invertible)).reduce)
+        ]
       ]
     ]
   }
@@ -155,10 +234,22 @@ final class FractionTest {
   }
 
   @Test
+  def void divideOneShouldBeEqualToSelf() {
+    fractions.forEach [
+      assertThat(divide(ONE)).isEqualTo(it)
+    ]
+  }
+
+  @Test
   def void negateShouldSucceed() {
     fractions.forEach [
       assertThat(negate).isEqualTo(new Fraction(-numerator, denominator))
     ]
+  }
+
+  @Test
+  def void negateZeroShouldBeEqualToSelf() {
+    assertThat(ZERO.negate).isEqualTo(ZERO)
   }
 
   @Test
@@ -173,11 +264,31 @@ final class FractionTest {
     fractions.forEach [
       assertThat(pow(3)).isEqualTo(multiply(multiply(it)))
       assertThat(pow(2)).isEqualTo(multiply(it))
+    ]
+  }
+
+  @Test
+  def void powOneShouldBeTheSame() {
+    fractions.forEach [
       assertThat(pow(1)).isSameAs(it)
+    ]
+  }
+
+  @Test
+  def void powZeroShouldBeSameAsOne() {
+    fractions.forEach [
       assertThat(pow(0)).isSameAs(ONE)
     ]
+  }
+
+  @Test
+  def void powOfOneShouldBeEqualToOne() {
     assertThat(ONE.pow(3)).isEqualTo(ONE)
-    assertThat(ZERO.pow(0)).isEqualTo(ONE)
+  }
+
+  @Test
+  def void powOfZeroForExponentNotEqualToZeroShouldBeEqualToZero() {
+    assertThat(ZERO.pow(3)).isEqualTo(ZERO)
   }
 
   @Test
@@ -192,6 +303,11 @@ final class FractionTest {
     invertibles.forEach [
       assertThat(invert).isEqualTo(new Fraction(denominator, numerator))
     ]
+  }
+
+  @Test
+  def void invertOneShouldBeEqualToOne() {
+    assertThat(ONE.invert).isEqualTo(ONE)
   }
 
   @Test
@@ -307,7 +423,7 @@ final class FractionTest {
     val mathRandom = new MathRandom
     val bound = 10
     val howMany = 10
-    mathRandom.createInvertiblePositiveFractions(bound, howMany).forEach [
+    mathRandom.nextInvertiblePositiveFractions(bound, howMany).forEach [
       val expectedForNegativeSignum = new Fraction(-numerator, denominator)
       assertThat(new Fraction(numerator, -denominator).normalize).isEqualTo(expectedForNegativeSignum)
       assertThat(new Fraction(-numerator, denominator).normalize).isEqualTo(expectedForNegativeSignum)
@@ -319,10 +435,35 @@ final class FractionTest {
   }
 
   @Test
+  def void normalizeZeroShouldBeTheSame() {
+    assertThat(ZERO.normalize).isSameAs(ZERO)
+  }
+
+  @Test
+  def void normalizeOneShouldBeTheSame() {
+    assertThat(ONE.normalize).isSameAs(ONE)
+  }
+
+  @Test
   def void absShouldSucceed() {
     fractions.forEach [
       assertThat(abs).isEqualTo(new Fraction(numerator.abs, denominator.abs))
     ]
+  }
+
+  @Test
+  def void absZeroShouldBeEqualToZero() {
+    assertThat(ZERO.abs).isEqualTo(ZERO)
+  }
+
+  @Test
+  def void absOneShouldBeEqualToOne() {
+    assertThat(ONE.abs).isEqualTo(ONE)
+  }
+
+  @Test
+  def void absMinusOneShouldBeSameAsOne() {
+    assertThat(ONE.negate.abs).isEqualTo(ONE)
   }
 
   @Test
@@ -333,11 +474,36 @@ final class FractionTest {
   }
 
   @Test
+  def void signumMinusOneShouldBeEqualToMinusOne() {
+    assertEquals(-1, ONE.negate.signum)
+  }
+
+  @Test
+  def void signumZeroShouldBeEqualToZero() {
+    assertEquals(0, ZERO.signum)
+  }
+
+  @Test
+  def void signumOneShouldBeEqualToOne() {
+    assertEquals(1, ONE.signum)
+  }
+
+  @Test
   def void reduceShouldSucceed() {
     fractions.forEach [
       val gcd = numerator.gcd(denominator)
       assertThat(reduce).isEqualTo(new Fraction(numerator / gcd, denominator / gcd))
     ]
+  }
+
+  @Test
+  def void reduceZeroShouldBeEqualToZero() {
+    assertThat(ZERO.reduce).isEqualTo(ZERO)
+  }
+
+  @Test
+  def void reduceOneShouldBeEqualToOne() {
+    assertThat(ONE.reduce).isEqualTo(ONE)
   }
 
   @Test
@@ -353,6 +519,13 @@ final class FractionTest {
       others.forEach [ other |
         assertEquals(equivalent(other), reduce == other.reduce)
       ]
+    ]
+  }
+
+  @Test
+  def void equivalentSelfShouldBeTrue() {
+    fractions.forEach [
+      assertTrue(equivalent(it))
     ]
   }
 }
