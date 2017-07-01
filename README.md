@@ -3,7 +3,7 @@
 bigMath is a free software library for the JVM which provides or will provide implementations for fractions, 
 complex numbers, matrixes and vectors and their arithmetics based on BigInteger and BigDecimal so that this 
 library is not prone to buffer overflows and big rounding errors. The great Commons Math uses primitives 
-instead. So if you want to achieve great performance then please choose Commons Math instead.
+so if you want to achieve great performance then please choose Commons Math instead.
 
 Today bigMath consists of three parts:
 * Linear algebra with matrixes and vectors
