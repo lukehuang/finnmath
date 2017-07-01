@@ -19,7 +19,7 @@ bigMath is still in a very early state and a work in progress.
 
 ## Thanks to
 * Oracle for the JVM and OpenJDK
-* the Eclipse Foundation for the Eclipse IDE and Xtend
+* the Eclipse Foundation for Xtend and the Eclipse IDE
 * Google for Guava
 * the Apache Software Foundation for Groovy, Commons Lang and Commons Math 
 * Joel Costigliola for AssertJ
