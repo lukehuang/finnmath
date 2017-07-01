@@ -580,9 +580,8 @@ final class FractionTest {
                     val a = equivalent(other)
                     val b = other.equivalent(invertible)
                     val c = equivalent(invertible)
-                    if (a && b) {
+                    if (a && b)
                         assertTrue(c)
-                    }
                     if (!c)
                         assertFalse(a && b)
                 ]
