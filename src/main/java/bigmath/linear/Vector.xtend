@@ -28,10 +28,24 @@
 
 package bigmath.linear
 
-import com.google.common.annotations.Beta
+import java.util.Map
 
-@Beta
-interface Vector<V, E> {
+import static com.google.common.base.Preconditions.checkArgument
+import static java.util.Objects.requireNonNull
+
+abstract class Vector<V, E> {
+    protected val Map<Integer, E> map
+
+    protected new(Map<Integer, E> map) {
+        this.map = requireNonNull(map, 'map')
+    }
+
+    def entry(Integer index) {
+        requireNonNull(index, 'index')
+        checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
+        map.get(index)
+    }
+
     def V negate()
 
     def E abs()

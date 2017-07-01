@@ -28,21 +28,33 @@
 
 package bigmath.linear
 
-import java.util.Map
+import com.google.common.annotations.Beta
+import com.google.common.collect.ArrayTable
+import com.google.common.collect.Table
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
-abstract class AbstractVector<T> {
-    protected val Map<Integer, T> map
+@Beta
+@EqualsHashCode
+abstract class MatrixBuilder<T> {
+    protected Table<Integer, Integer, T> table
 
-    protected new(Map<Integer, T> map) {
-        this.map = requireNonNull(map, 'map')
+    new(int rowSize, int columnSize) {
+        checkArgument(rowSize > 0, 'expected row size > 0 but actual %s', rowSize)
+        checkArgument(columnSize > 0, 'expected column size > 0 but actual %s', columnSize)
+        table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))
     }
 
-    def entry(Integer index) {
-        requireNonNull(index, 'index')
-        checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
-        map.get(index)
+    def put(Integer rowIndex, Integer columnIndex, T entry) {
+        requireNonNull(entry, 'entry')
+        requireNonNull(rowIndex, 'rowIndex')
+        requireNonNull(columnIndex, 'columnIndex')
+        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
+            table.rowKeySet.last, rowIndex)
+        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
+            table.columnKeySet.last, columnIndex)
+        table.put(rowIndex, columnIndex, entry)
     }
 }

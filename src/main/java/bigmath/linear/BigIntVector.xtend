@@ -38,50 +38,50 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @Data
-final class BigIntVector extends AbstractVector<BigInteger> implements Vector<BigIntVector, BigInteger> {
-  override negate() {
-    val builder = builder
-    map.entrySet.forEach [
-      builder.put(-value)
-    ]
-    builder.build
-  }
-
-  override abs() {
-    var result = 0BI
-    for (it : map.entrySet)
-      result += value ** 2
-    result
-  }
-
-  override size() {
-    map.size
-  }
-
-  static def builder() {
-    new BigIntVectorBuilder
-  }
-
-  @Beta
-  @Data
-  static class BigIntVectorBuilder extends AbstractVectorBuilder<BigInteger> implements Builder<BigIntVector> {
-    private new() {
+final class BigIntVector extends Vector<BigIntVector, BigInteger> {
+    override negate() {
+        val builder = builder
+        map.entrySet.forEach [
+            builder.put(-value)
+        ]
+        builder.build
     }
 
-    def addToEntryAndPut(Integer index, BigInteger entry) {
-      requireNonNull(index, 'index')
-      checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
-      val existing = map.get(index)
-      requireNonNull(existing, 'existing')
-      requireNonNull(entry, 'entry')
-      map.put(index, map.get(index) + entry)
+    override abs() {
+        var result = 0BI
+        for (it : map.entrySet)
+            result += value ** 2
+        result
     }
 
-    override build() {
-      map.forEach [ index, entry |
-        requireNonNull(entry, 'entry')
-      ]
-      new BigIntVector(map)
+    override size() {
+        map.size
     }
-  }
+
+    static def builder() {
+        new BigIntVectorBuilder
+    }
+
+    @Beta
+    @Data
+    static class BigIntVectorBuilder extends VectorBuilder<BigInteger> implements Builder<BigIntVector> {
+        private new() {
+        }
+
+        def addToEntryAndPut(Integer index, BigInteger entry) {
+            requireNonNull(index, 'index')
+            checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
+            val existing = map.get(index)
+            requireNonNull(existing, 'existing')
+            requireNonNull(entry, 'entry')
+            map.put(index, map.get(index) + entry)
+        }
+
+        override build() {
+            map.forEach [ index, entry |
+                requireNonNull(entry, 'entry')
+            ]
+            new BigIntVector(map)
+        }
+    }
 }

@@ -37,7 +37,7 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
-abstract class AbstractVectorBuilder<T> {
+abstract class VectorBuilder<T> {
     protected val Map<Integer, T> map = newHashMap
 
     def put(T entry) {

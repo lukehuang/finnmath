@@ -37,7 +37,7 @@ import static java.util.Objects.requireNonNull
 @Beta
 @EqualsHashCode
 @Accessors
-class AbstractNumberAndSqrt<T> {
+abstract class NumberAndSqrt<T> {
     protected val T number
     protected val T sqrt
 

@@ -29,11 +29,73 @@
 package bigmath.linear
 
 import com.google.common.annotations.Beta
+import com.google.common.collect.ImmutableMap
+import com.google.common.collect.ImmutableSet
+import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
 import java.util.Map
+import java.util.Set
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
+
+import static com.google.common.base.Preconditions.checkArgument
 
 @Beta
-interface Matrix<M, E, V> {
+@EqualsHashCode
+abstract class Matrix<M, E, V> {
+    Table<Integer, Integer, E> table
+
+    protected new(Table<Integer, Integer, E> table) {
+        this.table = ImmutableTable.copyOf(table)
+    }
+
+    def rowIndexes() {
+        ImmutableSet.copyOf(table.rowKeySet) as Set<Integer>
+    }
+
+    def columnIndexes() {
+        ImmutableSet.copyOf(table.columnKeySet) as Set<Integer>
+    }
+
+    def entry(Integer rowIndex, Integer columnIndex) {
+        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
+            table.rowKeySet.last, rowIndex)
+        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
+            table.columnKeySet.last, columnIndex)
+        table.get(rowIndex, columnIndex)
+    }
+
+    def row(Integer rowIndex) {
+        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
+            table.rowKeySet.last, rowIndex)
+        ImmutableMap.copyOf(table.row(rowIndex)) as Map<Integer, E>
+    }
+
+    def column(Integer columnIndex) {
+        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
+            table.columnKeySet.last, columnIndex)
+        ImmutableMap.copyOf(table.column(columnIndex)) as Map<Integer, E>
+    }
+
+    def rows() {
+        ImmutableMap.copyOf(table.rowMap) as Map<Integer, Map<Integer, E>>
+    }
+
+    def columns() {
+        ImmutableMap.copyOf(table.columnMap) as Map<Integer, Map<Integer, E>>
+    }
+
+    def size() {
+        Long.valueOf(rowSize) * Long.valueOf(columnSize)
+    }
+
+    def rowSize() {
+        table.rowKeySet.size
+    }
+
+    def columnSize() {
+        table.columnKeySet.size
+    }
+
     def M add(M summand)
 
     def M subtract(M subtrahend)
@@ -74,5 +136,7 @@ interface Matrix<M, E, V> {
 
     def M minor(Integer rowIndex, Integer columnIndex)
 
-    def Table<Integer, Integer, E> getTable()
+    def getTable() {
+        ImmutableTable.copyOf(table) as Table<Integer, Integer, E>
+    }
 }

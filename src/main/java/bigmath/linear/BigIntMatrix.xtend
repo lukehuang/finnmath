@@ -40,7 +40,7 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @Data
-final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigIntVector> implements Matrix<BigIntMatrix, BigInteger, BigIntVector> {
+final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> {
     override add(BigIntMatrix summand) {
         requireNonNull(summand, 'summand')
         checkArgument(table.rowKeySet.size == summand.rowSize, 'equal row sizes expected but actual %s != %s',
@@ -219,7 +219,7 @@ final class BigIntMatrix extends AbstractMatrix<BigIntMatrix, BigInteger, BigInt
         new BigIntMatrixBuilder(rowSize, columnSize)
     }
 
-    static class BigIntMatrixBuilder extends AbstractMatrixBuilder<BigInteger> implements Builder<BigIntMatrix> {
+    static class BigIntMatrixBuilder extends MatrixBuilder<BigInteger> implements Builder<BigIntMatrix> {
         private new(int rowSize, int columnSize) {
             super(rowSize, columnSize)
         }

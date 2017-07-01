@@ -36,7 +36,7 @@ import org.apache.commons.lang3.builder.Builder
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
-final class DecimalMatrix extends AbstractMatrix<DecimalMatrix, BigDecimal, DecimalVector> implements Matrix<DecimalMatrix, BigDecimal, DecimalVector> {
+final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVector> {
     protected new(Table<Integer, Integer, BigDecimal> table) {
         super(table)
     }
@@ -118,7 +118,7 @@ final class DecimalMatrix extends AbstractMatrix<DecimalMatrix, BigDecimal, Deci
         new BigIntMatrixBuilder(rowSize, columnSize)
     }
 
-    static class BigIntMatrixBuilder extends AbstractMatrixBuilder<BigDecimal> implements Builder<DecimalMatrix> {
+    static class BigIntMatrixBuilder extends MatrixBuilder<BigDecimal> implements Builder<DecimalMatrix> {
         private new(int rowSize, int columnSize) {
             super(rowSize, columnSize)
         }

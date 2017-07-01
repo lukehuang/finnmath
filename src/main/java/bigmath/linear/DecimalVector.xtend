@@ -31,7 +31,7 @@ package bigmath.linear
 import java.math.BigDecimal
 import java.util.Map
 
-final class DecimalVector extends AbstractVector<BigDecimal> implements Vector<DecimalVector, BigDecimal> {
+final class DecimalVector extends Vector<DecimalVector, BigDecimal> {
     protected new(Map<Integer, BigDecimal> map) {
         super(map)
     }
