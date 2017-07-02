@@ -39,12 +39,10 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @Data
-final class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealComplexNumber>, ComplexNumber<BigInteger, SimpleComplexNumber, BigIntMatrix> {
+final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexNumber, BigIntMatrix> implements MathNumber<SimpleComplexNumber, RealComplexNumber> {
     public static val ZERO = new SimpleComplexNumber(0BI, 0BI)
     public static val SimpleComplexNumber ONE = new SimpleComplexNumber(1BI, 0BI)
     public static val I = new SimpleComplexNumber(0BI, 1BI)
-    BigInteger real
-    BigInteger imaginary
 
     new(BigInteger real, BigInteger imaginary) {
         this.real = requireNonNull(real, 'real')
@@ -121,10 +119,6 @@ final class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealC
 
     override matrix() {
         val builder = BigIntMatrix::builder(2, 2)
-        builder.put(1, 1, real)
-        builder.put(1, 2, -imaginary)
-        builder.put(2, 1, imaginary)
-        builder.put(2, 2, real)
-        builder.build
+        builder.put(1, 1, real).put(1, 2, -imaginary).put(2, 1, imaginary).put(2, 2, real).build
     }
 }

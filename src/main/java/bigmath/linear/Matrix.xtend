@@ -42,7 +42,7 @@ import static com.google.common.base.Preconditions.checkArgument
 @Beta
 @EqualsHashCode
 abstract class Matrix<M, E, V> {
-    Table<Integer, Integer, E> table
+    protected Table<Integer, Integer, E> table
 
     protected new(Table<Integer, Integer, E> table) {
         this.table = ImmutableTable.copyOf(table)

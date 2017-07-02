@@ -38,8 +38,8 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
-abstract class MatrixBuilder<T> {
-    protected Table<Integer, Integer, T> table
+abstract class MatrixBuilder<B, M, E> {
+    protected Table<Integer, Integer, E> table
 
     new(int rowSize, int columnSize) {
         checkArgument(rowSize > 0, 'expected row size > 0 but actual %s', rowSize)
@@ -47,7 +47,7 @@ abstract class MatrixBuilder<T> {
         table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))
     }
 
-    def put(Integer rowIndex, Integer columnIndex, T entry) {
+    def put(Integer rowIndex, Integer columnIndex, E entry) {
         requireNonNull(entry, 'entry')
         requireNonNull(rowIndex, 'rowIndex')
         requireNonNull(columnIndex, 'columnIndex')
@@ -56,5 +56,8 @@ abstract class MatrixBuilder<T> {
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
         table.put(rowIndex, columnIndex, entry)
+        this as B
     }
+
+    def M build()
 }

@@ -39,12 +39,10 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @Data
-final class RealComplexNumber implements MathNumber<RealComplexNumber, RealComplexNumber>, ComplexNumber<BigDecimal, RealComplexNumber, DecimalMatrix> {
+final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumber, DecimalMatrix> implements MathNumber<RealComplexNumber, RealComplexNumber> {
     public static val ZERO = new RealComplexNumber(0BD, 0BD)
     public static val ONE = new RealComplexNumber(1BD, 0BD)
     public static val I = new RealComplexNumber(0BD, 1BD)
-    BigDecimal real
-    BigDecimal imaginary
 
     new(SimpleComplexNumber complexNumber) {
         requireNonNull(complexNumber, 'complexNumber')

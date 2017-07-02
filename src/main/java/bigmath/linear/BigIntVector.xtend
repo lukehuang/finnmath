@@ -64,7 +64,7 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger> {
 
     @Beta
     @Data
-    static class BigIntVectorBuilder extends VectorBuilder<BigInteger> implements Builder<BigIntVector> {
+    static class BigIntVectorBuilder extends VectorBuilder<BigIntVectorBuilder, BigIntVector, BigInteger> implements Builder<BigIntVector> {
         private new() {
         }
 

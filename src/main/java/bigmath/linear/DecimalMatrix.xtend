@@ -115,10 +115,10 @@ final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVecto
     static def builder(int rowSize, int columnSize) {
         checkArgument(rowSize > 0, 'expected row size > 0 but actual %s', rowSize)
         checkArgument(columnSize > 0, 'expected column size > 0 but actual %s', columnSize)
-        new BigIntMatrixBuilder(rowSize, columnSize)
+        new DecimalMatrixBuilder(rowSize, columnSize)
     }
 
-    static class BigIntMatrixBuilder extends MatrixBuilder<BigDecimal> implements Builder<DecimalMatrix> {
+    static class DecimalMatrixBuilder extends MatrixBuilder<DecimalMatrixBuilder, DecimalMatrix, BigDecimal> implements Builder<DecimalMatrix> {
         private new(int rowSize, int columnSize) {
             super(rowSize, columnSize)
         }

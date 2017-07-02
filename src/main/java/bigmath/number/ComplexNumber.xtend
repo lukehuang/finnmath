@@ -29,9 +29,16 @@
 package bigmath.number
 
 import com.google.common.annotations.Beta
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 @Beta
-interface ComplexNumber<S, T, M> {
+@EqualsHashCode
+@Accessors
+abstract class ComplexNumber<S, T, M> {
+    protected S real
+    protected S imaginary
+
     def S absPow2()
 
     def T conjugate()

@@ -37,16 +37,20 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
-abstract class VectorBuilder<T> {
-    protected val Map<Integer, T> map = newHashMap
+abstract class VectorBuilder<B, V, E> {
+    protected val Map<Integer, E> map = newHashMap
 
-    def put(T entry) {
+    def put(E entry) {
         map.put(map.size + 1, requireNonNull(entry, 'entry'))
+        this as B
     }
 
-    def put(Integer index, T entry) {
+    def put(Integer index, E entry) {
         requireNonNull(index, 'index')
         checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
         map.put(index, requireNonNull(entry, 'entry'))
+        this as B
     }
+
+    def V build()
 }

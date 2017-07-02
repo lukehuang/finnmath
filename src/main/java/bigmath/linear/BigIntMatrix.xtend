@@ -219,7 +219,7 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
         new BigIntMatrixBuilder(rowSize, columnSize)
     }
 
-    static class BigIntMatrixBuilder extends MatrixBuilder<BigInteger> implements Builder<BigIntMatrix> {
+    static class BigIntMatrixBuilder extends MatrixBuilder<BigIntMatrixBuilder, BigIntMatrix, BigInteger> implements Builder<BigIntMatrix> {
         private new(int rowSize, int columnSize) {
             super(rowSize, columnSize)
         }
