@@ -10,12 +10,40 @@ Today bigMath consists of three parts:
 * Fractions and complex numbers
 * A pseudo random generator
 
-bigMath is written in Xtend and uses Gradle as its build automation tool.
+bigMath is written in Xtend and uses Gradle as its build automation tool so it should interop 
+seamlessly with other JVM technologies.
 Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 bigMath is open source and free software and is licensed under the permissive BSD 2-Clause License.
 
 bigMath is still in a very early state and a work in progress.
+
+## Building
+
+#### Prerequisites
+* JDK
+* Gradle
+* Git (optional)
+#
+	git clone https://github.com/togliu/bigmath.git
+	cd bigmath
+	gradle install
+
+This will clone the remote Git repository, build bigmath and install it into your local Maven repository.
+
+## Developing
+
+I recommend the Eclipse IDE for Xtend development but you are free to use whatever IDE or editor you want.
+You will need the Xtend plugin and optional the EGit plugin for Git and the Buildship plugin for Gradle
+integration. Push requests are very welcome.
+
+The Eclipse plugin for Gradle is applied to the build.gradle file.
+
+    gradle eclipse
+
+This will create an Eclipse project inside your cloned folder which is ready to import.
+
+The code formatting follows loosely the Google Java style guide found here on GitHub.    
 
 ## Thanks to
 * Oracle for the JVM and OpenJDK
@@ -28,4 +56,3 @@ bigMath is still in a very early state and a work in progress.
 * Linus Torvalds for Git
 * Gradle Inc. for Gradle
 * Judd Vinet and Aaron Griffin for Arch Linux
-
