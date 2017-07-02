@@ -44,9 +44,9 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
     override add(BigIntMatrix summand) {
         requireNonNull(summand, 'summand')
         checkArgument(table.rowKeySet.size == summand.rowSize, 'equal row sizes expected but actual %s != %s',
-            table.rowKeySet.last, summand.rowSize)
+            table.rowKeySet.size, summand.rowSize)
         checkArgument(table.columnKeySet.size == summand.columnSize, 'column sizes expected equal but actual %s != %s',
-            table.columnKeySet.last, summand.columnSize)
+            table.columnKeySet.size, summand.columnSize)
         val builder = BigIntMatrix::builder(rowSize, columnSize)
         table.cellSet.forEach [
             builder.put(rowKey, columnKey, value + summand.entry(rowKey, columnKey))
@@ -57,9 +57,9 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
     override subtract(BigIntMatrix subtrahend) {
         requireNonNull(subtrahend, 'subtrahend')
         checkArgument(table.rowKeySet.size == subtrahend.rowSize, 'equal row sizes expected but actual %s != %s',
-            table.rowKeySet.last, subtrahend.rowSize)
+            table.rowKeySet.size, subtrahend.rowSize)
         checkArgument(table.columnKeySet.size == subtrahend.columnSize,
-            'equal column sizes expected but actual %s != %s', table.columnKeySet.last, subtrahend.columnSize)
+            'equal column sizes expected but actual %s != %s', table.columnKeySet.size, subtrahend.columnSize)
         val builder = builder(rowSize, columnSize)
         table.cellSet.forEach [
             builder.put(rowKey, columnKey, value - subtrahend.entry(rowKey, columnKey))
@@ -105,7 +105,7 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
 
     override scalarMultiply(BigInteger scalar) {
         requireNonNull(scalar, 'scalar')
-        val builder = builder(table.rowKeySet.last, table.columnKeySet.last)
+        val builder = builder(table.rowKeySet.size, table.columnKeySet.size)
         table.cellSet.forEach [
             builder.put(rowKey, columnKey, scalar * value)
         ]
@@ -200,14 +200,14 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
     override minor(Integer rowIndex, Integer columnIndex) {
         requireNonNull(rowIndex, 'rowIndex')
         requireNonNull(columnIndex, 'columnIndex')
-        checkArgument(table.containsRow(rowIndex), 'expected row index in [0, %s] but actual %s', table.rowKeySet.last,
+        checkArgument(table.containsRow(rowIndex), 'expected row index in [0, %s] but actual %s', table.rowKeySet.size,
             rowIndex)
         checkArgument(table.containsColumn(rowIndex), 'expected column index in [0, %s] but actual %s',
-            table.columnKeySet.last, columnIndex)
+            table.columnKeySet.size, columnIndex)
         val builder = builder(table.rowKeySet.size - 1, table.columnKeySet.size - 1)
         table.cellSet.forEach [
-            val newRowIndex = if(rowKey >= rowIndex) rowKey - 1 else rowKey
-            val newColumnIndex = if(columnKey >= columnIndex) columnKey - 1 else columnKey
+            val newRowIndex = if (rowKey >= rowIndex) rowKey - 1 else rowKey
+            val newColumnIndex = if (columnKey >= columnIndex) columnKey - 1 else columnKey
             builder.put(newRowIndex, newColumnIndex, value)
         ]
         builder.build

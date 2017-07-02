@@ -58,21 +58,21 @@ abstract class Matrix<M, E, V> {
 
     def entry(Integer rowIndex, Integer columnIndex) {
         checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
-            table.rowKeySet.last, rowIndex)
+            table.rowKeySet.size, rowIndex)
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
-            table.columnKeySet.last, columnIndex)
+            table.columnKeySet.size, columnIndex)
         table.get(rowIndex, columnIndex)
     }
 
     def row(Integer rowIndex) {
         checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
-            table.rowKeySet.last, rowIndex)
+            table.rowKeySet.size, rowIndex)
         ImmutableMap.copyOf(table.row(rowIndex)) as Map<Integer, E>
     }
 
     def column(Integer columnIndex) {
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
-            table.columnKeySet.last, columnIndex)
+            table.columnKeySet.size, columnIndex)
         ImmutableMap.copyOf(table.column(columnIndex)) as Map<Integer, E>
     }
 

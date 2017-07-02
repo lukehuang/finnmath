@@ -52,9 +52,9 @@ abstract class MatrixBuilder<T> {
         requireNonNull(rowIndex, 'rowIndex')
         requireNonNull(columnIndex, 'columnIndex')
         checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
-            table.rowKeySet.last, rowIndex)
+            table.rowKeySet.size, rowIndex)
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
-            table.columnKeySet.last, columnIndex)
+            table.columnKeySet.size, columnIndex)
         table.put(rowIndex, columnIndex, entry)
     }
 }
