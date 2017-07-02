@@ -11,7 +11,7 @@ Today bigMath consists of three parts:
 * A pseudo random generator
 
 bigMath is written in Xtend and uses Gradle as its build automation tool.
-Dependencies are Guava and Commons Lang and for tests AssertJ and JUnit.
+Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 bigMath is open source and free software and is licensed under the permissive BSD 2-Clause License.
 
@@ -21,9 +21,11 @@ bigMath is still in a very early state and a work in progress.
 * Oracle for the JVM and OpenJDK
 * the Eclipse Foundation for Xtend and the Eclipse IDE
 * Google for Guava
-* the Apache Software Foundation for Groovy, Commons Lang and Commons Math 
+* the Apache Software Foundation for Groovy, Commons Lang and Commons Math
+* QOS.ch for SLF4J 
 * Joel Costigliola for AssertJ
 * the JUnit team for JUnit
 * Linus Torvalds for Git
 * Gradle Inc. for Gradle
 * Judd Vinet and Aaron Griffin for Arch Linux
+
