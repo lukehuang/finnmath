@@ -42,16 +42,17 @@ final class RealComplexNumberTest {
     static val I = RealComplexNumber::I
     static List<RealComplexNumber> complexNumbers
     static List<RealComplexNumber> others
-    static List<RealComplexNumber> anotherOthers
+    static List<RealComplexNumber> invertibles
 
     @BeforeClass
     def static void setUpClass() {
         val mathRandom = new MathRandom
         val bound = 10
+        val scale = 2
         val howMany = 10
-        complexNumbers = mathRandom.nextRealComplexNumbers(bound, howMany)
-        others = mathRandom.nextRealComplexNumbers(bound, howMany)
-        anotherOthers = mathRandom.nextRealComplexNumbers(bound, howMany)
+        complexNumbers = mathRandom.nextRealComplexNumbers(bound, scale, howMany)
+        others = mathRandom.nextRealComplexNumbers(bound, scale, howMany)
+        invertibles = mathRandom.nextInvertibleRealComplexNumbers(bound, scale, howMany)
     }
 
     @Test
@@ -106,8 +107,8 @@ final class RealComplexNumberTest {
     def void addShouldBeAssociative() {
         complexNumbers.forEach [
             others.forEach [ other |
-                anotherOthers.forEach [ anotherOther |
-                    assertThat(add(other).add(anotherOther)).isEqualTo(add(other.add(anotherOther)))
+                invertibles.forEach [ invertible |
+                    assertThat(add(other).add(invertible)).isEqualTo(add(other.add(invertible)))
                 ]
             ]
         ]
@@ -159,7 +160,9 @@ final class RealComplexNumberTest {
     @Test
     def void multiplyZeroShouldBeEqualToZero() {
         complexNumbers.forEach [
-            assertThat(multiply(ZERO)).isEqualTo(ZERO)
+            val it = multiply(ZERO)
+            val scaledZero = new RealComplexNumber(0BD.scale = real.scale, 0BD.scale = imaginary.scale)
+            assertThat(it).isEqualTo(scaledZero)
         ]
     }
 
@@ -176,8 +179,8 @@ final class RealComplexNumberTest {
     def void multiplyShouldBeAssociative() {
         complexNumbers.forEach [
             others.forEach [ other |
-                anotherOthers.forEach [ anotherOther |
-                    assertThat(multiply(other).multiply(anotherOther)).isEqualTo(multiply(other.multiply(anotherOther)))
+                invertibles.forEach [ invertible |
+                    assertThat(multiply(other).multiply(invertible)).isEqualTo(multiply(other.multiply(invertible)))
                 ]
             ]
         ]
@@ -187,8 +190,8 @@ final class RealComplexNumberTest {
     def void addAndMultiplyShouldBeDistributive() {
         complexNumbers.forEach [
             others.forEach [ other |
-                anotherOthers.forEach [ anotherOther |
-                    assertThat(multiply(other.add(anotherOther))).isEqualTo(multiply(other).add(multiply(anotherOther)))
+                invertibles.forEach [ invertible |
+                    assertThat(multiply(other.add(invertible))).isEqualTo(multiply(other).add(multiply(invertible)))
                 ]
             ]
         ]
@@ -204,13 +207,12 @@ final class RealComplexNumberTest {
     @Test
     def divideShouldSucceed() {
         complexNumbers.forEach [
-            others.forEach [ other |
-                val suitable = if(other == ZERO) other.add(ONE) else other
-                val denominator = suitable.real ** 2 + suitable.imaginary ** 2
-                val expectedReal = (real * suitable.real + imaginary * suitable.imaginary) / denominator
-                val expectedImaginary = (imaginary * suitable.real - real * suitable.imaginary) / denominator
+            invertibles.forEach [ invertible |
+                val denominator = invertible.real ** 2 + invertible.imaginary ** 2
+                val expectedReal = (real * invertible.real + imaginary * invertible.imaginary) / denominator
+                val expectedImaginary = (imaginary * invertible.real - real * invertible.imaginary) / denominator
                 new RealComplexNumber(expectedReal, expectedImaginary)
-                assertThat(divide(suitable)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
+                assertThat(divide(invertible)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
             ]
         ]
     }
@@ -281,7 +283,9 @@ final class RealComplexNumberTest {
     @Test
     def void addNegatedShouldBeEqualToZero() {
         complexNumbers.forEach [
-            assertThat(add(negate)).isEqualTo(ZERO)
+            val it = add(negate)
+            val scaledZero = new RealComplexNumber(0BD.scale = real.scale, 0BD.scale = imaginary.scale)
+            assertThat(it).isEqualTo(scaledZero)
         ]
     }
 

@@ -34,6 +34,7 @@ import java.math.BigDecimal
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
+import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
@@ -93,6 +94,15 @@ final class RealComplexNumber implements MathNumber<RealComplexNumber, RealCompl
 
     override negate() {
         new RealComplexNumber(-real, -imaginary)
+    }
+
+    override invert() {
+        checkState(invertible, 'expected != 0 but actual %s', this)
+        ONE.divide(this)
+    }
+
+    override invertible() {
+        this != ZERO
     }
 
     override asString() {

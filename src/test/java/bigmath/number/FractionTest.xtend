@@ -300,25 +300,6 @@ final class FractionTest {
     }
 
     @Test
-    def void invertibleZeroShouldBeFalse() {
-        assertFalse(ZERO.invertible)
-    }
-
-    @Test
-    def void invertibleShouldBePredictable() {
-        fractions.forEach [
-            assertEquals(numerator != 0BI, invertible)
-        ]
-    }
-
-    @Test
-    def void invertibleShouldSucceed() {
-        invertibles.forEach [
-            assertTrue(invertible)
-        ]
-    }
-
-    @Test
     def void invertZeroShouldThrowException() {
         assertThatThrownBy[
             ZERO.invert
@@ -338,9 +319,35 @@ final class FractionTest {
     }
 
     @Test
+    def void invertSelfShouldBeEqualToOneDividedBySelf() {
+        invertibles.forEach [
+            assertThat(invert.reduce.normalize).isEqualTo(ONE.divide(it).reduce.normalize)
+        ]
+    }
+
+    @Test
     def void multiplyInvertedShouldBeEqualToOne() {
         invertibles.forEach [
             assertThat(multiply(invert).reduce.normalize).isEqualTo(ONE)
+        ]
+    }
+
+    @Test
+    def void invertibleZeroShouldBeFalse() {
+        assertFalse(ZERO.invertible)
+    }
+
+    @Test
+    def void invertibleShouldBePredictable() {
+        fractions.forEach [
+            assertEquals(numerator != 0BI, invertible)
+        ]
+    }
+
+    @Test
+    def void invertibleShouldSucceed() {
+        invertibles.forEach [
+            assertTrue(invertible)
         ]
     }
 

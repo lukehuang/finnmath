@@ -34,6 +34,7 @@ import java.math.BigInteger
 import org.eclipse.xtend.lib.annotations.Data
 
 import static com.google.common.base.Preconditions.checkArgument
+import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
@@ -84,6 +85,15 @@ final class SimpleComplexNumber implements MathNumber<SimpleComplexNumber, RealC
 
     override negate() {
         new SimpleComplexNumber(-real, -imaginary)
+    }
+
+    override invert() {
+        checkState(invertible, 'expected != 0 but actual %s', this)
+        ONE.divide(this)
+    }
+
+    override invertible() {
+        this != ZERO
     }
 
     override asString() {

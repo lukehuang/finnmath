@@ -90,19 +90,19 @@ final class Fraction implements MathNumber<Fraction, Fraction> {
         ONE
     }
 
+    override invert() {
+        checkState(invertible, 'expected numerator != 0 but actual %s', numerator)
+        new Fraction(denominator, numerator)
+    }
+
+    override invertible() {
+        numerator != 0BI
+    }
+
     override asString() {
         if (denominator < 0BI)
             return '''«numerator» / («denominator»)'''
         '''«numerator» / «denominator»'''
-    }
-
-    def invertible() {
-        numerator != 0BI
-    }
-
-    def invert() {
-        checkState(invertible, 'expected numerator != 0 but actual %s', numerator)
-        new Fraction(denominator, numerator)
     }
 
     def lessThanOrEqualTo(Fraction other) {

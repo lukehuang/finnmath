@@ -49,260 +49,358 @@ import static java.util.Objects.requireNonNull
 @Beta
 @ToString
 final class MathRandom {
-  val random = new Random
+    val random = new Random
 
-  def nextPositiveLong(long bound) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    RandomUtils.nextLong(0, bound)
-  }
+    def nextPositiveLong(long bound) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        RandomUtils.nextLong(0, bound)
+    }
 
-  def nextNegativeLong(long bound) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    (-1) * RandomUtils.nextLong(0, bound)
-  }
+    def nextNegativeLong(long bound) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        (-1) * RandomUtils.nextLong(0, bound)
+    }
 
-  def nextLong(long bound) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    if (random.nextBoolean)
-      return nextNegativeLong(bound)
-    nextPositiveLong(bound)
-  }
+    def nextLong(long bound) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        if (random.nextBoolean)
+            return nextNegativeLong(bound)
+        nextPositiveLong(bound)
+    }
 
-  def nextPositiveLongs(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val ints = newLongArrayOfSize(howMany)
-    for (i : 0 ..< howMany)
-      ints.set(i, nextPositiveLong(bound))
-    ints
-  }
+    def nextPositiveLongs(long bound, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val ints = newLongArrayOfSize(howMany)
+        for (i : 0 ..< howMany)
+            ints.set(i, nextPositiveLong(bound))
+        ints
+    }
 
-  def nextNegativeLongs(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val ints = newLongArrayOfSize(howMany)
-    for (i : 0 ..< howMany)
-      ints.set(i, nextNegativeLong(bound))
-    ints
-  }
+    def nextNegativeLongs(long bound, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val ints = newLongArrayOfSize(howMany)
+        for (i : 0 ..< howMany)
+            ints.set(i, nextNegativeLong(bound))
+        ints
+    }
 
-  def nextLongs(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val ints = newLongArrayOfSize(howMany)
-    for (i : 0 ..< howMany)
-      ints.set(i, nextLong(bound))
-    ints
-  }
+    def nextLongs(long bound, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val ints = newLongArrayOfSize(howMany)
+        for (i : 0 ..< howMany)
+            ints.set(i, nextLong(bound))
+        ints
+    }
 
-  def nextPositiveDecimal(long bound, int scale) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
-    val decimal = nextDecimal(bound, scale)
-    if (decimal < 0BD)
-      return -decimal
-    decimal
-  }
+    def nextPositiveDecimal(long bound, int scale) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        val decimal = nextDecimal(bound, scale)
+        if (decimal < 0BD)
+            return -decimal
+        decimal
+    }
 
-  def nextNegativeDecimal(long bound, int scale) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
-    val decimal = nextDecimal(bound, scale)
-    if (decimal > 0BD)
-      return -decimal
-    decimal
-  }
+    def nextNegativeDecimal(long bound, int scale) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        val decimal = nextDecimal(bound, scale)
+        if (decimal > 0BD)
+            return -decimal
+        decimal
+    }
 
-  def nextDecimal(long bound, int scale) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
-    val decimal = BigDecimal.valueOf(RandomUtils.nextLong(0, bound))
-    keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP)
-  }
+    def nextDecimal(long bound, int scale) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        val decimal = BigDecimal.valueOf(RandomUtils.nextLong(0, bound))
+        keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP)
+    }
 
-  def keepDecimalInBound(BigDecimal decimal, long bound) {
-    requireNonNull(decimal, 'decimal')
-    checkArgument(bound > 0, 'expected > 0 but actual %s', bound)
-    var it = decimal
-    val decimalBound = BigDecimal.valueOf(bound)
-    if (it >= 0BD)
-      while (it >= decimalBound)
-        it -= decimalBound
-    else
-      while (abs >= decimalBound)
-        it += decimalBound
-    it
-  }
+    def nextInvertiblePositiveDecimal(long bound, int scale) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        val decimal = nextDecimal(bound, scale)
+        if (decimal < 0BD)
+            return -decimal
+        decimal
+    }
 
-  def nextPositiveDecimals(long bound, int scale, int howMany) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val List<BigDecimal> decimals = new ArrayList(howMany)
-    for (i : 0 ..< howMany)
-      decimals += nextPositiveDecimal(bound, scale)
-    decimals
-  }
+    def nextInvertibleNegativeDecimal(long bound, int scale) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        val decimal = nextDecimal(bound, scale)
+        if (decimal > 0BD)
+            return -decimal
+        decimal
+    }
 
-  def nextNegativeDecimals(long bound, int scale, int howMany) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val List<BigDecimal> decimals = new ArrayList(howMany)
-    for (i : 0 ..< howMany)
-      decimals += nextNegativeDecimal(bound, scale)
-    decimals
-  }
+    def nextInvertibleDecimal(long bound, int scale) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        val decimal = BigDecimal.valueOf(RandomUtils.nextLong(1, bound))
+        keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP)
+    }
 
-  def nextDecimals(long bound, int scale, int howMany) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val List<BigDecimal> decimals = new ArrayList(howMany)
-    for (i : 0 ..< howMany)
-      decimals += nextDecimal(bound, scale)
-    decimals
-  }
+    def keepDecimalInBound(BigDecimal decimal, long bound) {
+        requireNonNull(decimal, 'decimal')
+        checkArgument(bound > 0, 'expected > 0 but actual %s', bound)
+        var it = decimal
+        val decimalBound = BigDecimal.valueOf(bound)
+        if (it >= 0BD)
+            while (it >= decimalBound)
+                it -= decimalBound
+        else
+            while (abs >= decimalBound)
+                it += decimalBound
+        it
+    }
 
-  def nextPositiveFraction(long bound) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    val numerator = BigInteger.valueOf(RandomUtils.nextLong(0, bound))
-    val denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
-    new Fraction(numerator, denominator)
-  }
+    def nextPositiveDecimals(long bound, int scale, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val List<BigDecimal> decimals = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            decimals += nextPositiveDecimal(bound, scale)
+        decimals
+    }
 
-  def nextNegativeFraction(long bound) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    nextPositiveFraction(bound).negate
-  }
+    def nextNegativeDecimals(long bound, int scale, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val List<BigDecimal> decimals = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            decimals += nextNegativeDecimal(bound, scale)
+        decimals
+    }
 
-  def nextFraction(long bound) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    if (random.nextBoolean)
-      return nextNegativeFraction(bound)
-    nextPositiveFraction(bound)
-  }
+    def nextDecimals(long bound, int scale, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val List<BigDecimal> decimals = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            decimals += nextDecimal(bound, scale)
+        decimals
+    }
 
-  def nextPositiveFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
-    for (i : 0 ..< howMany)
-      fractions += nextPositiveFraction(bound)
-    fractions
-  }
+    def nextInvertiblePositiveDecimals(long bound, int scale, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val List<BigDecimal> decimals = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            decimals += nextInvertiblePositiveDecimal(bound, scale)
+        decimals
+    }
 
-  def nextNegativeFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val List<Fraction> fractions = new ArrayList(howMany)
-    for (i : 0 ..< howMany)
-      fractions += nextNegativeFraction(bound)
-    fractions
-  }
+    def nextInvertibleNegativeDecimals(long bound, int scale, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val List<BigDecimal> decimals = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            decimals += nextInvertibleNegativeDecimal(bound, scale)
+        decimals
+    }
 
-  def nextFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val List<Fraction> fractions = new ArrayList(howMany)
-    for (i : 0 ..< howMany)
-      fractions += nextFraction(bound)
-    fractions
-  }
+    def nextInvertibleDecimals(long bound, int scale, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val List<BigDecimal> decimals = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            decimals += nextInvertibleDecimal(bound, scale)
+        decimals
+    }
 
-  def nextInvertiblePositiveFraction(long bound) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    val numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
-    val denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
-    new Fraction(numerator, denominator)
-  }
+    def nextPositiveFraction(long bound) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        val numerator = BigInteger.valueOf(RandomUtils.nextLong(0, bound))
+        val denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
+        new Fraction(numerator, denominator)
+    }
 
-  def nextInvertibleNegativeFraction(long bound) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    nextInvertiblePositiveFraction(bound).negate
-  }
+    def nextNegativeFraction(long bound) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        nextPositiveFraction(bound).negate
+    }
 
-  def nextInvertibleFraction(long bound) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    if (random.nextBoolean)
-      return nextInvertibleNegativeFraction(bound)
-    nextInvertiblePositiveFraction(bound)
-  }
+    def nextFraction(long bound) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        if (random.nextBoolean)
+            return nextNegativeFraction(bound)
+        nextPositiveFraction(bound)
+    }
 
-  def nextInvertiblePositiveFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
-    for (i : 0 ..< howMany)
-      fractions += nextInvertiblePositiveFraction(bound)
-    fractions
-  }
+    def nextPositiveFractions(long bound, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
+        for (i : 0 ..< howMany)
+            fractions += nextPositiveFraction(bound)
+        fractions
+    }
 
-  def nextInvertibleNegativeFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
-    for (i : 0 ..< howMany)
-      fractions += nextInvertibleNegativeFraction(bound)
-    fractions
-  }
+    def nextNegativeFractions(long bound, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val List<Fraction> fractions = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            fractions += nextNegativeFraction(bound)
+        fractions
+    }
 
-  def nextInvertibleFractions(long bound, int howMany) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
-    for (i : 0 ..< howMany)
-      fractions += nextInvertibleFraction(bound)
-    fractions
-  }
+    def nextFractions(long bound, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val List<Fraction> fractions = new ArrayList(howMany)
+        for (i : 0 ..< howMany)
+            fractions += nextFraction(bound)
+        fractions
+    }
 
-  def nextSimpleComplexNumber(long bound) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    val real = BigInteger.valueOf(nextLong(bound))
-    val imaginary = BigInteger.valueOf(nextLong(bound))
-    new SimpleComplexNumber(real, imaginary)
-  }
+    def nextInvertiblePositiveFraction(long bound) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        val numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
+        val denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
+        new Fraction(numerator, denominator)
+    }
 
-  def nextSimpleComplexNumbers(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val complexNumbers = new ArrayList<SimpleComplexNumber>(howMany) as List<SimpleComplexNumber>
-    for (i : 0 ..< howMany)
-      complexNumbers += nextSimpleComplexNumber(bound)
-    complexNumbers
-  }
+    def nextInvertibleNegativeFraction(long bound) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        nextInvertiblePositiveFraction(bound).negate
+    }
 
-  def nextRealComplexNumber(long bound) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    val real = BigDecimal.valueOf(nextLong(bound))
-    val imaginary = BigDecimal.valueOf(nextLong(bound))
-    new RealComplexNumber(real, imaginary)
-  }
+    def nextInvertibleFraction(long bound) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        if (random.nextBoolean)
+            return nextInvertibleNegativeFraction(bound)
+        nextInvertiblePositiveFraction(bound)
+    }
 
-  def nextRealComplexNumbers(long bound, int howMany) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
-    val complexNumbers = new ArrayList<RealComplexNumber>(howMany) as List<RealComplexNumber>
-    for (i : 0 ..< howMany)
-      complexNumbers += nextRealComplexNumber(bound)
-    complexNumbers
-  }
+    def nextInvertiblePositiveFractions(long bound, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
+        for (i : 0 ..< howMany)
+            fractions += nextInvertiblePositiveFraction(bound)
+        fractions
+    }
 
-  def nextBigIntAndSqrt(long bound) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    val it = BigInteger.valueOf(nextPositiveLong(bound))
-    new BigIntAndSqrt(it ** 2, it)
-  }
+    def nextInvertibleNegativeFractions(long bound, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
+        for (i : 0 ..< howMany)
+            fractions += nextInvertibleNegativeFraction(bound)
+        fractions
+    }
 
-  def nextFractionAndSqrt(long bound) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    val it = nextPositiveFraction(bound)
-    new FractionAndSqrt(pow(2), it)
-  }
+    def nextInvertibleFractions(long bound, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
+        for (i : 0 ..< howMany)
+            fractions += nextInvertibleFraction(bound)
+        fractions
+    }
 
-  def nextSimpleComplexNumberAndSqrt(long bound) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    val it = nextSimpleComplexNumber(bound)
-    new SimpleComplexNumberAndSqrt(pow(2), it)
-  }
+    def nextSimpleComplexNumber(long bound) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        val real = BigInteger.valueOf(nextLong(bound))
+        val imaginary = BigInteger.valueOf(nextLong(bound))
+        new SimpleComplexNumber(real, imaginary)
+    }
+
+    def nextInvertibleSimpleComplexNumber(long bound) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        val nonZeroPart = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
+        val possibleZeroPart = if (random.nextBoolean) RandomUtils.nextLong(1, bound) else nextLong(bound)
+        if (random.nextBoolean)
+            return new SimpleComplexNumber(BigInteger.valueOf(possibleZeroPart), nonZeroPart)
+        new SimpleComplexNumber(nonZeroPart, BigInteger.valueOf(possibleZeroPart))
+    }
+
+    def nextSimpleComplexNumbers(long bound, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val complexNumbers = new ArrayList<SimpleComplexNumber>(howMany) as List<SimpleComplexNumber>
+        for (i : 0 ..< howMany)
+            complexNumbers += nextSimpleComplexNumber(bound)
+        complexNumbers
+    }
+
+    def nextInvertibleSimpleComplexNumbers(long bound, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val complexNumbers = new ArrayList<SimpleComplexNumber>(howMany) as List<SimpleComplexNumber>
+        for (i : 0 ..< howMany)
+            complexNumbers += nextInvertibleSimpleComplexNumber(bound)
+        complexNumbers
+    }
+
+    def nextRealComplexNumber(long bound, int scale) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        val real = nextDecimal(bound, scale)
+        val imaginary = nextDecimal(bound, scale)
+        new RealComplexNumber(real, imaginary)
+    }
+
+    def nextInvertibleRealComplexNumber(long bound, int scale) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        val nonZeroPart = nextInvertibleDecimal(bound, scale)
+        val possibleZeroPart = if (random.nextBoolean)
+                nextInvertibleDecimal(bound, scale)
+            else
+                nextDecimal(bound, scale)
+        if (random.nextBoolean)
+            return new RealComplexNumber(possibleZeroPart, nonZeroPart)
+        new RealComplexNumber(nonZeroPart, possibleZeroPart)
+    }
+
+    def nextRealComplexNumbers(long bound, int scale, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val complexNumbers = new ArrayList<RealComplexNumber>(howMany) as List<RealComplexNumber>
+        for (i : 0 ..< howMany)
+            complexNumbers += nextRealComplexNumber(bound, scale)
+        complexNumbers
+    }
+
+    def nextInvertibleRealComplexNumbers(long bound, int scale, int howMany) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val complexNumbers = new ArrayList<RealComplexNumber>(howMany) as List<RealComplexNumber>
+        for (i : 0 ..< howMany)
+            complexNumbers += nextInvertibleRealComplexNumber(bound, scale)
+        complexNumbers
+    }
+
+    def nextBigIntAndSqrt(long bound) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        val it = BigInteger.valueOf(nextPositiveLong(bound))
+        new BigIntAndSqrt(it ** 2, it)
+    }
+
+    def nextFractionAndSqrt(long bound) {
+        checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
+        val it = nextPositiveFraction(bound)
+        new FractionAndSqrt(pow(2), it)
+    }
+
+    def nextSimpleComplexNumberAndSqrt(long bound) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        val it = nextSimpleComplexNumber(bound)
+        new SimpleComplexNumberAndSqrt(pow(2), it)
+    }
 }

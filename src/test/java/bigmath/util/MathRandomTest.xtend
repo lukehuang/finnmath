@@ -339,13 +339,13 @@ final class MathRandomTest {
     @Test
     def void nextRealComplexNumberBoundTooLowShouldThrowException() {
         assertThatThrownBy[
-            mathRandom.nextRealComplexNumber(0)
+            mathRandom.nextRealComplexNumber(0, 1)
         ].isExactlyInstanceOf(IllegalArgumentException)
     }
 
     @Test
     def void nextRealComplexNumberShouldSucceed() {
-        val it = mathRandom.nextRealComplexNumber(bound)
+        val it = mathRandom.nextRealComplexNumber(bound, 1)
         assertThat(real).isGreaterThan(-decimalBound).isLessThan(decimalBound)
         assertThat(imaginary).isGreaterThan(-decimalBound).isLessThan(decimalBound)
     }
@@ -353,13 +353,13 @@ final class MathRandomTest {
     @Test
     def void nextRealComplexNumbersTooLessShoudThrowException() {
         assertThatThrownBy[
-            mathRandom.nextRealComplexNumbers(bound, 1)
+            mathRandom.nextRealComplexNumbers(bound, 1, 1)
         ].isExactlyInstanceOf(IllegalArgumentException)
     }
 
     @Test
     def void nextRealComplexNumbersShouldSucceed() {
-        val it = mathRandom.nextRealComplexNumbers(bound, howMany)
+        val it = mathRandom.nextRealComplexNumbers(bound, 1, howMany)
         assertEquals(howMany, size)
     }
 

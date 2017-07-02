@@ -43,7 +43,7 @@ final class SimpleComplexNumberTest {
     static val I = SimpleComplexNumber::I
     static List<SimpleComplexNumber> complexNumbers
     static List<SimpleComplexNumber> others
-    static List<SimpleComplexNumber> anotherOthers
+    static List<SimpleComplexNumber> invertibles
 
     @BeforeClass
     def static void setUpClass() {
@@ -52,7 +52,7 @@ final class SimpleComplexNumberTest {
         val howMany = 10
         complexNumbers = mathRandom.nextSimpleComplexNumbers(bound, howMany)
         others = mathRandom.nextSimpleComplexNumbers(bound, howMany)
-        anotherOthers = mathRandom.nextSimpleComplexNumbers(bound, howMany)
+        invertibles = mathRandom.nextInvertibleSimpleComplexNumbers(bound, howMany)
     }
 
     @Test
@@ -107,8 +107,8 @@ final class SimpleComplexNumberTest {
     def void addShouldBeAssociative() {
         complexNumbers.forEach [
             others.forEach [ other |
-                anotherOthers.forEach [ anotherOther |
-                    assertThat(add(other).add(anotherOther)).isEqualTo(add(other.add(anotherOther)))
+                invertibles.forEach [ invertible |
+                    assertThat(add(other).add(invertible)).isEqualTo(add(other.add(invertible)))
                 ]
             ]
         ]
@@ -177,8 +177,8 @@ final class SimpleComplexNumberTest {
     def void multiplyShouldBeAssociative() {
         complexNumbers.forEach [
             others.forEach [ other |
-                anotherOthers.forEach [ anotherOther |
-                    assertThat(multiply(other).multiply(anotherOther)).isEqualTo(multiply(other.multiply(anotherOther)))
+                invertibles.forEach [ invertible |
+                    assertThat(multiply(other).multiply(invertible)).isEqualTo(multiply(other.multiply(invertible)))
                 ]
             ]
         ]
@@ -188,8 +188,8 @@ final class SimpleComplexNumberTest {
     def void addAndMultiplyShouldBeDistributive() {
         complexNumbers.forEach [
             others.forEach [ other |
-                anotherOthers.forEach [ anotherOther |
-                    assertThat(multiply(other.add(anotherOther))).isEqualTo(multiply(other).add(multiply(anotherOther)))
+                invertibles.forEach [ invertible |
+                    assertThat(multiply(other.add(invertible))).isEqualTo(multiply(other).add(multiply(invertible)))
                 ]
             ]
         ]
@@ -205,13 +205,13 @@ final class SimpleComplexNumberTest {
     @Test
     def divideShouldSucceed() {
         complexNumbers.forEach [
-            others.forEach [ other |
-                val suitable = if(other == ZERO) other.add(ONE) else other
-                val denominator = new BigDecimal(suitable.real ** 2 + suitable.imaginary ** 2)
-                val expectedReal = new BigDecimal(real * suitable.real + imaginary * suitable.imaginary) / denominator
-                val expectedImaginary = new BigDecimal(imaginary * suitable.real - real * suitable.imaginary) /
+            invertibles.forEach [ invertible |
+                val denominator = new BigDecimal(invertible.real ** 2 + invertible.imaginary ** 2)
+                val expectedReal = new BigDecimal(real * invertible.real + imaginary * invertible.imaginary) /
                     denominator
-                assertThat(divide(suitable)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
+                val expectedImaginary = new BigDecimal(imaginary * invertible.real - real * invertible.imaginary) /
+                    denominator
+                assertThat(divide(invertible)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
             ]
         ]
     }

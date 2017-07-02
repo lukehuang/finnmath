@@ -44,5 +44,9 @@ interface MathNumber<S, T> {
 
     def S negate()
 
+    def T invert()
+
+    def boolean invertible()
+
     def String asString()
 }
