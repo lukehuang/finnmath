@@ -28,23 +28,60 @@
 
 package bigmath.linear
 
+import com.google.common.annotations.Beta
 import java.math.BigDecimal
-import java.util.Map
+import org.apache.commons.lang3.builder.Builder
+import org.eclipse.xtend.lib.annotations.Data
 
+import static com.google.common.base.Preconditions.checkArgument
+import static java.util.Objects.requireNonNull
+
+@Beta
+@Data
 final class DecimalVector extends Vector<DecimalVector, BigDecimal> {
-    protected new(Map<Integer, BigDecimal> map) {
-        super(map)
-    }
-
     override negate() {
-        this
+        val builder = builder
+        map.entrySet.forEach [
+            builder.put(-value)
+        ]
+        builder.build
     }
 
     override abs() {
-        0BD
+        var result = 0BD
+        for (it : map.entrySet)
+            result += value ** 2
+        result
     }
 
     override size() {
-        0
+        map.size
+    }
+
+    static def builder() {
+        new DecimalVectorBuilder
+    }
+
+    @Beta
+    @Data
+    static class DecimalVectorBuilder extends VectorBuilder<DecimalVectorBuilder, DecimalVector, BigDecimal> implements Builder<DecimalVector> {
+        private new() {
+        }
+
+        def addToEntryAndPut(Integer index, BigDecimal entry) {
+            requireNonNull(index, 'index')
+            checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
+            val existing = map.get(index)
+            requireNonNull(existing, 'existing')
+            requireNonNull(entry, 'entry')
+            map.put(index, map.get(index) + entry)
+        }
+
+        override build() {
+            map.forEach [ index, entry |
+                requireNonNull(entry, 'entry')
+            ]
+            new DecimalVector(map)
+        }
     }
 }

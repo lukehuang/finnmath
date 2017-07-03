@@ -28,6 +28,10 @@
 
 package bigmath.util
 
+import bigmath.linear.BigIntMatrix
+import bigmath.linear.BigIntVector
+import bigmath.linear.DecimalMatrix
+import bigmath.linear.DecimalVector
 import bigmath.number.BigIntAndSqrt
 import bigmath.number.Fraction
 import bigmath.number.FractionAndSqrt
@@ -402,5 +406,51 @@ final class MathRandom {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
         val it = nextSimpleComplexNumber(bound)
         new SimpleComplexNumberAndSqrt(pow(2), it)
+    }
+
+    def nextBigIntMatrix(long bound, int rowSize, int columnSize) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(rowSize > 0, 'expected rowSize > 0 but actual %s', rowSize)
+        checkArgument(columnSize > 0, 'expected columnSize > 0 but actual %s', columnSize)
+        val builder = BigIntMatrix::builder(rowSize, columnSize)
+        (1 .. rowSize).forEach [ rowIndex |
+            (1 .. columnSize).forEach [ columnIndex |
+                builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)))
+            ]
+        ]
+        builder.build
+    }
+
+    def nextBigIntVector(long bound, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = BigIntVector::builder()
+        (1 .. size).forEach [
+            builder.put(BigInteger.valueOf(nextLong))
+        ]
+    }
+
+    def nextDecimalMatrix(long bound, int scale, int rowSize, int columnSize) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(rowSize > 0, 'expected rowSize > 0 but actual %s', rowSize)
+        checkArgument(columnSize > 0, 'expected columnSize > 0 but actual %s', columnSize)
+        val builder = DecimalMatrix::builder(rowSize, columnSize)
+        (1 .. rowSize).forEach [ rowIndex |
+            (1 .. columnSize).forEach [ columnIndex |
+                builder.put(rowIndex, columnIndex, nextDecimal(bound, scale))
+            ]
+        ]
+        builder.build
+    }
+
+    def nextDecimalVector(long bound, int scale, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = DecimalVector::builder()
+        (1 .. size).forEach [
+            builder.put(nextDecimal(bound, scale))
+        ]
     }
 }
