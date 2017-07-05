@@ -29,12 +29,9 @@
 package bigmath.linear
 
 import com.google.common.annotations.Beta
-import com.google.common.collect.ImmutableMap
-import com.google.common.collect.ImmutableSet
 import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
 import java.util.Map
-import java.util.Set
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
@@ -49,11 +46,11 @@ abstract class Matrix<M, E, V> {
     }
 
     def rowIndexes() {
-        ImmutableSet.copyOf(table.rowKeySet) as Set<Integer>
+        table.rowKeySet.immutableCopy
     }
 
     def columnIndexes() {
-        ImmutableSet.copyOf(table.columnKeySet) as Set<Integer>
+        table.columnKeySet.immutableCopy
     }
 
     def entry(Integer rowIndex, Integer columnIndex) {
@@ -67,21 +64,21 @@ abstract class Matrix<M, E, V> {
     def row(Integer rowIndex) {
         checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
             table.rowKeySet.size, rowIndex)
-        ImmutableMap.copyOf(table.row(rowIndex)) as Map<Integer, E>
+        table.row(rowIndex).immutableCopy
     }
 
     def column(Integer columnIndex) {
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
-        ImmutableMap.copyOf(table.column(columnIndex)) as Map<Integer, E>
+        table.column(columnIndex).immutableCopy
     }
 
     def rows() {
-        ImmutableMap.copyOf(table.rowMap) as Map<Integer, Map<Integer, E>>
+        table.rowMap.immutableCopy
     }
 
     def columns() {
-        ImmutableMap.copyOf(table.columnMap) as Map<Integer, Map<Integer, E>>
+        table.columnMap.immutableCopy
     }
 
     def size() {

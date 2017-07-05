@@ -47,6 +47,33 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal> {
         builder.build
     }
 
+    override add(DecimalVector summand) {
+        checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
+        val builder = builder
+        map.forEach [ index, entry |
+            builder.put(entry + summand.entry(index))
+        ]
+        builder.build
+    }
+
+    override subtract(DecimalVector subtrahend) {
+        checkArgument(map.size == subtrahend.size, 'equal sizes expected but actual %s != %s', map.size,
+            subtrahend.size)
+        val builder = builder
+        map.forEach [ index, entry |
+            builder.put(entry - subtrahend.entry(index))
+        ]
+        builder.build
+    }
+
+    override scalarMultiply(BigDecimal scalar) {
+        val builder = builder
+        map.forEach [ index, entry |
+            builder.put(scalar * entry)
+        ]
+        builder.build
+    }
+
     override abs() {
         var result = 0BD
         for (it : map.entrySet)

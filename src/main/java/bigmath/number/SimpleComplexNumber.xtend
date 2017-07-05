@@ -99,7 +99,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
             if (imaginary > 0BI)
                 return '''«real» + «imaginary»i'''
             else if (imaginary < 0BI)
-                return '''«real» - «imaginary»i'''
+                return '''«real» - «imaginary.abs»i'''
             else
                 return '''«real»'''
         if (imaginary > 0BI)

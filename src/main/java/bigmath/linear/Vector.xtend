@@ -30,7 +30,6 @@ package bigmath.linear
 
 import com.google.common.annotations.Beta
 import java.util.Map
-import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
@@ -38,7 +37,6 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
-@Accessors
 abstract class Vector<V, E> {
     protected val Map<Integer, E> map
 
@@ -52,9 +50,19 @@ abstract class Vector<V, E> {
         map.get(index)
     }
 
+    def V add(V summand)
+
+    def V subtract(V subtrahend)
+
+    def V scalarMultiply(E scalar)
+
     def V negate()
 
     def E abs()
 
     def int size()
+
+    def getMap() {
+        map.immutableCopy
+    }
 }

@@ -42,14 +42,14 @@ abstract class VectorBuilder<B, V, E> {
 
     def put(E entry) {
         map.put(map.size + 1, requireNonNull(entry, 'entry'))
-        this as B
+        this
     }
 
     def put(Integer index, E entry) {
         requireNonNull(index, 'index')
         checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
         map.put(index, requireNonNull(entry, 'entry'))
-        this as B
+        this
     }
 
     def V build()
