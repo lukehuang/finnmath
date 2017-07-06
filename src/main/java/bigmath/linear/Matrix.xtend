@@ -133,7 +133,7 @@ abstract class Matrix<M, E, V> {
 
     def M minor(Integer rowIndex, Integer columnIndex)
 
-    def getTable() {
-        ImmutableTable.copyOf(table) as Table<Integer, Integer, E>
+    def Table<Integer, Integer, E> getTable() {
+        ImmutableTable.copyOf(table)
     }
 }

@@ -34,6 +34,7 @@ import java.util.Map
 import org.apache.commons.lang3.builder.Builder
 
 import static com.google.common.base.Preconditions.checkArgument
+import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVector> {
@@ -42,74 +43,175 @@ final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVecto
     }
 
     override add(DecimalMatrix summand) {
+        requireNonNull(summand, 'summand')
+        checkArgument(table.rowKeySet.size == summand.rowSize, 'equal row sizes expected but actual %s != %s',
+            table.rowKeySet.size, summand.rowSize)
+        checkArgument(table.columnKeySet.size == summand.columnSize, 'column sizes expected equal but actual %s != %s',
+            table.columnKeySet.size, summand.columnSize)
+        val builder = builder(rowSize, columnSize)
+        table.cellSet.forEach [
+            builder.put(rowKey, columnKey, value + summand.entry(rowKey, columnKey))
+        ]
+        builder.build
     }
 
     override subtract(DecimalMatrix subtrahend) {
+        requireNonNull(subtrahend, 'subtrahend')
+        checkArgument(table.rowKeySet.size == subtrahend.rowSize, 'equal row sizes expected but actual %s != %s',
+            table.rowKeySet.size, subtrahend.rowSize)
+        checkArgument(table.columnKeySet.size == subtrahend.columnSize,
+            'equal column sizes expected but actual %s != %s', table.columnKeySet.size, subtrahend.columnSize)
+        val builder = builder(rowSize, columnSize)
+        table.cellSet.forEach [
+            builder.put(rowKey, columnKey, value - subtrahend.entry(rowKey, columnKey))
+        ]
+        builder.build
     }
 
     override multiply(DecimalMatrix factor) {
+        requireNonNull(factor, 'factor')
+        checkArgument(table.columnKeySet.size == factor.rowSize,
+            'expected columnSize == factor.rowSize but actual %s != %s', table.columnKeySet.size, factor.rowSize)
+        val builder = builder(table.rowKeySet.size, factor.columnSize)
+        table.rowKeySet.forEach [ rowIndex |
+            factor.columnIndexes.forEach [ columnIndex |
+                val entry = multiplyRowWithColumn(table.row(rowIndex), factor.column(columnIndex))
+                builder.put(rowIndex, columnIndex, entry)
+            ]
+        ]
+        builder.build
     }
 
     override multiplyVector(DecimalVector vector) {
+        requireNonNull(vector, 'vector')
+        val builder = DecimalVector::builder
+        table.rowMap.forEach [ rowIndex, row |
+            row.forEach [ columnIndex, matrixEntry |
+                builder.addToEntryAndPut(rowIndex, matrixEntry * vector.entry(columnIndex))
+            ]
+        ]
+        builder.build
     }
 
     override multiplyRowWithColumn(Map<Integer, BigDecimal> row, Map<Integer, BigDecimal> column) {
+        requireNonNull(row, 'row')
+        requireNonNull(column, 'column')
+        checkArgument(row.size == column.size, 'expected row size == column size but actual %s != %s', row.size,
+            column.size)
+        var result = 0BD
+        for (index : row.keySet)
+            result += row.get(index) * column.get(index)
+        result
     }
 
     override scalarMultiply(BigDecimal scalar) {
+        requireNonNull(scalar, 'scalar')
+        val builder = builder(table.rowKeySet.size, table.columnKeySet.size)
+        table.cellSet.forEach [
+            builder.put(rowKey, columnKey, scalar * value)
+        ]
+        builder.build
     }
 
     override negate() {
+        scalarMultiply(-1BD)
     }
 
     override tr() {
+        checkState(square, 'expected square matrix but actual %s x %s', table.rowKeySet.size, table.columnKeySet.size)
+        var result = 0BD
+        for (index : table.rowKeySet)
+            result += table.get(index, index)
+        result
     }
 
     override det() {
+        checkState(square, 'expected square matrix but actual %s x %s', table.rowKeySet.size, table.columnKeySet.size)
+        if (table.rowKeySet.size > 1) {
+            var result = 0BD
+            for (it : table.row(1).entrySet)
+                result += (-1BD) ** (key + 1) * value * minor(1, key).det
+            return result
+        }
+        table.get(1, 1)
     }
 
     override square() {
-        false
+        table.rowKeySet.size == table.columnKeySet.size
     }
 
     override triangular() {
-        false
+        upperTriangular || lowerTriangular
     }
 
     override upperTriangular() {
+        if (square) {
+            for (it : table.cellSet)
+                if (rowKey > columnKey && value != 0BI)
+                    return false
+            return true
+        }
         false
     }
 
     override lowerTriangular() {
+        if (square) {
+            for (it : table.cellSet)
+                if (rowKey < columnKey && value != 0BI)
+                    return false
+            return true
+        }
         false
     }
 
     override diagonal() {
-        false
+        upperTriangular && lowerTriangular
     }
 
     override id() {
+        if (diagonal) {
+            for (index : table.rowKeySet)
+                if (table.get(index, index) != 1BI)
+                    return false
+            return true
+        }
         false
     }
 
     override invertible() {
-        false
+        det != 0BD
     }
 
     override transpose() {
-        this
+        val builder = builder(table.columnKeySet.size, table.rowKeySet.size)
+        table.cellSet.forEach [
+            builder.put(columnKey, rowKey, value)
+        ]
+        builder.build
     }
 
     override symmetric() {
-        false
+        square && equals(transpose)
     }
 
     override skewSymmetric() {
-        false
+        square && equals(transpose.negate)
     }
 
     override minor(Integer rowIndex, Integer columnIndex) {
-        this
+        requireNonNull(rowIndex, 'rowIndex')
+        requireNonNull(columnIndex, 'columnIndex')
+        checkArgument(table.containsRow(rowIndex), 'expected row index in [0, %s] but actual %s', table.rowKeySet.size,
+            rowIndex)
+        checkArgument(table.containsColumn(rowIndex), 'expected column index in [0, %s] but actual %s',
+            table.columnKeySet.size, columnIndex)
+        val builder = builder(table.rowKeySet.size - 1, table.columnKeySet.size - 1)
+        table.cellSet.forEach [
+            val newRowIndex = if (rowKey >= rowIndex) rowKey - 1 else rowKey
+            val newColumnIndex = if (columnKey >= columnIndex) columnKey - 1 else columnKey
+            builder.put(newRowIndex, newColumnIndex, value)
+        ]
+        builder.build
     }
 
     static def builder(int rowSize, int columnSize) {
@@ -118,7 +220,7 @@ final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVecto
         new DecimalMatrixBuilder(rowSize, columnSize)
     }
 
-    static class DecimalMatrixBuilder extends MatrixBuilder<DecimalMatrixBuilder, DecimalMatrix, BigDecimal> implements Builder<DecimalMatrix> {
+    static class DecimalMatrixBuilder extends MatrixBuilder<DecimalMatrix, BigDecimal> implements Builder<DecimalMatrix> {
         private new(int rowSize, int columnSize) {
             super(rowSize, columnSize)
         }

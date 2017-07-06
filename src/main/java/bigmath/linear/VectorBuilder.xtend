@@ -29,6 +29,7 @@
 package bigmath.linear
 
 import com.google.common.annotations.Beta
+import java.util.HashMap
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
@@ -38,7 +39,7 @@ import static java.util.Objects.requireNonNull
 @Beta
 @EqualsHashCode
 abstract class VectorBuilder<B, V, E> {
-    protected val Map<Integer, E> map = newHashMap
+    protected val Map<Integer, E> map = new HashMap
 
     def put(E entry) {
         map.put(map.size + 1, requireNonNull(entry, 'entry'))

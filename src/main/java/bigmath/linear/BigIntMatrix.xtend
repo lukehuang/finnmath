@@ -47,7 +47,7 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
             table.rowKeySet.size, summand.rowSize)
         checkArgument(table.columnKeySet.size == summand.columnSize, 'column sizes expected equal but actual %s != %s',
             table.columnKeySet.size, summand.columnSize)
-        val builder = BigIntMatrix::builder(rowSize, columnSize)
+        val builder = builder(rowSize, columnSize)
         table.cellSet.forEach [
             builder.put(rowKey, columnKey, value + summand.entry(rowKey, columnKey))
         ]
@@ -219,7 +219,7 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
         new BigIntMatrixBuilder(rowSize, columnSize)
     }
 
-    static class BigIntMatrixBuilder extends MatrixBuilder<BigIntMatrixBuilder, BigIntMatrix, BigInteger> implements Builder<BigIntMatrix> {
+    static class BigIntMatrixBuilder extends MatrixBuilder<BigIntMatrix, BigInteger> implements Builder<BigIntMatrix> {
         private new(int rowSize, int columnSize) {
             super(rowSize, columnSize)
         }
