@@ -37,16 +37,16 @@ I recommend the Eclipse IDE for Xtend development but you are free to use whatev
 You will need the Xtend plugin and optional the EGit plugin for Git and the Buildship plugin for Gradle
 integration. Push requests are very welcome.
 
-The Eclipse plugin for Gradle is applied to the build.gradle file.
+The Eclipse plugin for Gradle is applied to the build so that the command
 
     gradle eclipse
 
-This will create an Eclipse project inside your cloned folder which is ready to import.
+will create an Eclipse project inside your cloned folder which is ready to import.
 
 The code formatting follows loosely the Google Java style guide found here on GitHub.    
 
 ## Thanks to
-* Oracle for the JVM and OpenJDK
+* Oracle for the JVM, Java and OpenJDK
 * the Eclipse Foundation for Xtend and the Eclipse IDE
 * Google for Guava
 * the Apache Software Foundation for Groovy, Commons Lang and Commons Math
@@ -55,4 +55,5 @@ The code formatting follows loosely the Google Java style guide found here on Gi
 * the JUnit team for JUnit
 * Linus Torvalds for Git
 * Gradle Inc. for Gradle
+* GitHub Inc. for GitHub
 * Judd Vinet and Aaron Griffin for Arch Linux

@@ -37,10 +37,15 @@ import org.eclipse.xtend.lib.annotations.Data
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
+import com.google.common.collect.Table
 
 @Beta
 @Data
 final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> {
+    private new(Table<Integer, Integer, BigInteger> table) {
+        super(table)
+    }
+    
     override add(BigIntMatrix summand) {
         requireNonNull(summand, 'summand')
         checkArgument(table.rowKeySet.size == summand.rowSize, 'equal row sizes expected but actual %s != %s',
