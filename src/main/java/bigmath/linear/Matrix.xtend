@@ -33,17 +33,15 @@ import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 
 @Beta
+@FinalFieldsConstructor
 @EqualsHashCode
 abstract class Matrix<M, E, V> {
-    protected Table<Integer, Integer, E> table
-
-    protected new(Table<Integer, Integer, E> table) {
-        this.table = ImmutableTable.copyOf(table)
-    }
+    protected val Table<Integer, Integer, E> table
 
     def rowIndexes() {
         table.rowKeySet.immutableCopy
@@ -54,21 +52,21 @@ abstract class Matrix<M, E, V> {
     }
 
     def entry(Integer rowIndex, Integer columnIndex) {
-        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
+        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
             table.rowKeySet.size, rowIndex)
-        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
+        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
         table.get(rowIndex, columnIndex)
     }
 
     def row(Integer rowIndex) {
-        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
+        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
             table.rowKeySet.size, rowIndex)
         table.row(rowIndex).immutableCopy
     }
 
     def column(Integer columnIndex) {
-        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
+        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
         table.column(columnIndex).immutableCopy
     }

@@ -31,25 +31,39 @@ package bigmath.linear
 import com.google.common.annotations.Beta
 import java.util.HashMap
 import java.util.Map
-import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Beta
-@EqualsHashCode
+@FinalFieldsConstructor
 abstract class VectorBuilder<B, V, E> {
+    @Accessors
     protected val Map<Integer, E> map = new HashMap
 
+    private val Integer size
+
     def put(E entry) {
-        map.put(map.size + 1, requireNonNull(entry, 'entry'))
+        val index = map.size + 1
+        checkArgument(map.size < size, 'expected index in [1, %s] but actual %s', size, index)
+        map.put(index, requireNonNull(entry, 'entry'))
         this
     }
 
     def put(Integer index, E entry) {
         requireNonNull(index, 'index')
-        checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
+        checkArgument(0 < index && index <= size, 'expected index in [1, %s] but actual %s', size, index)
         map.put(index, requireNonNull(entry, 'entry'))
+        this
+    }
+
+    def putAll(E entry) {
+        requireNonNull(entry, 'entry')
+        (1 .. size).forEach [
+            map.put(it, entry)
+        ]
         this
     }
 

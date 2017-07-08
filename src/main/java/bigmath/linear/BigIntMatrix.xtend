@@ -29,23 +29,25 @@
 package bigmath.linear
 
 import com.google.common.annotations.Beta
+import com.google.common.collect.Table
 import java.math.BigInteger
 import java.util.Map
 import org.apache.commons.lang3.builder.Builder
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
-import com.google.common.collect.Table
 
 @Beta
-@Data
+@EqualsHashCode
+@ToString
 final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> {
     private new(Table<Integer, Integer, BigInteger> table) {
         super(table)
     }
-    
+
     override add(BigIntMatrix summand) {
         requireNonNull(summand, 'summand')
         checkArgument(table.rowKeySet.size == summand.rowSize, 'equal row sizes expected but actual %s != %s',
@@ -88,7 +90,7 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
 
     override multiplyVector(BigIntVector vector) {
         requireNonNull(vector, 'vector')
-        val builder = BigIntVector::builder
+        val builder = BigIntVector::builder(vector.size)
         table.rowMap.forEach [ rowIndex, row |
             row.forEach [ columnIndex, matrixEntry |
                 builder.addToEntryAndPut(rowIndex, matrixEntry * vector.entry(columnIndex))
@@ -205,9 +207,9 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
     override minor(Integer rowIndex, Integer columnIndex) {
         requireNonNull(rowIndex, 'rowIndex')
         requireNonNull(columnIndex, 'columnIndex')
-        checkArgument(table.containsRow(rowIndex), 'expected row index in [0, %s] but actual %s', table.rowKeySet.size,
+        checkArgument(table.containsRow(rowIndex), 'expected row index in [1, %s] but actual %s', table.rowKeySet.size,
             rowIndex)
-        checkArgument(table.containsColumn(rowIndex), 'expected column index in [0, %s] but actual %s',
+        checkArgument(table.containsColumn(rowIndex), 'expected column index in [1, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
         val builder = builder(table.rowKeySet.size - 1, table.columnKeySet.size - 1)
         table.cellSet.forEach [
@@ -224,6 +226,8 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
         new BigIntMatrixBuilder(rowSize, columnSize)
     }
 
+    @Beta
+    @ToString
     static class BigIntMatrixBuilder extends MatrixBuilder<BigIntMatrix, BigInteger> implements Builder<BigIntMatrix> {
         private new(int rowSize, int columnSize) {
             super(rowSize, columnSize)

@@ -33,24 +33,24 @@ import org.junit.Test
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
 final class BigIntAndSqrtTest {
-  @Test
-  def void newNumberNullShouldThrowException() {
-    assertThatThrownBy[
-      new BigIntAndSqrt(null, 0BI)
-    ].isExactlyInstanceOf(NullPointerException)
-  }
+    @Test
+    def void newNumberNullShouldThrowException() {
+        assertThatThrownBy[
+            new BigIntAndSqrt(null, 0BI)
+        ].isExactlyInstanceOf(NullPointerException)
+    }
 
-  @Test
-  def void newSqrtNullShouldThrowException() {
-    assertThatThrownBy[
-      new BigIntAndSqrt(0BI, null)
-    ].isExactlyInstanceOf(NullPointerException)
-  }
+    @Test
+    def void newSqrtNullShouldThrowException() {
+        assertThatThrownBy[
+            new BigIntAndSqrt(0BI, null)
+        ].isExactlyInstanceOf(NullPointerException)
+    }
 
-  @Test
-  def void newWithWrongSqrtShouldThrowException() {
-    assertThatThrownBy[
-      new BigIntAndSqrt(1BI, 0BI)
-    ].isExactlyInstanceOf(IllegalArgumentException)
-  }
+    @Test
+    def void newWithWrongSqrtShouldThrowException() {
+        assertThatThrownBy[
+            new BigIntAndSqrt(1BI, 0BI)
+        ].isExactlyInstanceOf(IllegalArgumentException)
+    }
 }

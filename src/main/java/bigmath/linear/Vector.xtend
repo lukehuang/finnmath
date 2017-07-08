@@ -46,7 +46,7 @@ abstract class Vector<V, E> {
 
     def entry(Integer index) {
         requireNonNull(index, 'index')
-        checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
+        checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
         map.get(index)
     }
 

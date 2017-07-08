@@ -31,13 +31,15 @@ package bigmath.linear
 import com.google.common.annotations.Beta
 import com.google.common.collect.ArrayTable
 import com.google.common.collect.Table
-import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Beta
-@EqualsHashCode
+@ToString
+@Accessors
 abstract class MatrixBuilder<M, E> {
     protected Table<Integer, Integer, E> table
 
@@ -47,15 +49,25 @@ abstract class MatrixBuilder<M, E> {
         table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))
     }
 
-    def MatrixBuilder<M, E> put(Integer rowIndex, Integer columnIndex, E entry) {
+    def put(Integer rowIndex, Integer columnIndex, E entry) {
         requireNonNull(entry, 'entry')
         requireNonNull(rowIndex, 'rowIndex')
         requireNonNull(columnIndex, 'columnIndex')
-        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [0, %s] but actual %s',
+        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
             table.rowKeySet.size, rowIndex)
-        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [0, %s] but actual %s',
+        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
         table.put(rowIndex, columnIndex, entry)
+        this
+    }
+
+    def putAll(E entry) {
+        requireNonNull(entry, 'entry')
+        table.rowKeySet.forEach [ rowKey |
+            table.columnKeySet.forEach [ columnKey |
+                table.put(rowKey, columnKey, entry)
+            ]
+        ]
         this
     }
 

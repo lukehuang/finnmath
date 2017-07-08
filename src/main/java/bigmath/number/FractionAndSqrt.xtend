@@ -29,12 +29,14 @@
 package bigmath.number
 
 import com.google.common.annotations.Beta
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 
 @Beta
-@Data
+@EqualsHashCode
+@ToString
 final class FractionAndSqrt extends NumberAndSqrt<Fraction> {
     new(Fraction number, Fraction sqrt) {
         super(number, sqrt)

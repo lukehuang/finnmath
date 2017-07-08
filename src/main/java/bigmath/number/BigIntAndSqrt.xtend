@@ -30,12 +30,14 @@ package bigmath.number
 
 import com.google.common.annotations.Beta
 import java.math.BigInteger
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 
 @Beta
-@Data
+@EqualsHashCode
+@ToString
 final class BigIntAndSqrt extends NumberAndSqrt<BigInteger> {
     new(BigInteger number, BigInteger sqrt) {
         super(number, sqrt)

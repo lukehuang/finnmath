@@ -30,17 +30,24 @@ package bigmath.linear
 
 import com.google.common.annotations.Beta
 import java.math.BigDecimal
+import java.util.Map
 import org.apache.commons.lang3.builder.Builder
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Beta
-@Data
+@EqualsHashCode
+@ToString
 final class DecimalVector extends Vector<DecimalVector, BigDecimal> {
+    private new(Map<Integer, BigDecimal> map) {
+        super(map)
+    }
+
     override negate() {
-        val builder = builder
+        val builder = builder(map.size)
         map.entrySet.forEach [
             builder.put(-value)
         ]
@@ -49,7 +56,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal> {
 
     override add(DecimalVector summand) {
         checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
-        val builder = builder
+        val builder = builder(map.size)
         map.forEach [ index, entry |
             builder.put(entry + summand.entry(index))
         ]
@@ -59,7 +66,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal> {
     override subtract(DecimalVector subtrahend) {
         checkArgument(map.size == subtrahend.size, 'equal sizes expected but actual %s != %s', map.size,
             subtrahend.size)
-        val builder = builder
+        val builder = builder(map.size)
         map.forEach [ index, entry |
             builder.put(entry - subtrahend.entry(index))
         ]
@@ -67,7 +74,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal> {
     }
 
     override scalarMultiply(BigDecimal scalar) {
-        val builder = builder
+        val builder = builder(map.size)
         map.forEach [ index, entry |
             builder.put(scalar * entry)
         ]
@@ -85,19 +92,20 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal> {
         map.size
     }
 
-    static def builder() {
-        new DecimalVectorBuilder
+    static def builder(int size) {
+        new DecimalVectorBuilder(size)
     }
 
     @Beta
-    @Data
+    @ToString
     static class DecimalVectorBuilder extends VectorBuilder<DecimalVectorBuilder, DecimalVector, BigDecimal> implements Builder<DecimalVector> {
-        private new() {
+        private new(int size) {
+            super(size)
         }
 
         def addToEntryAndPut(Integer index, BigDecimal entry) {
             requireNonNull(index, 'index')
-            checkArgument(map.containsKey(index), 'expected index in [0, %s] but actual %s', map.size, index)
+            checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
             val existing = map.get(index)
             requireNonNull(existing, 'existing')
             requireNonNull(entry, 'entry')

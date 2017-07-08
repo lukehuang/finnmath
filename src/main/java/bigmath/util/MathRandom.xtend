@@ -424,10 +424,11 @@ final class MathRandom {
     def nextBigIntVector(long bound, int size) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
-        val builder = BigIntVector::builder()
+        val builder = BigIntVector::builder(size)
         (1 .. size).forEach [
             builder.put(BigInteger.valueOf(nextLong))
         ]
+        builder.build
     }
 
     def nextDecimalMatrix(long bound, int scale, int rowSize, int columnSize) {
@@ -448,7 +449,7 @@ final class MathRandom {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
-        val builder = DecimalVector::builder()
+        val builder = DecimalVector::builder(size)
         (1 .. size).forEach [
             builder.put(nextDecimal(bound, scale))
         ]
