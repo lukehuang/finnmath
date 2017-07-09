@@ -87,7 +87,7 @@ final class SquareRootCalculator {
       predecessor = successor
       successor = heronsMethod(successor)
     }
-    return successor
+    successor
   }
 
   protected def heronsMethod(BigDecimal predecessor) {
