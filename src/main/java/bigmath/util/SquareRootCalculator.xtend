@@ -32,50 +32,76 @@ import bigmath.number.ScientificNotation
 import com.google.common.annotations.Beta
 import java.math.BigDecimal
 import java.math.BigInteger
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.lang.Math.addExact
 import static java.util.Objects.requireNonNull
 
 @Beta
+@EqualsHashCode
+@ToString
+@Accessors
 final class SquareRootCalculator {
-  private new() {
-  }
+  val BigDecimal decimal
+  val BigDecimal epsilon
 
-  static def sqrt(BigInteger integer) {
+  new(BigInteger integer) {
     requireNonNull(integer, 'integer')
+    decimal = new BigDecimal(integer)
+    epsilon = 0.0000000001BD
     checkArgument(integer >= 0BI, 'expected >= 0 but actual %s', integer)
-    sqrt(new BigDecimal(integer))
   }
 
-  static def sqrt(BigDecimal decimal) {
-    requireNonNull(decimal, 'decimal')
+  new(BigDecimal decimal) {
+    this.decimal = requireNonNull(decimal, 'decimal')
+    epsilon = 0.0000000001BD
     checkArgument(decimal >= 0BD, 'expected >= 0 but actual %s', decimal)
-    heronsMethod(decimal)
   }
 
-  protected static def heronsMethod(BigDecimal decimal) {
-    var predecessor = seedValue(decimal)
-    var successor = heronsMethod(predecessor, decimal)
-    while ((successor - predecessor).abs > 0.0000000001BD) {
+  new(BigInteger integer, BigDecimal epsilon) {
+    requireNonNull(integer, 'integer')
+    decimal = new BigDecimal(integer)
+    this.epsilon = requireNonNull(epsilon, 'epsilon')
+    checkArgument(integer >= 0BI, 'expected >= 0 but actual %s', integer)
+    checkArgument(0BD < epsilon && epsilon < 1BD, 'expected epsilon in (0, 1) but actual %s', epsilon)
+  }
+
+  new(BigDecimal decimal, BigDecimal epsilon) {
+    this.decimal = requireNonNull(decimal, 'decimal')
+    this.epsilon = requireNonNull(epsilon, 'epsilon')
+    checkArgument(decimal >= 0BD, 'expected >= 0 but actual %s', decimal)
+    checkArgument(0BD < epsilon && epsilon < 1BD, 'expected epsilon in (0, 1) but actual %s', epsilon)
+  }
+
+  def sqrt() {
+    heronsMethod
+  }
+
+  protected def heronsMethod() {
+    var predecessor = seedValue
+    var successor = heronsMethod(predecessor)
+    while ((successor - predecessor).abs > epsilon) {
       predecessor = successor
-      successor = heronsMethod(successor, decimal)
+      successor = heronsMethod(successor)
     }
     return successor
   }
 
-  protected static def heronsMethod(BigDecimal predecessor, BigDecimal decimal) {
+  protected def heronsMethod(BigDecimal predecessor) {
     (predecessor ** 2 + decimal) / (2BD * predecessor)
   }
 
-  protected static def seedValue(BigDecimal decimal) {
-    val it = scientificNotationForSqrt(decimal)
+  protected def seedValue() {
+    val it = scientificNotationForSqrt
     if (coefficient >= 10BD)
       return 6BD * 10BD ** (exponent / 2)
     2BD * 10BD ** (exponent / 2)
   }
 
-  protected static def scientificNotationForSqrt(BigDecimal decimal) {
+  protected def scientificNotationForSqrt() {
     if (0BD < decimal && decimal < 100BD)
       return new ScientificNotation(decimal, 0)
     else if (decimal >= 100BD) {
