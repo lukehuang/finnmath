@@ -57,6 +57,7 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
   }
 
   override add(BigIntVector summand) {
+    requireNonNull(summand, 'summand')
     checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
     val builder = builder(map.size)
     map.forEach [ index, entry |
@@ -66,6 +67,7 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
   }
 
   override subtract(BigIntVector subtrahend) {
+    requireNonNull(subtrahend, 'subtrahend')
     checkArgument(map.size == subtrahend.size, 'equal sizes expected but actual %s != %s', map.size, subtrahend.size)
     val builder = builder(map.size)
     map.forEach [ index, entry |
@@ -75,6 +77,7 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
   }
 
   override scalarMultiply(BigInteger scalar) {
+    requireNonNull(scalar, 'scalar')
     val builder = builder(map.size)
     map.forEach [ index, entry |
       builder.put(scalar * entry)
@@ -92,7 +95,7 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
 
   override dotProduct(BigIntVector vector) {
     requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'equal sizes expected but actual %s != %s', map.size, vector.size)
+    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
     var result = 0BI
     for (index : (1 .. map.size))
       result += map.get(index) * vector.entry(index)
@@ -101,13 +104,13 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
 
   override distance(BigIntVector vector) {
     requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'equal sizes expected but actual %s != %s', map.size, vector.size)
+    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
     sqrt(distancePow2(vector))
   }
 
   override distancePow2(BigIntVector vector) {
     requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'equal sizes expected but actual %s != %s', map.size, vector.size)
+    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
     subtract(vector).normPow2
   }
 
@@ -116,6 +119,7 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
   }
 
   static def builder(int size) {
+    checkArgument(size > 0, 'expected > 0 but actual %s', size)
     new BigIntVectorBuilder(size)
   }
 

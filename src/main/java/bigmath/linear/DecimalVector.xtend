@@ -56,7 +56,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
   }
 
   override add(DecimalVector summand) {
-    checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
+    checkArgument(map.size == summand.size, 'expected equal sizes but actual %s != %s', map.size, summand.size)
     val builder = builder(map.size)
     map.forEach [ index, entry |
       builder.put(entry + summand.entry(index))
@@ -65,7 +65,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
   }
 
   override subtract(DecimalVector subtrahend) {
-    checkArgument(map.size == subtrahend.size, 'equal sizes expected but actual %s != %s', map.size, subtrahend.size)
+    checkArgument(map.size == subtrahend.size, 'expected equal sizes but actual %s != %s', map.size, subtrahend.size)
     val builder = builder(map.size)
     map.forEach [ index, entry |
       builder.put(entry - subtrahend.entry(index))
@@ -74,6 +74,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
   }
 
   override scalarMultiply(BigDecimal scalar) {
+    requireNonNull(scalar, 'scalar')
     val builder = builder(map.size)
     map.forEach [ index, entry |
       builder.put(scalar * entry)
@@ -91,7 +92,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
 
   override dotProduct(DecimalVector vector) {
     requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'equal sizes expected but actual %s != %s', map.size, vector.size)
+    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
     var result = 0BD
     for (index : (1 .. map.size))
       result += map.get(index) * vector.entry(index)
@@ -100,7 +101,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
 
   override distance(DecimalVector vector) {
     requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'equal sizes expected but actual %s != %s', map.size, vector.size)
+    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
     sqrt(distancePow2(vector))
   }
 
@@ -115,6 +116,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
   }
 
   static def builder(int size) {
+    checkArgument(size > 0, 'expected > 0 but actual %s', size)
     new DecimalVectorBuilder(size)
   }
 

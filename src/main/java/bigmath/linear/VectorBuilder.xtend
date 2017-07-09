@@ -40,32 +40,34 @@ import static java.util.Objects.requireNonNull
 @Beta
 @FinalFieldsConstructor
 abstract class VectorBuilder<B, V, E> {
-    @Accessors
-    protected val Map<Integer, E> map = new HashMap
+  @Accessors
+  protected val Map<Integer, E> map = new HashMap
 
-    private val Integer size
+  private val Integer size
 
-    def put(E entry) {
-        val index = map.size + 1
-        checkArgument(map.size < size, 'expected index in [1, %s] but actual %s', size, index)
-        map.put(index, requireNonNull(entry, 'entry'))
-        this
-    }
+  def put(E entry) {
+    requireNonNull(entry, 'entry')
+    val index = map.size + 1
+    checkArgument(map.size < size, 'expected index in [1, %s] but actual %s', size, index)
+    map.put(index, entry)
+    this
+  }
 
-    def put(Integer index, E entry) {
-        requireNonNull(index, 'index')
-        checkArgument(0 < index && index <= size, 'expected index in [1, %s] but actual %s', size, index)
-        map.put(index, requireNonNull(entry, 'entry'))
-        this
-    }
+  def put(Integer index, E entry) {
+    requireNonNull(index, 'index')
+    requireNonNull(entry, 'entry')
+    checkArgument(0 < index && index <= size, 'expected index in [1, %s] but actual %s', size, index)
+    map.put(index, entry)
+    this
+  }
 
-    def putAll(E entry) {
-        requireNonNull(entry, 'entry')
-        (1 .. size).forEach [
-            map.put(it, entry)
-        ]
-        this
-    }
+  def putAll(E entry) {
+    requireNonNull(entry, 'entry')
+    (1 .. size).forEach [
+      map.put(it, entry)
+    ]
+    this
+  }
 
-    def V build()
+  def V build()
 }

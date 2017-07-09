@@ -39,6 +39,9 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 final class SquareRootCalculator {
+  private new() {
+  }
+
   static def sqrt(BigInteger integer) {
     var sqrt = seedValue(integer)
     for (i : 1 .. 1000)
