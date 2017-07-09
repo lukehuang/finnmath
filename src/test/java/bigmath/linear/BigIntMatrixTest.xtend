@@ -38,163 +38,160 @@ import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
 final class BigIntMatrixTest {
-    static var BigIntMatrix zeroMatrixForAddition
-    static var BigIntMatrix zeroMatrixForMultiplication
-    static var BigIntMatrix identityMatrix
-    static val List<BigIntMatrix> matrices = newArrayList
-    static val List<BigIntMatrix> squarematrices = newArrayList
-    static val List<BigIntMatrix> othersForAddition = newArrayList
-    static val List<BigIntMatrix> additionalOthersForAddition = newArrayList
-    static val List<BigIntMatrix> othersForMultiplication = newArrayList
-    static val List<BigIntMatrix> additionalOthersForMultiplication = newArrayList
-    static var BigIntVector zeroVector
-    static var BigIntVector vector
+  static var BigIntMatrix zeroMatrixForAddition
+  static var BigIntMatrix zeroMatrixForMultiplication
+  static var BigIntMatrix identityMatrix
+  static val List<BigIntMatrix> matrices = newArrayList
+  static val List<BigIntMatrix> squarematrices = newArrayList
+  static val List<BigIntMatrix> othersForAddition = newArrayList
+  static val List<BigIntMatrix> additionalOthersForAddition = newArrayList
+  static val List<BigIntMatrix> othersForMultiplication = newArrayList
+  static val List<BigIntMatrix> additionalOthersForMultiplication = newArrayList
+  static var BigIntVector zeroVector
+  static var BigIntVector vector
 
-    @BeforeClass
-    static def void setUp() {
-        val mathRandom = new MathRandom
-        val howMany = 10
-        val bound = 10
-        val rowSize = RandomUtils.nextInt(2, 10)
-        val columnSize = RandomUtils.nextInt(2, 10)
-        val columnSizeForOthers = RandomUtils.nextInt(2, 10)
-        val columnSizeForAdditionalOthers = RandomUtils.nextInt(2, 10)
-        val zeroMatrixBuilderForAddition = BigIntMatrix::builder(rowSize, columnSize).putAll(0BI)
-        zeroMatrixForAddition = zeroMatrixBuilderForAddition.build
-        val zeroMatrixBuilderForMultiplication = BigIntMatrix::builder(columnSize, rowSize).putAll(0BI)
-        zeroMatrixForMultiplication = zeroMatrixBuilderForMultiplication.build
-        val identyMatrixBuilder = BigIntMatrix::builder(rowSize, rowSize).putAll(0BI)
-        for (index : (1 .. rowSize))
-            identyMatrixBuilder.put(index, index, 1BI)
-        identityMatrix = identyMatrixBuilder.build
-        for (i : 1 .. howMany) {
-            matrices += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
-            squarematrices += mathRandom.nextBigIntMatrix(bound, rowSize, rowSize)
-            othersForAddition += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
-            additionalOthersForAddition += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
-            othersForMultiplication += mathRandom.nextBigIntMatrix(bound, columnSize, columnSizeForOthers)
-            additionalOthersForMultiplication +=
-                mathRandom.nextBigIntMatrix(bound, columnSizeForOthers, columnSizeForAdditionalOthers)
-        }
-        val vectorBuilder = BigIntVector::builder(columnSize)
-        zeroVector = vectorBuilder.putAll(0BI).build
-        vector = mathRandom.nextBigIntVector(bound, columnSize)
+  @BeforeClass
+  static def void setUp() {
+    val mathRandom = new MathRandom
+    val howMany = 10
+    val bound = 10
+    val rowSize = RandomUtils.nextInt(2, 10)
+    val columnSize = RandomUtils.nextInt(2, 10)
+    val columnSizeForOthers = RandomUtils.nextInt(2, 10)
+    val columnSizeForAdditionalOthers = RandomUtils.nextInt(2, 10)
+    zeroMatrixForAddition = BigIntMatrix::builder(rowSize, columnSize).putAll(0BI).build
+    zeroMatrixForMultiplication = BigIntMatrix::builder(columnSize, rowSize).putAll(0BI).build
+    val identyMatrixBuilder = BigIntMatrix::builder(rowSize, rowSize).putAll(0BI)
+    for (index : (1 .. rowSize))
+      identyMatrixBuilder.put(index, index, 1BI)
+    identityMatrix = identyMatrixBuilder.build
+    for (i : 1 .. howMany) {
+      matrices += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
+      squarematrices += mathRandom.nextBigIntMatrix(bound, rowSize, rowSize)
+      othersForAddition += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
+      additionalOthersForAddition += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
+      othersForMultiplication += mathRandom.nextBigIntMatrix(bound, columnSize, columnSizeForOthers)
+      additionalOthersForMultiplication +=
+        mathRandom.nextBigIntMatrix(bound, columnSizeForOthers, columnSizeForAdditionalOthers)
     }
+    val vectorBuilder = BigIntVector::builder(columnSize)
+    zeroVector = vectorBuilder.putAll(0BI).build
+    vector = mathRandom.nextBigIntVector(bound, columnSize)
+  }
 
-    @Test
-    def void addNullShouldThrowException() {
-        assertThatThrownBy[
-            zeroMatrixForAddition.add(null)
-        ].isExactlyInstanceOf(NullPointerException)
-    }
+  @Test
+  def void addNullShouldThrowException() {
+    assertThatThrownBy[
+      zeroMatrixForAddition.add(null)
+    ].isExactlyInstanceOf(NullPointerException)
+  }
 
-    @Test
-    def void addShouldSucceed() {
-        matrices.forEach [
-            othersForAddition.forEach [ other |
-                val builder = BigIntMatrix::builder(rowSize, columnSize)
-                rowIndexes.forEach [ rowIndex |
-                    columnIndexes.forEach [ columnIndex |
-                        val expectedEntry = entry(rowIndex, columnIndex) + other.entry(rowIndex, columnIndex)
-                        builder.put(rowIndex, columnIndex, expectedEntry)
-                    ]
+  @Test
+  def void addShouldSucceed() {
+    matrices.forEach [
+      othersForAddition.forEach [ other |
+        val builder = BigIntMatrix::builder(rowSize, columnSize)
+        rowIndexes.forEach [ rowIndex |
+          columnIndexes.forEach [ columnIndex |
+            val expectedEntry = entry(rowIndex, columnIndex) + other.entry(rowIndex, columnIndex)
+            builder.put(rowIndex, columnIndex, expectedEntry)
+          ]
 
-                ]
-                assertThat(add(other)).isEqualTo(builder.build)
-            ]
         ]
-    }
+        assertThat(add(other)).isEqualTo(builder.build)
+      ]
+    ]
+  }
 
-    @Test
-    def void addShouldBeCommutative() {
-        matrices.forEach [
-            othersForAddition.forEach [ other |
-                assertThat(add(other)).isEqualTo(other.add(it))
-            ]
+  @Test
+  def void addShouldBeCommutative() {
+    matrices.forEach [
+      othersForAddition.forEach [ other |
+        assertThat(add(other)).isEqualTo(other.add(it))
+      ]
+    ]
+  }
+
+  @Test
+  def void addShouldBeAssociative() {
+    matrices.forEach [
+      othersForAddition.forEach [ other |
+        additionalOthersForAddition.forEach [ additionalOthers |
+          assertThat(add(other).add(additionalOthers)).isEqualTo(add(other.add(additionalOthers)))
         ]
-    }
+      ]
+    ]
+  }
 
-    @Test
-    def void addShouldBeAssociative() {
-        matrices.forEach [
-            othersForAddition.forEach [ other |
-                additionalOthersForAddition.forEach [ additionalOthers |
-                    assertThat(add(other).add(additionalOthers)).isEqualTo(add(other.add(additionalOthers)))
-                ]
-            ]
+  @Test
+  def void addZeroMatrixShouldBeEqualToSelf() {
+    matrices.forEach [
+      assertThat(add(zeroMatrixForAddition)).isEqualTo(it)
+    ]
+  }
+
+  @Test
+  def void subtractNullShouldThrowException() {
+    assertThatThrownBy[
+      zeroMatrixForAddition.subtract(null)
+    ].isExactlyInstanceOf(NullPointerException)
+  }
+
+  @Test
+  def void subtractShouldSucceed() {
+    matrices.forEach [
+      othersForAddition.forEach [ other |
+        val builder = BigIntMatrix::builder(rowSize, columnSize)
+        rowIndexes.forEach [ rowIndex |
+          columnIndexes.forEach [ columnIndex |
+            val expectedEntry = entry(rowIndex, columnIndex) - other.entry(rowIndex, columnIndex)
+            builder.put(rowIndex, columnIndex, expectedEntry)
+          ]
+
         ]
-    }
+        assertThat(subtract(other)).isEqualTo(builder.build)
+      ]
+    ]
+  }
 
-    @Test
-    def void addZeroMatrixShouldBeEqualToSelf() {
-        matrices.forEach [
-            assertThat(add(zeroMatrixForAddition)).isEqualTo(it)
+  @Test
+  def void subtractZeroMatrixShouldBeEqualToSelf() {
+    matrices.forEach [
+      assertThat(subtract(zeroMatrixForAddition)).isEqualTo(it)
+    ]
+  }
+
+  @Test
+  def void multiplyNullShouldThrowException() {
+    assertThatThrownBy[
+      zeroMatrixForMultiplication.multiply(null)
+    ].isExactlyInstanceOf(NullPointerException)
+  }
+
+  @Test
+  def void multiplyShouldBeAssociative() {
+    matrices.forEach [
+      othersForMultiplication.forEach [ other |
+        additionalOthersForMultiplication.forEach [ additionalOthers |
+          assertThat(multiply(other).multiply(additionalOthers)).isEqualTo(multiply(other.multiply(additionalOthers)))
         ]
-    }
+      ]
+    ]
+  }
 
-    @Test
-    def void subtractNullShouldThrowException() {
-        assertThatThrownBy[
-            zeroMatrixForAddition.subtract(null)
-        ].isExactlyInstanceOf(NullPointerException)
-    }
+  @Test
+  def void muliplyZeroMatrixShouldBeEqualToZeroMatrix() {
+    matrices.forEach [
+      multiply(zeroMatrixForMultiplication).table.cellSet.forEach [
+        assertThat(value).isEqualTo(0BI)
+      ]
+    ]
+  }
 
-    @Test
-    def void subtractShouldSucceed() {
-        matrices.forEach [
-            othersForAddition.forEach [ other |
-                val builder = BigIntMatrix::builder(rowSize, columnSize)
-                rowIndexes.forEach [ rowIndex |
-                    columnIndexes.forEach [ columnIndex |
-                        val expectedEntry = entry(rowIndex, columnIndex) - other.entry(rowIndex, columnIndex)
-                        builder.put(rowIndex, columnIndex, expectedEntry)
-                    ]
-
-                ]
-                assertThat(subtract(other)).isEqualTo(builder.build)
-            ]
-        ]
-    }
-
-    @Test
-    def void subtractZeroMatrixShouldBeEqualToSelf() {
-        matrices.forEach [
-            assertThat(subtract(zeroMatrixForAddition)).isEqualTo(it)
-        ]
-    }
-
-    @Test
-    def void multiplyNullShouldThrowException() {
-        assertThatThrownBy[
-            zeroMatrixForMultiplication.multiply(null)
-        ].isExactlyInstanceOf(NullPointerException)
-    }
-
-    @Test
-    def void multiplyShouldBeAssociative() {
-        matrices.forEach [
-            othersForMultiplication.forEach [ other |
-                additionalOthersForMultiplication.forEach [ additionalOthers |
-                    assertThat(multiply(other).multiply(additionalOthers)).isEqualTo(
-                        multiply(other.multiply(additionalOthers)))
-                ]
-            ]
-        ]
-    }
-
-    @Test
-    def void muliplyZeroMatrixShouldBeEqualToZeroMatrix() {
-        matrices.forEach [
-            multiply(zeroMatrixForMultiplication).table.cellSet.forEach [
-                assertThat(value).isEqualTo(0BI)
-            ]
-        ]
-    }
-
-    @Test
-    def void multiplyIdentityMatrixShouldBeEqualToSelf() {
-        squarematrices.forEach [
-            assertThat(multiply(identityMatrix)).isEqualTo(it)
-        ]
-    }
+  @Test
+  def void multiplyIdentityMatrixShouldBeEqualToSelf() {
+    squarematrices.forEach [
+      assertThat(multiply(identityMatrix)).isEqualTo(it)
+    ]
+  }
 }
