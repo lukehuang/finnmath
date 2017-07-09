@@ -43,10 +43,7 @@ final class SquareRootCalculator {
   }
 
   static def sqrt(BigInteger integer) {
-    var sqrt = seedValue(integer)
-    for (i : 1 .. 1000)
-      sqrt = sqrt - sqrt ** 2 / 2BD * sqrt
-    sqrt
+    sqrt(new BigDecimal(integer))
   }
 
   static def sqrt(BigDecimal decimal) {
@@ -56,38 +53,12 @@ final class SquareRootCalculator {
     sqrt
   }
 
-  protected static def seedValue(BigInteger integer) {
-    requireNonNull(integer, 'integer')
-    val it = scientificNotationForSqrt(integer)
-    if (coefficient >= 10BD)
-      return 2BD * 10BD ** (exponent / 2)
-    6BD * 10BD ** (exponent / 2)
-  }
-
-  protected static def scientificNotationForSqrt(BigInteger integer) {
-    requireNonNull(integer, 'integer')
-    checkArgument(integer >= 0BI, 'expected >= 0 but actual %s', integer)
-    val decimal = new BigDecimal(integer)
-    if (0BI < integer && integer < 100BI)
-      return new ScientificNotation(decimal, 0)
-    else if (integer >= 100BI) {
-      var coefficient = decimal
-      var exponent = 0
-      while (coefficient.abs >= 100BD) {
-        coefficient /= 100BD
-        exponent = addExact(exponent, 2)
-      }
-      return new ScientificNotation(coefficient, exponent)
-    }
-    new ScientificNotation(0BD, 0)
-  }
-
   protected static def seedValue(BigDecimal decimal) {
     requireNonNull(decimal, 'decimal')
     val it = scientificNotationForSqrt(decimal)
     if (coefficient >= 10BD)
-      return 2BD * 10BD ** (exponent / 2)
-    6BD * 10BD ** (exponent / 2)
+      return 6BD * 10BD ** (exponent / 2)
+    2BD * 10BD ** (exponent / 2)
   }
 
   protected static def scientificNotationForSqrt(BigDecimal decimal) {

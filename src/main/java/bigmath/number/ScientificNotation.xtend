@@ -30,11 +30,32 @@ package bigmath.number
 
 import com.google.common.annotations.Beta
 import java.math.BigDecimal
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
+
+import static java.util.Objects.requireNonNull
 
 @Beta
-@Data
+@EqualsHashCode
+@ToString
+@Accessors
 final class ScientificNotation {
-  BigDecimal coefficient
-  int exponent
+  val BigDecimal coefficient
+  val int exponent
+
+  new(BigDecimal coefficient, int exponent) {
+    this.coefficient = requireNonNull(coefficient, 'coefficient')
+    this.exponent = requireNonNull(exponent, 'exponent')
+  }
+
+  def asString() {
+    if (exponent < 0)
+      return '''«coefficient» * 10^(«exponent»)'''
+    else if (exponent == 0)
+      return '''«coefficient»'''
+    else if (exponent == 1)
+      return '''«coefficient» * 10'''
+    '''«coefficient» * 10^«exponent»'''
+  }
 }
