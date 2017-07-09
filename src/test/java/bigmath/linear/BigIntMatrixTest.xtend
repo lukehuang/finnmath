@@ -41,8 +41,8 @@ final class BigIntMatrixTest {
     static var BigIntMatrix zeroMatrixForAddition
     static var BigIntMatrix zeroMatrixForMultiplication
     static var BigIntMatrix identityMatrix
-    static val List<BigIntMatrix> matrixes = newArrayList
-    static val List<BigIntMatrix> squareMatrixes = newArrayList
+    static val List<BigIntMatrix> matrices = newArrayList
+    static val List<BigIntMatrix> squarematrices = newArrayList
     static val List<BigIntMatrix> othersForAddition = newArrayList
     static val List<BigIntMatrix> additionalOthersForAddition = newArrayList
     static val List<BigIntMatrix> othersForMultiplication = newArrayList
@@ -68,8 +68,8 @@ final class BigIntMatrixTest {
             identyMatrixBuilder.put(index, index, 1BI)
         identityMatrix = identyMatrixBuilder.build
         for (i : 1 .. howMany) {
-            matrixes += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
-            squareMatrixes += mathRandom.nextBigIntMatrix(bound, rowSize, rowSize)
+            matrices += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
+            squarematrices += mathRandom.nextBigIntMatrix(bound, rowSize, rowSize)
             othersForAddition += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
             additionalOthersForAddition += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
             othersForMultiplication += mathRandom.nextBigIntMatrix(bound, columnSize, columnSizeForOthers)
@@ -90,7 +90,7 @@ final class BigIntMatrixTest {
 
     @Test
     def void addShouldSucceed() {
-        matrixes.forEach [
+        matrices.forEach [
             othersForAddition.forEach [ other |
                 val builder = BigIntMatrix::builder(rowSize, columnSize)
                 rowIndexes.forEach [ rowIndex |
@@ -107,7 +107,7 @@ final class BigIntMatrixTest {
 
     @Test
     def void addShouldBeCommutative() {
-        matrixes.forEach [
+        matrices.forEach [
             othersForAddition.forEach [ other |
                 assertThat(add(other)).isEqualTo(other.add(it))
             ]
@@ -116,7 +116,7 @@ final class BigIntMatrixTest {
 
     @Test
     def void addShouldBeAssociative() {
-        matrixes.forEach [
+        matrices.forEach [
             othersForAddition.forEach [ other |
                 additionalOthersForAddition.forEach [ additionalOthers |
                     assertThat(add(other).add(additionalOthers)).isEqualTo(add(other.add(additionalOthers)))
@@ -127,7 +127,7 @@ final class BigIntMatrixTest {
 
     @Test
     def void addZeroMatrixShouldBeEqualToSelf() {
-        matrixes.forEach [
+        matrices.forEach [
             assertThat(add(zeroMatrixForAddition)).isEqualTo(it)
         ]
     }
@@ -141,7 +141,7 @@ final class BigIntMatrixTest {
 
     @Test
     def void subtractShouldSucceed() {
-        matrixes.forEach [
+        matrices.forEach [
             othersForAddition.forEach [ other |
                 val builder = BigIntMatrix::builder(rowSize, columnSize)
                 rowIndexes.forEach [ rowIndex |
@@ -158,7 +158,7 @@ final class BigIntMatrixTest {
 
     @Test
     def void subtractZeroMatrixShouldBeEqualToSelf() {
-        matrixes.forEach [
+        matrices.forEach [
             assertThat(subtract(zeroMatrixForAddition)).isEqualTo(it)
         ]
     }
@@ -172,7 +172,7 @@ final class BigIntMatrixTest {
 
     @Test
     def void multiplyShouldBeAssociative() {
-        matrixes.forEach [
+        matrices.forEach [
             othersForMultiplication.forEach [ other |
                 additionalOthersForMultiplication.forEach [ additionalOthers |
                     assertThat(multiply(other).multiply(additionalOthers)).isEqualTo(
@@ -184,7 +184,7 @@ final class BigIntMatrixTest {
 
     @Test
     def void muliplyZeroMatrixShouldBeEqualToZeroMatrix() {
-        matrixes.forEach [
+        matrices.forEach [
             multiply(zeroMatrixForMultiplication).table.cellSet.forEach [
                 assertThat(value).isEqualTo(0BI)
             ]
@@ -193,7 +193,7 @@ final class BigIntMatrixTest {
 
     @Test
     def void multiplyIdentityMatrixShouldBeEqualToSelf() {
-        squareMatrixes.forEach [
+        squarematrices.forEach [
             assertThat(multiply(identityMatrix)).isEqualTo(it)
         ]
     }

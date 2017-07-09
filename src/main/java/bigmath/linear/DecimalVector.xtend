@@ -35,88 +35,110 @@ import org.apache.commons.lang3.builder.Builder
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.ToString
 
+import static bigmath.util.SquareRootCalculator.sqrt
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
 @ToString
-final class DecimalVector extends Vector<DecimalVector, BigDecimal> {
-    private new(Map<Integer, BigDecimal> map) {
-        super(map)
+final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> {
+  private new(Map<Integer, BigDecimal> map) {
+    super(map)
+  }
+
+  override negate() {
+    val builder = builder(map.size)
+    map.entrySet.forEach [
+      builder.put(-value)
+    ]
+    builder.build
+  }
+
+  override add(DecimalVector summand) {
+    checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
+    val builder = builder(map.size)
+    map.forEach [ index, entry |
+      builder.put(entry + summand.entry(index))
+    ]
+    builder.build
+  }
+
+  override subtract(DecimalVector subtrahend) {
+    checkArgument(map.size == subtrahend.size, 'equal sizes expected but actual %s != %s', map.size, subtrahend.size)
+    val builder = builder(map.size)
+    map.forEach [ index, entry |
+      builder.put(entry - subtrahend.entry(index))
+    ]
+    builder.build
+  }
+
+  override scalarMultiply(BigDecimal scalar) {
+    val builder = builder(map.size)
+    map.forEach [ index, entry |
+      builder.put(scalar * entry)
+    ]
+    builder.build
+  }
+
+  override norm() {
+    sqrt(normPow2)
+  }
+
+  override normPow2() {
+    dotProduct
+  }
+
+  override dotProduct(DecimalVector vector) {
+    requireNonNull(vector, 'vector')
+    checkArgument(map.size == vector.size, 'equal sizes expected but actual %s != %s', map.size, vector.size)
+    var result = 0BD
+    for (index : (1 .. map.size))
+      result += map.get(index) * vector.entry(index)
+    result
+  }
+
+  override distance(DecimalVector vector) {
+    requireNonNull(vector, 'vector')
+    checkArgument(map.size == vector.size, 'equal sizes expected but actual %s != %s', map.size, vector.size)
+    sqrt(distancePow2(vector))
+  }
+
+  override distancePow2(DecimalVector vector) {
+    requireNonNull(vector, 'vector')
+    checkArgument(map.size == vector.size, 'equal sizes expected but actual %s != %s', map.size, vector.size)
+    subtract(vector).normPow2
+  }
+
+  override size() {
+    map.size
+  }
+
+  static def builder(int size) {
+    new DecimalVectorBuilder(size)
+  }
+
+  @Beta
+  @ToString
+  static class DecimalVectorBuilder extends VectorBuilder<DecimalVectorBuilder, DecimalVector, BigDecimal> implements Builder<DecimalVector> {
+    private new(int size) {
+      super(size)
     }
 
-    override negate() {
-        val builder = builder(map.size)
-        map.entrySet.forEach [
-            builder.put(-value)
-        ]
-        builder.build
+    def addToEntryAndPut(Integer index, BigDecimal entry) {
+      requireNonNull(index, 'index')
+      checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
+      val existing = map.get(index)
+      requireNonNull(existing, 'existing')
+      requireNonNull(entry, 'entry')
+      map.put(index, map.get(index) + entry)
     }
 
-    override add(DecimalVector summand) {
-        checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
-        val builder = builder(map.size)
-        map.forEach [ index, entry |
-            builder.put(entry + summand.entry(index))
-        ]
-        builder.build
+    override build() {
+      map.forEach [ index, entry |
+        requireNonNull(entry, 'entry')
+      ]
+      new DecimalVector(map)
     }
-
-    override subtract(DecimalVector subtrahend) {
-        checkArgument(map.size == subtrahend.size, 'equal sizes expected but actual %s != %s', map.size,
-            subtrahend.size)
-        val builder = builder(map.size)
-        map.forEach [ index, entry |
-            builder.put(entry - subtrahend.entry(index))
-        ]
-        builder.build
-    }
-
-    override scalarMultiply(BigDecimal scalar) {
-        val builder = builder(map.size)
-        map.forEach [ index, entry |
-            builder.put(scalar * entry)
-        ]
-        builder.build
-    }
-
-    override abs() {
-        var result = 0BD
-        for (it : map.entrySet)
-            result += value ** 2
-        result
-    }
-
-    override size() {
-        map.size
-    }
-
-    static def builder(int size) {
-        new DecimalVectorBuilder(size)
-    }
-
-    @Beta
-    @ToString
-    static class DecimalVectorBuilder extends VectorBuilder<DecimalVectorBuilder, DecimalVector, BigDecimal> implements Builder<DecimalVector> {
-        private new(int size) {
-            super(size)
-        }
-
-        def addToEntryAndPut(Integer index, BigDecimal entry) {
-            requireNonNull(index, 'index')
-            checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
-            val existing = map.get(index)
-            requireNonNull(existing, 'existing')
-            requireNonNull(entry, 'entry')
-            map.put(index, map.get(index) + entry)
-        }
-
-        override build() {
-            map.forEach [ index, entry |
-                requireNonNull(entry, 'entry')
-            ]
-            new DecimalVector(map)
-        }
-    }
+  }
 }

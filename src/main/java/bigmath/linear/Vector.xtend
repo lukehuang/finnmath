@@ -37,32 +37,40 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
-abstract class Vector<V, E> {
-    protected val Map<Integer, E> map
+abstract class Vector<V, E, N> {
+  protected val Map<Integer, E> map
 
-    protected new(Map<Integer, E> map) {
-        this.map = requireNonNull(map, 'map')
-    }
+  protected new(Map<Integer, E> map) {
+    this.map = requireNonNull(map, 'map')
+  }
 
-    def entry(Integer index) {
-        requireNonNull(index, 'index')
-        checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
-        map.get(index)
-    }
+  def entry(Integer index) {
+    requireNonNull(index, 'index')
+    checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
+    map.get(index)
+  }
 
-    def V add(V summand)
+  def V add(V summand)
 
-    def V subtract(V subtrahend)
+  def V subtract(V subtrahend)
 
-    def V scalarMultiply(E scalar)
+  def V scalarMultiply(E scalar)
 
-    def V negate()
+  def V negate()
 
-    def E abs()
+  def N norm()
 
-    def int size()
+  def E normPow2()
 
-    def getMap() {
-        map.immutableCopy
-    }
+  def E dotProduct(V vector)
+
+  def N distance(V vector)
+
+  def E distancePow2(V vector)
+
+  def int size()
+
+  def getMap() {
+    map.immutableCopy
+  }
 }

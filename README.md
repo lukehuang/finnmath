@@ -1,14 +1,15 @@
-# bigMath: A math library for the JVM based on BigInteger and BigDecimal
+# bigMath: Math library for the JVM based on BigInteger and BigDecimal
 
 bigMath is a free software library for the JVM which provides or will provide implementations for fractions, 
 complex numbers, matrixes and vectors and their arithmetics based on BigInteger and BigDecimal so that this 
 library is not prone to buffer overflows and big rounding errors. The great Commons Math uses primitives 
-so if you want to achieve great performance then please choose Commons Math instead.
+so if you want to achieve best performance then please choose Commons Math instead.
 
-Today bigMath consists of three parts:
-* Linear algebra with matrixes and vectors
+Today bigMath consists of the following parts:
+* Linear algebra with matrices and vectors
 * Fractions and complex numbers
 * A pseudo random generator
+* A square root calculator for BigInteger and BigDecimal based on Newton's method
 
 bigMath is written in Xtend and uses Gradle as its build automation tool so it should interop 
 seamlessly with other JVM technologies.
