@@ -43,18 +43,32 @@ final class SquareRootCalculator {
   }
 
   static def sqrt(BigInteger integer) {
+    requireNonNull(integer, 'integer')
+    checkArgument(integer >= 0BI, 'expected >= 0 but actual %s', integer)
     sqrt(new BigDecimal(integer))
   }
 
   static def sqrt(BigDecimal decimal) {
-    var sqrt = seedValue(decimal)
-    for (i : 1 .. 1000)
-      sqrt = sqrt - sqrt ** 2 / 2BD * sqrt
-    sqrt
+    requireNonNull(decimal, 'decimal')
+    checkArgument(decimal >= 0BD, 'expected >= 0 but actual %s', decimal)
+    heronsMethod(decimal)
+  }
+
+  protected static def heronsMethod(BigDecimal decimal) {
+    var predecessor = seedValue(decimal)
+    var successor = heronsMethod(predecessor, decimal)
+    while ((successor - predecessor).abs > 0.0000000001BD) {
+      predecessor = successor
+      successor = heronsMethod(successor, decimal)
+    }
+    return successor
+  }
+
+  protected static def heronsMethod(BigDecimal predecessor, BigDecimal decimal) {
+    (predecessor ** 2 + decimal) / (2BD * predecessor)
   }
 
   protected static def seedValue(BigDecimal decimal) {
-    requireNonNull(decimal, 'decimal')
     val it = scientificNotationForSqrt(decimal)
     if (coefficient >= 10BD)
       return 6BD * 10BD ** (exponent / 2)
@@ -62,8 +76,6 @@ final class SquareRootCalculator {
   }
 
   protected static def scientificNotationForSqrt(BigDecimal decimal) {
-    requireNonNull(decimal, 'decimal')
-    checkArgument(decimal >= 0BD, 'expected >= 0 but actual %s', decimal)
     if (0BD < decimal && decimal < 100BD)
       return new ScientificNotation(decimal, 0)
     else if (decimal >= 100BD) {

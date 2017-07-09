@@ -9,7 +9,7 @@ Today bigMath consists of the following parts:
 * Linear algebra with matrices and vectors
 * Fractions and complex numbers
 * A pseudo random generator
-* A square root calculator for BigInteger and BigDecimal based on Newton's method
+* A square root calculator for BigInteger and BigDecimal based on Heron's method
 
 bigMath is written in Xtend and uses Gradle as its build automation tool so it should interop 
 seamlessly with other JVM technologies.
