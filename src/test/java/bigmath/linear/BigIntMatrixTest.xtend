@@ -160,6 +160,13 @@ final class BigIntMatrixTest {
       assertThat(subtract(zeroMatrixForAddition)).isEqualTo(it)
     ]
   }
+  
+  @Test
+  def void subtractSelfShouldBeEqualToZeroMatrix() {
+    matrices.forEach [
+      assertThat(subtract(it)).isEqualTo(zeroMatrixForAddition)
+    ]
+  }
 
   @Test
   def void multiplyNullShouldThrowException() {
