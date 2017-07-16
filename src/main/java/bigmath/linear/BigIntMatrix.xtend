@@ -153,22 +153,16 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
   }
 
   override upperTriangular() {
-    if (square) {
+    if (square)
       for (it : table.cellSet)
-        if (rowKey > columnKey && value != 0BI)
-          return false
-      return true
-    }
+        return !(rowKey > columnKey && value != 0BI)
     false
   }
 
   override lowerTriangular() {
-    if (square) {
+    if (square)
       for (it : table.cellSet)
-        if (rowKey < columnKey && value != 0BI)
-          return false
-      return true
-    }
+        return !(rowKey < columnKey && value != 0BI)
     false
   }
 
@@ -177,12 +171,9 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
   }
 
   override id() {
-    if (diagonal) {
+    if (diagonal)
       for (index : table.rowKeySet)
-        if (table.get(index, index) != 1BI)
-          return false
-      return true
-    }
+        return !(table.get(index, index) != 1BI)
     false
   }
 

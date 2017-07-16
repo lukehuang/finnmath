@@ -116,7 +116,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
   }
 
   static def builder(int size) {
-    checkArgument(size > 0, 'expected > 0 but actual %s', size)
+    checkArgument(size > 0, 'expected size > 0 but actual %s', size)
     new DecimalVectorBuilder(size)
   }
 

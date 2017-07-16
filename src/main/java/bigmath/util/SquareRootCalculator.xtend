@@ -30,13 +30,17 @@ package bigmath.util
 
 import bigmath.number.ScientificNotation
 import com.google.common.annotations.Beta
+import com.google.common.math.BigIntegerMath
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.math.RoundingMode
+import java.util.Optional
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
+import static com.google.common.base.Preconditions.checkState
 import static java.lang.Math.addExact
 import static java.util.Objects.requireNonNull
 
@@ -45,45 +49,109 @@ import static java.util.Objects.requireNonNull
 @ToString
 @Accessors
 final class SquareRootCalculator {
+  val Optional<BigInteger> optInteger;
   val BigDecimal decimal
-  val BigDecimal epsilon
+  val BigDecimal precision
+  val int scale
 
   new(BigInteger integer) {
     requireNonNull(integer, 'integer')
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
+    optInteger = Optional.of(integer)
     decimal = new BigDecimal(integer)
-    epsilon = 0.0000000001BD
-    checkArgument(integer >= 0BI, 'expected >= 0 but actual %s', integer)
+    precision = 0.0000000001BD
+    scale = 0
+  }
+
+  new(BigInteger integer, BigDecimal precision) {
+    requireNonNull(integer, 'integer')
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
+    optInteger = Optional.of(integer)
+    decimal = new BigDecimal(integer)
+    this.precision = requireNonNull(precision, 'precision')
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
+    scale = 10
+  }
+
+  new(BigInteger integer, int scale) {
+    requireNonNull(integer, 'integer')
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
+    optInteger = Optional.of(integer)
+    decimal = new BigDecimal(integer)
+    this.precision = 0.0000000001BD
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
+    this.scale = scale
+  }
+
+  new(BigInteger integer, BigDecimal precision, int scale) {
+    requireNonNull(integer, 'integer')
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
+    optInteger = Optional.of(integer)
+    decimal = new BigDecimal(integer)
+    this.precision = requireNonNull(precision, 'precision')
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
+    this.scale = scale
   }
 
   new(BigDecimal decimal) {
+    optInteger = Optional.empty
     this.decimal = requireNonNull(decimal, 'decimal')
-    epsilon = 0.0000000001BD
-    checkArgument(decimal >= 0BD, 'expected >= 0 but actual %s', decimal)
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
+    precision = 0.0000000001BD
+    scale = 10
   }
 
-  new(BigInteger integer, BigDecimal epsilon) {
-    requireNonNull(integer, 'integer')
-    decimal = new BigDecimal(integer)
-    this.epsilon = requireNonNull(epsilon, 'epsilon')
-    checkArgument(integer >= 0BI, 'expected >= 0 but actual %s', integer)
-    checkArgument(0BD < epsilon && epsilon < 1BD, 'expected epsilon in (0, 1) but actual %s', epsilon)
+  new(BigDecimal decimal, int scale) {
+    optInteger = Optional.empty
+    this.decimal = requireNonNull(decimal, 'decimal')
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
+    precision = 0.0000000001BD
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
+    this.scale = scale
   }
 
-  new(BigDecimal decimal, BigDecimal epsilon) {
+  new(BigDecimal decimal, BigDecimal precision) {
+    optInteger = Optional.empty
     this.decimal = requireNonNull(decimal, 'decimal')
-    this.epsilon = requireNonNull(epsilon, 'epsilon')
-    checkArgument(decimal >= 0BD, 'expected >= 0 but actual %s', decimal)
-    checkArgument(0BD < epsilon && epsilon < 1BD, 'expected epsilon in (0, 1) but actual %s', epsilon)
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
+    this.precision = requireNonNull(precision, 'precision')
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
+    scale = 10
+  }
+
+  new(BigDecimal decimal, BigDecimal precision, int scale) {
+    optInteger = Optional.empty
+    this.decimal = requireNonNull(decimal, 'decimal')
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
+    this.precision = requireNonNull(precision, 'precision')
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
+    this.scale = scale
   }
 
   def sqrt() {
-    heronsMethod
+    heronsMethod.scale = scale
+  }
+
+  def sqrtOfPerfectSquare() {
+    checkState(perfectSquare, 'expected perfect square but actual %s', optInteger.get)
+    BigIntegerMath.sqrt(optInteger.get, RoundingMode.UNNECESSARY)
+  }
+
+  def perfectSquare() {
+    checkState(optInteger.present, 'expect optInteger.present to be true but actual %s', optInteger.present)
+    val integer = optInteger.get
+    var sum = 0BI
+    for (var odd = 1BI; sum < integer; odd += 2BI)
+      sum += odd
+    sum == integer
   }
 
   protected def heronsMethod() {
     var predecessor = seedValue
     var successor = heronsMethod(predecessor)
-    while ((successor - predecessor).abs > epsilon) {
+    while ((successor - predecessor).abs > precision) {
       predecessor = successor
       successor = heronsMethod(successor)
     }
