@@ -48,7 +48,7 @@ final class SquareRootCalculator {
   public static val BigDecimal DEFAULT_PRECISION = 0.0000000001BD
   public static val int DEFAULT_SCALE = 10
   public static val int DEFAULT_ROUNDING_MODE = BigDecimal.ROUND_HALF_UP
-  public static val log = LoggerFactory.getLogger(SquareRootCalculator)
+  static val log = LoggerFactory.getLogger(SquareRootCalculator)
 
   static def sqrt(BigInteger integer) {
     requireNonNull(integer, 'integer')
@@ -142,13 +142,13 @@ final class SquareRootCalculator {
       successor = calculateSuccessor(successor, decimal)
       iterations++
     }
-    log.debug('terminated after {} iteration steps', iterations)
+    log.debug('terminated after {} iterations', iterations)
     log.debug('sqrt({}) = {}', decimal.toPlainString, successor.toPlainString)
     successor
   }
 
   protected static def calculateSuccessor(BigDecimal predecessor, BigDecimal decimal) {
-    log.debug('iteration step')
+    log.debug('iteration')
     log.debug('predecessor = {}', predecessor.toPlainString)
     val successor = (predecessor ** 2 + decimal) / (2BD * predecessor)
     log.debug('successor = {}', successor.toPlainString)
@@ -157,6 +157,7 @@ final class SquareRootCalculator {
 
   protected static def seedValue(BigDecimal decimal) {
     val it = scientificNotationForSqrt(decimal)
+    log.debug('Scientific notation of {} is {}.', decimal.toPlainString, asString)
     if (coefficient >= 10BD)
       return 6BD * 10BD ** (exponent / 2)
     2BD * 10BD ** (exponent / 2)
