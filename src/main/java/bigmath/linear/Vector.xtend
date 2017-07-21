@@ -63,9 +63,9 @@ abstract class Vector<V, E, N> {
 
   def N norm(BigDecimal precision)
 
-  def N norm(int scale)
+  def N norm(int scale, int roundingMode)
 
-  def N norm(BigDecimal precision, int scale)
+  def N norm(BigDecimal precision, int scale, int roundingMode)
 
   def E normPow2()
 

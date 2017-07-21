@@ -35,6 +35,7 @@ import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.RoundingMode
 import org.eclipse.xtend.lib.annotations.ToString
+import org.slf4j.LoggerFactory
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
@@ -46,77 +47,83 @@ import static java.util.Objects.requireNonNull
 final class SquareRootCalculator {
   public static val BigDecimal DEFAULT_PRECISION = 0.0000000001BD
   public static val int DEFAULT_SCALE = 10
+  public static val int DEFAULT_ROUNDING_MODE = BigDecimal.ROUND_HALF_UP
+  public static val log = LoggerFactory.getLogger(SquareRootCalculator)
 
   static def sqrt(BigInteger integer) {
     requireNonNull(integer, 'integer')
-    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
-    sqrt(new BigDecimal(integer), DEFAULT_PRECISION, DEFAULT_SCALE)
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual {}', integer)
+    sqrt(new BigDecimal(integer), DEFAULT_PRECISION, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE)
   }
 
   static def sqrt(BigDecimal decimal) {
     requireNonNull(decimal, 'decimal')
-    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
-    heronsMethod(decimal, DEFAULT_PRECISION).scale = DEFAULT_SCALE
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual {}', decimal)
+    heronsMethod(decimal, DEFAULT_PRECISION).setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE)
   }
 
   static def sqrt(BigInteger integer, BigDecimal precision) {
     requireNonNull(integer, 'integer')
-    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual {}', integer)
     requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
-    sqrt(new BigDecimal(integer), precision, DEFAULT_SCALE)
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+    sqrt(new BigDecimal(integer), precision, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE)
   }
 
   static def sqrt(BigDecimal decimal, BigDecimal precision) {
     requireNonNull(decimal, 'decimal')
-    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual {}', decimal)
     requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
-    heronsMethod(decimal, precision).scale = DEFAULT_SCALE
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+    heronsMethod(decimal, precision).setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE)
   }
 
-  static def sqrt(BigInteger integer, int scale) {
+  static def sqrt(BigInteger integer, int scale, int roundingMode) {
     requireNonNull(integer, 'integer')
-    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
-    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
-    sqrt(new BigDecimal(integer), DEFAULT_PRECISION, scale)
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual {}', integer)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
+    sqrt(new BigDecimal(integer), DEFAULT_PRECISION, scale, roundingMode)
   }
 
-  static def sqrt(BigDecimal decimal, int scale) {
+  static def sqrt(BigDecimal decimal, int scale, int roundingMode) {
     requireNonNull(decimal, 'decimal')
-    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
-    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
-    heronsMethod(decimal, DEFAULT_PRECISION).scale = scale
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual {}', decimal)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
+    heronsMethod(decimal, DEFAULT_PRECISION).setScale(scale, roundingMode)
   }
 
-  static def sqrt(BigInteger integer, BigDecimal precision, int scale) {
+  static def sqrt(BigInteger integer, BigDecimal precision, int scale, int roundingMode) {
     requireNonNull(integer, 'integer')
-    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual {}', integer)
     requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
-    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
-    sqrt(new BigDecimal(integer), precision, scale)
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
+    sqrt(new BigDecimal(integer), precision, scale, roundingMode)
   }
 
-  static def sqrt(BigDecimal decimal, BigDecimal precision, int scale) {
+  static def sqrt(BigDecimal decimal, BigDecimal precision, int scale, int roundingMode) {
     requireNonNull(decimal, 'decimal')
-    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual {}', decimal)
     requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
-    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
-    heronsMethod(decimal, precision).scale = scale
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
+    heronsMethod(decimal, precision).setScale(scale, roundingMode)
   }
 
   static def sqrtOfPerfectSquare(BigInteger integer) {
     requireNonNull(integer, 'integer')
-    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
-    checkState(perfectSquare(integer), 'expected perfect square but actual %s', integer)
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual {}', integer)
+    checkState(perfectSquare(integer), 'expected perfect square but actual {}', integer)
     BigIntegerMath.sqrt(integer, RoundingMode.UNNECESSARY)
   }
 
   static def perfectSquare(BigInteger integer) {
     requireNonNull(integer, 'integer')
-    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual {}', integer)
     var sum = 0BI
     for (var odd = 1BI; sum < integer; odd += 2BI)
       sum += odd
@@ -124,17 +131,28 @@ final class SquareRootCalculator {
   }
 
   protected static def heronsMethod(BigDecimal decimal, BigDecimal precision) {
+    log.debug('calculating square root for {} with precision = {}', decimal.toPlainString, precision.toPlainString)
     var predecessor = seedValue(decimal)
+    log.debug('seed value = {}', predecessor.toPlainString)
     var successor = calculateSuccessor(predecessor, decimal)
+    var iterations = 1
     while ((successor - predecessor).abs >= precision) {
+      log.debug('|successor - predecessor| = {}', (successor - predecessor).abs.toPlainString)
       predecessor = successor
       successor = calculateSuccessor(successor, decimal)
+      iterations++
     }
+    log.debug('terminated after {} iteration steps', iterations)
+    log.debug('sqrt({}) = {}', decimal.toPlainString, successor.toPlainString)
     successor
   }
 
   protected static def calculateSuccessor(BigDecimal predecessor, BigDecimal decimal) {
-    (predecessor ** 2 + decimal) / (2BD * predecessor)
+    log.debug('iteration step')
+    log.debug('predecessor = {}', predecessor.toPlainString)
+    val successor = (predecessor ** 2 + decimal) / (2BD * predecessor)
+    log.debug('successor = {}', successor.toPlainString)
+    successor
   }
 
   protected static def seedValue(BigDecimal decimal) {
@@ -145,14 +163,22 @@ final class SquareRootCalculator {
   }
 
   protected static def scientificNotationForSqrt(BigDecimal decimal) {
-    if (0BD < decimal && decimal < 100BD)
+    log.debug('calculating scientific notification for {}', decimal.toPlainString)
+    if (0BD < decimal && decimal < 100BD) {
+      log.debug('{} in (0, 100)', decimal.toPlainString)
       return new ScientificNotation(decimal, 0)
-    else if (decimal >= 100BD) {
+    } else if (decimal >= 100BD) {
+      log.debug('{} >= 100)', decimal.toPlainString)
       var coefficient = decimal
       var exponent = 0
+      log.debug('coefficient = {}', coefficient.toPlainString)
+      log.debug('exponent = {}', exponent)
       while (coefficient.abs >= 100BD) {
+        log.debug('iteration step for scientific notification')
         coefficient /= 100BD
         exponent = addExact(exponent, 2)
+        log.debug('coefficient = {}', coefficient.toPlainString)
+        log.debug('exponent = {}', exponent)
       }
       return new ScientificNotation(coefficient, exponent)
     }

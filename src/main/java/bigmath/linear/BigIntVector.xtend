@@ -90,15 +90,23 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
   }
 
   override norm(BigDecimal precision) {
+    requireNonNull(precision, 'precision')
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
     sqrt(normPow2, precision)
   }
 
-  override norm(int scale) {
-    sqrt(normPow2, scale)
+  override norm(int scale, int roundingMode) {
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
+    sqrt(normPow2, scale, roundingMode)
   }
 
-  override norm(BigDecimal precision, int scale) {
-    sqrt(normPow2, precision, scale)
+  override norm(BigDecimal precision, int scale, int roundingMode) {
+    requireNonNull(precision, 'precision')
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
+    sqrt(normPow2, precision, scale, roundingMode)
   }
 
   override normPow2() {
