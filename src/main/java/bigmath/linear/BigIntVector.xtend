@@ -28,7 +28,6 @@
 
 package bigmath.linear
 
-import bigmath.util.SquareRootCalculator
 import com.google.common.annotations.Beta
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -37,6 +36,7 @@ import org.apache.commons.lang3.builder.Builder
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.ToString
 
+import static bigmath.util.SquareRootCalculator.sqrt
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
@@ -86,7 +86,19 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
   }
 
   override norm() {
-    new SquareRootCalculator(normPow2).sqrt
+    sqrt(normPow2)
+  }
+
+  override norm(BigDecimal precision) {
+    sqrt(normPow2, precision)
+  }
+
+  override norm(int scale) {
+    sqrt(normPow2, scale)
+  }
+
+  override norm(BigDecimal precision, int scale) {
+    sqrt(normPow2, precision, scale)
   }
 
   override normPow2() {
@@ -105,7 +117,7 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
   override distance(BigIntVector vector) {
     requireNonNull(vector, 'vector')
     checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-    new SquareRootCalculator(distancePow2(vector)).sqrt
+    sqrt(distancePow2(vector))
   }
 
   override distancePow2(BigIntVector vector) {

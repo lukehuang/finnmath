@@ -29,6 +29,7 @@
 package bigmath.linear
 
 import com.google.common.annotations.Beta
+import java.math.BigDecimal
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
@@ -59,6 +60,12 @@ abstract class Vector<V, E, N> {
   def V negate()
 
   def N norm()
+
+  def N norm(BigDecimal precision)
+
+  def N norm(int scale)
+
+  def N norm(BigDecimal precision, int scale)
 
   def E normPow2()
 

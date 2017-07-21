@@ -34,9 +34,6 @@ import com.google.common.math.BigIntegerMath
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.RoundingMode
-import java.util.Optional
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
@@ -45,131 +42,109 @@ import static java.lang.Math.addExact
 import static java.util.Objects.requireNonNull
 
 @Beta
-@EqualsHashCode
 @ToString
-@Accessors
 final class SquareRootCalculator {
-  val Optional<BigInteger> optInteger;
-  val BigDecimal decimal
-  val BigDecimal precision
-  val int scale
+  public static val BigDecimal DEFAULT_PRECISION = 0.0000000001BD
+  public static val int DEFAULT_SCALE = 10
 
-  new(BigInteger integer) {
+  static def sqrt(BigInteger integer) {
     requireNonNull(integer, 'integer')
     checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
-    optInteger = Optional.of(integer)
-    decimal = new BigDecimal(integer)
-    precision = 0.0000000001BD
-    scale = 0
+    sqrt(new BigDecimal(integer), DEFAULT_PRECISION, DEFAULT_SCALE)
   }
 
-  new(BigInteger integer, BigDecimal precision) {
+  static def sqrt(BigDecimal decimal) {
+    requireNonNull(decimal, 'decimal')
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
+    heronsMethod(decimal, DEFAULT_PRECISION).scale = DEFAULT_SCALE
+  }
+
+  static def sqrt(BigInteger integer, BigDecimal precision) {
     requireNonNull(integer, 'integer')
     checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
-    optInteger = Optional.of(integer)
-    decimal = new BigDecimal(integer)
-    this.precision = requireNonNull(precision, 'precision')
+    requireNonNull(precision, 'precision')
     checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
-    scale = 10
+    sqrt(new BigDecimal(integer), precision, DEFAULT_SCALE)
   }
 
-  new(BigInteger integer, int scale) {
+  static def sqrt(BigDecimal decimal, BigDecimal precision) {
+    requireNonNull(decimal, 'decimal')
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
+    requireNonNull(precision, 'precision')
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
+    heronsMethod(decimal, precision).scale = DEFAULT_SCALE
+  }
+
+  static def sqrt(BigInteger integer, int scale) {
     requireNonNull(integer, 'integer')
     checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
-    optInteger = Optional.of(integer)
-    decimal = new BigDecimal(integer)
-    this.precision = 0.0000000001BD
     checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
-    this.scale = scale
+    sqrt(new BigDecimal(integer), DEFAULT_PRECISION, scale)
   }
 
-  new(BigInteger integer, BigDecimal precision, int scale) {
+  static def sqrt(BigDecimal decimal, int scale) {
+    requireNonNull(decimal, 'decimal')
+    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
+    heronsMethod(decimal, DEFAULT_PRECISION).scale = scale
+  }
+
+  static def sqrt(BigInteger integer, BigDecimal precision, int scale) {
     requireNonNull(integer, 'integer')
     checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
-    optInteger = Optional.of(integer)
-    decimal = new BigDecimal(integer)
-    this.precision = requireNonNull(precision, 'precision')
+    requireNonNull(precision, 'precision')
     checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
     checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
-    this.scale = scale
+    sqrt(new BigDecimal(integer), precision, scale)
   }
 
-  new(BigDecimal decimal) {
-    optInteger = Optional.empty
-    this.decimal = requireNonNull(decimal, 'decimal')
+  static def sqrt(BigDecimal decimal, BigDecimal precision, int scale) {
+    requireNonNull(decimal, 'decimal')
     checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
-    precision = 0.0000000001BD
-    scale = 10
-  }
-
-  new(BigDecimal decimal, int scale) {
-    optInteger = Optional.empty
-    this.decimal = requireNonNull(decimal, 'decimal')
-    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
-    precision = 0.0000000001BD
-    checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
-    this.scale = scale
-  }
-
-  new(BigDecimal decimal, BigDecimal precision) {
-    optInteger = Optional.empty
-    this.decimal = requireNonNull(decimal, 'decimal')
-    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
-    this.precision = requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
-    scale = 10
-  }
-
-  new(BigDecimal decimal, BigDecimal precision, int scale) {
-    optInteger = Optional.empty
-    this.decimal = requireNonNull(decimal, 'decimal')
-    checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
-    this.precision = requireNonNull(precision, 'precision')
+    requireNonNull(precision, 'precision')
     checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
     checkArgument(scale >= 0, 'expected scale >= 0 but actual %s', scale)
-    this.scale = scale
+    heronsMethod(decimal, precision).scale = scale
   }
 
-  def sqrt() {
-    heronsMethod.scale = scale
+  static def sqrtOfPerfectSquare(BigInteger integer) {
+    requireNonNull(integer, 'integer')
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
+    checkState(perfectSquare(integer), 'expected perfect square but actual %s', integer)
+    BigIntegerMath.sqrt(integer, RoundingMode.UNNECESSARY)
   }
 
-  def sqrtOfPerfectSquare() {
-    checkState(perfectSquare, 'expected perfect square but actual %s', optInteger.get)
-    BigIntegerMath.sqrt(optInteger.get, RoundingMode.UNNECESSARY)
-  }
-
-  def perfectSquare() {
-    checkState(optInteger.present, 'expect optInteger.present to be true but actual %s', optInteger.present)
-    val integer = optInteger.get
+  static def perfectSquare(BigInteger integer) {
+    requireNonNull(integer, 'integer')
+    checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
     var sum = 0BI
     for (var odd = 1BI; sum < integer; odd += 2BI)
       sum += odd
     sum == integer
   }
 
-  protected def heronsMethod() {
-    var predecessor = seedValue
-    var successor = heronsMethod(predecessor)
-    while ((successor - predecessor).abs > precision) {
+  protected static def heronsMethod(BigDecimal decimal, BigDecimal precision) {
+    var predecessor = seedValue(decimal)
+    var successor = calculateSuccessor(predecessor, decimal)
+    while ((successor - predecessor).abs >= precision) {
       predecessor = successor
-      successor = heronsMethod(successor)
+      successor = calculateSuccessor(successor, decimal)
     }
     successor
   }
 
-  protected def heronsMethod(BigDecimal predecessor) {
+  protected static def calculateSuccessor(BigDecimal predecessor, BigDecimal decimal) {
     (predecessor ** 2 + decimal) / (2BD * predecessor)
   }
 
-  protected def seedValue() {
-    val it = scientificNotationForSqrt
+  protected static def seedValue(BigDecimal decimal) {
+    val it = scientificNotationForSqrt(decimal)
     if (coefficient >= 10BD)
       return 6BD * 10BD ** (exponent / 2)
     2BD * 10BD ** (exponent / 2)
   }
 
-  protected def scientificNotationForSqrt() {
+  protected static def scientificNotationForSqrt(BigDecimal decimal) {
     if (0BD < decimal && decimal < 100BD)
       return new ScientificNotation(decimal, 0)
     else if (decimal >= 100BD) {
