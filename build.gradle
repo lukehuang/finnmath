@@ -39,7 +39,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 description 'A math library for the JVM based on BigInteger and BigDecimal'
-group 'bigmath'
+group 'finnmath'
 version '1-SNAPSHOT'
 
 repositories { jcenter() }
