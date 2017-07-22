@@ -153,16 +153,22 @@ final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVecto
   }
 
   override upperTriangular() {
-    if (square)
+    if (square) {
       for (it : table.cellSet)
-        return !(rowKey > columnKey && value != 0BI)
+        if (rowKey > columnKey && value != 0BI)
+          return false
+      return true
+    }
     false
   }
 
   override lowerTriangular() {
-    if (square)
+    if (square) {
       for (it : table.cellSet)
-        return !(rowKey < columnKey && value != 0BI)
+        if (rowKey < columnKey && value != 0BI)
+          return false
+      return true
+    }
     false
   }
 
