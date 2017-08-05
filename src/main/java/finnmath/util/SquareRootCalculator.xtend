@@ -34,7 +34,6 @@ import finnmath.number.ScientificNotation
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.RoundingMode
-import org.eclipse.xtend.lib.annotations.ToString
 import org.slf4j.LoggerFactory
 
 import static com.google.common.base.Preconditions.checkArgument
@@ -43,7 +42,6 @@ import static java.lang.Math.addExact
 import static java.util.Objects.requireNonNull
 
 @Beta
-@ToString
 class SquareRootCalculator {
   public static val BigDecimal DEFAULT_PRECISION = 0.0000000001BD
   public static val int DEFAULT_SCALE = 10

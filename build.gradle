@@ -42,6 +42,8 @@ description 'A math library for the JVM based on BigInteger and BigDecimal'
 group 'finnmath'
 version '1-SNAPSHOT'
 
+xtend { generator { suppressWarningsAnnotation = false } }
+
 repositories { jcenter() }
 
 dependencies {

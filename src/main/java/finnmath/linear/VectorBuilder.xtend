@@ -35,12 +35,13 @@ import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
+import java.util.HashMap
 
 @Beta
 @FinalFieldsConstructor
 abstract class VectorBuilder<B, V, E> {
   @Accessors
-  protected val Map<Integer, E> map = newHashMap
+  protected val Map<Integer, E> map = new HashMap
 
   private val Integer size
 
