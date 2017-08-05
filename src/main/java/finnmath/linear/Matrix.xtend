@@ -29,9 +29,11 @@
 package finnmath.linear
 
 import com.google.common.annotations.Beta
+import com.google.common.collect.ImmutableMap
+import com.google.common.collect.ImmutableSet
 import com.google.common.collect.ImmutableTable
-import com.google.common.collect.Table
 import java.util.Map
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
@@ -40,15 +42,16 @@ import static com.google.common.base.Preconditions.checkArgument
 @Beta
 @FinalFieldsConstructor
 @EqualsHashCode
+@Accessors
 abstract class Matrix<M, E, V> {
-  protected val Table<Integer, Integer, E> table
+  protected val ImmutableTable<Integer, Integer, E> table
 
   def rowIndexes() {
-    table.rowKeySet.immutableCopy
+    ImmutableSet.copyOf(table.rowKeySet)
   }
 
   def columnIndexes() {
-    table.columnKeySet.immutableCopy
+    ImmutableSet.copyOf(table.columnKeySet)
   }
 
   def entry(Integer rowIndex, Integer columnIndex) {
@@ -62,21 +65,21 @@ abstract class Matrix<M, E, V> {
   def row(Integer rowIndex) {
     checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
       table.rowKeySet.size, rowIndex)
-    table.row(rowIndex).immutableCopy
+    ImmutableMap.copyOf(table.row(rowIndex))
   }
 
   def column(Integer columnIndex) {
     checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
       table.columnKeySet.size, columnIndex)
-    table.column(columnIndex).immutableCopy
+    ImmutableMap.copyOf(table.column(columnIndex))
   }
 
   def rows() {
-    table.rowMap.immutableCopy
+    ImmutableMap.copyOf(table.rowMap)
   }
 
   def columns() {
-    table.columnMap.immutableCopy
+    ImmutableMap.copyOf(table.columnMap)
   }
 
   def size() {
@@ -130,8 +133,4 @@ abstract class Matrix<M, E, V> {
   def boolean skewSymmetric()
 
   def M minor(Integer rowIndex, Integer columnIndex)
-
-  def Table<Integer, Integer, E> getTable() {
-    ImmutableTable.copyOf(table)
-  }
 }

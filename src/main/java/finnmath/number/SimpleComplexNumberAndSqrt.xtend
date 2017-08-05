@@ -29,15 +29,11 @@
 package finnmath.number
 
 import com.google.common.annotations.Beta
-import org.eclipse.xtend.lib.annotations.EqualsHashCode
-import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 
 @Beta
-@EqualsHashCode
-@ToString
-final class SimpleComplexNumberAndSqrt extends NumberAndSqrt<SimpleComplexNumber> {
+class SimpleComplexNumberAndSqrt extends NumberAndSqrt<SimpleComplexNumber> {
   new(SimpleComplexNumber number, SimpleComplexNumber sqrt) {
     super(number, sqrt)
     checkArgument(sqrt.pow(2) == number, 'expected sqrt**2 == number but actual %s**2 != %s', sqrt, number)

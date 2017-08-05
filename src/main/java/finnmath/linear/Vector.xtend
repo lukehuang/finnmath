@@ -29,19 +29,23 @@
 package finnmath.linear
 
 import com.google.common.annotations.Beta
+import com.google.common.collect.ImmutableMap
 import java.math.BigDecimal
-import java.util.Map
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
+import org.eclipse.xtend.lib.annotations.ToString
 
 @Beta
 @EqualsHashCode
+@ToString
+@Accessors
 abstract class Vector<V, E, N> {
-  protected val Map<Integer, E> map
+  protected val ImmutableMap<Integer, E> map
 
-  protected new(Map<Integer, E> map) {
+  protected new(ImmutableMap<Integer, E> map) {
     this.map = requireNonNull(map, 'map')
   }
 
@@ -76,8 +80,4 @@ abstract class Vector<V, E, N> {
   def E distancePow2(V vector)
 
   def int size()
-
-  def getMap() {
-    map.immutableCopy
-  }
 }

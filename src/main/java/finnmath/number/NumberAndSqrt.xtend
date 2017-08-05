@@ -31,11 +31,13 @@ package finnmath.number
 import com.google.common.annotations.Beta
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
+@ToString
 @Accessors
 abstract class NumberAndSqrt<T> {
   protected val T number

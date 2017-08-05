@@ -31,13 +31,22 @@ package finnmath.number
 import com.google.common.annotations.Beta
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
+
+import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
+@ToString
 @Accessors
 abstract class ComplexNumber<S, T, M> {
-  protected S real
-  protected S imaginary
+  protected val S real
+  protected val S imaginary
+
+  protected new(S real, S imaginary) {
+    this.real = requireNonNull(real, 'real')
+    this.imaginary = requireNonNull(imaginary, 'imaginary')
+  }
 
   def S absPow2()
 

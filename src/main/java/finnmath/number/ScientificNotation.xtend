@@ -40,7 +40,7 @@ import static java.util.Objects.requireNonNull
 @EqualsHashCode
 @ToString
 @Accessors
-final class ScientificNotation {
+class ScientificNotation {
   val BigDecimal coefficient
   val int exponent
 

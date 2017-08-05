@@ -29,7 +29,6 @@
 package finnmath.linear
 
 import com.google.common.annotations.Beta
-import java.util.HashMap
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
@@ -41,7 +40,7 @@ import static java.util.Objects.requireNonNull
 @FinalFieldsConstructor
 abstract class VectorBuilder<B, V, E> {
   @Accessors
-  protected val Map<Integer, E> map = new HashMap
+  protected val Map<Integer, E> map = newHashMap
 
   private val Integer size
 

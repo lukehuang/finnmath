@@ -32,7 +32,7 @@ import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
-final class BigIntAndSqrtTest {
+class BigIntAndSqrtTest {
   @Test
   def void newNumberNullShouldThrowException() {
     assertThatThrownBy[

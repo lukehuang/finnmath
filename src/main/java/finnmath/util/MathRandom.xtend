@@ -52,7 +52,7 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 @ToString
-final class MathRandom {
+class MathRandom {
   val random = new Random
 
   def nextPositiveLong(long bound) {

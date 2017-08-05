@@ -37,7 +37,7 @@ import org.junit.Test
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
-final class BigIntMatrixTest {
+class BigIntMatrixTest {
   static var BigIntMatrix zeroMatrixForAddition
   static var BigIntMatrix zeroMatrixForMultiplication
   static var BigIntMatrix identityMatrix
@@ -160,7 +160,7 @@ final class BigIntMatrixTest {
       assertThat(subtract(zeroMatrixForAddition)).isEqualTo(it)
     ]
   }
-  
+
   @Test
   def void subtractSelfShouldBeEqualToZeroMatrix() {
     matrices.forEach [

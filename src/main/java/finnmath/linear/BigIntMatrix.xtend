@@ -29,25 +29,19 @@
 package finnmath.linear
 
 import com.google.common.annotations.Beta
-import com.google.common.collect.Table
+import com.google.common.collect.ImmutableTable
 import java.math.BigInteger
 import java.util.Map
 import org.apache.commons.lang3.builder.Builder
-import org.eclipse.xtend.lib.annotations.EqualsHashCode
-import org.eclipse.xtend.lib.annotations.ToString
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
-@EqualsHashCode
-@ToString
-final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> {
-  private new(Table<Integer, Integer, BigInteger> table) {
-    super(table)
-  }
-
+@FinalFieldsConstructor
+class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> {
   override add(BigIntMatrix summand) {
     requireNonNull(summand, 'summand')
     checkArgument(table.rowKeySet.size == summand.rowSize, 'expected equal row sizes but actual %s != %s',
@@ -226,7 +220,6 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
   }
 
   @Beta
-  @ToString
   static class BigIntMatrixBuilder extends MatrixBuilder<BigIntMatrix, BigInteger> implements Builder<BigIntMatrix> {
     private new(int rowSize, int columnSize) {
       super(rowSize, columnSize)
@@ -236,7 +229,7 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
       table.cellSet.forEach [
         requireNonNull(value, 'value')
       ]
-      new BigIntMatrix(table)
+      new BigIntMatrix(ImmutableTable.copyOf(table))
     }
   }
 }

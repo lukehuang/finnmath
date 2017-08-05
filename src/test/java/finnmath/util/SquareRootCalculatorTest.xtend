@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory
 
 import static org.assertj.core.api.Assertions.assertThat
 
-final class SquareRootCalculatorTest {
+class SquareRootCalculatorTest {
   val defaultScale = SquareRootCalculator.DEFAULT_SCALE
   val mathRandom = new MathRandom
   private static val log = LoggerFactory.getLogger(SquareRootCalculatorTest)
@@ -44,7 +44,7 @@ final class SquareRootCalculatorTest {
   def void after() {
     log.debug('')
   }
-  
+
   @Test
   def void scientificNotationForSqrtForZero() {
     val actual = SquareRootCalculator.scientificNotationForSqrt(0BD)
@@ -120,37 +120,37 @@ final class SquareRootCalculatorTest {
   def void sqrtOfTen() {
     assertThat(SquareRootCalculator.sqrt(10BD)).isBetween(3.161BD, 3.163BD)
   }
-  
+
   @Test
   def void sqrtOfSixteen() {
     assertThat(SquareRootCalculator.sqrt(16BD)).isBetween(3.999BD, 4.001BD)
   }
-  
+
   @Test
   def void sqrtOfTwentyFive() {
     assertThat(SquareRootCalculator.sqrt(25BD)).isBetween(4.999BD, 5.001BD)
   }
-  
+
   @Test
   def void sqrtOfThirtySix() {
     assertThat(SquareRootCalculator.sqrt(36BD)).isBetween(5.999BD, 6.001BD)
   }
-  
+
   @Test
   def void sqrtOfFortyNine() {
     assertThat(SquareRootCalculator.sqrt(49BD)).isBetween(6.999BD, 7.001BD)
   }
-  
+
   @Test
   def void sqrtOfSixtyFour() {
     assertThat(SquareRootCalculator.sqrt(64BD)).isBetween(7.999BD, 8.001BD)
   }
-  
+
   @Test
   def void sqrtOfEightyOne() {
     assertThat(SquareRootCalculator.sqrt(81BD)).isBetween(8.999BD, 9.001BD)
   }
-  
+
   @Test
   def void sqrtOfOneHundred() {
     assertThat(SquareRootCalculator.sqrt(100BD)).isBetween(9.999BD, 10.001BD)

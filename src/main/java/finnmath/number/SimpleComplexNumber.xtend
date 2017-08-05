@@ -31,23 +31,18 @@ package finnmath.number
 import com.google.common.annotations.Beta
 import finnmath.linear.BigIntMatrix
 import java.math.BigInteger
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
-@Data
-final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexNumber, BigIntMatrix> implements MathNumber<SimpleComplexNumber, RealComplexNumber> {
+@FinalFieldsConstructor
+class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexNumber, BigIntMatrix> implements MathNumber<SimpleComplexNumber, RealComplexNumber> {
   public static val ZERO = new SimpleComplexNumber(0BI, 0BI)
   public static val SimpleComplexNumber ONE = new SimpleComplexNumber(1BI, 0BI)
   public static val I = new SimpleComplexNumber(0BI, 1BI)
-
-  new(BigInteger real, BigInteger imaginary) {
-    this.real = requireNonNull(real, 'real')
-    this.imaginary = requireNonNull(imaginary, 'imaginary')
-  }
 
   override add(SimpleComplexNumber summand) {
     requireNonNull(summand, 'summand')

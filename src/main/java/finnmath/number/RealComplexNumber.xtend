@@ -31,28 +31,21 @@ package finnmath.number
 import com.google.common.annotations.Beta
 import finnmath.linear.DecimalMatrix
 import java.math.BigDecimal
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
-@Data
-final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumber, DecimalMatrix> implements MathNumber<RealComplexNumber, RealComplexNumber> {
+@FinalFieldsConstructor
+class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumber, DecimalMatrix> implements MathNumber<RealComplexNumber, RealComplexNumber> {
   public static val ZERO = new RealComplexNumber(0BD, 0BD)
   public static val ONE = new RealComplexNumber(1BD, 0BD)
   public static val I = new RealComplexNumber(0BD, 1BD)
 
   new(SimpleComplexNumber complexNumber) {
-    requireNonNull(complexNumber, 'complexNumber')
-    real = new BigDecimal(complexNumber.real)
-    imaginary = new BigDecimal(complexNumber.imaginary)
-  }
-
-  new(BigDecimal real, BigDecimal imaginary) {
-    this.real = requireNonNull(real, 'real')
-    this.imaginary = requireNonNull(imaginary, 'imaginary')
+    super(new BigDecimal(requireNonNull(complexNumber, 'complexNumber').real), new BigDecimal(complexNumber.imaginary))
   }
 
   override add(RealComplexNumber summand) {

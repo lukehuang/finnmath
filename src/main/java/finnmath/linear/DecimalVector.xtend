@@ -29,24 +29,18 @@
 package finnmath.linear
 
 import com.google.common.annotations.Beta
+import com.google.common.collect.ImmutableMap
 import java.math.BigDecimal
-import java.util.Map
 import org.apache.commons.lang3.builder.Builder
-import org.eclipse.xtend.lib.annotations.EqualsHashCode
-import org.eclipse.xtend.lib.annotations.ToString
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static finnmath.util.SquareRootCalculator.sqrt
 import static java.util.Objects.requireNonNull
 
 @Beta
-@EqualsHashCode
-@ToString
-final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> {
-  private new(Map<Integer, BigDecimal> map) {
-    super(map)
-  }
-
+@FinalFieldsConstructor
+class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> {
   override negate() {
     val builder = builder(map.size)
     map.entrySet.forEach [
@@ -141,7 +135,6 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
   }
 
   @Beta
-  @ToString
   static class DecimalVectorBuilder extends VectorBuilder<DecimalVectorBuilder, DecimalVector, BigDecimal> implements Builder<DecimalVector> {
     private new(int size) {
       super(size)
@@ -160,7 +153,7 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
       map.forEach [ index, entry |
         requireNonNull(entry, 'entry')
       ]
-      new DecimalVector(map)
+      new DecimalVector(ImmutableMap.copyOf(map))
     }
   }
 }

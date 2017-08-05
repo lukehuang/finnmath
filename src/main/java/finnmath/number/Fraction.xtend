@@ -30,15 +30,19 @@ package finnmath.number
 
 import com.google.common.annotations.Beta
 import java.math.BigInteger
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
-@Data
-final class Fraction implements MathNumber<Fraction, Fraction> {
+@EqualsHashCode
+@ToString
+@Accessors
+class Fraction implements MathNumber<Fraction, Fraction> {
   public static val ZERO = new Fraction(0BI, 1BI)
   public static val ONE = new Fraction(1BI, 1BI)
   BigInteger numerator

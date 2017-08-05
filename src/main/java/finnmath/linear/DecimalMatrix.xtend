@@ -29,25 +29,19 @@
 package finnmath.linear
 
 import com.google.common.annotations.Beta
-import com.google.common.collect.Table
+import com.google.common.collect.ImmutableTable
 import java.math.BigDecimal
 import java.util.Map
 import org.apache.commons.lang3.builder.Builder
-import org.eclipse.xtend.lib.annotations.EqualsHashCode
-import org.eclipse.xtend.lib.annotations.ToString
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
-@EqualsHashCode
-@ToString
-final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVector> {
-  private new(Table<Integer, Integer, BigDecimal> table) {
-    super(table)
-  }
-
+@FinalFieldsConstructor
+class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVector> {
   override add(DecimalMatrix summand) {
     requireNonNull(summand, 'summand')
     checkArgument(table.rowKeySet.size == summand.rowSize, 'expected equal row sizes but actual %s != %s',
@@ -226,9 +220,8 @@ final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVecto
   }
 
   @Beta
-  @ToString
   static class DecimalMatrixBuilder extends MatrixBuilder<DecimalMatrix, BigDecimal> implements Builder<DecimalMatrix> {
-    private new(int rowSize, int columnSize) {
+    new(int rowSize, int columnSize) {
       super(rowSize, columnSize)
     }
 
@@ -236,7 +229,7 @@ final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVecto
       table.cellSet.forEach [
         requireNonNull(value, 'value')
       ]
-      new DecimalMatrix(table)
+      new DecimalMatrix(ImmutableTable.copyOf(table))
     }
   }
 }

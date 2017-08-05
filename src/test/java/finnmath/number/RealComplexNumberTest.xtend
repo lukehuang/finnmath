@@ -36,7 +36,7 @@ import org.junit.Test
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
-final class RealComplexNumberTest {
+class RealComplexNumberTest {
   static val ZERO = RealComplexNumber::ZERO
   static val ONE = RealComplexNumber::ONE
   static val I = RealComplexNumber::I
