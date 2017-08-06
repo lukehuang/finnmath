@@ -42,14 +42,6 @@ import static java.util.Objects.requireNonNull
 @Beta
 @FinalFieldsConstructor
 class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
-  override negate() {
-    val builder = builder(map.size)
-    map.entrySet.forEach [
-      builder.put(-value)
-    ]
-    builder.build
-  }
-
   override add(BigIntVector summand) {
     requireNonNull(summand, 'summand')
     checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
@@ -75,6 +67,14 @@ class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
     val builder = builder(map.size)
     map.forEach [ index, entry |
       builder.put(scalar * entry)
+    ]
+    builder.build
+  }
+
+  override negate() {
+    val builder = builder(map.size)
+    map.entrySet.forEach [
+      builder.put(-value)
     ]
     builder.build
   }

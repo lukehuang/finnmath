@@ -41,7 +41,7 @@ import static java.util.Objects.requireNonNull
 @ToString
 @Accessors
 abstract class MatrixBuilder<M, E> {
-  protected Table<Integer, Integer, E> table
+  protected val Table<Integer, Integer, E> table
 
   new(int rowSize, int columnSize) {
     checkArgument(rowSize > 0, 'expected row size > 0 but actual %s', rowSize)

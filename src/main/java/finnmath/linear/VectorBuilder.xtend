@@ -29,21 +29,24 @@
 package finnmath.linear
 
 import com.google.common.annotations.Beta
+import java.util.HashMap
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
-import java.util.HashMap
 
 @Beta
-@FinalFieldsConstructor
+@Accessors
 abstract class VectorBuilder<B, V, E> {
-  @Accessors
   protected val Map<Integer, E> map = new HashMap
 
-  private val Integer size
+  private val int size
+
+  new(int size) {
+    checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+    this.size = size
+  }
 
   def put(E entry) {
     requireNonNull(entry, 'entry')

@@ -45,8 +45,8 @@ import static java.util.Objects.requireNonNull
 class Fraction implements MathNumber<Fraction, Fraction> {
   public static val ZERO = new Fraction(0BI, 1BI)
   public static val ONE = new Fraction(1BI, 1BI)
-  BigInteger numerator
-  BigInteger denominator
+  val BigInteger numerator
+  val BigInteger denominator
 
   new(BigInteger numerator, BigInteger denominator) {
     checkArgument(denominator != 0BI, 'expected denominator != 0 but actual %s', denominator)

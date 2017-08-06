@@ -41,14 +41,6 @@ import static java.util.Objects.requireNonNull
 @Beta
 @FinalFieldsConstructor
 class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> {
-  override negate() {
-    val builder = builder(map.size)
-    map.entrySet.forEach [
-      builder.put(-value)
-    ]
-    builder.build
-  }
-
   override add(DecimalVector summand) {
     checkArgument(map.size == summand.size, 'expected equal sizes but actual %s != %s', map.size, summand.size)
     val builder = builder(map.size)
@@ -72,6 +64,14 @@ class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> {
     val builder = builder(map.size)
     map.forEach [ index, entry |
       builder.put(scalar * entry)
+    ]
+    builder.build
+  }
+
+  override negate() {
+    val builder = builder(map.size)
+    map.entrySet.forEach [
+      builder.put(-value)
     ]
     builder.build
   }
