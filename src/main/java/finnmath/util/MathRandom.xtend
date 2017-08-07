@@ -408,6 +408,25 @@ class MathRandom {
     new SimpleComplexNumberAndSqrt(pow(2), it)
   }
 
+  def nextBigIntVector(long bound, int size) {
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+    checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+    val builder = BigIntVector::builder(size)
+    for (index : 1 .. size)
+      builder.put(BigInteger.valueOf(nextLong(bound)))
+    builder.build
+  }
+
+  def nextBigIntVectors(long bound, int size, int howMany) {
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+    checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+    val vectors = new ArrayList<BigIntVector>(howMany) as List<BigIntVector>
+    for (i : 1 .. howMany)
+      vectors += nextBigIntVector(bound, size)
+    vectors
+  }
+
   def nextBigIntMatrix(long bound, int rowSize, int columnSize) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(rowSize > 0, 'expected rowSize > 0 but actual %s', rowSize)
@@ -421,13 +440,36 @@ class MathRandom {
     builder.build
   }
 
-  def nextBigIntVector(long bound, int size) {
+  def nextBigIntMatrices(long bound, int rowSize, int columnSize, int howMany) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+    checkArgument(rowSize > 0, 'expected rowSize > 0 but actual %s', rowSize)
+    checkArgument(columnSize > 0, 'expected columnSize > 0 but actual %s', columnSize)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+    val matrices = new ArrayList<BigIntMatrix>(howMany) as List<BigIntMatrix>
+    for (i : 1 .. howMany)
+      matrices += nextBigIntMatrix(bound, rowSize, columnSize)
+    matrices
+  }
+
+  def nextDecimalVector(long bound, int scale, int size) {
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+    checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
     checkArgument(size > 0, 'expected size > 0 but actual %s', size)
-    val builder = BigIntVector::builder(size)
+    val builder = DecimalVector::builder(size)
     for (index : 1 .. size)
-      builder.put(BigInteger.valueOf(nextLong(bound)))
+      builder.put(nextDecimal(bound, scale))
     builder.build
+  }
+
+  def nextDecimalVectors(long bound, int scale, int size, int howMany) {
+    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+    checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+    checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+    val vectors = new ArrayList<DecimalVector>(howMany) as List<DecimalVector>
+    for (i : 1 .. howMany)
+      vectors += nextDecimalVector(bound, scale, size)
+    vectors
   }
 
   def nextDecimalMatrix(long bound, int scale, int rowSize, int columnSize) {
@@ -444,13 +486,15 @@ class MathRandom {
     builder.build
   }
 
-  def nextDecimalVector(long bound, int scale, int size) {
+  def nextDecimalMatrices(long bound, int scale, int rowSize, int columnSize, int howMany) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
-    checkArgument(size > 0, 'expected size > 0 but actual %s', size)
-    val builder = DecimalVector::builder(size)
-    for (index : 1 .. size)
-      builder.put(nextDecimal(bound, scale))
-    builder.build
+    checkArgument(rowSize > 0, 'expected rowSize > 0 but actual %s', rowSize)
+    checkArgument(columnSize > 0, 'expected columnSize > 0 but actual %s', columnSize)
+    checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+    val matrices = new ArrayList<DecimalMatrix>(howMany) as List<DecimalMatrix>
+    for (i : 1 .. howMany)
+      matrices += nextDecimalMatrix(bound, scale, rowSize, columnSize)
+    matrices
   }
 }
