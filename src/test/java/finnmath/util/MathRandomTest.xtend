@@ -107,10 +107,10 @@ class MathRandomTest {
   def void nextPositiveLongsShouldSucceed() {
     val integers = mathRandom.nextPositiveLongs(bound, howMany)
     assertEquals(howMany, integers.length)
-    integers.forEach [
-      assertTrue(0 <= it)
-      assertTrue(it < bound)
-    ]
+    for (integer : integers) {
+      assertTrue(0 <= integer)
+      assertTrue(integer < bound)
+    }
   }
 
   @Test
@@ -124,10 +124,10 @@ class MathRandomTest {
   def void nextNegativeLongsShouldSucceed() {
     val integers = mathRandom.nextNegativeLongs(bound, howMany)
     assertEquals(howMany, integers.length)
-    integers.forEach [
-      assertTrue(-bound < it)
-      assertTrue(it <= 0)
-    ]
+    for (integer : integers) {
+      assertTrue(-bound < integer)
+      assertTrue(integer <= 0)
+    }
   }
 
   @Test
@@ -141,10 +141,10 @@ class MathRandomTest {
   def void nextLongsShouldSucceed() {
     val integers = mathRandom.nextLongs(bound, howMany)
     assertEquals(howMany, integers.length)
-    integers.forEach [
-      assertTrue(-bound < it)
-      assertTrue(it < bound)
-    ]
+    for (integer : integers) {
+      assertTrue(-bound < integer)
+      assertTrue(integer < bound)
+    }
   }
 
   @Test
