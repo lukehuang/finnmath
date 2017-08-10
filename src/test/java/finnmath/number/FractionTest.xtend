@@ -29,6 +29,7 @@
 package finnmath.number
 
 import finnmath.util.MathRandom
+import java.math.BigInteger
 import java.util.List
 import org.junit.BeforeClass
 import org.junit.Test
@@ -60,28 +61,36 @@ class FractionTest {
   def void newNumeratorNullShouldThrowException() {
     assertThatThrownBy[
       new Fraction(null, 1BI)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('numerator')
   }
 
   @Test
   def void newDenominatorNullShouldThrowException() {
     assertThatThrownBy[
       new Fraction(0BI, null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('denominator')
   }
 
   @Test
   def void newDenominatorZeroShouldThrowException() {
     assertThatThrownBy[
       new Fraction(0BI, 0BI)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected denominator != 0 but actual 0')
+  }
+
+  @Test
+  def void newShouldSucceed() {
+    val it = new Fraction(0BI, 1BI)
+    assertThat(it).isExactlyInstanceOf(Fraction)
+    assertThat(numerator).isExactlyInstanceOf(BigInteger)
+    assertThat(denominator).isExactlyInstanceOf(BigInteger)
   }
 
   @Test
   def void addNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.add(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('summand')
   }
 
   @Test
@@ -90,7 +99,9 @@ class FractionTest {
       others.forEach [ other |
         val expectedNumerator = other.denominator * numerator + denominator * other.numerator
         val expectedDenominator = denominator * other.denominator
-        assertThat(add(other)).isEqualTo(new Fraction(expectedNumerator, expectedDenominator))
+        val actual = add(other)
+        val expected = new Fraction(expectedNumerator, expectedDenominator)
+        assertThat(actual).isExactlyInstanceOf(Fraction).isEqualTo((expected))
       ]
     ]
   }
@@ -126,7 +137,7 @@ class FractionTest {
   def void subtractNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.subtract(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('subtrahend')
   }
 
   @Test
@@ -135,7 +146,9 @@ class FractionTest {
       others.forEach [ other |
         val expectedNumerator = other.denominator * numerator - denominator * other.numerator
         val expectedDenominator = denominator * other.denominator
-        assertThat(subtract(other)).isEqualTo(new Fraction(expectedNumerator, expectedDenominator))
+        val actual = subtract(other)
+        val expected = new Fraction(expectedNumerator, expectedDenominator)
+        assertThat(actual).isExactlyInstanceOf(Fraction).isEqualTo(expected)
       ]
     ]
   }
@@ -158,7 +171,7 @@ class FractionTest {
   def void multiplyNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.multiply(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('factor')
   }
 
   @Test
@@ -167,7 +180,9 @@ class FractionTest {
       others.forEach [ other |
         val expectedNumerator = numerator * other.numerator
         val expectedDenominator = denominator * other.denominator
-        assertThat(multiply(other)).isEqualTo(new Fraction(expectedNumerator, expectedDenominator))
+        val actual = multiply(other)
+        val expected = new Fraction(expectedNumerator, expectedDenominator)
+        assertThat(actual).isExactlyInstanceOf(Fraction).isEqualTo(expected)
       ]
     ]
   }
@@ -221,7 +236,7 @@ class FractionTest {
   def void divideNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.divide(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('divisor')
   }
 
   @Test
@@ -235,7 +250,7 @@ class FractionTest {
   def void divideShouldSucceed() {
     fractions.forEach [
       invertibles.forEach [ invertible |
-        assertThat(divide(invertible)).isEqualTo(multiply(invertible.invert))
+        assertThat(divide(invertible)).isExactlyInstanceOf(Fraction).isEqualTo(multiply(invertible.invert))
       ]
     ]
   }
@@ -250,7 +265,7 @@ class FractionTest {
   @Test
   def void negateShouldSucceed() {
     fractions.forEach [
-      assertThat(negate).isEqualTo(new Fraction(-numerator, denominator))
+      assertThat(negate).isExactlyInstanceOf(Fraction).isEqualTo(new Fraction(-numerator, denominator))
     ]
   }
 
@@ -270,12 +285,13 @@ class FractionTest {
   def void powNegativeExponentShouldThrowException() {
     assertThatThrownBy[
       ZERO.pow(-1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected exponent > -1 but actual -1')
   }
 
   @Test
   def void powShouldSucceed() {
     fractions.forEach [
+      assertThat(pow(0)).isExactlyInstanceOf(Fraction)
       assertThat(pow(3)).isEqualTo(multiply(multiply(it)))
       assertThat(pow(2)).isEqualTo(multiply(it))
     ]
@@ -309,13 +325,13 @@ class FractionTest {
   def void invertZeroShouldThrowException() {
     assertThatThrownBy[
       ZERO.invert
-    ].isExactlyInstanceOf(IllegalStateException)
+    ].isExactlyInstanceOf(IllegalStateException).hasMessage('expected numerator != 0 but actual 0')
   }
 
   @Test
   def void invertShouldSucceed() {
     invertibles.forEach [
-      assertThat(invert).isEqualTo(new Fraction(denominator, numerator))
+      assertThat(invert).isExactlyInstanceOf(Fraction).isEqualTo(new Fraction(denominator, numerator))
     ]
   }
 
@@ -361,7 +377,7 @@ class FractionTest {
   def void lessThanOrEqualToNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.lessThanOrEqualTo(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('other')
   }
 
   @Test
@@ -379,7 +395,7 @@ class FractionTest {
   def void greaterThanOrEqualToNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.greaterThanOrEqualTo(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('other')
   }
 
   @Test
@@ -397,7 +413,7 @@ class FractionTest {
   def void lessThanNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.lessThan(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('other')
   }
 
   @Test
@@ -415,7 +431,7 @@ class FractionTest {
   def void greaterThanNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.greaterThan(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('other')
   }
 
   @Test
@@ -433,7 +449,7 @@ class FractionTest {
   def void minNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.min(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('other')
   }
 
   @Test
@@ -441,9 +457,9 @@ class FractionTest {
     fractions.forEach [
       val maximum = add(ONE)
       val minimum = subtract(ONE)
+      assertThat(min(it)).isExactlyInstanceOf(Fraction).isSameAs(it)
       assertThat(min(maximum)).isSameAs(it)
       assertThat(min(minimum)).isSameAs(minimum)
-      assertThat(min(it)).isSameAs(it)
     ]
   }
 
@@ -451,7 +467,7 @@ class FractionTest {
   def void maxNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.max(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('other')
   }
 
   @Test
@@ -459,9 +475,9 @@ class FractionTest {
     fractions.forEach [
       val minimum = subtract(ONE)
       val maximum = add(ONE)
+      assertThat(max(it)).isExactlyInstanceOf(Fraction).isSameAs(it)
       assertThat(max(minimum)).isSameAs(it)
       assertThat(max(maximum)).isSameAs(maximum)
-      assertThat(max(it)).isSameAs(it)
     ]
   }
 
@@ -471,6 +487,7 @@ class FractionTest {
     val bound = 10
     val howMany = 10
     mathRandom.nextInvertiblePositiveFractions(bound, howMany).forEach [
+      assertThat(normalize).isExactlyInstanceOf(Fraction)
       val expectedForNegativeSignum = new Fraction(-numerator, denominator)
       assertThat(new Fraction(numerator, -denominator).normalize).isEqualTo(expectedForNegativeSignum)
       assertThat(new Fraction(-numerator, denominator).normalize).isEqualTo(expectedForNegativeSignum)
@@ -494,7 +511,7 @@ class FractionTest {
   @Test
   def void absShouldSucceed() {
     fractions.forEach [
-      assertThat(abs).isEqualTo(new Fraction(numerator.abs, denominator.abs))
+      assertThat(abs).isExactlyInstanceOf(Fraction).isEqualTo(new Fraction(numerator.abs, denominator.abs))
     ]
   }
 
@@ -539,7 +556,7 @@ class FractionTest {
   def void reduceShouldSucceed() {
     fractions.forEach [
       val gcd = numerator.gcd(denominator)
-      assertThat(reduce).isEqualTo(new Fraction(numerator / gcd, denominator / gcd))
+      assertThat(reduce).isExactlyInstanceOf(Fraction).isEqualTo(new Fraction(numerator / gcd, denominator / gcd))
     ]
   }
 
@@ -557,7 +574,7 @@ class FractionTest {
   def void equivalentNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.equivalent(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('other')
   }
 
   @Test

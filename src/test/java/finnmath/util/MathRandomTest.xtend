@@ -38,6 +38,7 @@ import finnmath.number.SimpleComplexNumber
 import finnmath.number.SimpleComplexNumberAndSqrt
 import java.math.BigDecimal
 import java.math.BigInteger
+import org.assertj.core.api.Condition
 import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -100,7 +101,7 @@ class MathRandomTest {
   def void nextPositiveLongsTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextPositiveLongs(bound, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
@@ -117,7 +118,7 @@ class MathRandomTest {
   def void nextNegativeLongsTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextNegativeLongs(bound, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
@@ -158,7 +159,7 @@ class MathRandomTest {
   def void nextPositiveDecimalScaleTooLowShouldThrowException() {
     assertThatThrownBy[
       mathRandom.nextPositiveDecimal(bound, 0)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected scale > 0 but actual 0')
   }
 
   @Test
@@ -180,7 +181,7 @@ class MathRandomTest {
   def void nextNegativeDecimalScaleTooLowShouldThrowException() {
     assertThatThrownBy[
       mathRandom.nextNegativeDecimal(bound, 0)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected scale > 0 but actual 0')
   }
 
   @Test
@@ -202,7 +203,7 @@ class MathRandomTest {
   def void nextDecimalScaleTooLowShouldThrowException() {
     assertThatThrownBy[
       mathRandom.nextDecimal(bound, 0)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected scale > 0 but actual 0')
   }
 
   @Test
@@ -214,54 +215,96 @@ class MathRandomTest {
   }
 
   @Test
+  def void nextPositiveDecimalsBoundTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextPositiveDecimals(0, validScale, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 0 but actual 0')
+  }
+
+  @Test
+  def void nextPositiveDecimalsScaleTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextPositiveDecimals(bound, 0, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected scale > 0 but actual 0')
+  }
+
+  @Test
   def void nextPositiveDecimalsTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextPositiveDecimals(bound, validScale, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
   def void nextPositiveDecimalsShouldSucceed() {
     val decimals = mathRandom.nextPositiveDecimals(bound, validScale, howMany)
-    assertThat(decimals).hasOnlyElementsOfType(BigDecimal).hasSize(howMany)
-    decimals.forEach [
-      assertThat(it).isGreaterThan(-decimalBound).isLessThan(decimalBound)
-      assertEquals(validScale, scale)
-    ]
+    assertThat(decimals).hasOnlyElementsOfType(BigDecimal).hasSize(howMany).are(new Condition([ BigDecimal decimal |
+      0BD <= decimal && decimal < decimalBound
+    ], 'bounds')).are(new Condition([ BigDecimal decimal |
+      decimal.scale === validScale
+    ], 'scale'))
+  }
+
+  @Test
+  def void nextNegativeDecimalsBoundTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextNegativeDecimals(0, validScale, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 0 but actual 0')
+  }
+
+  @Test
+  def void nextNegativeDecimalsScaleTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextNegativeDecimals(bound, 0, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected scale > 0 but actual 0')
   }
 
   @Test
   def void nextNegativeDecimalsTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextNegativeDecimals(bound, validScale, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
   def void nextNegativeDecimalsShouldSucceed() {
     val decimals = mathRandom.nextNegativeDecimals(bound, validScale, howMany)
-    assertThat(decimals).hasOnlyElementsOfType(BigDecimal).hasSize(howMany)
-    decimals.forEach [
-      assertThat(it).isGreaterThan(-decimalBound).isLessThanOrEqualTo(0BD)
-      assertEquals(validScale, scale)
-    ]
+    assertThat(decimals).hasOnlyElementsOfType(BigDecimal).hasSize(howMany).are(new Condition([ BigDecimal decimal |
+      -decimalBound < decimal && decimal <= 0BD
+    ], 'bounds')).are(new Condition([ BigDecimal decimal |
+      decimal.scale === validScale
+    ], 'scale'))
+  }
+
+  @Test
+  def void nextDecimalsBoundTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextDecimals(0, validScale, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 0 but actual 0')
+  }
+
+  @Test
+  def void nextDecimalsScaleTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextDecimals(bound, 0, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected scale > 0 but actual 0')
   }
 
   @Test
   def void nextDecimalsTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextDecimals(bound, validScale, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
   def void nextDecimalsShouldSucceed() {
     val decimals = mathRandom.nextDecimals(bound, validScale, howMany)
-    assertThat(decimals).hasOnlyElementsOfType(BigDecimal).hasSize(howMany)
-    decimals.forEach [
-      assertThat(it).isGreaterThan(-decimalBound).isLessThan(decimalBound)
-      assertEquals(validScale, scale)
-    ]
+    assertThat(decimals).hasOnlyElementsOfType(BigDecimal).hasSize(howMany).are(new Condition([ BigDecimal decimal |
+      -decimalBound < decimal && decimal < decimalBound
+    ], 'bounds')).are(new Condition([ BigDecimal decimal |
+      decimal.scale === validScale
+    ], 'scale'))
   }
 
   @Test
@@ -310,54 +353,75 @@ class MathRandomTest {
   }
 
   @Test
+  def void nextPositiveFractionsBoundTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextPositiveFractions(1, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 1 but actual 1')
+  }
+
+  @Test
   def void nextPositiveFractionsTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextPositiveFractions(bound, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
   def void nextPositiveFractionsShouldSucceed() {
     val fractions = mathRandom.nextPositiveFractions(bound, howMany)
-    assertThat(fractions).hasOnlyElementsOfType(Fraction).hasSize(howMany)
-    fractions.forEach [
-      assertThat(numerator).isGreaterThanOrEqualTo(0BI).isLessThan(bigBound)
-      assertThat(denominator).isGreaterThanOrEqualTo(0BI).isLessThan(bigBound)
-    ]
+    assertThat(fractions).hasOnlyElementsOfType(Fraction).hasSize(howMany).are(new Condition([ Fraction fraction |
+      0BI <= fraction.numerator && fraction.numerator < bigBound
+    ], 'numerator')).are(new Condition([ Fraction fraction |
+      0BI <= fraction.denominator && fraction.denominator < bigBound
+    ], 'denominator'))
+  }
+
+  @Test
+  def void nextNegativeFractionsBoundTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextNegativeFractions(1, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 1 but actual 1')
   }
 
   @Test
   def void nextNegativeFractionsTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextNegativeFractions(bound, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
   def void nextNegativeFractionsShouldSucceed() {
     val fractions = mathRandom.nextNegativeFractions(bound, howMany)
-    assertThat(fractions).hasOnlyElementsOfType(Fraction).hasSize(howMany)
-    fractions.forEach [
-      assertThat(numerator).isGreaterThan(-bigBound).isLessThanOrEqualTo(0BI)
-      assertThat(denominator).isGreaterThanOrEqualTo(0BI).isLessThan(bigBound)
-    ]
+    assertThat(fractions).hasOnlyElementsOfType(Fraction).hasSize(howMany).are(new Condition([ Fraction fraction |
+      -bigBound < fraction.numerator && fraction.numerator <= 0BI
+    ], 'numerator')).are(new Condition([ Fraction fraction |
+      0BI <= fraction.denominator && fraction.denominator < bigBound
+    ], 'denominator'))
+  }
+
+  @Test
+  def void nextFractionsBoundTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextFractions(1, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 1 but actual 1')
   }
 
   @Test
   def void nextFractionsTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextFractions(bound, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
   def void nextFractionsShouldSucceed() {
     val fractions = mathRandom.nextFractions(bound, howMany)
-    assertThat(fractions).hasOnlyElementsOfType(Fraction).hasSize(howMany)
-    fractions.forEach [
-      assertThat(numerator).isGreaterThan(-bigBound).isLessThan(bigBound)
-      assertThat(denominator).isGreaterThan(-bigBound).isLessThanOrEqualTo(bigBound)
-    ]
+    assertThat(fractions).hasOnlyElementsOfType(Fraction).hasSize(howMany).are(new Condition([ Fraction fraction |
+      -bigBound < fraction.numerator && fraction.numerator < bigBound
+    ], 'numerator')).are(new Condition([ Fraction fraction |
+      -bigBound < fraction.denominator && fraction.denominator < bigBound
+    ], 'denominator'))
   }
 
   @Test
@@ -376,20 +440,28 @@ class MathRandomTest {
   }
 
   @Test
+  def void nextSimpleComplexNumbersBoundTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextSimpleComplexNumbers(0, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 0 but actual 0')
+  }
+
+  @Test
   def void nextSimpleComplexNumbersTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextSimpleComplexNumbers(bound, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
   def void nextSimpleComplexNumbersShouldSucceed() {
     val complexNumbers = mathRandom.nextSimpleComplexNumbers(bound, howMany)
-    assertThat(complexNumbers).hasOnlyElementsOfType(SimpleComplexNumber).hasSize(howMany)
-    complexNumbers.forEach [
-      assertThat(real).isGreaterThan(-bigBound).isLessThan(bigBound)
-      assertThat(imaginary).isGreaterThan(-bigBound).isLessThan(bigBound)
-    ]
+    assertThat(complexNumbers).hasOnlyElementsOfType(SimpleComplexNumber).hasSize(howMany).are(
+      new Condition([ SimpleComplexNumber complexNumber |
+        -bigBound < complexNumber.real && complexNumber.real < bigBound
+      ], 'real')).are(new Condition([ SimpleComplexNumber complexNumber |
+      -bigBound < complexNumber.imaginary && complexNumber.imaginary < bigBound
+    ], 'imaginary'))
   }
 
   @Test
@@ -400,28 +472,54 @@ class MathRandomTest {
   }
 
   @Test
+  def void nextRealComplexNumberScaleTooLowShouldThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextRealComplexNumber(bound, 0)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected scale > 0 but actual 0')
+  }
+
+  @Test
   def void nextRealComplexNumberShouldSucceed() {
     val it = mathRandom.nextRealComplexNumber(bound, validScale)
     assertThat(it).isExactlyInstanceOf(RealComplexNumber)
     assertThat(real).isGreaterThan(-decimalBound).isLessThan(decimalBound)
     assertThat(imaginary).isGreaterThan(-decimalBound).isLessThan(decimalBound)
+    assertEquals(validScale, real.scale)
+    assertEquals(validScale, imaginary.scale)
+  }
+
+  @Test
+  def void nextRealComplexNumbersBoundTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextRealComplexNumbers(0, validScale, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 0 but actual 0')
+  }
+
+  @Test
+  def void nextRealComplexNumbersScaleTooLowShoudThrowException() {
+    assertThatThrownBy[
+      mathRandom.nextRealComplexNumbers(bound, 0, howMany)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected scale > 0 but actual 0')
   }
 
   @Test
   def void nextRealComplexNumbersTooLessShoudThrowException() {
     assertThatThrownBy[
       mathRandom.nextRealComplexNumbers(bound, validScale, 1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
   }
 
   @Test
   def void nextRealComplexNumbersShouldSucceed() {
     val complexNumbers = mathRandom.nextRealComplexNumbers(bound, validScale, howMany)
-    assertThat(complexNumbers).hasOnlyElementsOfType(RealComplexNumber).hasSize(howMany)
-    complexNumbers.forEach [
-      assertThat(real).isGreaterThan(-decimalBound).isLessThan(decimalBound)
-      assertThat(imaginary).isGreaterThan(-decimalBound).isLessThan(decimalBound)
-    ]
+    assertThat(complexNumbers).hasOnlyElementsOfType(RealComplexNumber).hasSize(howMany).are(
+      new Condition([ RealComplexNumber complexNumber |
+        0BD <= complexNumber.real && complexNumber.real < decimalBound
+      ], 'real')).are(new Condition([ RealComplexNumber complexNumber |
+      0BD <= complexNumber.imaginary && complexNumber.imaginary < decimalBound
+    ], 'imaginary')).are(new Condition([ RealComplexNumber complexNumber |
+      complexNumber.real.scale === validScale && complexNumber.imaginary.scale === validScale
+    ], 'scale'))
   }
 
   @Test
@@ -485,9 +583,9 @@ class MathRandomTest {
     val it = mathRandom.nextBigIntVector(bound, validSize)
     assertThat(it).isInstanceOf(BigIntVector)
     assertEquals(validSize, size)
-    map.values.forEach [ entry |
-      assertThat(entry).isGreaterThan(-bigBound).isLessThan(bigBound)
-    ]
+    assertThat(map.values).hasOnlyElementsOfType(BigInteger).are(new Condition([ BigInteger entry |
+      -bigBound < entry && entry < bigBound
+    ], 'bounds'))
   }
 
   @Test
@@ -516,9 +614,10 @@ class MathRandomTest {
     val it = mathRandom.nextDecimalVector(bound, validScale, validSize)
     assertThat(it).isInstanceOf(DecimalVector)
     assertEquals(validSize, size)
-    map.values.forEach [ entry |
-      assertThat(entry).isGreaterThan(-decimalBound).isLessThan(decimalBound)
-      assertEquals(validScale, entry.scale)
-    ]
+    assertThat(map.values).hasOnlyElementsOfType(BigDecimal).are(new Condition([ BigDecimal entry |
+      -decimalBound < entry && entry < decimalBound
+    ], 'bounds')).are(new Condition([ BigDecimal entry |
+      entry.scale === validScale
+    ], 'scale'))
   }
 }
