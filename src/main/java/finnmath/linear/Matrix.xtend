@@ -35,16 +35,19 @@ import com.google.common.collect.ImmutableTable
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
+import static java.util.Objects.requireNonNull
 
 @Beta
-@FinalFieldsConstructor
 @EqualsHashCode
 @Accessors
 abstract class Matrix<M, E, V> {
   protected val ImmutableTable<Integer, Integer, E> table
+
+  protected new(ImmutableTable<Integer, Integer, E> table) {
+    this.table = requireNonNull(table, 'table');
+  }
 
   def rowIndexes() {
     ImmutableSet.copyOf(table.rowKeySet)

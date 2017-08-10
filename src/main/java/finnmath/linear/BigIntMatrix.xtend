@@ -33,15 +33,17 @@ import com.google.common.collect.ImmutableTable
 import java.math.BigInteger
 import java.util.Map
 import org.apache.commons.lang3.builder.Builder
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
-@FinalFieldsConstructor
-class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> {
+final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> {
+  private new(ImmutableTable<Integer, Integer, BigInteger> table) {
+    super(table)
+  }
+
   override add(BigIntMatrix summand) {
     requireNonNull(summand, 'summand')
     checkArgument(table.rowKeySet.size == summand.rowSize, 'expected equal row sizes but actual %s != %s',
@@ -220,7 +222,7 @@ class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> {
   }
 
   @Beta
-  static class BigIntMatrixBuilder extends MatrixBuilder<BigIntMatrix, BigInteger> implements Builder<BigIntMatrix> {
+  static final class BigIntMatrixBuilder extends MatrixBuilder<BigIntMatrix, BigInteger> implements Builder<BigIntMatrix> {
     private new(int rowSize, int columnSize) {
       super(rowSize, columnSize)
     }

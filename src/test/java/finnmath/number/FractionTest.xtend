@@ -40,7 +40,7 @@ import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertFalse
 import static org.junit.Assert.assertTrue
 
-class FractionTest {
+final class FractionTest {
   static val ZERO = Fraction::ZERO
   static val ONE = Fraction::ONE
   static var List<Fraction> fractions

@@ -32,16 +32,17 @@ import com.google.common.annotations.Beta
 import java.util.HashMap
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 @Beta
+@ToString
 @Accessors
 abstract class VectorBuilder<B, V, E> {
   protected val Map<Integer, E> map = new HashMap
-
-  private val int size
+  val int size
 
   new(int size) {
     checkArgument(size > 0, 'expected size > 0 but actual %s', size)

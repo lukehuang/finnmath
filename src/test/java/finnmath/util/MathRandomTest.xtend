@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertTrue
 
-class MathRandomTest {
+final class MathRandomTest {
   val mathRandom = new MathRandom
   val bound = 10
   val howMany = 10

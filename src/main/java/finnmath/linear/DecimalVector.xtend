@@ -32,15 +32,17 @@ import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableMap
 import java.math.BigDecimal
 import org.apache.commons.lang3.builder.Builder
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static finnmath.util.SquareRootCalculator.sqrt
 import static java.util.Objects.requireNonNull
 
 @Beta
-@FinalFieldsConstructor
-class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> {
+final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> {
+  private new(ImmutableMap<Integer, BigDecimal> map) {
+    super(map)
+  }
+
   override add(DecimalVector summand) {
     checkArgument(map.size == summand.size, 'expected equal sizes but actual %s != %s', map.size, summand.size)
     val builder = builder(map.size)
@@ -135,7 +137,7 @@ class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> {
   }
 
   @Beta
-  static class DecimalVectorBuilder extends VectorBuilder<DecimalVectorBuilder, DecimalVector, BigDecimal> implements Builder<DecimalVector> {
+  static final class DecimalVectorBuilder extends VectorBuilder<DecimalVectorBuilder, DecimalVector, BigDecimal> implements Builder<DecimalVector> {
     private new(int size) {
       super(size)
     }

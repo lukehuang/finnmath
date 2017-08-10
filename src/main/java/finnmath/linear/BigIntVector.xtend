@@ -33,15 +33,17 @@ import com.google.common.collect.ImmutableMap
 import java.math.BigDecimal
 import java.math.BigInteger
 import org.apache.commons.lang3.builder.Builder
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static finnmath.util.SquareRootCalculator.sqrt
 import static java.util.Objects.requireNonNull
 
 @Beta
-@FinalFieldsConstructor
-class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
+final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
+  private new(ImmutableMap<Integer, BigInteger> map) {
+    super(map)
+  }
+
   override add(BigIntVector summand) {
     requireNonNull(summand, 'summand')
     checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
@@ -138,7 +140,7 @@ class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
   }
 
   @Beta
-  static class BigIntVectorBuilder extends VectorBuilder<BigIntVectorBuilder, BigIntVector, BigInteger> implements Builder<BigIntVector> {
+  static final class BigIntVectorBuilder extends VectorBuilder<BigIntVectorBuilder, BigIntVector, BigInteger> implements Builder<BigIntVector> {
     private new(Integer size) {
       super(size)
     }

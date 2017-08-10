@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory
 
 import static org.assertj.core.api.Assertions.assertThat
 
-class SquareRootCalculatorTest {
+final class SquareRootCalculatorTest {
   val defaultScale = SquareRootCalculator.DEFAULT_SCALE
   val mathRandom = new MathRandom
   private static val log = LoggerFactory.getLogger(SquareRootCalculatorTest)

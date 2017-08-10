@@ -37,7 +37,7 @@ import org.junit.Test
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
-class BigIntMatrixTest {
+final class BigIntMatrixTest {
   static var BigIntMatrix zeroMatrixForAddition
   static var BigIntMatrix zeroMatrixForMultiplication
   static var BigIntMatrix identityMatrix

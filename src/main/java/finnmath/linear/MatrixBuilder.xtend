@@ -43,7 +43,7 @@ import static java.util.Objects.requireNonNull
 abstract class MatrixBuilder<M, E> {
   protected val Table<Integer, Integer, E> table
 
-  new(int rowSize, int columnSize) {
+  protected new(int rowSize, int columnSize) {
     checkArgument(rowSize > 0, 'expected row size > 0 but actual %s', rowSize)
     checkArgument(columnSize > 0, 'expected column size > 0 but actual %s', columnSize)
     table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))

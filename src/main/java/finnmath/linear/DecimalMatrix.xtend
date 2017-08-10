@@ -33,15 +33,17 @@ import com.google.common.collect.ImmutableTable
 import java.math.BigDecimal
 import java.util.Map
 import org.apache.commons.lang3.builder.Builder
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
-@FinalFieldsConstructor
-class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVector> {
+final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVector> {
+  private new(ImmutableTable<Integer, Integer, BigDecimal> table) {
+    super(table)
+  }
+
   override add(DecimalMatrix summand) {
     requireNonNull(summand, 'summand')
     checkArgument(table.rowKeySet.size == summand.rowSize, 'expected equal row sizes but actual %s != %s',
@@ -220,7 +222,7 @@ class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVector> {
   }
 
   @Beta
-  static class DecimalMatrixBuilder extends MatrixBuilder<DecimalMatrix, BigDecimal> implements Builder<DecimalMatrix> {
+  static final class DecimalMatrixBuilder extends MatrixBuilder<DecimalMatrix, BigDecimal> implements Builder<DecimalMatrix> {
     new(int rowSize, int columnSize) {
       super(rowSize, columnSize)
     }

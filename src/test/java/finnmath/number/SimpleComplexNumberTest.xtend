@@ -37,7 +37,7 @@ import org.junit.Test
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
-class SimpleComplexNumberTest {
+final class SimpleComplexNumberTest {
   static val ZERO = SimpleComplexNumber::ZERO
   static val ONE = SimpleComplexNumber::ONE
   static val I = SimpleComplexNumber::I

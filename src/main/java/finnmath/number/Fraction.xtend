@@ -42,7 +42,7 @@ import static java.util.Objects.requireNonNull
 @EqualsHashCode
 @ToString
 @Accessors
-class Fraction implements MathNumber<Fraction, Fraction> {
+final class Fraction implements MathNumber<Fraction, Fraction> {
   public static val ZERO = new Fraction(0BI, 1BI)
   public static val ONE = new Fraction(1BI, 1BI)
   val BigInteger numerator

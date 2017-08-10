@@ -42,7 +42,7 @@ import static java.lang.Math.addExact
 import static java.util.Objects.requireNonNull
 
 @Beta
-class SquareRootCalculator {
+final class SquareRootCalculator {
   public static val BigDecimal DEFAULT_PRECISION = 0.0000000001BD
   public static val int DEFAULT_SCALE = 10
   public static val int DEFAULT_ROUNDING_MODE = BigDecimal.ROUND_HALF_UP
