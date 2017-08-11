@@ -37,7 +37,6 @@ import java.math.RoundingMode
 import org.slf4j.LoggerFactory
 
 import static com.google.common.base.Preconditions.checkArgument
-import static com.google.common.base.Preconditions.checkState
 import static java.lang.Math.addExact
 import static java.util.Objects.requireNonNull
 
@@ -64,7 +63,7 @@ final class SquareRootCalculator {
     requireNonNull(integer, 'integer')
     checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
     requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual %s', precision)
     sqrt(new BigDecimal(integer), precision, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE)
   }
 
@@ -115,7 +114,7 @@ final class SquareRootCalculator {
   static def sqrtOfPerfectSquare(BigInteger integer) {
     requireNonNull(integer, 'integer')
     checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
-    checkState(perfectSquare(integer), 'expected perfect square but actual %s', integer)
+    checkArgument(perfectSquare(integer), 'expected perfect square but actual %s', integer)
     BigIntegerMath.sqrt(integer, RoundingMode.UNNECESSARY)
   }
 
