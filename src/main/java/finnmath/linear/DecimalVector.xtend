@@ -1,7 +1,7 @@
 /*
  * BSD 2-Clause License
  * 
- * Copyright (c) 2017, togliu
+ * Copyright (c) 2017, Lars Tennstedt
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -78,6 +78,10 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
     builder.build
   }
 
+  override normPow2() {
+    dotProduct
+  }
+
   override norm() {
     sqrt(normPow2)
   }
@@ -102,10 +106,6 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
     sqrt(normPow2, precision, scale, roundingMode)
   }
 
-  override normPow2() {
-    dotProduct
-  }
-
   override dotProduct(DecimalVector vector) {
     requireNonNull(vector, 'vector')
     checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
@@ -115,16 +115,42 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
     result
   }
 
+  override distancePow2(DecimalVector vector) {
+    requireNonNull(vector, 'vector')
+    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+    subtract(vector).normPow2
+  }
+
   override distance(DecimalVector vector) {
     requireNonNull(vector, 'vector')
     checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
     sqrt(distancePow2(vector))
   }
 
-  override distancePow2(DecimalVector vector) {
+  override distance(DecimalVector vector, BigDecimal precision) {
     requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'equal sizes expected but actual %s != %s', map.size, vector.size)
-    subtract(vector).normPow2
+    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+    requireNonNull(precision, 'precision')
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+    sqrt(distancePow2(vector))
+  }
+
+  override distance(DecimalVector vector, int scale, int roundingMode) {
+    requireNonNull(vector, 'vector')
+    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
+    sqrt(distancePow2(vector))
+  }
+
+  override distance(DecimalVector vector, BigDecimal precision, int scale, int roundingMode) {
+    requireNonNull(vector, 'vector')
+    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+    requireNonNull(precision, 'precision')
+    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
+    sqrt(distancePow2(vector))
   }
 
   override size() {

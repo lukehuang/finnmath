@@ -58,4 +58,3 @@ The code formatting follows loosely the Google Java style guide found here on Gi
 * Gradle Inc. for Gradle
 * GitHub Inc. for GitHub
 * Judd Vinet and Aaron Griffin for Arch Linux
-

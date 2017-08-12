@@ -1,7 +1,7 @@
 /*
  * BSD 2-Clause License
  * 
- * Copyright (c) 2017, togliu
+ * Copyright (c) 2017, Lars Tennstedt
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,8 +28,10 @@
 
 package finnmath.number
 
+import java.math.BigInteger
 import org.junit.Test
 
+import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
 final class BigIntAndSqrtTest {
@@ -37,20 +39,27 @@ final class BigIntAndSqrtTest {
   def void newNumberNullShouldThrowException() {
     assertThatThrownBy[
       new BigIntAndSqrt(null, 0BI)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('number')
   }
 
   @Test
   def void newSqrtNullShouldThrowException() {
     assertThatThrownBy[
       new BigIntAndSqrt(0BI, null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('sqrt')
   }
 
   @Test
   def void newWithWrongSqrtShouldThrowException() {
     assertThatThrownBy[
       new BigIntAndSqrt(1BI, 0BI)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected sqrt**2 == number but actual 0**2 != 1')
+  }
+
+  @Test
+  def void newShouldSucceed() {
+    val it = new BigIntAndSqrt(0BI, 0BI)
+    assertThat(number).isExactlyInstanceOf(BigInteger)
+    assertThat(sqrt).isExactlyInstanceOf(BigInteger)
   }
 }

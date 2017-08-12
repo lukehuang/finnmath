@@ -1,7 +1,7 @@
 /*
  * BSD 2-Clause License
  * 
- * Copyright (c) 2017, togliu
+ * Copyright (c) 2017, Lars Tennstedt
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,13 +30,36 @@ package finnmath.number
 
 import org.junit.Test
 
+import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
 final class SimpleComplexNumberAndSqrtTest {
   @Test
+  def void newNumberNullShouldThrowException() {
+    assertThatThrownBy[
+      new SimpleComplexNumberAndSqrt(null, SimpleComplexNumber::ZERO)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('number')
+  }
+
+  @Test
+  def void newSqrtNullShouldThrowException() {
+    assertThatThrownBy[
+      new SimpleComplexNumberAndSqrt(SimpleComplexNumber::ZERO, null)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('sqrt')
+  }
+
+  @Test
   def void newWithWrongSqrtShouldThrowException() {
     assertThatThrownBy[
       new SimpleComplexNumberAndSqrt(SimpleComplexNumber::ONE, SimpleComplexNumber::ZERO)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).
+      hasMessage('''expected sqrt**2 == number but actual «SimpleComplexNumber::ZERO»**2 != «SimpleComplexNumber::ONE»''')
+  }
+
+  @Test
+  def void newShouldSucceed() {
+    val it = new SimpleComplexNumberAndSqrt(SimpleComplexNumber::ZERO, SimpleComplexNumber::ZERO)
+    assertThat(number).isExactlyInstanceOf(SimpleComplexNumber)
+    assertThat(sqrt).isExactlyInstanceOf(SimpleComplexNumber)
   }
 }

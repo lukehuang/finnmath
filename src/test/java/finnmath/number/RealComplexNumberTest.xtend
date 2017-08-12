@@ -1,7 +1,7 @@
 /*
  * BSD 2-Clause License
  * 
- * Copyright (c) 2017, togliu
+ * Copyright (c) 2017, Lars Tennstedt
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,10 @@
 
 package finnmath.number
 
+import finnmath.linear.DecimalMatrix
 import finnmath.util.MathRandom
+import finnmath.util.SquareRootCalculator
+import java.math.BigDecimal
 import java.util.List
 import org.junit.BeforeClass
 import org.junit.Test
@@ -59,21 +62,21 @@ final class RealComplexNumberTest {
   def void newRealNullShouldThrowException() {
     assertThatThrownBy[
       new RealComplexNumber(null, 0BD)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('real')
   }
 
   @Test
   def void newImaginaryNullShouldThrowException() {
     assertThatThrownBy[
       new RealComplexNumber(0BD, null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('imaginary')
   }
 
   @Test
   def void addNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.add(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('summand')
   }
 
   @Test
@@ -82,7 +85,8 @@ final class RealComplexNumberTest {
       others.forEach [ other |
         val expectedReal = real + other.real
         val expectedImaginary = imaginary + other.imaginary
-        assertThat(add(other)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
+        assertThat(add(other)).isExactlyInstanceOf(RealComplexNumber).isEqualTo(
+          new RealComplexNumber(expectedReal, expectedImaginary))
       ]
     ]
   }
@@ -118,7 +122,7 @@ final class RealComplexNumberTest {
   def void subtractNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.subtract(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('subtrahend')
   }
 
   @Test
@@ -127,7 +131,8 @@ final class RealComplexNumberTest {
       others.forEach [ other |
         val expectedReal = real - other.real
         val expectedImaginary = imaginary - other.imaginary
-        assertThat(subtract(other)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
+        assertThat(subtract(other)).isExactlyInstanceOf(RealComplexNumber).isEqualTo(
+          new RealComplexNumber(expectedReal, expectedImaginary))
       ]
     ]
   }
@@ -153,7 +158,7 @@ final class RealComplexNumberTest {
   def void multiplyNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.multiply(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('factor')
   }
 
   @Test
@@ -162,7 +167,8 @@ final class RealComplexNumberTest {
       others.forEach [ other |
         val expectedReal = real * other.real - imaginary * other.imaginary
         val expectedImaginary = imaginary * other.real + real * other.imaginary
-        assertThat(multiply(other)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
+        assertThat(multiply(other)).isExactlyInstanceOf(RealComplexNumber).isEqualTo(
+          new RealComplexNumber(expectedReal, expectedImaginary))
       ]
     ]
   }
@@ -218,7 +224,14 @@ final class RealComplexNumberTest {
   def void divideNullShouldThrowException() {
     assertThatThrownBy[
       ZERO.divide(null)
-    ].isExactlyInstanceOf(NullPointerException)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('divisor')
+  }
+
+  @Test
+  def void divideZeroShouldThrowException() {
+    assertThatThrownBy [
+      ONE.divide(ZERO)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('''expected divisor != 0 but actual «ZERO»''')
   }
 
   @Test
@@ -229,7 +242,8 @@ final class RealComplexNumberTest {
         val expectedReal = (real * invertible.real + imaginary * invertible.imaginary) / denominator
         val expectedImaginary = (imaginary * invertible.real - real * invertible.imaginary) / denominator
         new RealComplexNumber(expectedReal, expectedImaginary)
-        assertThat(divide(invertible)).isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary))
+        assertThat(divide(invertible)).isExactlyInstanceOf(RealComplexNumber).isEqualTo(
+          new RealComplexNumber(expectedReal, expectedImaginary))
       ]
     ]
   }
@@ -245,13 +259,13 @@ final class RealComplexNumberTest {
   def void powNegativeExponentShouldThrowException() {
     assertThatThrownBy[
       ZERO.pow(-1)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected exponent > -1 but actual -1')
   }
 
   @Test
   def void powShouldSucceed() {
     complexNumbers.forEach [
-      assertThat(pow(3)).isEqualTo(multiply(multiply(it)))
+      assertThat(pow(3)).isExactlyInstanceOf(RealComplexNumber).isEqualTo(multiply(multiply(it)))
       assertThat(pow(2)).isEqualTo(multiply(it))
     ]
   }
@@ -288,13 +302,27 @@ final class RealComplexNumberTest {
   @Test
   def void negateShouldSucceed() {
     complexNumbers.forEach [
-      assertThat(negate).isEqualTo(new RealComplexNumber(-real, -imaginary))
+      assertThat(negate).isExactlyInstanceOf(RealComplexNumber).isEqualTo(new RealComplexNumber(-real, -imaginary))
     ]
   }
 
   @Test
   def void negateZeroShouldBeEqualToSelf() {
     assertThat(ZERO.negate).isEqualTo(ZERO)
+  }
+
+  @Test
+  def void multiplyMinusOneShouldBeEqualToNegated() {
+    complexNumbers.forEach [
+      assertThat(multiply(ONE.negate)).isEqualTo(negate)
+    ]
+  }
+
+  @Test
+  def void divideMinusOneShouldBeEqualToNegated() {
+    complexNumbers.forEach [
+      assertThat(divide(ONE.negate)).isEqualTo(negate)
+    ]
   }
 
   @Test
@@ -309,7 +337,7 @@ final class RealComplexNumberTest {
   @Test
   def void absPow2ShouldSucceed() {
     complexNumbers.forEach [
-      assertThat(absPow2).isEqualTo(real ** 2 + imaginary ** 2)
+      assertThat(absPow2).isExactlyInstanceOf(BigDecimal).isEqualTo(real ** 2 + imaginary ** 2)
     ]
   }
 
@@ -329,9 +357,16 @@ final class RealComplexNumberTest {
   }
 
   @Test
+  def void absShouldSucceed() {
+    complexNumbers.forEach [
+      assertThat(abs).isExactlyInstanceOf(BigDecimal).isEqualTo(SquareRootCalculator::sqrt(absPow2))
+    ]
+  }
+
+  @Test
   def void conjugateShouldSucceed() {
     complexNumbers.forEach [
-      assertThat(conjugate).isEqualTo(new RealComplexNumber(real, -imaginary))
+      assertThat(conjugate).isExactlyInstanceOf(RealComplexNumber).isEqualTo(new RealComplexNumber(real, -imaginary))
     ]
   }
 
@@ -340,6 +375,15 @@ final class RealComplexNumberTest {
     complexNumbers.forEach [
       val realNumber = new RealComplexNumber(real, 0BD)
       assertThat(realNumber.conjugate).isEqualTo(realNumber)
+    ]
+  }
+
+  @Test
+  def void matrixShouldSucceed() {
+    complexNumbers.forEach [
+      val expected = DecimalMatrix::builder(2, 2).put(1, 1, real).put(1, 2, -imaginary).put(2, 1, imaginary).put(2, 2,
+        real).build
+      assertThat(matrix).isExactlyInstanceOf(DecimalMatrix).isEqualTo(expected)
     ]
   }
 }

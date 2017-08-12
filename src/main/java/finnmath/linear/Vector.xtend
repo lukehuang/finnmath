@@ -1,7 +1,7 @@
 /*
  * BSD 2-Clause License
  * 
- * Copyright (c) 2017, togliu
+ * Copyright (c) 2017, Lars Tennstedt
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,10 +33,10 @@ import com.google.common.collect.ImmutableMap
 import java.math.BigDecimal
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
-import org.eclipse.xtend.lib.annotations.ToString
 
 @Beta
 @EqualsHashCode
@@ -63,6 +63,8 @@ abstract class Vector<V, E, N> {
 
   def V negate()
 
+  def E normPow2()
+
   def N norm()
 
   def N norm(BigDecimal precision)
@@ -71,13 +73,17 @@ abstract class Vector<V, E, N> {
 
   def N norm(BigDecimal precision, int scale, int roundingMode)
 
-  def E normPow2()
-
   def E dotProduct(V vector)
+
+  def E distancePow2(V vector)
 
   def N distance(V vector)
 
-  def E distancePow2(V vector)
+  def N distance(V vector, BigDecimal precision)
+
+  def N distance(V vector, int scale, int roundingMode)
+
+  def N distance(V vector, BigDecimal precision, int scale, int roundingMode)
 
   def int size()
 }

@@ -1,7 +1,7 @@
 /*
  * BSD 2-Clause License
  * 
- * Copyright (c) 2017, togliu
+ * Copyright (c) 2017, Lars Tennstedt
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@
 package finnmath.number
 
 import com.google.common.annotations.Beta
+import java.math.BigDecimal
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.ToString
@@ -49,6 +50,8 @@ abstract class ComplexNumber<S, T, M> {
   }
 
   def S absPow2()
+
+  def BigDecimal abs()
 
   def T conjugate()
 

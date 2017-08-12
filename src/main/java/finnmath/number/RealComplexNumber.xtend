@@ -1,7 +1,7 @@
 /*
  * BSD 2-Clause License
  * 
- * Copyright (c) 2017, togliu
+ * Copyright (c) 2017, Lars Tennstedt
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,6 +30,7 @@ package finnmath.number
 
 import com.google.common.annotations.Beta
 import finnmath.linear.DecimalMatrix
+import finnmath.util.SquareRootCalculator
 import java.math.BigDecimal
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
@@ -37,6 +38,9 @@ import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
+/**
+ * An immutable implementation of a complex number which uses {@code BigDecimal} for the real and imaginary part 
+ */
 @Beta
 @FinalFieldsConstructor
 final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumber, DecimalMatrix> implements MathNumber<RealComplexNumber, RealComplexNumber> {
@@ -48,16 +52,37 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     super(new BigDecimal(requireNonNull(complexNumber, 'complexNumber').real), new BigDecimal(complexNumber.imaginary))
   }
 
+  /**
+   * Returns the sum of this complex number and the given one
+   * 
+   * @param summand
+   * @return sum
+   * @throws NullPointerException
+   */
   override add(RealComplexNumber summand) {
     requireNonNull(summand, 'summand')
     new RealComplexNumber(real + summand.real, imaginary + summand.imaginary)
   }
 
+  /**
+   * Returns the difference of this complex number and the given one
+   * 
+   * @param subtrahend
+   * @return difference
+   * @throws NullPointerException
+   */
   override subtract(RealComplexNumber subtrahend) {
     requireNonNull(subtrahend, 'subtrahend')
     new RealComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
   }
 
+  /**
+   * Returns the product of this complex number and the given one
+   * 
+   * @param factor
+   * @return product
+   * @throws NullPointerException
+   */
   override multiply(RealComplexNumber factor) {
     requireNonNull(factor, 'factor')
     val newReal = real * factor.real - imaginary * factor.imaginary
@@ -65,6 +90,13 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     new RealComplexNumber(newReal, newImaginary)
   }
 
+  /**
+   * Returns the quotient as {@RealComplexNumber} of this complex number and the given one
+   * 
+   * @param divisor
+   * @return quotient
+   * @throws NullPointerException
+   */
   override divide(RealComplexNumber divisor) {
     requireNonNull(divisor, 'divisor')
     checkArgument(divisor != ZERO, 'expected divisor != 0 but actual %s', divisor)
@@ -74,6 +106,13 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     new RealComplexNumber(newReal, newImaginary)
   }
 
+  /**
+   * Calculates the power of this complex number by the given exponent and returns it
+   * 
+   * @param exponent
+   * @return pow
+   * @throws IllegalArgumentException if exponent < 0
+   */
   override pow(int exponent) {
     checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
     if (exponent > 1)
@@ -83,19 +122,40 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     ONE
   }
 
+  /**
+   * Returns the negated complex number of this one
+   * 
+   * @return negated
+   */
   override negate() {
     new RealComplexNumber(-real, -imaginary)
   }
 
+  /**
+   * Returns the inverted complex number of this one
+   * 
+   * @return inverted
+   * @throws IllegalStateException if numerator == 0
+   */
   override invert() {
     checkState(invertible, 'expected != 0 but actual %s', this)
     ONE.divide(this)
   }
 
+  /**
+   * Returns if this complex number is invertible
+   * 
+   * @return true if this != 0, false otherwise
+   */
   override invertible() {
     this != ZERO
   }
 
+  /**
+   * Returns a string representation of this complex number
+   * 
+   * @return string
+   */
   override asString() {
     if (real != 0BD)
       if (imaginary > 0BD)
@@ -111,14 +171,38 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     '0'
   }
 
+  /**
+   * Returns the square of the absolute of this complex number
+   * 
+   * @return square of the absolute
+   */
   override absPow2() {
     real ** 2 + imaginary ** 2
   }
 
+  /**
+   * Returns the absolute of this complex number
+   * 
+   * @return absolute
+   */
+  override abs() {
+    SquareRootCalculator::sqrt(absPow2)
+  }
+
+  /**
+   * Returns the conjugate of this complex number
+   * 
+   * @return conjugated
+   */
   override conjugate() {
     new RealComplexNumber(real, -imaginary)
   }
 
+  /**
+   * Returns a matrix representation of this complex number
+   * 
+   * @return matrix
+   */
   override matrix() {
     DecimalMatrix::builder(2, 2).put(1, 1, real).put(1, 2, -imaginary).put(2, 1, imaginary).put(2, 2, real).build
   }

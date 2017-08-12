@@ -1,7 +1,7 @@
 /*
  * BSD 2-Clause License
  * 
- * Copyright (c) 2017, togliu
+ * Copyright (c) 2017, Lars Tennstedt
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,13 +30,36 @@ package finnmath.number
 
 import org.junit.Test
 
+import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
 
 final class FractionAndSqrtTest {
   @Test
+  def void newNumberNullShouldThrowException() {
+    assertThatThrownBy[
+      new FractionAndSqrt(null, Fraction::ZERO)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('number')
+  }
+
+  @Test
+  def void newSqrtNullShouldThrowException() {
+    assertThatThrownBy[
+      new FractionAndSqrt(Fraction::ZERO, null)
+    ].isExactlyInstanceOf(NullPointerException).hasMessage('sqrt')
+  }
+
+  @Test
   def void newWithWrongSqrtShouldThrowException() {
     assertThatThrownBy[
       new FractionAndSqrt(Fraction::ONE, Fraction::ZERO)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).
+      hasMessage('''expected sqrt**2 == number but actual «Fraction::ZERO»**2 != «Fraction::ONE»''')
+  }
+
+  @Test
+  def void newShouldSucceed() {
+    val it = new FractionAndSqrt(Fraction::ZERO, Fraction::ZERO)
+    assertThat(number).isExactlyInstanceOf(Fraction)
+    assertThat(sqrt).isExactlyInstanceOf(Fraction)
   }
 }

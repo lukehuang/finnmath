@@ -1,7 +1,7 @@
 /*
  * BSD 2-Clause License
  * 
- * Copyright (c) 2017, togliu
+ * Copyright (c) 2017, Lars Tennstedt
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -243,7 +243,7 @@ final class FractionTest {
   def void divideZeroShouldThrowException() {
     assertThatThrownBy[
       ZERO.divide(ZERO)
-    ].isExactlyInstanceOf(IllegalArgumentException)
+    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected divisor.numerator != 0 but actual 0')
   }
 
   @Test
@@ -282,6 +282,20 @@ final class FractionTest {
   }
 
   @Test
+  def void multiplyMinusOneShouldBeEqualToNegated() {
+    fractions.forEach [
+      assertThat(multiply(ONE.negate)).isEqualTo(negate)
+    ]
+  }
+
+  @Test
+  def void divideMinusOneShouldBeEqualToNegated() {
+    fractions.forEach [
+      assertThat(divide(ONE.negate).normalize.reduce).isEqualTo(negate.reduce)
+    ]
+  }
+
+  @Test
   def void powNegativeExponentShouldThrowException() {
     assertThatThrownBy[
       ZERO.pow(-1)
@@ -291,8 +305,7 @@ final class FractionTest {
   @Test
   def void powShouldSucceed() {
     fractions.forEach [
-      assertThat(pow(0)).isExactlyInstanceOf(Fraction)
-      assertThat(pow(3)).isEqualTo(multiply(multiply(it)))
+      assertThat(pow(3)).isExactlyInstanceOf(Fraction).isEqualTo(multiply(multiply(it)))
       assertThat(pow(2)).isEqualTo(multiply(it))
     ]
   }
