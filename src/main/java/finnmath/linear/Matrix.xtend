@@ -37,7 +37,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
-import static java.util.Objects.requireNonNull
 
 @Beta
 @EqualsHashCode
@@ -46,15 +45,15 @@ abstract class Matrix<E, V, M> {
   protected val ImmutableTable<Integer, Integer, E> table
 
   protected new(ImmutableTable<Integer, Integer, E> table) {
-    this.table = requireNonNull(table, 'table');
+    this.table = table
   }
 
   def rowIndexes() {
-    ImmutableSet.copyOf(table.rowKeySet)
+    ImmutableSet::copyOf(table.rowKeySet)
   }
 
   def columnIndexes() {
-    ImmutableSet.copyOf(table.columnKeySet)
+    ImmutableSet::copyOf(table.columnKeySet)
   }
 
   def entry(Integer rowIndex, Integer columnIndex) {
@@ -68,25 +67,25 @@ abstract class Matrix<E, V, M> {
   def row(Integer rowIndex) {
     checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
       table.rowKeySet.size, rowIndex)
-    ImmutableMap.copyOf(table.row(rowIndex))
+    ImmutableMap::copyOf(table.row(rowIndex))
   }
 
   def column(Integer columnIndex) {
     checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
       table.columnKeySet.size, columnIndex)
-    ImmutableMap.copyOf(table.column(columnIndex))
+    ImmutableMap::copyOf(table.column(columnIndex))
   }
 
   def rows() {
-    ImmutableMap.copyOf(table.rowMap)
+    ImmutableMap::copyOf(table.rowMap)
   }
 
   def columns() {
-    ImmutableMap.copyOf(table.columnMap)
+    ImmutableMap::copyOf(table.columnMap)
   }
 
   def size() {
-    Long.valueOf(rowSize) * Long.valueOf(columnSize)
+    Long::valueOf(rowSize) * Long::valueOf(columnSize)
   }
 
   def rowSize() {

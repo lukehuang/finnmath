@@ -28,7 +28,6 @@
 
 package finnmath.number
 
-import com.google.common.annotations.Beta
 import java.math.BigDecimal
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
@@ -36,11 +35,10 @@ import org.eclipse.xtend.lib.annotations.ToString
 
 import static java.util.Objects.requireNonNull
 
-@Beta
 @EqualsHashCode
 @ToString
 @Accessors
-abstract class ComplexNumber<B, S, R, M> implements MathNumber<S, R> {
+package abstract class ComplexNumber<B, S, R, M> implements MathNumber<S, R> {
   protected val B real
   protected val B imaginary
 

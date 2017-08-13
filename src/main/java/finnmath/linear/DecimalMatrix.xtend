@@ -230,7 +230,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
       table.cellSet.forEach [
         requireNonNull(value, 'value')
       ]
-      new DecimalMatrix(ImmutableTable.copyOf(table))
+      new DecimalMatrix(ImmutableTable::copyOf(table))
     }
   }
 }

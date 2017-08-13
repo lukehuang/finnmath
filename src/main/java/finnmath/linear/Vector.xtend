@@ -46,7 +46,7 @@ abstract class Vector<E, V, N> {
   protected val ImmutableMap<Integer, E> map
 
   protected new(ImmutableMap<Integer, E> map) {
-    this.map = requireNonNull(map, 'map')
+    this.map = map
   }
 
   def entry(Integer index) {

@@ -184,7 +184,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
       map.forEach [ index, entry |
         requireNonNull(entry, 'entry')
       ]
-      new BigIntVector(ImmutableMap.copyOf(map));
+      new BigIntVector(ImmutableMap::copyOf(map));
     }
   }
 }

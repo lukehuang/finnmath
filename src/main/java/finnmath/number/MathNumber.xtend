@@ -28,10 +28,7 @@
 
 package finnmath.number
 
-import com.google.common.annotations.Beta
-
-@Beta
-interface MathNumber<S, T> {
+package interface MathNumber<S, T> {
   def S add(S summand)
 
   def S subtract(S subtrahend)

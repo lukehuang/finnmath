@@ -181,7 +181,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
       map.forEach [ index, entry |
         requireNonNull(entry, 'entry')
       ]
-      new DecimalVector(ImmutableMap.copyOf(map))
+      new DecimalVector(ImmutableMap::copyOf(map))
     }
   }
 }

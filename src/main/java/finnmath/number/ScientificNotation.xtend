@@ -36,6 +36,11 @@ import org.eclipse.xtend.lib.annotations.ToString
 
 import static java.util.Objects.requireNonNull
 
+/**
+ * Represents the scientific notation for a decimal number
+ * <p>
+ * decimal = coefficient * 10^exponent
+ */
 @Beta
 @EqualsHashCode
 @ToString
@@ -44,11 +49,23 @@ final class ScientificNotation {
   val BigDecimal coefficient
   val int exponent
 
+  /**
+   * Constructs a scientific notation
+   * 
+   * @param coefficient
+   * @param exponent
+   * @throws NullPointerException
+   */
   new(BigDecimal coefficient, int exponent) {
     this.coefficient = requireNonNull(coefficient, 'coefficient')
-    this.exponent = requireNonNull(exponent, 'exponent')
+    this.exponent = exponent
   }
 
+  /**
+   * Returns a string representation of this scientific notation
+   * 
+   * @return string
+   */
   def asString() {
     if (exponent < 0)
       return '''«coefficient» * 10^(«exponent»)'''

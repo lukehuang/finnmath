@@ -41,9 +41,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy
 final class SquareRootCalculatorTest {
   val precision = 0.00000001BD
   val scale = 8
-  val roundingMoude = BigDecimal.ROUND_HALF_EVEN
+  val roundingMoude = BigDecimal::ROUND_HALF_EVEN
   val mathRandom = new MathRandom
-  private static val log = LoggerFactory.getLogger(SquareRootCalculatorTest)
+  private static val log = LoggerFactory::getLogger(SquareRootCalculatorTest)
 
   @After
   def void after() {

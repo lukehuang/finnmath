@@ -55,10 +55,10 @@ final class BigIntMatrixTest {
     val mathRandom = new MathRandom
     val howMany = 10
     val bound = 10
-    val rowSize = RandomUtils.nextInt(2, 10)
-    val columnSize = RandomUtils.nextInt(2, 10)
-    val columnSizeForOthers = RandomUtils.nextInt(2, 10)
-    val columnSizeForAdditionalOthers = RandomUtils.nextInt(2, 10)
+    val rowSize = RandomUtils::nextInt(2, 10)
+    val columnSize = RandomUtils::nextInt(2, 10)
+    val columnSizeForOthers = RandomUtils::nextInt(2, 10)
+    val columnSizeForAdditionalOthers = RandomUtils::nextInt(2, 10)
     zeroMatrixForAddition = BigIntMatrix::builder(rowSize, columnSize).putAll(0BI).build
     zeroMatrixForMultiplication = BigIntMatrix::builder(columnSize, rowSize).putAll(0BI).build
     val identyMatrixBuilder = BigIntMatrix::builder(rowSize, rowSize).putAll(0BI)

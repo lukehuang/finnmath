@@ -33,12 +33,9 @@ import finnmath.linear.BigIntMatrix
 import finnmath.linear.BigIntVector
 import finnmath.linear.DecimalMatrix
 import finnmath.linear.DecimalVector
-import finnmath.number.BigIntAndSqrt
 import finnmath.number.Fraction
-import finnmath.number.FractionAndSqrt
 import finnmath.number.RealComplexNumber
 import finnmath.number.SimpleComplexNumber
-import finnmath.number.SimpleComplexNumberAndSqrt
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.ArrayList
@@ -50,21 +47,47 @@ import org.eclipse.xtend.lib.annotations.ToString
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
+/**
+ * A pseudo random generator for {@code long}, {@code BigDecimal}, {@code Fraction}, {@code SimpleComplexNumber}, 
+ * {@code RealComplexNumber}, {@code BigIntVector}, {@code DecimalVector}, {@code BigIntMatrix} and 
+ * {@code DecimalMatrix}
+ */
 @Beta
 @ToString
 final class MathRandom {
   val random = new Random
 
+  /**
+   * Returns a positive {code long} bounded below by {@code 0} (inclusive) and above by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @return long
+   * @throws IllegalArgumentException if {@code bound < 1}
+   */
   def nextPositiveLong(long bound) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    RandomUtils.nextLong(0, bound)
+    RandomUtils::nextLong(0, bound)
   }
 
+  /**
+   * Returns a negative {code long} bounded below by {@code -bound} (exclusive) and above by {@code 0} (inclusive)
+   * 
+   * @param bound
+   * @return long
+   * @throws IllegalArgumentException if {@code bound < 1}
+   */
   def nextNegativeLong(long bound) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    (-1) * RandomUtils.nextLong(0, bound)
+    (-1) * RandomUtils::nextLong(0, bound)
   }
 
+  /**
+   * Returns a {code long} bounded below by {@code -bound} (exclusive) and above by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @return long
+   * @throws IllegalArgumentException if {@code bound < 1}
+   */
   def nextLong(long bound) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     if (random.nextBoolean)
@@ -72,6 +95,16 @@ final class MathRandom {
     nextPositiveLong(bound)
   }
 
+  /**
+   * Returns an array of the length of {@code howMany} containing positive {code long}s bounded below by {@code 0} 
+   * (inclusive) and above by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @param howMany
+   * @return long array
+   * @throws IllegalArgumentException if {@code bound < 1}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextPositiveLongs(long bound, int howMany) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
@@ -81,6 +114,16 @@ final class MathRandom {
     ints
   }
 
+  /**
+   * Returns an array of the length of {@code howMany} containing negative {code long}s bounded below by  
+   * {@code -bound} (exclusive) and above by {@code 0} (exclusive)
+   * 
+   * @param bound
+   * @param howMany
+   * @return long array
+   * @throws IllegalArgumentException if {@code bound < 1}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextNegativeLongs(long bound, int howMany) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
@@ -90,6 +133,16 @@ final class MathRandom {
     ints
   }
 
+  /**
+   * Returns an array of the length of {@code howMany} containing {code long}s bounded below by {@code -bound}  
+   * (exclusive) and above by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @param howMany
+   * @return long array
+   * @throws IllegalArgumentException if {@code  bound < 1}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextLongs(long bound, int howMany) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
@@ -99,6 +152,15 @@ final class MathRandom {
     ints
   }
 
+  /**
+   * Returns a positive {@code BigDecimal} of a given {@code scale} bounded below by {@code 0} (inclusive) and above  
+   * by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @return BigDecimal
+   * @throws IllegalArgumentException if {@code bound < 1}
+   * @throws IllegalArgumentException if {@code scale < 1}
+   */
   def nextPositiveDecimal(long bound, int scale) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -108,6 +170,15 @@ final class MathRandom {
     decimal
   }
 
+  /**
+   * Returns a negative {@code BigDecimal} of a given {@code scale} bounded below by {@code -bound} (exclusive) and  
+   * above by {@code 0} (inclusive)
+   * 
+   * @param bound
+   * @return BigDecimal
+   * @throws IllegalArgumentException if {@code bound < 1}
+   * @throws IllegalArgumentException if {@code scale < 1}
+   */
   def nextNegativeDecimal(long bound, int scale) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -117,13 +188,31 @@ final class MathRandom {
     decimal
   }
 
+  /**
+   * Returns a {@code BigDecimal} of a given {@code scale} bounded below by {@code -bound} (exclusive) and above by  
+   * {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @return BigDecimal
+   * @throws IllegalArgumentException if {@code bound < 1}
+   * @throws IllegalArgumentException if {@code scale < 1}
+   */
   def nextDecimal(long bound, int scale) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
-    val decimal = BigDecimal.valueOf(RandomUtils.nextLong(0, bound))
-    keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP)
+    val decimal = BigDecimal::valueOf(RandomUtils::nextLong(0, bound))
+    keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal::ROUND_HALF_UP)
   }
 
+  /**
+   * Returns a positive {@code BigDecimal} of a given {@code scale} bounded below by {@code 0} (exclusive) and above 
+   * by {@code bound} (exclusive) which is invertible
+   * 
+   * @param bound
+   * @return BigDecimal
+   * @throws IllegalArgumentException if {@code bound < 2}
+   * @throws IllegalArgumentException if {@code scale < 1}
+   */
   def nextInvertiblePositiveDecimal(long bound, int scale) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -133,6 +222,15 @@ final class MathRandom {
     decimal
   }
 
+  /**
+   * Returns a negative {@code BigDecimal} of a given {@code scale} bounded below by {@code -bound} (exclusive) and  
+   * above by {@code 0} (exclusive) which is invertible
+   * 
+   * @param bound
+   * @return BigDecimal
+   * @throws IllegalArgumentException if {@code bound < 2}
+   * @throws IllegalArgumentException if {@code scale < 1}
+   */
   def nextInvertibleNegativeDecimal(long bound, int scale) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -142,18 +240,27 @@ final class MathRandom {
     decimal
   }
 
+  /**
+   * Returns a {@code BigDecimal} of a given {@code scale} bounded below by {@code -bound} (exclusive) and above by  
+   * {@code bound} (exclusive) which is invertible
+   * 
+   * @param bound
+   * @return BigDecimal
+   * @throws IllegalArgumentException if {@code bound < 2}
+   * @throws IllegalArgumentException if {@code scale < 1}
+   */
   def nextInvertibleDecimal(long bound, int scale) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
-    val decimal = BigDecimal.valueOf(RandomUtils.nextLong(1, bound))
-    keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP)
+    val decimal = BigDecimal::valueOf(RandomUtils::nextLong(1, bound))
+    keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal::ROUND_HALF_UP)
   }
 
-  def keepDecimalInBound(BigDecimal decimal, long bound) {
+  private def keepDecimalInBound(BigDecimal decimal, long bound) {
     requireNonNull(decimal, 'decimal')
     checkArgument(bound > 0, 'expected > 0 but actual %s', bound)
     var it = decimal
-    val decimalBound = BigDecimal.valueOf(bound)
+    val decimalBound = BigDecimal::valueOf(bound)
     if (it >= 0BD)
       while (it >= decimalBound)
         it -= decimalBound
@@ -163,6 +270,18 @@ final class MathRandom {
     it
   }
 
+  /**
+   * Returns a {@code List} of the size of {@code howMany} containing positive {@code BigDecimal}s of the given  
+   * {@code scale} bounded below by {@code 0} (inclusive) and above by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @param scale
+   * @param howMany
+   * @return List
+   * @throws IllegalArgumentException if {@code  bound < 1}
+   * @throws IllegalArgumentException if {@code  scale < 1}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextPositiveDecimals(long bound, int scale, int howMany) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -173,6 +292,18 @@ final class MathRandom {
     decimals
   }
 
+  /**
+   * Returns a {@code List} of the size of {@code howMany} containing negative {@code BigDecimal}s of the given  
+   * {@code scale} bounded below by {@code -bound} (exclusive) and above by {@code 0} (inclusive)
+   * 
+   * @param bound
+   * @param scale
+   * @param howMany
+   * @return List
+   * @throws IllegalArgumentException if {@code  bound < 1}
+   * @throws IllegalArgumentException if {@code  scale < 1}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextNegativeDecimals(long bound, int scale, int howMany) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -183,6 +314,18 @@ final class MathRandom {
     decimals
   }
 
+  /**
+   * Returns a {@code List} of the size of {@code howMany} containing {@code BigDecimal}s of the given {@code scale}  
+   * bounded below by {@code -bound} (exclusive) and above by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @param scale
+   * @param howMany
+   * @return List
+   * @throws IllegalArgumentException if {@code  bound < 1}
+   * @throws IllegalArgumentException if {@code  scale < 1}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextDecimals(long bound, int scale, int howMany) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -193,6 +336,19 @@ final class MathRandom {
     decimals
   }
 
+  /**
+   * Returns a {@code List} of the size of {@code howMany} whose elements are each a positive {@code BigDecimal} of  
+   * the given {@code scale} bounded below by {@code 0} (inclusive) and above by {@code bound} (exclusive) which are  
+   * invertible
+   * 
+   * @param bound
+   * @param scale
+   * @param howMany
+   * @return List
+   * @throws IllegalArgumentException if {@code  bound < 2}
+   * @throws IllegalArgumentException if {@code  scale < 1}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextInvertiblePositiveDecimals(long bound, int scale, int howMany) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -203,6 +359,19 @@ final class MathRandom {
     decimals
   }
 
+  /**
+   * Returns a {@code List} of the size of {@code howMany} whose elements are each a negative {@code BigDecimal} of 
+   * the given  {@code scale} bounded below by {@code -bound} (exclusive) and above by {@code 0} (inclusive) which  
+   * are invertible
+   * 
+   * @param bound
+   * @param scale
+   * @param howMany
+   * @return List
+   * @throws IllegalArgumentException if {@code  bound < 2}
+   * @throws IllegalArgumentException if {@code  scale < 1}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextInvertibleNegativeDecimals(long bound, int scale, int howMany) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -213,6 +382,19 @@ final class MathRandom {
     decimals
   }
 
+  /**
+   * Returns a {@code List} of the size of {@code howMany} whose elements are each a {@code BigDecimal} of the given  
+   * {@code scale} bounded below by {@code -bound} (exclusive) and above by {@code bound} (exclusive) which are  
+   * invertible
+   * 
+   * @param bound
+   * @param scale
+   * @param howMany
+   * @return List
+   * @throws IllegalArgumentException if {@code  bound < 2}
+   * @throws IllegalArgumentException if {@code  scale < 1}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextInvertibleDecimals(long bound, int scale, int howMany) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
@@ -223,18 +405,45 @@ final class MathRandom {
     decimals
   }
 
+  /**
+   * Returns a {@code Fraction} whose {@code numerator} is bounded below by {@code 0} (inclusive) and above by 
+   * {@code bound} (exclusive) and whose {@code denominator} is bounded below {@code 1} (inclusive) and {@code bound} 
+   * (exclusive)
+   * 
+   * @param bound
+   * @return Fraction
+   * @throws IllegalArgumentException if {@code bound < 2}
+   */
   def nextPositiveFraction(long bound) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    val numerator = BigInteger.valueOf(RandomUtils.nextLong(0, bound))
-    val denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
+    val numerator = BigInteger::valueOf(RandomUtils::nextLong(0, bound))
+    val denominator = BigInteger::valueOf(RandomUtils::nextLong(1, bound))
     new Fraction(numerator, denominator)
   }
 
+  /**
+   * Returns a {@code Fraction} whose {@code numerator} is bounded below by {@code -bound} (exclusive) and above by  
+   * {@code 0} (inclusive) and whose {@code denominator} is bounded below {@code 1} (inclusive) and {@code bound}  
+   * (exclusive)
+   * 
+   * @param bound
+   * @return Fraction
+   * @throws IllegalArgumentException if {@code bound < 2}
+   */
   def nextNegativeFraction(long bound) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     nextPositiveFraction(bound).negate
   }
 
+  /**
+   * Returns a {@code Fraction} whose {@code numerator} is bounded below by {@code -bound} (exclusive) and above by  
+   * {@code bound} (exclusive) and whose {@code denominator} is bounded below {@code -bound} (exclusive) and  
+   * {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @return Fraction
+   * @throws IllegalArgumentException if {@code bound < 2}
+   */
   def nextFraction(long bound) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     if (random.nextBoolean)
@@ -242,6 +451,17 @@ final class MathRandom {
     nextPositiveFraction(bound)
   }
 
+  /**
+   * Returns a {@code List} of the size of {@code howMany} whose elements are each a {@code Fraction} whose  
+   * {@code numerator}s are bounded below by {@code 0} (inclusive) and above by {@code bound} (exclusive) and whose  
+   * {@code denominator}s are bounded below by {@code 1} (inclusive) and above by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @param howMany
+   * @return List
+   * @throws IllegalArgumentException if {@code  bound < 2}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextPositiveFractions(long bound, int howMany) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
@@ -251,6 +471,17 @@ final class MathRandom {
     fractions
   }
 
+  /**
+   * Returns a {@code List} of the size of {@code howMany} whose elements are each a {@code Fraction} whose 
+   * {@code numerator} is bounded below by {@code -bound} (exclusive) and above by {@code 0} (inclusive) and whose 
+   * {@code denominator} is bounded below by {@code 1} (inclusive) and above by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @param howMany
+   * @return List
+   * @throws IllegalArgumentException if {@code  bound < 2}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextNegativeFractions(long bound, int howMany) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
@@ -260,6 +491,17 @@ final class MathRandom {
     fractions
   }
 
+  /**
+   * Returns a {@code List} of the size of {@code howMany} whose elements are each a {@code Fraction} whose 
+   * {@code numerator} is bounded below by {@code -bound} (exclusive) and above by {@code bound} (exclusive) and 
+   * whose {@code denominator} is bounded below by {@code 1} (inclusive) and above by {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @param howMany
+   * @return List
+   * @throws IllegalArgumentException if {@code  bound < 2}
+   * @throws IllegalArgumentException if {@code howMany < 2}
+   */
   def nextFractions(long bound, int howMany) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
     checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
@@ -269,10 +511,19 @@ final class MathRandom {
     fractions
   }
 
+  /**
+   * Returns a {@code Fraction} whose {@code numerator} and {@code denominator} are bounded below by {@code 1} 
+   * (inclusive) and above by {@code bound} (exclusive) and whose {@code denominator} is bounded below  
+   * {@code -bound} (exclusive) and {@code bound} (exclusive)
+   * 
+   * @param bound
+   * @return Fraction
+   * @throws IllegalArgumentException if {@code bound < 2}
+   */
   def nextInvertiblePositiveFraction(long bound) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    val numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
-    val denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
+    val numerator = BigInteger::valueOf(RandomUtils::nextLong(1, bound))
+    val denominator = BigInteger::valueOf(RandomUtils::nextLong(1, bound))
     new Fraction(numerator, denominator)
   }
 
@@ -317,18 +568,18 @@ final class MathRandom {
 
   def nextSimpleComplexNumber(long bound) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    val real = BigInteger.valueOf(nextLong(bound))
-    val imaginary = BigInteger.valueOf(nextLong(bound))
+    val real = BigInteger::valueOf(nextLong(bound))
+    val imaginary = BigInteger::valueOf(nextLong(bound))
     new SimpleComplexNumber(real, imaginary)
   }
 
   def nextInvertibleSimpleComplexNumber(long bound) {
     checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    val nonZeroPart = BigInteger.valueOf(RandomUtils.nextLong(1, bound))
-    val possibleZeroPart = if (random.nextBoolean) RandomUtils.nextLong(1, bound) else nextLong(bound)
+    val nonZeroPart = BigInteger::valueOf(RandomUtils::nextLong(1, bound))
+    val possibleZeroPart = if (random.nextBoolean) RandomUtils::nextLong(1, bound) else nextLong(bound)
     if (random.nextBoolean)
-      return new SimpleComplexNumber(BigInteger.valueOf(possibleZeroPart), nonZeroPart)
-    new SimpleComplexNumber(nonZeroPart, BigInteger.valueOf(possibleZeroPart))
+      return new SimpleComplexNumber(BigInteger::valueOf(possibleZeroPart), nonZeroPart)
+    new SimpleComplexNumber(nonZeroPart, BigInteger::valueOf(possibleZeroPart))
   }
 
   def nextSimpleComplexNumbers(long bound, int howMany) {
@@ -390,30 +641,12 @@ final class MathRandom {
     complexNumbers
   }
 
-  def nextBigIntAndSqrt(long bound) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    val it = BigInteger.valueOf(nextPositiveLong(bound))
-    new BigIntAndSqrt(it ** 2, it)
-  }
-
-  def nextFractionAndSqrt(long bound) {
-    checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
-    val it = nextPositiveFraction(bound)
-    new FractionAndSqrt(pow(2), it)
-  }
-
-  def nextSimpleComplexNumberAndSqrt(long bound) {
-    checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
-    val it = nextSimpleComplexNumber(bound)
-    new SimpleComplexNumberAndSqrt(pow(2), it)
-  }
-
   def nextBigIntVector(long bound, int size) {
     checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
     checkArgument(size > 0, 'expected size > 0 but actual %s', size)
     val builder = BigIntVector::builder(size)
     for (index : 1 .. size)
-      builder.put(BigInteger.valueOf(nextLong(bound)))
+      builder.put(BigInteger::valueOf(nextLong(bound)))
     builder.build
   }
 
@@ -434,7 +667,7 @@ final class MathRandom {
     val builder = BigIntMatrix::builder(rowSize, columnSize)
     (1 .. rowSize).forEach [ rowIndex |
       (1 .. columnSize).forEach [ columnIndex |
-        builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)))
+        builder.put(rowIndex, columnIndex, BigInteger::valueOf(nextLong(bound)))
       ]
     ]
     builder.build

@@ -30,12 +30,9 @@ package finnmath.util
 
 import finnmath.linear.BigIntVector
 import finnmath.linear.DecimalVector
-import finnmath.number.BigIntAndSqrt
 import finnmath.number.Fraction
-import finnmath.number.FractionAndSqrt
 import finnmath.number.RealComplexNumber
 import finnmath.number.SimpleComplexNumber
-import finnmath.number.SimpleComplexNumberAndSqrt
 import java.math.BigDecimal
 import java.math.BigInteger
 import org.assertj.core.api.Condition
@@ -51,8 +48,8 @@ final class MathRandomTest {
   val bound = 10
   val howMany = 10
   val validScale = 2
-  val decimalBound = BigDecimal.valueOf(bound)
-  val bigBound = BigInteger.valueOf(bound)
+  val decimalBound = BigDecimal::valueOf(bound)
+  val bigBound = BigInteger::valueOf(bound)
   val validSize = 3
 
   @Test
@@ -520,48 +517,6 @@ final class MathRandomTest {
     ], 'imaginary')).are(new Condition([ RealComplexNumber complexNumber |
       complexNumber.real.scale === validScale && complexNumber.imaginary.scale === validScale
     ], 'scale'))
-  }
-
-  @Test
-  def void nextBigIntAndSqrtBoundTooLowShouldThrowException() {
-    assertThatThrownBy[
-      mathRandom.nextBigIntAndSqrt(0)
-    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 0 but actual 0')
-  }
-
-  @Test
-  def void nextBigIntAndSqrtShouldSucceed() {
-    val it = mathRandom.nextBigIntAndSqrt(bound)
-    assertThat(it).isExactlyInstanceOf(BigIntAndSqrt)
-    assertThat(number).isEqualTo(sqrt ** 2)
-  }
-
-  @Test
-  def void nextFractionAndSqrtBoundTooLowShouldThrowException() {
-    assertThatThrownBy[
-      mathRandom.nextFractionAndSqrt(1)
-    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 1 but actual 1')
-  }
-
-  @Test
-  def void nextFractionAndSqrtShouldSucceed() {
-    val it = mathRandom.nextFractionAndSqrt(bound)
-    assertThat(it).isExactlyInstanceOf(FractionAndSqrt)
-    assertThat(number).isEqualTo(sqrt.pow(2))
-  }
-
-  @Test
-  def void nextSimpleComplexNumberAndSqrtBoundTooLowShouldThrowException() {
-    assertThatThrownBy[
-      mathRandom.nextSimpleComplexNumberAndSqrt(0)
-    ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 0 but actual 0')
-  }
-
-  @Test
-  def void nextSimpleComplexNumberAndSqrtShouldSucceed() {
-    val it = mathRandom.nextSimpleComplexNumberAndSqrt(bound)
-    assertThat(it).isExactlyInstanceOf(SimpleComplexNumberAndSqrt)
-    assertThat(number).isEqualTo(sqrt.pow(2))
   }
 
   @Test

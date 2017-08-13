@@ -230,7 +230,7 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
       table.cellSet.forEach [
         requireNonNull(value, 'value')
       ]
-      new BigIntMatrix(ImmutableTable.copyOf(table))
+      new BigIntMatrix(ImmutableTable::copyOf(table))
     }
   }
 }
