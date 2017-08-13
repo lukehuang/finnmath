@@ -42,7 +42,7 @@ import static java.util.Objects.requireNonNull
 @Beta
 @EqualsHashCode
 @Accessors
-abstract class Matrix<M, E, V> {
+abstract class Matrix<E, V, M> {
   protected val ImmutableTable<Integer, Integer, E> table
 
   protected new(ImmutableTable<Integer, Integer, E> table) {

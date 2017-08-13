@@ -31,6 +31,7 @@ package finnmath.linear
 import com.google.common.annotations.Beta
 import com.google.common.collect.ArrayTable
 import com.google.common.collect.Table
+import org.apache.commons.lang3.builder.Builder
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.ToString
 
@@ -40,7 +41,7 @@ import static java.util.Objects.requireNonNull
 @Beta
 @ToString
 @Accessors
-abstract class MatrixBuilder<M, E> {
+abstract class MatrixBuilder<E, M> implements Builder<M> {
   protected val Table<Integer, Integer, E> table
 
   protected new(int rowSize, int columnSize) {
@@ -70,6 +71,4 @@ abstract class MatrixBuilder<M, E> {
     ]
     this
   }
-
-  def M build()
 }

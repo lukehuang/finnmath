@@ -32,14 +32,13 @@ import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableMap
 import java.math.BigDecimal
 import java.math.BigInteger
-import org.apache.commons.lang3.builder.Builder
 
 import static com.google.common.base.Preconditions.checkArgument
 import static finnmath.util.SquareRootCalculator.sqrt
 import static java.util.Objects.requireNonNull
 
 @Beta
-final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
+final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
   private new(ImmutableMap<Integer, BigInteger> map) {
     super(map)
   }
@@ -166,18 +165,19 @@ final class BigIntVector extends Vector<BigIntVector, BigInteger, BigDecimal> {
   }
 
   @Beta
-  static final class BigIntVectorBuilder extends VectorBuilder<BigIntVectorBuilder, BigIntVector, BigInteger> implements Builder<BigIntVector> {
+  static final class BigIntVectorBuilder extends VectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
     private new(Integer size) {
       super(size)
     }
 
-    def addToEntryAndPut(Integer index, BigInteger entry) {
+    override addToEntryAndPut(Integer index, BigInteger entry) {
       requireNonNull(index, 'index')
       checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
       val existing = map.get(index)
       requireNonNull(existing, 'existing')
       requireNonNull(entry, 'entry')
       map.put(index, map.get(index) + entry)
+      this
     }
 
     override build() {

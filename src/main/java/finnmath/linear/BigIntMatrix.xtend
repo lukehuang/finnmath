@@ -32,14 +32,13 @@ import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableTable
 import java.math.BigInteger
 import java.util.Map
-import org.apache.commons.lang3.builder.Builder
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
-final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> {
+final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> {
   private new(ImmutableTable<Integer, Integer, BigInteger> table) {
     super(table)
   }
@@ -222,7 +221,7 @@ final class BigIntMatrix extends Matrix<BigIntMatrix, BigInteger, BigIntVector> 
   }
 
   @Beta
-  static final class BigIntMatrixBuilder extends MatrixBuilder<BigIntMatrix, BigInteger> implements Builder<BigIntMatrix> {
+  static final class BigIntMatrixBuilder extends MatrixBuilder<BigInteger, BigIntMatrix> {
     private new(int rowSize, int columnSize) {
       super(rowSize, columnSize)
     }

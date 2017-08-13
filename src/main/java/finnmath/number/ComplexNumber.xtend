@@ -40,20 +40,20 @@ import static java.util.Objects.requireNonNull
 @EqualsHashCode
 @ToString
 @Accessors
-abstract class ComplexNumber<S, T, M> {
-  protected val S real
-  protected val S imaginary
+abstract class ComplexNumber<B, S, R, M> implements MathNumber<S, R> {
+  protected val B real
+  protected val B imaginary
 
-  protected new(S real, S imaginary) {
+  protected new(B real, B imaginary) {
     this.real = requireNonNull(real, 'real')
     this.imaginary = requireNonNull(imaginary, 'imaginary')
   }
 
-  def S absPow2()
+  def B absPow2()
 
   def BigDecimal abs()
 
-  def T conjugate()
+  def S conjugate()
 
   def M matrix()
 }

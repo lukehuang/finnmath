@@ -31,6 +31,7 @@ package finnmath.linear
 import com.google.common.annotations.Beta
 import java.util.HashMap
 import java.util.Map
+import org.apache.commons.lang3.builder.Builder
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.ToString
 
@@ -40,7 +41,7 @@ import static java.util.Objects.requireNonNull
 @Beta
 @ToString
 @Accessors
-abstract class VectorBuilder<B, V, E> {
+abstract class VectorBuilder<E, V, B> implements Builder<V> {
   protected val Map<Integer, E> map = new HashMap
   val int size
 
@@ -65,6 +66,8 @@ abstract class VectorBuilder<B, V, E> {
     this
   }
 
+  def B addToEntryAndPut(Integer index, E entry)
+
   def putAll(E entry) {
     requireNonNull(entry, 'entry')
     (1 .. size).forEach [
@@ -72,6 +75,4 @@ abstract class VectorBuilder<B, V, E> {
     ]
     this
   }
-
-  def V build()
 }

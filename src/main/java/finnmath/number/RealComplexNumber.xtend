@@ -43,7 +43,7 @@ import static java.util.Objects.requireNonNull
  */
 @Beta
 @FinalFieldsConstructor
-final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumber, DecimalMatrix> implements MathNumber<RealComplexNumber, RealComplexNumber> {
+final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
   public static val ZERO = new RealComplexNumber(0BD, 0BD)
   public static val ONE = new RealComplexNumber(1BD, 0BD)
   public static val I = new RealComplexNumber(0BD, 1BD)

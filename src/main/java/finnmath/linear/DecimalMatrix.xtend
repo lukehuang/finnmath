@@ -32,14 +32,13 @@ import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableTable
 import java.math.BigDecimal
 import java.util.Map
-import org.apache.commons.lang3.builder.Builder
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 @Beta
-final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVector> {
+final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatrix> {
   private new(ImmutableTable<Integer, Integer, BigDecimal> table) {
     super(table)
   }
@@ -222,7 +221,7 @@ final class DecimalMatrix extends Matrix<DecimalMatrix, BigDecimal, DecimalVecto
   }
 
   @Beta
-  static final class DecimalMatrixBuilder extends MatrixBuilder<DecimalMatrix, BigDecimal> implements Builder<DecimalMatrix> {
+  static final class DecimalMatrixBuilder extends MatrixBuilder<BigDecimal, DecimalMatrix> {
     new(int rowSize, int columnSize) {
       super(rowSize, columnSize)
     }

@@ -31,14 +31,13 @@ package finnmath.linear
 import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableMap
 import java.math.BigDecimal
-import org.apache.commons.lang3.builder.Builder
 
 import static com.google.common.base.Preconditions.checkArgument
 import static finnmath.util.SquareRootCalculator.sqrt
 import static java.util.Objects.requireNonNull
 
 @Beta
-final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> {
+final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> {
   private new(ImmutableMap<Integer, BigDecimal> map) {
     super(map)
   }
@@ -163,18 +162,19 @@ final class DecimalVector extends Vector<DecimalVector, BigDecimal, BigDecimal> 
   }
 
   @Beta
-  static final class DecimalVectorBuilder extends VectorBuilder<DecimalVectorBuilder, DecimalVector, BigDecimal> implements Builder<DecimalVector> {
+  static final class DecimalVectorBuilder extends VectorBuilder<BigDecimal, DecimalVector, DecimalVectorBuilder> {
     private new(int size) {
       super(size)
     }
 
-    def addToEntryAndPut(Integer index, BigDecimal entry) {
+    override addToEntryAndPut(Integer index, BigDecimal entry) {
       requireNonNull(index, 'index')
       checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
       val existing = map.get(index)
       requireNonNull(existing, 'existing')
       requireNonNull(entry, 'entry')
       map.put(index, map.get(index) + entry)
+      this
     }
 
     override build() {
