@@ -40,6 +40,8 @@ import static java.util.Objects.requireNonNull
 
 /**
  * An immutable implementation of a fraction
+ * 
+ * @since 1
  */
 @Beta
 @EqualsHashCode
@@ -52,12 +54,14 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   val BigInteger denominator
 
   /**
-   * Constructs a fraction by the given numerator and denominator
+   * Constructs a {@link Fraction Fraction} by the given numerator and denominator
    * 
-   * @param numerator
-   * @param denominator
-   * @throws NullPointerException if one of the arguments is {@code null}
-   * @throws IllegalArgumentException if denominator == 0
+   * @param numerator {@link BigInteger BigInteger}
+   * @param denominator  {@link BigInteger BigInteger}
+   * @throws NullPointerException if {@code numerator == null}
+   * @throws NullPointerException if {@code denominator == null}
+   * @throws IllegalArgumentException if {@code denominator == 0}
+   * @since 1
    */
   new(BigInteger numerator, BigInteger denominator) {
     checkArgument(denominator != 0BI, 'expected denominator != 0 but actual %s', denominator)
@@ -66,11 +70,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Returns the sum of this fraction and the given one
+   * Returns the sum of this {@link Fraction Fraction} and the given one
    * 
-   * @param summand
-   * @return sum
-   * @throws NullPointerException
+   * @param summand {@link Fraction Fraction}
+   * @return sum {@link Fraction Fraction}
+   * @throws NullPointerException if {@code summand == null}
+   * @since 1
    */
   override add(Fraction summand) {
     requireNonNull(summand, 'summand')
@@ -80,11 +85,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Returns the difference of this fraction and the given one
+   * Returns the difference of this {@link Fraction Fraction} and the given one
    * 
-   * @param subtrahend
-   * @return difference
-   * @throws NullPointerException
+   * @param subtrahend {@link Fraction Fraction}
+   * @return difference {@link Fraction Fraction}
+   * @throws NullPointerException if {@code subtrahend == null}
+   * @since 1
    */
   override subtract(Fraction subtrahend) {
     requireNonNull(subtrahend, 'subtrahend')
@@ -94,11 +100,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Returns the product of this fraction and the given one
+   * Returns the product of this {@link Fraction Fraction} and the given one
    * 
-   * @param factor
-   * @return product
-   * @throws NullPointerException
+   * @param factor {@link Fraction Fraction}
+   * @return product {@link Fraction Fraction}
+   * @throws NullPointerException if {@code factor == null}
+   * @since 1
    */
   override multiply(Fraction factor) {
     requireNonNull(factor, 'factor')
@@ -108,11 +115,13 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Return the quotient of this fraction and the given one
+   * Return the quotient of this {@link Fraction Fraction} and the given one
    * 
-   * @param divisor
-   * @return quotient
-   * @throws NullPointerException
+   * @param divisor {@link Fraction Fraction}
+   * @return quotient {@link Fraction Fraction}
+   * @throws NullPointerException if {@code divisor == null}
+   * @throws IllegalArgumentException if {@code divisor.numerator == 0}
+   * @since 1
    */
   override divide(Fraction divisor) {
     requireNonNull(divisor, 'divisor')
@@ -121,11 +130,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Calculates the power of this fraction by the given exponent and returns it
+   * Calculates the power of this {@link Fraction Fraction} by the given exponent and returns it
    * 
-   * @param exponent
-   * @return pow
-   * @throws IllegalArgumentException if exponent < 0
+   * @param exponent {@code int}
+   * @return power {@link Fraction Fraction}
+   * @throws IllegalArgumentException if {@code exponent < 0}
+   * @since 1
    */
   override pow(int exponent) {
     checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
@@ -137,19 +147,21 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Returns the negated fraction of this one
+   * Returns the negated {@link Fraction Fraction} of this one
    * 
-   * @return negated
+   * @return negated {@link Fraction Fraction}
+   * @since 1
    */
   override negate() {
     new Fraction(-numerator, denominator)
   }
 
   /**
-   * Returns the inverted fraction of this one
+   * Returns the inverted {@link Fraction Fraction} of this one
    * 
-   * @return inverted
-   * @throws IllegalStateException if numerator == 0
+   * @return inverted {@link Fraction Fraction}
+   * @throws IllegalStateException if {@code numerator == 0}
+   * @since 1
    */
   override invert() {
     checkState(invertible, 'expected numerator != 0 but actual %s', numerator)
@@ -157,18 +169,20 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Returns if this fraction is invertible
+   * Returns if this {@link Fraction Fraction} is invertible
    * 
-   * @return true if numerator != 0, false otherwise
+   * @return {@code true} if {@code numerator != 0}, {@code false} otherwise
+   * @since 1
    */
   override invertible() {
     numerator != 0BI
   }
 
   /**
-   * Returns a string representation of this fraction
+   * Returns a string representation of this {@link Fraction Fraction}
    * 
-   * @return string
+   * @return string {@link String String}
+   * @since 1
    */
   override asString() {
     if (denominator < 0BI)
@@ -177,10 +191,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Compares this fraction to the given one and returns an int which indicates which one is less
+   * Compares this {@link Fraction Fraction} to the given one and returns an int which indicates 
+   * which one is less
    * 
-   * @param other
-   * @return -1 if this < other, 1 if this > other, 0 otherwise 
+   * @param other {@link Fraction Fraction}
+   * @return {@code -1} if {@code this < other}, {@code 1} if {@code this > other}, {@code 0} otherwise
+   * @since 1
    */
   override compareTo(Fraction other) {
     requireNonNull(other, 'other')
@@ -192,10 +208,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Compares this fraction to the given one and returns a boolean which indicates which one is less
+   * Compares this {@link Fraction Fraction} to the given one and returns a {@code boolean} which 
+   * indicates which one is less
    * 
-   * @param other
-   * @return true if this <= other, false otherwise
+   * @param other {@link Fraction Fraction}
+   * @return {@code true} if {@code this <= other}, {@code false} otherwise
+   * @since 1
    */
   def lessThanOrEqualTo(Fraction other) {
     requireNonNull(other, 'other')
@@ -205,10 +223,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Compares this fraction to the given one and returns a boolean which indicates which one is greater
+   * Compares this {@link Fraction Fraction} to the given one and returns a {@code boolean} which 
+   * indicates which one is greater
    * 
-   * @param other
-   * @return true if this >= other, false otherwise
+   * @param other {@link Fraction Fraction}
+   * @return {@code true} if {@code this >= other}, {@code false} otherwise
+   * @since 1
    */
   def greaterThanOrEqualTo(Fraction other) {
     requireNonNull(other, 'other')
@@ -216,10 +236,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Compares this fraction to the given one and returns a boolean which indicates which one is less
+   * Compares this {@link Fraction Fraction} to the given one and returns a {@code boolean} which 
+   * indicates which one is less
    * 
-   * @param other
-   * @return true if this < other, false otherwise
+   * @param other {@link Fraction Fraction}
+   * @return {@code true} if {@code this < other}, {@code false} otherwise
+   * @since 1
    */
   def lessThan(Fraction other) {
     requireNonNull(other, 'other')
@@ -227,10 +249,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Compares this fraction to the given one and returns a boolean which indicates which one is greater
+   * Compares this {@link Fraction Fraction} to the given one and returns a {@code boolean} which 
+   * indicates which one is greater
    * 
-   * @param other
-   * @return true if this < other, false otherwise
+   * @param other {@link Fraction Fraction}
+   * @return {@code true} if {@code this < other}, {@code false} otherwise
+   * @since 1
    */
   def greaterThan(Fraction other) {
     requireNonNull(other, 'other')
@@ -238,10 +262,11 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Compares this fraction to the given one and returns a the minimum
+   * Compares this {@link Fraction Fraction} to the given one and returns a the minimum
    * 
-   * @param other
-   * @return minimum
+   * @param other {@link Fraction Fraction}
+   * @return minimum {@link Fraction Fraction}
+   * @since 1
    */
   def min(Fraction other) {
     requireNonNull(other, 'other')
@@ -251,10 +276,11 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Compares this fraction to the given one and returns a the maximum
+   * Compares this {@link Fraction Fraction} to the given one and returns a the maximum
    * 
-   * @param other
-   * @return maximum
+   * @param other {@link Fraction Fraction}
+   * @return maximum {@link Fraction Fraction}
+   * @since 1
    */
   def max(Fraction other) {
     requireNonNull(other, 'other')
@@ -264,9 +290,10 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Returns the normalized fraction of this one
+   * Returns the normalized {@link Fraction Fraction} of this one
    * 
-   * @return normalized
+   * @return normalized {@link Fraction Fraction}
+   * @since 1
    */
   def normalize() {
     if (signum < 0)
@@ -279,27 +306,30 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Returns the absolute fraction of this one
+   * Returns the absolute {@link Fraction Fraction} of this one
    * 
-   * @return absolute
+   * @return absolute {@link Fraction Fraction}
+   * @since 1
    */
   def abs() {
     new Fraction(numerator.abs, denominator.abs)
   }
 
   /**
-   * Returns the signum of this fraction
+   * Returns the signum of this {@link Fraction Fraction}
    * 
-   * @return signum
+   * @return signum {@code int}
+   * @since 1
    */
   def signum() {
     numerator.signum * denominator.signum
   }
 
   /**
-   * Returns the reduced fraction of this one
+   * Returns the reduced {@link Fraction Fraction} of this one
    * 
-   * @return reduced
+   * @return reduced {@link Fraction Fraction}
+   * @since 1
    */
   def reduce() {
     val gcd = numerator.gcd(denominator)
@@ -307,9 +337,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
   }
 
   /**
-   * Compares this fraction to the given one and returns a boolean which indicates if this fraction is equivalent to the given one
+   * Compares this {@link Fraction Fraction} to the given one and returns a {@code boolean} which 
+   * indicates if this {@link Fraction Fraction} is equivalent to the given one
    * 
-   * @return true if the fractions are equivalent to themselves, false otherwise
+   * @param other {@link Fraction Fraction}
+   * @return {@code true} if the {@code this} is equivalent to {@code other}, {@code false} otherwise
+   * @since 1
    */
   def equivalent(Fraction other) {
     requireNonNull(other, 'other')
