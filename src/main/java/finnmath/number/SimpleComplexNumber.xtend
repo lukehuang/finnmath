@@ -31,6 +31,7 @@ package finnmath.number
 import com.google.common.annotations.Beta
 import finnmath.linear.BigIntMatrix
 import finnmath.util.SquareRootCalculator
+import java.math.BigDecimal
 import java.math.BigInteger
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
@@ -39,7 +40,9 @@ import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 /**
- * An immutable implementation of a complex number which uses {@code BigInteger} for the real and imaginary part 
+ * An immutable implementation of a complex number which uses {@code BigInteger} for the real and imaginary part
+ * 
+ * @since 1
  */
 @Beta
 @FinalFieldsConstructor
@@ -49,11 +52,12 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
   public static val I = new SimpleComplexNumber(0BI, 1BI)
 
   /**
-   * Returns the sum of this complex number and the given one
+   * Returns the sum of this {@link SimpleComplexNumber} complex number and the given one
    * 
-   * @param summand
-   * @return sum
+   * @param summand {@link SimpleComplexNumber}
+   * @return sum {@link SimpleComplexNumber}
    * @throws NullPointerException
+   * @since 1
    */
   override add(SimpleComplexNumber summand) {
     requireNonNull(summand, 'summand')
@@ -61,11 +65,12 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
   }
 
   /**
-   * Returns the difference of this complex number and the given one
+   * Returns the difference of this {@link SimpleComplexNumber} and the given one
    * 
-   * @param subtrahend
-   * @return difference
+   * @param subtrahend {@link SimpleComplexNumber}
+   * @return difference {@link SimpleComplexNumber}
    * @throws NullPointerException
+   * @since 1
    */
   override subtract(SimpleComplexNumber subtrahend) {
     requireNonNull(subtrahend, 'subtrahend')
@@ -73,11 +78,12 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
   }
 
   /**
-   * Returns the product of this complex number and the given one
+   * Returns the product of this {@link SimpleComplexNumber} and the given one
    * 
-   * @param factor
-   * @return product
+   * @param factor {@link SimpleComplexNumber}
+   * @return product {@link SimpleComplexNumber}
    * @throws NullPointerException
+   * @since 1
    */
   override multiply(SimpleComplexNumber factor) {
     requireNonNull(factor, 'factor')
@@ -87,11 +93,12 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
   }
 
   /**
-   * Returns the quotient as {@RealComplexNumber} of this complex number and the given one
+   * Returns the quotient as {@RealComplexNumber} of this {@link SimpleComplexNumber} and the given one
    * 
-   * @param divisor
-   * @return quotient
+   * @param divisor {@link SimpleComplexNumber}
+   * @return quotient {@link RealComplexNumber}
    * @throws NullPointerException
+   * @since 1
    */
   override divide(SimpleComplexNumber divisor) {
     requireNonNull(divisor, 'divisor')
@@ -100,11 +107,12 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
   }
 
   /**
-   * Calculates the power of this complex number by the given exponent and returns it
+   * Returns the power of this {@link SimpleComplexNumber} raised by the given exponent
    * 
-   * @param exponent
-   * @return pow
-   * @throws IllegalArgumentException if exponent < 0
+   * @param exponent int
+   * @return power {@link SimpleComplexNumber}
+   * @throws IllegalArgumentException if {@code exponent < 0}
+   * @since 1
    */
   override pow(int exponent) {
     checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
@@ -116,19 +124,21 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
   }
 
   /**
-   * Returns the negated complex number of this one
+   * Returns the negated {@link SimpleComplexNumber} of this one
    * 
-   * @return negated
+   * @return negated {@link SimpleComplexNumber}
+   * @since 1
    */
   override negate() {
     new SimpleComplexNumber(-real, -imaginary)
   }
 
   /**
-   * Returns the inverted complex number of this one
+   * Returns the inverted {@link SimpleComplexNumber} of this one
    * 
-   * @return inverted
-   * @throws IllegalStateException if numerator == 0
+   * @return inverted {@link SimpleComplexNumber}
+   * @throws IllegalStateException if {@code numerator == 0}
+   * @since 1
    */
   override invert() {
     checkState(invertible, 'expected != 0 but actual %s', this)
@@ -136,18 +146,20 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
   }
 
   /**
-   * Returns if this complex number is invertible
+   * Returns if this {@link SimpleComplexNumber} is invertible
    * 
-   * @return true if this != 0, false otherwise
+   * @return {@code true} if {@code this != 0}, {@code false} otherwise
+   * @since 1
    */
   override invertible() {
     this != ZERO
   }
 
   /**
-   * Returns a string representation of this complex number
+   * Returns a string representation of this {@link SimpleComplexNumber}
    * 
-   * @return string
+   * @return string {@link String}
+   * @since 1
    */
   override asString() {
     if (real != 0BI)
@@ -165,36 +177,40 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
   }
 
   /**
-   * Returns the square of the absolute of this complex number
+   * Returns the square of the absolute of this {@link SimpleComplexNumber}
    * 
-   * @return square of the absolute
+   * @return square of the absolute {@link BigInteger}
+   * @since 1
    */
   override absPow2() {
     real ** 2 + imaginary ** 2
   }
 
   /**
-   * Returns the absolute of this complex number
+   * Returns the absolute as {@link RealComplexNumber} of this {@link SimpleComplexNumber}
    * 
-   * @return absolute
+   * @return absolute {@link BigDecimal}
+   * @since 1
    */
   override abs() {
     SquareRootCalculator::sqrt(absPow2)
   }
 
   /**
-   * Returns the conjugate of this complex number
+   * Returns the conjugate of this {@link SimpleComplexNumber}
    * 
-   * @return conjugated
+   * @return conjugated {@link SimpleComplexNumber}
+   * @since 1
    */
   override conjugate() {
     new SimpleComplexNumber(real, -imaginary)
   }
 
   /**
-   * Returns a matrix representation of this complex number
+   * Returns a matrix representation of this {@link SimpleComplexNumber}
    * 
-   * @return matrix
+   * @return matrix {@link BigIntMatrix}
+   * @since 1
    */
   override matrix() {
     BigIntMatrix::builder(2, 2).put(1, 1, real).put(1, 2, -imaginary).put(2, 1, imaginary).put(2, 2, real).build

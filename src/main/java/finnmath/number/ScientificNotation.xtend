@@ -40,6 +40,8 @@ import static java.util.Objects.requireNonNull
  * Represents the scientific notation for a decimal number
  * <p>
  * decimal = coefficient * 10^exponent
+ * 
+ * @since 1
  */
 @Beta
 @EqualsHashCode
@@ -50,11 +52,12 @@ final class ScientificNotation {
   val int exponent
 
   /**
-   * Constructs a scientific notation
+   * Constructs a {@link ScientificNotation} from the given coefficient and exponent
    * 
-   * @param coefficient
-   * @param exponent
-   * @throws NullPointerException
+   * @param coefficient {@link BigDecimal}
+   * @param exponent int
+   * @throws NullPointerException if {@code coefficient == null}
+   * @since 1
    */
   new(BigDecimal coefficient, int exponent) {
     this.coefficient = requireNonNull(coefficient, 'coefficient')
@@ -62,9 +65,10 @@ final class ScientificNotation {
   }
 
   /**
-   * Returns a string representation of this scientific notation
+   * Returns a string representation of this {@link ScientificNotation}
    * 
-   * @return string
+   * @return string {@link String}
+   * @since 1
    */
   def asString() {
     if (exponent < 0)

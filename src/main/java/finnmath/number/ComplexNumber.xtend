@@ -37,9 +37,11 @@ import static java.util.Objects.requireNonNull
 
 @EqualsHashCode
 @ToString
-@Accessors
 package abstract class ComplexNumber<B, S, R, M> implements MathNumber<S, R> {
+  @Accessors
   protected val B real
+
+  @Accessors
   protected val B imaginary
 
   protected new(B real, B imaginary) {
