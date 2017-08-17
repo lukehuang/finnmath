@@ -29,6 +29,7 @@
 package finnmath.util
 
 import com.google.common.annotations.Beta
+import com.google.common.annotations.VisibleForTesting
 import com.google.common.math.BigIntegerMath
 import finnmath.number.ScientificNotation
 import java.math.BigDecimal
@@ -40,25 +41,77 @@ import static com.google.common.base.Preconditions.checkArgument
 import static java.lang.Math.addExact
 import static java.util.Objects.requireNonNull
 
+/**
+ * An implementation for calculating square roots of {@link BigInteger BigIntegers} and 
+ * {@link BigDecimal BigDecimals}
+ * 
+ * @since 1
+ * @author Lars Tennstedt
+ */
 @Beta
 final class SquareRootCalculator {
+    /**
+     * Default precision
+     */
     public static val BigDecimal DEFAULT_PRECISION = 0.0000000001BD
+
+    /**
+     * Default scale
+     */
     public static val int DEFAULT_SCALE = 10
+
+    /**
+     * Default rounding mode
+     */
     public static val int DEFAULT_ROUNDING_MODE = BigDecimal::ROUND_HALF_UP
+
     static val log = LoggerFactory::getLogger(SquareRootCalculator)
 
+    /**
+     * Returns the square root of the given {@link BigInteger}
+     * 
+     * @param integer {@link BigInteger}
+     * @return sqrt {@link BigDecimal}
+     * @throws NullPointerException
+     * @throws IllegalArgumentException if {@code integer < 0}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def sqrt(BigInteger integer) {
         requireNonNull(integer, 'integer')
         checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
         sqrt(new BigDecimal(integer), DEFAULT_PRECISION, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE)
     }
 
+    /**
+     * Returns the square root of the given {@link BigDecimal}
+     * 
+     * @param decimal {@link BigDecimal}
+     * @return sqrt {@link BigDecimal}
+     * @throws NullPointerException
+     * @throws IllegalArgumentException if {@code decimal < 0}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def sqrt(BigDecimal decimal) {
         requireNonNull(decimal, 'decimal')
         checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
         heronsMethod(decimal, DEFAULT_PRECISION).setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE)
     }
 
+    /**
+     * Returns the square root of the given {@link BigInteger}
+     * 
+     * @param integer {@link BigInteger}
+     * @param precision {@link BigDecimal}
+     * @return sqrt {@link BigDecimal}
+     * @throws NullPointerException if {@code integer == null}
+     * @throws IllegalArgumentException if {@code integer < 0}
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def sqrt(BigInteger integer, BigDecimal precision) {
         requireNonNull(integer, 'integer')
         checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
@@ -67,6 +120,19 @@ final class SquareRootCalculator {
         sqrt(new BigDecimal(integer), precision, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE)
     }
 
+    /**
+     * Returns the square root of the given {@link BigDecimal}
+     * 
+     * @param decimal {@link BigDecimal}
+     * @param precision {@link BigDecimal}
+     * @return sqrt {@link BigDecimal}
+     * @throws NullPointerException if {@code decimal == null}
+     * @throws IllegalArgumentException if {@code decimal < 0}
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def sqrt(BigDecimal decimal, BigDecimal precision) {
         requireNonNull(decimal, 'decimal')
         checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
@@ -75,6 +141,20 @@ final class SquareRootCalculator {
         heronsMethod(decimal, precision).setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE)
     }
 
+    /**
+     * Returns the square root of the given {@link BigInteger}
+     * 
+     * @param integer {@link BigInteger}
+     * @param scale (@code int}
+     * @param roundingMode {@code int}
+     * @return sqrt {@link BigDecimal}
+     * @throws NullPointerException
+     * @throws IllegalArgumentException if {@code integer < 0}
+     * @throws IllegalArgumentException if {scale < 0}
+     * @throws IllegalArgumentException if {roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def sqrt(BigInteger integer, int scale, int roundingMode) {
         requireNonNull(integer, 'integer')
         checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
@@ -84,6 +164,20 @@ final class SquareRootCalculator {
         sqrt(new BigDecimal(integer), DEFAULT_PRECISION, scale, roundingMode)
     }
 
+    /**
+     * Returns the square root of the given {@link BigDecimal}
+     * 
+     * @param decimal {@link BigDecimal}
+     * @param scale (@code int}
+     * @param roundingMode {@code int}
+     * @return sqrt {@link BigDecimal}
+     * @throws NullPointerException
+     * @throws IllegalArgumentException if {@code decimal < 0}
+     * @throws IllegalArgumentException if {scale < 0}
+     * @throws IllegalArgumentException if {roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def sqrt(BigDecimal decimal, int scale, int roundingMode) {
         requireNonNull(decimal, 'decimal')
         checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
@@ -93,6 +187,23 @@ final class SquareRootCalculator {
         heronsMethod(decimal, DEFAULT_PRECISION).setScale(scale, roundingMode)
     }
 
+    /**
+     * Returns the square root of the given {@link BigInteger}
+     * 
+     * @param integer {@link BigInteger}
+     * @param precision {@link BigDecimal}
+     * @param scale (@code int}
+     * @param roundingMode {@code int}
+     * @return sqrt {@link BigDecimal}
+     * @throws NullPointerException if {@code integer == null}
+     * @throws IllegalArgumentException if {@code integer < 0}
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException if {scale < 0}
+     * @throws IllegalArgumentException if {roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def sqrt(BigInteger integer, BigDecimal precision, int scale, int roundingMode) {
         requireNonNull(integer, 'integer')
         checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
@@ -104,6 +215,23 @@ final class SquareRootCalculator {
         sqrt(new BigDecimal(integer), precision, scale, roundingMode)
     }
 
+    /**
+     * Returns the square root of the given {@link BigDecimal}
+     * 
+     * @param decimal {@link BigDecimal}
+     * @param precision {@link BigDecimal}
+     * @param scale (@code int}
+     * @param roundingMode {@code int}
+     * @return sqrt {@link BigDecimal}
+     * @throws NullPointerException if {@code decimal == null}
+     * @throws IllegalArgumentException if {@code decimal < 0}
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException if {scale < 0}
+     * @throws IllegalArgumentException if {roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def sqrt(BigDecimal decimal, BigDecimal precision, int scale, int roundingMode) {
         requireNonNull(decimal, 'decimal')
         checkArgument(decimal >= 0BD, 'expected decimal >= 0 but actual %s', decimal)
@@ -115,6 +243,18 @@ final class SquareRootCalculator {
         heronsMethod(decimal, precision).setScale(scale, roundingMode)
     }
 
+    /**
+     * Returns the square root of the given {@link BigInteger} which has to be a perfect square
+     * 
+     * @param integer {@link BigInteger}
+     * @return sqrt {@link BigInteger}
+     * @throws NullPointerException
+     * @throws IllegalArgumentException if {@code integer < 0}
+     * @throws IllegalArgumentException if {@code !perfectSquare}
+     * @see #perfectSquare
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def sqrtOfPerfectSquare(BigInteger integer) {
         requireNonNull(integer, 'integer')
         checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
@@ -122,6 +262,16 @@ final class SquareRootCalculator {
         BigIntegerMath::sqrt(integer, RoundingMode.UNNECESSARY)
     }
 
+    /**
+     * Returns if the given {@link BigInteger} is a perfect square
+     * 
+     * @param integer {@link BigInteger}
+     * @return b {@code boolean}
+     * @throws NullPointerException
+     * @throws IllegalArgumentException if {@code integer < 0}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def perfectSquare(BigInteger integer) {
         requireNonNull(integer, 'integer')
         checkArgument(integer >= 0BI, 'expected integer >= 0 but actual %s', integer)
@@ -131,7 +281,7 @@ final class SquareRootCalculator {
         sum == integer
     }
 
-    protected static def heronsMethod(BigDecimal decimal, BigDecimal precision) {
+    private static def heronsMethod(BigDecimal decimal, BigDecimal precision) {
         log.debug('calculating square root for {} with precision = {}', decimal.toPlainString, precision.toPlainString)
         var predecessor = seedValue(decimal)
         log.debug('seed value = {}', predecessor.toPlainString)
@@ -148,7 +298,7 @@ final class SquareRootCalculator {
         successor
     }
 
-    protected static def calculateSuccessor(BigDecimal predecessor, BigDecimal decimal) {
+    private static def calculateSuccessor(BigDecimal predecessor, BigDecimal decimal) {
         log.debug('iteration')
         log.debug('predecessor = {}', predecessor.toPlainString)
         val successor = (predecessor ** 2 + decimal) / (2BD * predecessor)
@@ -156,7 +306,7 @@ final class SquareRootCalculator {
         successor
     }
 
-    protected static def seedValue(BigDecimal decimal) {
+    private static def seedValue(BigDecimal decimal) {
         val it = scientificNotationForSqrt(decimal)
         log.debug('Scientific notation of {} is {}.', decimal.toPlainString, asString)
         if (coefficient >= 10BD)
@@ -164,6 +314,7 @@ final class SquareRootCalculator {
         2BD * 10BD ** (exponent / 2)
     }
 
+    @VisibleForTesting
     protected static def scientificNotationForSqrt(BigDecimal decimal) {
         log.debug('calculating scientific notification for {}', decimal.toPlainString)
         if (0BD < decimal && decimal < 100BD) {
@@ -176,7 +327,7 @@ final class SquareRootCalculator {
             log.debug('coefficient = {}', coefficient.toPlainString)
             log.debug('exponent = {}', exponent)
             while (coefficient.abs >= 100BD) {
-                log.debug('iteration step for scientific notification')
+                log.debug('iteration for scientific notification')
                 coefficient /= 100BD
                 exponent = addExact(exponent, 2)
                 log.debug('coefficient = {}', coefficient.toPlainString)
