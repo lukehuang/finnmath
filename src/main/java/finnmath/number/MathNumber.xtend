@@ -29,21 +29,21 @@
 package finnmath.number
 
 package interface MathNumber<S, T> {
-  def S add(S summand)
+    def S add(S summand)
 
-  def S subtract(S subtrahend)
+    def S subtract(S subtrahend)
 
-  def S multiply(S factor)
+    def S multiply(S factor)
 
-  def T divide(S divisor)
+    def T divide(S divisor)
 
-  def S pow(int exponent)
+    def S pow(int exponent)
 
-  def S negate()
+    def S negate()
 
-  def T invert()
+    def T invert()
 
-  def boolean invertible()
+    def boolean invertible()
 
-  def String asString()
+    def String asString()
 }

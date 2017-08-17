@@ -42,97 +42,97 @@ import static com.google.common.base.Preconditions.checkArgument
 @EqualsHashCode
 @Accessors
 abstract class Matrix<E, V, M> {
-  protected val ImmutableTable<Integer, Integer, E> table
+    protected val ImmutableTable<Integer, Integer, E> table
 
-  protected new(ImmutableTable<Integer, Integer, E> table) {
-    this.table = table
-  }
+    protected new(ImmutableTable<Integer, Integer, E> table) {
+        this.table = table
+    }
 
-  def rowIndexes() {
-    ImmutableSet::copyOf(table.rowKeySet)
-  }
+    def rowIndexes() {
+        ImmutableSet::copyOf(table.rowKeySet)
+    }
 
-  def columnIndexes() {
-    ImmutableSet::copyOf(table.columnKeySet)
-  }
+    def columnIndexes() {
+        ImmutableSet::copyOf(table.columnKeySet)
+    }
 
-  def entry(Integer rowIndex, Integer columnIndex) {
-    checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
-      table.rowKeySet.size, rowIndex)
-    checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
-      table.columnKeySet.size, columnIndex)
-    table.get(rowIndex, columnIndex)
-  }
+    def entry(Integer rowIndex, Integer columnIndex) {
+        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
+            table.rowKeySet.size, rowIndex)
+        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
+            table.columnKeySet.size, columnIndex)
+        table.get(rowIndex, columnIndex)
+    }
 
-  def row(Integer rowIndex) {
-    checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
-      table.rowKeySet.size, rowIndex)
-    ImmutableMap::copyOf(table.row(rowIndex))
-  }
+    def row(Integer rowIndex) {
+        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
+            table.rowKeySet.size, rowIndex)
+        ImmutableMap::copyOf(table.row(rowIndex))
+    }
 
-  def column(Integer columnIndex) {
-    checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
-      table.columnKeySet.size, columnIndex)
-    ImmutableMap::copyOf(table.column(columnIndex))
-  }
+    def column(Integer columnIndex) {
+        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
+            table.columnKeySet.size, columnIndex)
+        ImmutableMap::copyOf(table.column(columnIndex))
+    }
 
-  def rows() {
-    ImmutableMap::copyOf(table.rowMap)
-  }
+    def rows() {
+        ImmutableMap::copyOf(table.rowMap)
+    }
 
-  def columns() {
-    ImmutableMap::copyOf(table.columnMap)
-  }
+    def columns() {
+        ImmutableMap::copyOf(table.columnMap)
+    }
 
-  def size() {
-    Long::valueOf(rowSize) * Long::valueOf(columnSize)
-  }
+    def size() {
+        Long::valueOf(rowSize) * Long::valueOf(columnSize)
+    }
 
-  def rowSize() {
-    table.rowKeySet.size
-  }
+    def rowSize() {
+        table.rowKeySet.size
+    }
 
-  def columnSize() {
-    table.columnKeySet.size
-  }
+    def columnSize() {
+        table.columnKeySet.size
+    }
 
-  def M add(M summand)
+    def M add(M summand)
 
-  def M subtract(M subtrahend)
+    def M subtract(M subtrahend)
 
-  def M multiply(M factor)
+    def M multiply(M factor)
 
-  def V multiplyVector(V vector)
+    def V multiplyVector(V vector)
 
-  def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
+    def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
 
-  def M scalarMultiply(E scalar)
+    def M scalarMultiply(E scalar)
 
-  def M negate()
+    def M negate()
 
-  def E tr()
+    def E tr()
 
-  def E det()
+    def E det()
 
-  def boolean square()
+    def boolean square()
 
-  def boolean triangular()
+    def boolean triangular()
 
-  def boolean upperTriangular()
+    def boolean upperTriangular()
 
-  def boolean lowerTriangular()
+    def boolean lowerTriangular()
 
-  def boolean diagonal()
+    def boolean diagonal()
 
-  def boolean id()
+    def boolean id()
 
-  def boolean invertible()
+    def boolean invertible()
 
-  def M transpose()
+    def M transpose()
 
-  def boolean symmetric()
+    def boolean symmetric()
 
-  def boolean skewSymmetric()
+    def boolean skewSymmetric()
 
-  def M minor(Integer rowIndex, Integer columnIndex)
+    def M minor(Integer rowIndex, Integer columnIndex)
 }

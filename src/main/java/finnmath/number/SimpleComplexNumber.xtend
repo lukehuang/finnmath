@@ -43,176 +43,190 @@ import static java.util.Objects.requireNonNull
  * An immutable implementation of a complex number which uses {@code BigInteger} for the real and imaginary part
  * 
  * @since 1
+ * @author Lars Tennstedt
  */
 @Beta
 @FinalFieldsConstructor
 final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
-  public static val ZERO = new SimpleComplexNumber(0BI, 0BI)
-  public static val SimpleComplexNumber ONE = new SimpleComplexNumber(1BI, 0BI)
-  public static val I = new SimpleComplexNumber(0BI, 1BI)
+    public static val ZERO = new SimpleComplexNumber(0BI, 0BI)
+    public static val SimpleComplexNumber ONE = new SimpleComplexNumber(1BI, 0BI)
+    public static val I = new SimpleComplexNumber(0BI, 1BI)
 
-  /**
-   * Returns the sum of this {@link SimpleComplexNumber} complex number and the given one
-   * 
-   * @param summand {@link SimpleComplexNumber}
-   * @return sum {@link SimpleComplexNumber}
-   * @throws NullPointerException
-   * @since 1
-   */
-  override add(SimpleComplexNumber summand) {
-    requireNonNull(summand, 'summand')
-    new SimpleComplexNumber(real + summand.real, imaginary + summand.imaginary)
-  }
+    /**
+     * Returns the sum of this {@link SimpleComplexNumber} complex number and the given one
+     * 
+     * @param summand {@link SimpleComplexNumber}
+     * @return sum {@link SimpleComplexNumber}
+     * @throws NullPointerException
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override add(SimpleComplexNumber summand) {
+        requireNonNull(summand, 'summand')
+        new SimpleComplexNumber(real + summand.real, imaginary + summand.imaginary)
+    }
 
-  /**
-   * Returns the difference of this {@link SimpleComplexNumber} and the given one
-   * 
-   * @param subtrahend {@link SimpleComplexNumber}
-   * @return difference {@link SimpleComplexNumber}
-   * @throws NullPointerException
-   * @since 1
-   */
-  override subtract(SimpleComplexNumber subtrahend) {
-    requireNonNull(subtrahend, 'subtrahend')
-    new SimpleComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
-  }
+    /**
+     * Returns the difference of this {@link SimpleComplexNumber} and the given one
+     * 
+     * @param subtrahend {@link SimpleComplexNumber}
+     * @return difference {@link SimpleComplexNumber}
+     * @throws NullPointerException
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override subtract(SimpleComplexNumber subtrahend) {
+        requireNonNull(subtrahend, 'subtrahend')
+        new SimpleComplexNumber(real - subtrahend.real, imaginary - subtrahend.imaginary)
+    }
 
-  /**
-   * Returns the product of this {@link SimpleComplexNumber} and the given one
-   * 
-   * @param factor {@link SimpleComplexNumber}
-   * @return product {@link SimpleComplexNumber}
-   * @throws NullPointerException
-   * @since 1
-   */
-  override multiply(SimpleComplexNumber factor) {
-    requireNonNull(factor, 'factor')
-    val newReal = real * factor.real - imaginary * factor.imaginary
-    val newImaginary = real * factor.imaginary + imaginary * factor.real
-    new SimpleComplexNumber(newReal, newImaginary)
-  }
+    /**
+     * Returns the product of this {@link SimpleComplexNumber} and the given one
+     * 
+     * @param factor {@link SimpleComplexNumber}
+     * @return product {@link SimpleComplexNumber}
+     * @throws NullPointerException
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override multiply(SimpleComplexNumber factor) {
+        requireNonNull(factor, 'factor')
+        val newReal = real * factor.real - imaginary * factor.imaginary
+        val newImaginary = real * factor.imaginary + imaginary * factor.real
+        new SimpleComplexNumber(newReal, newImaginary)
+    }
 
-  /**
-   * Returns the quotient as {@RealComplexNumber} of this {@link SimpleComplexNumber} and the given one
-   * 
-   * @param divisor {@link SimpleComplexNumber}
-   * @return quotient {@link RealComplexNumber}
-   * @throws NullPointerException
-   * @since 1
-   */
-  override divide(SimpleComplexNumber divisor) {
-    requireNonNull(divisor, 'divisor')
-    checkArgument(divisor != ZERO, 'expected divisor != 0 but actual %s', divisor)
-    new RealComplexNumber(this).divide(new RealComplexNumber(divisor))
-  }
+    /**
+     * Returns the quotient as {@RealComplexNumber} of this {@link SimpleComplexNumber} and the given one
+     * 
+     * @param divisor {@link SimpleComplexNumber}
+     * @return quotient {@link RealComplexNumber}
+     * @throws NullPointerException
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override divide(SimpleComplexNumber divisor) {
+        requireNonNull(divisor, 'divisor')
+        checkArgument(divisor != ZERO, 'expected divisor != 0 but actual %s', divisor)
+        new RealComplexNumber(this).divide(new RealComplexNumber(divisor))
+    }
 
-  /**
-   * Returns the power of this {@link SimpleComplexNumber} raised by the given exponent
-   * 
-   * @param exponent int
-   * @return power {@link SimpleComplexNumber}
-   * @throws IllegalArgumentException if {@code exponent < 0}
-   * @since 1
-   */
-  override pow(int exponent) {
-    checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
-    if (exponent > 1)
-      return multiply(pow(exponent - 1))
-    else if (exponent == 1)
-      return this
-    ONE
-  }
+    /**
+     * Returns the power of this {@link SimpleComplexNumber} raised by the given exponent
+     * 
+     * @param exponent int
+     * @return power {@link SimpleComplexNumber}
+     * @throws IllegalArgumentException if {@code exponent < 0}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override pow(int exponent) {
+        checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
+        if (exponent > 1)
+            return multiply(pow(exponent - 1))
+        else if (exponent == 1)
+            return this
+        ONE
+    }
 
-  /**
-   * Returns the negated {@link SimpleComplexNumber} of this one
-   * 
-   * @return negated {@link SimpleComplexNumber}
-   * @since 1
-   */
-  override negate() {
-    new SimpleComplexNumber(-real, -imaginary)
-  }
+    /**
+     * Returns the negated {@link SimpleComplexNumber} of this one
+     * 
+     * @return negated {@link SimpleComplexNumber}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override negate() {
+        new SimpleComplexNumber(-real, -imaginary)
+    }
 
-  /**
-   * Returns the inverted {@link SimpleComplexNumber} of this one
-   * 
-   * @return inverted {@link SimpleComplexNumber}
-   * @throws IllegalStateException if {@code numerator == 0}
-   * @since 1
-   */
-  override invert() {
-    checkState(invertible, 'expected != 0 but actual %s', this)
-    ONE.divide(this)
-  }
+    /**
+     * Returns the inverted {@link SimpleComplexNumber} of this one
+     * 
+     * @return inverted {@link SimpleComplexNumber}
+     * @throws IllegalStateException if {@code numerator == 0}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override invert() {
+        checkState(invertible, 'expected != 0 but actual %s', this)
+        ONE.divide(this)
+    }
 
-  /**
-   * Returns if this {@link SimpleComplexNumber} is invertible
-   * 
-   * @return {@code true} if {@code this != 0}, {@code false} otherwise
-   * @since 1
-   */
-  override invertible() {
-    this != ZERO
-  }
+    /**
+     * Returns if this {@link SimpleComplexNumber} is invertible
+     * 
+     * @return {@code true} if {@code this != 0}, {@code false} otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override invertible() {
+        this != ZERO
+    }
 
-  /**
-   * Returns a string representation of this {@link SimpleComplexNumber}
-   * 
-   * @return string {@link String}
-   * @since 1
-   */
-  override asString() {
-    if (real != 0BI)
-      if (imaginary > 0BI)
-        return '''«real» + «imaginary»i'''
-      else if (imaginary < 0BI)
-        return '''«real» - «imaginary.abs»i'''
-      else
-        return '''«real»'''
-    if (imaginary > 0BI)
-      return '''«imaginary»i'''
-    else if (imaginary < 0BI)
-      return '''- «imaginary»i'''
-    '0'
-  }
+    /**
+     * Returns a string representation of this {@link SimpleComplexNumber}
+     * 
+     * @return string {@link String}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override asString() {
+        if (real != 0BI)
+            if (imaginary > 0BI)
+                return '''«real» + «imaginary»i'''
+            else if (imaginary < 0BI)
+                return '''«real» - «imaginary.abs»i'''
+            else
+                return '''«real»'''
+        if (imaginary > 0BI)
+            return '''«imaginary»i'''
+        else if (imaginary < 0BI)
+            return '''- «imaginary»i'''
+        '0'
+    }
 
-  /**
-   * Returns the square of the absolute of this {@link SimpleComplexNumber}
-   * 
-   * @return square of the absolute {@link BigInteger}
-   * @since 1
-   */
-  override absPow2() {
-    real ** 2 + imaginary ** 2
-  }
+    /**
+     * Returns the square of the absolute of this {@link SimpleComplexNumber}
+     * 
+     * @return square of the absolute {@link BigInteger}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override absPow2() {
+        real ** 2 + imaginary ** 2
+    }
 
-  /**
-   * Returns the absolute as {@link RealComplexNumber} of this {@link SimpleComplexNumber}
-   * 
-   * @return absolute {@link BigDecimal}
-   * @since 1
-   */
-  override abs() {
-    SquareRootCalculator::sqrt(absPow2)
-  }
+    /**
+     * Returns the absolute as {@link RealComplexNumber} of this {@link SimpleComplexNumber}
+     * 
+     * @return absolute {@link BigDecimal}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override abs() {
+        SquareRootCalculator::sqrt(absPow2)
+    }
 
-  /**
-   * Returns the conjugate of this {@link SimpleComplexNumber}
-   * 
-   * @return conjugated {@link SimpleComplexNumber}
-   * @since 1
-   */
-  override conjugate() {
-    new SimpleComplexNumber(real, -imaginary)
-  }
+    /**
+     * Returns the conjugate of this {@link SimpleComplexNumber}
+     * 
+     * @return conjugated {@link SimpleComplexNumber}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override conjugate() {
+        new SimpleComplexNumber(real, -imaginary)
+    }
 
-  /**
-   * Returns a matrix representation of this {@link SimpleComplexNumber}
-   * 
-   * @return matrix {@link BigIntMatrix}
-   * @since 1
-   */
-  override matrix() {
-    BigIntMatrix::builder(2, 2).put(1, 1, real).put(1, 2, -imaginary).put(2, 1, imaginary).put(2, 2, real).build
-  }
+    /**
+     * Returns a matrix representation of this {@link SimpleComplexNumber}
+     * 
+     * @return matrix {@link BigIntMatrix}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override matrix() {
+        BigIntMatrix::builder(2, 2).put(1, 1, real).put(1, 2, -imaginary).put(2, 1, imaginary).put(2, 2, real).build
+    }
 }

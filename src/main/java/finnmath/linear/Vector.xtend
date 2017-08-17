@@ -43,47 +43,47 @@ import static java.util.Objects.requireNonNull
 @ToString
 @Accessors
 abstract class Vector<E, V, N> {
-  protected val ImmutableMap<Integer, E> map
+    protected val ImmutableMap<Integer, E> map
 
-  protected new(ImmutableMap<Integer, E> map) {
-    this.map = map
-  }
+    protected new(ImmutableMap<Integer, E> map) {
+        this.map = map
+    }
 
-  def entry(Integer index) {
-    requireNonNull(index, 'index')
-    checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
-    map.get(index)
-  }
+    def entry(Integer index) {
+        requireNonNull(index, 'index')
+        checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
+        map.get(index)
+    }
 
-  def V add(V summand)
+    def V add(V summand)
 
-  def V subtract(V subtrahend)
+    def V subtract(V subtrahend)
 
-  def V scalarMultiply(E scalar)
+    def V scalarMultiply(E scalar)
 
-  def V negate()
+    def V negate()
 
-  def E normPow2()
+    def E normPow2()
 
-  def N norm()
+    def N norm()
 
-  def N norm(BigDecimal precision)
+    def N norm(BigDecimal precision)
 
-  def N norm(int scale, int roundingMode)
+    def N norm(int scale, int roundingMode)
 
-  def N norm(BigDecimal precision, int scale, int roundingMode)
+    def N norm(BigDecimal precision, int scale, int roundingMode)
 
-  def E dotProduct(V vector)
+    def E dotProduct(V vector)
 
-  def E distancePow2(V vector)
+    def E distancePow2(V vector)
 
-  def N distance(V vector)
+    def N distance(V vector)
 
-  def N distance(V vector, BigDecimal precision)
+    def N distance(V vector, BigDecimal precision)
 
-  def N distance(V vector, int scale, int roundingMode)
+    def N distance(V vector, int scale, int roundingMode)
 
-  def N distance(V vector, BigDecimal precision, int scale, int roundingMode)
+    def N distance(V vector, BigDecimal precision, int scale, int roundingMode)
 
-  def int size()
+    def int size()
 }

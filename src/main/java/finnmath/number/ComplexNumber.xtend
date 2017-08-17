@@ -35,25 +35,35 @@ import org.eclipse.xtend.lib.annotations.ToString
 
 import static java.util.Objects.requireNonNull
 
+/**
+ * @since 1
+ * @author Lars Tennstedt
+ */
 @EqualsHashCode
 @ToString
 package abstract class ComplexNumber<B, S, R, M> implements MathNumber<S, R> {
-  @Accessors
-  protected val B real
+    /**
+     * {@code real} part of this {@link ComplexNumber}
+     */
+    @Accessors
+    protected val B real
 
-  @Accessors
-  protected val B imaginary
+    /**
+     * {@code imaginary} part of this {@link ComplexNumber}
+     */
+    @Accessors
+    protected val B imaginary
 
-  protected new(B real, B imaginary) {
-    this.real = requireNonNull(real, 'real')
-    this.imaginary = requireNonNull(imaginary, 'imaginary')
-  }
+    protected new(B real, B imaginary) {
+        this.real = requireNonNull(real, 'real')
+        this.imaginary = requireNonNull(imaginary, 'imaginary')
+    }
 
-  def B absPow2()
+    def B absPow2()
 
-  def BigDecimal abs()
+    def BigDecimal abs()
 
-  def S conjugate()
+    def S conjugate()
 
-  def M matrix()
+    def M matrix()
 }

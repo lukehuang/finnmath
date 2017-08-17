@@ -39,152 +39,157 @@ import static java.util.Objects.requireNonNull
 
 @Beta
 final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
-  private new(ImmutableMap<Integer, BigInteger> map) {
-    super(map)
-  }
-
-  override add(BigIntVector summand) {
-    requireNonNull(summand, 'summand')
-    checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
-    val builder = builder(map.size)
-    map.forEach [ index, entry |
-      builder.put(entry + summand.entry(index))
-    ]
-    builder.build
-  }
-
-  override subtract(BigIntVector subtrahend) {
-    requireNonNull(subtrahend, 'subtrahend')
-    checkArgument(map.size == subtrahend.size, 'equal sizes expected but actual %s != %s', map.size, subtrahend.size)
-    val builder = builder(map.size)
-    map.forEach [ index, entry |
-      builder.put(entry - subtrahend.entry(index))
-    ]
-    builder.build
-  }
-
-  override scalarMultiply(BigInteger scalar) {
-    requireNonNull(scalar, 'scalar')
-    val builder = builder(map.size)
-    map.forEach [ index, entry |
-      builder.put(scalar * entry)
-    ]
-    builder.build
-  }
-
-  override negate() {
-    val builder = builder(map.size)
-    map.entrySet.forEach [
-      builder.put(-value)
-    ]
-    builder.build
-  }
-
-  override normPow2() {
-    dotProduct
-  }
-
-  override norm() {
-    sqrt(normPow2)
-  }
-
-  override norm(BigDecimal precision) {
-    requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-    sqrt(normPow2, precision)
-  }
-
-  override norm(int scale, int roundingMode) {
-    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
-    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
-    sqrt(normPow2, scale, roundingMode)
-  }
-
-  override norm(BigDecimal precision, int scale, int roundingMode) {
-    requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
-    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
-    sqrt(normPow2, precision, scale, roundingMode)
-  }
-
-  override dotProduct(BigIntVector vector) {
-    requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-    var result = 0BI
-    for (index : (1 .. map.size))
-      result += map.get(index) * vector.entry(index)
-    result
-  }
-
-  override distancePow2(BigIntVector vector) {
-    requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-    subtract(vector).normPow2
-  }
-
-  override distance(BigIntVector vector) {
-    requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-    sqrt(distancePow2(vector))
-  }
-
-  override distance(BigIntVector vector, BigDecimal precision) {
-    requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-    requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-    sqrt(distancePow2(vector))
-  }
-
-  override distance(BigIntVector vector, int scale, int roundingMode) {
-    requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
-    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
-    sqrt(distancePow2(vector))
-  }
-
-  override distance(BigIntVector vector, BigDecimal precision, int scale, int roundingMode) {
-    requireNonNull(vector, 'vector')
-    checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-    requireNonNull(precision, 'precision')
-    checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-    checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
-    checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}', roundingMode)
-    sqrt(distancePow2(vector))
-  }
-
-  override size() {
-    map.size
-  }
-
-  static def builder(int size) {
-    checkArgument(size > 0, 'expected size > 0 but actual %s', size)
-    new BigIntVectorBuilder(size)
-  }
-
-  @Beta
-  static final class BigIntVectorBuilder extends VectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
-    private new(Integer size) {
-      super(size)
+    private new(ImmutableMap<Integer, BigInteger> map) {
+        super(map)
     }
 
-    override addToEntryAndPut(Integer index, BigInteger entry) {
-      requireNonNull(index, 'index')
-      checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
-      val existing = map.get(index)
-      requireNonNull(existing, 'existing')
-      requireNonNull(entry, 'entry')
-      map.put(index, map.get(index) + entry)
-      this
+    override add(BigIntVector summand) {
+        requireNonNull(summand, 'summand')
+        checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
+        val builder = builder(map.size)
+        map.forEach [ index, entry |
+            builder.put(entry + summand.entry(index))
+        ]
+        builder.build
     }
 
-    override build() {
-      map.forEach [ index, entry |
-        requireNonNull(entry, 'entry')
-      ]
-      new BigIntVector(ImmutableMap::copyOf(map));
+    override subtract(BigIntVector subtrahend) {
+        requireNonNull(subtrahend, 'subtrahend')
+        checkArgument(map.size == subtrahend.size, 'equal sizes expected but actual %s != %s', map.size,
+            subtrahend.size)
+        val builder = builder(map.size)
+        map.forEach [ index, entry |
+            builder.put(entry - subtrahend.entry(index))
+        ]
+        builder.build
     }
-  }
+
+    override scalarMultiply(BigInteger scalar) {
+        requireNonNull(scalar, 'scalar')
+        val builder = builder(map.size)
+        map.forEach [ index, entry |
+            builder.put(scalar * entry)
+        ]
+        builder.build
+    }
+
+    override negate() {
+        val builder = builder(map.size)
+        map.entrySet.forEach [
+            builder.put(-value)
+        ]
+        builder.build
+    }
+
+    override normPow2() {
+        dotProduct
+    }
+
+    override norm() {
+        sqrt(normPow2)
+    }
+
+    override norm(BigDecimal precision) {
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        sqrt(normPow2, precision)
+    }
+
+    override norm(int scale, int roundingMode) {
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        sqrt(normPow2, scale, roundingMode)
+    }
+
+    override norm(BigDecimal precision, int scale, int roundingMode) {
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        sqrt(normPow2, precision, scale, roundingMode)
+    }
+
+    override dotProduct(BigIntVector vector) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        var result = 0BI
+        for (index : (1 .. map.size))
+            result += map.get(index) * vector.entry(index)
+        result
+    }
+
+    override distancePow2(BigIntVector vector) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        subtract(vector).normPow2
+    }
+
+    override distance(BigIntVector vector) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        sqrt(distancePow2(vector))
+    }
+
+    override distance(BigIntVector vector, BigDecimal precision) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        sqrt(distancePow2(vector))
+    }
+
+    override distance(BigIntVector vector, int scale, int roundingMode) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        sqrt(distancePow2(vector))
+    }
+
+    override distance(BigIntVector vector, BigDecimal precision, int scale, int roundingMode) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        sqrt(distancePow2(vector))
+    }
+
+    override size() {
+        map.size
+    }
+
+    static def builder(int size) {
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        new BigIntVectorBuilder(size)
+    }
+
+    @Beta
+    static final class BigIntVectorBuilder extends VectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
+        private new(Integer size) {
+            super(size)
+        }
+
+        override addToEntryAndPut(Integer index, BigInteger entry) {
+            requireNonNull(index, 'index')
+            checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
+            val existing = map.get(index)
+            requireNonNull(existing, 'existing')
+            requireNonNull(entry, 'entry')
+            map.put(index, map.get(index) + entry)
+            this
+        }
+
+        override build() {
+            map.forEach [ index, entry |
+                requireNonNull(entry, 'entry')
+            ]
+            new BigIntVector(ImmutableMap::copyOf(map));
+        }
+    }
 }

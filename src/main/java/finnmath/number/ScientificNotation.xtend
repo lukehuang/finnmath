@@ -42,41 +42,44 @@ import static java.util.Objects.requireNonNull
  * decimal = coefficient * 10^exponent
  * 
  * @since 1
+ * @author Lars Tennstedt
  */
 @Beta
 @EqualsHashCode
 @ToString
 @Accessors
 final class ScientificNotation {
-  val BigDecimal coefficient
-  val int exponent
+    val BigDecimal coefficient
+    val int exponent
 
-  /**
-   * Constructs a {@link ScientificNotation} from the given coefficient and exponent
-   * 
-   * @param coefficient {@link BigDecimal}
-   * @param exponent int
-   * @throws NullPointerException if {@code coefficient == null}
-   * @since 1
-   */
-  new(BigDecimal coefficient, int exponent) {
-    this.coefficient = requireNonNull(coefficient, 'coefficient')
-    this.exponent = exponent
-  }
+    /**
+     * Constructs a {@link ScientificNotation} from the given coefficient and exponent
+     * 
+     * @param coefficient {@link BigDecimal}
+     * @param exponent int
+     * @throws NullPointerException if {@code coefficient == null}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    new(BigDecimal coefficient, int exponent) {
+        this.coefficient = requireNonNull(coefficient, 'coefficient')
+        this.exponent = exponent
+    }
 
-  /**
-   * Returns a string representation of this {@link ScientificNotation}
-   * 
-   * @return string {@link String}
-   * @since 1
-   */
-  def asString() {
-    if (exponent < 0)
-      return '''«coefficient» * 10^(«exponent»)'''
-    else if (exponent == 0)
-      return '''«coefficient»'''
-    else if (exponent == 1)
-      return '''«coefficient» * 10'''
-    '''«coefficient» * 10^«exponent»'''
-  }
+    /**
+     * Returns a string representation of this {@link ScientificNotation}
+     * 
+     * @return string {@link String}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    def asString() {
+        if (exponent < 0)
+            return '''«coefficient» * 10^(«exponent»)'''
+        else if (exponent == 0)
+            return '''«coefficient»'''
+        else if (exponent == 1)
+            return '''«coefficient» * 10'''
+        '''«coefficient» * 10^«exponent»'''
+    }
 }

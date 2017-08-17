@@ -42,37 +42,37 @@ import static java.util.Objects.requireNonNull
 @ToString
 @Accessors
 abstract class VectorBuilder<E, V, B> implements Builder<V> {
-  protected val Map<Integer, E> map = new HashMap
-  val int size
+    protected val Map<Integer, E> map = new HashMap
+    val int size
 
-  new(int size) {
-    checkArgument(size > 0, 'expected size > 0 but actual %s', size)
-    this.size = size
-  }
+    new(int size) {
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        this.size = size
+    }
 
-  def put(E entry) {
-    requireNonNull(entry, 'entry')
-    val index = map.size + 1
-    checkArgument(map.size < size, 'expected index in [1, %s] but actual %s', size, index)
-    map.put(index, entry)
-    this
-  }
+    def put(E entry) {
+        requireNonNull(entry, 'entry')
+        val index = map.size + 1
+        checkArgument(map.size < size, 'expected index in [1, %s] but actual %s', size, index)
+        map.put(index, entry)
+        this
+    }
 
-  def put(Integer index, E entry) {
-    requireNonNull(index, 'index')
-    requireNonNull(entry, 'entry')
-    checkArgument(0 < index && index <= size, 'expected index in [1, %s] but actual %s', size, index)
-    map.put(index, entry)
-    this
-  }
+    def put(Integer index, E entry) {
+        requireNonNull(index, 'index')
+        requireNonNull(entry, 'entry')
+        checkArgument(0 < index && index <= size, 'expected index in [1, %s] but actual %s', size, index)
+        map.put(index, entry)
+        this
+    }
 
-  def B addToEntryAndPut(Integer index, E entry)
+    def B addToEntryAndPut(Integer index, E entry)
 
-  def putAll(E entry) {
-    requireNonNull(entry, 'entry')
-    (1 .. size).forEach [
-      map.put(it, entry)
-    ]
-    this
-  }
+    def putAll(E entry) {
+        requireNonNull(entry, 'entry')
+        (1 .. size).forEach [
+            map.put(it, entry)
+        ]
+        this
+    }
 }

@@ -42,31 +42,31 @@ import static java.util.Objects.requireNonNull
 @ToString
 @Accessors
 abstract class MatrixBuilder<E, M> implements Builder<M> {
-  protected val Table<Integer, Integer, E> table
+    protected val Table<Integer, Integer, E> table
 
-  protected new(int rowSize, int columnSize) {
-    table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))
-  }
+    protected new(int rowSize, int columnSize) {
+        table = ArrayTable.create((1 .. rowSize), (1 .. columnSize))
+    }
 
-  def put(Integer rowIndex, Integer columnIndex, E entry) {
-    requireNonNull(entry, 'entry')
-    requireNonNull(rowIndex, 'rowIndex')
-    requireNonNull(columnIndex, 'columnIndex')
-    checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
-      table.rowKeySet.size, rowIndex)
-    checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
-      table.columnKeySet.size, columnIndex)
-    table.put(rowIndex, columnIndex, entry)
-    this
-  }
+    def put(Integer rowIndex, Integer columnIndex, E entry) {
+        requireNonNull(entry, 'entry')
+        requireNonNull(rowIndex, 'rowIndex')
+        requireNonNull(columnIndex, 'columnIndex')
+        checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
+            table.rowKeySet.size, rowIndex)
+        checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
+            table.columnKeySet.size, columnIndex)
+        table.put(rowIndex, columnIndex, entry)
+        this
+    }
 
-  def putAll(E entry) {
-    requireNonNull(entry, 'entry')
-    table.rowKeySet.forEach [ rowKey |
-      table.columnKeySet.forEach [ columnKey |
-        table.put(rowKey, columnKey, entry)
-      ]
-    ]
-    this
-  }
+    def putAll(E entry) {
+        requireNonNull(entry, 'entry')
+        table.rowKeySet.forEach [ rowKey |
+            table.columnKeySet.forEach [ columnKey |
+                table.put(rowKey, columnKey, entry)
+            ]
+        ]
+        this
+    }
 }
