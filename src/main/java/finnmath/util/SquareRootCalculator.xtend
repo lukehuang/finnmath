@@ -317,7 +317,6 @@ final class SquareRootCalculator {
     @VisibleForTesting
     protected static def scientificNotationForSqrt(BigDecimal decimal) {
         log.debug('calculating scientific notification for {}', decimal.toPlainString)
-        log.debug('{} >= 100)', decimal.toPlainString)
         var coefficient = decimal
         var exponent = 0
         log.debug('coefficient = {}', coefficient.toPlainString)
