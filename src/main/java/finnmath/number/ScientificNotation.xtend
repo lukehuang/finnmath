@@ -47,9 +47,17 @@ import static java.util.Objects.requireNonNull
 @Beta
 @EqualsHashCode
 @ToString
-@Accessors
 final class ScientificNotation {
+    /**
+     * Coefficient of this scientific notation
+     */
+    @Accessors
     val BigDecimal coefficient
+
+    /**
+     * Exponent of this scientific notation
+     */
+    @Accessors
     val int exponent
 
     /**

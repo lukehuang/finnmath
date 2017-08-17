@@ -317,24 +317,18 @@ final class SquareRootCalculator {
     @VisibleForTesting
     protected static def scientificNotationForSqrt(BigDecimal decimal) {
         log.debug('calculating scientific notification for {}', decimal.toPlainString)
-        if (0BD < decimal && decimal < 100BD) {
-            log.debug('{} in (0, 100)', decimal.toPlainString)
-            return new ScientificNotation(decimal, 0)
-        } else if (decimal >= 100BD) {
-            log.debug('{} >= 100)', decimal.toPlainString)
-            var coefficient = decimal
-            var exponent = 0
+        log.debug('{} >= 100)', decimal.toPlainString)
+        var coefficient = decimal
+        var exponent = 0
+        log.debug('coefficient = {}', coefficient.toPlainString)
+        log.debug('exponent = {}', exponent)
+        while (coefficient >= 100BD) {
+            log.debug('iteration for scientific notification')
+            coefficient /= 100BD
+            exponent = addExact(exponent, 2)
             log.debug('coefficient = {}', coefficient.toPlainString)
             log.debug('exponent = {}', exponent)
-            while (coefficient.abs >= 100BD) {
-                log.debug('iteration for scientific notification')
-                coefficient /= 100BD
-                exponent = addExact(exponent, 2)
-                log.debug('coefficient = {}', coefficient.toPlainString)
-                log.debug('exponent = {}', exponent)
-            }
-            return new ScientificNotation(coefficient, exponent)
         }
-        new ScientificNotation(0BD, 0)
+        new ScientificNotation(coefficient, exponent)
     }
 }
