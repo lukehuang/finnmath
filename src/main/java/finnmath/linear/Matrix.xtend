@@ -29,8 +29,6 @@
 package finnmath.linear
 
 import com.google.common.annotations.Beta
-import com.google.common.collect.ImmutableMap
-import com.google.common.collect.ImmutableSet
 import com.google.common.collect.ImmutableTable
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -49,11 +47,11 @@ abstract class Matrix<E, V, M> {
     }
 
     def rowIndexes() {
-        ImmutableSet::copyOf(table.rowKeySet)
+        table.rowKeySet
     }
 
     def columnIndexes() {
-        ImmutableSet::copyOf(table.columnKeySet)
+        table.columnKeySet
     }
 
     def entry(Integer rowIndex, Integer columnIndex) {
@@ -67,21 +65,21 @@ abstract class Matrix<E, V, M> {
     def row(Integer rowIndex) {
         checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
             table.rowKeySet.size, rowIndex)
-        ImmutableMap::copyOf(table.row(rowIndex))
+        table.row(rowIndex)
     }
 
     def column(Integer columnIndex) {
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
-        ImmutableMap::copyOf(table.column(columnIndex))
+        table.column(columnIndex)
     }
 
     def rows() {
-        ImmutableMap::copyOf(table.rowMap)
+        table.rowMap
     }
 
     def columns() {
-        ImmutableMap::copyOf(table.columnMap)
+        table.columnMap
     }
 
     def size() {
