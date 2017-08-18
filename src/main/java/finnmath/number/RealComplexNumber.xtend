@@ -55,7 +55,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
      * Constructs a {@link RealComplexNumber} by the given {@link SimpleComplexNumber} 
      * 
      * @param complexNumber {@link SimpleComplexNumber}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code complexNumber == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -69,7 +69,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
      * 
      * @param summand {@link RealComplexNumber}
      * @return sum {@link RealComplexNumber}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code summand == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -83,7 +83,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
      * 
      * @param subtrahend {@link RealComplexNumber}
      * @return difference {@link RealComplexNumber}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code subtrahend == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -97,7 +97,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
      * 
      * @param factor {@link RealComplexNumber}
      * @return product {@link RealComplexNumber}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code factor == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -113,7 +113,8 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
      * 
      * @param divisor {@link RealComplexNumber}
      * @return quotient {@link RealComplexNumber}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code divisor == null}
+     * @throws IllegalArgumentException if {@code divisor == 0}
      * @since 1
      * @author Lars Tennstedt
      */

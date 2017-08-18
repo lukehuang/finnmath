@@ -57,7 +57,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
      * 
      * @param summand {@link SimpleComplexNumber}
      * @return sum {@link SimpleComplexNumber}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code summand == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -71,7 +71,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
      * 
      * @param subtrahend {@link SimpleComplexNumber}
      * @return difference {@link SimpleComplexNumber}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code subtrahend == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -85,7 +85,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
      * 
      * @param factor {@link SimpleComplexNumber}
      * @return product {@link SimpleComplexNumber}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code factor == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -97,11 +97,12 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     }
 
     /**
-     * Returns the quotient as {@RealComplexNumber} of this {@link SimpleComplexNumber} and the given one
+     * Returns the quotient as {@link RealComplexNumber} of this {@link SimpleComplexNumber} and the given one
      * 
      * @param divisor {@link SimpleComplexNumber}
      * @return quotient {@link RealComplexNumber}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code divisor == null}
+     * @throws IllegalArgumentException if {@code divisor == 0}
      * @since 1
      * @author Lars Tennstedt
      */

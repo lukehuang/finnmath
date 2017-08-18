@@ -72,7 +72,7 @@ final class SquareRootCalculator {
      * 
      * @param integer {@link BigInteger}
      * @return sqrt {@link BigDecimal}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code integer == null}
      * @throws IllegalArgumentException if {@code integer < 0}
      * @since 1
      * @author Lars Tennstedt
@@ -88,7 +88,7 @@ final class SquareRootCalculator {
      * 
      * @param decimal {@link BigDecimal}
      * @return sqrt {@link BigDecimal}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code decimal == null}
      * @throws IllegalArgumentException if {@code decimal < 0}
      * @since 1
      * @author Lars Tennstedt
@@ -148,10 +148,10 @@ final class SquareRootCalculator {
      * @param scale (@code int}
      * @param roundingMode {@code int}
      * @return sqrt {@link BigDecimal}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code integer == null}
      * @throws IllegalArgumentException if {@code integer < 0}
-     * @throws IllegalArgumentException if {scale < 0}
-     * @throws IllegalArgumentException if {roundingMode < 0 || 7 < roundingMode}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -171,10 +171,10 @@ final class SquareRootCalculator {
      * @param scale (@code int}
      * @param roundingMode {@code int}
      * @return sqrt {@link BigDecimal}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code decimal == null}
      * @throws IllegalArgumentException if {@code decimal < 0}
-     * @throws IllegalArgumentException if {scale < 0}
-     * @throws IllegalArgumentException if {roundingMode < 0 || 7 < roundingMode}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -199,8 +199,8 @@ final class SquareRootCalculator {
      * @throws IllegalArgumentException if {@code integer < 0}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException if {scale < 0}
-     * @throws IllegalArgumentException if {roundingMode < 0 || 7 < roundingMode}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -227,8 +227,8 @@ final class SquareRootCalculator {
      * @throws IllegalArgumentException if {@code decimal < 0}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException if {scale < 0}
-     * @throws IllegalArgumentException if {roundingMode < 0 || 7 < roundingMode}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -248,7 +248,7 @@ final class SquareRootCalculator {
      * 
      * @param integer {@link BigInteger}
      * @return sqrt {@link BigInteger}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code integer == null}
      * @throws IllegalArgumentException if {@code integer < 0}
      * @throws IllegalArgumentException if {@code !perfectSquare}
      * @see #perfectSquare
@@ -267,7 +267,7 @@ final class SquareRootCalculator {
      * 
      * @param integer {@link BigInteger}
      * @return b {@code boolean}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code integer == null}
      * @throws IllegalArgumentException if {@code integer < 0}
      * @since 1
      * @author Lars Tennstedt
@@ -315,7 +315,7 @@ final class SquareRootCalculator {
     }
 
     @VisibleForTesting
-    protected static def scientificNotationForSqrt(BigDecimal decimal) {
+    package static def scientificNotationForSqrt(BigDecimal decimal) {
         log.debug('calculating scientific notification for {}', decimal.toPlainString)
         var coefficient = decimal
         var exponent = 0

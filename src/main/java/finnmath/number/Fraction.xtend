@@ -92,7 +92,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * 
      * @param summand {@link Fraction}
      * @return sum {@link Fraction}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code summand == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -108,7 +108,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * 
      * @param subtrahend {@link Fraction}
      * @return difference {@link Fraction}
-     * @throws NullPointerException
+     * @throws NullPointerException  if {@code subtrahend == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -124,7 +124,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * 
      * @param factor {@link Fraction}
      * @return product {@link Fraction}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code factor == null}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -140,7 +140,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * 
      * @param divisor {@link Fraction}
      * @return quotient {@link Fraction}
-     * @throws NullPointerException
+     * @throws NullPointerException if {@code divisor == null}
      * @throws IllegalArgumentException if {@code divisor.numerator == 0}
      * @since 1
      * @author Lars Tennstedt

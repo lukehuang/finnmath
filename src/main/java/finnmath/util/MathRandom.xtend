@@ -172,6 +172,7 @@ final class MathRandom {
      * by {@code bound} (exclusive)
      * 
      * @param bound {@code long}
+     * @param scale {@code int}
      * @return BigDecimal {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
@@ -192,6 +193,7 @@ final class MathRandom {
      * above by {@code 0} (inclusive)
      * 
      * @param bound {@code long}
+     * @param scale {@code int}
      * @return BigDecimal {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
@@ -212,6 +214,7 @@ final class MathRandom {
      * {@code bound} (exclusive)
      * 
      * @param bound {@code long}
+     * @param scale {@code int}
      * @return BigDecimal {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
@@ -250,6 +253,7 @@ final class MathRandom {
      * Returns a negative {@link BigDecimal} which is invertible
      * 
      * @param bound {@code long}
+     * @param scale {@code int}
      * @return BigDecimal {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @throws IllegalArgumentException if {@code scale < 1}
@@ -271,6 +275,7 @@ final class MathRandom {
      * Returns a {@link BigDecimal} which is invertible
      * 
      * @param bound {@code long}
+     * @param scale {@code int}
      * @return BigDecimal {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @throws IllegalArgumentException if {@code scale < 1}
@@ -502,8 +507,8 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing positive {@link Fraction Fractions}
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextPositiveFraction
@@ -523,8 +528,8 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing negative {@link Fraction Fractions}
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextNegativeFraction
@@ -544,8 +549,8 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link Fraction Fractions}
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextFraction
@@ -615,8 +620,8 @@ final class MathRandom {
      * invertible
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertiblePositiveFraction
@@ -637,8 +642,8 @@ final class MathRandom {
      * invertible
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertibleNegativeFraction
@@ -659,8 +664,8 @@ final class MathRandom {
      * invertible
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertibleFraction
@@ -717,8 +722,8 @@ final class MathRandom {
      * {@link SimpleComplexNumber SimpleComplexNumbers}
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextSimpleComplexNumber
@@ -739,8 +744,8 @@ final class MathRandom {
      * {@link SimpleComplexNumber SimpleComplexNumbers} which are invertible
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertibleSimpleComplexNumber
@@ -761,6 +766,7 @@ final class MathRandom {
      * {@code -bound} (exclusive) and above by {@code bound} (exclusive)
      * 
      * @param bound {@code long}
+     * @param scale {@code int}
      * @return RealComplexNumber {@link RealComplexNumber}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @since 1
@@ -778,6 +784,7 @@ final class MathRandom {
      * Returns a {@link RealComplexNumber} which is invertible
      * 
      * @param bound {@code long}
+     * @param scale {@code int}
      * @return RealComplexNumber {@link RealComplexNumber}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @see #nextRealComplexNumber
@@ -801,8 +808,9 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link RealComplexNumber RealComplexNumbers}
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param scale {@code int}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextRealComplexNumber
@@ -824,8 +832,9 @@ final class MathRandom {
      * which are invertible
      * 
      * @param bound {@code long}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param scale {@code int}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertibleRealComplexNumber
@@ -867,9 +876,9 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link BigIntVector BigIntVectors}
      * 
      * @param bound {@code long}
-     * @param size [@code int}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param size {@code int}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextBigIntVector
@@ -917,10 +926,10 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link BigIntMatrix BigIntMatrices}
      * 
      * @param bound {@code long}
-     * @param rowSize [@code int}
-     * @param columnize [@code int}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param rowSize {@code int}
+     * @param columnSize {@code int}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}
      * @throws IllegalArgumentException if {@code columnSize < 1}
@@ -969,10 +978,9 @@ final class MathRandom {
      * 
      * @param bound {@code long}
      * @param scale {@code int}
-     * @param rowSize [@code int}
-     * @param columnize [@code int}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param size {@code int}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}
@@ -1027,11 +1035,11 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link DecimalMatrix DecimalMatrices}
      * 
      * @param bound {@code long}
-     * @param scale [@code int}
-     * @param rowSize [@code int}
-     * @param columnize [@code int}
-     * @param howMany [@code int}
-     * @return List [@link List}
+     * @param scale {@code int}
+     * @param rowSize {@code int}
+     * @param columnSize {@code int}
+     * @param howMany {@code int}
+     * @return List {@link List}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}
