@@ -5,14 +5,19 @@ complex numbers, matrices and vectors and their arithmetics based on BigInteger 
 library is not prone to buffer overflows and big rounding errors. The great Commons Math uses primitives 
 so if you want to achieve best performance then please choose Commons Math instead.
 
-Today finnMath consists of the following parts:
-* Linear algebra with matrices and vectors
-* Fractions and complex numbers
-* A pseudo random generator
+What finnMath will provide:
+* Implementations for matrices and vectors
+* Implementations for fractions and complex numbers
+* A pseudo random generator for all these implementations
 * A square root calculator for BigInteger and BigDecimal based on Heron's method
 
+What finnMath will not provide:
+* Solver for equations
+* Matrix decomposition, reduction or factorization
+* Polynomials
+
 finnMath is written in Xtend and uses Gradle as its build automation tool so it should interop 
-seamlessly with other JVM technologies.
+seamlessly with other JVM technologies. 
 Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 finnMath is open source and free software and is licensed under the permissive BSD 2-Clause License.
