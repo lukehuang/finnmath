@@ -367,6 +367,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
 
     /**
      * The builder for {@link BigIntVector BigIntVectors}
+     * 
      * @since 1
      * @author Lars Tennstedt
      */
@@ -387,7 +388,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
         }
 
         /**
-         * Returns the builded {@link BigIntVector}
+         * Returns the built {@link BigIntVector}
          * 
          * @return the {@link BigIntVector}
          * @throws NullPointerException if one {@code entry == null}

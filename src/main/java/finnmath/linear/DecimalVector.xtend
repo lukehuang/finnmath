@@ -30,18 +30,35 @@ package finnmath.linear
 
 import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableMap
+import finnmath.util.SquareRootCalculator
 import java.math.BigDecimal
+import java.util.Map
 
 import static com.google.common.base.Preconditions.checkArgument
 import static finnmath.util.SquareRootCalculator.sqrt
 import static java.util.Objects.requireNonNull
 
+/**
+ * An immutable implementation of a vector which uses {@link BigDecimal} as type for its entries
+ * 
+ * @since 1
+ * @author Lars Tennstedt
+ */
 @Beta
 final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> {
     private new(ImmutableMap<Integer, BigDecimal> map) {
         super(map)
     }
 
+    /**
+     * Returns the sum of this {@link DecimalVector} and the given one
+     * 
+     * @param summand the summand
+     * @return The sum
+     * @throws NullPointerException if {@code summand == null}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     override add(DecimalVector summand) {
         checkArgument(map.size == summand.size, 'expected equal sizes but actual %s != %s', map.size, summand.size)
         val builder = builder(map.size)
@@ -51,6 +68,15 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         builder.build
     }
 
+    /**
+     * Returns the difference of this {@link DecimalVector} and the given one
+     * 
+     * @param subtrahend the subtrahend
+     * @return The difference
+     * @throws NullPointerException if {@code subtrahend == null}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     override subtract(DecimalVector subtrahend) {
         checkArgument(map.size == subtrahend.size, 'expected equal sizes but actual %s != %s', map.size,
             subtrahend.size)
@@ -61,6 +87,15 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         builder.build
     }
 
+    /**
+     * Returns the scalar product of the given scalar and this {@link DecimalVector}
+     * 
+     * @param scalar the scalar
+     * @return The scalar product
+     * @throws NullPointerException if {@code summand == null}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     override scalarMultiply(BigDecimal scalar) {
         requireNonNull(scalar, 'scalar')
         val builder = builder(map.size)
@@ -70,6 +105,14 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         builder.build
     }
 
+    /**
+     * Returns the negated {@link DecimalVector} of this one
+     * 
+     * @return The negated
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #scalarMultiply
+     */
     override negate() {
         val builder = builder(map.size)
         map.entrySet.forEach [
@@ -78,20 +121,62 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         builder.build
     }
 
+    /**
+     * Returns the square of the norm of this {@link DecimalVector}
+     * 
+     * @return The square of the norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #dotProduct
+     */
     override normPow2() {
         dotProduct
     }
 
+    /**
+     * Returns the norm of this {@link DecimalVector}
+     * 
+     * @return The norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #normPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
     override norm() {
         sqrt(normPow2)
     }
 
+    /**
+     * Returns the norm of this {@link DecimalVector}
+     * 
+     * @param precision the precision for the termination condition
+     * @return The norm
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #normPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal)
+     */
     override norm(BigDecimal precision) {
         requireNonNull(precision, 'precision')
         checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
         sqrt(normPow2, precision)
     }
 
+    /**
+     * Returns the norm of this {@link DecimalVector}
+     * 
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The norm
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #normPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, int, int)
+     */
     override norm(int scale, int roundingMode) {
         checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
         checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
@@ -99,6 +184,22 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         sqrt(normPow2, scale, roundingMode)
     }
 
+    /**
+     * Returns the norm of this {@link DecimalVector}
+     * 
+     * @param precision the precision for the termination condition
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The norm
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #normPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal, int, int)
+     */
     override norm(BigDecimal precision, int scale, int roundingMode) {
         requireNonNull(precision, 'precision')
         checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
@@ -108,6 +209,16 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         sqrt(normPow2, precision, scale, roundingMode)
     }
 
+    /**
+     * Returns the dot product of this {@link DecimalVector} and the given one
+     * 
+     * @param vector The other {@link DecimalVector}
+     * @return The dot product
+     * @throws NullPointerException if {@code vector == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     override dotProduct(DecimalVector vector) {
         requireNonNull(vector, 'vector')
         checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
@@ -117,18 +228,57 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         result
     }
 
+    /**
+     * Returns the square of the distance from this {@link DecimalVector} to the given one
+     * 
+     * @param vector The other {@link DecimalVector}
+     * @return The square of the distance
+     * @throws NullPointerException if {@code vector == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #subtract
+     * @see #normPow2
+     */
     override distancePow2(DecimalVector vector) {
         requireNonNull(vector, 'vector')
         checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         subtract(vector).normPow2
     }
 
+    /**
+     * Returns the distance from this {@link DecimalVector} to the given one
+     * 
+     * @param vector The other {@link DecimalVector}
+     * @return The the distance
+     * @throws NullPointerException if {@code vector == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @see #distancePow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     * @since 1
+     * @author Lars Tennstedt
+     */
     override distance(DecimalVector vector) {
         requireNonNull(vector, 'vector')
         checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         sqrt(distancePow2(vector))
     }
 
+    /**
+     * Returns the distance from this {@link DecimalVector} to the given one
+     * 
+     * @param vector The other {@link DecimalVector}
+     * @param precision the precision for the termination condition
+     * @return The the distance
+     * @throws NullPointerException if {@code vector == null}
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #distancePow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     */
     override distance(DecimalVector vector, BigDecimal precision) {
         requireNonNull(vector, 'vector')
         checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
@@ -137,6 +287,22 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         sqrt(distancePow2(vector))
     }
 
+    /**
+     * Returns the distance from this {@link DecimalVector} to the given one
+     * 
+     * @param vector The other {@link DecimalVector}
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The the distance
+     * @throws NullPointerException if {@code vector == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #distancePow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     */
     override distance(DecimalVector vector, int scale, int roundingMode) {
         requireNonNull(vector, 'vector')
         checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
@@ -146,6 +312,25 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         sqrt(distancePow2(vector))
     }
 
+    /**
+     * Returns the distance from this {@link DecimalVector} to the given one
+     * 
+     * @param vector The other {@link DecimalVector}
+     * @param precision the precision for the termination condition
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The the distance
+     * @throws NullPointerException if {@code vector == null}
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #distancePow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     */
     override distance(DecimalVector vector, BigDecimal precision, int scale, int roundingMode) {
         requireNonNull(vector, 'vector')
         checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
@@ -157,15 +342,36 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         sqrt(distancePow2(vector))
     }
 
+    /**
+     * Returns the size of the underlying {@link Map}
+     * 
+     * @return size the size
+     * @since 1
+     * @author Lars Tennstedt
+     */
     override size() {
         map.size
     }
 
+    /**
+     * Returns a {@link DecimalVectorBuilder}
+     * 
+     * @param size the size the resulting {@link DecimalVector}
+     * @return the {@link DecimalVectorBuilder}
+     * @since 1
+     * @author Lars Tennstedt
+     */
     static def builder(int size) {
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
         new DecimalVectorBuilder(size)
     }
 
+    /**
+     * The builder for {@link DecimalVector DecimalVectors}
+     * 
+     * @since 1
+     * @author Lars Tennstedt
+     */
     @Beta
     static final class DecimalVectorBuilder extends VectorBuilder<BigDecimal, DecimalVector, DecimalVectorBuilder> {
         private new(int size) {
@@ -182,6 +388,14 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
             this
         }
 
+        /**
+         * Returns the built {@link DecimalVector}
+         * 
+         * @return the {@link DecimalVector}
+         * @throws NullPointerException if one {@code entry == null}
+         * @since 1
+         * @author Lars Tennstedt  
+         */
         override build() {
             map.forEach [ index, entry |
                 requireNonNull(entry, 'entry')

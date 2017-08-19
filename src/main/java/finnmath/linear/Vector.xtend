@@ -40,7 +40,8 @@ import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
 /**
- * An abstract class for vectors
+ * @since 1
+ * @author Lars Tennstedt
  */
 @Beta
 @EqualsHashCode
@@ -60,7 +61,7 @@ abstract class Vector<E, V, N> {
     }
 
     /**
-     * Returns the entry found by the given index
+     * Returns the entry dependent on the given index
      * 
      * @param index the index of the entry
      * @return The entry found by the given index

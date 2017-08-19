@@ -29,32 +29,78 @@
 package finnmath.linear
 
 import com.google.common.annotations.Beta
+import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableTable
+import com.google.common.collect.Table
 import java.util.Map
+import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
+import static java.util.Objects.requireNonNull
 
+/**
+ * @since 1
+ * @author Lars Tennstedt
+ */
 @Beta
 @EqualsHashCode
 @Accessors
 abstract class Matrix<E, V, M> {
+    /**
+     * The table holding the entries of this {@link Matrix}
+     * 
+     * @since 1
+     * @author Lars Tennstedt
+     */
     protected val ImmutableTable<Integer, Integer, E> table
 
     protected new(ImmutableTable<Integer, Integer, E> table) {
         this.table = table
     }
 
+    /**
+     * Returns the row indices starting from {@code 1}
+     * 
+     * @return The row indices
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#rowKeySet
+     */
     def rowIndexes() {
         table.rowKeySet
     }
 
+    /**
+     * Returns the column indices starting from {@code 1}
+     * 
+     * @return The column indices
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#columnKeySet
+     */
     def columnIndexes() {
         table.columnKeySet
     }
 
+    /**
+     * Returns the matrix entry dependent on the given row and column index
+     * 
+     * @param rowIndex the row index
+     * @param columnIndex the column index
+     * @return the entry
+     * @throws NullPointerException if {@code rowIndex == null}
+     * @throws NullPointerException if {@code columnIndex == null}
+     * @throws IllegalArgumentException if {@code rowIndex < 1 || rowSize < rowIndex}
+     * @throws IllegalArgumentException if {@code columnIndex < 1 || columnSize < columnIndex}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#get
+     */
     def entry(Integer rowIndex, Integer columnIndex) {
+        requireNonNull(rowIndex, 'rowIndex')
+        requireNonNull(columnIndex, 'columnIndex')
         checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
             table.rowKeySet.size, rowIndex)
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
@@ -62,34 +108,96 @@ abstract class Matrix<E, V, M> {
         table.get(rowIndex, columnIndex)
     }
 
+    /**
+     * Returns the matrix row as {@link ImmutableMap} dependent on the given row index
+     * 
+     * @param rowIndex the row index
+     * @return the row
+     * @throws NullPointerException if {@code rowIndex == null}
+     * @throws IllegalArgumentException if {@code rowIndex < 1 || rowSize < rowIndex}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#row
+     */
     def row(Integer rowIndex) {
+        requireNonNull(rowIndex, 'rowIndex')
         checkArgument(table.rowKeySet.contains(rowIndex), 'expected row index in [1, %s] but actual %s',
             table.rowKeySet.size, rowIndex)
         table.row(rowIndex)
     }
 
+    /**
+     * Returns the matrix column as {@link ImmutableMap} dependent on the given column index
+     * 
+     * @param columnIndex the column index
+     * @return the column
+     * @throws NullPointerException if {@code columnIndex == null}
+     * @throws IllegalArgumentException if {@code columnIndex < 1 || columnSize < columnIndex}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#column
+     */
     def column(Integer columnIndex) {
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
         table.column(columnIndex)
     }
 
+    /**
+     * Returns all matrix rows as {@link ImmutableMap}
+     * 
+     * @return the rows
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#rowMap
+     */
     def rows() {
         table.rowMap
     }
 
+    /**
+     * Returns all matrix columns as {@link ImmutableMap}
+     * 
+     * @return the columns
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#columnMap
+     */
     def columns() {
         table.columnMap
     }
 
+    /**
+     * Returns the size of matrix
+     * 
+     * @return the size
+     * @since 1
+     * @author Lars Tennstedt
+     */
     def size() {
         Long::valueOf(rowSize) * Long::valueOf(columnSize)
     }
 
+    /**
+     * Returns the row size of matrix
+     * 
+     * @return the row size
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Set#size
+     */
     def rowSize() {
         table.rowKeySet.size
     }
 
+    /**
+     * Returns the column size of matrix
+     * 
+     * @return the column size
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Set#size
+     */
     def columnSize() {
         table.columnKeySet.size
     }
