@@ -39,7 +39,8 @@ import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 /**
- * An immutable implementation of a complex number which uses {@code BigDecimal} for the real and imaginary part
+ * An immutable implementation of a complex number which uses {@link BigDecimal} as type for its real and imaginary 
+ * part
  * 
  * @since 1
  * @author Lars Tennstedt
@@ -47,8 +48,19 @@ import static java.util.Objects.requireNonNull
 @Beta
 @FinalFieldsConstructor
 final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
+    /**
+     * {@code 0} as {@link RealComplexNumber}
+     */
     public static val ZERO = new RealComplexNumber(0BD, 0BD)
+
+    /**
+     * {@code 1} as {@link RealComplexNumber}
+     */
     public static val ONE = new RealComplexNumber(1BD, 0BD)
+
+    /**
+     * {@code i} as {@link RealComplexNumber}
+     */
     public static val I = new RealComplexNumber(0BD, 1BD)
 
     /**
@@ -67,8 +79,8 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns the sum of this {@link RealComplexNumber} and the given one
      * 
-     * @param summand {@link RealComplexNumber}
-     * @return sum {@link RealComplexNumber}
+     * @param summand the summand
+     * @return The sum of this {@link RealComplexNumber} and the given one
      * @throws NullPointerException if {@code summand == null}
      * @since 1
      * @author Lars Tennstedt
@@ -81,8 +93,8 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns the difference of this {@link RealComplexNumber} and the given one
      * 
-     * @param subtrahend {@link RealComplexNumber}
-     * @return difference {@link RealComplexNumber}
+     * @param subtrahend the subtrahend
+     * @return The difference of this {@link RealComplexNumber} and the given one
      * @throws NullPointerException if {@code subtrahend == null}
      * @since 1
      * @author Lars Tennstedt
@@ -95,8 +107,8 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns the product of this {@link RealComplexNumber} and the given one
      * 
-     * @param factor {@link RealComplexNumber}
-     * @return product {@link RealComplexNumber}
+     * @param factor the factor
+     * @return The product of this {@link RealComplexNumber} and the given one
      * @throws NullPointerException if {@code factor == null}
      * @since 1
      * @author Lars Tennstedt
@@ -111,8 +123,8 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns the quotient of this {@link RealComplexNumber} and the given one
      * 
-     * @param divisor {@link RealComplexNumber}
-     * @return quotient {@link RealComplexNumber}
+     * @param divisor the divisor
+     * @return The quotient of this {@link RealComplexNumber} and the given one
      * @throws NullPointerException if {@code divisor == null}
      * @throws IllegalArgumentException if {@code divisor == 0}
      * @since 1
@@ -130,8 +142,8 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns power of this {@link RealComplexNumber} by the given exponent
      * 
-     * @param exponent int
-     * @return power {@link RealComplexNumber}
+     * @param exponent the exponent
+     * @return The power of this {@link RealComplexNumber} raised by the given {@code exponent}
      * @throws IllegalArgumentException if {@code exponent < 0}
      * @since 1
      * @author Lars Tennstedt
@@ -148,7 +160,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns the negated {@link RealComplexNumber} of this one
      * 
-     * @return negated {@link RealComplexNumber}
+     * @return The negated {@link RealComplexNumber} of this one
      * @since 1
      * @author Lars Tennstedt
      */
@@ -159,7 +171,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns the inverted {@link RealComplexNumber} of this one
      * 
-     * @return inverted {@link RealComplexNumber}
+     * @return The inverted {@link RealComplexNumber} of this one
      * @throws IllegalStateException if {@code this == 0}
      * @since 1
      * @author Lars Tennstedt
@@ -172,7 +184,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns if this {@link RealComplexNumber} is invertible
      * 
-     * @return {@code true} if {@code this != 0}, {@code false} otherwise
+     * @return {@code true} if {@code this != ZERO}, {@code false} otherwise
      * @since 1
      * @author Lars Tennstedt
      */
@@ -183,7 +195,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns a string representation of this {@link RealComplexNumber}
      * 
-     * @return string {@link String}
+     * @return The string representation of this {@link RealComplexNumber}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -205,7 +217,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns the square of the absolute of this {@link RealComplexNumber}
      * 
-     * @return square of the absolute {@link BigDecimal}
+     * @return The square of the absolute of this {@link RealComplexNumber}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -216,7 +228,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns the absolute of this {@link RealComplexNumber}
      * 
-     * @return absolute {@link BigDecimal}
+     * @return The absolute of this {@link RealComplexNumber}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -227,7 +239,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns the conjugate of this {@link RealComplexNumber}
      * 
-     * @return conjugated {@link RealComplexNumber}
+     * @return The conjugated of this {@link RealComplexNumber}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -238,7 +250,7 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     /**
      * Returns a matrix representation of this {@link RealComplexNumber}
      * 
-     * @return matrix {@link DecimalMatrix}
+     * @return The matrix representation of this {@link RealComplexNumber}
      * @since 1
      * @author Lars Tennstedt
      */

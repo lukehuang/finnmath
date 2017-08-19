@@ -63,8 +63,8 @@ final class MathRandom {
     /**
      * Returns a positive {@code long} bounded below by {@code 0} (inclusive) and above by {@code bound} (exclusive)
      * 
-     * @param bound {@code long}
-     * @return long {@code long}
+     * @param bound the bound
+     * @return A pseudo random {@code long}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @since 1
      * @author Lars Tennstedt
@@ -77,8 +77,8 @@ final class MathRandom {
     /**
      * Returns a negative {@code long} bounded below by {@code -bound} (exclusive) and above by {@code 0} (inclusive)
      * 
-     * @param bound {@code long}
-     * @return long {@code long}
+     * @param bound the bound
+     * @return A pseudo random {@code long}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @since 1
      * @author Lars Tennstedt
@@ -91,8 +91,8 @@ final class MathRandom {
     /**
      * Returns a {@code long} bounded below by {@code -bound} (exclusive) and above by {@code bound} (exclusive)
      * 
-     * @param bound {@code long}
-     * @return long {@code long}
+     * @param bound the bound
+     * @return A pseudo random {@code long}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @since 1
      * @author Lars Tennstedt
@@ -107,9 +107,9 @@ final class MathRandom {
     /**
      * Returns an array of the length of {@code howMany} containing positive {@code long longs}
      * 
-     * @param bound {@code long}
-     * @param howMany {@code int}
-     * @return long array {@code long[]}
+     * @param bound the bound
+     * @param howMany the length of the resulting array
+     * @return An array of pseudo random {@code long longs}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextPositiveLong
@@ -130,7 +130,7 @@ final class MathRandom {
      * 
      * @param bound  {@code long}
      * @param howMany  {@code int}
-     * @return long array  {@code long[]}
+     * @return An array of pseudo random {@code long longs}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextNegativeLong
@@ -149,9 +149,9 @@ final class MathRandom {
     /**
      * Returns an array of the length of {@code howMany} containing {@code long longs}
      * 
-     * @param bound {@code long}
-     * @param howMany  {@code int}
-     * @return long array  {@code long[]}
+     * @param bound the bound
+     * @param howMany the length of the resulting array
+     * @return An array of pseudo random {@code long longs}
      * @throws IllegalArgumentException if {@code  bound < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextLong
@@ -171,9 +171,9 @@ final class MathRandom {
      * Returns a positive {@link BigDecimal} of a given {@code scale} bounded below by {@code 0} (inclusive) and above  
      * by {@code bound} (exclusive)
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @return BigDecimal {@link BigDecimal}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @return A pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @since 1
@@ -192,9 +192,9 @@ final class MathRandom {
      * Returns a negative {@link BigDecimal} of a given {@code scale} bounded below by {@code -bound} (exclusive) and  
      * above by {@code 0} (inclusive)
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @return BigDecimal {@link BigDecimal}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @return A pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @since 1
@@ -213,9 +213,9 @@ final class MathRandom {
      * Returns a {@link BigDecimal} of a given {@code scale} bounded below by {@code -bound} (exclusive) and above by  
      * {@code bound} (exclusive)
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @return BigDecimal {@link BigDecimal}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @return A pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @since 1
@@ -231,9 +231,9 @@ final class MathRandom {
     /**
      * Returns a positive {@link BigDecimal} which is invertible
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @return BigDecimal {@link BigDecimal}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @return A pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @see #nextPositiveDecimal
@@ -252,9 +252,9 @@ final class MathRandom {
     /**
      * Returns a negative {@link BigDecimal} which is invertible
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @return BigDecimal {@link BigDecimal}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @return A pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @see #nextNegativeDecimal
@@ -274,9 +274,9 @@ final class MathRandom {
     /**
      * Returns a {@link BigDecimal} which is invertible
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @return BigDecimal {@link BigDecimal}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @return A pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @see #nextDecimal
@@ -307,10 +307,10 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing positive {@link BigDecimal BigDecimals}
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
@@ -331,10 +331,10 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing negative {@link BigDecimal BigDecimals}
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
@@ -355,10 +355,10 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing {@link BigDecimal BigDecimals}
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
@@ -380,10 +380,10 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing positive {@link BigDecimal BigDecimals} which 
      * are invertible
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
@@ -405,10 +405,10 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing negative {@link BigDecimal BigDecimals} which 
      * are invertible
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
@@ -430,10 +430,10 @@ final class MathRandom {
      * Returns a {@code List} of the size of {@code howMany} containing {@link BigDecimal BigDecimals} which are 
      * invertible
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
@@ -456,8 +456,8 @@ final class MathRandom {
      * {@code bound} (exclusive) and whose {@code denominator} is bounded below {@code 1} (inclusive) and {@code bound} 
      * (exclusive)
      * 
-     * @param bound {@code long}
-     * @return Fraction {@link Fraction}
+     * @param bound the bound
+     * @return A pseudo random {@link Fraction}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @since 1
      * @author Lars Tennstedt
@@ -474,8 +474,8 @@ final class MathRandom {
      * {@code 0} (inclusive) and whose {@code denominator} is bounded below {@code 1} (inclusive) and {@code bound}  
      * (exclusive)
      * 
-     * @param bound {@code long}
-     * @return Fraction {@link Fraction}
+     * @param bound the bound
+     * @return A pseudo random {@link Fraction}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @since 1
      * @author Lars Tennstedt
@@ -490,8 +490,8 @@ final class MathRandom {
      * {@code bound} (exclusive) and whose {@code denominator} is bounded below {@code -bound} (exclusive) and  
      * {@code bound} (exclusive)
      * 
-     * @param bound {@code long}
-     * @return Fraction {@link Fraction}
+     * @param bound the bound
+     * @return A pseudo random {@link Fraction}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @since 1
      * @author Lars Tennstedt
@@ -506,9 +506,9 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing positive {@link Fraction Fractions}
      * 
-     * @param bound {@code long}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link Fraction Fractions} 
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextPositiveFraction
@@ -527,9 +527,9 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing negative {@link Fraction Fractions}
      * 
-     * @param bound {@code long}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextNegativeFraction
@@ -548,9 +548,9 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing {@link Fraction Fractions}
      * 
-     * @param bound {@code long}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextFraction
@@ -569,8 +569,8 @@ final class MathRandom {
     /**
      * Returns a positive {@link Fraction} which is invertible
      * 
-     * @param bound {@code long}
-     * @return Fraction {@link Fraction}
+     * @param bound the bound
+     * @return A pseudo random {@link Fraction}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @see #nextPositiveFraction
      * @since 1
@@ -586,8 +586,8 @@ final class MathRandom {
     /**
      * Returns a negative {@link Fraction} which is invertible
      * 
-     * @param bound {@code long}
-     * @return Fraction {@link Fraction}
+     * @param bound the bound
+     * @return A pseudo random {@link Fraction}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @see #nextNegativeFraction
      * @since 1
@@ -601,8 +601,8 @@ final class MathRandom {
     /**
      * Returns a {@link Fraction} which is invertible
      * 
-     * @param bound {@code long}
-     * @return Fraction {@link Fraction}
+     * @param bound the bound
+     * @return A pseudo random {@link Fraction}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @see #nextFraction
      * @since 1
@@ -619,9 +619,9 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing positive {@link Fraction Fractions} which are 
      * invertible
      * 
-     * @param bound {@code long}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertiblePositiveFraction
@@ -641,9 +641,9 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing negative {@link Fraction Fractions} which are 
      * invertible
      * 
-     * @param bound {@code long}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertibleNegativeFraction
@@ -663,9 +663,9 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link Fraction Fractions} which are 
      * invertible
      * 
-     * @param bound {@code long}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertibleFraction
@@ -685,8 +685,8 @@ final class MathRandom {
      * Returns a {@link SimpleComplexNumber} whose {@code real} and {@code imaginary} part are bounded below by 
      * {@code -bound} (exclusive) and above by {@code bound} (exclusive)
      * 
-     * @param bound {@code long}
-     * @return SimpleComplexNumber {@link SimpleComplexNumber}
+     * @param bound the bound
+     * @return A pseudo random {@link SimpleComplexNumber}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @since 1
      * @author Lars Tennstedt
@@ -701,8 +701,8 @@ final class MathRandom {
     /**
      * Returns a {@link SimpleComplexNumber} which is invertible
      * 
-     * @param bound {@code long}
-     * @return SimpleComplexNumber {@link SimpleComplexNumber}
+     * @param bound the bound
+     * @return A pseudo random {@link SimpleComplexNumber}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @see #nextSimpleComplexNumber
      * @since 1
@@ -721,9 +721,9 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing 
      * {@link SimpleComplexNumber SimpleComplexNumbers}
      * 
-     * @param bound {@code long}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param howMany the size of the resulting {@link List}
+     * @return A List {@link List} of pseudo random {@link SimpleComplexNumber SimpleComplexNumbers}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextSimpleComplexNumber
@@ -743,9 +743,9 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing 
      * {@link SimpleComplexNumber SimpleComplexNumbers} which are invertible
      * 
-     * @param bound {@code long}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link SimpleComplexNumber SimpleComplexNumbers} 
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertibleSimpleComplexNumber
@@ -765,9 +765,9 @@ final class MathRandom {
      * Returns a {@link RealComplexNumber} whose {@code real} and {@code imaginary} part are bounded below by 
      * {@code -bound} (exclusive) and above by {@code bound} (exclusive)
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @return RealComplexNumber {@link RealComplexNumber}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @return A pseudo random {@link RealComplexNumber}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @since 1
      * @author Lars Tennstedt
@@ -783,9 +783,9 @@ final class MathRandom {
     /**
      * Returns a {@link RealComplexNumber} which is invertible
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @return RealComplexNumber {@link RealComplexNumber}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @return A pseudo random {@link RealComplexNumber}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @see #nextRealComplexNumber
      * @since 1
@@ -807,10 +807,10 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing {@link RealComplexNumber RealComplexNumbers}
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link RealComplexNumber RealComplexNumbers}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextRealComplexNumber
@@ -831,10 +831,10 @@ final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link RealComplexNumber RealComplexNumbers} 
      * which are invertible
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link RealComplexNumber RealComplexNumbers}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextInvertibleRealComplexNumber
@@ -854,9 +854,9 @@ final class MathRandom {
     /**
      * Returns a {@link BigIntVector}
      * 
-     * @param bound {@code long}
-     * @param size {@code int}
-     * @return BigIntVector {@link BigIntVector} 
+     * @param bound the bound
+     * @param size the size of the resulting {@link BigIntVector}  
+     * @return A pseudo random {@link BigIntVector} 
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code size < 1}
      * @see #nextLong
@@ -875,10 +875,10 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing {@link BigIntVector BigIntVectors}
      * 
-     * @param bound {@code long}
-     * @param size {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param size the sizes of the resulting {@link BigIntVector BigIntVectors}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link BigIntVector BigIntVectors}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
      * @see #nextBigIntVector
@@ -898,10 +898,10 @@ final class MathRandom {
     /**
      * Returns a {@link BigIntMatrix}
      * 
-     * @param bound {@code long}
-     * @param rowSize {@code int}
-     * @param columnSize {@code int}
-     * @return BigIntMatrix {@link BigIntMatrix} 
+     * @param bound the bound
+     * @param rowSize the row size of the resulting {@link BigIntMatrix}
+     * @param columnSize the column size of the resulting {@link BigIntMatrix}
+     * @return A pseudo random {@link BigIntMatrix} 
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}
      * @throws IllegalArgumentException if {@code columnSize < 1}
@@ -925,11 +925,11 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing {@link BigIntMatrix BigIntMatrices}
      * 
-     * @param bound {@code long}
-     * @param rowSize {@code int}
-     * @param columnSize {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param rowSize the row size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param columnSize the column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link BigIntMatrix BigIntMatrices}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}
      * @throws IllegalArgumentException if {@code columnSize < 1}
@@ -952,10 +952,10 @@ final class MathRandom {
     /**
      * Returns a {@link DecimalVector}
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param size {@code int}
-     * @return DecimalVector {@link DecimalVector} 
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param size the size of the resulting {@link DecimalVector}
+     * @return A speudo random {@link DecimalVector} 
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code size < 1}
@@ -976,11 +976,11 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing {@link DecimalVector DecimalVectors}
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param size {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param size the size of the resulting {@link DecimalVector DecimalVectors}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link DecimalVector DecimalVectors}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}
@@ -1004,11 +1004,11 @@ final class MathRandom {
     /**
      * Returns a {@link DecimalMatrix}
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param rowSize {@code int}
-     * @param columnSize {@code int}
-     * @return DecimalMatrix {@link DecimalMatrix} 
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param rowSize the row size of the resulting {@link DecimalMatrix}
+     * @param columnSize the column size of the resulting {@link DecimalMatrix}
+     * @return A pseudo random {@link DecimalMatrix} 
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}
@@ -1034,12 +1034,12 @@ final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing {@link DecimalMatrix DecimalMatrices}
      * 
-     * @param bound {@code long}
-     * @param scale {@code int}
-     * @param rowSize {@code int}
-     * @param columnSize {@code int}
-     * @param howMany {@code int}
-     * @return List {@link List}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param rowSize the row size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param columnSize the column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link DecimalMatrix DecimalMatrices}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}

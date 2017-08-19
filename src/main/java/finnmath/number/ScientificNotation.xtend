@@ -37,7 +37,8 @@ import org.eclipse.xtend.lib.annotations.ToString
 import static java.util.Objects.requireNonNull
 
 /**
- * Represents the scientific notation for a decimal number
+ * Represents the scientific notation for a decimal number which uses {@link BigDecimal} as type for its coefficient 
+ * and {@code int} as type for its exponent
  * <p>
  * decimal = coefficient * 10^exponent
  * 
@@ -63,8 +64,8 @@ final class ScientificNotation {
     /**
      * Constructs a {@link ScientificNotation} from the given coefficient and exponent
      * 
-     * @param coefficient {@link BigDecimal}
-     * @param exponent int
+     * @param coefficient the coefficient
+     * @param exponent the exponent
      * @throws NullPointerException if {@code coefficient == null}
      * @since 1
      * @author Lars Tennstedt
@@ -77,7 +78,7 @@ final class ScientificNotation {
     /**
      * Returns a string representation of this {@link ScientificNotation}
      * 
-     * @return string {@link String}
+     * @return The string representation of this {@link ScientificNotation}
      * @since 1
      * @author Lars Tennstedt
      */

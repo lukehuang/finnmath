@@ -31,6 +31,7 @@ package finnmath.linear
 import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableMap
 import java.math.BigDecimal
+import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.ToString
@@ -38,17 +39,37 @@ import org.eclipse.xtend.lib.annotations.ToString
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
 
+/**
+ * An abstract class for vectors
+ */
 @Beta
 @EqualsHashCode
 @ToString
 @Accessors
 abstract class Vector<E, V, N> {
+    /**
+     * The map holding the entries of this {@link Vector}
+     * 
+     * @since 1
+     * @author Lars Tennstedt
+     */
     protected val ImmutableMap<Integer, E> map
 
     protected new(ImmutableMap<Integer, E> map) {
         this.map = map
     }
 
+    /**
+     * Returns the entry found by the given index
+     * 
+     * @param index the index of the entry
+     * @return The entry found by the given index
+     * @throws NullPointerException if {@code index == null}
+     * @throws IllegalArgumentException if {@code !map.containsKey(index)}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Map#containsKey
+     */
     def entry(Integer index) {
         requireNonNull(index, 'index')
         checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
