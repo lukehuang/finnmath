@@ -55,19 +55,19 @@ dependencies {
 	testCompile 'junit:junit:4.12'
 }
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
 task sourcesJar(type: Jar, dependsOn: classes) {
 	classifier = 'sources'
 	from sourceSets.main.allSource
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-	classifier = 'javadoc'
-	from javadoc.destinationDir
-}
-
 artifacts {
+    archives javadocJar
 	archives sourcesJar
-	archives javadocJar
 }
 
 uploadArchives { repositories { mavenLocal() } }
