@@ -256,6 +256,8 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @return {@code -1} if {@code this < other}, {@code 1} if {@code this > other}, {@code 0} otherwise
      * @since 1
      * @author Lars Tennstedt
+     * @see #lessThan
+     * @see #greaterThan
      */
     override compareTo(Fraction other) {
         requireNonNull(other, 'other')
@@ -273,6 +275,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @return {@code true} if {@code this <= other}, {@code false} otherwise
      * @since 1
      * @author Lars Tennstedt
+     * @see #normalize
      */
     def lessThanOrEqualTo(Fraction other) {
         requireNonNull(other, 'other')
@@ -289,6 +292,8 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @return {@code true} if {@code this >= other}, {@code false} otherwise
      * @since 1
      * @author Lars Tennstedt
+     * @see #lessThanOrEqualTo
+     * @see #equivalent
      */
     def greaterThanOrEqualTo(Fraction other) {
         requireNonNull(other, 'other')
@@ -302,6 +307,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @return {@code true} if {@code this < other}, {@code false} otherwise
      * @since 1
      * @author Lars Tennstedt
+     * @see #greaterThanOrEqualTo
      */
     def lessThan(Fraction other) {
         requireNonNull(other, 'other')
@@ -316,6 +322,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @return {@code true} if {@code this < other}, {@code false} otherwise
      * @since 1
      * @author Lars Tennstedt
+     * @see #lessThanOrEqualTo
      */
     def greaterThan(Fraction other) {
         requireNonNull(other, 'other')
@@ -331,6 +338,9 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @return The minimum of this {@link Fraction} and the other one
      * @since 1
      * @author Lars Tennstedt
+     * @see #greaterThan
+     * @see #normalize
+     * @see #reduce
      */
     def min(Fraction other) {
         requireNonNull(other, 'other')
@@ -348,6 +358,9 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @return The maximum of this {@link Fraction} and the other one
      * @since 1
      * @author Lars Tennstedt
+     * @see #lessThan
+     * @see #normalize
+     * @see #reduce
      */
     def max(Fraction other) {
         requireNonNull(other, 'other')
@@ -365,6 +378,9 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * {@code signum == 0}, {@code this} otherwise
      * @since 1
      * @author Lars Tennstedt
+     * @see #signum
+     * @see #abs
+     * @see BigInteger#abs
      * @see #reduce
      */
     def normalize() {
@@ -373,7 +389,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
         if (signum == 0)
             return ZERO
         if (numerator < 0BI)
-            return new Fraction(numerator.abs, denominator.abs)
+            return abs
         this
     }
 
@@ -387,6 +403,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
+     * @see BigInteger#abs
      */
     def abs() {
         new Fraction(numerator.abs, denominator.abs)
@@ -398,6 +415,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @return The signum of this {@link Fraction}
      * @since 1
      * @author Lars Tennstedt
+     * @see BigInteger#signum
      */
     def signum() {
         numerator.signum * denominator.signum
@@ -412,6 +430,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @since 1
      * @author Lars Tennstedt
      * @see #normalize
+     * @see BigInteger#gcd
      */
     def reduce() {
         val gcd = numerator.gcd(denominator)
