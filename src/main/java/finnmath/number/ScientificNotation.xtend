@@ -78,7 +78,7 @@ final class ScientificNotation {
     /**
      * Returns a string representation of this {@link ScientificNotation}
      * 
-     * @return The string representation of this {@link ScientificNotation}
+     * @return The string representation
      * @since 1
      * @author Lars Tennstedt
      */

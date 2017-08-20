@@ -268,7 +268,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
      * 
      * @param vector The other {@link BigIntVector}
      * @param precision the precision for the termination condition
-     * @return The the distance
+     * @return The distance
      * @throws NullPointerException if {@code vector == null}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
@@ -292,7 +292,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
      * @param vector The other {@link BigIntVector}
      * @param scale the scale to be set on the result
      * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The the distance
+     * @return The distance
      * @throws NullPointerException if {@code vector == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
      * @throws IllegalArgumentException if {@code scale < 0}
@@ -318,7 +318,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
      * @param precision the precision for the termination condition
      * @param scale the scale to be set on the result
      * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The the distance
+     * @return The distance
      * @throws NullPointerException if {@code vector == null}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
@@ -356,7 +356,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
      * Returns a {@link BigIntVectorBuilder}
      * 
      * @param size the size the resulting {@link BigIntVector}
-     * @return the {@link BigIntVectorBuilder}
+     * @return A {@link BigIntVectorBuilder}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -390,10 +390,11 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
         /**
          * Returns the built {@link BigIntVector}
          * 
-         * @return the {@link BigIntVector}
+         * @return The {@link BigIntVector}
          * @throws NullPointerException if one {@code entry == null}
          * @since 1
-         * @author Lars Tennstedt  
+         * @author Lars Tennstedt
+         * @see ImmutableMap#copyOf
          */
         override build() {
             map.forEach [ index, entry |

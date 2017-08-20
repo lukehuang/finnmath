@@ -269,7 +269,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * 
      * @param vector The other {@link DecimalVector}
      * @param precision the precision for the termination condition
-     * @return The the distance
+     * @return The distance
      * @throws NullPointerException if {@code vector == null}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
@@ -293,7 +293,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * @param vector The other {@link DecimalVector}
      * @param scale the scale to be set on the result
      * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The the distance
+     * @return The distance
      * @throws NullPointerException if {@code vector == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
      * @throws IllegalArgumentException if {@code scale < 0}
@@ -319,7 +319,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * @param precision the precision for the termination condition
      * @param scale the scale to be set on the result
      * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The the distance
+     * @return The distance
      * @throws NullPointerException if {@code vector == null}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
@@ -357,7 +357,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * Returns a {@link DecimalVectorBuilder}
      * 
      * @param size the size the resulting {@link DecimalVector}
-     * @return the {@link DecimalVectorBuilder}
+     * @return A {@link DecimalVectorBuilder}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -391,10 +391,11 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         /**
          * Returns the built {@link DecimalVector}
          * 
-         * @return the {@link DecimalVector}
+         * @return The {@link DecimalVector}
          * @throws NullPointerException if one {@code entry == null}
          * @since 1
-         * @author Lars Tennstedt  
+         * @author Lars Tennstedt
+         * @see ImmutableMap#copyOf  
          */
         override build() {
             map.forEach [ index, entry |

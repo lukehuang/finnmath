@@ -43,6 +43,7 @@ import static java.util.Objects.requireNonNull
 /**
  * @since 1
  * @author Lars Tennstedt
+ * @see ImmutableTable
  */
 @Beta
 @EqualsHashCode
@@ -89,7 +90,7 @@ abstract class Matrix<E, V, M> {
      * 
      * @param rowIndex the row index
      * @param columnIndex the column index
-     * @return the entry
+     * @return The entry
      * @throws NullPointerException if {@code rowIndex == null}
      * @throws NullPointerException if {@code columnIndex == null}
      * @throws IllegalArgumentException if {@code rowIndex < 1 || rowSize < rowIndex}
@@ -112,7 +113,7 @@ abstract class Matrix<E, V, M> {
      * Returns the matrix row as {@link ImmutableMap} dependent on the given row index
      * 
      * @param rowIndex the row index
-     * @return the row
+     * @return The row
      * @throws NullPointerException if {@code rowIndex == null}
      * @throws IllegalArgumentException if {@code rowIndex < 1 || rowSize < rowIndex}
      * @since 1
@@ -130,7 +131,7 @@ abstract class Matrix<E, V, M> {
      * Returns the matrix column as {@link ImmutableMap} dependent on the given column index
      * 
      * @param columnIndex the column index
-     * @return the column
+     * @return The column
      * @throws NullPointerException if {@code columnIndex == null}
      * @throws IllegalArgumentException if {@code columnIndex < 1 || columnSize < columnIndex}
      * @since 1
@@ -146,7 +147,7 @@ abstract class Matrix<E, V, M> {
     /**
      * Returns all matrix rows as {@link ImmutableMap}
      * 
-     * @return the rows
+     * @return The rows
      * @since 1
      * @author Lars Tennstedt
      * @see Table#rowMap
@@ -158,7 +159,7 @@ abstract class Matrix<E, V, M> {
     /**
      * Returns all matrix columns as {@link ImmutableMap}
      * 
-     * @return the columns
+     * @return The columns
      * @since 1
      * @author Lars Tennstedt
      * @see Table#columnMap
@@ -170,7 +171,7 @@ abstract class Matrix<E, V, M> {
     /**
      * Returns the size of matrix
      * 
-     * @return the size
+     * @return The size
      * @since 1
      * @author Lars Tennstedt
      */
@@ -181,7 +182,7 @@ abstract class Matrix<E, V, M> {
     /**
      * Returns the row size of matrix
      * 
-     * @return the row size
+     * @return The row size
      * @since 1
      * @author Lars Tennstedt
      * @see Set#size
@@ -193,7 +194,7 @@ abstract class Matrix<E, V, M> {
     /**
      * Returns the column size of matrix
      * 
-     * @return the column size
+     * @return The column size
      * @since 1
      * @author Lars Tennstedt
      * @see Set#size
@@ -210,7 +211,7 @@ abstract class Matrix<E, V, M> {
 
     def V multiplyVector(V vector)
 
-    def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
+    protected def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
 
     def M scalarMultiply(E scalar)
 

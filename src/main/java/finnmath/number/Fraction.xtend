@@ -76,7 +76,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
      * @param numerator the numerator
-     * @param denominator  the denominator
+     * @param denominator the denominator
      * @throws NullPointerException if {@code numerator == null}
      * @throws NullPointerException if {@code denominator == null}
      * @throws IllegalArgumentException if {@code denominator == 0}
@@ -97,7 +97,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
      * @param summand the summand
-     * @return The sum of this {@link Fraction} and the summand
+     * @return The sum
      * @throws NullPointerException if {@code summand == null}
      * @since 1
      * @author Lars Tennstedt
@@ -117,7 +117,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
      * @param subtrahend the subtrahend
-     * @return The difference of this {@link Fraction} and the subtrahend
+     * @return The difference
      * @throws NullPointerException  if {@code subtrahend == null}
      * @since 1
      * @author Lars Tennstedt
@@ -137,7 +137,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
      * @param factor the factor
-     * @return The product of this {@link Fraction} and the factor 
+     * @return The product 
      * @throws NullPointerException if {@code factor == null}
      * @since 1
      * @author Lars Tennstedt
@@ -157,7 +157,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
      * @param divisor the divisor
-     * @return The quotient of this {@link Fraction} and the divisor
+     * @return The quotient
      * @throws NullPointerException if {@code divisor.numerator == null}
      * @throws IllegalArgumentException if {@code divisor.numerator == 0}
      * @since 1
@@ -177,7 +177,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
      * @param exponent the exponent
-     * @return The power of this {@link Fraction} raised by the exponent
+     * @return The power
      * @throws IllegalArgumentException if {@code exponent < 0}
      * @since 1
      * @author Lars Tennstedt
@@ -198,7 +198,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
-     * @return The negated {@link Fraction} of this one
+     * @return The negated
      * @since 1
      * @author Lars Tennstedt
      * @see #normalize
@@ -213,7 +213,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
-     * @return The inverted {@link Fraction} of this one
+     * @return The inverted
      * @throws IllegalStateException if {@code numerator == 0}
      * @since 1
      * @author Lars Tennstedt
@@ -239,7 +239,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
     /**
      * Returns a string representation of this {@link Fraction}
      * 
-     * @return The string representation of this {@link Fraction}
+     * @return The string representation
      * @since 1
      * @author Lars Tennstedt
      */
@@ -382,7 +382,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
-     * @return The absolute of this {@link Fraction}
+     * @return The absolute
      * @since 1
      * @author Lars Tennstedt
      * @see #normalize
@@ -408,7 +408,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * <p>
      * The returned {@link Fraction} is not normalized.
      * 
-     * @return The reduced {@link Fraction} of this one
+     * @return The reduced
      * @since 1
      * @author Lars Tennstedt
      * @see #normalize

@@ -42,6 +42,7 @@ import static java.util.Objects.requireNonNull
 /**
  * @since 1
  * @author Lars Tennstedt
+ * @see ImmutableMap
  */
 @Beta
 @EqualsHashCode
@@ -64,7 +65,7 @@ abstract class Vector<E, V, N> {
      * Returns the entry dependent on the given index
      * 
      * @param index the index of the entry
-     * @return The entry found by the given index
+     * @return The entry
      * @throws NullPointerException if {@code index == null}
      * @throws IllegalArgumentException if {@code !map.containsKey(index)}
      * @since 1

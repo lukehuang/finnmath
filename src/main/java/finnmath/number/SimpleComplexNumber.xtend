@@ -64,10 +64,10 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     public static val I = new SimpleComplexNumber(0BI, 1BI)
 
     /**
-     * Returns the sum of this {@link SimpleComplexNumber} complex number and the given one
+     * Returns the sum of this {@link SimpleComplexNumber} and the given one
      * 
      * @param summand The summand
-     * @return The sum of this {@link SimpleComplexNumber} and the given one
+     * @return The sum
      * @throws NullPointerException if {@code summand == null}
      * @since 1
      * @author Lars Tennstedt
@@ -81,7 +81,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
      * Returns the difference of this {@link SimpleComplexNumber} and the given one
      * 
      * @param subtrahend the subtrahend
-     * @return The difference of this {@link SimpleComplexNumber} and the given one
+     * @return The difference
      * @throws NullPointerException if {@code subtrahend == null}
      * @since 1
      * @author Lars Tennstedt
@@ -95,7 +95,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
      * Returns the product of this {@link SimpleComplexNumber} and the given one
      * 
      * @param factor the factor
-     * @return The product of this {@link SimpleComplexNumber} and the given one
+     * @return The product
      * @throws NullPointerException if {@code factor == null}
      * @since 1
      * @author Lars Tennstedt
@@ -111,7 +111,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
      * Returns the quotient as {@link RealComplexNumber} of this {@link SimpleComplexNumber} and the given one
      * 
      * @param divisor the divisor
-     * @return The quotient of this {@link RealComplexNumber} and the given one
+     * @return The quotient
      * @throws NullPointerException if {@code divisor == null}
      * @throws IllegalArgumentException if {@code divisor == 0}
      * @since 1
@@ -127,7 +127,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
      * Returns the power of this {@link SimpleComplexNumber} raised by the given exponent
      * 
      * @param exponent the exponent
-     * @return The power of this {@link SimpleComplexNumber} raised by the given exponent
+     * @return The power
      * @throws IllegalArgumentException if {@code exponent < 0}
      * @since 1
      * @author Lars Tennstedt
@@ -144,7 +144,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     /**
      * Returns the negated {@link SimpleComplexNumber} of this one
      * 
-     * @return The negated {@link SimpleComplexNumber} of this one
+     * @return The negated
      * @since 1
      * @author Lars Tennstedt
      */
@@ -179,7 +179,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     /**
      * Returns a string representation of this {@link SimpleComplexNumber}
      * 
-     * @return The string representation of this {@link SimpleComplexNumber}
+     * @return The string representation
      * @since 1
      * @author Lars Tennstedt
      */
@@ -201,7 +201,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     /**
      * Returns the square of the absolute of this {@link SimpleComplexNumber}
      * 
-     * @return The square of the absolute of this {@link SimpleComplexNumber}
+     * @return The square of the absolute
      * @since 1
      * @author Lars Tennstedt
      */
@@ -212,7 +212,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     /**
      * Returns the absolute as {@link RealComplexNumber} of this {@link SimpleComplexNumber}
      * 
-     * @return The absolute of this {@link SimpleComplexNumber}
+     * @return The absolute
      * @since 1
      * @author Lars Tennstedt
      */
@@ -223,7 +223,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     /**
      * Returns the conjugate of this {@link SimpleComplexNumber}
      * 
-     * @return The conjugated of this {@link SimpleComplexNumber}
+     * @return The conjugated
      * @since 1
      * @author Lars Tennstedt
      */
@@ -234,7 +234,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     /**
      * Returns a matrix representation of this {@link SimpleComplexNumber}
      * 
-     * @return The matrix representation of this {@link SimpleComplexNumber}
+     * @return The matrix representation
      * @since 1
      * @author Lars Tennstedt
      */
