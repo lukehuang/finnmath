@@ -33,7 +33,7 @@ finnMath is still in a very early state and a work in progress.
 #
 	git clone https://github.com/togliu/finnmath.git
 	cd finnmath
-	gradle install
+	gradle publishToMavenLocal
 
 This will clone the remote Git repository, build finnmath and install it into your local Maven repository.
 
@@ -61,5 +61,6 @@ The code formatting follows loosely the Google Java style guide found here on Gi
 * the JUnit team for JUnit
 * Linus Torvalds for Git
 * Gradle Inc. for Gradle
+* Vyacheslav Rusakov for the Gradle POM plugin
 * GitHub Inc. for GitHub
 * Judd Vinet and Aaron Griffin for Arch Linux

@@ -26,22 +26,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-buildscript {
-	repositories { maven { url 'https://plugins.gradle.org/m2/' } }
-	
-	dependencies { classpath 'org.xtext:xtext-gradle-plugin:1.0.19' }
+plugins {
+    id 'java-library'
+    id 'org.xtext.xtend' version '1.0.19'
+    id 'ru.vyarus.pom' version '1.2.0'
+    id 'maven-publish'
+    id 'eclipse'
 }
-
-apply plugin: 'java-library'
-apply plugin: 'org.xtext.xtend'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
 
 description 'A math library for the JVM based on BigInteger and BigDecimal'
 group 'finnmath'
 version '1-SNAPSHOT'
 
-xtend { generator { suppressWarningsAnnotation = false } }
+xtend.generator { suppressWarningsAnnotation = false }
 
 repositories { jcenter() }
 
@@ -70,11 +67,55 @@ artifacts {
 	archives sourcesJar
 }
 
-uploadArchives { repositories { mavenLocal() } }
+pom {
+    name 'finnMath'
+    url 'https://github.com/togliu/finnmath'
+    inceptionYear '2017'
+    
+    licenses {
+        license {
+            name 'BSD 2-Clause License'
+            url 'https://opensource.org/licenses/BSD-2-Clause'
+        }
+    }
+    
+    developers {
+        developer {
+            id 'togliu'
+            name 'Lars Tennstedt'
+            
+            roles {
+                role 'architect'
+                role 'developer'
+            }
+            
+            timezone 'Europe/Berlin'
+        }
+    }
+    
+    issueManagement {
+        system 'GitHub'
+        url 'https://github.com/togliu/finnmath/issues'
+    }
+    
+    scm {
+        connection 'scm:git:https://github.com/togliu/finnmath.git'
+        tag 'master'
+        url 'https://github.com/togliu/finnmath'
+    }
+}
 
-eclipse {
-	classpath {
-		downloadJavadoc true
-		downloadSources true
-	}
+publishing.publications {
+    mavenJava(MavenPublication) {
+        from components.java
+        
+        artifact javadocJar { classifier 'javadoc' }
+        
+        artifact sourcesJar { classifier 'sources' }
+    }
+}
+
+eclipse.classpath {
+    downloadJavadoc true
+    downloadSources true
 }
