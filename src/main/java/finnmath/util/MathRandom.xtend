@@ -120,7 +120,7 @@ final class MathRandom {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val ints = newLongArrayOfSize(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             ints.set(i, nextPositiveLong(bound))
         ints
     }
@@ -141,7 +141,7 @@ final class MathRandom {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val ints = newLongArrayOfSize(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             ints.set(i, nextNegativeLong(bound))
         ints
     }
@@ -162,7 +162,7 @@ final class MathRandom {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val ints = newLongArrayOfSize(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             ints.set(i, nextLong(bound))
         ints
     }
@@ -323,7 +323,7 @@ final class MathRandom {
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             decimals += nextPositiveDecimal(bound, scale)
         decimals
     }
@@ -347,7 +347,7 @@ final class MathRandom {
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             decimals += nextNegativeDecimal(bound, scale)
         decimals
     }
@@ -371,7 +371,7 @@ final class MathRandom {
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             decimals += nextDecimal(bound, scale)
         decimals
     }
@@ -396,7 +396,7 @@ final class MathRandom {
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             decimals += nextInvertiblePositiveDecimal(bound, scale)
         decimals
     }
@@ -421,7 +421,7 @@ final class MathRandom {
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             decimals += nextInvertibleNegativeDecimal(bound, scale)
         decimals
     }
@@ -446,7 +446,7 @@ final class MathRandom {
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val List<BigDecimal> decimals = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             decimals += nextInvertibleDecimal(bound, scale)
         decimals
     }
@@ -519,7 +519,7 @@ final class MathRandom {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             fractions += nextPositiveFraction(bound)
         fractions
     }
@@ -540,7 +540,7 @@ final class MathRandom {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val List<Fraction> fractions = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             fractions += nextNegativeFraction(bound)
         fractions
     }
@@ -561,7 +561,7 @@ final class MathRandom {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val List<Fraction> fractions = new ArrayList(howMany)
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             fractions += nextFraction(bound)
         fractions
     }
@@ -632,7 +632,7 @@ final class MathRandom {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             fractions += nextInvertiblePositiveFraction(bound)
         fractions
     }
@@ -654,7 +654,7 @@ final class MathRandom {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             fractions += nextInvertibleNegativeFraction(bound)
         fractions
     }
@@ -676,7 +676,7 @@ final class MathRandom {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val fractions = new ArrayList<Fraction>(howMany) as List<Fraction>
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             fractions += nextInvertibleFraction(bound)
         fractions
     }
@@ -734,7 +734,7 @@ final class MathRandom {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val complexNumbers = new ArrayList<SimpleComplexNumber>(howMany) as List<SimpleComplexNumber>
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             complexNumbers += nextSimpleComplexNumber(bound)
         complexNumbers
     }
@@ -756,7 +756,7 @@ final class MathRandom {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val complexNumbers = new ArrayList<SimpleComplexNumber>(howMany) as List<SimpleComplexNumber>
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             complexNumbers += nextInvertibleSimpleComplexNumber(bound)
         complexNumbers
     }
@@ -822,7 +822,7 @@ final class MathRandom {
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val complexNumbers = new ArrayList<RealComplexNumber>(howMany) as List<RealComplexNumber>
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             complexNumbers += nextRealComplexNumber(bound, scale)
         complexNumbers
     }
@@ -846,7 +846,7 @@ final class MathRandom {
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val complexNumbers = new ArrayList<RealComplexNumber>(howMany) as List<RealComplexNumber>
-        for (i : 0 ..< howMany)
+        for (var i = 0; i < howMany; i++)
             complexNumbers += nextInvertibleRealComplexNumber(bound, scale)
         complexNumbers
     }
@@ -867,7 +867,7 @@ final class MathRandom {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
         val builder = BigIntVector::builder(size)
-        for (index : 1 .. size)
+        for (var i = 0; i < size; i++)
             builder.put(BigInteger::valueOf(nextLong(bound)))
         builder.build
     }
@@ -890,7 +890,7 @@ final class MathRandom {
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val vectors = new ArrayList<BigIntVector>(howMany) as List<BigIntVector>
-        for (i : 1 .. howMany)
+        for (var i = 0;  i < howMany; i++)
             vectors += nextBigIntVector(bound, size)
         vectors
     }
@@ -944,7 +944,7 @@ final class MathRandom {
         checkArgument(columnSize > 0, 'expected columnSize > 0 but actual %s', columnSize)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val matrices = new ArrayList<BigIntMatrix>(howMany) as List<BigIntMatrix>
-        for (i : 1 .. howMany)
+        for (var i = 0;  i < howMany; i++)
             matrices += nextBigIntMatrix(bound, rowSize, columnSize)
         matrices
     }
@@ -968,7 +968,7 @@ final class MathRandom {
         checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
         val builder = DecimalVector::builder(size)
-        for (index : 1 .. size)
+        for (var i = 0; i < size; i++)
             builder.put(nextDecimal(bound, scale))
         builder.build
     }
@@ -996,7 +996,7 @@ final class MathRandom {
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val vectors = new ArrayList<DecimalVector>(howMany) as List<DecimalVector>
-        for (i : 1 .. howMany)
+        for (var i = 0;  i < howMany; i++)
             vectors += nextDecimalVector(bound, scale, size)
         vectors
     }
@@ -1056,7 +1056,7 @@ final class MathRandom {
         checkArgument(columnSize > 0, 'expected columnSize > 0 but actual %s', columnSize)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val matrices = new ArrayList<DecimalMatrix>(howMany) as List<DecimalMatrix>
-        for (i : 1 .. howMany)
+        for (var i = 0; i < howMany; i++)
             matrices += nextDecimalMatrix(bound, scale, rowSize, columnSize)
         matrices
     }

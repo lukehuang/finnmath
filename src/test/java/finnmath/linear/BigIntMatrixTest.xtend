@@ -47,8 +47,6 @@ final class BigIntMatrixTest {
     static val List<BigIntMatrix> additionalOthersForAddition = newArrayList
     static val List<BigIntMatrix> othersForMultiplication = newArrayList
     static val List<BigIntMatrix> additionalOthersForMultiplication = newArrayList
-    static var BigIntVector zeroVector
-    static var BigIntVector vector
 
     @BeforeClass
     static def void setUp() {
@@ -65,7 +63,7 @@ final class BigIntMatrixTest {
         for (index : (1 .. rowSize))
             identyMatrixBuilder.put(index, index, 1BI)
         identityMatrix = identyMatrixBuilder.build
-        for (i : 1 .. howMany) {
+        for (var i = 0; i < howMany; i++) {
             matrices += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
             squarematrices += mathRandom.nextBigIntMatrix(bound, rowSize, rowSize)
             othersForAddition += mathRandom.nextBigIntMatrix(bound, rowSize, columnSize)
@@ -74,9 +72,6 @@ final class BigIntMatrixTest {
             additionalOthersForMultiplication +=
                 mathRandom.nextBigIntMatrix(bound, columnSizeForOthers, columnSizeForAdditionalOthers)
         }
-        val vectorBuilder = BigIntVector::builder(columnSize)
-        zeroVector = vectorBuilder.putAll(0BI).build
-        vector = mathRandom.nextBigIntVector(bound, columnSize)
     }
 
     @Test
