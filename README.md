@@ -1,5 +1,7 @@
 # finnMath: Math library for the JVM based on BigInteger and BigDecimal
 
+[![Build Status](https://travis-ci.org/togliu/finnmath.svg?branch=master)](https://travis-ci.org/togliu/finnmath)
+
 finnMath is a free software library for the JVM which provides or will provide implementations for fractions, 
 complex numbers, matrices and vectors and their arithmetics based on BigInteger and BigDecimal so that this 
 library is not prone to buffer overflows and big rounding errors. The great Commons Math uses primitives 
@@ -33,7 +35,7 @@ finnMath is still in a very early state and a work in progress.
 #
 	git clone https://github.com/togliu/finnmath.git
 	cd finnmath
-	gradle publishToMavenLocal
+	gradle install
 
 This will clone the remote Git repository, build finnmath and install it into your local Maven repository.
 
@@ -63,4 +65,6 @@ The code formatting follows loosely the Google Java style guide found here on Gi
 * Gradle Inc. for Gradle
 * Vyacheslav Rusakov for the Gradle POM plugin
 * GitHub Inc. for GitHub
+* Travis CI GmbH for Travis CI
 * Judd Vinet and Aaron Griffin for Arch Linux
+
