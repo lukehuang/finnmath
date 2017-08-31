@@ -306,9 +306,12 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
      * @see #diagonal
      */
     override id() {
-        if (diagonal)
+        if (diagonal) {
             for (index : table.rowKeySet)
-                return !(table.get(index, index) != 1BI)
+                if (table.get(index, index) != 1BI)
+                    return false
+            return true
+        }
         false
     }
 

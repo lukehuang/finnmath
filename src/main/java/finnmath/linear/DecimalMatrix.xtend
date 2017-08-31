@@ -306,9 +306,12 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
      * @see #diagonal
      */
     override id() {
-        if (diagonal)
+        if (diagonal) {
             for (index : table.rowKeySet)
-                return !(table.get(index, index) != 1BI)
+                if (table.get(index, index) != 1BI)
+                    return false
+            return true
+        }
         false
     }
 

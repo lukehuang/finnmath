@@ -67,6 +67,9 @@ final class SquareRootCalculator {
 
     static val log = LoggerFactory::getLogger(SquareRootCalculator)
 
+    private new() {
+    }
+
     /**
      * Returns the square root of the given {@link BigInteger}
      * 
