@@ -26,13 +26,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-plugins {
-    id 'java-library'
-    id 'org.xtext.xtend' version '1.0.19'
-    id 'ru.vyarus.pom' version '1.2.0'
-    id 'maven-publish'
-    id 'eclipse'
+buildscript {
+    repositories.maven { url 'https://plugins.gradle.org/m2/' }
+    
+    dependencies { classpath 'org.xtext:xtext-gradle-plugin:1.0.19' }
 }
+
+apply plugin: 'java-library'
+apply plugin: 'org.xtext.xtend'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
 
 description 'A math library for the JVM based on BigInteger and BigDecimal'
 group 'finnmath'
@@ -53,33 +56,31 @@ dependencies {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
     from javadoc.destinationDir
+    classifier = 'javadoc'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = 'sources'
 	from sourceSets.main.allSource
+    classifier = 'sources'
 }
 
-artifacts {
-    archives javadocJar
-	archives sourcesJar
-}
+artifacts { archives javadocJar, sourcesJar }
 
-pom {
-    name 'finnMath'
-    url 'https://github.com/togliu/finnmath'
-    inceptionYear '2017'
-    
-    licenses {
+install.repositories.mavenInstaller.pom.project {
+     name 'finnMath'
+     description 'A math library for the JVM based on BigInteger and BigDecimal'
+     url 'https://github.com/togliu/finnmath'
+     inceptionYear '2017'
+     
+     licenses {
         license {
             name 'BSD 2-Clause License'
             url 'https://opensource.org/licenses/BSD-2-Clause'
         }
-    }
-    
-    developers {
+     }
+     
+     developers {
         developer {
             id 'togliu'
             name 'Lars Tennstedt'
@@ -91,29 +92,21 @@ pom {
             
             timezone 'Europe/Berlin'
         }
-    }
-    
-    issueManagement {
+     }
+     
+     issueManagement {
         system 'GitHub'
         url 'https://github.com/togliu/finnmath/issues'
-    }
-    
-    scm {
+     }
+     
+     scm {
         connection 'scm:git:https://github.com/togliu/finnmath.git'
         tag 'master'
         url 'https://github.com/togliu/finnmath'
     }
 }
 
-publishing.publications {
-    mavenJava(MavenPublication) {
-        from components.java
-        
-        artifact javadocJar { classifier 'javadoc' }
-        
-        artifact sourcesJar { classifier 'sources' }
-    }
-}
+uploadArchives.repositories { mavenLocal() }
 
 eclipse.classpath {
     downloadJavadoc true
