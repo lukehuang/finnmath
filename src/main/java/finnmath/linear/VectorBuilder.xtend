@@ -87,7 +87,7 @@ abstract class VectorBuilder<E, V, B> implements Builder<V> {
      */
     def entry(Integer index) {
         requireNonNull(index, 'index')
-        checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', size, index)
+        checkArgument(0 < index && index <= size, 'expected index in [1, %s] but actual %s', size, index)
         map.get(index)
     }
 

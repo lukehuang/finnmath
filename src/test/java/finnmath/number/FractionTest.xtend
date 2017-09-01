@@ -388,6 +388,24 @@ final class FractionTest {
     }
 
     @Test
+    def void compareToNullShouldThrowException() {
+        assertThatThrownBy [
+            ZERO.compareTo(null)
+        ].isExactlyInstanceOf(NullPointerException).hasMessage('other')
+    }
+
+    @Test
+    def void compareToShouldSucceed() {
+        fractions.forEach [
+            val greater = add(ONE)
+            val lower = subtract(ONE)
+            assertEquals(compareTo(greater), -1)
+            assertEquals(compareTo(lower), 1)
+            assertEquals(compareTo(it), 0)
+        ]
+    }
+
+    @Test
     def void lessThanOrEqualToNullShouldThrowException() {
         assertThatThrownBy[
             ZERO.lessThanOrEqualTo(null)

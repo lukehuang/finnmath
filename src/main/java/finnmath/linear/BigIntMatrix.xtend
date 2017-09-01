@@ -140,7 +140,7 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
         requireNonNull(vector, 'vector')
         checkArgument(table.columnKeySet.size == vector.size, 'expected columnSize == vectorSize but actual %s != %s',
             table.columnKeySet.size, vector.size)
-        val builder = BigIntVector::builder(vector.size)
+        val builder = BigIntVector::builder(table.rowKeySet.size)
         table.rowMap.forEach [ rowIndex, row |
             row.forEach [ columnIndex, matrixEntry |
                 val oldEntry = builder.entry(rowIndex) ?: 0BI
