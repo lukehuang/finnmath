@@ -86,9 +86,9 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @see #reduce
      */
     new(BigInteger numerator, BigInteger denominator) {
-        checkArgument(denominator != 0BI, 'expected denominator != 0 but actual %s', denominator)
         this.numerator = requireNonNull(numerator, 'numerator')
         this.denominator = requireNonNull(denominator, 'denominator')
+        checkArgument(denominator != 0BI, 'expected denominator != 0 but actual %s', denominator)
     }
 
     /**

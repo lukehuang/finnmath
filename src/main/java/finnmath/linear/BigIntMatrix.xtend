@@ -38,7 +38,8 @@ import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 /**
- * An immutable implementation of a matrix which uses {@link BigInteger} as type for its entries
+ * An immutable implementation of a matrix which is based on {@link ImmutableTable} and uses {@link BigInteger} as 
+ * type for its entries
  * 
  * @since 1
  * @author Lars Tennstedt
@@ -142,7 +143,8 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
         val builder = BigIntVector::builder(vector.size)
         table.rowMap.forEach [ rowIndex, row |
             row.forEach [ columnIndex, matrixEntry |
-                builder.addToEntryAndPut(rowIndex, matrixEntry * vector.entry(columnIndex))
+                val oldEntry = builder.entry(rowIndex) ?: 0BI
+                builder.put(rowIndex, oldEntry + matrixEntry * vector.entry(columnIndex))
             ]
         ]
         builder.build

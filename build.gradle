@@ -71,36 +71,30 @@ artifacts { archives javadocJar, sourcesJar }
 
 install.repositories.mavenInstaller.pom.project {
      name 'finnMath'
-     description 'A math library for the JVM based on BigInteger and BigDecimal'
+     description description
      url 'https://github.com/togliu/finnmath'
      inceptionYear '2017'
-     
      licenses {
         license {
             name 'BSD 2-Clause License'
             url 'https://opensource.org/licenses/BSD-2-Clause'
         }
      }
-     
      developers {
         developer {
             id 'togliu'
             name 'Lars Tennstedt'
-            
             roles {
                 role 'architect'
                 role 'developer'
             }
-            
             timezone 'Europe/Berlin'
         }
      }
-     
      issueManagement {
         system 'GitHub'
         url 'https://github.com/togliu/finnmath/issues'
      }
-     
      scm {
         connection 'scm:git:https://github.com/togliu/finnmath.git'
         tag 'master'

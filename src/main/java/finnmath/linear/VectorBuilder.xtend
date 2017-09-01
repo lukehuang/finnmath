@@ -45,7 +45,6 @@ import static java.util.Objects.requireNonNull
  */
 @Beta
 @ToString
-@Accessors
 abstract class VectorBuilder<E, V, B> implements Builder<V> {
     /**
      * The map holding the entries of this {@link VectorBuilder}
@@ -53,8 +52,13 @@ abstract class VectorBuilder<E, V, B> implements Builder<V> {
      * @since 1
      * @author Lars Tennstedt
      */
+    @Accessors
     protected val Map<Integer, E> map = new HashMap
 
+    /**
+     * The size of the resulting {@link Vector}
+     */
+    @Accessors
     val int size
 
     /**
@@ -68,6 +72,23 @@ abstract class VectorBuilder<E, V, B> implements Builder<V> {
     new(int size) {
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
         this.size = size
+    }
+
+    /**
+     * Returns the entry dependent on the given index
+     * 
+     * @param index the index of the entry
+     * @return The entry
+     * @throws NullPointerException if {@code index == null}
+     * @throws IllegalArgumentException if {@code !map.containsKey(index)}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Map#containsKey
+     */
+    def entry(Integer index) {
+        requireNonNull(index, 'index')
+        checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', size, index)
+        map.get(index)
     }
 
     /**
@@ -107,8 +128,6 @@ abstract class VectorBuilder<E, V, B> implements Builder<V> {
         map.put(index, entry)
         this
     }
-
-    def B addToEntryAndPut(Integer index, E entry)
 
     /**
      * Puts the given entry on all indices and returns {@code this}

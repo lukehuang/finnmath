@@ -40,7 +40,8 @@ import static finnmath.util.SquareRootCalculator.sqrt
 import static java.util.Objects.requireNonNull
 
 /**
- * An immutable implementation of a vector which uses {@link BigInteger} as type for its entries
+ * An immutable implementation of a vector which is based on {@link ImmutableMap} and uses {@link BigInteger} as type 
+ * for its entries
  * 
  * @since 1
  * @author Lars Tennstedt
@@ -375,16 +376,6 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
     static final class BigIntVectorBuilder extends VectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
         private new(Integer size) {
             super(size)
-        }
-
-        override addToEntryAndPut(Integer index, BigInteger entry) {
-            requireNonNull(index, 'index')
-            checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
-            val existing = map.get(index)
-            requireNonNull(existing, 'existing')
-            requireNonNull(entry, 'entry')
-            map.put(index, map.get(index) + entry)
-            this
         }
 
         /**
