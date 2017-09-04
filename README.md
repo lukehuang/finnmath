@@ -36,7 +36,7 @@ Active Annotations to eliminate boilerplate code.
 #### Why AssertJ?
 Because I find it more readable in comparison to JUnit and Hamcrest and it is more IDE friendly.
 
-#### Why Gradle
+#### Why Gradle?
 Because I hate XML.
 
 ## Implementation details
