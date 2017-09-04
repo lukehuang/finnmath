@@ -22,6 +22,33 @@ finnMath is written in Xtend and uses Gradle as its build automation tool so it 
 seamlessly with other JVM technologies. 
 Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
+# Why finnMath
+I needed a mathematical library for another project which is based on BigInteger and BigDecimal instead of primitives 
+and I could not find one. That is all.
+
+# Why Xtend
+Because I want to write a library which is usable from all JVM languages. Almost every JVM language tries to 
+work seamlessly with Java. I do not expect the developers to test the interoperability with the other languages 
+besides Java. So Java was a candidate but I discovered Xtend which compiles to Java source code instead of bytecode 
+and provides wonderful syntactic sugar for the arithmetic operations of BigInteger and BigDecimal and the great 
+Active Annotations to eliminate boilerplate code. 
+
+# Why AssertJ
+Because I find it more readable in comparison with JUnit and Hamcrest and it is more IDE friendly.
+
+# Why Gradle
+I hate XML.
+
+# Implementation details
+* All types are immutable.
+* The matrices are based on ImmutableTable from Guava.
+* The vectors are based on ImmutableMap from Guava.
+* All leaf classes are final.
+* Useful hashCode, equals and toString methods thanks to Xtend's Active Annotations
+* Builders for vectors and matrices
+* Early failing with nice messages
+* Logging facade instead of a hard dependency on a specific logging framework
+
 finnMath is open source and free software and is licensed under the permissive BSD 2-Clause License.
 
 finnMath is still in a very early state and a work in progress.
@@ -63,8 +90,8 @@ The code formatting follows loosely the Google Java style guide found here on Gi
 * the JUnit team for JUnit
 * Linus Torvalds for Git
 * Gradle Inc. for Gradle
-* Vyacheslav Rusakov for the Gradle POM plugin
 * GitHub Inc. for GitHub
 * Travis CI GmbH for Travis CI
+* Stack Exchange Inc. for Stack Overflow
 * Judd Vinet and Aaron Griffin for Arch Linux
 
