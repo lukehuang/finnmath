@@ -28,5 +28,5 @@
 
 language: java
 
-before_script: gradle -b wrapper.gradle wrapper
+install: gradle -b wrapper.gradle wrapper
 
