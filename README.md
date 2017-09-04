@@ -18,26 +18,28 @@ What finnMath will not provide:
 * Matrix decomposition, reduction or factorization
 * Polynomials
 
-finnMath is written in Xtend and uses Gradle as its build automation tool so it should interop 
-seamlessly with other JVM technologies. 
-Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
+finnMath is written in Xtend and uses Gradle as its build automation tool so it should interoperate seamlessly with 
+other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 #### Why finnMath?
-I needed a mathematical library for another project which is based on BigInteger and BigDecimal instead of primitives 
-and I could not find one. That is all.
+I searched for a mathematical library for another project which is based on BigInteger and BigDecimal instead of 
+primitives and I could not find one.
 
 #### Why Xtend?
-Because I want to write a library which is usable from all JVM languages. Almost every JVM language tries to 
-work seamlessly with Java. I do not expect the developers to test the interoperability with the other languages 
-besides Java. So Java was a candidate but I discovered Xtend which compiles to Java source code instead of bytecode 
-and provides wonderful syntactic sugar for the arithmetic operations of BigInteger and BigDecimal and the great 
-Active Annotations to eliminate boilerplate code. 
+I want to write a library which is usable from all JVM languages. Almost every JVM language tries to work seamlessly 
+with Java. I do not think the developers to test the interoperability with all the other languages besides Java and 
+it would be presumptuous to expect that. So Java would be a wise choice but then a colleague mentioned Xtend. I chose 
+Xtend because it compiles to Java source code instead of bytecode and therefore it exists no mismatch between Java 
+and Xtend. Further it provides wonderful syntactic sugar for the arithmetic operations of BigInteger and BigDecimal 
+and the great Active Annotations to eliminate boilerplate code similar to Lombok. 
 
 #### Why AssertJ?
-Because I find it more readable in comparison to JUnit and Hamcrest and it is more IDE friendly.
+I find its assertions more readable in comparison to JUnit and Hamcrest and it is more IDE friendly.
 
 #### Why Gradle?
-Because I hate XML.
+Its DSL is less verbose than Maven's XML approach and thanks to Groovy customizing of all the tasks involved in the 
+build process is very comfortable. I want to point out that conventions are a very good thing that simplifies a 
+developer's life extremely and thanks to Maven convention over configuration arrived at the Java world.
 
 ## Implementation details
 * All types are immutable.
@@ -46,7 +48,7 @@ Because I hate XML.
 * All leaf classes are final.
 * Useful hashCode, equals and toString methods thanks to Xtend's Active Annotations
 * Builders for vectors and matrices
-* Early failing with nice messages
+* Early failing with meaningful messages
 * Logging facade instead of a hard dependency on a specific logging framework
 
 finnMath is open source and free software and is licensed under the permissive BSD 2-Clause License.
@@ -94,4 +96,3 @@ The code formatting follows loosely the Google Java style guide found here on Gi
 * Travis CI GmbH for Travis CI
 * Stack Exchange Inc. for Stack Overflow
 * Judd Vinet and Aaron Griffin for Arch Linux
-
