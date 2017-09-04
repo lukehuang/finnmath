@@ -32,10 +32,10 @@ import com.google.common.annotations.Beta
 import finnmath.linear.DecimalMatrix
 import finnmath.util.SquareRootCalculator
 import java.math.BigDecimal
+import java.util.Optional
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
-import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 /**
@@ -129,10 +129,11 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
      * @throws IllegalArgumentException if {@code divisor == 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #invert
      */
     override divide(RealComplexNumber divisor) {
         requireNonNull(divisor, 'divisor')
-        checkArgument(divisor != ZERO, 'expected divisor != 0 but actual %s', divisor)
+        checkArgument(divisor.invertible, 'expected divisor to be invertible but actual %s', divisor)
         val denominator = divisor.real ** 2 + divisor.imaginary ** 2
         val newReal = (real * divisor.real + imaginary * divisor.imaginary) / denominator
         val newImaginary = (imaginary * divisor.real - real * divisor.imaginary) / denominator
@@ -169,16 +170,16 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     }
 
     /**
-     * Returns the inverted {@link RealComplexNumber} of this one
+     * Returns an {@link Optional} with the inverted {@link RealComplexNumber } of this one if this 
+     * {@link RealComplexNumber} is invertible and an emtpy {@link Optional} otherwise
      * 
-     * @return The inverted
-     * @throws IllegalStateException if {@code this == 0}
+     * @return The optional inverted
      * @since 1
      * @author Lars Tennstedt
+     * @see #invertible
      */
     override invert() {
-        checkState(invertible, 'expected != 0 but actual %s', this)
-        ONE.divide(this)
+        if (invertible) Optional.of(ONE.divide(this)) else Optional.empty
     }
 
     /**

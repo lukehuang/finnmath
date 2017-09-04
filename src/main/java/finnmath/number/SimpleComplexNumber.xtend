@@ -32,10 +32,10 @@ import com.google.common.annotations.Beta
 import finnmath.linear.BigIntMatrix
 import finnmath.util.SquareRootCalculator
 import java.math.BigInteger
+import java.util.Optional
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
-import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 /**
@@ -116,10 +116,11 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
      * @throws IllegalArgumentException if {@code divisor == 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #invertible
      */
     override divide(SimpleComplexNumber divisor) {
         requireNonNull(divisor, 'divisor')
-        checkArgument(divisor != ZERO, 'expected divisor != 0 but actual %s', divisor)
+        checkArgument(divisor.invertible, 'expected divisor to be invertible but actual %s', divisor)
         new RealComplexNumber(this).divide(new RealComplexNumber(divisor))
     }
 
@@ -153,16 +154,16 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     }
 
     /**
-     * Returns the inverted {@link SimpleComplexNumber} of this one
+     * Returns an {@link Optional} with the inverted {@link SimpleComplexNumber} of this one if this 
+     * {@link SimpleComplexNumber} is invertible and an emtpy {@link Optional} otherwise
      * 
-     * @return The inverted {@link SimpleComplexNumber} of this one
-     * @throws IllegalStateException if {@code numerator == 0}
+     * @return The optional inverted
      * @since 1
      * @author Lars Tennstedt
+     * @see #invertible
      */
     override invert() {
-        checkState(invertible, 'expected != 0 but actual %s', this)
-        ONE.divide(this)
+        if (invertible) Optional.of(ONE.divide(this)) else Optional.empty
     }
 
     /**

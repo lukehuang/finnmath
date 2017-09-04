@@ -29,6 +29,8 @@
 package finnmath.linear
 
 import finnmath.util.MathRandom
+import java.math.BigInteger
+import java.util.ArrayList
 import java.util.List
 import org.apache.commons.lang3.RandomUtils
 import org.junit.BeforeClass
@@ -36,6 +38,9 @@ import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
+import static org.junit.Assert.assertEquals
+import static org.junit.Assert.assertFalse
+import static org.junit.Assert.assertTrue
 
 final class BigIntMatrixTest {
     static var BigIntMatrix zeroMatrixForAddition
@@ -48,6 +53,8 @@ final class BigIntMatrixTest {
     static var List<BigIntMatrix> othersForMultiplication
     static var List<BigIntMatrix> additionalOthersForMultiplication
     static var List<BigIntVector> vectors
+    static var List<BigInteger> scalars
+    static var List<BigInteger> otherScalars
 
     @BeforeClass
     static def void setUp() {
@@ -72,6 +79,12 @@ final class BigIntMatrixTest {
         additionalOthersForMultiplication = mathRandom.nextBigIntMatrices(bound, columnSizeForOthers,
             columnSizeForAdditionalOthers, howMany)
         vectors = mathRandom.nextBigIntVectors(bound, columnSize, howMany)
+        scalars = new ArrayList(howMany)
+        otherScalars = new ArrayList(howMany)
+        for (var i = 0; i < howMany; i++) {
+            scalars += BigInteger::valueOf(mathRandom.nextLong(bound))
+            otherScalars += BigInteger::valueOf(mathRandom.nextLong(bound))
+        }
     }
 
     @Test
@@ -91,7 +104,6 @@ final class BigIntMatrixTest {
                         val expectedEntry = entry(rowIndex, columnIndex) + other.entry(rowIndex, columnIndex)
                         builder.put(rowIndex, columnIndex, expectedEntry)
                     ]
-
                 ]
                 assertThat(add(other)).isExactlyInstanceOf(BigIntMatrix).isEqualTo(builder.build)
             ]
@@ -142,7 +154,6 @@ final class BigIntMatrixTest {
                         val expectedEntry = entry(rowIndex, columnIndex) - other.entry(rowIndex, columnIndex)
                         builder.put(rowIndex, columnIndex, expectedEntry)
                     ]
-
                 ]
                 assertThat(subtract(other)).isExactlyInstanceOf(BigIntMatrix).isEqualTo(builder.build)
             ]
@@ -182,7 +193,6 @@ final class BigIntMatrixTest {
                             entry += row.get(index) * otherColumn.get(index)
                         builder.put(rowIndex, otherColumnIndex, entry)
                     ]
-
                 ]
                 assertThat(multiply(other)).isExactlyInstanceOf(BigIntMatrix).isEqualTo(builder.build)
             ]
@@ -262,6 +272,87 @@ final class BigIntMatrixTest {
     }
 
     @Test
+    def void scalarMultiplyNullShouldThrowException() {
+        assertThatThrownBy [
+            zeroMatrixForAddition.scalarMultiply(null)
+        ].isExactlyInstanceOf(NullPointerException).hasMessage('scalar')
+    }
+
+    @Test
+    def void scalarMultiplyShouldSucceed() {
+        matrices.forEach [
+            scalars.forEach [ scalar |
+                val builder = BigIntMatrix::builder(rowSize, columnSize)
+                table.cellSet.forEach [ cell |
+                    builder.put(cell.rowKey, cell.columnKey, scalar * cell.value)
+                ]
+                assertThat(scalarMultiply(scalar)).isExactlyInstanceOf(BigIntMatrix).isEqualTo(builder.build)
+            ]
+        ]
+    }
+
+    @Test
+    def void scalarMultiplyWithTwoScalarsShouldBeAssociative() {
+        matrices.forEach [
+            scalars.forEach [ scalar |
+                otherScalars.forEach [ otherScalar |
+                    assertThat(scalarMultiply(scalar * otherScalar)).isEqualTo(
+                        scalarMultiply(otherScalar).scalarMultiply(scalar))
+                ]
+            ]
+        ]
+    }
+
+    @Test
+    def void scalarMultiplyWithTwoMatricesShouldBeAssociative() {
+        matrices.forEach [
+            othersForMultiplication.forEach [ other |
+                scalars.forEach [ scalar |
+                    assertThat(scalarMultiply(scalar).multiply(other)).isEqualTo(multiply(other).scalarMultiply(scalar))
+                ]
+            ]
+        ]
+    }
+
+    @Test
+    def void addAndScalarMultiplyWithTwoScalarsShouldBeDistributive() {
+        matrices.forEach [
+            scalars.forEach [ scalar |
+                otherScalars.forEach [ otherScalar |
+                    assertThat(scalarMultiply(scalar + otherScalar)).isEqualTo(
+                        scalarMultiply(scalar).add(scalarMultiply(otherScalar)))
+                ]
+            ]
+        ]
+    }
+
+    @Test
+    def void addAndScalarMultiplyWithTwoMatricesShouldBeDistributive() {
+        matrices.forEach [
+            othersForAddition.forEach [ other |
+                scalars.forEach [ scalar |
+                    assertThat(add(other).scalarMultiply(scalar)).isEqualTo(
+                        scalarMultiply(scalar).add(other.scalarMultiply(scalar)))
+                ]
+            ]
+        ]
+    }
+
+    @Test
+    def void scalarMultiplyWithZeroShouldBeEqualToZeroMatrix() {
+        matrices.forEach [
+            assertThat(scalarMultiply(0BI)).isEqualTo(zeroMatrixForAddition)
+        ]
+    }
+
+    @Test
+    def void scalarMultiplyWithOneShouldBeEqualToSelf() {
+        matrices.forEach [
+            assertThat(scalarMultiply(1BI)).isEqualTo(it)
+        ]
+    }
+
+    @Test
     def void negateShouldSucceed() {
         matrices.forEach [
             assertThat(negate).isExactlyInstanceOf(BigIntMatrix).isEqualTo(scalarMultiply(-1BI))
@@ -283,13 +374,39 @@ final class BigIntMatrixTest {
     }
 
     @Test
-    def void multiplyMinusOneShouldBeEqualToNegated() {
+    def void multiplyNegativeIdentityMatrixShouldBeEqualToNegated() {
         squarematrices.forEach [
             val builder = BigIntMatrix::builder(rowSize, columnSize).putAll(0BI)
             rowIndexes.forEach [ index |
                 builder.put(index, index, -1BI)
             ]
             assertThat(multiply(builder.build)).isEqualTo(negate)
+        ]
+    }
+
+    @Test
+    def void scalarMultiplyWithMinusOneShouldBeEqualToNegated() {
+        matrices.forEach [
+            assertThat(scalarMultiply(-1BI)).isEqualTo(negate)
+        ]
+    }
+
+    @Test
+    def void squareOfNonSquareMatrixShouldBeFalse() {
+        assertFalse(BigIntMatrix::builder(2, 3).putAll(0BI).build.square)
+    }
+
+    @Test
+    def void squareOfSquareMatricesShouldBeTrue() {
+        squarematrices.forEach [
+            assertTrue(square)
+        ]
+    }
+
+    @Test
+    def void squareShouldBePredictable() {
+        matrices.forEach [
+            assertEquals(rowSize == columnSize, square)
         ]
     }
 }

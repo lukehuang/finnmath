@@ -530,7 +530,7 @@ final class MathRandomTest {
     def void nextBigIntVectorSizeTooLowhouldThrowException() {
         assertThatThrownBy [
             mathRandom.nextBigIntVector(bound, 0)
-        ].isExactlyInstanceOf(IllegalArgumentException)
+        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected size > 0 but actual 0')
     }
 
     @Test
@@ -538,9 +538,44 @@ final class MathRandomTest {
         val it = mathRandom.nextBigIntVector(bound, validSize)
         assertThat(it).isInstanceOf(BigIntVector)
         assertEquals(validSize, size)
-        assertThat(map.values).hasOnlyElementsOfType(BigInteger).are(new Condition([ BigInteger entry |
+        assertThat(map.values).are(new Condition([ BigInteger entry |
             -bigBound < entry && entry < bigBound
         ], 'bounds'))
+    }
+
+    @Test
+    def void nextBigIntVectorsBoundTooLowShouldThrowException() {
+        assertThatThrownBy [
+            mathRandom.nextBigIntVectors(0, validSize, howMany)
+        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 0 but actual 0')
+    }
+
+    @Test
+    def void nextBigIntVectorsSizeTooLowhouldThrowException() {
+        assertThatThrownBy [
+            mathRandom.nextBigIntVectors(bound, 0, howMany)
+        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected size > 0 but actual 0')
+    }
+
+    @Test
+    def void nextBigIntVectorsTooLessShouldThrowException() {
+        assertThatThrownBy [
+            mathRandom.nextBigIntVectors(bound, validSize, 1)
+        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
+    }
+
+    @Test
+    def void nextBigIntVectorsShouldSucceed() {
+        val vectors = mathRandom.nextBigIntVectors(bound, validSize, howMany)
+        assertThat(vectors).hasOnlyElementsOfType(BigIntVector).hasSize(howMany).are(
+            new Condition([ BigIntVector vector |
+                vector.size === validSize
+            ], 'size'))
+        vectors.forEach [
+            assertThat(map.values).are(new Condition([ BigInteger integer |
+                -bigBound < integer && integer < bigBound
+            ], 'bound'))
+        ]
     }
 
     @Test
@@ -574,5 +609,49 @@ final class MathRandomTest {
         ], 'bounds')).are(new Condition([ BigDecimal entry |
             entry.scale === validScale
         ], 'scale'))
+    }
+
+    @Test
+    def void nextDecimalVectorsBoundTooLowShouldThrowException() {
+        assertThatThrownBy [
+            mathRandom.nextDecimalVectors(0, validScale, validSize, howMany)
+        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected bound > 0 but actual 0')
+    }
+
+    @Test
+    def void nextDecimalVectorsScaleTooLowhouldThrowException() {
+        assertThatThrownBy [
+            mathRandom.nextDecimalVectors(bound, 0, validSize, howMany)
+        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected scale > 0 but actual 0')
+    }
+
+    @Test
+    def void nextDecimalVectorsSizeTooLowhouldThrowException() {
+        assertThatThrownBy [
+            mathRandom.nextDecimalVectors(bound, validScale, 0, howMany)
+        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected size > 0 but actual 0')
+    }
+
+    @Test
+    def void nextDecimalVectorsTooLessShouldThrowException() {
+        assertThatThrownBy [
+            mathRandom.nextDecimalVectors(bound, validScale, validSize, 1)
+        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected howMany > 1 but actual 1')
+    }
+
+    @Test
+    def void nextDecimalVectorsShouldSucceed() {
+        val vectors = mathRandom.nextDecimalVectors(bound, validScale, validSize, howMany)
+        assertThat(vectors).hasOnlyElementsOfType(DecimalVector).hasSize(howMany).are(
+            new Condition([ DecimalVector vector |
+                vector.size === validSize
+            ], 'size'))
+        vectors.forEach [
+            assertThat(map.values).are(new Condition([ BigDecimal decimal |
+                -decimalBound <= decimal && decimal < decimalBound
+            ], 'bound')).are(new Condition([ BigDecimal decimal |
+                decimal.scale === validScale
+            ], 'scale'))
+        ]
     }
 }

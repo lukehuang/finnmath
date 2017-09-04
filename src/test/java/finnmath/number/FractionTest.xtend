@@ -31,6 +31,7 @@ package finnmath.number
 import finnmath.util.MathRandom
 import java.math.BigInteger
 import java.util.List
+import java.util.Optional
 import org.junit.BeforeClass
 import org.junit.Test
 
@@ -243,15 +244,16 @@ final class FractionTest {
     @Test
     def void divideZeroShouldThrowException() {
         assertThatThrownBy[
-            ZERO.divide(ZERO)
-        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('expected divisor.numerator != 0 but actual 0')
+            ONE.divide(ZERO)
+        ].isExactlyInstanceOf(IllegalArgumentException).
+            hasMessage('''expected divisor to be invertible but actual «ZERO»''')
     }
 
     @Test
     def void divideShouldSucceed() {
         fractions.forEach [
             invertibles.forEach [ invertible |
-                assertThat(divide(invertible)).isExactlyInstanceOf(Fraction).isEqualTo(multiply(invertible.invert))
+                assertThat(divide(invertible)).isExactlyInstanceOf(Fraction).isEqualTo(multiply(invertible.invert.get))
             ]
         ]
     }
@@ -336,35 +338,34 @@ final class FractionTest {
     }
 
     @Test
-    def void invertZeroShouldThrowException() {
-        assertThatThrownBy[
-            ZERO.invert
-        ].isExactlyInstanceOf(IllegalStateException).hasMessage('expected numerator != 0 but actual 0')
+    def void invertZeroShouldReturnEmptyOptional() {
+        assertThat(ZERO.invert).isExactlyInstanceOf(Optional).isEmpty
     }
 
     @Test
     def void invertShouldSucceed() {
         invertibles.forEach [
-            assertThat(invert).isExactlyInstanceOf(Fraction).isEqualTo(new Fraction(denominator, numerator))
+            assertThat(invert).isExactlyInstanceOf(Optional).isEqualTo(
+                Optional.of(new Fraction(denominator, numerator)))
         ]
     }
 
     @Test
     def void invertOneShouldBeEqualToOne() {
-        assertThat(ONE.invert).isEqualTo(ONE)
+        assertThat(ONE.invert.get).isEqualTo(ONE)
     }
 
     @Test
     def void invertSelfShouldBeEqualToOneDividedBySelf() {
         invertibles.forEach [
-            assertThat(invert.reduce.normalize).isEqualTo(ONE.divide(it).reduce.normalize)
+            assertThat(invert.get.reduce.normalize).isEqualTo(ONE.divide(it).reduce.normalize)
         ]
     }
 
     @Test
     def void multiplyInvertedShouldBeEqualToOne() {
         invertibles.forEach [
-            assertThat(multiply(invert).reduce.normalize).isEqualTo(ONE)
+            assertThat(multiply(invert.get).reduce.normalize).isEqualTo(ONE)
         ]
     }
 
@@ -374,16 +375,16 @@ final class FractionTest {
     }
 
     @Test
-    def void invertibleShouldBePredictable() {
-        fractions.forEach [
-            assertEquals(numerator != 0BI, invertible)
+    def void invertibleShouldSucceed() {
+        invertibles.forEach [
+            assertTrue(invertible)
         ]
     }
 
     @Test
-    def void invertibleShouldSucceed() {
-        invertibles.forEach [
-            assertTrue(invertible)
+    def void invertibleShouldBePredictable() {
+        fractions.forEach [
+            assertEquals(numerator != 0BI, invertible)
         ]
     }
 

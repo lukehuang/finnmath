@@ -30,12 +30,12 @@ package finnmath.number
 
 import com.google.common.annotations.Beta
 import java.math.BigInteger
+import java.util.Optional
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
-import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 /**
@@ -162,13 +162,15 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @throws IllegalArgumentException if {@code divisor.numerator == 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #invertible
      * @see #normalize
      * @see #reduce
+     * @see Optional#get
      */
     override divide(Fraction divisor) {
         requireNonNull(divisor, 'divisor')
-        checkArgument(divisor.numerator != 0BI, 'expected divisor.numerator != 0 but actual %s', divisor.numerator)
-        multiply(divisor.invert)
+        checkArgument(divisor.invertible, 'expected divisor to be invertible but actual %s', divisor)
+        multiply(divisor.invert.get)
     }
 
     /**
@@ -209,20 +211,20 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
     }
 
     /**
-     * Returns the inverted {@link Fraction} of this one
+     * Returns an {@link Optional} with the inverted {@link Fraction} of this one if this {@link Fraction} is 
+     * invertible and an emtpy {@link Optional} otherwise
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
-     * @return The inverted
-     * @throws IllegalStateException if {@code numerator == 0}
+     * @return The optional inverted
      * @since 1
      * @author Lars Tennstedt
+     * @see #invertible
      * @see #normalize
      * @see #reduce
      */
     override invert() {
-        checkState(invertible, 'expected numerator != 0 but actual %s', numerator)
-        new Fraction(denominator, numerator)
+        if (invertible) Optional.of(new Fraction(denominator, numerator)) else Optional.empty
     }
 
     /**

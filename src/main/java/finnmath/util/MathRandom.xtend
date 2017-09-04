@@ -112,9 +112,9 @@ final class MathRandom {
      * @return An array of pseudo random {@code long longs}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextPositiveLong
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextPositiveLong
      */
     def nextPositiveLongs(long bound, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -133,9 +133,9 @@ final class MathRandom {
      * @return An array of pseudo random {@code long longs}
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextNegativeLong
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextNegativeLong
      */
     def nextNegativeLongs(long bound, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -154,9 +154,9 @@ final class MathRandom {
      * @return An array of pseudo random {@code long longs}
      * @throws IllegalArgumentException if {@code  bound < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextLong
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextLong
      */
     def nextLongs(long bound, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -236,9 +236,9 @@ final class MathRandom {
      * @return A pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @throws IllegalArgumentException if {@code scale < 1}
-     * @see #nextPositiveDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextPositiveDecimal
      */
     def nextInvertiblePositiveDecimal(long bound, int scale) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -257,10 +257,10 @@ final class MathRandom {
      * @return A pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @throws IllegalArgumentException if {@code scale < 1}
-     * @see #nextNegativeDecimal
-     * @see #nextInvertibleDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextNegativeDecimal
+     * @see #nextInvertibleDecimal
      */
     def nextInvertibleNegativeDecimal(long bound, int scale) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -279,9 +279,9 @@ final class MathRandom {
      * @return A pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException if {@code bound < 2}
      * @throws IllegalArgumentException if {@code scale < 1}
-     * @see #nextDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextDecimal
      */
     def nextInvertibleDecimal(long bound, int scale) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -314,9 +314,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextPositiveDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextPositiveDecimal
      */
     def nextPositiveDecimals(long bound, int scale, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -338,9 +338,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextNegativeDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextNegativeDecimal
      */
     def nextNegativeDecimals(long bound, int scale, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -362,9 +362,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextDecimal
      */
     def nextDecimals(long bound, int scale, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -387,9 +387,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextInvertiblePositiveDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextInvertiblePositiveDecimal
      */
     def nextInvertiblePositiveDecimals(long bound, int scale, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -412,9 +412,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextInvertibleNegativeDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextInvertibleNegativeDecimal
      */
     def nextInvertibleNegativeDecimals(long bound, int scale, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -437,9 +437,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextInvertibleDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextInvertibleDecimal
      */
     def nextInvertibleDecimals(long bound, int scale, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -511,9 +511,9 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link Fraction Fractions} 
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextPositiveFraction
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextPositiveFraction
      */
     def nextPositiveFractions(long bound, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -532,9 +532,9 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextNegativeFraction
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextNegativeFraction
      */
     def nextNegativeFractions(long bound, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -553,9 +553,9 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextFraction
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextFraction
      */
     def nextFractions(long bound, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -572,9 +572,9 @@ final class MathRandom {
      * @param bound the bound
      * @return A pseudo random {@link Fraction}
      * @throws IllegalArgumentException if {@code bound < 2}
-     * @see #nextPositiveFraction
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextPositiveFraction
      */
     def nextInvertiblePositiveFraction(long bound) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -589,9 +589,9 @@ final class MathRandom {
      * @param bound the bound
      * @return A pseudo random {@link Fraction}
      * @throws IllegalArgumentException if {@code bound < 2}
-     * @see #nextNegativeFraction
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextNegativeFraction
      */
     def nextInvertibleNegativeFraction(long bound) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -604,9 +604,9 @@ final class MathRandom {
      * @param bound the bound
      * @return A pseudo random {@link Fraction}
      * @throws IllegalArgumentException if {@code bound < 2}
-     * @see #nextFraction
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextFraction
      */
     def nextInvertibleFraction(long bound) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -624,9 +624,9 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextInvertiblePositiveFraction
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextInvertiblePositiveFraction
      */
     def nextInvertiblePositiveFractions(long bound, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -646,9 +646,9 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextInvertibleNegativeFraction
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextInvertibleNegativeFraction
      */
     def nextInvertibleNegativeFractions(long bound, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -668,9 +668,9 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextInvertibleFraction
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextInvertibleFraction
      */
     def nextInvertibleFractions(long bound, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -704,9 +704,9 @@ final class MathRandom {
      * @param bound the bound
      * @return A pseudo random {@link SimpleComplexNumber}
      * @throws IllegalArgumentException if {@code bound < 1}
-     * @see #nextSimpleComplexNumber
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextSimpleComplexNumber
      */
     def nextInvertibleSimpleComplexNumber(long bound) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -726,9 +726,9 @@ final class MathRandom {
      * @return A List {@link List} of pseudo random {@link SimpleComplexNumber SimpleComplexNumbers}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextSimpleComplexNumber
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextSimpleComplexNumber
      */
     def nextSimpleComplexNumbers(long bound, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -748,9 +748,9 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link SimpleComplexNumber SimpleComplexNumbers} 
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextInvertibleSimpleComplexNumber
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextInvertibleSimpleComplexNumber
      */
     def nextInvertibleSimpleComplexNumbers(long bound, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -787,9 +787,9 @@ final class MathRandom {
      * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
      * @return A pseudo random {@link RealComplexNumber}
      * @throws IllegalArgumentException if {@code bound < 1}
-     * @see #nextRealComplexNumber
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextRealComplexNumber
      */
     def nextInvertibleRealComplexNumber(long bound, int scale) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -813,9 +813,9 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link RealComplexNumber RealComplexNumbers}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextRealComplexNumber
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextRealComplexNumber
      */
     def nextRealComplexNumbers(long bound, int scale, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -837,9 +837,9 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link RealComplexNumber RealComplexNumbers}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextInvertibleRealComplexNumber
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextInvertibleRealComplexNumber
      */
     def nextInvertibleRealComplexNumbers(long bound, int scale, int howMany) {
         checkArgument(bound > 1, 'expected bound > 1 but actual %s', bound)
@@ -859,9 +859,9 @@ final class MathRandom {
      * @return A pseudo random {@link BigIntVector} 
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code size < 1}
-     * @see #nextLong
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextLong
      */
     def nextBigIntVector(long bound, int size) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -881,16 +881,16 @@ final class MathRandom {
      * @return A {@link List} of pseudo random {@link BigIntVector BigIntVectors}
      * @throws IllegalArgumentException if {@code  bound < 2}
      * @throws IllegalArgumentException if {@code howMany < 2}
-     * @see #nextBigIntVector
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextBigIntVector
      */
     def nextBigIntVectors(long bound, int size, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val vectors = new ArrayList<BigIntVector>(howMany) as List<BigIntVector>
-        for (var i = 0;  i < howMany; i++)
+        for (var i = 0; i < howMany; i++)
             vectors += nextBigIntVector(bound, size)
         vectors
     }
@@ -905,9 +905,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}
      * @throws IllegalArgumentException if {@code columnSize < 1}
-     * @see #nextLong
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextLong
      */
     def nextBigIntMatrix(long bound, int rowSize, int columnSize) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -917,6 +917,169 @@ final class MathRandom {
         (1 .. rowSize).forEach [ rowIndex |
             (1 .. columnSize).forEach [ columnIndex |
                 builder.put(rowIndex, columnIndex, BigInteger::valueOf(nextLong(bound)))
+            ]
+        ]
+        builder.build
+    }
+
+    /**
+     * Returns an upper triangular {@link BigIntMatrix}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of resulting {@link BigIntMatrix}
+     * @return A pseudo random upper triangular {@link BigIntMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @see BigIntMatrix#upperTriangular
+     */
+    def nextUpperTriangularBigIntMatrix(long bound, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = BigIntMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                if (rowIndex <= columnIndex)
+                    builder.put(rowIndex, columnIndex, BigInteger::valueOf(nextLong(bound)))
+                else
+                    builder.put(rowIndex, columnIndex, 0BI)
+            ]
+        ]
+        builder.build
+    }
+
+    /**
+     * Returns an lower triangular {@link BigIntMatrix}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix}
+     * @return A pseudo random lower triangular {@link BigIntMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @see BigIntMatrix#lowerTriangular
+     */
+    def nextLowerTriangularBigIntMatrix(long bound, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = BigIntMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                if (rowIndex >= columnIndex)
+                    builder.put(rowIndex, columnIndex, BigInteger::valueOf(nextLong(bound)))
+                else
+                    builder.put(rowIndex, columnIndex, 0BI)
+            ]
+        ]
+        builder.build
+    }
+
+    /**
+     * Returns a triangular {@link BigIntMatrix}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix}
+     * @return A pseudo random triangular {@link BigIntMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextUpperTriangularBigIntMatrix
+     * @see #nextLowerTriangularBigIntMatrix
+     * @see BigIntMatrix#triangular
+     */
+    def nextTriangularBigIntMatrix(long bound, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        if (random.nextBoolean)
+            return nextLowerTriangularBigIntMatrix(bound, size)
+        nextUpperTriangularBigIntMatrix(bound, size)
+    }
+
+    /**
+     * Returns a diagonal {@link BigIntMatrix}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix}
+     * @return A pseudo random diagonal {@link BigIntMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigIntMatrix#diagonal
+     */
+    def nextDiagonalBigIntMatrix(long bound, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = BigIntMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                if (rowIndex == columnIndex)
+                    builder.put(rowIndex, columnIndex, BigInteger::valueOf(nextLong(bound)))
+                else
+                    builder.put(rowIndex, columnIndex, 0BI)
+            ]
+        ]
+        builder.build
+    }
+
+    /**
+     * Returns a symmetric {@link BigIntMatrix}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix}
+     * @return A pseudo random symmetric {@link BigIntMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigIntMatrix#symmetric
+     */
+    def nextSymmetricBigIntMatrix(long bound, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = BigIntMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                val entry = BigInteger::valueOf(nextLong(bound))
+                if (rowIndex < columnIndex) {
+                    builder.put(rowIndex, columnIndex, entry)
+                    builder.put(columnIndex, rowIndex, entry)
+                } else
+                    builder.put(rowIndex, columnIndex, entry)
+            ]
+        ]
+        builder.build
+    }
+
+    /**
+     * Returns a skew-symmetric {@link BigIntMatrix}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix}
+     * @return A pseudo random skew-symmetric {@link BigIntMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigIntMatrix#skewSymmetric
+     */
+    def nextSkewSymmetricBigIntMatrix(long bound, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = BigIntMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                val entry = BigInteger::valueOf(nextLong(bound))
+                if (rowIndex < columnIndex) {
+                    builder.put(rowIndex, columnIndex, entry)
+                    builder.put(columnIndex, rowIndex, -entry)
+                } else
+                    builder.put(rowIndex, columnIndex, entry)
             ]
         ]
         builder.build
@@ -934,9 +1097,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code rowSize < 1}
      * @throws IllegalArgumentException if {@code columnSize < 1}
      * @throws IllegalArgumentException if {@code howMany < 1}
-     * @see #nextBigIntMatrix
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextBigIntMatrix
      */
     def nextBigIntMatrices(long bound, int rowSize, int columnSize, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -944,8 +1107,155 @@ final class MathRandom {
         checkArgument(columnSize > 0, 'expected columnSize > 0 but actual %s', columnSize)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val matrices = new ArrayList<BigIntMatrix>(howMany) as List<BigIntMatrix>
-        for (var i = 0;  i < howMany; i++)
+        for (var i = 0; i < howMany; i++)
             matrices += nextBigIntMatrix(bound, rowSize, columnSize)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing upper triangular 
+     * {@link BigIntMatrix BigIntMatrices}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random upper triangular {@link BigIntMatrix BigIntMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextUpperTriangularBigIntMatrix
+     */
+    def nextUpperTriangularBigIntMatrices(long bound, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<BigIntMatrix>(howMany) as List<BigIntMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextUpperTriangularBigIntMatrix(bound, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing lower triangular 
+     * {@link BigIntMatrix BigIntMatrices}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random lower triangular {@link BigIntMatrix BigIntMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextLowerTriangularBigIntMatrix
+     */
+    def nextLowerTriangularBigIntMatrices(long bound, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<BigIntMatrix>(howMany) as List<BigIntMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextLowerTriangularBigIntMatrix(bound, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing triangular {@link BigIntMatrix BigIntMatrices}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random triangular {@link BigIntMatrix BigIntMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextTriangularBigIntMatrix
+     */
+    def nextTriangularBigIntMatrices(long bound, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<BigIntMatrix>(howMany) as List<BigIntMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextTriangularBigIntMatrix(bound, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing diagonal {@link BigIntMatrix BigIntMatrices}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random diagonal {@link BigIntMatrix BigIntMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextDiagonalBigIntMatrix
+     */
+    def nextDiagonalBigIntMatrices(long bound, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<BigIntMatrix>(howMany) as List<BigIntMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextDiagonalBigIntMatrix(bound, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing symmetric {@link BigIntMatrix BigIntMatrices}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random symmetric {@link BigIntMatrix BigIntMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextSymmetricBigIntMatrix
+     */
+    def nextSymmetricBigIntMatrices(long bound, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<BigIntMatrix>(howMany) as List<BigIntMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextSymmetricBigIntMatrix(bound, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing skew-symmetric 
+     * {@link BigIntMatrix BigIntMatrices}
+     * 
+     * @param bound the bound
+     * @param size the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random skew-symmetric {@link BigIntMatrix BigIntMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextSkewSymmetricBigIntMatrix
+     */
+    def nextSkewSymmetricBigIntMatrices(long bound, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<BigIntMatrix>(howMany) as List<BigIntMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextSkewSymmetricBigIntMatrix(bound, size)
         matrices
     }
 
@@ -959,9 +1269,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code bound < 1}
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code size < 1}
-     * @see #nextDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextDecimal
      */
     def nextDecimalVector(long bound, int scale, int size) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -986,9 +1296,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code rowSize < 1}
      * @throws IllegalArgumentException if {@code columnSize < 1}
      * @throws IllegalArgumentException if {@code howMany < 1}
-     * @see #nextDecimalVector
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextDecimalVector
      */
     def nextDecimalVectors(long bound, int scale, int size, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -996,7 +1306,7 @@ final class MathRandom {
         checkArgument(size > 0, 'expected size > 0 but actual %s', size)
         checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
         val vectors = new ArrayList<DecimalVector>(howMany) as List<DecimalVector>
-        for (var i = 0;  i < howMany; i++)
+        for (var i = 0; i < howMany; i++)
             vectors += nextDecimalVector(bound, scale, size)
         vectors
     }
@@ -1013,9 +1323,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code scale < 1}
      * @throws IllegalArgumentException if {@code rowSize < 1}
      * @throws IllegalArgumentException if {@code columnSize < 1}
-     * @see #nextDecimal
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextDecimal
      */
     def nextDecimalMatrix(long bound, int scale, int rowSize, int columnSize) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -1032,10 +1342,185 @@ final class MathRandom {
     }
 
     /**
+     * Returns an upper triangular {@link DecimalMatrix}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of resulting {@link DecimalMatrix}
+     * @return A pseudo random upper triangular {@link DecimalMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextDecimal
+     * @see DecimalMatrix#upperTriangular
+     */
+    def nextUpperTriangularDecimalMatrix(long bound, int scale, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = DecimalMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                if (rowIndex <= columnIndex)
+                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale))
+                else
+                    builder.put(rowIndex, columnIndex, 0BD)
+            ]
+        ]
+        builder.build
+    }
+
+    /**
+     * Returns an lower triangular {@link DecimalMatrix}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix}
+     * @return A pseudo random lower triangular {@link DecimalMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextDecimal
+     * @see DecimalMatrix#lowerTriangular
+     */
+    def nextLowerTriangularDecimalMatrix(long bound, int scale, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = DecimalMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                if (rowIndex >= columnIndex)
+                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale))
+                else
+                    builder.put(rowIndex, columnIndex, 0BD)
+            ]
+        ]
+        builder.build
+    }
+
+    /**
+     * Returns a triangular {@link DecimalMatrix}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix}
+     * @return A pseudo random triangular {@link DecimalMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextUpperTriangularDecimalMatrix
+     * @see #nextLowerTriangularDecimalMatrix
+     * @see DecimalMatrix#triangular
+     */
+    def nextTriangularDecimalMatrix(long bound, int scale, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        if (random.nextBoolean)
+            return nextLowerTriangularDecimalMatrix(bound, scale, size)
+        nextUpperTriangularDecimalMatrix(bound, scale, size)
+    }
+
+    /**
+     * Returns a diagonal {@link DecimalMatrix}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix}
+     * @return A pseudo random diagonal {@link DecimalMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see DecimalMatrix#diagonal
+     */
+    def nextDiagonalDecimalMatrix(long bound, int scale, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = DecimalMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                if (rowIndex == columnIndex)
+                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale))
+                else
+                    builder.put(rowIndex, columnIndex, 0BD)
+            ]
+        ]
+        builder.build
+    }
+
+    /**
+     * Returns a symmetric {@link DecimalMatrix}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix}
+     * @return A pseudo random symmetric {@link DecimalMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see DecimalMatrix#symmetric
+     */
+    def nextSymmetricDecimalMatrix(long bound, int scale, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = DecimalMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                val entry = nextDecimal(bound, scale)
+                if (rowIndex < columnIndex) {
+                    builder.put(rowIndex, columnIndex, entry)
+                    builder.put(columnIndex, rowIndex, entry)
+                } else
+                    builder.put(rowIndex, columnIndex, entry)
+            ]
+        ]
+        builder.build
+    }
+
+    /**
+     * Returns a skew-symmetric {@link DecimalMatrix}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix}
+     * @return A pseudo random skew-symmetric {@link DecimalMatrix} 
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see DecimalMatrix#skewSymmetric
+     */
+    def nextSkewSymmetricDecimalMatrix(long bound, int scale, int size) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        val builder = DecimalMatrix::builder(size, size)
+        (1 .. size).forEach [ rowIndex |
+            (1 .. size).forEach [ columnIndex |
+                val entry = nextDecimal(bound, scale)
+                if (rowIndex < columnIndex) {
+                    builder.put(rowIndex, columnIndex, entry)
+                    builder.put(columnIndex, rowIndex, -entry)
+                } else
+                    builder.put(rowIndex, columnIndex, entry)
+            ]
+        ]
+        builder.build
+    }
+
+    /**
      * Returns a {@link List} of the size of {@code howMany} containing {@link DecimalMatrix DecimalMatrices}
      * 
      * @param bound the bound
-     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param scale the scale
      * @param rowSize the row size of the resulting {@link DecimalMatrix DecimalMatrices}
      * @param columnSize the column size of the resulting {@link DecimalMatrix DecimalMatrices}
      * @param howMany the size of the resulting {@link List}
@@ -1045,9 +1530,9 @@ final class MathRandom {
      * @throws IllegalArgumentException if {@code rowSize < 1}
      * @throws IllegalArgumentException if {@code columnSize < 1}
      * @throws IllegalArgumentException if {@code howMany < 1}
-     * @see #nextDecimalMatrix
      * @since 1
      * @author Lars Tennstedt
+     * @see #nextDecimalMatrix
      */
     def nextDecimalMatrices(long bound, int scale, int rowSize, int columnSize, int howMany) {
         checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
@@ -1058,6 +1543,171 @@ final class MathRandom {
         val matrices = new ArrayList<DecimalMatrix>(howMany) as List<DecimalMatrix>
         for (var i = 0; i < howMany; i++)
             matrices += nextDecimalMatrix(bound, scale, rowSize, columnSize)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing upper triangular 
+     * {@link DecimalMatrix DecimalMatrices}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random upper triangular {@link DecimalMatrix DecimalMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextUpperTriangularDecimalMatrix
+     */
+    def nextUpperTriangularDecimalMatrices(long bound, int scale, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<DecimalMatrix>(howMany) as List<DecimalMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextUpperTriangularDecimalMatrix(bound, scale, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing lower triangular 
+     * {@link DecimalMatrix DecimalMatrices}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random lower triangular {@link DecimalMatrix DecimalMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextLowerTriangularDecimalMatrix
+     */
+    def nextLowerTriangularDecimalMatrices(long bound, int scale, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<DecimalMatrix>(howMany) as List<DecimalMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextLowerTriangularDecimalMatrix(bound, scale, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing triangular {@link DecimalMatrix DecimalMatrices}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random triangular {@link DecimalMatrix DecimalMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextTriangularDecimalMatrix
+     */
+    def nextTriangularDecimalMatrices(long bound, int scale, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<DecimalMatrix>(howMany) as List<DecimalMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextTriangularDecimalMatrix(bound, scale, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing diagonal {@link DecimalMatrix DecimalMatrices}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random diagonal {@link DecimalMatrix DecimalMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextDiagonalDecimalMatrix
+     */
+    def nextDiagonalDecimalMatrices(long bound, int scale, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<DecimalMatrix>(howMany) as List<DecimalMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextDiagonalDecimalMatrix(bound, scale, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing symmetric {@link DecimalMatrix DecimalMatrices}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random symmetric {@link DecimalMatrix DecimalMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextSymmetricDecimalMatrix
+     */
+    def nextSymmetricDecimalMatrices(long bound, int scale, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<DecimalMatrix>(howMany) as List<DecimalMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextSymmetricDecimalMatrix(bound, scale, size)
+        matrices
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing skew-symmetric 
+     * {@link DecimalMatrix DecimalMatrices}
+     * 
+     * @param bound the bound
+     * @param scale the scale
+     * @param size the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random skew-symmetric {@link DecimalMatrix DecimalMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #nextSkewSymmetricDecimalMatrix
+     */
+    def nextSkewSymmetricDecimalMatrices(long bound, int scale, int size, int howMany) {
+        checkArgument(bound > 0, 'expected bound > 0 but actual %s', bound)
+        checkArgument(scale > 0, 'expected scale > 0 but actual %s', scale)
+        checkArgument(size > 0, 'expected size > 0 but actual %s', size)
+        checkArgument(howMany > 1, 'expected howMany > 1 but actual %s', howMany)
+        val matrices = new ArrayList<DecimalMatrix>(howMany) as List<DecimalMatrix>
+        for (var i = 0; i < howMany; i++)
+            matrices += nextSkewSymmetricDecimalMatrix(bound, scale, size)
         matrices
     }
 }

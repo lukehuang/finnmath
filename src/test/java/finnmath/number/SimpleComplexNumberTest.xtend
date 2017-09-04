@@ -34,11 +34,15 @@ import finnmath.util.SquareRootCalculator
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.List
+import java.util.Optional
 import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThatThrownBy
+import static org.junit.Assert.assertEquals
+import static org.junit.Assert.assertFalse
+import static org.junit.Assert.assertTrue
 
 final class SimpleComplexNumberTest {
     static val ZERO = SimpleComplexNumber::ZERO
@@ -223,10 +227,11 @@ final class SimpleComplexNumberTest {
     }
 
     @Test
-    def void divideZeroShouldThrowException() {
-        assertThatThrownBy [
+    def void divideZeroShouldReturnEmptyOptional() {
+        assertThatThrownBy[
             ONE.divide(ZERO)
-        ].isExactlyInstanceOf(IllegalArgumentException).hasMessage('''expected divisor != 0 but actual «ZERO»''')
+        ].isExactlyInstanceOf(IllegalArgumentException).
+            hasMessage('''expected divisor to be invertible but actual «ZERO»''')
     }
 
     @Test
@@ -326,6 +331,49 @@ final class SimpleComplexNumberTest {
     def void divideMinusOneShouldBeEqualToNegated() {
         complexNumbers.forEach [
             assertThat(divide(ONE.negate)).isEqualTo(new RealComplexNumber(negate))
+        ]
+    }
+
+    @Test
+    def void invertZeroShouldReturnAnEmptyOptional() {
+        assertThat(ZERO.invert).isEmpty
+    }
+
+    @Test
+    def void invertShouldSucceed() {
+        invertibles.forEach [
+            assertThat(invert).isExactlyInstanceOf(Optional).isEqualTo(Optional.of(ONE.divide(it)))
+        ]
+    }
+
+    @Test
+    def void invertOneShouldBeEqualToOne() {
+        assertThat(ONE.invert.get).isEqualTo(RealComplexNumber::ONE)
+    }
+
+    @Test
+    def void invertSelfShouldBeEqualToOneDividedBySelf() {
+        invertibles.forEach [
+            assertThat(invert.get).isEqualTo(ONE.divide(it))
+        ]
+    }
+
+    @Test
+    def void invertibleZeroShouldBeFalse() {
+        assertFalse(ZERO.invertible)
+    }
+
+    @Test
+    def void invertibleShouldSucceed() {
+        invertibles.forEach [
+            assertTrue(invertible)
+        ]
+    }
+
+    @Test
+    def void invertibleShouldBePredictable() {
+        complexNumbers.forEach [
+            assertEquals(it != ZERO, invertible)
         ]
     }
 

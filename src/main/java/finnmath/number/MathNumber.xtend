@@ -28,6 +28,8 @@
 
 package finnmath.number
 
+import java.util.Optional
+
 /**
  * @since 1
  * @author Lars Tennstedt
@@ -45,7 +47,7 @@ package interface MathNumber<S, T> {
 
     def S negate()
 
-    def T invert()
+    def Optional<T> invert()
 
     def boolean invertible()
 
