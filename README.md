@@ -22,22 +22,22 @@ finnMath is written in Xtend and uses Gradle as its build automation tool so it 
 seamlessly with other JVM technologies. 
 Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
-#### Why finnMath
+#### Why finnMath?
 I needed a mathematical library for another project which is based on BigInteger and BigDecimal instead of primitives 
 and I could not find one. That is all.
 
-#### Why Xtend
+#### Why Xtend?
 Because I want to write a library which is usable from all JVM languages. Almost every JVM language tries to 
 work seamlessly with Java. I do not expect the developers to test the interoperability with the other languages 
 besides Java. So Java was a candidate but I discovered Xtend which compiles to Java source code instead of bytecode 
 and provides wonderful syntactic sugar for the arithmetic operations of BigInteger and BigDecimal and the great 
 Active Annotations to eliminate boilerplate code. 
 
-#### Why AssertJ
-Because I find it more readable in comparison with JUnit and Hamcrest and it is more IDE friendly.
+#### Why AssertJ?
+Because I find it more readable in comparison to JUnit and Hamcrest and it is more IDE friendly.
 
 #### Why Gradle
-I hate XML.
+Because I hate XML.
 
 ## Implementation details
 * All types are immutable.
