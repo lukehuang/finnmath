@@ -156,8 +156,8 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
         checkArgument(row.size == column.size, 'expected row size == column size but actual %s != %s', row.size,
             column.size)
         var result = 0BD
-        for (index : row.keySet)
-            result += row.get(index) * column.get(index)
+        for (it : row.entrySet)
+            result += value * column.get(key)
         result
     }
 
@@ -310,7 +310,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
     override id() {
         if (diagonal) {
             for (index : table.rowKeySet)
-                if (table.get(index, index) != 1BI)
+                if (table.get(index, index) != 1BD)
                     return false
             return true
         }

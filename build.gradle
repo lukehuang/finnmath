@@ -34,6 +34,8 @@ buildscript {
 
 apply plugin: 'java-library'
 apply plugin: 'org.xtext.xtend'
+apply plugin: 'findbugs'
+apply plugin: 'jacoco'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
 
@@ -53,6 +55,13 @@ dependencies {
 	implementation 'org.slf4j:slf4j-simple:1.7.25'
 	testCompile 'org.assertj:assertj-core:3.8.0'
 	testCompile 'junit:junit:4.12'
+}
+
+tasks.withType(FindBugs) {
+	reports { 
+		xml.enabled = false
+		html.enabled = true
+	}
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

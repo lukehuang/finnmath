@@ -45,12 +45,12 @@ import static org.junit.Assert.assertTrue
 
 final class MathRandomTest {
     val mathRandom = new MathRandom
-    val bound = 10
-    val howMany = 10
-    val validScale = 2
+    static val bound = 10
+    static val howMany = 10
+    static val validScale = 2
     val decimalBound = BigDecimal::valueOf(bound)
     val bigBound = BigInteger::valueOf(bound)
-    val validSize = 3
+    static val validSize = 3
 
     @Test
     def void nextPositiveLongBoundTooLowShouldThrowException() {

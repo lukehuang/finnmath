@@ -156,8 +156,8 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
         checkArgument(row.size == column.size, 'expected row size == column size but actual %s != %s', row.size,
             column.size)
         var result = 0BI
-        for (index : row.keySet)
-            result += row.get(index) * column.get(index)
+        for (it : row.entrySet)
+            result += value * column.get(key)
         result
     }
 

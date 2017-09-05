@@ -189,8 +189,8 @@ final class BigIntMatrixTest {
                 rows.forEach [ rowIndex, row |
                     other.columns.forEach [ otherColumnIndex, otherColumn |
                         var entry = 0BI
-                        for (index : row.keySet)
-                            entry += row.get(index) * otherColumn.get(index)
+                        for (rowEntry : row.entrySet)
+                            entry += rowEntry.value * otherColumn.get(rowEntry.key)
                         builder.put(rowIndex, otherColumnIndex, entry)
                     ]
                 ]
