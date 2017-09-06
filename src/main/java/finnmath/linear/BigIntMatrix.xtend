@@ -395,9 +395,11 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
             table.columnKeySet.size, columnIndex)
         val builder = builder(table.rowKeySet.size - 1, table.columnKeySet.size - 1)
         table.cellSet.forEach [
-            val newRowIndex = if (rowKey >= rowIndex) rowKey - 1 else rowKey
-            val newColumnIndex = if (columnKey >= columnIndex) columnKey - 1 else columnKey
-            builder.put(newRowIndex, newColumnIndex, value)
+            if (rowKey != rowIndex && columnKey != columnIndex) {
+                val newRowIndex = if (rowKey > rowIndex) rowKey - 1 else rowKey
+                val newColumnIndex = if (columnKey > columnIndex) columnKey - 1 else columnKey
+                builder.put(newRowIndex, newColumnIndex, value)
+            }
         ]
         builder.build
     }

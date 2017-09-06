@@ -34,6 +34,7 @@ import java.util.ArrayList
 import java.util.List
 import org.apache.commons.lang3.RandomUtils
 import org.junit.BeforeClass
+import org.junit.Ignore
 import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -406,7 +407,90 @@ final class BigIntMatrixTest {
     @Test
     def void squareShouldBePredictable() {
         matrices.forEach [
-            assertEquals(rowSize == columnSize, square)
+            assertEquals(rowSize === columnSize, square)
+        ]
+    }
+
+    @Test
+    def void transposeShouldSucceed() {
+        matrices.forEach [
+            val builder = BigIntMatrix::builder(columnSize, rowSize)
+            table.cellSet.forEach [ cell |
+                builder.put(cell.columnKey, cell.rowKey, cell.value)
+            ]
+            assertThat(transpose).isEqualTo(builder.build)
+        ]
+    }
+
+    @Ignore
+    @Test
+    def void minorRowIndexNullShouldThrowException() {
+        assertThatThrownBy [
+            zeroMatrixForAddition.minor(null, 1)
+        ].isExactlyInstanceOf(NullPointerException).hasMessage('rowIndex')
+    }
+
+    @Ignore
+    @Test
+    def void minorColumnIndexNullShouldThrowException() {
+        assertThatThrownBy [
+            zeroMatrixForAddition.minor(1, null)
+        ].isExactlyInstanceOf(NullPointerException).hasMessage('columnIndex')
+    }
+
+    @Ignore
+    @Test
+    def void minorRowIndexTooLowShouldThrowException() {
+        assertThatThrownBy [
+            zeroMatrixForAddition.minor(0, 1)
+        ].isExactlyInstanceOf(IllegalArgumentException).
+            hasMessage('''expected row index in [1, «zeroMatrixForAddition.rowSize»] but actual 0''')
+    }
+
+    @Ignore
+    @Test
+    def void minorRowIndexTooHighShouldThrowException() {
+        val invalidRowIndex = zeroMatrixForAddition.rowSize + 1
+        assertThatThrownBy [
+            zeroMatrixForAddition.minor(invalidRowIndex, 1)
+        ].isExactlyInstanceOf(IllegalArgumentException).
+            hasMessage('''expected row index in [1, «zeroMatrixForAddition.rowSize»] but actual «invalidRowIndex»''')
+    }
+
+    @Ignore
+    @Test
+    def void minorColumnIndexTooLowShouldThrowException() {
+        assertThatThrownBy [
+            zeroMatrixForAddition.minor(1, 0)
+        ].isExactlyInstanceOf(IllegalArgumentException).
+            hasMessage('''expected column index in [1, «zeroMatrixForAddition.columnSize»] but actual 0''')
+    }
+
+    @Ignore
+    @Test
+    def void minorColumnIndexTooHighShouldThrowException() {
+        val invalidColumnIndex = zeroMatrixForAddition.columnSize + 1
+        assertThatThrownBy [
+            zeroMatrixForAddition.minor(1, invalidColumnIndex)
+        ].isExactlyInstanceOf(IllegalArgumentException).
+            hasMessage('''expected column index in [1, «zeroMatrixForAddition.columnSize»] but actual «invalidColumnIndex»''')
+    }
+
+    @Ignore
+    @Test
+    def void minorShouldSucceed() {
+        matrices.forEach [
+            val rowIndex = RandomUtils::nextInt(1, rowSize + 1)
+            val columnIndex = RandomUtils::nextInt(1, columnSize + 1)
+            val builder = BigIntMatrix::builder(rowSize - 1, columnSize - 1)
+            table.cellSet.forEach [ cell |
+                if (cell.rowKey != rowIndex && cell.columnKey != columnIndex) {
+                    val newRowIndex = if (cell.rowKey > rowIndex) cell.rowKey - 1 else cell.rowKey
+                    val newColumnIndex = if (cell.columnKey > columnIndex) cell.columnKey - 1 else cell.columnKey
+                    builder.put(newRowIndex, newColumnIndex, cell.value)
+                }
+            ]
+            assertThat(minor(rowIndex, columnIndex)).isExactlyInstanceOf(BigIntMatrix).isEqualTo(builder.build)
         ]
     }
 }
