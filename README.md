@@ -26,7 +26,7 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 * The matrices are based on ImmutableTable from Guava.
 * The vectors are based on ImmutableMap from Guava.
 * All leaf classes are final.
-* Useful hashCode, equals and toString methods thanks to Xtend's Active Annotations
+* Useful hashCode, equals and toString methods thanks to Xtend's active annotations
 * Builders for vectors and matrices
 * Early failing with meaningful messages
 * Logging facade instead of a hard dependency on a specific logging framework
