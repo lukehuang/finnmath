@@ -236,7 +236,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
      * @author Lars Tennstedt
      */
     override square() {
-        table.rowKeySet.size == table.columnKeySet.size
+        table.rowKeySet.size === table.columnKeySet.size
     }
 
     /**

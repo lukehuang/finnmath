@@ -34,7 +34,6 @@ import java.util.ArrayList
 import java.util.List
 import org.apache.commons.lang3.RandomUtils
 import org.junit.BeforeClass
-import org.junit.Ignore
 import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -92,7 +91,7 @@ final class BigIntMatrixTest {
     def void addNullShouldThrowException() {
         assertThatThrownBy[
             zeroMatrixForAddition.add(null)
-        ].isExactlyInstanceOf(NullPointerException)
+        ].isExactlyInstanceOf(NullPointerException).hasMessage('summand')
     }
 
     @Test
@@ -142,7 +141,7 @@ final class BigIntMatrixTest {
     def void subtractNullShouldThrowException() {
         assertThatThrownBy[
             zeroMatrixForAddition.subtract(null)
-        ].isExactlyInstanceOf(NullPointerException)
+        ].isExactlyInstanceOf(NullPointerException).hasMessage('subtrahend')
     }
 
     @Test
@@ -179,7 +178,7 @@ final class BigIntMatrixTest {
     def void multiplyNullShouldThrowException() {
         assertThatThrownBy[
             zeroMatrixForMultiplication.multiply(null)
-        ].isExactlyInstanceOf(NullPointerException)
+        ].isExactlyInstanceOf(NullPointerException).hasMessage('factor')
     }
 
     @Test
@@ -393,6 +392,30 @@ final class BigIntMatrixTest {
     }
 
     @Test
+    def void trNotSquareShouldThrowException() {
+        assertThatThrownBy [
+            BigIntMatrix::builder(2, 3).putAll(0BI).build.tr
+        ].isExactlyInstanceOf(IllegalStateException).hasMessage('expected square matrix but actual 2 x 3')
+    }
+
+    @Test
+    def void trShouldSucceed() {
+        squarematrices.forEach [
+            var expected = 0BI
+            for (index : rowIndexes)
+                expected += entry(index, index)
+            assertThat(tr).isExactlyInstanceOf(BigInteger).isEqualTo(expected)
+        ]
+    }
+
+    @Test
+    def void detNotSquareShouldThrowException() {
+        assertThatThrownBy [
+            BigIntMatrix::builder(2, 3).putAll(0BI).build.det
+        ].isExactlyInstanceOf(IllegalStateException).hasMessage('expected square matrix but actual 2 x 3')
+    }
+
+    @Test
     def void squareOfNonSquareMatrixShouldBeFalse() {
         assertFalse(BigIntMatrix::builder(2, 3).putAll(0BI).build.square)
     }
@@ -422,7 +445,6 @@ final class BigIntMatrixTest {
         ]
     }
 
-    @Ignore
     @Test
     def void minorRowIndexNullShouldThrowException() {
         assertThatThrownBy [
@@ -430,7 +452,6 @@ final class BigIntMatrixTest {
         ].isExactlyInstanceOf(NullPointerException).hasMessage('rowIndex')
     }
 
-    @Ignore
     @Test
     def void minorColumnIndexNullShouldThrowException() {
         assertThatThrownBy [
@@ -438,7 +459,6 @@ final class BigIntMatrixTest {
         ].isExactlyInstanceOf(NullPointerException).hasMessage('columnIndex')
     }
 
-    @Ignore
     @Test
     def void minorRowIndexTooLowShouldThrowException() {
         assertThatThrownBy [
@@ -447,7 +467,6 @@ final class BigIntMatrixTest {
             hasMessage('''expected row index in [1, «zeroMatrixForAddition.rowSize»] but actual 0''')
     }
 
-    @Ignore
     @Test
     def void minorRowIndexTooHighShouldThrowException() {
         val invalidRowIndex = zeroMatrixForAddition.rowSize + 1
@@ -457,7 +476,6 @@ final class BigIntMatrixTest {
             hasMessage('''expected row index in [1, «zeroMatrixForAddition.rowSize»] but actual «invalidRowIndex»''')
     }
 
-    @Ignore
     @Test
     def void minorColumnIndexTooLowShouldThrowException() {
         assertThatThrownBy [
@@ -466,7 +484,6 @@ final class BigIntMatrixTest {
             hasMessage('''expected column index in [1, «zeroMatrixForAddition.columnSize»] but actual 0''')
     }
 
-    @Ignore
     @Test
     def void minorColumnIndexTooHighShouldThrowException() {
         val invalidColumnIndex = zeroMatrixForAddition.columnSize + 1
@@ -476,7 +493,6 @@ final class BigIntMatrixTest {
             hasMessage('''expected column index in [1, «zeroMatrixForAddition.columnSize»] but actual «invalidColumnIndex»''')
     }
 
-    @Ignore
     @Test
     def void minorShouldSucceed() {
         matrices.forEach [

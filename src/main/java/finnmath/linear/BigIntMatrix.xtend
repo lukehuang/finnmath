@@ -196,6 +196,7 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
      * Returns the trace of this {@link BigIntMatrix}
      * 
      * @return The trace
+     * @throws IllegalStateException if {@code !square}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -236,7 +237,7 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
      * @author Lars Tennstedt
      */
     override square() {
-        table.rowKeySet.size == table.columnKeySet.size
+        table.rowKeySet.size === table.columnKeySet.size
     }
 
     /**
@@ -391,7 +392,7 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
         requireNonNull(columnIndex, 'columnIndex')
         checkArgument(table.containsRow(rowIndex), 'expected row index in [1, %s] but actual %s', table.rowKeySet.size,
             rowIndex)
-        checkArgument(table.containsColumn(rowIndex), 'expected column index in [1, %s] but actual %s',
+        checkArgument(table.containsColumn(columnIndex), 'expected column index in [1, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
         val builder = builder(table.rowKeySet.size - 1, table.columnKeySet.size - 1)
         table.cellSet.forEach [
