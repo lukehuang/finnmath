@@ -35,6 +35,7 @@ buildscript {
 apply plugin: 'java-library'
 apply plugin: 'org.xtext.xtend'
 apply plugin: 'findbugs'
+apply plugin: 'pmd'
 apply plugin: 'jacoco'
 apply plugin: 'maven'
 apply plugin: 'eclipse'

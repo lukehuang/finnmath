@@ -98,6 +98,7 @@ developer's life extremely and thanks to Maven convention over configuration arr
 * Linus Torvalds for Git
 * Gradle Inc. for Gradle
 * the University of Maryland for FindBugs
+* the developers of PMD
 * the developers of JaCoCo and EclEmma
 * GitHub Inc. for GitHub
 * Travis CI GmbH for Travis CI
