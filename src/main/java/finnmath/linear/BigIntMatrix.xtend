@@ -32,6 +32,7 @@ import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableTable
 import java.math.BigInteger
 import java.util.Map
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
@@ -45,6 +46,7 @@ import static java.util.Objects.requireNonNull
  * @author Lars Tennstedt
  */
 @Beta
+@EqualsHashCode
 final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> {
     private new(ImmutableTable<Integer, Integer, BigInteger> table) {
         super(table)
@@ -356,7 +358,7 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
      * @see #transpose
      */
     override symmetric() {
-        square && equals(transpose)
+        square && this == transpose
     }
 
     /**
@@ -370,7 +372,7 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
      * @see #negate
      */
     override skewSymmetric() {
-        square && equals(transpose.negate)
+        square && transpose == negate
     }
 
     /**

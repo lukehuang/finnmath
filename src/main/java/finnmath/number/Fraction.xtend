@@ -36,6 +36,7 @@ import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
+import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 /**
@@ -170,7 +171,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
     override divide(Fraction divisor) {
         requireNonNull(divisor, 'divisor')
         checkArgument(divisor.invertible, 'expected divisor to be invertible but actual %s', divisor)
-        multiply(divisor.invert.get)
+        multiply(divisor.invert)
     }
 
     /**
@@ -211,12 +212,12 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
     }
 
     /**
-     * Returns an {@link Optional} with the inverted {@link Fraction} of this one if this {@link Fraction} is 
-     * invertible and an emtpy {@link Optional} otherwise
+     * Returns the inverted {@link Fraction} of this one if this {@link Fraction} is invertible
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      * 
-     * @return The optional inverted
+     * @return The inverted
+     * @throws IllegalStateException if {@code !invertible}
      * @since 1
      * @author Lars Tennstedt
      * @see #invertible
@@ -224,7 +225,8 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @see #reduce
      */
     override invert() {
-        if (invertible) Optional.of(new Fraction(denominator, numerator)) else Optional.empty
+        checkState(invertible, 'expected to be invertible but actual %s', this)
+        new Fraction(denominator, numerator)
     }
 
     /**

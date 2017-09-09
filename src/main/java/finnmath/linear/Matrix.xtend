@@ -36,6 +36,7 @@ import java.util.Map
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
+import org.eclipse.xtend.lib.annotations.ToString
 
 import static com.google.common.base.Preconditions.checkArgument
 import static java.util.Objects.requireNonNull
@@ -47,7 +48,7 @@ import static java.util.Objects.requireNonNull
  */
 @Beta
 @EqualsHashCode
-@Accessors
+@ToString
 abstract class Matrix<E, V, M> {
     /**
      * The table holding the entries of this {@link Matrix}
@@ -55,6 +56,7 @@ abstract class Matrix<E, V, M> {
      * @since 1
      * @author Lars Tennstedt
      */
+    @Accessors
     protected val ImmutableTable<Integer, Integer, E> table
 
     protected new(ImmutableTable<Integer, Integer, E> table) {

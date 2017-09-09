@@ -47,7 +47,6 @@ import static java.util.Objects.requireNonNull
 @Beta
 @EqualsHashCode
 @ToString
-@Accessors
 abstract class Vector<E, V, N> {
     /**
      * The map holding the entries of this {@link Vector}
@@ -55,6 +54,7 @@ abstract class Vector<E, V, N> {
      * @since 1
      * @author Lars Tennstedt
      */
+    @Accessors
     protected val ImmutableMap<Integer, E> map
 
     protected new(ImmutableMap<Integer, E> map) {

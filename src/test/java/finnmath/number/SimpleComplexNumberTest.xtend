@@ -34,7 +34,6 @@ import finnmath.util.SquareRootCalculator
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.List
-import java.util.Optional
 import org.junit.BeforeClass
 import org.junit.Test
 
@@ -335,26 +334,28 @@ final class SimpleComplexNumberTest {
     }
 
     @Test
-    def void invertZeroShouldReturnAnEmptyOptional() {
-        assertThat(ZERO.invert).isEmpty
+    def void invertZeroShouldThrowException() {
+        assertThatThrownBy[
+            ZERO.invert
+        ].isExactlyInstanceOf(IllegalStateException).hasMessage('''expected to be invertible but actual «ZERO»''')
     }
 
     @Test
     def void invertShouldSucceed() {
         invertibles.forEach [
-            assertThat(invert).isExactlyInstanceOf(Optional).isEqualTo(Optional.of(ONE.divide(it)))
+            assertThat(invert).isExactlyInstanceOf(RealComplexNumber).isEqualTo(ONE.divide(it))
         ]
     }
 
     @Test
     def void invertOneShouldBeEqualToOne() {
-        assertThat(ONE.invert.get).isEqualTo(RealComplexNumber::ONE)
+        assertThat(ONE.invert).isEqualTo(RealComplexNumber::ONE)
     }
 
     @Test
     def void invertSelfShouldBeEqualToOneDividedBySelf() {
         invertibles.forEach [
-            assertThat(invert.get).isEqualTo(ONE.divide(it))
+            assertThat(invert).isEqualTo(ONE.divide(it))
         ]
     }
 

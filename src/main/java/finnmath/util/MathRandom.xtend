@@ -1049,7 +1049,7 @@ final class MathRandom {
                 if (rowIndex < columnIndex) {
                     builder.put(rowIndex, columnIndex, entry)
                     builder.put(columnIndex, rowIndex, entry)
-                } else
+                } else if (rowIndex == columnIndex)
                     builder.put(rowIndex, columnIndex, entry)
             ]
         ]
@@ -1074,12 +1074,12 @@ final class MathRandom {
         val builder = BigIntMatrix::builder(size, size)
         (1 .. size).forEach [ rowIndex |
             (1 .. size).forEach [ columnIndex |
-                val entry = BigInteger::valueOf(nextLong(bound))
                 if (rowIndex < columnIndex) {
+                    val entry = BigInteger::valueOf(nextLong(bound))
                     builder.put(rowIndex, columnIndex, entry)
                     builder.put(columnIndex, rowIndex, -entry)
-                } else
-                    builder.put(rowIndex, columnIndex, entry)
+                } else if (rowIndex == columnIndex)
+                    builder.put(rowIndex, columnIndex, 0BI)
             ]
         ]
         builder.build
@@ -1478,7 +1478,7 @@ final class MathRandom {
                 if (rowIndex < columnIndex) {
                     builder.put(rowIndex, columnIndex, entry)
                     builder.put(columnIndex, rowIndex, entry)
-                } else
+                } else if (rowIndex == columnIndex)
                     builder.put(rowIndex, columnIndex, entry)
             ]
         ]
@@ -1505,12 +1505,12 @@ final class MathRandom {
         val builder = DecimalMatrix::builder(size, size)
         (1 .. size).forEach [ rowIndex |
             (1 .. size).forEach [ columnIndex |
-                val entry = nextDecimal(bound, scale)
                 if (rowIndex < columnIndex) {
+                    val entry = nextDecimal(bound, scale)
                     builder.put(rowIndex, columnIndex, entry)
                     builder.put(columnIndex, rowIndex, -entry)
-                } else
-                    builder.put(rowIndex, columnIndex, entry)
+                } else if (rowIndex == columnIndex)
+                    builder.put(rowIndex, columnIndex, 0BD)
             ]
         ]
         builder.build

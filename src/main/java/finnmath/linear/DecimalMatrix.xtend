@@ -32,6 +32,7 @@ import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableTable
 import java.math.BigDecimal
 import java.util.Map
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
 import static com.google.common.base.Preconditions.checkState
@@ -45,6 +46,7 @@ import static java.util.Objects.requireNonNull
  * @author Lars Tennstedt
  */
 @Beta
+@EqualsHashCode
 final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatrix> {
     private new(ImmutableTable<Integer, Integer, BigDecimal> table) {
         super(table)
@@ -262,7 +264,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
     override upperTriangular() {
         if (square) {
             for (it : table.cellSet)
-                if (rowKey > columnKey && value != 0BI)
+                if (rowKey > columnKey && value != 0BD)
                     return false
             return true
         }
@@ -279,7 +281,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
     override lowerTriangular() {
         if (square) {
             for (it : table.cellSet)
-                if (rowKey < columnKey && value != 0BI)
+                if (rowKey < columnKey && value != 0BD)
                     return false
             return true
         }
@@ -355,7 +357,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
      * @see #transpose
      */
     override symmetric() {
-        square && equals(transpose)
+        square && this == transpose
     }
 
     /**
@@ -369,7 +371,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
      * @see #negate
      */
     override skewSymmetric() {
-        square && equals(transpose.negate)
+        square && transpose == negate
     }
 
     /**

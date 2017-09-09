@@ -32,10 +32,11 @@ import com.google.common.annotations.Beta
 import finnmath.linear.BigIntMatrix
 import finnmath.util.SquareRootCalculator
 import java.math.BigInteger
-import java.util.Optional
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.checkArgument
+import static com.google.common.base.Preconditions.checkState
 import static java.util.Objects.requireNonNull
 
 /**
@@ -47,6 +48,7 @@ import static java.util.Objects.requireNonNull
  */
 @Beta
 @FinalFieldsConstructor
+@EqualsHashCode
 final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
     /**
      * {@code 0} as {@link SimpleComplexNumber}
@@ -154,16 +156,17 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     }
 
     /**
-     * Returns an {@link Optional} with the inverted {@link SimpleComplexNumber} of this one if this 
-     * {@link SimpleComplexNumber} is invertible and an emtpy {@link Optional} otherwise
+     * Returns the inverted {@link SimpleComplexNumber} of this one if this {@link SimpleComplexNumber} is invertible
      * 
-     * @return The optional inverted
+     * @return The inverted
+     * @throws IllegalStateException if {@code !invertible}
      * @since 1
      * @author Lars Tennstedt
      * @see #invertible
      */
     override invert() {
-        if (invertible) Optional.of(ONE.divide(this)) else Optional.empty
+        checkState(invertible, 'expected to be invertible but actual %s', this)
+        ONE.divide(this)
     }
 
     /**

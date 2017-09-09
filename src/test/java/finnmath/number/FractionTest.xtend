@@ -31,7 +31,6 @@ package finnmath.number
 import finnmath.util.MathRandom
 import java.math.BigInteger
 import java.util.List
-import java.util.Optional
 import org.junit.BeforeClass
 import org.junit.Test
 
@@ -253,7 +252,7 @@ final class FractionTest {
     def void divideShouldSucceed() {
         fractions.forEach [
             invertibles.forEach [ invertible |
-                assertThat(divide(invertible)).isExactlyInstanceOf(Fraction).isEqualTo(multiply(invertible.invert.get))
+                assertThat(divide(invertible)).isExactlyInstanceOf(Fraction).isEqualTo(multiply(invertible.invert))
             ]
         ]
     }
@@ -338,34 +337,35 @@ final class FractionTest {
     }
 
     @Test
-    def void invertZeroShouldReturnEmptyOptional() {
-        assertThat(ZERO.invert).isExactlyInstanceOf(Optional).isEmpty
+    def void invertZeroShouldThrowException() {
+        assertThatThrownBy[
+            ZERO.invert
+        ].isExactlyInstanceOf(IllegalStateException).hasMessage('''expected to be invertible but actual «ZERO»''')
     }
 
     @Test
     def void invertShouldSucceed() {
         invertibles.forEach [
-            assertThat(invert).isExactlyInstanceOf(Optional).isEqualTo(
-                Optional.of(new Fraction(denominator, numerator)))
+            assertThat(invert).isExactlyInstanceOf(Fraction).isEqualTo(new Fraction(denominator, numerator))
         ]
     }
 
     @Test
     def void invertOneShouldBeEqualToOne() {
-        assertThat(ONE.invert.get).isEqualTo(ONE)
+        assertThat(ONE.invert).isEqualTo(ONE)
     }
 
     @Test
     def void invertSelfShouldBeEqualToOneDividedBySelf() {
         invertibles.forEach [
-            assertThat(invert.get.reduce.normalize).isEqualTo(ONE.divide(it).reduce.normalize)
+            assertThat(invert.reduce.normalize).isEqualTo(ONE.divide(it).reduce.normalize)
         ]
     }
 
     @Test
     def void multiplyInvertedShouldBeEqualToOne() {
         invertibles.forEach [
-            assertThat(multiply(invert.get).reduce.normalize).isEqualTo(ONE)
+            assertThat(multiply(invert).reduce.normalize).isEqualTo(ONE)
         ]
     }
 

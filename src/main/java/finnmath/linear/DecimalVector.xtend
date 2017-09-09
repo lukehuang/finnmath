@@ -33,9 +33,9 @@ import com.google.common.collect.ImmutableMap
 import finnmath.util.SquareRootCalculator
 import java.math.BigDecimal
 import java.util.Map
+import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
-import static finnmath.util.SquareRootCalculator.sqrt
 import static java.util.Objects.requireNonNull
 
 /**
@@ -46,6 +46,7 @@ import static java.util.Objects.requireNonNull
  * @author Lars Tennstedt
  */
 @Beta
+@EqualsHashCode
 final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> {
     private new(ImmutableMap<Integer, BigDecimal> map) {
         super(map)
@@ -144,7 +145,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * @see SquareRootCalculator#sqrt(BigDecimal)
      */
     override norm() {
-        sqrt(normPow2)
+        SquareRootCalculator::sqrt(normPow2)
     }
 
     /**
@@ -162,7 +163,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
     override norm(BigDecimal precision) {
         requireNonNull(precision, 'precision')
         checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-        sqrt(normPow2, precision)
+        SquareRootCalculator::sqrt(normPow2, precision)
     }
 
     /**
@@ -182,7 +183,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
         checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
             roundingMode)
-        sqrt(normPow2, scale, roundingMode)
+        SquareRootCalculator::sqrt(normPow2, scale, roundingMode)
     }
 
     /**
@@ -207,7 +208,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
         checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
             roundingMode)
-        sqrt(normPow2, precision, scale, roundingMode)
+        SquareRootCalculator::sqrt(normPow2, precision, scale, roundingMode)
     }
 
     /**
@@ -262,7 +263,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
     override distance(DecimalVector vector) {
         requireNonNull(vector, 'vector')
         checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-        sqrt(distancePow2(vector))
+        SquareRootCalculator::sqrt(distancePow2(vector))
     }
 
     /**
@@ -278,14 +279,14 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * @since 1
      * @author Lars Tennstedt
      * @see #distancePow2
-     * @see SquareRootCalculator#sqrt(BigInteger)
+     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal)
      */
     override distance(DecimalVector vector, BigDecimal precision) {
         requireNonNull(vector, 'vector')
         checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         requireNonNull(precision, 'precision')
         checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-        sqrt(distancePow2(vector))
+        SquareRootCalculator::sqrt(distancePow2(vector), precision)
     }
 
     /**
@@ -302,7 +303,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * @since 1
      * @author Lars Tennstedt
      * @see #distancePow2
-     * @see SquareRootCalculator#sqrt(BigInteger)
+     * @see SquareRootCalculator#sqrt(BigInteger, int, int)
      */
     override distance(DecimalVector vector, int scale, int roundingMode) {
         requireNonNull(vector, 'vector')
@@ -310,7 +311,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
         checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
             roundingMode)
-        sqrt(distancePow2(vector))
+        SquareRootCalculator::sqrt(distancePow2(vector), scale, roundingMode)
     }
 
     /**
@@ -330,7 +331,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * @since 1
      * @author Lars Tennstedt
      * @see #distancePow2
-     * @see SquareRootCalculator#sqrt(BigInteger)
+     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal, int, int)
      */
     override distance(DecimalVector vector, BigDecimal precision, int scale, int roundingMode) {
         requireNonNull(vector, 'vector')
@@ -340,7 +341,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
         checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
             roundingMode)
-        sqrt(distancePow2(vector))
+        SquareRootCalculator::sqrt(distancePow2(vector), precision, scale, roundingMode)
     }
 
     /**
