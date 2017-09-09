@@ -90,13 +90,14 @@ developer's life extremely and thanks to Maven convention over configuration arr
 ## Thanks to
 * Oracle for the JVM, Java and OpenJDK
 * the Eclipse Foundation for Xtend and the Eclipse IDE
-* Google for Guava
+* Google for Guava and Error Prone
 * the Apache Software Foundation for Groovy, Commons Lang and Commons Math
 * QOS.ch for SLF4J 
 * Joel Costigliola for AssertJ
 * the JUnit team for JUnit
 * Linus Torvalds for Git
 * Gradle Inc. for Gradle
+* Thomas Broyer for the Gradle Error Prone plugin
 * the University of Maryland for FindBugs
 * the developers of PMD
 * the developers of JaCoCo and EclEmma
