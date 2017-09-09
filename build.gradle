@@ -26,14 +26,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import net.ltgt.gradle.errorprone.ErrorProneToolChain
+
 buildscript {
     repositories.maven { url 'https://plugins.gradle.org/m2/' }
     
-    dependencies { classpath 'org.xtext:xtext-gradle-plugin:1.0.19' }
+    dependencies {
+        classpath 'org.xtext:xtext-gradle-plugin:1.0.19'
+        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.11'
+    }
 }
 
 apply plugin: 'java-library'
 apply plugin: 'org.xtext.xtend'
+apply plugin: 'net.ltgt.errorprone-base'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
@@ -45,6 +51,8 @@ group 'finnmath'
 version '1-SNAPSHOT'
 
 xtend.generator { suppressWarningsAnnotation = false }
+
+compileJava { toolChain ErrorProneToolChain.create(project) }
 
 repositories { jcenter() }
 
