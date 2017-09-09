@@ -66,9 +66,9 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
      */
     override add(DecimalMatrix summand) {
         requireNonNull(summand, 'summand')
-        checkArgument(table.rowKeySet.size == summand.rowSize, 'expected equal row sizes but actual %s != %s',
+        checkArgument(table.rowKeySet.size === summand.rowSize, 'expected equal row sizes but actual %s != %s',
             table.rowKeySet.size, summand.rowSize)
-        checkArgument(table.columnKeySet.size == summand.columnSize, 'expected equal column sizes but actual %s != %s',
+        checkArgument(table.columnKeySet.size === summand.columnSize, 'expected equal column sizes but actual %s != %s',
             table.columnKeySet.size, summand.columnSize)
         val builder = builder(rowSize, columnSize)
         table.cellSet.forEach [
@@ -91,9 +91,9 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
      */
     override subtract(DecimalMatrix subtrahend) {
         requireNonNull(subtrahend, 'subtrahend')
-        checkArgument(table.rowKeySet.size == subtrahend.rowSize, 'expected equal row sizes but actual %s != %s',
+        checkArgument(table.rowKeySet.size === subtrahend.rowSize, 'expected equal row sizes but actual %s != %s',
             table.rowKeySet.size, subtrahend.rowSize)
-        checkArgument(table.columnKeySet.size == subtrahend.columnSize,
+        checkArgument(table.columnKeySet.size === subtrahend.columnSize,
             'expected equal column sizes but actual %s != %s', table.columnKeySet.size, subtrahend.columnSize)
         val builder = builder(rowSize, columnSize)
         table.cellSet.forEach [
@@ -115,7 +115,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
      */
     override multiply(DecimalMatrix factor) {
         requireNonNull(factor, 'factor')
-        checkArgument(table.columnKeySet.size == factor.rowSize,
+        checkArgument(table.columnKeySet.size === factor.rowSize,
             'expected columnSize == factor.rowSize but actual %s != %s', table.columnKeySet.size, factor.rowSize)
         val builder = builder(table.rowKeySet.size, factor.columnSize)
         table.rowKeySet.forEach [ rowIndex |
@@ -140,7 +140,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
      */
     override multiplyVector(DecimalVector vector) {
         requireNonNull(vector, 'vector')
-        checkArgument(table.columnKeySet.size == vector.size, 'expected columnSize == vectorSize but actual %s != %s',
+        checkArgument(table.columnKeySet.size === vector.size, 'expected columnSize == vectorSize but actual %s != %s',
             table.columnKeySet.size, vector.size)
         val builder = DecimalVector::builder(vector.size)
         table.rowMap.forEach [ rowIndex, row |
@@ -155,7 +155,7 @@ final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, DecimalMatri
     protected override multiplyRowWithColumn(Map<Integer, BigDecimal> row, Map<Integer, BigDecimal> column) {
         requireNonNull(row, 'row')
         requireNonNull(column, 'column')
-        checkArgument(row.size == column.size, 'expected row size == column size but actual %s != %s', row.size,
+        checkArgument(row.size === column.size, 'expected row size == column size but actual %s != %s', row.size,
             column.size)
         var result = 0BD
         for (it : row.entrySet)

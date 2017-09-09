@@ -30,6 +30,7 @@ package finnmath.linear
 
 import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableMap
+import com.google.common.collect.ImmutableSet
 import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
 import java.util.Map
@@ -168,6 +169,18 @@ abstract class Matrix<E, V, M> {
      */
     def columns() {
         table.columnMap
+    }
+
+    /**
+     * Returns all matrix cells as {@link ImmutableSet}
+     * 
+     * @return The columns
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#cellSet
+     */
+    def cells() {
+        table.cellSet
     }
 
     /**

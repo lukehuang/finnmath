@@ -62,7 +62,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * @author Lars Tennstedt
      */
     override add(DecimalVector summand) {
-        checkArgument(map.size == summand.size, 'expected equal sizes but actual %s != %s', map.size, summand.size)
+        checkArgument(map.size === summand.size, 'expected equal sizes but actual %s != %s', map.size, summand.size)
         val builder = builder(map.size)
         map.forEach [ index, entry |
             builder.put(entry + summand.entry(index))
@@ -80,7 +80,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * @author Lars Tennstedt
      */
     override subtract(DecimalVector subtrahend) {
-        checkArgument(map.size == subtrahend.size, 'expected equal sizes but actual %s != %s', map.size,
+        checkArgument(map.size === subtrahend.size, 'expected equal sizes but actual %s != %s', map.size,
             subtrahend.size)
         val builder = builder(map.size)
         map.forEach [ index, entry |
@@ -124,94 +124,6 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
     }
 
     /**
-     * Returns the square of the norm of this {@link DecimalVector}
-     * 
-     * @return The square of the norm
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #dotProduct
-     */
-    override normPow2() {
-        dotProduct
-    }
-
-    /**
-     * Returns the norm of this {@link DecimalVector}
-     * 
-     * @return The norm
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #normPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     */
-    override norm() {
-        SquareRootCalculator::sqrt(normPow2)
-    }
-
-    /**
-     * Returns the norm of this {@link DecimalVector}
-     * 
-     * @param precision the precision for the termination condition
-     * @return The norm
-     * @throws NullPointerException if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #normPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal)
-     */
-    override norm(BigDecimal precision) {
-        requireNonNull(precision, 'precision')
-        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-        SquareRootCalculator::sqrt(normPow2, precision)
-    }
-
-    /**
-     * Returns the norm of this {@link DecimalVector}
-     * 
-     * @param scale the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The norm
-     * @throws IllegalArgumentException if {@code scale < 0}
-     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #normPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal, int, int)
-     */
-    override norm(int scale, int roundingMode) {
-        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
-        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
-            roundingMode)
-        SquareRootCalculator::sqrt(normPow2, scale, roundingMode)
-    }
-
-    /**
-     * Returns the norm of this {@link DecimalVector}
-     * 
-     * @param precision the precision for the termination condition
-     * @param scale the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The norm
-     * @throws NullPointerException if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException if {@code scale < 0}
-     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #normPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal, int, int)
-     */
-    override norm(BigDecimal precision, int scale, int roundingMode) {
-        requireNonNull(precision, 'precision')
-        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
-        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
-            roundingMode)
-        SquareRootCalculator::sqrt(normPow2, precision, scale, roundingMode)
-    }
-
-    /**
      * Returns the dot product of this {@link DecimalVector} and the given one
      * 
      * @param vector The other {@link DecimalVector}
@@ -223,7 +135,7 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      */
     override dotProduct(DecimalVector vector) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         var result = 0BD
         for (index : (1 .. map.size))
             result += map.get(index) * vector.entry(index)
@@ -231,97 +143,185 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
     }
 
     /**
-     * Returns the square of the distance from this {@link DecimalVector} to the given one
+     * Returns the square of the euclidean norm of this {@link DecimalVector}
+     * 
+     * @return The square of the euclidean norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #dotProduct
+     */
+    override euclideanNormPow2() {
+        dotProduct
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link DecimalVector}
+     * 
+     * @return The euclidean norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
+    override euclideanNorm() {
+        SquareRootCalculator::sqrt(euclideanNormPow2)
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link DecimalVector}
+     * 
+     * @param precision the precision for the termination condition
+     * @return The euclidean norm
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal)
+     */
+    override euclideanNorm(BigDecimal precision) {
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        SquareRootCalculator::sqrt(euclideanNormPow2, precision)
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link DecimalVector}
+     * 
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The euclidean norm
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, int, int)
+     */
+    override euclideanNorm(int scale, int roundingMode) {
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        SquareRootCalculator::sqrt(euclideanNormPow2, scale, roundingMode)
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link DecimalVector}
+     * 
+     * @param precision the precision for the termination condition
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The euclidean norm
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal, int, int)
+     */
+    override euclideanNorm(BigDecimal precision, int scale, int roundingMode) {
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        SquareRootCalculator::sqrt(euclideanNormPow2, precision, scale, roundingMode)
+    }
+
+    /**
+     * Returns the square of the euclidean distance from this {@link DecimalVector} to the given one
      * 
      * @param vector The other {@link DecimalVector}
-     * @return The square of the distance
+     * @return The square of the euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
      * @since 1
      * @author Lars Tennstedt
      * @see #subtract
-     * @see #normPow2
+     * @see #euclideanNormPow2
      */
-    override distancePow2(DecimalVector vector) {
+    override euclideanDistancePow2(DecimalVector vector) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-        subtract(vector).normPow2
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        subtract(vector).euclideanNormPow2
     }
 
     /**
-     * Returns the distance from this {@link DecimalVector} to the given one
+     * Returns the euclidean distance from this {@link DecimalVector} to the given one
      * 
      * @param vector The other {@link DecimalVector}
-     * @return The the distance
+     * @return The the euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
-     * @see #distancePow2
+     * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
      * @author Lars Tennstedt
      */
-    override distance(DecimalVector vector) {
+    override euclideanDistance(DecimalVector vector) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-        SquareRootCalculator::sqrt(distancePow2(vector))
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        SquareRootCalculator::sqrt(euclideanDistancePow2(vector))
     }
 
     /**
-     * Returns the distance from this {@link DecimalVector} to the given one
+     * Returns the euclidean distance from this {@link DecimalVector} to the given one
      * 
      * @param vector The other {@link DecimalVector}
      * @param precision the precision for the termination condition
-     * @return The distance
+     * @return The euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
      * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
      * @since 1
      * @author Lars Tennstedt
-     * @see #distancePow2
+     * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal)
      */
-    override distance(DecimalVector vector, BigDecimal precision) {
+    override euclideanDistance(DecimalVector vector, BigDecimal precision) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         requireNonNull(precision, 'precision')
         checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-        SquareRootCalculator::sqrt(distancePow2(vector), precision)
+        SquareRootCalculator::sqrt(euclideanDistancePow2(vector), precision)
     }
 
     /**
-     * Returns the distance from this {@link DecimalVector} to the given one
+     * Returns the euclidean distance from this {@link DecimalVector} to the given one
      * 
      * @param vector The other {@link DecimalVector}
      * @param scale the scale to be set on the result
      * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The distance
+     * @return The euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
      * @throws IllegalArgumentException if {@code scale < 0}
      * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
-     * @see #distancePow2
+     * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger, int, int)
      */
-    override distance(DecimalVector vector, int scale, int roundingMode) {
+    override euclideanDistance(DecimalVector vector, int scale, int roundingMode) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
         checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
             roundingMode)
-        SquareRootCalculator::sqrt(distancePow2(vector), scale, roundingMode)
+        SquareRootCalculator::sqrt(euclideanDistancePow2(vector), scale, roundingMode)
     }
 
     /**
-     * Returns the distance from this {@link DecimalVector} to the given one
+     * Returns the euclidean distance from this {@link DecimalVector} to the given one
      * 
      * @param vector The other {@link DecimalVector}
      * @param precision the precision for the termination condition
      * @param scale the scale to be set on the result
      * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The distance
+     * @return The euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
@@ -330,18 +330,83 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
      * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
-     * @see #distancePow2
+     * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal, int, int)
      */
-    override distance(DecimalVector vector, BigDecimal precision, int scale, int roundingMode) {
+    override euclideanDistance(DecimalVector vector, BigDecimal precision, int scale, int roundingMode) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         requireNonNull(precision, 'precision')
         checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
         checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
         checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
             roundingMode)
-        SquareRootCalculator::sqrt(distancePow2(vector), precision, scale, roundingMode)
+        SquareRootCalculator::sqrt(euclideanDistancePow2(vector), precision, scale, roundingMode)
+    }
+
+    /**
+     * Returns the taxicab norm of this {@link DecimalVector}
+     * 
+     * @return The taxicab norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override taxicabNorm() {
+        var result = 0BD
+        for (entry : map.values)
+            result += entry.abs
+        result
+    }
+
+    /**
+     * Returns the taxicab distance from this {@link DecimalVector} to the given one
+     * 
+     * @param vector The other {@link DecimalVector}
+     * @return The taxicab distance
+     * @throws NullPointerException if {@code vector == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #taxicabNorm
+     * @see #subtract
+     */
+    override taxicabDistance(DecimalVector vector) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        subtract(vector).taxicabNorm
+    }
+
+    /**
+     * Returns the infinity norm of this {@link DecimalVector}
+     * 
+     * @return The infinity norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigDecimal#max
+     * @see BigDecimal#abs
+     * @see IterableExtensions#min
+     * @see IterableExtensions#max
+     */
+    override infinityNorm() {
+        map.values.min.abs.max(map.values.max.abs)
+    }
+
+    /**
+     * Returns the infinity distance from this {@link DecimalVector} to the given one
+     * 
+     * @param vector The other {@link DecimalVector}
+     * @return The infinity distance
+     * @throws NullPointerException if {@code vector == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #infinityNorm
+     * @see #subtract
+     */
+    override infinityDistance(DecimalVector vector) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        subtract(vector).infinityNorm
     }
 
     /**

@@ -30,7 +30,6 @@ package finnmath.number
 
 import com.google.common.annotations.Beta
 import java.math.BigInteger
-import java.util.Optional
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 import org.eclipse.xtend.lib.annotations.ToString
@@ -166,7 +165,6 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
      * @see #invertible
      * @see #normalize
      * @see #reduce
-     * @see Optional#get
      */
     override divide(Fraction divisor) {
         requireNonNull(divisor, 'divisor')
@@ -191,7 +189,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
         checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
         if (exponent > 1)
             return multiply(pow(exponent - 1))
-        else if (exponent == 1)
+        else if (exponent === 1)
             return this
         ONE
     }
@@ -390,7 +388,7 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
     def normalize() {
         if (signum < 0)
             return new Fraction(-numerator.abs, denominator.abs)
-        if (signum == 0)
+        if (signum === 0)
             return ZERO
         if (numerator < 0BI)
             return abs

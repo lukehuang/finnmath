@@ -85,9 +85,9 @@ final class ScientificNotation {
     def asString() {
         if (exponent < 0)
             return '''«coefficient» * 10^(«exponent»)'''
-        else if (exponent == 0)
+        else if (exponent === 0)
             return '''«coefficient»'''
-        else if (exponent == 1)
+        else if (exponent === 1)
             return '''«coefficient» * 10'''
         '''«coefficient» * 10^«exponent»'''
     }

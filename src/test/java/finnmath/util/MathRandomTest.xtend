@@ -1194,7 +1194,7 @@ final class MathRandomTest {
         assertThat(table.values).hasOnlyElementsOfType(BigDecimal).are(new Condition([ BigDecimal entry |
             -decimalBound < entry && entry < decimalBound
         ], 'bound'))
-        table.cellSet.forEach [ cell |
+        cells.forEach [ cell |
             if (cell.rowKey <= cell.columnKey)
                 assertEquals(validScale, cell.value.scale)
         ]
@@ -1231,7 +1231,7 @@ final class MathRandomTest {
         assertThat(table.values).hasOnlyElementsOfType(BigDecimal).are(new Condition([ BigDecimal entry |
             -decimalBound < entry && entry < decimalBound
         ], 'bound'))
-        table.cellSet.forEach [ cell |
+        cells.forEach [ cell |
             if (cell.rowKey >= cell.columnKey)
                 assertEquals(validScale, cell.value.scale)
         ]
@@ -1269,7 +1269,7 @@ final class MathRandomTest {
             -decimalBound < entry && entry < decimalBound
         ], 'bound'))
         if (upperTriangular)
-            table.cellSet.forEach [ cell |
+            cells.forEach [ cell |
                 if (cell.rowKey <= cell.columnKey)
                     assertEquals(validScale, cell.value.scale)
             ]
@@ -1306,7 +1306,7 @@ final class MathRandomTest {
         assertThat(table.values).hasOnlyElementsOfType(BigDecimal).are(new Condition([ BigDecimal entry |
             -decimalBound < entry && entry < decimalBound
         ], 'bound'))
-        table.cellSet.forEach [ cell |
+        cells.forEach [ cell |
             if (cell.rowKey == cell.columnKey)
                 assertEquals(validScale, cell.value.scale)
         ]
@@ -1378,7 +1378,7 @@ final class MathRandomTest {
         assertThat(table.values).hasOnlyElementsOfType(BigDecimal).are(new Condition([ BigDecimal entry |
             -decimalBound < entry && entry < decimalBound
         ], 'bound'))
-        table.cellSet.forEach [ cell |
+        cells.forEach [ cell |
             if (cell.rowKey != cell.columnKey)
                 assertEquals(validScale, cell.value.scale)
         ]
@@ -1483,7 +1483,7 @@ final class MathRandomTest {
             assertThat(table.values).hasOnlyElementsOfType(BigDecimal).are(new Condition([ BigDecimal entry |
                 -decimalBound < entry && entry < decimalBound
             ], 'bound'))
-            table.cellSet.forEach [ cell |
+            cells.forEach [ cell |
                 if (cell.rowKey <= cell.columnKey)
                     assertEquals(validScale, cell.value.scale)
             ]
@@ -1533,7 +1533,7 @@ final class MathRandomTest {
             assertThat(table.values).hasOnlyElementsOfType(BigDecimal).are(new Condition([ BigDecimal entry |
                 -decimalBound < entry && entry < decimalBound
             ], 'bound'))
-            table.cellSet.forEach [ cell |
+            cells.forEach [ cell |
                 if (cell.rowKey >= cell.columnKey)
                     assertEquals(validScale, cell.value.scale)
             ]
@@ -1584,12 +1584,12 @@ final class MathRandomTest {
                 -decimalBound < entry && entry < decimalBound
             ], 'bound'))
             if (lowerTriangular)
-                table.cellSet.forEach [ cell |
+                cells.forEach [ cell |
                     if (cell.rowKey >= cell.columnKey)
                         assertEquals(validScale, cell.value.scale)
                 ]
             else
-                table.cellSet.forEach [ cell |
+                cells.forEach [ cell |
                     if (cell.rowKey <= cell.columnKey)
                         assertEquals(validScale, cell.value.scale)
                 ]
@@ -1639,7 +1639,7 @@ final class MathRandomTest {
             assertThat(table.values).hasOnlyElementsOfType(BigDecimal).are(new Condition([ BigDecimal entry |
                 -decimalBound < entry && entry < decimalBound
             ], 'bound'))
-            table.cellSet.forEach [ cell |
+            cells.forEach [ cell |
                 if (cell.rowKey == cell.columnKey)
                     assertEquals(validScale, cell.value.scale)
             ]
@@ -1737,7 +1737,7 @@ final class MathRandomTest {
             assertThat(table.values).hasOnlyElementsOfType(BigDecimal).are(new Condition([ BigDecimal entry |
                 -decimalBound < entry && entry < decimalBound
             ], 'bound'))
-            table.cellSet.forEach [ cell |
+            cells.forEach [ cell |
                 if (cell.rowKey != cell.columnKey)
                     assertEquals(validScale, cell.value.scale)
             ]

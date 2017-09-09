@@ -202,7 +202,7 @@ final class BigIntMatrixTest {
     @Test
     def void muliplyZeroMatrixShouldBeEqualToZeroMatrix() {
         matrices.forEach [
-            multiply(zeroMatrixForMultiplication).table.cellSet.forEach [
+            multiply(zeroMatrixForMultiplication).cells.forEach [
                 assertThat(value).isEqualTo(0BI)
             ]
         ]
@@ -283,7 +283,7 @@ final class BigIntMatrixTest {
         matrices.forEach [
             scalars.forEach [ scalar |
                 val builder = BigIntMatrix::builder(rowSize, columnSize)
-                table.cellSet.forEach [ cell |
+                cells.forEach [ cell |
                     builder.put(cell.rowKey, cell.columnKey, scalar * cell.value)
                 ]
                 assertThat(scalarMultiply(scalar)).isExactlyInstanceOf(BigIntMatrix).isEqualTo(builder.build)
@@ -367,7 +367,7 @@ final class BigIntMatrixTest {
     @Test
     def void addNegatedShouldBeEqualToZeroMatrix() {
         matrices.forEach [
-            add(negate).table.cellSet.forEach [
+            add(negate).cells.forEach [
                 assertThat(value).isEqualTo(0BI)
             ]
         ]
@@ -438,7 +438,7 @@ final class BigIntMatrixTest {
     def void transposeShouldSucceed() {
         matrices.forEach [
             val builder = BigIntMatrix::builder(columnSize, rowSize)
-            table.cellSet.forEach [ cell |
+            cells.forEach [ cell |
                 builder.put(cell.columnKey, cell.rowKey, cell.value)
             ]
             assertThat(transpose).isEqualTo(builder.build)
@@ -499,7 +499,7 @@ final class BigIntMatrixTest {
             val rowIndex = RandomUtils::nextInt(1, rowSize + 1)
             val columnIndex = RandomUtils::nextInt(1, columnSize + 1)
             val builder = BigIntMatrix::builder(rowSize - 1, columnSize - 1)
-            table.cellSet.forEach [ cell |
+            cells.forEach [ cell |
                 if (cell.rowKey != rowIndex && cell.columnKey != columnIndex) {
                     val newRowIndex = if (cell.rowKey > rowIndex) cell.rowKey - 1 else cell.rowKey
                     val newColumnIndex = if (cell.columnKey > columnIndex) cell.columnKey - 1 else cell.columnKey

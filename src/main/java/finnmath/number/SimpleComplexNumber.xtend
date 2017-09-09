@@ -139,7 +139,7 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
         checkArgument(exponent > -1, 'expected exponent > -1 but actual %s', exponent)
         if (exponent > 1)
             return multiply(pow(exponent - 1))
-        else if (exponent == 1)
+        else if (exponent === 1)
             return this
         ONE
     }

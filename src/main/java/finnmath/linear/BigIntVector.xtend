@@ -64,7 +64,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
      */
     override add(BigIntVector summand) {
         requireNonNull(summand, 'summand')
-        checkArgument(map.size == summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
+        checkArgument(map.size === summand.size, 'equal sizes expected but actual %s != %s', map.size, summand.size)
         val builder = builder(map.size)
         map.forEach [ index, entry |
             builder.put(entry + summand.entry(index))
@@ -83,7 +83,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
      */
     override subtract(BigIntVector subtrahend) {
         requireNonNull(subtrahend, 'subtrahend')
-        checkArgument(map.size == subtrahend.size, 'equal sizes expected but actual %s != %s', map.size,
+        checkArgument(map.size === subtrahend.size, 'equal sizes expected but actual %s != %s', map.size,
             subtrahend.size)
         val builder = builder(map.size)
         map.forEach [ index, entry |
@@ -123,94 +123,6 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
     }
 
     /**
-     * Returns the square of the norm of this {@link BigIntVector}
-     * 
-     * @return The square of the norm
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #dotProduct
-     */
-    override normPow2() {
-        dotProduct
-    }
-
-    /**
-     * Returns the norm of this {@link BigIntVector}
-     * 
-     * @return The norm
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #normPow2
-     * @see SquareRootCalculator#sqrt(BigInteger)
-     */
-    override norm() {
-        SquareRootCalculator::sqrt(normPow2)
-    }
-
-    /**
-     * Returns the norm of this {@link BigIntVector}
-     * 
-     * @param precision the precision for the termination condition
-     * @return The norm
-     * @throws NullPointerException if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #normPow2
-     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal)
-     */
-    override norm(BigDecimal precision) {
-        requireNonNull(precision, 'precision')
-        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-        SquareRootCalculator::sqrt(normPow2, precision)
-    }
-
-    /**
-     * Returns the norm of this {@link BigIntVector}
-     * 
-     * @param scale the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The norm
-     * @throws IllegalArgumentException if {@code scale < 0}
-     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #normPow2
-     * @see SquareRootCalculator#sqrt(BigInteger, int, int)
-     */
-    override norm(int scale, int roundingMode) {
-        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
-        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
-            roundingMode)
-        SquareRootCalculator::sqrt(normPow2, scale, roundingMode)
-    }
-
-    /**
-     * Returns the norm of this {@link BigIntVector}
-     * 
-     * @param precision the precision for the termination condition
-     * @param scale the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The norm
-     * @throws NullPointerException if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException if {@code scale < 0}
-     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #normPow2
-     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal, int, int)
-     */
-    override norm(BigDecimal precision, int scale, int roundingMode) {
-        requireNonNull(precision, 'precision')
-        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
-        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
-            roundingMode)
-        SquareRootCalculator::sqrt(normPow2, precision, scale, roundingMode)
-    }
-
-    /**
      * Returns the dot product of this {@link BigIntVector} and the given one
      * 
      * @param vector The other {@link BigIntVector}
@@ -222,7 +134,7 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
      */
     override dotProduct(BigIntVector vector) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         var result = 0BI
         for (index : (1 .. map.size))
             result += map.get(index) * vector.entry(index)
@@ -230,97 +142,185 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
     }
 
     /**
-     * Returns the square of the distance from this {@link BigIntVector} to the given one
+     * Returns the square of the euclidean norm of this {@link BigIntVector}
+     * 
+     * @return The square of the euclidean norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #dotProduct
+     */
+    override euclideanNormPow2() {
+        dotProduct
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link BigIntVector}
+     * 
+     * @return The euclidean norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     */
+    override euclideanNorm() {
+        SquareRootCalculator::sqrt(euclideanNormPow2)
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link BigIntVector}
+     * 
+     * @param precision the precision for the termination condition
+     * @return The euclidean norm
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal)
+     */
+    override euclideanNorm(BigDecimal precision) {
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        SquareRootCalculator::sqrt(euclideanNormPow2, precision)
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link BigIntVector}
+     * 
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The euclidean norm
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger, int, int)
+     */
+    override euclideanNorm(int scale, int roundingMode) {
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        SquareRootCalculator::sqrt(euclideanNormPow2, scale, roundingMode)
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link BigIntVector}
+     * 
+     * @param precision the precision for the termination condition
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The euclidean norm
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal, int, int)
+     */
+    override euclideanNorm(BigDecimal precision, int scale, int roundingMode) {
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        SquareRootCalculator::sqrt(euclideanNormPow2, precision, scale, roundingMode)
+    }
+
+    /**
+     * Returns the square of the euclidean distance from this {@link BigIntVector} to the given one
      * 
      * @param vector The other {@link BigIntVector}
-     * @return The square of the distance
+     * @return The square of the euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
      * @since 1
      * @author Lars Tennstedt
      * @see #subtract
-     * @see #normPow2
+     * @see #euclideanNormPow2
      */
-    override distancePow2(BigIntVector vector) {
+    override euclideanDistancePow2(BigIntVector vector) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-        subtract(vector).normPow2
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        subtract(vector).euclideanNormPow2
     }
 
     /**
-     * Returns the distance from this {@link BigIntVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given one
      * 
      * @param vector The other {@link BigIntVector}
-     * @return The the distance
+     * @return The the euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
-     * @see #distancePow2
+     * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
      * @author Lars Tennstedt
      */
-    override distance(BigIntVector vector) {
+    override euclideanDistance(BigIntVector vector) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
-        SquareRootCalculator::sqrt(distancePow2(vector))
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        SquareRootCalculator::sqrt(euclideanDistancePow2(vector))
     }
 
     /**
-     * Returns the distance from this {@link BigIntVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given one
      * 
      * @param vector The other {@link BigIntVector}
      * @param precision the precision for the termination condition
-     * @return The distance
+     * @return The euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
      * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
      * @since 1
      * @author Lars Tennstedt
-     * @see #distancePow2
+     * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal)
      */
-    override distance(BigIntVector vector, BigDecimal precision) {
+    override euclideanDistance(BigIntVector vector, BigDecimal precision) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         requireNonNull(precision, 'precision')
         checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
-        SquareRootCalculator::sqrt(distancePow2(vector), precision)
+        SquareRootCalculator::sqrt(euclideanDistancePow2(vector), precision)
     }
 
     /**
-     * Returns the distance from this {@link BigIntVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given one
      * 
      * @param vector The other {@link BigIntVector}
      * @param scale the scale to be set on the result
      * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The distance
+     * @return The euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
      * @throws IllegalArgumentException if {@code scale < 0}
      * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
-     * @see #distancePow2
+     * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger, int, int)
      */
-    override distance(BigIntVector vector, int scale, int roundingMode) {
+    override euclideanDistance(BigIntVector vector, int scale, int roundingMode) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
         checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
             roundingMode)
-        SquareRootCalculator::sqrt(distancePow2(vector), scale, roundingMode)
+        SquareRootCalculator::sqrt(euclideanDistancePow2(vector), scale, roundingMode)
     }
 
     /**
-     * Returns the distance from this {@link BigIntVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given one
      * 
      * @param vector The other {@link BigIntVector}
      * @param precision the precision for the termination condition
      * @param scale the scale to be set on the result
      * @param roundingMode the rounding mode to be used during the setting of the scale of the result
-     * @return The distance
+     * @return The euclidean distance
      * @throws NullPointerException if {@code vector == null}
      * @throws NullPointerException if {@code precision == null}
      * @throws IllegalArgumentException if {@code map.size != vector.size}
@@ -329,18 +329,83 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
      * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
-     * @see #distancePow2
+     * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal, int, int)
      */
-    override distance(BigIntVector vector, BigDecimal precision, int scale, int roundingMode) {
+    override euclideanDistance(BigIntVector vector, BigDecimal precision, int scale, int roundingMode) {
         requireNonNull(vector, 'vector')
-        checkArgument(map.size == vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         requireNonNull(precision, 'precision')
         checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
         checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
         checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
             roundingMode)
-        SquareRootCalculator::sqrt(distancePow2(vector), precision, scale, roundingMode)
+        SquareRootCalculator::sqrt(euclideanDistancePow2(vector), precision, scale, roundingMode)
+    }
+
+    /**
+     * Returns the taxicab norm of this {@link BigIntVector}
+     * 
+     * @return The taxicab norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override taxicabNorm() {
+        var result = 0BI
+        for (entry : map.values)
+            result += entry.abs
+        result
+    }
+
+    /**
+     * Returns the taxicab distance from this {@link BigIntVector} to the given one
+     * 
+     * @param vector The other {@link BigIntVector}
+     * @return The taxicab distance
+     * @throws NullPointerException if {@code vector == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #taxicabNorm
+     * @see #subtract
+     */
+    override taxicabDistance(BigIntVector vector) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        subtract(vector).taxicabNorm
+    }
+
+    /**
+     * Returns the infinity norm of this {@link BigIntVector}
+     * 
+     * @return The infinity norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigInteger#max
+     * @see BigInteger#abs
+     * @see IterableExtensions#min
+     * @see IterableExtensions#max
+     */
+    override infinityNorm() {
+        map.values.min.abs.max(map.values.max.abs)
+    }
+
+    /**
+     * Returns the infinity distance from this {@link BigIntVector} to the given one
+     * 
+     * @param vector The other {@link BigIntVector}
+     * @return The infinity distance
+     * @throws NullPointerException if {@code vector == null}
+     * @throws IllegalArgumentException if {@code map.size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #infinityNorm
+     * @see #subtract
+     */
+    override infinityDistance(BigIntVector vector) {
+        requireNonNull(vector, 'vector')
+        checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
+        subtract(vector).infinityNorm
     }
 
     /**

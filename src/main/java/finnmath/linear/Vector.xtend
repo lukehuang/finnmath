@@ -86,27 +86,35 @@ abstract class Vector<E, V, N> {
 
     def V negate()
 
-    def E normPow2()
-
-    def N norm()
-
-    def N norm(BigDecimal precision)
-
-    def N norm(int scale, int roundingMode)
-
-    def N norm(BigDecimal precision, int scale, int roundingMode)
-
     def E dotProduct(V vector)
 
-    def E distancePow2(V vector)
+    def E euclideanNormPow2()
 
-    def N distance(V vector)
+    def N euclideanNorm()
 
-    def N distance(V vector, BigDecimal precision)
+    def N euclideanNorm(BigDecimal precision)
 
-    def N distance(V vector, int scale, int roundingMode)
+    def N euclideanNorm(int scale, int roundingMode)
 
-    def N distance(V vector, BigDecimal precision, int scale, int roundingMode)
+    def N euclideanNorm(BigDecimal precision, int scale, int roundingMode)
+
+    def E euclideanDistancePow2(V vector)
+
+    def N euclideanDistance(V vector)
+
+    def N euclideanDistance(V vector, BigDecimal precision)
+
+    def N euclideanDistance(V vector, int scale, int roundingMode)
+
+    def N euclideanDistance(V vector, BigDecimal precision, int scale, int roundingMode)
+
+    def E taxicabNorm()
+
+    def E taxicabDistance(V vector)
+
+    def E infinityNorm()
+
+    def E infinityDistance(V vector)
 
     def int size()
 }
