@@ -61,32 +61,15 @@ abstract class Vector<E, V, N> {
         this.map = map
     }
 
-    /**
-     * Returns the entry dependent on the given index
-     * 
-     * @param index the index of the entry
-     * @return The entry
-     * @throws NullPointerException if {@code index == null}
-     * @throws IllegalArgumentException if {@code !map.containsKey(index)}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see Map#containsKey
-     */
-    def entry(Integer index) {
-        requireNonNull(index, 'index')
-        checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
-        map.get(index)
-    }
-
     def V add(V summand)
 
     def V subtract(V subtrahend)
 
+    def E dotProduct(V vector)
+
     def V scalarMultiply(E scalar)
 
     def V negate()
-
-    def E dotProduct(V vector)
 
     def E euclideanNormPow2()
 
@@ -116,5 +99,55 @@ abstract class Vector<E, V, N> {
 
     def E infinityDistance(V vector)
 
-    def int size()
+    /**
+     * Returns the entry dependent on the given index
+     * 
+     * @param index the index of the entry
+     * @return The entry
+     * @throws NullPointerException if {@code index == null}
+     * @throws IllegalArgumentException if {@code !map.containsKey(index)}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Map#containsKey
+     */
+    def entry(Integer index) {
+        requireNonNull(index, 'index')
+        checkArgument(map.containsKey(index), 'expected index in [1, %s] but actual %s', map.size, index)
+        map.get(index)
+    }
+
+    /**
+     * Returns the indexes of this {@link Vector}
+     * 
+     * @return indexes the indexes
+     * @since 1
+     * @author Lars Tennstedt
+     * @see ImmutableMap#keySet
+     */
+    def indexes() {
+        map.keySet
+    }
+
+    /**
+     * Returns the entries of this {@link Vector}
+     * 
+     * @return entries the entries
+     * @since 1
+     * @author Lars Tennstedt
+     * @see ImmutableMap#values
+     */
+    def entries() {
+        map.values
+    }
+
+    /**
+     * Returns the size of the underlying {@link Map}
+     * 
+     * @return size the size
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    def size() {
+        map.size
+    }
 }

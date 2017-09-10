@@ -33,6 +33,7 @@ import com.google.common.collect.ImmutableMap
 import com.google.common.collect.ImmutableSet
 import com.google.common.collect.ImmutableTable
 import com.google.common.collect.Table
+import java.math.BigDecimal
 import java.util.Map
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -64,29 +65,59 @@ abstract class Matrix<E, V, M> {
         this.table = table
     }
 
-    /**
-     * Returns the row indices starting from {@code 1}
-     * 
-     * @return The row indices
-     * @since 1
-     * @author Lars Tennstedt
-     * @see Table#rowKeySet
-     */
-    def rowIndexes() {
-        table.rowKeySet
-    }
+    def M add(M summand)
 
-    /**
-     * Returns the column indices starting from {@code 1}
-     * 
-     * @return The column indices
-     * @since 1
-     * @author Lars Tennstedt
-     * @see Table#columnKeySet
-     */
-    def columnIndexes() {
-        table.columnKeySet
-    }
+    def M subtract(M subtrahend)
+
+    def M multiply(M factor)
+
+    def V multiplyVector(V vector)
+
+    protected def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
+
+    def M scalarMultiply(E scalar)
+
+    def M negate()
+
+    def E trace()
+
+    def E det()
+
+    def M transpose()
+
+    def M minor(Integer rowIndex, Integer columnIndex)
+
+    def E maximumAbsoluteColumnSumNorm()
+
+    def E maximumAbsoluteRowSumNorm()
+
+    def E frobeniusNormPow2()
+
+    def BigDecimal frobeniusNorm()
+
+    def BigDecimal frobeniusNorm(BigDecimal precision)
+
+    def BigDecimal frobeniusNorm(int scale, int roundingMode)
+
+    def BigDecimal frobeniusNorm(BigDecimal precision, int scale, int roundingMode)
+
+    def boolean square()
+
+    def boolean triangular()
+
+    def boolean upperTriangular()
+
+    def boolean lowerTriangular()
+
+    def boolean diagonal()
+
+    def boolean id()
+
+    def boolean invertible()
+
+    def boolean symmetric()
+
+    def boolean skewSymmetric()
 
     /**
      * Returns the matrix entry dependent on the given row and column index
@@ -110,6 +141,30 @@ abstract class Matrix<E, V, M> {
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
         table.get(rowIndex, columnIndex)
+    }
+
+    /**
+     * Returns the row indices starting from {@code 1}
+     * 
+     * @return The row indices
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#rowKeySet
+     */
+    def rowIndexes() {
+        table.rowKeySet
+    }
+
+    /**
+     * Returns the column indices starting from {@code 1}
+     * 
+     * @return The column indices
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#columnKeySet
+     */
+    def columnIndexes() {
+        table.columnKeySet
     }
 
     /**
@@ -145,6 +200,17 @@ abstract class Matrix<E, V, M> {
         checkArgument(table.columnKeySet.contains(columnIndex), 'expected column index in [1, %s] but actual %s',
             table.columnKeySet.size, columnIndex)
         table.column(columnIndex)
+    }
+
+    /**
+     * Returns the size of matrix
+     * 
+     * @return The size
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    def size() {
+        Long::valueOf(rowSize) * Long::valueOf(columnSize)
     }
 
     /**
@@ -184,17 +250,6 @@ abstract class Matrix<E, V, M> {
     }
 
     /**
-     * Returns the size of matrix
-     * 
-     * @return The size
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    def size() {
-        Long::valueOf(rowSize) * Long::valueOf(columnSize)
-    }
-
-    /**
      * Returns the row size of matrix
      * 
      * @return The row size
@@ -218,43 +273,4 @@ abstract class Matrix<E, V, M> {
         table.columnKeySet.size
     }
 
-    def M add(M summand)
-
-    def M subtract(M subtrahend)
-
-    def M multiply(M factor)
-
-    def V multiplyVector(V vector)
-
-    protected def E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column)
-
-    def M scalarMultiply(E scalar)
-
-    def M negate()
-
-    def E tr()
-
-    def E det()
-
-    def boolean square()
-
-    def boolean triangular()
-
-    def boolean upperTriangular()
-
-    def boolean lowerTriangular()
-
-    def boolean diagonal()
-
-    def boolean id()
-
-    def boolean invertible()
-
-    def M transpose()
-
-    def boolean symmetric()
-
-    def boolean skewSymmetric()
-
-    def M minor(Integer rowIndex, Integer columnIndex)
 }

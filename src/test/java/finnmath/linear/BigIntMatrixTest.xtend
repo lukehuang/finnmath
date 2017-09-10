@@ -394,7 +394,7 @@ final class BigIntMatrixTest {
     @Test
     def void trNotSquareShouldThrowException() {
         assertThatThrownBy [
-            BigIntMatrix::builder(2, 3).putAll(0BI).build.tr
+            BigIntMatrix::builder(2, 3).putAll(0BI).build.trace
         ].isExactlyInstanceOf(IllegalStateException).hasMessage('expected square matrix but actual 2 x 3')
     }
 
@@ -404,7 +404,7 @@ final class BigIntMatrixTest {
             var expected = 0BI
             for (index : rowIndexes)
                 expected += entry(index, index)
-            assertThat(tr).isExactlyInstanceOf(BigInteger).isEqualTo(expected)
+            assertThat(trace).isExactlyInstanceOf(BigInteger).isEqualTo(expected)
         ]
     }
 

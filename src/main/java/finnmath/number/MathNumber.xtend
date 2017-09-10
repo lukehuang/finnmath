@@ -32,7 +32,7 @@ package finnmath.number
  * @since 1
  * @author Lars Tennstedt
  */
-package interface MathNumber<S, T> {
+package interface MathNumber<S, T, A> {
     def S add(S summand)
 
     def S subtract(S subtrahend)
@@ -48,6 +48,8 @@ package interface MathNumber<S, T> {
     def T invert()
 
     def boolean invertible()
+
+    def A abs()
 
     def String asString()
 }

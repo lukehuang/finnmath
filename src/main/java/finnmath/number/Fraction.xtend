@@ -29,6 +29,7 @@
 package finnmath.number
 
 import com.google.common.annotations.Beta
+import java.math.BigDecimal
 import java.math.BigInteger
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
@@ -47,7 +48,7 @@ import static java.util.Objects.requireNonNull
 @Beta
 @EqualsHashCode
 @ToString
-final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fraction> {
+final class Fraction extends Number implements MathNumber<Fraction, Fraction, Fraction>, Comparable<Fraction> {
     /**
      * {@code 0} as {@link Fraction}
      */
@@ -239,6 +240,22 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
     }
 
     /**
+     * Returns the absolute {@link Fraction} of this one
+     * <p>
+     * The returned {@link Fraction} is not reduced and not normalized.
+     * 
+     * @return The absolute
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #normalize
+     * @see #reduce
+     * @see BigInteger#abs
+     */
+    override abs() {
+        new Fraction(numerator.abs, denominator.abs)
+    }
+
+    /**
      * Returns a string representation of this {@link Fraction}
      * 
      * @return The string representation
@@ -249,6 +266,54 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
         if (denominator < 0BI)
             return '''«numerator» / («denominator»)'''
         '''«numerator» / «denominator»'''
+    }
+
+    /**
+     * Returns this {@link Fraction} as {@code double}
+     * 
+     * @return The double value
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigDecimal#doubleValue
+     */
+    override doubleValue() {
+        (new BigDecimal(numerator) / new BigDecimal(denominator)).doubleValue
+    }
+
+    /**
+     * Returns this {@link Fraction} as {@code float}
+     * 
+     * @return The float value
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigDecimal#floatValue
+     */
+    override floatValue() {
+        (new BigDecimal(numerator) / new BigDecimal(denominator)).floatValue
+    }
+
+    /**
+     * Returns this {@link Fraction} as {@code int}
+     * 
+     * @return The int value
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigDecimal#intValue
+     */
+    override intValue() {
+        (new BigDecimal(numerator) / new BigDecimal(denominator)).intValue
+    }
+
+    /**
+     * Returns this {@link Fraction} as {@code long}
+     * 
+     * @return The long value
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigDecimal#longValue
+     */
+    override longValue() {
+        (new BigDecimal(numerator) / new BigDecimal(denominator)).longValue
     }
 
     /**
@@ -372,46 +437,6 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
     }
 
     /**
-     * Returns the normalized {@link Fraction} of this one
-     * <p>
-     * The returned {@link Fraction} is not reduced.
-     * 
-     * @return {@code new Fraction(-numerator.abs, denominator.abs)} if the {@code signum < 0}, {@code ZERO} if 
-     * {@code signum == 0}, {@code this} otherwise
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #signum
-     * @see #abs
-     * @see BigInteger#abs
-     * @see #reduce
-     */
-    def normalize() {
-        if (signum < 0)
-            return new Fraction(-numerator.abs, denominator.abs)
-        if (signum === 0)
-            return ZERO
-        if (numerator < 0BI)
-            return abs
-        this
-    }
-
-    /**
-     * Returns the absolute {@link Fraction} of this one
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     * 
-     * @return The absolute
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #normalize
-     * @see #reduce
-     * @see BigInteger#abs
-     */
-    def abs() {
-        new Fraction(numerator.abs, denominator.abs)
-    }
-
-    /**
      * Returns the signum of this {@link Fraction}
      * 
      * @return The signum of this {@link Fraction}
@@ -437,6 +462,30 @@ final class Fraction implements MathNumber<Fraction, Fraction>, Comparable<Fract
     def reduce() {
         val gcd = numerator.gcd(denominator)
         new Fraction(numerator / gcd, denominator / gcd)
+    }
+
+    /**
+     * Returns the normalized {@link Fraction} of this one
+     * <p>
+     * The returned {@link Fraction} is not reduced.
+     * 
+     * @return {@code new Fraction(-numerator.abs, denominator.abs)} if the {@code signum < 0}, {@code ZERO} if 
+     * {@code signum == 0}, {@code this} otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #signum
+     * @see #abs
+     * @see BigInteger#abs
+     * @see #reduce
+     */
+    def normalize() {
+        if (signum < 0)
+            return new Fraction(-numerator.abs, denominator.abs)
+        if (signum === 0)
+            return ZERO
+        if (numerator < 0BI)
+            return abs
+        this
     }
 
     /**

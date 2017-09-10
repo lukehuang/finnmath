@@ -33,7 +33,6 @@ import com.google.common.collect.ImmutableMap
 import finnmath.util.SquareRootCalculator
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.util.Map
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
@@ -406,17 +405,6 @@ final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
         requireNonNull(vector, 'vector')
         checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         subtract(vector).infinityNorm
-    }
-
-    /**
-     * Returns the size of the underlying {@link Map}
-     * 
-     * @return size the size
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    override size() {
-        map.size
     }
 
     /**

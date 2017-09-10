@@ -49,6 +49,7 @@ apply plugin: 'eclipse'
 description 'A math library for the JVM based on BigInteger and BigDecimal'
 group 'finnmath'
 version '1-SNAPSHOT'
+sourceCompatibility = 1.8
 
 xtend.generator { suppressWarningsAnnotation = false }
 
@@ -119,6 +120,13 @@ install.repositories.mavenInstaller.pom.project {
 }
 
 uploadArchives.repositories { mavenLocal() }
+
+task deleteJavadoc(type: Delete) { delete 'docs' }
+
+task copyJavadoc(type: Copy) {
+    from 'build/docs/javadoc'
+    into 'docs'
+}
 
 eclipse.classpath {
     downloadJavadoc true

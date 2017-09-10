@@ -181,6 +181,17 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
     }
 
     /**
+     * Returns the absolute as {@link RealComplexNumber} of this {@link SimpleComplexNumber}
+     * 
+     * @return The absolute
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override abs() {
+        SquareRootCalculator::sqrt(absPow2)
+    }
+
+    /**
      * Returns a string representation of this {@link SimpleComplexNumber}
      * 
      * @return The string representation
@@ -211,17 +222,6 @@ final class SimpleComplexNumber extends ComplexNumber<BigInteger, SimpleComplexN
      */
     override absPow2() {
         real ** 2 + imaginary ** 2
-    }
-
-    /**
-     * Returns the absolute as {@link RealComplexNumber} of this {@link SimpleComplexNumber}
-     * 
-     * @return The absolute
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    override abs() {
-        SquareRootCalculator::sqrt(absPow2)
     }
 
     /**

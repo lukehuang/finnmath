@@ -30,6 +30,8 @@ package finnmath.linear
 
 import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableTable
+import finnmath.util.SquareRootCalculator
+import java.math.BigDecimal
 import java.math.BigInteger
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
@@ -202,7 +204,7 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
      * @since 1
      * @author Lars Tennstedt
      */
-    override tr() {
+    override trace() {
         checkState(square, 'expected square matrix but actual %s x %s', table.rowKeySet.size, table.columnKeySet.size)
         var result = 0BI
         for (index : table.rowKeySet)
@@ -405,6 +407,132 @@ final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> 
             }
         ]
         builder.build
+    }
+
+    /**
+     * Returns the maximum absolute column sum norm of this {@link BigIntMatrix}
+     * 
+     * @return The maximum absolute column sum norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override maximumAbsoluteColumnSumNorm() {
+        var norm = 0BI
+        for (column : table.columnMap.entrySet) {
+            var temp = 0BI
+            for (entry : column.value.values)
+                temp += entry.abs
+            norm = if (temp > norm) temp else norm
+        }
+        norm
+    }
+
+    /**
+     * Returns the maximum absolute row sum norm of this {@link BigIntMatrix}
+     * 
+     * @return The maximum absolute row sum norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override maximumAbsoluteRowSumNorm() {
+        var norm = 0BI
+        for (row : table.rowMap.entrySet) {
+            var temp = 0BI
+            for (entry : row.value.values)
+                temp += entry.abs
+            norm = if (temp > norm) temp else norm
+        }
+        norm
+    }
+
+    /**
+     * Returns the square of the frobenius norm of this {@link BigIntMatrix}
+     * 
+     * @return The square of the frobenius norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override frobeniusNormPow2() {
+        var normPow2 = 0BI
+        for (entry : table.values)
+            normPow2 += entry ** 2
+        normPow2
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntMatrix}
+     * 
+     * @return The frobenius norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #frobeniusNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     */
+    override frobeniusNorm() {
+        SquareRootCalculator::sqrt(frobeniusNormPow2)
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntMatrix}
+     * 
+     * @param precision the precision for the termination condition
+     * @return The frobenius norm
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #frobeniusNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal)
+     */
+    override frobeniusNorm(BigDecimal precision) {
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        SquareRootCalculator::sqrt(frobeniusNormPow2, precision)
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntMatrix}
+     * 
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The frobenius norm
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #frobeniusNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger, int, int)
+     */
+    override frobeniusNorm(int scale, int roundingMode) {
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        SquareRootCalculator::sqrt(frobeniusNormPow2, scale, roundingMode)
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntMatrix}
+     * 
+     * @param precision the precision for the termination condition
+     * @param scale the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @return The frobenius norm
+     * @throws NullPointerException if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #frobeniusNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal, int, int)
+     */
+    override frobeniusNorm(BigDecimal precision, int scale, int roundingMode) {
+        requireNonNull(precision, 'precision')
+        checkArgument(0BD < precision && precision < 1BD, 'expected precision in (0, 1) but actual {}', precision)
+        checkArgument(scale >= 0, 'expected scale >= 0 but actual {}', scale)
+        checkArgument(0 <= roundingMode && roundingMode <= 7, 'expected roundingMode in [0, 7] but actual {}',
+            roundingMode)
+        SquareRootCalculator::sqrt(frobeniusNormPow2, precision, scale, roundingMode)
     }
 
     /**

@@ -31,6 +31,7 @@ package finnmath.number
 import finnmath.util.MathRandom
 import java.math.BigInteger
 import java.util.List
+import javax.annotation.CheckReturnValue
 import org.junit.BeforeClass
 import org.junit.Test
 
@@ -337,6 +338,7 @@ final class FractionTest {
     }
 
     @Test
+    @CheckReturnValue
     def void invertZeroShouldThrowException() {
         assertThatThrownBy[
             ZERO.invert

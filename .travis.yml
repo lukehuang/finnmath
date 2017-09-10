@@ -27,7 +27,6 @@
 #
 
 language: java
-
 install: gradle -b wrapper.gradle wrapper
-after_script: ./gradlew jacocoTestReport install
+after_script: ./gradlew jacocoTestReport deleteJavadoc copyJavadoc install
 

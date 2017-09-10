@@ -32,7 +32,6 @@ import com.google.common.annotations.Beta
 import com.google.common.collect.ImmutableMap
 import finnmath.util.SquareRootCalculator
 import java.math.BigDecimal
-import java.util.Map
 import org.eclipse.xtend.lib.annotations.EqualsHashCode
 
 import static com.google.common.base.Preconditions.checkArgument
@@ -407,17 +406,6 @@ final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> 
         requireNonNull(vector, 'vector')
         checkArgument(map.size === vector.size, 'expected equal sizes but actual %s != %s', map.size, vector.size)
         subtract(vector).infinityNorm
-    }
-
-    /**
-     * Returns the size of the underlying {@link Map}
-     * 
-     * @return size the size
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    override size() {
-        map.size
     }
 
     /**

@@ -197,6 +197,17 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
     }
 
     /**
+     * Returns the absolute of this {@link RealComplexNumber}
+     * 
+     * @return The absolute
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    override abs() {
+        SquareRootCalculator::sqrt(absPow2)
+    }
+
+    /**
      * Returns a string representation of this {@link RealComplexNumber}
      * 
      * @return The string representation
@@ -227,17 +238,6 @@ final class RealComplexNumber extends ComplexNumber<BigDecimal, RealComplexNumbe
      */
     override absPow2() {
         real ** 2 + imaginary ** 2
-    }
-
-    /**
-     * Returns the absolute of this {@link RealComplexNumber}
-     * 
-     * @return The absolute
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    override abs() {
-        SquareRootCalculator::sqrt(absPow2)
     }
 
     /**

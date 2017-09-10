@@ -41,7 +41,7 @@ import static java.util.Objects.requireNonNull
  */
 @EqualsHashCode
 @ToString
-package abstract class ComplexNumber<B, S, R, M> implements MathNumber<S, R> {
+package abstract class ComplexNumber<B, S, R, M> implements MathNumber<S, R, BigDecimal> {
     /**
      * {@code real} part of this {@link ComplexNumber}
      */
@@ -60,8 +60,6 @@ package abstract class ComplexNumber<B, S, R, M> implements MathNumber<S, R> {
     }
 
     def B absPow2()
-
-    def BigDecimal abs()
 
     def S conjugate()
 
