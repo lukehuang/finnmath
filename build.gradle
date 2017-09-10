@@ -74,6 +74,8 @@ tasks.withType(FindBugs) {
 	}
 }
 
+javadoc { options.noQualifiers 'all' }
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
     classifier = 'javadoc'
