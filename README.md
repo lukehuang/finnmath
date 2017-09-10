@@ -31,6 +31,9 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 * Early failing with meaningful messages
 * Logging facade instead of a hard dependency on a specific logging framework
 
+## Javadoc
+The current Javadoc can be found at [link https://togliu.github.io/finnmath/]. 
+
 finnMath is open source and free software and is licensed under the permissive BSD 2-Clause License.
 
 finnMath is still in a very early state and a work in progress.
