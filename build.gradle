@@ -31,27 +31,22 @@ import net.ltgt.gradle.errorprone.ErrorProneToolChain
 buildscript {
     repositories.maven { url 'https://plugins.gradle.org/m2/' }
     
-    dependencies {
-        classpath 'org.xtext:xtext-gradle-plugin:1.0.19'
-        classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.11'
-    }
+    dependencies { classpath 'net.ltgt.gradle:gradle-errorprone-plugin:0.0.11' }
 }
 
 apply plugin: 'java-library'
-apply plugin: 'org.xtext.xtend'
 apply plugin: 'net.ltgt.errorprone-base'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
 apply plugin: 'maven'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 
 description 'A math library for the JVM based on BigInteger and BigDecimal'
 group 'finnmath'
 version '1-SNAPSHOT'
 sourceCompatibility = 1.8
-
-xtend.generator { suppressWarningsAnnotation = false }
 
 compileJava { toolChain ErrorProneToolChain.create(project) }
 
@@ -60,7 +55,6 @@ repositories { jcenter() }
 dependencies {
 	api 'com.google.guava:guava:23.0'
 	api 'org.apache.commons:commons-lang3:3.6'
-	implementation 'org.eclipse.xtend:org.eclipse.xtend.lib:2.12.0'
 	implementation 'org.slf4j:slf4j-api:1.7.25'
 	implementation 'org.slf4j:slf4j-simple:1.7.25'
 	testCompile 'org.assertj:assertj-core:3.8.0'
@@ -131,6 +125,11 @@ task copyJavadoc(type: Copy) {
 }
 
 eclipse.classpath {
+    downloadJavadoc true
+    downloadSources true
+}
+
+idea.module {
     downloadJavadoc true
     downloadSources true
 }

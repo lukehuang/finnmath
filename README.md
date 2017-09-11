@@ -18,7 +18,7 @@ What finnMath will not provide:
 * Matrix decomposition, reduction or factorization
 * Polynomials
 
-finnMath is written in Xtend and uses Gradle as its build automation tool so it should interoperate seamlessly with 
+finnMath is written in Java and uses Gradle as its build automation tool so it should interoperate seamlessly with 
 other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 ## Implementation details
@@ -26,7 +26,7 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 * The matrices are based on ImmutableTable from Guava.
 * The vectors are based on ImmutableMap from Guava.
 * All leaf classes are final.
-* Useful hashCode, equals and toString methods thanks to Xtend's active annotations
+* Useful hashCode, equals and toString methods
 * Builders for vectors and matrices
 * Early failing with meaningful messages
 * Logging facade instead of a hard dependency on a specific logging framework
@@ -53,46 +53,37 @@ This will clone the remote Git repository, build finnmath and install it into yo
 
 ## Developing
 
-I recommend the Eclipse IDE for Xtend development but you are free to use whatever IDE or editor you want.
-You will need the Xtend plugin and optional the EGit plugin for Git and the Buildship plugin for Gradle
-integration. Push requests are very welcome.
-
-The Eclipse plugin for Gradle is applied to the build so that the command
+The Eclipse and IDEA plugin for Gradle are applied to the build so that the commands
 
     gradle eclipse
+    gradle idea
 
-will create an Eclipse project inside your cloned folder which is ready to import.
+will create an Eclipse or IntelliJ IDEA project inside your cloned folder which is ready to import.
 
 The code formatting follows loosely the Google Java style guide found here on GitHub.    
 
 #### Why finnMath?
-I searched for a mathematical library for another project which is based on BigInteger and BigDecimal instead of 
-primitives and I could not find one.
+I searched for a mathematical library for another project which should be based on BigInteger and BigDecimal instead 
+of primitives and I could not find one.
 
 #### Why BigInteger or BigDecimal?
 Both are protected against buffer overflows and BigDecimal is by far less prone to big rounding errors. In addition, 
 you are able to control the rounding behaviour and the scale in the case of BigDecimal. The downsides of using them 
-are the impact on the runtime speed and the cumbersome syntax in Java. 
-
-#### Why Xtend?
-I want to write a library which is usable from all JVM languages. Almost every JVM language tries to work seamlessly 
-with Java. I do not expect the developers to test the interoperability with all the other languages besides Java and 
-it would be presumptuous to expect that. So Java would be a wise choice but then a colleague mentioned Xtend. I chose 
-Xtend because it compiles to Java source code instead of bytecode and therefore it exists no mismatch between Java 
-and Xtend. Further it provides wonderful syntactic sugar for the arithmetic operations of BigInteger and BigDecimal 
-and the great active annotations to eliminate boilerplate code similar to Lombok. 
+are the impact on the runtime speed, the higher memory consumption and the cumbersome syntax. 
 
 #### Why AssertJ?
-I find its assertions more readable in comparison to JUnit and Hamcrest and it is more IDE friendly.
+I find its assertions more readable in comparison to JUnit and Hamcrest and the fluent assertions are more IDE 
+friendly.
 
 #### Why Gradle?
-Its DSL is less verbose than Maven's XML approach and thanks to Groovy customizing of all the tasks involved in the 
+Its DSL is less verbose than Maven's XML approach and thanks to Groovy customizing all the tasks involved in the 
 build process is very comfortable. I want to point out that conventions are a very good thing that simplifies a 
 developer's life extremely and thanks to Maven convention over configuration arrived at the Java world.
 
 ## Thanks to
 * Oracle for the JVM, Java and OpenJDK
-* the Eclipse Foundation for Xtend and the Eclipse IDE
+* the Eclipse Foundation for the Eclipse IDE
+* JetBrains s.r.o. for IntelliJ IDEA Community Edition
 * Google for Guava and Error Prone
 * the Apache Software Foundation for Groovy, Commons Lang and Commons Math
 * QOS.ch for SLF4J 

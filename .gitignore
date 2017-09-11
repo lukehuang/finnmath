@@ -36,6 +36,4 @@
 *.ipr
 *.iws
 /.idea/
-/src/build/
-/src/main/xtend-gen/
-/src/test/xtend-gen/
+
