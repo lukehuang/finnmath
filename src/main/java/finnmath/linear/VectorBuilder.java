@@ -29,6 +29,7 @@
 package finnmath.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
@@ -65,6 +66,26 @@ abstract class VectorBuilder<E, V, B> implements Builder<V> {
     protected VectorBuilder(final int size) {
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         this.size = size;
+    }
+
+    /**
+     * Returns the entry dependent on the given index
+     *
+     * @param index
+     *            the index of the entry
+     * @return The entry
+     * @throws NullPointerException
+     *             if {@code index == null}
+     * @throws IllegalArgumentException
+     *             if {@code !map.containsKey(index)}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Map#containsKey
+     */
+    public E entry(final Integer index) {
+        requireNonNull(index, "index");
+        checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s", size, index);
+        return map.get(index);
     }
 
     @Override

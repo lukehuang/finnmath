@@ -69,6 +69,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Constructs a {@link Fraction} by the given numerator and denominator
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -115,6 +116,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Returns the sum of this {@link Fraction} and the given one
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -139,6 +141,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Returns the difference of this {@link Fraction} and the given one
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -163,6 +166,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Returns the product of this {@link Fraction} and the given one
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -186,6 +190,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Return the quotient of this {@link Fraction} and the given one
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -210,6 +215,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Returns the power of this {@link Fraction} raised by the given exponent
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -236,6 +242,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Returns the negated {@link Fraction} of this one
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -252,6 +259,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Returns the inverted {@link Fraction} of this one
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -283,6 +291,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Returns the absolute {@link Fraction} of this one
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -394,6 +403,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Compares this {@link Fraction} to the given one and returns the minimum
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -416,6 +426,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Compares this {@link Fraction} to the given one and returns the maximum
+     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
@@ -438,6 +449,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Returns the normalized {@link Fraction} of this one
+     *
      * <p>
      * The returned {@link Fraction} is not reduced.
      *
@@ -466,6 +478,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
 
     /**
      * Returns the reduced {@link Fraction} of this one
+     *
      * <p>
      * The returned {@link Fraction} is not normalized.
      *

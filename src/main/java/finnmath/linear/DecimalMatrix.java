@@ -169,10 +169,11 @@ public final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, Decim
         requireNonNull(vector, "vector");
         checkArgument(table.columnKeySet().size() == vector.size(),
                 "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(), vector.size());
-        final DecimalVectorBuilder builder = DecimalVector.builder(vector.size());
-        table.rowMap().entrySet().forEach(row -> {
-            row.getValue().entrySet().forEach(column -> {
-                builder.addToEntryAndPut(row.getKey(), column.getValue().multiply(vector.entry(column.getKey())));
+        final DecimalVectorBuilder builder = DecimalVector.builder(table.rowKeySet().size());
+        table.rowMap().forEach((rowIndex, row) -> {
+            row.forEach((columnIndex, matrixEntry) -> {
+                final BigDecimal oldEntry = builder.entry(rowIndex) != null ? builder.entry(rowIndex) : BigDecimal.ZERO;
+                builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.entry(columnIndex))));
             });
         });
         return builder.build();
@@ -316,15 +317,18 @@ public final class DecimalMatrix extends Matrix<BigDecimal, DecimalVector, Decim
         requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.containsRow(rowIndex), "expected row index in [1, %s] but actual %s",
                 table.rowKeySet().size(), rowIndex);
-        checkArgument(table.containsColumn(rowIndex), "expected column index in [1, %s] but actual %s",
+        checkArgument(table.containsColumn(columnIndex), "expected column index in [1, %s] but actual %s",
                 table.columnKeySet().size(), columnIndex);
         final DecimalMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
         table.cellSet().forEach(it -> {
             final Integer rowKey = it.getRowKey();
             final Integer columnKey = it.getColumnKey();
-            final Integer newRowIndex = rowKey >= rowIndex ? rowKey - 1 : rowKey;
-            final Integer newColumnIndex = columnKey >= columnIndex ? columnKey - 1 : columnKey;
-            builder.put(newRowIndex, newColumnIndex, it.getValue());
+            if (!rowKey.equals(rowIndex) && !columnKey.equals(columnIndex)) {
+                final Integer newRowIndex = rowKey > rowIndex ? rowKey - 1 : rowKey;
+                final Integer newColumnIndex = columnKey > columnIndex ? columnKey - 1
+                        : columnKey;
+                builder.put(newRowIndex, newColumnIndex, it.getValue());
+            }
         });
         return builder.build();
     }

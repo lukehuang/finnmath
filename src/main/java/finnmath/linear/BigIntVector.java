@@ -556,34 +556,6 @@ public final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDeci
         }
 
         /**
-         * Adds the given entry to the existing one dependent on the given index and
-         * puts it
-         *
-         * @param index
-         *            the index
-         * @param entry
-         *            the entry
-         * @return {@code this}
-         * @throws NullPointerException
-         *             if {@code index == null}
-         * @throws NullPointerException
-         *             if {@code map.get(index) == null}
-         * @throws NullPointerException
-         *             if {@code entry == null}
-         * @since 1
-         * @author Lars Tennstedt
-         */
-        public BigIntVectorBuilder addToEntryAndPut(final Integer index, final BigInteger entry) {
-            requireNonNull(index, "index");
-            checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(), index);
-            final BigInteger existing = map.get(index);
-            requireNonNull(existing, "existing");
-            requireNonNull(entry, "entry");
-            map.put(index, map.get(index).add(entry));
-            return this;
-        }
-
-        /**
          * Returns the built {@link BigIntVector}
          *
          * @return The {@link BigIntVector}
