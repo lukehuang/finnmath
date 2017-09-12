@@ -392,7 +392,7 @@ public final class SquareRootCalculator {
         log.debug("iteration");
         log.debug("predecessor = {}", predecessor.toPlainString());
         final BigDecimal successor = predecessor.pow(2).add(decimal).divide(BigDecimal.valueOf(2).multiply(predecessor),
-                BigDecimal.ROUND_HALF_UP);
+                DEFAULT_SCALE, BigDecimal.ROUND_HALF_UP);
         log.debug("successor = {}", successor.toPlainString());
         return successor;
     }
