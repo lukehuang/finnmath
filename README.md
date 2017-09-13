@@ -34,7 +34,7 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 ## Javadoc
 The current Javadoc can be found at [link https://togliu.github.io/finnmath/]. 
 
-finnMath is open source and free software and is licensed under the permissive BSD 2-Clause License.
+finnMath is open source and free software and is licensed under the permissive Apache License.
 
 finnMath is still in a very early state and a work in progress.
 
