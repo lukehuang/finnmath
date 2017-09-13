@@ -28,6 +28,7 @@
 
 language: java
 install: gradle -b wrapper.gradle wrapper
-after_script: - ./gradlew jacocoTestReport install deleteJavadoc copyJavadoc
-              - bash <(curl -s https://codecov.io/bash)
+after_script:
+		- ./gradlew jacocoTestReport install deleteJavadoc copyJavadoc
+		- bash <(curl -s https://codecov.io/bash)
 
