@@ -35,27 +35,30 @@ import finnmath.linear.DecimalMatrix;
 import finnmath.util.MathRandom;
 import finnmath.util.SquareRootCalculator;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class RealComplexNumberTest {
+    private static final int howMany = 10;
     private static final RealComplexNumber ZERO = RealComplexNumber.ZERO;
     private static final RealComplexNumber ONE = RealComplexNumber.ONE;
     private static final RealComplexNumber I = RealComplexNumber.I;
-    private static List<RealComplexNumber> complexNumbers;
-    private static List<RealComplexNumber> others;
-    private static List<RealComplexNumber> invertibles;
+    private static final List<RealComplexNumber> complexNumbers = new ArrayList<>(howMany);
+    private static final List<RealComplexNumber> others = new ArrayList<>(howMany);
+    private static final List<RealComplexNumber> invertibles = new ArrayList<>(howMany);
 
     @BeforeClass
     public static void setUpClass() {
         final MathRandom mathRandom = new MathRandom();
         final int bound = 10;
         final int scale = 2;
-        final int howMany = 10;
-        complexNumbers = mathRandom.nextRealComplexNumbers(bound, scale, howMany);
-        others = mathRandom.nextRealComplexNumbers(bound, scale, howMany);
-        invertibles = mathRandom.nextInvertibleRealComplexNumbers(bound, scale, howMany);
+        for (int i = 0; i < howMany; i++) {
+            complexNumbers.add(mathRandom.nextRealComplexNumber(bound, scale));
+            others.add(mathRandom.nextRealComplexNumber(bound, scale));
+            invertibles.add(mathRandom.nextInvertibleRealComplexNumber(bound, scale));
+        }
     }
 
     @Test

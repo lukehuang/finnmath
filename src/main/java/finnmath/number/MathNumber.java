@@ -33,7 +33,7 @@ package finnmath.number;
  * @author Lars Tennstedt
  */
 public interface MathNumber<S, T, A> {
-    public S add(S summand);
+    S add(S summand);
 
     S subtract(S subtrahend);
 

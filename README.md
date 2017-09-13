@@ -92,6 +92,7 @@ developer's life extremely and thanks to Maven convention over configuration arr
 * Linus Torvalds for Git
 * Gradle Inc. for Gradle
 * Thomas Broyer for the Gradle Error Prone plugin
+* the developers of Checkstyle
 * the University of Maryland for FindBugs
 * the developers of PMD
 * the developers of JaCoCo and EclEmma

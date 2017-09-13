@@ -40,11 +40,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class SquareRootCalculatorTest {
+    private static final Logger log = LoggerFactory.getLogger(SquareRootCalculatorTest.class);
     private final BigDecimal precision = BigDecimal.valueOf(0.00000001);
     private final int scale = 8;
     private final int roundingMoude = BigDecimal.ROUND_HALF_EVEN;
     private final MathRandom mathRandom = new MathRandom();
-    private static final Logger log = LoggerFactory.getLogger(SquareRootCalculatorTest.class);
 
     @After
     public void after() {
@@ -56,7 +56,6 @@ public final class SquareRootCalculatorTest {
         assertThatThrownBy(() -> {
             SquareRootCalculator.sqrt((BigInteger) null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("integer");
-        ;
     }
 
     @Test
@@ -64,7 +63,6 @@ public final class SquareRootCalculatorTest {
         assertThatThrownBy(() -> {
             SquareRootCalculator.sqrt(BigInteger.ONE.negate());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected integer >= 0 but actual -1");
-        ;
     }
 
     @Test
@@ -180,7 +178,6 @@ public final class SquareRootCalculatorTest {
         assertThatThrownBy(() -> {
             SquareRootCalculator.sqrt((BigInteger) null, precision);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("integer");
-        ;
     }
 
     @Test
@@ -188,7 +185,6 @@ public final class SquareRootCalculatorTest {
         assertThatThrownBy(() -> {
             SquareRootCalculator.sqrt(BigInteger.ONE.negate(), precision);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected integer >= 0 but actual -1");
-        ;
     }
 
     @Test
@@ -196,7 +192,6 @@ public final class SquareRootCalculatorTest {
         assertThatThrownBy(() -> {
             SquareRootCalculator.sqrt(BigInteger.ZERO, null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("precision");
-        ;
     }
 
     @Test
@@ -204,7 +199,6 @@ public final class SquareRootCalculatorTest {
         assertThatThrownBy(() -> {
             SquareRootCalculator.sqrt(BigInteger.ZERO, BigDecimal.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 0");
-        ;
     }
 
     @Test
@@ -212,7 +206,6 @@ public final class SquareRootCalculatorTest {
         assertThatThrownBy(() -> {
             SquareRootCalculator.sqrt(BigInteger.ZERO, BigDecimal.ONE);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 1");
-        ;
     }
 
     @Test
@@ -328,7 +321,6 @@ public final class SquareRootCalculatorTest {
         assertThatThrownBy(() -> {
             SquareRootCalculator.sqrt((BigInteger) null, scale, roundingMoude);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("integer");
-        ;
     }
 
     @Test

@@ -36,26 +36,29 @@ import finnmath.util.MathRandom;
 import finnmath.util.SquareRootCalculator;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class SimpleComplexNumberTest {
+    private static final int howMany = 10;
     private static final SimpleComplexNumber ZERO = SimpleComplexNumber.ZERO;
     private static final SimpleComplexNumber ONE = SimpleComplexNumber.ONE;
     private static final SimpleComplexNumber I = SimpleComplexNumber.I;
-    private static List<SimpleComplexNumber> complexNumbers;
-    private static List<SimpleComplexNumber> others;
-    private static List<SimpleComplexNumber> invertibles;
+    private static final List<SimpleComplexNumber> complexNumbers = new ArrayList<>(howMany);
+    private static final List<SimpleComplexNumber> others = new ArrayList<>(howMany);
+    private static final List<SimpleComplexNumber> invertibles = new ArrayList<>(howMany);
 
     @BeforeClass
     public static void setUpClass() {
         final MathRandom mathRandom = new MathRandom();
         final int bound = 10;
-        final int howMany = 10;
-        complexNumbers = mathRandom.nextSimpleComplexNumbers(bound, howMany);
-        others = mathRandom.nextSimpleComplexNumbers(bound, howMany);
-        invertibles = mathRandom.nextInvertibleSimpleComplexNumbers(bound, howMany);
+        for (int i = 0; i < howMany; i++) {
+            complexNumbers.add(mathRandom.nextSimpleComplexNumber(bound));
+            others.add(mathRandom.nextSimpleComplexNumber(bound));
+            invertibles.add(mathRandom.nextInvertibleSimpleComplexNumber(bound));
+        }
     }
 
     @Test

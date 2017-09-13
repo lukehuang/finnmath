@@ -45,15 +45,15 @@ import org.assertj.core.api.Condition;
 import org.junit.Test;
 
 public final class MathRandomTest {
-    private final MathRandom mathRandom = new MathRandom();
     private static final int bound = 10;
     private static final int howMany = 10;
     private static final int validScale = 2;
-    private final BigDecimal decimalBound = BigDecimal.valueOf(bound);
-    private final BigInteger bigBound = BigInteger.valueOf(bound);
     private static final int validSize = 3;
     private static final int validRowSize = 2;
     private static final int validColumnSize = 3;
+    private final MathRandom mathRandom = new MathRandom();
+    private final BigDecimal decimalBound = BigDecimal.valueOf(bound);
+    private final BigInteger bigBound = BigInteger.valueOf(bound);
 
     @Test
     public void nextPositiveLongBoundTooLowShouldThrowException() {

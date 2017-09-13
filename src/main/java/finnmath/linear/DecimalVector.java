@@ -30,7 +30,6 @@ package finnmath.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
-import static finnmath.util.SquareRootCalculator.sqrt;
 import static java.lang.Math.addExact;
 import static java.util.Objects.requireNonNull;
 
@@ -114,7 +113,6 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
     @Override
     public BigDecimal dotProduct(final DecimalVector vector) {
         requireNonNull(vector, "vector");
-        ;
         checkArgument(map.size() == vector.size(), "expected equal sizes but actual %s != %s", map.size(),
                 vector.size());
         BigDecimal result = BigDecimal.ZERO;
@@ -182,7 +180,7 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
      */
     @Override
     public BigDecimal euclideanNorm() {
-        return sqrt(euclideanNormPow2());
+        return SquareRootCalculator.sqrt(euclideanNormPow2());
     }
 
     /**
@@ -205,7 +203,7 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual {}", precision);
-        return sqrt(euclideanNormPow2(), precision);
+        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision);
     }
 
     /**
@@ -231,7 +229,7 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
         checkArgument(scale >= 0, "expected scale >= 0 but actual {}", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual {}",
                 roundingMode);
-        return sqrt(euclideanNormPow2(), scale, roundingMode);
+        return SquareRootCalculator.sqrt(euclideanNormPow2(), scale, roundingMode);
     }
 
     /**
@@ -266,7 +264,7 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
         checkArgument(scale >= 0, "expected scale >= 0 but actual {}", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual {}",
                 roundingMode);
-        return sqrt(euclideanNormPow2(), precision, scale, roundingMode);
+        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision, scale, roundingMode);
     }
 
     /**
@@ -314,7 +312,7 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
         requireNonNull(vector, "vector");
         checkArgument(map.size() == vector.size(), "expected equal sizes but actual %s != %s", map.size(),
                 vector.size());
-        return sqrt(euclideanDistancePow2(vector));
+        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector));
     }
 
     /**
@@ -347,7 +345,7 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual {}", precision);
-        return sqrt(euclideanDistancePow2(vector), precision);
+        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision);
     }
 
     /**
@@ -383,7 +381,7 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
         checkArgument(scale >= 0, "expected scale >= 0 but actual {}", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual {}",
                 roundingMode);
-        return sqrt(euclideanDistancePow2(vector), scale, roundingMode);
+        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), scale, roundingMode);
     }
 
     /**
@@ -429,7 +427,7 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
         checkArgument(scale >= 0, "expected scale >= 0 but actual {}", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual {}",
                 roundingMode);
-        return sqrt(euclideanDistancePow2(vector), precision, scale, roundingMode);
+        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision, scale, roundingMode);
     }
 
     /**

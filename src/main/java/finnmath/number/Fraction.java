@@ -45,8 +45,6 @@ import java.util.Objects;
  * @author Lars Tennstedt
  */
 public final class Fraction extends Number implements MathNumber<Fraction, Fraction, Fraction>, Comparable<Fraction> {
-    private static final long serialVersionUID = 1L;
-
     /**
      * {@code 0} as {@link Fraction}
      */
@@ -56,6 +54,8 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * {@code 1} as {@link Fraction}
      */
     public static final Fraction ONE = new Fraction(BigInteger.ONE, BigInteger.ONE);
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * {@code numerator} of this {@link Fraction}

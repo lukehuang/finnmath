@@ -33,25 +33,28 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import finnmath.util.MathRandom;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-final public class FractionTest {
+public final class FractionTest {
+    private static final int howMany = 10;
     private static final Fraction ZERO = Fraction.ZERO;
     private static final Fraction ONE = Fraction.ONE;
-    private static List<Fraction> fractions;
-    private static List<Fraction> others;
-    private static List<Fraction> invertibles;
+    private static final List<Fraction> fractions = new ArrayList<>(howMany);
+    private static final List<Fraction> others = new ArrayList<>(howMany);
+    private static final List<Fraction> invertibles = new ArrayList<>(howMany);
 
     @BeforeClass
     public static void setUpClass() {
         final MathRandom mathRandom = new MathRandom();
-        final int howMany = 10;
         final long bound = 10;
-        fractions = mathRandom.nextFractions(bound, howMany);
-        others = mathRandom.nextFractions(bound, howMany);
-        invertibles = mathRandom.nextInvertibleFractions(bound, howMany);
+        for (int i = 0; i < howMany; i++) {
+            fractions.add(mathRandom.nextFraction(bound));
+            others.add(mathRandom.nextFraction(bound));
+            invertibles.add(mathRandom.nextInvertibleFraction(bound));
+        }
     }
 
     @Test
@@ -503,7 +506,6 @@ final public class FractionTest {
     public void normalizeShouldSucceed() {
         final MathRandom mathRandom = new MathRandom();
         final int bound = 10;
-        final int howMany = 10;
         mathRandom.nextInvertiblePositiveFractions(bound, howMany).forEach(it -> {
             assertThat(it.normalize()).isExactlyInstanceOf(Fraction.class);
             final BigInteger numerator = it.getNumerator();

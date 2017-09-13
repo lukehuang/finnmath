@@ -36,6 +36,7 @@ buildscript {
 
 apply plugin: 'java-library'
 apply plugin: 'net.ltgt.errorprone-base'
+apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
@@ -61,12 +62,16 @@ dependencies {
 	testCompile 'junit:junit:4.12'
 }
 
+tasks.withType(Checkstyle) { reports { xml.enabled false } }
+
 tasks.withType(FindBugs) {
 	reports { 
-		xml.enabled = false
-		html.enabled = true
+		xml.enabled false
+		html.enabled true
 	}
 }
+
+tasks.withType(Pmd) { reports { xml.enabled false} }
 
 javadoc { options.noQualifiers 'all' }
 
