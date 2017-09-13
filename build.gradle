@@ -59,6 +59,8 @@ tasks.withType(FindBugs) {
 
 tasks.withType(Pmd) { reports { xml.enabled false} }
 
+tasks.withType(JacocoReport) { reports { xml.enabled true } }
+
 javadoc { options.noQualifiers 'all' }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
