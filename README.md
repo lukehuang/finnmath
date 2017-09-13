@@ -1,6 +1,7 @@
 # finnMath: Math library for the JVM based on BigInteger and BigDecimal
 
 [![Build Status](https://travis-ci.org/togliu/finnmath.svg?branch=master)](https://travis-ci.org/togliu/finnmath)
+[![codecov](https://codecov.io/gh/togliu/finnmath/branch/master/graph/badge.svg)](https://codecov.io/gh/togliu/finnmath)
 
 finnMath is a free software library for the JVM which provides or will provide implementations for fractions, 
 complex numbers, matrices and vectors and their arithmetics based on BigInteger and BigDecimal so that this 
