@@ -50,8 +50,6 @@ dependencies {
 	testCompile 'junit:junit:4.12'
 }
 
-tasks.withType(Checkstyle) { reports { xml.enabled false } }
-
 tasks.withType(FindBugs) {
 	reports { 
 		xml.enabled false

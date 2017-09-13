@@ -98,5 +98,6 @@ developer's life extremely and thanks to Maven convention over configuration arr
 * the developers of JaCoCo and EclEmma
 * GitHub Inc. for GitHub
 * Travis CI GmbH for Travis CI
+* Codecov LLC for Codecov
 * Stack Exchange Inc. for Stack Overflow
 * Judd Vinet and Aaron Griffin for Arch Linux
