@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import net.ltgt.gradle.errorprone.ErrorProneToolChain
-
 buildscript {
     repositories.maven { url 'https://plugins.gradle.org/m2/' }
     
@@ -23,7 +21,7 @@ buildscript {
 }
 
 apply plugin: 'java-library'
-apply plugin: 'net.ltgt.errorprone-base'
+apply plugin: 'net.ltgt.errorprone'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
@@ -37,17 +35,15 @@ group 'finnmath'
 version '1-SNAPSHOT'
 sourceCompatibility = 1.8
 
-compileJava { toolChain ErrorProneToolChain.create(project) }
-
 repositories { jcenter() }
 
 dependencies {
 	api 'com.google.guava:guava:23.0'
 	api 'org.apache.commons:commons-lang3:3.6'
 	implementation 'org.slf4j:slf4j-api:1.7.25'
-	implementation 'org.slf4j:slf4j-simple:1.7.25'
+    testCompile 'junit:junit:4.12'
 	testCompile 'org.assertj:assertj-core:3.8.0'
-	testCompile 'junit:junit:4.12'
+    testRuntime 'org.slf4j:slf4j-simple:1.7.25'
 }
 
 tasks.withType(FindBugs) {
@@ -57,7 +53,11 @@ tasks.withType(FindBugs) {
 	}
 }
 
-tasks.withType(Pmd) { reports { xml.enabled false} }
+tasks.withType(Pmd) {
+    reports { xml.enabled false }
+    
+    ruleSetFiles = files('config/pmd/ruleset.xml')
+}
 
 tasks.withType(JacocoReport) { reports { xml.enabled true } }
 
@@ -82,8 +82,8 @@ install.repositories.mavenInstaller.pom.project {
      inceptionYear '2017'
      licenses {
         license {
-            name 'BSD 2-Clause License'
-            url 'https://opensource.org/licenses/BSD-2-Clause'
+            name 'Apache License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0'
         }
      }
      developers {

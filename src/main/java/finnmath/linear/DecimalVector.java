@@ -36,7 +36,7 @@ import java.util.Objects;
  * @author Lars Tennstedt
  */
 @Beta
-public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDecimal> {
+public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVector, BigDecimal> {
     private DecimalVector(final ImmutableMap<Integer, BigDecimal> map) {
         super(map);
     }
@@ -125,8 +125,8 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
     public DecimalVector scalarMultiply(final BigDecimal scalar) {
         requireNonNull(scalar, "scalar");
         final DecimalVectorBuilder builder = builder(map.size());
-        map.values().forEach(it -> {
-            builder.put(scalar.multiply(it));
+        map.values().forEach(entry -> {
+            builder.put(scalar.multiply(entry));
         });
         return builder.build();
     }
@@ -469,7 +469,7 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
      */
     @Beta
     public static final class DecimalVectorBuilder
-            extends VectorBuilder<BigDecimal, DecimalVector, DecimalVectorBuilder> {
+            extends AbstractVectorBuilder<BigDecimal, DecimalVector, DecimalVectorBuilder> {
         private DecimalVectorBuilder(final int size) {
             super(size);
         }
@@ -553,8 +553,8 @@ public final class DecimalVector extends Vector<BigDecimal, DecimalVector, BigDe
          */
         @Override
         public DecimalVector build() {
-            map.values().forEach(it -> {
-                requireNonNull(it, "it");
+            map.values().forEach(entry -> {
+                requireNonNull(entry, "entry");
             });
             return new DecimalVector(ImmutableMap.copyOf(map));
         }

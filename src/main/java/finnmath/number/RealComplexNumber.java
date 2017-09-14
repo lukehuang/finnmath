@@ -35,7 +35,7 @@ import java.util.Objects;
  */
 @Beta
 public final class RealComplexNumber
-        extends ComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
+        extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
     /**
      * {@code 0} as {@link RealComplexNumber}
      */
@@ -49,7 +49,7 @@ public final class RealComplexNumber
     /**
      * {@code i} as {@link RealComplexNumber}
      */
-    public static RealComplexNumber I = new RealComplexNumber(BigDecimal.ZERO, BigDecimal.ONE);
+    public static final RealComplexNumber IMAGINARY = new RealComplexNumber(BigDecimal.ZERO, BigDecimal.ONE);
 
     /**
      * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part

@@ -21,27 +21,39 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.ImmutableMap;
-import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.lang3.builder.Builder;
 
 /**
  * @since 1
  * @author Lars Tennstedt
- * @see ImmutableMap
  */
 @Beta
-abstract class Vector<E, V, N> {
+abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
     /**
-     * The map holding the entries of this {@link Vector}
+     * The map holding the entries of this {@link AbstractVectorBuilder}
+     */
+    protected final Map<Integer, E> map = new HashMap<>();
+
+    /**
+     * The size of the map
+     */
+    protected final int size;
+
+    /**
+     * Constructs a {@link AbstractVectorBuilder} from the given size
      *
+     * @param size
+     *            the size
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
      * @since 1
      * @author Lars Tennstedt
      */
-    protected final ImmutableMap<Integer, E> map;
-
-    protected Vector(final ImmutableMap<Integer, E> map) {
-        this.map = map;
+    protected AbstractVectorBuilder(final int size) {
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        this.size = size;
     }
 
     /**
@@ -60,57 +72,20 @@ abstract class Vector<E, V, N> {
      */
     public E entry(final Integer index) {
         requireNonNull(index, "index");
-        checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(), index);
+        checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s", size, index);
         return map.get(index);
-    }
-
-    abstract V add(V summand);
-
-    abstract V subtract(V subtrahend);
-
-    abstract E dotProduct(V vector);
-
-    abstract V scalarMultiply(E scalar);
-
-    abstract V negate();
-
-    abstract E euclideanNormPow2();
-
-    abstract N euclideanNorm();
-
-    abstract N euclideanNorm(BigDecimal precision);
-
-    abstract N euclideanNorm(int scale, int roundingMode);
-
-    abstract N euclideanNorm(BigDecimal precision, int scale, int roundingMode);
-
-    abstract E euclideanDistancePow2(V vector);
-
-    abstract N euclideanDistance(V vector);
-
-    abstract N euclideanDistance(V vector, BigDecimal precision);
-
-    abstract N euclideanDistance(V vector, int scale, int roundingMode);
-
-    abstract N euclideanDistance(V vector, BigDecimal precision, int scale, int roundingMode);
-
-    /**
-     * Returns the size of the underlying {@link Map}
-     *
-     * @return size the size
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    public int size() {
-        return map.size();
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).add("map", map).toString();
+        return MoreObjects.toStringHelper(this).add("map", map).add("size", size).toString();
     }
 
-    public ImmutableMap<Integer, E> getMap() {
+    public Map<Integer, E> getMap() {
         return map;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

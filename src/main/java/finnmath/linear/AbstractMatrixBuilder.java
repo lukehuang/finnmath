@@ -25,10 +25,10 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.builder.Builder;
 
 @Beta
-abstract class MatrixBuilder<E, M> implements Builder<M> {
+abstract class AbstractMatrixBuilder<E, M> implements Builder<M> {
     protected final Table<Integer, Integer, E> table;
 
-    protected MatrixBuilder(final int rowSize, final int columnSize) {
+    protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {
         final List<Integer> rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());
         final List<Integer> columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());
         table = ArrayTable.create(rowIndexes, columnIndexes);

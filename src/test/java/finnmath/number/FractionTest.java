@@ -28,8 +28,6 @@ import org.junit.Test;
 
 public final class FractionTest {
     private static final int howMany = 10;
-    private static final Fraction ZERO = Fraction.ZERO;
-    private static final Fraction ONE = Fraction.ONE;
     private static final List<Fraction> fractions = new ArrayList<>(howMany);
     private static final List<Fraction> others = new ArrayList<>(howMany);
     private static final List<Fraction> invertibles = new ArrayList<>(howMany);
@@ -77,7 +75,7 @@ public final class FractionTest {
     @Test
     public void addNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.add(null);
+            Fraction.ZERO.add(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("summand");
     }
 
@@ -97,8 +95,8 @@ public final class FractionTest {
 
     @Test
     public void addZeroShouldBeEqualToSelf() {
-        fractions.forEach(it -> {
-            assertThat(it.add(ZERO)).isEqualTo(it);
+        fractions.forEach(fraction -> {
+            assertThat(fraction.add(Fraction.ZERO)).isEqualTo(fraction);
         });
     }
 
@@ -125,7 +123,7 @@ public final class FractionTest {
     @Test
     public void subtractNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.subtract(null);
+            Fraction.ZERO.subtract(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("subtrahend");
     }
 
@@ -145,22 +143,22 @@ public final class FractionTest {
 
     @Test
     public void subtractZeroShouldBeEqualToSelf() {
-        fractions.forEach(it -> {
-            assertThat(it.subtract(ZERO)).isEqualTo(it);
+        fractions.forEach(fraction -> {
+            assertThat(fraction.subtract(Fraction.ZERO)).isEqualTo(fraction);
         });
     }
 
     @Test
     public void subtractSelfShouldBeEqualToZero() {
-        fractions.forEach(it -> {
-            assertThat(it.subtract(it).normalize().reduce()).isEqualTo(ZERO);
+        fractions.forEach(fraction -> {
+            assertThat(fraction.subtract(fraction).normalize().reduce()).isEqualTo(Fraction.ZERO);
         });
     }
 
     @Test
     public void multiplyNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.multiply(null);
+            Fraction.ZERO.multiply(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("factor");
     }
 
@@ -179,15 +177,15 @@ public final class FractionTest {
 
     @Test
     public void multiplyOneShouldBeEqualToSelf() {
-        fractions.forEach(it -> {
-            assertThat(it.multiply(ONE)).isEqualTo(it);
+        fractions.forEach(fraction -> {
+            assertThat(fraction.multiply(Fraction.ONE)).isEqualTo(fraction);
         });
     }
 
     @Test
     public void multiplyZeroShouldBeEqualToZero() {
-        fractions.forEach(it -> {
-            assertThat(it.multiply(ZERO).reduce()).isEqualTo(ZERO);
+        fractions.forEach(fraction -> {
+            assertThat(fraction.multiply(Fraction.ZERO).reduce()).isEqualTo(Fraction.ZERO);
         });
     }
 
@@ -227,16 +225,16 @@ public final class FractionTest {
     @Test
     public void divideNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.divide(null);
+            Fraction.ZERO.divide(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("divisor");
     }
 
     @Test
     public void divideZeroShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.divide(ZERO);
+            Fraction.ZERO.divide(Fraction.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected divisor to be invertible but actual %s", ZERO);
+                .hasMessage("expected divisor to be invertible but actual %s", Fraction.ZERO);
     }
 
     @Test
@@ -251,242 +249,246 @@ public final class FractionTest {
 
     @Test
     public void divideOneShouldBeEqualToSelf() {
-        fractions.forEach(it -> {
-            assertThat(it.divide(ONE)).isEqualTo(it);
+        fractions.forEach(fraction -> {
+            assertThat(fraction.divide(Fraction.ONE)).isEqualTo(fraction);
         });
     }
 
     @Test
     public void negateShouldSucceed() {
-        fractions.forEach(it -> {
-            assertThat(it.negate()).isExactlyInstanceOf(Fraction.class)
-                    .isEqualTo(new Fraction(it.getNumerator().negate(), it.getDenominator()));
+        fractions.forEach(fraction -> {
+            assertThat(fraction.negate()).isExactlyInstanceOf(Fraction.class)
+                    .isEqualTo(new Fraction(fraction.getNumerator().negate(), fraction.getDenominator()));
         });
     }
 
     @Test
     public void negateZeroShouldBeEqualToSelf() {
-        assertThat(ZERO.negate()).isEqualTo(ZERO);
+        assertThat(Fraction.ZERO.negate()).isEqualTo(Fraction.ZERO);
     }
 
     @Test
     public void addNegatedShouldBeEqualToZero() {
-        fractions.forEach(it -> {
-            assertThat(it.add(it.negate()).reduce()).isEqualTo(ZERO);
+        fractions.forEach(fraction -> {
+            assertThat(fraction.add(fraction.negate()).reduce()).isEqualTo(Fraction.ZERO);
         });
     }
 
     @Test
     public void multiplyMinusOneShouldBeEqualToNegated() {
-        fractions.forEach(it -> {
-            assertThat(it.multiply(ONE.negate())).isEqualTo(it.negate());
+        fractions.forEach(fraction -> {
+            assertThat(fraction.multiply(Fraction.ONE.negate())).isEqualTo(fraction.negate());
         });
     }
 
     @Test
     public void divideMinusOneShouldBeEqualToNegated() {
-        fractions.forEach(it -> {
-            assertThat(it.divide(ONE.negate()).normalize().reduce()).isEqualTo(it.negate().reduce());
+        fractions.forEach(fraction -> {
+            assertThat(fraction.divide(Fraction.ONE.negate()).normalize().reduce())
+                    .isEqualTo(fraction.negate().reduce());
         });
     }
 
     @Test
     public void powNegativeExponentShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.pow(-1);
+            Fraction.ZERO.pow(-1);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected exponent > -1 but actual -1");
     }
 
     @Test
     public void powShouldSucceed() {
-        fractions.forEach(it -> {
-            assertThat(it.pow(3)).isExactlyInstanceOf(Fraction.class).isEqualTo(it.multiply(it).multiply(it));
-            assertThat(it.pow(2)).isEqualTo(it.multiply(it));
+        fractions.forEach(fraction -> {
+            assertThat(fraction.pow(3)).isExactlyInstanceOf(Fraction.class)
+                    .isEqualTo(fraction.multiply(fraction).multiply(fraction));
+            assertThat(fraction.pow(2)).isEqualTo(fraction.multiply(fraction));
         });
     }
 
     @Test
     public void powOneShouldBeTheSame() {
-        fractions.forEach(it -> {
-            assertThat(it.pow(1)).isSameAs(it);
+        fractions.forEach(fraction -> {
+            assertThat(fraction.pow(1)).isSameAs(fraction);
         });
     }
 
     @Test
     public void powZeroShouldBeSameAsOne() {
-        fractions.forEach(it -> {
-            assertThat(it.pow(0)).isSameAs(ONE);
+        fractions.forEach(fraction -> {
+            assertThat(fraction.pow(0)).isSameAs(Fraction.ONE);
         });
     }
 
     @Test
     public void powOfOneShouldBeEqualToOne() {
-        assertThat(ONE.pow(3)).isEqualTo(ONE);
+        assertThat(Fraction.ONE.pow(3)).isEqualTo(Fraction.ONE);
     }
 
     @Test
     public void powOfZeroForExponentNotEqualToZeroShouldBeEqualToZero() {
-        assertThat(ZERO.pow(3)).isEqualTo(ZERO);
+        assertThat(Fraction.ZERO.pow(3)).isEqualTo(Fraction.ZERO);
     }
 
     @Test
     public void invertZeroShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.invert();
-        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected to be invertible but actual %s", ZERO);
+            Fraction.ZERO.invert();
+        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected to be invertible but actual %s",
+                Fraction.ZERO);
     }
 
     @Test
     public void invertShouldSucceed() {
-        invertibles.forEach(it -> {
-            assertThat(it.invert()).isExactlyInstanceOf(Fraction.class)
-                    .isEqualTo(new Fraction(it.getDenominator(), it.getNumerator()));
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.invert()).isExactlyInstanceOf(Fraction.class)
+                    .isEqualTo(new Fraction(invertible.getDenominator(), invertible.getNumerator()));
         });
     }
 
     @Test
     public void invertOneShouldBeEqualToOne() {
-        assertThat(ONE.invert()).isEqualTo(ONE);
+        assertThat(Fraction.ONE.invert()).isEqualTo(Fraction.ONE);
     }
 
     @Test
     public void invertSelfShouldBeEqualToOneDividedBySelf() {
-        invertibles.forEach(it -> {
-            assertThat(it.invert().reduce().normalize()).isEqualTo(ONE.divide(it).reduce().normalize());
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.invert().reduce().normalize())
+                    .isEqualTo(Fraction.ONE.divide(invertible).reduce().normalize());
         });
     }
 
     @Test
     public void multiplyInvertedShouldBeEqualToOne() {
-        invertibles.forEach(it -> {
-            assertThat(it.multiply(it.invert()).reduce().normalize()).isEqualTo(ONE);
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.multiply(invertible.invert()).reduce().normalize()).isEqualTo(Fraction.ONE);
         });
     }
 
     @Test
     public void invertibleZeroShouldBeFalse() {
-        assertThat(ZERO.invertible()).isFalse();
+        assertThat(Fraction.ZERO.invertible()).isFalse();
     }
 
     @Test
     public void invertibleShouldBePredictable() {
-        fractions.forEach(it -> {
-            assertThat(it.invertible()).isEqualTo(!it.getNumerator().equals(BigInteger.ZERO));
+        fractions.forEach(fraction -> {
+            assertThat(fraction.invertible()).isEqualTo(!fraction.getNumerator().equals(BigInteger.ZERO));
         });
     }
 
     @Test
     public void invertibleShouldSucceed() {
-        invertibles.forEach(it -> {
-            assertThat(it.invertible()).isTrue();
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.invertible()).isTrue();
         });
     }
 
     @Test
     public void lessThanOrEqualToNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.lessThanOrEqualTo(null);
+            Fraction.ZERO.lessThanOrEqualTo(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
     public void lessThanOrEqualToShouldSucceed() {
-        fractions.forEach(it -> {
-            final Fraction greater = it.add(ONE);
-            final Fraction lower = it.subtract(ONE);
-            assertThat(it.lessThanOrEqualTo(greater)).isTrue();
-            assertThat(it.lessThanOrEqualTo(lower)).isFalse();
-            assertThat(it.lessThanOrEqualTo(it)).isTrue();
+        fractions.forEach(fraction -> {
+            final Fraction greater = fraction.add(Fraction.ONE);
+            final Fraction lower = fraction.subtract(Fraction.ONE);
+            assertThat(fraction.lessThanOrEqualTo(greater)).isTrue();
+            assertThat(fraction.lessThanOrEqualTo(lower)).isFalse();
+            assertThat(fraction.lessThanOrEqualTo(fraction)).isTrue();
         });
     }
 
     @Test
     public void greaterThanOrEqualToNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.greaterThanOrEqualTo(null);
+            Fraction.ZERO.greaterThanOrEqualTo(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
     public void greaterThanOrEqualToShouldSucceed() {
-        fractions.forEach(it -> {
-            final Fraction lower = it.subtract(ONE);
-            final Fraction greater = it.add(ONE);
-            assertThat(it.greaterThanOrEqualTo(lower)).isTrue();
-            assertThat(it.greaterThanOrEqualTo(greater)).isFalse();
-            assertThat(it.greaterThanOrEqualTo(it)).isTrue();
+        fractions.forEach(fraction -> {
+            final Fraction lower = fraction.subtract(Fraction.ONE);
+            final Fraction greater = fraction.add(Fraction.ONE);
+            assertThat(fraction.greaterThanOrEqualTo(lower)).isTrue();
+            assertThat(fraction.greaterThanOrEqualTo(greater)).isFalse();
+            assertThat(fraction.greaterThanOrEqualTo(fraction)).isTrue();
         });
     }
 
     @Test
     public void lessThanNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.lessThan(null);
+            Fraction.ZERO.lessThan(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
     public void lessThanShouldSucceed() {
-        fractions.forEach(it -> {
-            final Fraction greater = it.add(ONE);
-            final Fraction lower = it.subtract(ONE);
-            assertThat(it.lessThan(greater)).isTrue();
-            assertThat(it.lessThan(lower)).isFalse();
-            assertThat(it.lessThan(it)).isFalse();
+        fractions.forEach(fraction -> {
+            final Fraction greater = fraction.add(Fraction.ONE);
+            final Fraction lower = fraction.subtract(Fraction.ONE);
+            assertThat(fraction.lessThan(greater)).isTrue();
+            assertThat(fraction.lessThan(lower)).isFalse();
+            assertThat(fraction.lessThan(fraction)).isFalse();
         });
     }
 
     @Test
     public void greaterThanNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.greaterThan(null);
+            Fraction.ZERO.greaterThan(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
     public void greaterThanShouldSucceed() {
-        fractions.forEach(it -> {
-            final Fraction lower = it.subtract(ONE);
-            final Fraction greater = it.add(ONE);
-            assertThat(it.greaterThan(lower)).isTrue();
-            assertThat(it.greaterThan(greater)).isFalse();
-            assertThat(it.greaterThan(it)).isFalse();
+        fractions.forEach(fraction -> {
+            final Fraction lower = fraction.subtract(Fraction.ONE);
+            final Fraction greater = fraction.add(Fraction.ONE);
+            assertThat(fraction.greaterThan(lower)).isTrue();
+            assertThat(fraction.greaterThan(greater)).isFalse();
+            assertThat(fraction.greaterThan(fraction)).isFalse();
         });
     }
 
     @Test
     public void minNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.min(null);
+            Fraction.ZERO.min(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
     public void minShouldSucceed() {
-        fractions.forEach(it -> {
-            final Fraction maximum = it.add(ONE);
-            final Fraction minimum = it.subtract(ONE);
-            assertThat(it.min(it)).isExactlyInstanceOf(Fraction.class).isSameAs(it);
-            assertThat(it.min(maximum)).isSameAs(it);
-            assertThat(it.min(minimum)).isSameAs(minimum);
+        fractions.forEach(fraction -> {
+            final Fraction maximum = fraction.add(Fraction.ONE);
+            final Fraction minimum = fraction.subtract(Fraction.ONE);
+            assertThat(fraction.min(fraction)).isExactlyInstanceOf(Fraction.class).isSameAs(fraction);
+            assertThat(fraction.min(maximum)).isSameAs(fraction);
+            assertThat(fraction.min(minimum)).isSameAs(minimum);
         });
     }
 
     @Test
     public void maxNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.max(null);
+            Fraction.ZERO.max(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
     public void maxShouldSucceed() {
-        fractions.forEach(it -> {
-            final Fraction minimum = it.subtract(ONE);
-            final Fraction maximum = it.add(ONE);
-            assertThat(it.max(it)).isExactlyInstanceOf(Fraction.class).isSameAs(it);
-            assertThat(it.max(minimum)).isSameAs(it);
-            assertThat(it.max(maximum)).isSameAs(maximum);
+        fractions.forEach(fraction -> {
+            final Fraction minimum = fraction.subtract(Fraction.ONE);
+            final Fraction maximum = fraction.add(Fraction.ONE);
+            assertThat(fraction.max(fraction)).isExactlyInstanceOf(Fraction.class).isSameAs(fraction);
+            assertThat(fraction.max(minimum)).isSameAs(fraction);
+            assertThat(fraction.max(maximum)).isSameAs(maximum);
         });
     }
 
@@ -494,147 +496,149 @@ public final class FractionTest {
     public void normalizeShouldSucceed() {
         final MathRandom mathRandom = new MathRandom();
         final int bound = 10;
-        mathRandom.nextInvertiblePositiveFractions(bound, howMany).forEach(it -> {
-            assertThat(it.normalize()).isExactlyInstanceOf(Fraction.class);
-            final BigInteger numerator = it.getNumerator();
-            final BigInteger denominator = it.getDenominator();
+        mathRandom.nextInvertiblePositiveFractions(bound, howMany).forEach(invertible -> {
+            assertThat(invertible.normalize()).isExactlyInstanceOf(Fraction.class);
+            final BigInteger numerator = invertible.getNumerator();
+            final BigInteger denominator = invertible.getDenominator();
             final BigInteger negatedNumerator = numerator.negate();
             final Fraction expectedForNegativeSignum = new Fraction(negatedNumerator, denominator);
             assertThat(new Fraction(negatedNumerator, denominator).normalize()).isEqualTo(expectedForNegativeSignum);
             final BigInteger negatedDenominator = denominator.negate();
             assertThat(new Fraction(numerator, negatedDenominator).normalize()).isEqualTo(expectedForNegativeSignum);
-            assertThat(new Fraction(BigInteger.ZERO, denominator).normalize()).isEqualTo(ZERO);
-            assertThat(new Fraction(negatedNumerator, negatedDenominator).normalize()).isEqualTo(it);
-            final Fraction normalized = it.normalize();
+            assertThat(new Fraction(BigInteger.ZERO, denominator).normalize()).isEqualTo(Fraction.ZERO);
+            assertThat(new Fraction(negatedNumerator, negatedDenominator).normalize()).isEqualTo(invertible);
+            final Fraction normalized = invertible.normalize();
             assertThat(normalized.normalize()).isSameAs(normalized);
         });
     }
 
     @Test
     public void normalizeZeroShouldBeTheSame() {
-        assertThat(ZERO.normalize()).isSameAs(ZERO);
+        assertThat(Fraction.ZERO.normalize()).isSameAs(Fraction.ZERO);
     }
 
     @Test
     public void normalizeOneShouldBeTheSame() {
-        assertThat(ONE.normalize()).isSameAs(ONE);
+        assertThat(Fraction.ONE.normalize()).isSameAs(Fraction.ONE);
     }
 
     @Test
     public void absShouldSucceed() {
-        fractions.forEach(it -> {
-            assertThat(it.abs()).isExactlyInstanceOf(Fraction.class)
-                    .isEqualTo(new Fraction(it.getNumerator().abs(), it.getDenominator().abs()));
+        fractions.forEach(fraction -> {
+            assertThat(fraction.abs()).isExactlyInstanceOf(Fraction.class)
+                    .isEqualTo(new Fraction(fraction.getNumerator().abs(), fraction.getDenominator().abs()));
         });
     }
 
     @Test
     public void absZeroShouldBeEqualToZero() {
-        assertThat(ZERO.abs()).isEqualTo(ZERO);
+        assertThat(Fraction.ZERO.abs()).isEqualTo(Fraction.ZERO);
     }
 
     @Test
     public void absOneShouldBeEqualToOne() {
-        assertThat(ONE.abs()).isEqualTo(ONE);
+        assertThat(Fraction.ONE.abs()).isEqualTo(Fraction.ONE);
     }
 
     @Test
     public void absMinusOneShouldBeEqualToOne() {
-        assertThat(ONE.negate().abs()).isEqualTo(ONE);
+        assertThat(Fraction.ONE.negate().abs()).isEqualTo(Fraction.ONE);
     }
 
     @Test
     public void signumShouldSucceed() {
-        fractions.forEach(it -> {
-            assertThat(it.signum()).isEqualTo(it.getNumerator().signum() * it.getDenominator().signum());
+        fractions.forEach(fraction -> {
+            assertThat(fraction.signum())
+                    .isEqualTo(fraction.getNumerator().signum() * fraction.getDenominator().signum());
         });
     }
 
     @Test
     public void signumMinusOneShouldBeEqualToMinusOne() {
-        assertThat(ONE.negate().signum()).isEqualTo(-1);
+        assertThat(Fraction.ONE.negate().signum()).isEqualTo(-1);
     }
 
     @Test
     public void signumZeroShouldBeEqualToZero() {
-        assertThat(ZERO.signum()).isEqualTo(0);
+        assertThat(Fraction.ZERO.signum()).isEqualTo(0);
     }
 
     @Test
     public void signumOneShouldBeEqualToOne() {
-        assertThat(ONE.signum()).isEqualTo(1);
+        assertThat(Fraction.ONE.signum()).isEqualTo(1);
     }
 
     @Test
     public void reduceShouldSucceed() {
-        fractions.forEach(it -> {
-            final BigInteger gcd = it.getNumerator().gcd(it.getDenominator());
-            final Fraction expected = new Fraction(it.getNumerator().divide(gcd), it.getDenominator().divide(gcd));
-            assertThat(it.reduce()).isExactlyInstanceOf(Fraction.class).isEqualTo(expected);
+        fractions.forEach(fraction -> {
+            final BigInteger gcd = fraction.getNumerator().gcd(fraction.getDenominator());
+            final Fraction expected = new Fraction(fraction.getNumerator().divide(gcd),
+                    fraction.getDenominator().divide(gcd));
+            assertThat(fraction.reduce()).isExactlyInstanceOf(Fraction.class).isEqualTo(expected);
         });
     }
 
     @Test
     public void reduceZeroShouldBeEqualToZero() {
-        assertThat(ZERO.reduce()).isEqualTo(ZERO);
+        assertThat(Fraction.ZERO.reduce()).isEqualTo(Fraction.ZERO);
     }
 
     @Test
     public void reduceOneShouldBeEqualToOne() {
-        assertThat(ONE.reduce()).isEqualTo(ONE);
+        assertThat(Fraction.ONE.reduce()).isEqualTo(Fraction.ONE);
     }
 
     @Test
     public void equivalentNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.equivalent(null);
+            Fraction.ZERO.equivalent(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
     public void equivalentShouldSucceed() {
-        fractions.forEach(it -> {
+        fractions.forEach(fraction -> {
             others.forEach(other -> {
-                assertThat(it.equivalent(other)).isEqualTo(it.reduce().equals(other.reduce()));
+                assertThat(fraction.equivalent(other)).isEqualTo(fraction.reduce().equals(other.reduce()));
             });
         });
     }
 
     @Test
     public void equivalentShouldBeReflexive() {
-        fractions.forEach(it -> {
-            assertThat(it.equivalent(it)).isTrue();
+        fractions.forEach(fraction -> {
+            assertThat(fraction.equivalent(fraction)).isTrue();
         });
     }
 
     @Test
     public void equivalentShouldBeSymmetric() {
-        fractions.forEach(it -> {
+        fractions.forEach(fraction -> {
             others.forEach(other -> {
-                assertThat(it.equivalent(other)).isEqualTo(other.equivalent(it));
+                assertThat(fraction.equivalent(other)).isEqualTo(other.equivalent(fraction));
             });
         });
     }
 
     @Test
     public void equivalentShouldBeTransitive() {
-        fractions.forEach(it -> {
+        fractions.forEach(fraction -> {
             others.forEach(other -> {
                 invertibles.forEach(invertible -> {
-                    final boolean a = it.equivalent(other);
-                    final boolean b = other.equivalent(invertible);
-                    final boolean c = it.equivalent(invertible);
-                    if (a && b) {
-                        assertThat(c).isTrue();
+                    final boolean conditionA = fraction.equivalent(other);
+                    final boolean conditionB = other.equivalent(invertible);
+                    final boolean conditionC = fraction.equivalent(invertible);
+                    if (conditionA && conditionB) {
+                        assertThat(conditionC).isTrue();
                     } else {
-                        assertThat(a && b && c).isFalse();
+                        assertThat(conditionA && conditionB && conditionC).isFalse();
                     }
-                    if (!c) {
-                        assertThat(a && b).isFalse();
-                    } else if (!a) {
-                        assertThat(b).isFalse();
-                    } else if (!b) {
-                        assertThat(a).isFalse();
+                    if (!conditionC) {
+                        assertThat(conditionA && conditionB).isFalse();
+                    } else if (!conditionA) {
+                        assertThat(conditionB).isFalse();
+                    } else if (!conditionB) {
+                        assertThat(conditionA).isFalse();
                     }
                 });
             });

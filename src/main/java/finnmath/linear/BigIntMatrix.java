@@ -37,7 +37,7 @@ import java.util.Objects;
  * @author Lars Tennstedt
  */
 @Beta
-public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntMatrix> {
+public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector, BigIntMatrix> {
     private BigIntMatrix(final ImmutableTable<Integer, Integer, BigInteger> table) {
         super(table);
     }
@@ -64,12 +64,12 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
         checkArgument(table.rowKeySet().size() == summand.rowSize(), "expected equal row sizes but actual %s != %s",
                 table.rowKeySet().size(), summand.rowSize());
         checkArgument(table.columnKeySet().size() == summand.columnSize(),
-                "expected column sizes equal but actual %s != %s", table.columnKeySet().size(), summand.columnSize());
+                "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), summand.columnSize());
         final BigIntMatrixBuilder builder = builder(rowSize(), columnSize());
-        table.cellSet().forEach(it -> {
-            final Integer rowKey = it.getRowKey();
-            final Integer columnKey = it.getColumnKey();
-            builder.put(rowKey, columnKey, it.getValue().add(summand.entry(rowKey, columnKey)));
+        table.cellSet().forEach(cell -> {
+            final Integer rowKey = cell.getRowKey();
+            final Integer columnKey = cell.getColumnKey();
+            builder.put(rowKey, columnKey, cell.getValue().add(summand.entry(rowKey, columnKey)));
         });
         return builder.build();
     }
@@ -99,10 +99,10 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
                 "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
                 subtrahend.columnSize());
         final BigIntMatrixBuilder builder = builder(rowSize(), columnSize());
-        table.cellSet().forEach(it -> {
-            final Integer rowKey = it.getRowKey();
-            final Integer columnKey = it.getColumnKey();
-            builder.put(rowKey, columnKey, it.getValue().subtract(subtrahend.entry(rowKey, columnKey)));
+        table.cellSet().forEach(cell -> {
+            final Integer rowKey = cell.getRowKey();
+            final Integer columnKey = cell.getColumnKey();
+            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.entry(rowKey, columnKey)));
         });
         return builder.build();
     }
@@ -198,8 +198,8 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
     public BigIntMatrix scalarMultiply(final BigInteger scalar) {
         requireNonNull(scalar, "scalar");
         final BigIntMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());
-        table.cellSet().forEach(it -> {
-            builder.put(it.getRowKey(), it.getColumnKey(), scalar.multiply(it.getValue()));
+        table.cellSet().forEach(cell -> {
+            builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue()));
         });
         return builder.build();
     }
@@ -238,28 +238,55 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
     /**
      * Returns the determinant of this {@link BigIntMatrix}
      *
+     * <p>
+     * Only implemented for 1 x 1, 2 x 2, and 3 x 3 matrices
+     *
      * @return The determinant
      * @throws IllegalStateException
      *             if {@code !square}
+     * @throws IllegalStateException
+     *             if {@code rowSize > 3}
+     * @throws IllegalStateException
+     *             if {@code columnSize > 3}
      * @since 1
      * @author Lars Tennstedt
      * @see #square
      * @see #minor
      */
     @Override
-    public BigInteger det() {
+    public BigInteger determinant() {
+        checkState(table.rowKeySet().size() < 4, "expected row size < 4 but actual %s", table.rowKeySet().size());
+        checkState(table.columnKeySet().size() < 4, "expected column size < 4 but actual %s",
+                table.columnKeySet().size());
         checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
                 table.columnKeySet().size());
-        if (table.rowKeySet().size() > 1) {
-            BigInteger result = BigInteger.ZERO;
-            for (final Entry<Integer, BigInteger> entry : table.row(1).entrySet()) {
-                final Integer key = entry.getKey();
-                final BigInteger factor = BigInteger.ONE.negate().pow(key + 1).multiply(entry.getValue());
-                result = result.add(factor.multiply(minor(1, key).det()));
+        if (triangular()) {
+            BigInteger result = BigInteger.ONE;
+            for (final Cell<Integer, Integer, BigInteger> cell : table.cellSet()) {
+                if (cell.getRowKey().equals(cell.getColumnKey())) {
+                    result = result.multiply(cell.getValue());
+                }
             }
             return result;
         }
+        if (table.rowKeySet().size() == 3) {
+            return ruleOfSarrus();
+        }
+        if (table.rowKeySet().size() == 2) {
+            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+        }
         return table.get(1, 1);
+    }
+
+    @Override
+    protected BigInteger ruleOfSarrus() {
+        final BigInteger firstSummand = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));
+        final BigInteger secondSummand = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));
+        final BigInteger thirdSummand = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));
+        final BigInteger fourthSummand = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3)).negate();
+        final BigInteger fifthSummand = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1)).negate();
+        final BigInteger sixthSummand = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2)).negate();
+        return firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand).add(fifthSummand).add(sixthSummand);
     }
 
     /**
@@ -309,46 +336,16 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
         checkArgument(table.containsColumn(columnIndex), "expected column index in [1, %s] but actual %s",
                 table.columnKeySet().size(), columnIndex);
         final BigIntMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
-        table.cellSet().forEach(it -> {
-            final Integer rowKey = it.getRowKey();
-            final Integer columnKey = it.getColumnKey();
+        table.cellSet().forEach(cell -> {
+            final Integer rowKey = cell.getRowKey();
+            final Integer columnKey = cell.getColumnKey();
             if (!rowKey.equals(rowIndex) && !columnKey.equals(columnIndex)) {
                 final Integer newRowIndex = rowKey > rowIndex ? rowKey - 1 : rowKey;
                 final Integer newColumnIndex = columnKey > columnIndex ? columnKey - 1 : columnKey;
-                builder.put(newRowIndex, newColumnIndex, it.getValue());
+                builder.put(newRowIndex, newColumnIndex, cell.getValue());
             }
         });
         return builder.build();
-    }
-
-    /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is a
-     * square one
-     *
-     * @return {@code true} if {@code rowSize == columnSize}, {@code false}
-     *         otherwise
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    @Override
-    public boolean square() {
-        return table.rowKeySet().size() == table.columnKeySet().size();
-    }
-
-    /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
-     * triangular
-     *
-     * @return {@code true} if {@code upperTriangular || lowerTriangular},
-     *         {@code false} otherwise
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #upperTriangular
-     * @see #lowerTriangular
-     */
-    @Override
-    public boolean triangular() {
-        return upperTriangular() || lowerTriangular();
     }
 
     /**
@@ -396,22 +393,6 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
-     * diagonal
-     *
-     * @return {@code true} if {@code upperTriangular && lowerTriangular},
-     *         {@code false} otherwise
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #upperTriangular
-     * @see #lowerTriangular
-     */
-    @Override
-    public boolean diagonal() {
-        return upperTriangular() && lowerTriangular();
-    }
-
-    /**
      * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is the
      * identity one
      *
@@ -422,7 +403,7 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
      * @see #diagonal
      */
     @Override
-    public boolean id() {
+    public boolean identity() {
         if (diagonal()) {
             for (final Integer index : table.rowKeySet()) {
                 if (!table.get(index, index).equals(BigInteger.ONE)) {
@@ -442,44 +423,11 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
      *         otherwise
      * @since 1
      * @author Lars Tennstedt
-     * @see #det
+     * @see #determinant
      */
     @Override
     public boolean invertible() {
-        return det().equals(BigInteger.ONE.negate()) || det().equals(BigInteger.ONE);
-    }
-
-    /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
-     * symmetric
-     *
-     * @return {@code true} if {@code square && equals(transpose)}, {@code false}
-     *         otherwise
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #square
-     * @see #transpose
-     */
-    @Override
-    public boolean symmetric() {
-        return square() && equals(transpose());
-    }
-
-    /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
-     * skew symmetric
-     *
-     * @return {@code true} if {@code square && equals(transpose.negate)},
-     *         {@code false} otherwise
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #square
-     * @see #transpose
-     * @see #negate
-     */
-    @Override
-    public boolean skewSymmetric() {
-        return square() && transpose().equals(negate());
+        return determinant().equals(BigInteger.ONE.negate()) || determinant().equals(BigInteger.ONE);
     }
 
     /**
@@ -523,7 +471,7 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
      * @author Lars Tennstedt
      */
     @Beta
-    public static final class BigIntMatrixBuilder extends MatrixBuilder<BigInteger, BigIntMatrix> {
+    public static final class BigIntMatrixBuilder extends AbstractMatrixBuilder<BigInteger, BigIntMatrix> {
         private BigIntMatrixBuilder(final int rowSize, final int columnSize) {
             super(rowSize, columnSize);
         }
@@ -562,8 +510,8 @@ public final class BigIntMatrix extends Matrix<BigInteger, BigIntVector, BigIntM
          */
         @Override
         public BigIntMatrix build() {
-            table.cellSet().forEach(it -> {
-                requireNonNull(it.getValue(), "it.value");
+            table.cellSet().forEach(cell -> {
+                requireNonNull(cell.getValue(), "it.value");
             });
             return new BigIntMatrix(ImmutableTable.copyOf(table));
         }

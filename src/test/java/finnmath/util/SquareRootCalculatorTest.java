@@ -29,10 +29,10 @@ import org.slf4j.LoggerFactory;
 
 public final class SquareRootCalculatorTest {
     private static final Logger log = LoggerFactory.getLogger(SquareRootCalculatorTest.class);
-    private final BigDecimal precision = BigDecimal.valueOf(0.00000001);
-    private final int scale = 8;
-    private final int roundingMoude = BigDecimal.ROUND_HALF_EVEN;
-    private final MathRandom mathRandom = new MathRandom();
+    private static final BigDecimal precision = BigDecimal.valueOf(0.00000001);
+    private static final int scale = 8;
+    private static final int roundingMoude = BigDecimal.ROUND_HALF_EVEN;
+    private static final MathRandom mathRandom = new MathRandom();
 
     @After
     public void after() {

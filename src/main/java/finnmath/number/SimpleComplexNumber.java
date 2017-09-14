@@ -36,7 +36,7 @@ import java.util.Objects;
  */
 @Beta
 public final class SimpleComplexNumber
-        extends ComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
+        extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
     /**
      * {@code 0} as {@link SimpleComplexNumber}
      */
@@ -50,7 +50,7 @@ public final class SimpleComplexNumber
     /**
      * {@code i} as {@link SimpleComplexNumber}
      */
-    public static final SimpleComplexNumber I = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ONE);
+    public static final SimpleComplexNumber IMAGINARY = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ONE);
 
     /**
      * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part

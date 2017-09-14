@@ -37,7 +37,7 @@ import java.util.Objects;
  * @author Lars Tennstedt
  */
 @Beta
-public final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDecimal> {
+public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector, BigDecimal> {
     private BigIntVector(final ImmutableMap<Integer, BigInteger> map) {
         super(map);
     }
@@ -103,8 +103,8 @@ public final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDeci
     public BigIntVector scalarMultiply(final BigInteger scalar) {
         requireNonNull(scalar, "scalar");
         final BigIntVectorBuilder builder = builder(map.size());
-        map.values().forEach(it -> {
-            builder.put(scalar.multiply(it));
+        map.values().forEach(entry -> {
+            builder.put(scalar.multiply(entry));
         });
         return builder.build();
     }
@@ -470,7 +470,8 @@ public final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDeci
      * @author Lars Tennstedt
      */
     @Beta
-    public static final class BigIntVectorBuilder extends VectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
+    public static final class BigIntVectorBuilder
+            extends AbstractVectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
         private BigIntVectorBuilder(final Integer size) {
             super(size);
         }
@@ -554,8 +555,8 @@ public final class BigIntVector extends Vector<BigInteger, BigIntVector, BigDeci
          */
         @Override
         public BigIntVector build() {
-            map.values().forEach(it -> {
-                requireNonNull(it, "it");
+            map.values().forEach(entry -> {
+                requireNonNull(entry, "entry");
             });
             return new BigIntVector(ImmutableMap.copyOf(map));
         }

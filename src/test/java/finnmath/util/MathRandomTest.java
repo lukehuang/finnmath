@@ -1284,7 +1284,7 @@ public final class MathRandomTest {
                 .are(new Condition<>(entry -> entry.compareTo(decimalBound.negate()) > 0, "lower bound of the entry"))
                 .are(new Condition<>(entry -> entry.compareTo(decimalBound) < 0, "upper bound of the entry"));
         matrix.cells().forEach(cell -> {
-            if (cell.getRowKey() == cell.getColumnKey()) {
+            if (cell.getRowKey().equals(cell.getColumnKey())) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
             }
         });
@@ -1356,7 +1356,7 @@ public final class MathRandomTest {
                 .are(new Condition<>(entry -> entry.compareTo(decimalBound.negate()) > 0, "lower bound of the entry"))
                 .are(new Condition<>(entry -> entry.compareTo(decimalBound) < 0, "upper bound of the entry"));
         matrix.cells().forEach(cell -> {
-            if (cell.getRowKey() != cell.getColumnKey()) {
+            if (!cell.getRowKey().equals(cell.getColumnKey())) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
             }
         });

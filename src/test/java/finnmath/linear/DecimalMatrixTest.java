@@ -20,10 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.google.common.collect.Table.Cell;
-import finnmath.linear.BigIntMatrix.BigIntMatrixBuilder;
-import finnmath.linear.BigIntVector.BigIntVectorBuilder;
+import finnmath.asserts.DecimalMatrixAssert;
+import finnmath.asserts.DecimalVectorAssert;
+import finnmath.linear.DecimalMatrix.DecimalMatrixBuilder;
+import finnmath.linear.DecimalVector.DecimalVectorBuilder;
 import finnmath.util.MathRandom;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -35,34 +37,35 @@ import org.assertj.core.api.Condition;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public final class BigIntMatrixTest {
-    private static BigIntMatrix zeroMatrixForAddition;
-    private static BigIntMatrix zeroMatrixForMultiplication;
-    private static BigIntMatrix zeroSquareMatrix;
-    private static BigIntMatrix identityMatrix;
+public final class DecimalMatrixTest {
+    private static DecimalMatrix zeroMatrixForAddition;
+    private static DecimalMatrix zeroMatrixForMultiplication;
+    private static DecimalMatrix zeroSquareMatrix;
+    private static DecimalMatrix identityMatrix;
     private static final int howMany = 10;
     private static final MathRandom mathRandom = new MathRandom();
     private static final long bound = 10;
-    private static final List<BigIntMatrix> matrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> squareMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> othersForAddition = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> additionalOthersForAddition = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> othersForMultiplication = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> additionalOthersForMultiplication = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> threeByThreeMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> twoByTwoMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> oneByOneMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> upperTriangularMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> lowerTriangularMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> triangularMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> threeByThreeTriangularMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> twoByTwoTriangularMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> diagonalMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> symmetricMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntMatrix> skewSymmetricMatrices = new ArrayList<>(howMany);
-    private static final List<BigIntVector> vectors = new ArrayList<>(howMany);
-    private static final List<BigInteger> scalars = new ArrayList<>(howMany);
-    private static final List<BigInteger> otherScalars = new ArrayList<>(howMany);
+    private static final int scale = 2;
+    private static final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> squareMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> othersForAddition = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> additionalOthersForAddition = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> othersForMultiplication = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> additionalOthersForMultiplication = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> threeByThreeMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> twoByTwoMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> oneByOneMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> upperTriangularMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> lowerTriangularMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> triangularMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> threeByThreeTriangularMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> twoByTwoTriangularMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> diagonalMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> symmetricMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalMatrix> skewSymmetricMatrices = new ArrayList<>(howMany);
+    private static final List<DecimalVector> vectors = new ArrayList<>(howMany);
+    private static final List<BigDecimal> scalars = new ArrayList<>(howMany);
+    private static final List<BigDecimal> otherScalars = new ArrayList<>(howMany);
 
     @BeforeClass
     public static void setUp() {
@@ -70,42 +73,42 @@ public final class BigIntMatrixTest {
         final int columnSize = RandomUtils.nextInt(3, 10);
         final int columnSizeForOthers = RandomUtils.nextInt(3, 10);
         final int columnSizeForAdditionalOthers = RandomUtils.nextInt(3, 10);
-        zeroMatrixForAddition = BigIntMatrix.builder(rowSize, columnSize).putAll(BigInteger.ZERO).build();
-        zeroMatrixForMultiplication = BigIntMatrix.builder(columnSize, rowSize).putAll(BigInteger.ZERO).build();
-        zeroSquareMatrix = BigIntMatrix.builder(rowSize, rowSize).putAll(BigInteger.ZERO).build();
-        final BigIntMatrixBuilder identityMatrixBuilder = BigIntMatrix.builder(rowSize, rowSize);
+        zeroMatrixForAddition = DecimalMatrix.builder(rowSize, columnSize).putAll(BigDecimal.ZERO).build();
+        zeroMatrixForMultiplication = DecimalMatrix.builder(columnSize, rowSize).putAll(BigDecimal.ZERO).build();
+        zeroSquareMatrix = DecimalMatrix.builder(rowSize, rowSize).putAll(BigDecimal.ZERO).build();
+        final DecimalMatrixBuilder identityMatrixBuilder = DecimalMatrix.builder(rowSize, rowSize);
         IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
                 if (rowIndex.equals(columnIndex)) {
-                    identityMatrixBuilder.put(rowIndex, columnIndex, BigInteger.ONE);
+                    identityMatrixBuilder.put(rowIndex, columnIndex, BigDecimal.ONE);
                 } else {
-                    identityMatrixBuilder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    identityMatrixBuilder.put(rowIndex, columnIndex, BigDecimal.ZERO);
                 }
             });
         });
         identityMatrix = identityMatrixBuilder.build();
         for (int i = 0; i < howMany; i++) {
-            matrices.add(mathRandom.nextBigIntMatrix(bound, rowSize, columnSize));
-            squareMatrices.add(mathRandom.nextBigIntMatrix(bound, rowSize, rowSize));
-            othersForAddition.add(mathRandom.nextBigIntMatrix(bound, rowSize, columnSize));
-            additionalOthersForAddition.add(mathRandom.nextBigIntMatrix(bound, rowSize, columnSize));
-            othersForMultiplication.add(mathRandom.nextBigIntMatrix(bound, columnSize, columnSizeForOthers));
-            additionalOthersForMultiplication
-                    .add(mathRandom.nextBigIntMatrix(bound, columnSizeForOthers, columnSizeForAdditionalOthers));
-            threeByThreeMatrices.add(mathRandom.nextBigIntMatrix(bound, 3, 3));
-            twoByTwoMatrices.add(mathRandom.nextBigIntMatrix(bound, 2, 2));
-            oneByOneMatrices.add(mathRandom.nextBigIntMatrix(bound, 1, 1));
-            vectors.add(mathRandom.nextBigIntVector(bound, columnSize));
-            upperTriangularMatrices.add(mathRandom.nextUpperTriangularBigIntMatrix(bound, rowSize));
-            lowerTriangularMatrices.add(mathRandom.nextLowerTriangularBigIntMatrix(bound, rowSize));
-            triangularMatrices.add(mathRandom.nextTriangularBigIntMatrix(bound, rowSize));
-            threeByThreeTriangularMatrices.add(mathRandom.nextTriangularBigIntMatrix(bound, 3));
-            twoByTwoTriangularMatrices.add(mathRandom.nextTriangularBigIntMatrix(bound, 2));
-            diagonalMatrices.add(mathRandom.nextDiagonalBigIntMatrix(bound, rowSize));
-            symmetricMatrices.add(mathRandom.nextSymmetricBigIntMatrix(bound, rowSize));
-            skewSymmetricMatrices.add(mathRandom.nextSkewSymmetricBigIntMatrix(bound, rowSize));
-            scalars.add(BigInteger.valueOf(mathRandom.nextLong(bound)));
-            otherScalars.add(BigInteger.valueOf(mathRandom.nextLong(bound)));
+            matrices.add(mathRandom.nextDecimalMatrix(bound, scale, rowSize, columnSize));
+            squareMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, rowSize, rowSize));
+            othersForAddition.add(mathRandom.nextDecimalMatrix(bound, scale, rowSize, columnSize));
+            additionalOthersForAddition.add(mathRandom.nextDecimalMatrix(bound, scale, rowSize, columnSize));
+            othersForMultiplication.add(mathRandom.nextDecimalMatrix(bound, scale, columnSize, columnSizeForOthers));
+            additionalOthersForMultiplication.add(
+                    mathRandom.nextDecimalMatrix(bound, scale, columnSizeForOthers, columnSizeForAdditionalOthers));
+            threeByThreeMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, 3, 3));
+            twoByTwoMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, 2, 2));
+            oneByOneMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, 1, 1));
+            vectors.add(mathRandom.nextDecimalVector(bound, scale, columnSize));
+            upperTriangularMatrices.add(mathRandom.nextUpperTriangularDecimalMatrix(bound, scale, rowSize));
+            lowerTriangularMatrices.add(mathRandom.nextLowerTriangularDecimalMatrix(bound, scale, rowSize));
+            triangularMatrices.add(mathRandom.nextTriangularDecimalMatrix(bound, scale, rowSize));
+            threeByThreeTriangularMatrices.add(mathRandom.nextTriangularDecimalMatrix(bound, scale, 3));
+            twoByTwoTriangularMatrices.add(mathRandom.nextTriangularDecimalMatrix(bound, scale, 2));
+            diagonalMatrices.add(mathRandom.nextDiagonalDecimalMatrix(bound, scale, rowSize));
+            symmetricMatrices.add(mathRandom.nextSymmetricDecimalMatrix(bound, scale, rowSize));
+            skewSymmetricMatrices.add(mathRandom.nextSkewSymmetricDecimalMatrix(bound, scale, rowSize));
+            scalars.add(BigDecimal.valueOf(mathRandom.nextLong(bound)));
+            otherScalars.add(BigDecimal.valueOf(mathRandom.nextLong(bound)));
         }
     }
 
@@ -120,8 +123,8 @@ public final class BigIntMatrixTest {
     @Test
     public void addRowSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            final BigIntMatrix matrix = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
-            final BigIntMatrix summand = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+            final DecimalMatrix matrix = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
+            final DecimalMatrix summand = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
             matrix.add(summand);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal row sizes but actual 3 != 2");
 
@@ -130,8 +133,8 @@ public final class BigIntMatrixTest {
     @Test
     public void addColumnSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            final BigIntMatrix matrix = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
-            final BigIntMatrix summand = BigIntMatrix.builder(3, 2).putAll(BigInteger.ZERO).build();
+            final DecimalMatrix matrix = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
+            final DecimalMatrix summand = DecimalMatrix.builder(3, 2).putAll(BigDecimal.ZERO).build();
             matrix.add(summand);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal column sizes but actual 3 != 2");
@@ -142,14 +145,14 @@ public final class BigIntMatrixTest {
     public void addShouldSucceed() {
         matrices.forEach(matrix -> {
             othersForAddition.forEach(other -> {
-                final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize());
+                final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize());
                 matrix.cells().forEach(cell -> {
                     final Integer rowIndex = cell.getRowKey();
                     final Integer columnIndex = cell.getColumnKey();
-                    final BigInteger expectedEntry = cell.getValue().add(other.entry(rowIndex, columnIndex));
+                    final BigDecimal expectedEntry = cell.getValue().add(other.entry(rowIndex, columnIndex));
                     builder.put(rowIndex, columnIndex, expectedEntry);
                 });
-                assertThat(matrix.add(other)).isExactlyInstanceOf(BigIntMatrix.class).isEqualTo(builder.build());
+                DecimalMatrixAssert.assertThat(matrix.add(other)).isEqualToByBigDecimalComparator(builder.build());
             });
         });
     }
@@ -158,7 +161,7 @@ public final class BigIntMatrixTest {
     public void addShouldBeCommutative() {
         matrices.forEach(matrix -> {
             othersForAddition.forEach(other -> {
-                assertThat(matrix.add(other)).isEqualTo(other.add(matrix));
+                DecimalMatrixAssert.assertThat(matrix.add(other)).isEqualToByBigDecimalComparator(other.add(matrix));
             });
         });
     }
@@ -168,8 +171,8 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             othersForAddition.forEach(other -> {
                 additionalOthersForAddition.forEach(additionalOthers -> {
-                    assertThat(matrix.add(other).add(additionalOthers))
-                            .isEqualTo(matrix.add(other.add(additionalOthers)));
+                    DecimalMatrixAssert.assertThat(matrix.add(other).add(additionalOthers))
+                            .isEqualToByBigDecimalComparator(matrix.add(other.add(additionalOthers)));
                 });
             });
         });
@@ -178,7 +181,7 @@ public final class BigIntMatrixTest {
     @Test
     public void addZeroMatrixShouldBeEqualToSelf() {
         matrices.forEach(matrix -> {
-            assertThat(matrix.add(zeroMatrixForAddition)).isEqualTo(matrix);
+            DecimalMatrixAssert.assertThat(matrix.add(zeroMatrixForAddition)).isEqualToByBigDecimalComparator(matrix);
         });
 
     }
@@ -194,8 +197,8 @@ public final class BigIntMatrixTest {
     @Test
     public void subtractRowSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            final BigIntMatrix minuend = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
-            final BigIntMatrix subtrahend = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+            final DecimalMatrix minuend = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
+            final DecimalMatrix subtrahend = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
             minuend.subtract(subtrahend);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal row sizes but actual 3 != 2");
 
@@ -204,8 +207,8 @@ public final class BigIntMatrixTest {
     @Test
     public void subtractColumnSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            final BigIntMatrix minuend = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
-            final BigIntMatrix subtrahend = BigIntMatrix.builder(3, 2).putAll(BigInteger.ZERO).build();
+            final DecimalMatrix minuend = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
+            final DecimalMatrix subtrahend = DecimalMatrix.builder(3, 2).putAll(BigDecimal.ZERO).build();
             minuend.subtract(subtrahend);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal column sizes but actual 3 != 2");
@@ -216,14 +219,15 @@ public final class BigIntMatrixTest {
     public void subtractShouldSucceed() {
         matrices.forEach(matrix -> {
             othersForAddition.forEach(other -> {
-                final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize());
+                final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize());
                 matrix.cells().forEach(cell -> {
                     final Integer rowIndex = cell.getRowKey();
                     final Integer columnIndex = cell.getColumnKey();
-                    final BigInteger expectedEntry = cell.getValue().subtract(other.entry(rowIndex, columnIndex));
+                    final BigDecimal expectedEntry = cell.getValue().subtract(other.entry(rowIndex, columnIndex));
                     builder.put(rowIndex, columnIndex, expectedEntry);
                 });
-                assertThat(matrix.subtract(other)).isExactlyInstanceOf(BigIntMatrix.class).isEqualTo(builder.build());
+                DecimalMatrixAssert.assertThat(matrix.subtract(other)).isExactlyInstanceOf(DecimalMatrix.class)
+                        .isEqualToByBigDecimalComparator(builder.build());
             });
         });
     }
@@ -231,14 +235,16 @@ public final class BigIntMatrixTest {
     @Test
     public void subtractZeroMatrixShouldBeEqualToSelf() {
         matrices.forEach(matrix -> {
-            assertThat(matrix.subtract(zeroMatrixForAddition)).isEqualTo(matrix);
+            DecimalMatrixAssert.assertThat(matrix.subtract(zeroMatrixForAddition))
+                    .isEqualToByBigDecimalComparator(matrix);
         });
     }
 
     @Test
     public void subtractSelfShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> {
-            assertThat(matrix.subtract(matrix)).isEqualTo(zeroMatrixForAddition);
+            DecimalMatrixAssert.assertThat(matrix.subtract(matrix))
+                    .isEqualToByBigDecimalComparator(zeroMatrixForAddition);
         });
     }
 
@@ -253,8 +259,8 @@ public final class BigIntMatrixTest {
     @Test
     public void multiplyColumnSizeNotEqualToFactorRowSizeShouldThrowException() {
         assertThatThrownBy(() -> {
-            final BigIntMatrix matrix = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
-            final BigIntMatrix factor = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+            final DecimalMatrix matrix = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
+            final DecimalMatrix factor = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
             matrix.multiply(factor);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected columnSize == factor.rowSize but actual 3 != 2");
@@ -265,17 +271,18 @@ public final class BigIntMatrixTest {
     public void multiplyShouldSucceed() {
         matrices.forEach(matrix -> {
             othersForMultiplication.forEach(other -> {
-                final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), other.columnSize());
+                final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), other.columnSize());
                 matrix.rows().forEach((rowIndex, row) -> {
                     other.columns().forEach((otherColumnIndex, otherColumn) -> {
-                        BigInteger entry = BigInteger.ZERO;
-                        for (final Entry<Integer, BigInteger> rowEntry : row.entrySet()) {
+                        BigDecimal entry = BigDecimal.ZERO;
+                        for (final Entry<Integer, BigDecimal> rowEntry : row.entrySet()) {
                             entry = entry.add(rowEntry.getValue().multiply(otherColumn.get(rowEntry.getKey())));
                         }
                         builder.put(rowIndex, otherColumnIndex, entry);
                     });
                 });
-                assertThat(matrix.multiply(other)).isExactlyInstanceOf(BigIntMatrix.class).isEqualTo(builder.build());
+                DecimalMatrixAssert.assertThat(matrix.multiply(other)).isExactlyInstanceOf(DecimalMatrix.class)
+                        .isEqualToByBigDecimalComparator(builder.build());
             });
         });
     }
@@ -284,7 +291,7 @@ public final class BigIntMatrixTest {
     public void muliplyZeroMatrixShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> {
             matrix.multiply(zeroMatrixForMultiplication).cells().forEach(cell -> {
-                assertThat(cell.getValue()).isEqualTo(BigInteger.ZERO);
+                assertThat(cell.getValue().compareTo(BigDecimal.ZERO)).isEqualTo(0);
             });
         });
     }
@@ -292,7 +299,7 @@ public final class BigIntMatrixTest {
     @Test
     public void multiplyIdentityMatrixShouldBeEqualToSelf() {
         squareMatrices.forEach(matrix -> {
-            assertThat(matrix.multiply(identityMatrix)).isEqualTo(matrix);
+            DecimalMatrixAssert.assertThat(matrix.multiply(identityMatrix)).isEqualToByBigDecimalComparator(matrix);
         });
     }
 
@@ -301,8 +308,8 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             othersForMultiplication.forEach(other -> {
                 additionalOthersForMultiplication.forEach(additionalOthers -> {
-                    assertThat(matrix.multiply(other).multiply(additionalOthers))
-                            .isEqualTo(matrix.multiply(other.multiply(additionalOthers)));
+                    DecimalMatrixAssert.assertThat(matrix.multiply(other).multiply(additionalOthers))
+                            .isEqualToByBigDecimalComparator(matrix.multiply(other.multiply(additionalOthers)));
                 });
             });
         });
@@ -313,8 +320,9 @@ public final class BigIntMatrixTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 squareMatrices.forEach(additionalOther -> {
-                    assertThat(matrix.multiply(other.add(additionalOther)))
-                            .isEqualTo(matrix.multiply(other).add(matrix.multiply(additionalOther)));
+                    DecimalMatrixAssert.assertThat(matrix.multiply(other.add(additionalOther)))
+                            .isEqualToByBigDecimalComparator(
+                                    matrix.multiply(other).add(matrix.multiply(additionalOther)));
                 });
             });
         });
@@ -330,8 +338,8 @@ public final class BigIntMatrixTest {
     @Test
     public void multiplyVectorColumnSizeNotEqualToVectorSizeShouldThrowException() {
         assertThatThrownBy(() -> {
-            final BigIntMatrix matrix = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
-            final BigIntVector vector = BigIntVector.builder(2).putAll(BigInteger.ZERO).build();
+            final DecimalMatrix matrix = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
+            final DecimalVector vector = DecimalVector.builder(2).putAll(BigDecimal.ZERO).build();
             matrix.multiplyVector(vector);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected columnSize == vectorSize but actual 3 != 2");
@@ -341,16 +349,16 @@ public final class BigIntMatrixTest {
     public void multiplyVectorShouldSucceed() {
         matrices.forEach(matrix -> {
             vectors.forEach(vector -> {
-                final BigIntVectorBuilder builder = BigIntVector.builder(matrix.rowSize());
+                final DecimalVectorBuilder builder = DecimalVector.builder(matrix.rowSize());
                 matrix.rows().forEach((rowIndex, row) -> {
-                    BigInteger entry = BigInteger.ZERO;
+                    BigDecimal entry = BigDecimal.ZERO;
                     for (final Integer columnIndex : matrix.columnIndexes()) {
                         entry = entry.add(row.get(columnIndex).multiply(vector.entry(columnIndex)));
                     }
                     builder.put(entry);
                 });
-                assertThat(matrix.multiplyVector(vector)).isExactlyInstanceOf(BigIntVector.class)
-                        .isEqualTo(builder.build());
+                DecimalVectorAssert.assertThat(matrix.multiplyVector(vector))
+                        .isEqualToByBigDecimalComparator(builder.build());
             });
         });
     }
@@ -358,9 +366,9 @@ public final class BigIntMatrixTest {
     @Test
     public void multiplyZeroVectorShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> {
-            final BigIntVector zeroVector = BigIntVector.builder(matrix.columnSize()).putAll(BigInteger.ZERO).build();
-            final BigIntVector expected = BigIntVector.builder(matrix.rowSize()).putAll(BigInteger.ZERO).build();
-            assertThat(matrix.multiplyVector(zeroVector)).isEqualTo(expected);
+            final DecimalVector zeroVector = DecimalVector.builder(matrix.columnSize()).putAll(BigDecimal.ZERO).build();
+            final DecimalVector expected = DecimalVector.builder(matrix.rowSize()).putAll(BigDecimal.ZERO).build();
+            DecimalVectorAssert.assertThat(matrix.multiplyVector(zeroVector)).isEqualToByBigDecimalComparator(expected);
         });
 
     }
@@ -376,12 +384,12 @@ public final class BigIntMatrixTest {
     public void scalarMultiplyShouldSucceed() {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
-                final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize());
+                final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize());
                 matrix.cells().forEach(cell -> {
                     builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue()));
                 });
-                assertThat(matrix.scalarMultiply(scalar)).isExactlyInstanceOf(BigIntMatrix.class)
-                        .isEqualTo(builder.build());
+                DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar)).isExactlyInstanceOf(DecimalMatrix.class)
+                        .isEqualToByBigDecimalComparator(builder.build());
             });
         });
     }
@@ -391,8 +399,8 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
-                    assertThat(matrix.scalarMultiply(scalar.multiply(otherScalar)))
-                            .isEqualTo(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar));
+                    DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar.multiply(otherScalar)))
+                            .isEqualToByBigDecimalComparator(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar));
                 });
             });
         });
@@ -403,8 +411,8 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             othersForMultiplication.forEach(other -> {
                 scalars.forEach(scalar -> {
-                    assertThat(matrix.scalarMultiply(scalar).multiply(other))
-                            .isEqualTo(matrix.multiply(other).scalarMultiply(scalar));
+                    DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar).multiply(other))
+                            .isEqualToByBigDecimalComparator(matrix.multiply(other).scalarMultiply(scalar));
                 });
             });
         });
@@ -415,8 +423,9 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
-                    assertThat(matrix.scalarMultiply(scalar.add(otherScalar)))
-                            .isEqualTo(matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar)));
+                    DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar.add(otherScalar)))
+                            .isEqualToByBigDecimalComparator(
+                                    matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar)));
                 });
             });
         });
@@ -427,8 +436,9 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             othersForAddition.forEach(other -> {
                 scalars.forEach(scalar -> {
-                    assertThat(matrix.add(other).scalarMultiply(scalar))
-                            .isEqualTo(matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)));
+                    DecimalMatrixAssert.assertThat(matrix.add(other).scalarMultiply(scalar))
+                            .isEqualToByBigDecimalComparator(
+                                    matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)));
                 });
             });
         });
@@ -437,14 +447,16 @@ public final class BigIntMatrixTest {
     @Test
     public void scalarMultiplyWithZeroShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> {
-            assertThat(matrix.scalarMultiply(BigInteger.ZERO)).isEqualTo(zeroMatrixForAddition);
+            DecimalMatrixAssert.assertThat(matrix.scalarMultiply(BigDecimal.ZERO))
+                    .isEqualToByBigDecimalComparator(zeroMatrixForAddition);
         });
     }
 
     @Test
     public void scalarMultiplyWithOneShouldBeEqualToSelf() {
         matrices.forEach(matrix -> {
-            assertThat(matrix.scalarMultiply(BigInteger.ONE)).isEqualTo(matrix);
+            DecimalMatrixAssert.assertThat(matrix.scalarMultiply(BigDecimal.ONE))
+                    .isEqualToByBigDecimalComparator(matrix);
         });
     }
 
@@ -453,8 +465,8 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             vectors.forEach(vector -> {
                 scalars.forEach(scalar -> {
-                    assertThat(matrix.scalarMultiply(scalar).multiplyVector(vector))
-                            .isEqualTo(matrix.multiplyVector(vector).scalarMultiply(scalar));
+                    DecimalVectorAssert.assertThat(matrix.scalarMultiply(scalar).multiplyVector(vector))
+                            .isEqualToByBigDecimalComparator(matrix.multiplyVector(vector).scalarMultiply(scalar));
                 });
             });
         });
@@ -463,20 +475,21 @@ public final class BigIntMatrixTest {
     @Test
     public void negateShouldSucceed() {
         matrices.forEach(matrix -> {
-            assertThat(matrix.negate()).isExactlyInstanceOf(BigIntMatrix.class)
-                    .isEqualTo(matrix.scalarMultiply(BigInteger.ONE.negate()));
+            DecimalMatrixAssert.assertThat(matrix.negate()).isExactlyInstanceOf(DecimalMatrix.class)
+                    .isEqualToByBigDecimalComparator(matrix.scalarMultiply(BigDecimal.ONE.negate()));
         });
     }
 
     @Test
     public void negateZeroMatrixShouldBeEqualToSelf() {
-        assertThat(zeroMatrixForAddition.negate()).isEqualTo(zeroMatrixForAddition);
+        DecimalMatrixAssert.assertThat(zeroMatrixForAddition.negate())
+                .isEqualToByBigDecimalComparator(zeroMatrixForAddition);
     }
 
     @Test
     public void negateTwiceShouldBeEqualToSelf() {
         matrices.forEach(matrix -> {
-            assertThat(matrix.negate().negate()).isEqualTo(matrix);
+            DecimalMatrixAssert.assertThat(matrix.negate().negate()).isEqualToByBigDecimalComparator(matrix);
         });
     }
 
@@ -484,7 +497,7 @@ public final class BigIntMatrixTest {
     public void addNegatedShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> {
             matrix.add(matrix.negate()).cells().forEach(cell -> {
-                assertThat(cell.getValue()).isEqualTo(BigInteger.ZERO);
+                assertThat(cell.getValue().compareTo(BigDecimal.ZERO)).isEqualTo(0);
             });
         });
     }
@@ -492,50 +505,52 @@ public final class BigIntMatrixTest {
     @Test
     public void multiplyNegativeIdentityMatrixShouldBeEqualToNegated() {
         squareMatrices.forEach(matrix -> {
-            final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize())
-                    .putAll(BigInteger.ZERO);
+            final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize())
+                    .putAll(BigDecimal.ZERO);
             matrix.rowIndexes().forEach(index -> {
-                builder.put(index, index, BigInteger.ONE.negate());
+                builder.put(index, index, BigDecimal.ONE.negate());
             });
-            assertThat(matrix.multiply(builder.build())).isEqualTo(matrix.negate());
+            DecimalMatrixAssert.assertThat(matrix.multiply(builder.build()))
+                    .isEqualToByBigDecimalComparator(matrix.negate());
         });
     }
 
     @Test
     public void scalarMultiplyWithMinusOneShouldBeEqualToNegated() {
         matrices.forEach(matrix -> {
-            assertThat(matrix.scalarMultiply(BigInteger.ONE.negate())).isEqualTo(matrix.negate());
+            DecimalMatrixAssert.assertThat(matrix.scalarMultiply(BigDecimal.ONE.negate()))
+                    .isEqualToByBigDecimalComparator(matrix.negate());
         });
     }
 
     @Test
     public void traceNotSquareShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build().trace();
+            DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build().trace();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected square matrix but actual 2 x 3");
     }
 
     @Test
     public void traceShouldSucceed() {
         squareMatrices.forEach(matrix -> {
-            BigInteger expected = BigInteger.ZERO;
+            BigDecimal expected = BigDecimal.ZERO;
             for (final Integer index : matrix.rowIndexes()) {
                 expected = expected.add(matrix.entry(index, index));
             }
-            assertThat(matrix.trace()).isExactlyInstanceOf(BigInteger.class).isEqualTo(expected);
+            assertThat(matrix.trace().compareTo(expected)).isEqualTo(0);
         });
     }
 
     @Test
     public void traceOfZeroMatrixShouldBeEqualToZero() {
-        assertThat(zeroSquareMatrix.trace()).isEqualTo(BigInteger.ZERO);
+        assertThat(zeroSquareMatrix.trace().compareTo(BigDecimal.ZERO)).isEqualTo(0);
     }
 
     @Test
     public void traceShouldBeAdditive() {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
-                assertThat(matrix.add(other).trace()).isEqualTo(matrix.trace().add(other.trace()));
+                assertThat(matrix.add(other).trace().compareTo(matrix.trace().add(other.trace()))).isEqualTo(0);
             });
         });
     }
@@ -544,7 +559,8 @@ public final class BigIntMatrixTest {
     public void traceShouldBeLinear() {
         squareMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
-                assertThat(matrix.scalarMultiply(scalar).trace()).isEqualTo(scalar.multiply(matrix.trace()));
+                assertThat(matrix.scalarMultiply(scalar).trace().compareTo(scalar.multiply(matrix.trace())))
+                        .isEqualTo(0);
             });
         });
     }
@@ -553,7 +569,7 @@ public final class BigIntMatrixTest {
     public void traceShouldBeIndependentOfTheOrderOfTheFactors() {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
-                assertThat(matrix.multiply(other).trace()).isEqualTo(other.multiply(matrix).trace());
+                assertThat(matrix.multiply(other).trace().compareTo(other.multiply(matrix).trace())).isEqualTo(0);
             });
         });
     }
@@ -561,151 +577,96 @@ public final class BigIntMatrixTest {
     @Test
     public void traceShouldBeEqualToTheTraceOfTheTranspose() {
         squareMatrices.forEach(matrix -> {
-            assertThat(matrix.trace()).isEqualTo(matrix.transpose().trace());
+            assertThat(matrix.trace().compareTo(matrix.transpose().trace())).isEqualTo(0);
         });
     }
 
     @Test
     public void detNotSquareShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build().determinant();
+            DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build().determinant();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected square matrix but actual 2 x 3");
     }
 
     @Test
     public void detRowSizeTooLargeShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 3).putAll(BigInteger.ZERO).build().determinant();
+            DecimalMatrix.builder(4, 3).putAll(BigDecimal.ZERO).build().determinant();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected row size < 4 but actual 4");
     }
 
     @Test
     public void detColumnSizeTooLargeShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(3, 4).putAll(BigInteger.ZERO).build().determinant();
+            DecimalMatrix.builder(3, 4).putAll(BigDecimal.ZERO).build().determinant();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected column size < 4 but actual 4");
-    }
-
-    @Test
-    public void detOfThreeByThreeMatricesShouldSucceed() {
-        threeByThreeMatrices.forEach(matrix -> {
-            final BigInteger firstSummand = matrix.entry(1, 1).multiply(matrix.entry(2, 2))
-                    .multiply(matrix.entry(3, 3));
-            final BigInteger secondSummand = matrix.entry(1, 2).multiply(matrix.entry(2, 3))
-                    .multiply(matrix.entry(3, 1));
-            final BigInteger thirdSummand = matrix.entry(1, 3).multiply(matrix.entry(2, 1))
-                    .multiply(matrix.entry(3, 2));
-            final BigInteger fourthSummand = matrix.entry(3, 1).multiply(matrix.entry(2, 2))
-                    .multiply(matrix.entry(1, 3)).negate();
-            final BigInteger fifthSummand = matrix.entry(3, 2).multiply(matrix.entry(2, 3)).multiply(matrix.entry(1, 1))
-                    .negate();
-            final BigInteger sixthSummand = matrix.entry(3, 3).multiply(matrix.entry(2, 1)).multiply(matrix.entry(1, 2))
-                    .negate();
-            final BigInteger expected = firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand)
-                    .add(fifthSummand).add(sixthSummand);
-            assertThat(matrix.determinant()).isExactlyInstanceOf(BigInteger.class).isEqualTo(expected);
-        });
     }
 
     @Test
     public void detOfTwoByTwoMatricesShouldSucceed() {
         twoByTwoMatrices.forEach(matrix -> {
-            final BigInteger expected = matrix.entry(1, 1).multiply(matrix.entry(2, 2))
+            final BigDecimal expected = matrix.entry(1, 1).multiply(matrix.entry(2, 2))
                     .subtract(matrix.entry(1, 2).multiply(matrix.entry(2, 1)));
-            assertThat(matrix.determinant()).isExactlyInstanceOf(BigInteger.class).isEqualTo(expected);
+            assertThat(matrix.determinant().compareTo(expected)).isEqualTo(0);
         });
     }
 
     @Test
     public void detOfOneByOneMatricesShouldSucceed() {
         oneByOneMatrices.forEach(matrix -> {
-            assertThat(matrix.determinant()).isExactlyInstanceOf(BigInteger.class).isEqualTo(matrix.entry(1, 1));
+            assertThat(matrix.determinant().compareTo(matrix.entry(1, 1))).isEqualTo(0);
         });
     }
 
     @Test
     public void detOfZeroMatrixShouldBeEqualToZero() {
-        final BigIntMatrix zeroThreeByThreeMatrix = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
-        final BigIntMatrix zeroTwoByTwoMatrix = BigIntMatrix.builder(2, 2).putAll(BigInteger.ZERO).build();
-        final BigIntMatrix zeroOneByOneMatrix = BigIntMatrix.builder(1, 1).put(1, 1, BigInteger.ZERO).build();
-        assertThat(zeroThreeByThreeMatrix.determinant()).isEqualTo(BigInteger.ZERO);
-        assertThat(zeroTwoByTwoMatrix.determinant()).isEqualTo(BigInteger.ZERO);
-        assertThat(zeroOneByOneMatrix.determinant()).isEqualTo(BigInteger.ZERO);
+        final DecimalMatrix zeroThreeByThreeMatrix = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
+        final DecimalMatrix zeroTwoByTwoMatrix = DecimalMatrix.builder(2, 2).putAll(BigDecimal.ZERO).build();
+        final DecimalMatrix zeroOneByOneMatrix = DecimalMatrix.builder(1, 1).put(1, 1, BigDecimal.ZERO).build();
+        assertThat(zeroThreeByThreeMatrix.determinant().compareTo(BigDecimal.ZERO)).isEqualTo(0);
+        assertThat(zeroTwoByTwoMatrix.determinant().compareTo(BigDecimal.ZERO)).isEqualTo(0);
+        assertThat(zeroOneByOneMatrix.determinant().compareTo(BigDecimal.ZERO)).isEqualTo(0);
     }
 
     @Test
     public void detOfIdentityMatrixShouldBeEqualToOne() {
-        final BigIntMatrixBuilder identityThreeByThreeMatrixBuilder = BigIntMatrix.builder(3, 3);
+        final DecimalMatrixBuilder identityThreeByThreeMatrixBuilder = DecimalMatrix.builder(3, 3);
         IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
                 if (rowIndex.equals(columnIndex)) {
-                    identityThreeByThreeMatrixBuilder.put(rowIndex, columnIndex, BigInteger.ONE);
+                    identityThreeByThreeMatrixBuilder.put(rowIndex, columnIndex, BigDecimal.ONE);
                 } else {
-                    identityThreeByThreeMatrixBuilder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    identityThreeByThreeMatrixBuilder.put(rowIndex, columnIndex, BigDecimal.ZERO);
                 }
             });
         });
-        final BigIntMatrix identityThreeByThreeMatrix = identityThreeByThreeMatrixBuilder.build();
-        final BigIntMatrix identityTwoByTwoMatrix = BigIntMatrix.builder(2, 2).put(1, 1, BigInteger.ONE)
-                .put(1, 2, BigInteger.ZERO).put(2, 1, BigInteger.ZERO).put(2, 2, BigInteger.ONE).build();
-        final BigIntMatrix identityOneByOneMatrix = BigIntMatrix.builder(1, 1).put(1, 1, BigInteger.ONE).build();
-        assertThat(identityThreeByThreeMatrix.determinant()).isEqualTo(identityTwoByTwoMatrix.determinant())
-                .isEqualTo(identityOneByOneMatrix.determinant()).isEqualTo(BigInteger.ONE);
-    }
-
-    @Test
-    public void detOfTransposeShouldBeEqualToDet() {
-        threeByThreeMatrices.forEach(matrix -> {
-            assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant());
-        });
-        twoByTwoMatrices.forEach(matrix -> {
-            assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant());
-        });
-        oneByOneMatrices.forEach(matrix -> {
-            assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant());
-        });
-    }
-
-    @Test
-    public void detShouldBeMultiplicative() {
-        threeByThreeMatrices.forEach(matrix -> {
-            threeByThreeMatrices.forEach(other -> {
-                assertThat(matrix.multiply(other).determinant())
-                        .isEqualTo(matrix.determinant().multiply(other.determinant()));
-            });
-        });
-        twoByTwoMatrices.forEach(matrix -> {
-            twoByTwoMatrices.forEach(other -> {
-                assertThat(matrix.multiply(other).determinant())
-                        .isEqualTo(matrix.determinant().multiply(other.determinant()));
-            });
-        });
-        oneByOneMatrices.forEach(matrix -> {
-            oneByOneMatrices.forEach(other -> {
-                assertThat(matrix.multiply(other).determinant())
-                        .isEqualTo(matrix.determinant().multiply(other.determinant()));
-            });
-        });
+        final DecimalMatrix identityThreeByThreeMatrix = identityThreeByThreeMatrixBuilder.build();
+        final DecimalMatrix identityTwoByTwoMatrix = DecimalMatrix.builder(2, 2).put(1, 1, BigDecimal.ONE)
+                .put(1, 2, BigDecimal.ZERO).put(2, 1, BigDecimal.ZERO).put(2, 2, BigDecimal.ONE).build();
+        final DecimalMatrix identityOneByOneMatrix = DecimalMatrix.builder(1, 1).put(1, 1, BigDecimal.ONE).build();
+        assertThat(identityThreeByThreeMatrix.determinant().compareTo(BigDecimal.ONE)).isEqualTo(0);
+        assertThat(identityTwoByTwoMatrix.determinant().compareTo(BigDecimal.ONE)).isEqualTo(0);
+        assertThat(identityOneByOneMatrix.determinant().compareTo(BigDecimal.ONE)).isEqualTo(0);
     }
 
     @Test
     public void detWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet() {
         threeByThreeMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
-                assertThat(matrix.scalarMultiply(scalar).determinant())
-                        .isEqualTo(scalar.pow(3).multiply(matrix.determinant()));
+                assertThat(matrix.scalarMultiply(scalar).determinant()
+                        .compareTo(scalar.pow(3).multiply(matrix.determinant()))).isEqualTo(0);
             });
         });
         twoByTwoMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
-                assertThat(matrix.scalarMultiply(scalar).determinant())
-                        .isEqualTo(scalar.pow(2).multiply(matrix.determinant()));
+                assertThat(matrix.scalarMultiply(scalar).determinant()
+                        .compareTo(scalar.pow(2).multiply(matrix.determinant()))).isEqualTo(0);
             });
         });
         oneByOneMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
-                assertThat(matrix.scalarMultiply(scalar).determinant())
-                        .isEqualTo(scalar.multiply(matrix.determinant()));
+                assertThat(matrix.scalarMultiply(scalar).determinant().compareTo(scalar.multiply(matrix.determinant())))
+                        .isEqualTo(0);
             });
         });
     }
@@ -713,49 +674,49 @@ public final class BigIntMatrixTest {
     @Test
     public void detOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries() {
         threeByThreeTriangularMatrices.forEach(matrix -> {
-            BigInteger expected = BigInteger.ONE;
-            for (final Cell<Integer, Integer, BigInteger> cell : matrix.cells()) {
+            BigDecimal expected = BigDecimal.ONE;
+            for (final Cell<Integer, Integer, BigDecimal> cell : matrix.cells()) {
                 if (cell.getRowKey().equals(cell.getColumnKey())) {
                     expected = expected.multiply(cell.getValue());
                 }
             }
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().compareTo(expected)).isEqualTo(0);
         });
         twoByTwoTriangularMatrices.forEach(matrix -> {
-            BigInteger expected = BigInteger.ONE;
-            for (final Cell<Integer, Integer, BigInteger> cell : matrix.cells()) {
+            BigDecimal expected = BigDecimal.ONE;
+            for (final Cell<Integer, Integer, BigDecimal> cell : matrix.cells()) {
                 if (cell.getRowKey().equals(cell.getColumnKey())) {
                     expected = expected.multiply(cell.getValue());
                 }
             }
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().compareTo(expected)).isEqualTo(0);
         });
         oneByOneMatrices.forEach(matrix -> {
-            BigInteger expected = BigInteger.ONE;
-            for (final Cell<Integer, Integer, BigInteger> cell : matrix.cells()) {
+            BigDecimal expected = BigDecimal.ONE;
+            for (final Cell<Integer, Integer, BigDecimal> cell : matrix.cells()) {
                 if (cell.getRowKey().equals(cell.getColumnKey())) {
                     expected = expected.multiply(cell.getValue());
                 }
             }
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().compareTo(expected)).isEqualTo(0);
         });
     }
 
     @Test
     public void transposeShouldSucceed() {
         matrices.forEach(matrix -> {
-            final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.columnSize(), matrix.rowSize());
+            final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.columnSize(), matrix.rowSize());
             matrix.cells().forEach(cell -> {
                 builder.put(cell.getColumnKey(), cell.getRowKey(), cell.getValue());
             });
-            assertThat(matrix.transpose()).isEqualTo(builder.build());
+            DecimalMatrixAssert.assertThat(matrix.transpose()).isEqualToByBigDecimalComparator(builder.build());
         });
     }
 
     @Test
     public void transposeTwiceIsEqualToSelf() {
         matrices.forEach(matrix -> {
-            assertThat(matrix.transpose().transpose()).isEqualTo(matrix);
+            DecimalMatrixAssert.assertThat(matrix.transpose().transpose()).isEqualToByBigDecimalComparator(matrix);
         });
     }
 
@@ -763,7 +724,8 @@ public final class BigIntMatrixTest {
     public void transposeShouldBeAdditive() {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
-                assertThat(matrix.add(other).transpose()).isEqualTo(matrix.transpose().add(other.transpose()));
+                DecimalMatrixAssert.assertThat(matrix.add(other).transpose())
+                        .isEqualToByBigDecimalComparator(matrix.transpose().add(other.transpose()));
             });
         });
     }
@@ -772,8 +734,8 @@ public final class BigIntMatrixTest {
     public void transposeShouldBeLinear() {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
-                assertThat(matrix.scalarMultiply(scalar).transpose())
-                        .isEqualTo(matrix.transpose().scalarMultiply(scalar));
+                DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar).transpose())
+                        .isEqualToByBigDecimalComparator(matrix.transpose().scalarMultiply(scalar));
             });
         });
     }
@@ -782,8 +744,8 @@ public final class BigIntMatrixTest {
     public void transposeShouldBeMultiplicativeWithInversedOrder() {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
-                assertThat(matrix.multiply(other).transpose())
-                        .isEqualTo(other.transpose().multiply(matrix.transpose()));
+                DecimalMatrixAssert.assertThat(matrix.multiply(other).transpose())
+                        .isEqualToByBigDecimalComparator(other.transpose().multiply(matrix.transpose()));
             });
         });
     }
@@ -844,7 +806,7 @@ public final class BigIntMatrixTest {
             final int columnSize = matrix.columnSize();
             final Integer rowIndex = RandomUtils.nextInt(1, rowSize + 1);
             final Integer columnIndex = RandomUtils.nextInt(1, columnSize + 1);
-            final BigIntMatrixBuilder builder = BigIntMatrix.builder(rowSize - 1, columnSize - 1);
+            final DecimalMatrixBuilder builder = DecimalMatrix.builder(rowSize - 1, columnSize - 1);
             matrix.cells().forEach(cell -> {
                 final Integer rowKey = cell.getRowKey();
                 final Integer columnKey = cell.getColumnKey();
@@ -854,14 +816,14 @@ public final class BigIntMatrixTest {
                     builder.put(newRowIndex, newColumnIndex, cell.getValue());
                 }
             });
-            assertThat(matrix.minor(rowIndex, columnIndex)).isExactlyInstanceOf(BigIntMatrix.class)
-                    .isEqualTo(builder.build());
+            DecimalMatrixAssert.assertThat(matrix.minor(rowIndex, columnIndex)).isExactlyInstanceOf(DecimalMatrix.class)
+                    .isEqualToByBigDecimalComparator(builder.build());
         });
     }
 
     @Test
     public void squareOfNonSquareMatrixShouldBeFalse() {
-        assertThat(BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build().square()).isFalse();
+        assertThat(DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build().square()).isFalse();
     }
 
     @Test
@@ -878,19 +840,19 @@ public final class BigIntMatrixTest {
 
     @Test
     public void triangularNotSquareShouldReturnFalse() {
-        final BigIntMatrix matrix = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+        final DecimalMatrix matrix = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
         assertThat(matrix.triangular()).isFalse();
     }
 
     @Test
     public void triangularNotUpperTriangularShouldReturnFalse() {
         upperTriangularMatrices.forEach(matrix -> {
-            final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize());
+            final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowIndex = cell.getRowKey();
                 final Integer columnIndex = cell.getColumnKey();
                 if (rowIndex > columnIndex) {
-                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(RandomUtils.nextLong(1, bound)));
+                    builder.put(rowIndex, columnIndex, BigDecimal.valueOf(RandomUtils.nextLong(1, bound)));
                 } else {
                     builder.put(rowIndex, columnIndex, cell.getValue());
                 }
@@ -902,12 +864,12 @@ public final class BigIntMatrixTest {
     @Test
     public void triangularNotLowerTriangularShouldReturnFalse() {
         lowerTriangularMatrices.forEach(matrix -> {
-            final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize());
+            final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowIndex = cell.getRowKey();
                 final Integer columnIndex = cell.getColumnKey();
                 if (rowIndex < columnIndex) {
-                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(RandomUtils.nextLong(1, bound)));
+                    builder.put(rowIndex, columnIndex, BigDecimal.valueOf(RandomUtils.nextLong(1, bound)));
                 } else {
                     builder.put(rowIndex, columnIndex, cell.getValue());
                 }
@@ -925,19 +887,19 @@ public final class BigIntMatrixTest {
 
     @Test
     public void upperTriangularNotSquareShouldReturnFalse() {
-        final BigIntMatrix matrix = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+        final DecimalMatrix matrix = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
         assertThat(matrix.upperTriangular()).isFalse();
     }
 
     @Test
     public void upperTriangularNotUpperTriangularShouldReturnFalse() {
         upperTriangularMatrices.forEach(matrix -> {
-            final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize());
+            final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowIndex = cell.getRowKey();
                 final Integer columnIndex = cell.getColumnKey();
                 if (rowIndex > columnIndex) {
-                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(RandomUtils.nextLong(1, bound)));
+                    builder.put(rowIndex, columnIndex, BigDecimal.valueOf(RandomUtils.nextLong(1, bound)));
                 } else {
                     builder.put(rowIndex, columnIndex, cell.getValue());
                 }
@@ -955,19 +917,19 @@ public final class BigIntMatrixTest {
 
     @Test
     public void lowerTriangularNotSquareShouldReturnFalse() {
-        final BigIntMatrix matrix = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+        final DecimalMatrix matrix = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
         assertThat(matrix.lowerTriangular()).isFalse();
     }
 
     @Test
     public void lowerTriangularNotLowerTriangularShouldReturnFalse() {
         lowerTriangularMatrices.forEach(matrix -> {
-            final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize());
+            final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowIndex = cell.getRowKey();
                 final Integer columnIndex = cell.getColumnKey();
                 if (rowIndex < columnIndex) {
-                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(RandomUtils.nextLong(1, bound)));
+                    builder.put(rowIndex, columnIndex, BigDecimal.valueOf(RandomUtils.nextLong(1, bound)));
                 } else {
                     builder.put(rowIndex, columnIndex, cell.getValue());
                 }
@@ -985,7 +947,7 @@ public final class BigIntMatrixTest {
 
     @Test
     public void diagonalNotSquareShouldReturnFalse() {
-        final BigIntMatrix matrix = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+        final DecimalMatrix matrix = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
         assertThat(matrix.diagonal()).isFalse();
     }
 
@@ -996,8 +958,8 @@ public final class BigIntMatrixTest {
             final Integer rowIndex = RandomUtils.nextInt(2, rowSize);
             final Integer columnIndex = RandomUtils.nextInt(1, rowIndex);
             final int factor = new Random().nextBoolean() ? -1 : 1;
-            final BigInteger entry = BigInteger.valueOf(factor * RandomUtils.nextLong(1, bound));
-            final BigIntMatrixBuilder builder = BigIntMatrix.builder(rowSize, matrix.columnSize());
+            final BigDecimal entry = BigDecimal.valueOf(factor * RandomUtils.nextLong(1, bound));
+            final DecimalMatrixBuilder builder = DecimalMatrix.builder(rowSize, matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowKey = cell.getRowKey();
                 final Integer columnKey = cell.getColumnKey();
@@ -1020,7 +982,7 @@ public final class BigIntMatrixTest {
 
     @Test
     public void idNotDiagonalhouldReturnFalse() {
-        final BigIntMatrix matrix = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+        final DecimalMatrix matrix = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
         assertThat(matrix.identity()).isFalse();
     }
 
@@ -1036,25 +998,25 @@ public final class BigIntMatrixTest {
 
     @Test
     public void invertibleNotSquareShouldReturnFalse() {
-        final BigIntMatrix matrix = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
+        final DecimalMatrix matrix = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
         assertThat(matrix.invertible()).isFalse();
     }
 
     @Test
     public void invertibleZeroMatrixShouldReturnFalse() {
-        final BigIntMatrix zeroMatrix = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
+        final DecimalMatrix zeroMatrix = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
         assertThat(zeroMatrix.invertible()).isFalse();
     }
 
     @Test
     public void invertibleIdShouldSucceed() {
-        final BigIntMatrixBuilder builder = BigIntMatrix.builder(3, 3);
+        final DecimalMatrixBuilder builder = DecimalMatrix.builder(3, 3);
         IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
                 if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, BigInteger.ONE);
+                    builder.put(rowIndex, columnIndex, BigDecimal.ONE);
                 } else {
-                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
                 }
             });
         });
@@ -1064,16 +1026,16 @@ public final class BigIntMatrixTest {
     @Test
     public void invertibleMatrixWithDetEqualToMinusOneShouldSucceed() {
         final int rowSize = 3;
-        final BigIntMatrixBuilder builder = BigIntMatrix.builder(rowSize, 3);
+        final DecimalMatrixBuilder builder = DecimalMatrix.builder(rowSize, 3);
         final Integer index = RandomUtils.nextInt(1, rowSize + 1);
         IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
                 if (rowIndex.equals(index) && columnIndex.equals(index)) {
-                    builder.put(rowIndex, columnIndex, BigInteger.ONE.negate());
+                    builder.put(rowIndex, columnIndex, BigDecimal.ONE.negate());
                 } else if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, BigInteger.ONE);
+                    builder.put(rowIndex, columnIndex, BigDecimal.ONE);
                 } else {
-                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
                 }
             });
         });
@@ -1082,16 +1044,16 @@ public final class BigIntMatrixTest {
 
     @Test
     public void symmetricNotquareShouldReturnFalse() {
-        final BigIntMatrix matrix = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+        final DecimalMatrix matrix = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
         assertThat(matrix.symmetric()).isFalse();
     }
 
     @Test
     public void symmetricNotSymmetricShouldReturnFalse() {
-        final BigIntMatrixBuilder builder = BigIntMatrix.builder(3, 3);
+        final DecimalMatrixBuilder builder = DecimalMatrix.builder(3, 3);
         IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                final BigInteger entry = BigInteger.valueOf(RandomUtils.nextLong(1, bound));
+                final BigDecimal entry = BigDecimal.valueOf(RandomUtils.nextLong(1, bound));
                 if (rowIndex < columnIndex) {
                     builder.put(rowIndex, columnIndex, entry);
                     builder.put(columnIndex, rowIndex, entry.negate());
@@ -1106,10 +1068,10 @@ public final class BigIntMatrixTest {
 
     @Test
     public void symmetricShouldSucceed() {
-        final BigIntMatrixBuilder builder = BigIntMatrix.builder(3, 3);
+        final DecimalMatrixBuilder builder = DecimalMatrix.builder(3, 3);
         IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                final BigInteger entry = BigInteger.valueOf(RandomUtils.nextLong(0, bound));
+                final BigDecimal entry = BigDecimal.valueOf(RandomUtils.nextLong(0, bound));
                 if (rowIndex < columnIndex) {
                     builder.put(rowIndex, columnIndex, entry);
                     builder.put(columnIndex, rowIndex, entry);
@@ -1124,22 +1086,22 @@ public final class BigIntMatrixTest {
 
     @Test
     public void skewSymmetricNotquareShouldReturnFalse() {
-        final BigIntMatrix matrix = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
+        final DecimalMatrix matrix = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
         assertThat(matrix.skewSymmetric()).isFalse();
     }
 
     @Test
     public void skewSymmetricNotSymmetricShouldReturnFalse() {
-        final BigIntMatrixBuilder builder = BigIntMatrix.builder(3, 3);
+        final DecimalMatrixBuilder builder = DecimalMatrix.builder(3, 3);
         IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
                 if (rowIndex < columnIndex) {
-                    final BigInteger entry = BigInteger.valueOf(RandomUtils.nextLong(1, bound));
+                    final BigDecimal entry = BigDecimal.valueOf(RandomUtils.nextLong(1, bound));
                     builder.put(rowIndex, columnIndex, entry);
                     builder.put(columnIndex, rowIndex, entry);
                 }
                 if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
                 }
             });
         });
@@ -1148,16 +1110,16 @@ public final class BigIntMatrixTest {
 
     @Test
     public void skewSymmetricShouldSucceed() {
-        final BigIntMatrixBuilder builder = BigIntMatrix.builder(3, 3);
+        final DecimalMatrixBuilder builder = DecimalMatrix.builder(3, 3);
         IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
                 if (rowIndex < columnIndex) {
-                    final BigInteger entry = BigInteger.valueOf(RandomUtils.nextLong(0, bound));
+                    final BigDecimal entry = BigDecimal.valueOf(RandomUtils.nextLong(0, bound));
                     builder.put(rowIndex, columnIndex, entry);
                     builder.put(columnIndex, rowIndex, entry.negate());
                 }
                 if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
                 }
             });
         });

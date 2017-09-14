@@ -31,9 +31,6 @@ import org.junit.Test;
 
 public final class SimpleComplexNumberTest {
     private static final int howMany = 10;
-    private static final SimpleComplexNumber ZERO = SimpleComplexNumber.ZERO;
-    private static final SimpleComplexNumber ONE = SimpleComplexNumber.ONE;
-    private static final SimpleComplexNumber I = SimpleComplexNumber.I;
     private static final List<SimpleComplexNumber> complexNumbers = new ArrayList<>(howMany);
     private static final List<SimpleComplexNumber> others = new ArrayList<>(howMany);
     private static final List<SimpleComplexNumber> invertibles = new ArrayList<>(howMany);
@@ -66,7 +63,7 @@ public final class SimpleComplexNumberTest {
     @Test
     public void addNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.add(null);
+            SimpleComplexNumber.ZERO.add(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("summand");
     }
 
@@ -84,8 +81,8 @@ public final class SimpleComplexNumberTest {
 
     @Test
     public void addZeroShouldBeEqualToZero() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.add(ZERO)).isEqualTo(it);
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.add(SimpleComplexNumber.ZERO)).isEqualTo(complexNumber);
         });
     }
 
@@ -113,7 +110,7 @@ public final class SimpleComplexNumberTest {
     @Test
     public void subtractNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.subtract(null);
+            SimpleComplexNumber.ZERO.subtract(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("subtrahend");
     }
 
@@ -131,22 +128,22 @@ public final class SimpleComplexNumberTest {
 
     @Test
     public void subtractZeroShouldBeEqualToSelf() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.subtract(ZERO)).isEqualTo(it);
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.subtract(SimpleComplexNumber.ZERO)).isEqualTo(complexNumber);
         });
     }
 
     @Test
     public void subtractSelfShouldBeEqualToZero() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.subtract(it)).isEqualTo(ZERO);
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.subtract(complexNumber)).isEqualTo(SimpleComplexNumber.ZERO);
         });
     }
 
     @Test
     public void multiplyNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.multiply(null);
+            SimpleComplexNumber.ZERO.multiply(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("factor");
     }
 
@@ -166,15 +163,15 @@ public final class SimpleComplexNumberTest {
 
     @Test
     public void multiplyOneShouldBeEqualToOne() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.multiply(ONE)).isEqualTo(it);
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.multiply(SimpleComplexNumber.ONE)).isEqualTo(complexNumber);
         });
     }
 
     @Test
     public void multiplyZeroShouldBeEqualToZero() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.multiply(ZERO)).isEqualTo(ZERO);
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.multiply(SimpleComplexNumber.ZERO)).isEqualTo(SimpleComplexNumber.ZERO);
         });
     }
 
@@ -214,16 +211,16 @@ public final class SimpleComplexNumberTest {
     @Test
     public void divideNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.divide(null);
+            SimpleComplexNumber.ZERO.divide(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("divisor");
     }
 
     @Test
     public void divideZeroShouldThrowException() {
         assertThatThrownBy(() -> {
-            ONE.divide(ZERO);
+            SimpleComplexNumber.ONE.divide(SimpleComplexNumber.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected divisor to be invertible but actual %s", ZERO);
+                .hasMessage("expected divisor to be invertible but actual %s", SimpleComplexNumber.ZERO);
     }
 
     @Test
@@ -247,190 +244,193 @@ public final class SimpleComplexNumberTest {
 
     @Test
     public void divideOneShouldBeEqualToSelf() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.divide(ONE)).isEqualTo(new RealComplexNumber(it));
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.divide(SimpleComplexNumber.ONE)).isEqualTo(new RealComplexNumber(complexNumber));
         });
     }
 
     @Test
     public void powNegativeExponentShouldThrowException() {
         assertThatThrownBy(() -> {
-            ZERO.pow(-1);
+            SimpleComplexNumber.ZERO.pow(-1);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected exponent > -1 but actual -1");
     }
 
     @Test
     public void powShouldSucceed() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.pow(3)).isExactlyInstanceOf(SimpleComplexNumber.class)
-                    .isEqualTo(it.multiply(it).multiply(it));
-            assertThat(it.pow(2)).isEqualTo(it.multiply(it));
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.pow(3)).isExactlyInstanceOf(SimpleComplexNumber.class)
+                    .isEqualTo(complexNumber.multiply(complexNumber).multiply(complexNumber));
+            assertThat(complexNumber.pow(2)).isEqualTo(complexNumber.multiply(complexNumber));
         });
     }
 
     @Test
     public void powOneShouldBeTheSame() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.pow(1)).isSameAs(it);
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.pow(1)).isSameAs(complexNumber);
         });
     }
 
     @Test
     public void powZeroShouldBeSameAsOne() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.pow(0)).isSameAs(ONE);
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.pow(0)).isSameAs(SimpleComplexNumber.ONE);
         });
     }
 
     @Test
     public void powOfOneShouldBeEqualToOne() {
-        assertThat(ONE.pow(3)).isEqualTo(ONE);
+        assertThat(SimpleComplexNumber.ONE.pow(3)).isEqualTo(SimpleComplexNumber.ONE);
     }
 
     @Test
     public void powOfZeroForExponentNotEqualToZeroShouldBeEqualToZero() {
-        assertThat(ZERO.pow(3)).isEqualTo(ZERO);
+        assertThat(SimpleComplexNumber.ZERO.pow(3)).isEqualTo(SimpleComplexNumber.ZERO);
     }
 
     @Test
     public void powOfIForExponentNotEqualToZeroShouldBeEqualToMinusOne() {
-        assertThat(I.pow(2)).isEqualTo(ONE.negate());
+        assertThat(SimpleComplexNumber.IMAGINARY.pow(2)).isEqualTo(SimpleComplexNumber.ONE.negate());
     }
 
     @Test
     public void negateShouldSucceed() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.negate()).isExactlyInstanceOf(SimpleComplexNumber.class)
-                    .isEqualTo(new SimpleComplexNumber(it.getReal().negate(), it.getImaginary().negate()));
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.negate()).isExactlyInstanceOf(SimpleComplexNumber.class).isEqualTo(
+                    new SimpleComplexNumber(complexNumber.getReal().negate(), complexNumber.getImaginary().negate()));
         });
     }
 
     @Test
     public void negateZeroShouldBeEqualToSelf() {
-        assertThat(ZERO.negate()).isEqualTo(ZERO);
+        assertThat(SimpleComplexNumber.ZERO.negate()).isEqualTo(SimpleComplexNumber.ZERO);
     }
 
     @Test
     public void multiplyMinusOneShouldBeEqualToNegated() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.multiply(ONE.negate())).isEqualTo(it.negate());
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.multiply(SimpleComplexNumber.ONE.negate())).isEqualTo(complexNumber.negate());
         });
     }
 
     @Test
     public void divideMinusOneShouldBeEqualToNegated() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.divide(ONE.negate())).isEqualTo(new RealComplexNumber(it).negate());
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.divide(SimpleComplexNumber.ONE.negate()))
+                    .isEqualTo(new RealComplexNumber(complexNumber).negate());
         });
     }
 
     @Test
     public void addNegatedShouldBeEqualToZero() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.add(it.negate())).isEqualTo(ZERO);
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.add(complexNumber.negate())).isEqualTo(SimpleComplexNumber.ZERO);
         });
     }
 
     @Test
     public void invertZeroShouldReturnAnEmptyOptional() {
         assertThatThrownBy(() -> {
-            ZERO.invert();
-        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected to be invertible but actual %s", ZERO);
+            SimpleComplexNumber.ZERO.invert();
+        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected to be invertible but actual %s",
+                SimpleComplexNumber.ZERO);
     }
 
     @Test
     public void invertShouldSucceed() {
-        invertibles.forEach(it -> {
-            assertThat(it.invert()).isExactlyInstanceOf(RealComplexNumber.class).isEqualTo(ONE.divide(it));
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.invert()).isExactlyInstanceOf(RealComplexNumber.class)
+                    .isEqualTo(SimpleComplexNumber.ONE.divide(invertible));
         });
     }
 
     @Test
     public void invertOneShouldBeEqualToOne() {
-        assertThat(ONE.invert()).isEqualTo(RealComplexNumber.ONE);
+        assertThat(SimpleComplexNumber.ONE.invert()).isEqualTo(RealComplexNumber.ONE);
     }
 
     @Test
     public void invertSelfShouldBeEqualToOneDividedBySelf() {
-        invertibles.forEach(it -> {
-            assertThat(it.invert()).isEqualTo(ONE.divide(it));
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.invert()).isEqualTo(SimpleComplexNumber.ONE.divide(invertible));
         });
     }
 
     @Test
     public void invertibleZeroShouldBeFalse() {
-        assertThat(ZERO.invertible()).isFalse();
+        assertThat(SimpleComplexNumber.ZERO.invertible()).isFalse();
     }
 
     @Test
     public void invertibleShouldSucceed() {
-        invertibles.forEach(it -> {
-            assertThat(it.invertible()).isTrue();
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.invertible()).isTrue();
         });
     }
 
     @Test
     public void invertibleShouldBePredictable() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.invertible()).isEqualTo(!it.equals(ZERO));
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.invertible()).isEqualTo(!complexNumber.equals(SimpleComplexNumber.ZERO));
         });
     }
 
     @Test
     public void absPow2ShouldSucceed() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.absPow2()).isExactlyInstanceOf(BigInteger.class)
-                    .isEqualTo(it.getReal().pow(2).add(it.getImaginary().pow(2)));
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.absPow2()).isExactlyInstanceOf(BigInteger.class)
+                    .isEqualTo(complexNumber.getReal().pow(2).add(complexNumber.getImaginary().pow(2)));
         });
     }
 
     @Test
     public void absPow2ZeroShouldBeEqualToZero() {
-        assertThat(ZERO.absPow2()).isEqualTo(BigInteger.ZERO);
+        assertThat(SimpleComplexNumber.ZERO.absPow2()).isEqualTo(BigInteger.ZERO);
     }
 
     @Test
     public void absPow2OneShouldBeEqualToOne() {
-        assertThat(ONE.absPow2()).isEqualTo(BigInteger.ONE);
+        assertThat(SimpleComplexNumber.ONE.absPow2()).isEqualTo(BigInteger.ONE);
     }
 
     @Test
     public void absPow2MinusOneShouldBeSameAsOne() {
-        assertThat(ONE.negate().absPow2()).isEqualTo(BigInteger.ONE);
+        assertThat(SimpleComplexNumber.ONE.negate().absPow2()).isEqualTo(BigInteger.ONE);
     }
 
     @Test
     public void absShouldSucceed() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.abs()).isExactlyInstanceOf(BigDecimal.class)
-                    .isEqualTo(SquareRootCalculator.sqrt(it.absPow2()));
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.abs()).isExactlyInstanceOf(BigDecimal.class)
+                    .isEqualTo(SquareRootCalculator.sqrt(complexNumber.absPow2()));
         });
     }
 
     @Test
     public void conjugateShouldSucceed() {
-        complexNumbers.forEach(it -> {
-            assertThat(it.conjugate()).isExactlyInstanceOf(SimpleComplexNumber.class)
-                    .isEqualTo(new SimpleComplexNumber(it.getReal(), it.getImaginary().negate()));
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.conjugate()).isExactlyInstanceOf(SimpleComplexNumber.class)
+                    .isEqualTo(new SimpleComplexNumber(complexNumber.getReal(), complexNumber.getImaginary().negate()));
         });
     }
 
     @Test
     public void conjugateRealNumberShouldBeEqualToSelf() {
-        complexNumbers.forEach(it -> {
-            final SimpleComplexNumber realNumber = new SimpleComplexNumber(it.getReal(), BigInteger.ZERO);
+        complexNumbers.forEach(complexNumber -> {
+            final SimpleComplexNumber realNumber = new SimpleComplexNumber(complexNumber.getReal(), BigInteger.ZERO);
             assertThat(realNumber.conjugate()).isEqualTo(realNumber);
         });
     }
 
     @Test
     public void matrixShouldSucceed() {
-        complexNumbers.forEach(it -> {
-            final BigInteger real = it.getReal();
-            final BigInteger imaginary = it.getImaginary();
+        complexNumbers.forEach(complexNumber -> {
+            final BigInteger real = complexNumber.getReal();
+            final BigInteger imaginary = complexNumber.getImaginary();
             final BigIntMatrix expected = BigIntMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate())
                     .put(2, 1, imaginary).put(2, 2, real).build();
-            assertThat(it.matrix()).isExactlyInstanceOf(BigIntMatrix.class).isEqualTo(expected);
+            assertThat(complexNumber.matrix()).isExactlyInstanceOf(BigIntMatrix.class).isEqualTo(expected);
         });
     }
 }

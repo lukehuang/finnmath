@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/togliu/finnmath.svg?branch=master)](https://travis-ci.org/togliu/finnmath)
 [![codecov](https://codecov.io/gh/togliu/finnmath/branch/master/graph/badge.svg)](https://codecov.io/gh/togliu/finnmath)
+[![License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](http://shields.io)
 
 finnMath is a free software library for the JVM which provides or will provide implementations for fractions, 
 complex numbers, matrices and vectors and their arithmetics based on BigInteger and BigDecimal so that this 
@@ -86,7 +87,7 @@ developer's life extremely and thanks to Maven convention over configuration arr
 * the Eclipse Foundation for the Eclipse IDE
 * JetBrains s.r.o. for IntelliJ IDEA Community Edition
 * Google for Guava and Error Prone
-* the Apache Software Foundation for Groovy, Commons Lang and Commons Math
+* the Apache Software Foundation for Groovy, Commons Lang, Commons Math and the Apache License
 * QOS.ch for SLF4J 
 * Joel Costigliola for AssertJ
 * the JUnit team for JUnit
@@ -95,10 +96,11 @@ developer's life extremely and thanks to Maven convention over configuration arr
 * Thomas Broyer for the Gradle Error Prone plugin
 * the developers of Checkstyle
 * the University of Maryland for FindBugs
-* the developers of PMD
+* the developers of PMD and CPD
 * the developers of JaCoCo and EclEmma
 * GitHub Inc. for GitHub
 * Travis CI GmbH for Travis CI
 * Codecov LLC for Codecov
 * Stack Exchange Inc. for Stack Overflow
+* Shields.io for Shields.io
 * Judd Vinet and Aaron Griffin for Arch Linux

@@ -36,58 +36,124 @@ import java.util.Set;
  * @see ImmutableTable
  */
 @Beta
-abstract class Matrix<E, V, M> {
+abstract class AbstractMatrix<E, V, M> {
     /**
-     * The table holding the entries of this {@link Matrix}
+     * The table holding the entries of this {@link AbstractMatrix}
      *
      * @since 1
      * @author Lars Tennstedt
      */
     protected final ImmutableTable<Integer, Integer, E> table;
 
-    protected Matrix(final ImmutableTable<Integer, Integer, E> table) {
+    protected AbstractMatrix(final ImmutableTable<Integer, Integer, E> table) {
         this.table = table;
     }
 
-    abstract M add(M summand);
+    protected abstract M add(M summand);
 
-    abstract M subtract(M subtrahend);
+    protected abstract M subtract(M subtrahend);
 
-    abstract M multiply(M factor);
+    protected abstract M multiply(M factor);
 
-    abstract V multiplyVector(V vector);
+    protected abstract V multiplyVector(V vector);
 
-    abstract E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column);
+    protected abstract E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column);
 
-    abstract M scalarMultiply(E scalar);
+    protected abstract M scalarMultiply(E scalar);
 
-    abstract M negate();
+    protected abstract M negate();
 
-    abstract E trace();
+    protected abstract E trace();
 
-    abstract E det();
+    protected abstract E determinant();
 
-    abstract M transpose();
+    protected abstract E ruleOfSarrus();
 
-    abstract M minor(final Integer rowIndex, final Integer columnIndex);
+    protected abstract M transpose();
 
-    abstract boolean square();
+    protected abstract M minor(final Integer rowIndex, final Integer columnIndex);
 
-    abstract boolean triangular();
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is a
+     * square one
+     *
+     * @return {@code true} if {@code rowSize == columnSize}, {@code false}
+     *         otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public boolean square() {
+        return table.rowKeySet().size() == table.columnKeySet().size();
+    }
 
-    abstract boolean upperTriangular();
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
+     * triangular
+     *
+     * @return {@code true} if {@code upperTriangular || lowerTriangular},
+     *         {@code false} otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #upperTriangular
+     * @see #lowerTriangular
+     */
+    public boolean triangular() {
+        return upperTriangular() || lowerTriangular();
+    }
 
-    abstract boolean lowerTriangular();
+    protected abstract boolean upperTriangular();
 
-    abstract boolean diagonal();
+    protected abstract boolean lowerTriangular();
 
-    abstract boolean id();
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
+     * diagonal
+     *
+     * @return {@code true} if {@code upperTriangular && lowerTriangular},
+     *         {@code false} otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #upperTriangular
+     * @see #lowerTriangular
+     */
+    public boolean diagonal() {
+        return upperTriangular() && lowerTriangular();
+    }
 
-    abstract boolean invertible();
+    protected abstract boolean identity();
 
-    abstract boolean symmetric();
+    protected abstract boolean invertible();
 
-    abstract boolean skewSymmetric();
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
+     * symmetric
+     *
+     * @return {@code true} if {@code square && equals(transpose)}, {@code false}
+     *         otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #square
+     * @see #transpose
+     */
+    public boolean symmetric() {
+        return square() && equals(transpose());
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
+     * skew symmetric
+     *
+     * @return {@code true} if {@code square && equals(transpose.negate)},
+     *         {@code false} otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #square
+     * @see #transpose
+     * @see #negate
+     */
+    public boolean skewSymmetric() {
+        return square() && transpose().equals(negate());
+    }
 
     /**
      * Returns the row indices starting from {@code 1}

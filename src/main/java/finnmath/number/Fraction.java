@@ -77,6 +77,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * @see #reduce
      */
     public Fraction(final BigInteger numerator, final BigInteger denominator) {
+        super();
         this.numerator = requireNonNull(numerator, "numerator");
         this.denominator = requireNonNull(denominator, "denominator");
         checkArgument(!denominator.equals(BigInteger.ZERO), "expected denominator != 0 but actual %s", denominator);

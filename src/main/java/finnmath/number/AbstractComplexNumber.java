@@ -25,27 +25,27 @@ import java.math.BigDecimal;
  * @since 1
  * @author Lars Tennstedt
  */
-abstract class ComplexNumber<B, S, R, M> implements MathNumber<S, R, BigDecimal> {
+abstract class AbstractComplexNumber<B, S, R, M> implements MathNumber<S, R, BigDecimal> {
     /**
-     * {@code real} part of this {@link ComplexNumber}
+     * {@code real} part of this {@link AbstractComplexNumber}
      */
     protected final B real;
 
     /**
-     * {@code imaginary} part of this {@link ComplexNumber}
+     * {@code imaginary} part of this {@link AbstractComplexNumber}
      */
     protected final B imaginary;
 
-    protected ComplexNumber(final B real, final B imaginary) {
+    protected AbstractComplexNumber(final B real, final B imaginary) {
         this.real = requireNonNull(real, "real");
         this.imaginary = requireNonNull(imaginary, "imaginary");
     }
 
-    abstract B absPow2();
+    protected abstract B absPow2();
 
-    abstract S conjugate();
+    protected abstract S conjugate();
 
-    abstract M matrix();
+    protected abstract M matrix();
 
     @Override
     public String toString() {
