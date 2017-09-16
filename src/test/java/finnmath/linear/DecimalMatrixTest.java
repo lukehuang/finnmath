@@ -20,8 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.google.common.collect.Table.Cell;
-import finnmath.asserts.DecimalMatrixAssert;
-import finnmath.asserts.DecimalVectorAssert;
+import finnmath.assertion.DecimalMatrixAssert;
+import finnmath.assertion.DecimalVectorAssert;
 import finnmath.linear.DecimalMatrix.DecimalMatrixBuilder;
 import finnmath.linear.DecimalVector.DecimalVectorBuilder;
 import finnmath.util.MathRandom;

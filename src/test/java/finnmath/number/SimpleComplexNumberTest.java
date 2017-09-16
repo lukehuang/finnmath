@@ -308,6 +308,13 @@ public final class SimpleComplexNumberTest {
     }
 
     @Test
+    public void negateTwiceShouldBeEqualToSelf() {
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.negate().negate()).isEqualTo(complexNumber);
+        });
+    }
+
+    @Test
     public void multiplyMinusOneShouldBeEqualToNegated() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.multiply(SimpleComplexNumber.ONE.negate())).isEqualTo(complexNumber.negate());

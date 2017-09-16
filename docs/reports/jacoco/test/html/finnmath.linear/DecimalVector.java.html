@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DecimalVector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnmath</a> &gt; <a href="index.source.html" class="el_package">finnmath.linear</a> &gt; <span class="el_source">DecimalVector.java</span></div><h1>DecimalVector.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package finnmath.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+import static java.lang.Math.addExact;
+import static java.util.Objects.requireNonNull;
+
+import com.google.common.annotations.Beta;
+import com.google.common.collect.ImmutableMap;
+import finnmath.util.SquareRootCalculator;
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * An immutable implementation of a vector which uses {@link BigDecimal} as type
+ * for its entries
+ *
+ * @since 1
+ * @author Lars Tennstedt
+ */
+@Beta
+public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVector, BigDecimal&gt; {
+    private DecimalVector(final ImmutableMap&lt;Integer, BigDecimal&gt; map) {
+<span class="fc" id="L41">        super(map);</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Returns the sum of this {@link DecimalVector} and the given one
+     *
+     * @param summand
+     *            the summand
+     * @return The sum
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public DecimalVector add(final DecimalVector summand) {
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        checkArgument(map.size() == summand.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L58">                summand.size());</span>
+<span class="nc" id="L59">        final DecimalVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L60">        map.forEach((index, entry) -&gt; {</span>
+<span class="nc" id="L61">            builder.put(entry.add(summand.entry(index)));</span>
+<span class="nc" id="L62">        });</span>
+<span class="nc" id="L63">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the difference of this {@link DecimalVector} and the given one
+     *
+     * @param subtrahend
+     *            the subtrahend
+     * @return The difference
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public DecimalVector subtract(final DecimalVector subtrahend) {
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        checkArgument(map.size() == subtrahend.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L80">                subtrahend.size());</span>
+<span class="nc" id="L81">        final DecimalVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L82">        map.forEach((index, entry) -&gt; {</span>
+<span class="nc" id="L83">            builder.put(entry.subtract(subtrahend.entry(index)));</span>
+<span class="nc" id="L84">        });</span>
+<span class="nc" id="L85">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the dot product of this {@link DecimalVector} and the given one
+     *
+     * @param vector
+     *            The other {@link DecimalVector}
+     * @return The dot product
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code map.size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigDecimal dotProduct(final DecimalVector vector) {
+<span class="nc" id="L103">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L105">                vector.size());</span>
+<span class="nc" id="L106">        BigDecimal result = BigDecimal.ZERO;</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        for (final Integer index : map.keySet()) {</span>
+<span class="nc" id="L108">            result = result.add(map.get(index).multiply(vector.entry(index)));</span>
+<span class="nc" id="L109">        }</span>
+<span class="nc" id="L110">        return result;</span>
+    }
+
+    /**
+     * Returns the scalar product of the given scalar and this {@link DecimalVector}
+     *
+     * @param scalar
+     *            the scalar
+     * @return The scalar product
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public DecimalVector scalarMultiply(final BigDecimal scalar) {
+<span class="fc" id="L126">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L127">        final DecimalVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L128">        map.values().forEach(entry -&gt; {</span>
+<span class="fc" id="L129">            builder.put(scalar.multiply(entry));</span>
+<span class="fc" id="L130">        });</span>
+<span class="fc" id="L131">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the negated {@link DecimalVector} of this one
+     *
+     * @return The negated
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #scalarMultiply
+     */
+    @Override
+    public DecimalVector negate() {
+<span class="nc" id="L144">        return scalarMultiply(BigDecimal.ONE.negate());</span>
+    }
+
+    /**
+     * Returns the square of the euclidean norm of this {@link DecimalVector}
+     *
+     * @return The square of the euclidean norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #dotProduct
+     */
+    @Override
+    public BigDecimal euclideanNormPow2() {
+<span class="nc" id="L157">        return dotProduct(this);</span>
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link DecimalVector}
+     *
+     * @return The euclidean norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
+    @Override
+    public BigDecimal euclideanNorm() {
+<span class="nc" id="L171">        return SquareRootCalculator.sqrt(euclideanNormPow2());</span>
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link DecimalVector}
+     *
+     * @param precision
+     *            the precision for the termination condition
+     * @return The euclidean norm
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal)
+     */
+    @Override
+    public BigDecimal euclideanNorm(final BigDecimal precision) {
+<span class="nc" id="L191">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="nc bnc" id="L192" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual {}&quot;, precision);
+<span class="nc" id="L194">        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision);</span>
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link DecimalVector}
+     *
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
+     * @return The euclidean norm
+     * @throws IllegalArgumentException
+     *             if {@code scale &lt; 0}
+     * @throws IllegalArgumentException
+     *             if {@code roundingMode &lt; 0 || 7 &lt; roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, int, int)
+     */
+    @Override
+    public BigDecimal euclideanNorm(final int scale, final int roundingMode) {
+<span class="nc bnc" id="L217" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual {}&quot;, scale);</span>
+<span class="nc bnc" id="L218" title="All 4 branches missed.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual {}&quot;,</span>
+                roundingMode);
+<span class="nc" id="L220">        return SquareRootCalculator.sqrt(euclideanNormPow2(), scale, roundingMode);</span>
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link DecimalVector}
+     *
+     * @param precision
+     *            the precision for the termination condition
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
+     * @return The euclidean norm
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @throws IllegalArgumentException
+     *             if {@code scale &lt; 0}
+     * @throws IllegalArgumentException
+     *             if {@code roundingMode &lt; 0 || 7 &lt; roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal, int, int)
+     */
+    @Override
+    public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final int roundingMode) {
+<span class="nc" id="L249">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="nc bnc" id="L250" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual {}&quot;, precision);
+<span class="nc bnc" id="L252" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual {}&quot;, scale);</span>
+<span class="nc bnc" id="L253" title="All 4 branches missed.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual {}&quot;,</span>
+                roundingMode);
+<span class="nc" id="L255">        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision, scale, roundingMode);</span>
+    }
+
+    /**
+     * Returns the square of the euclidean distance from this {@link DecimalVector}
+     * to the given one
+     *
+     * @param vector
+     *            The other {@link DecimalVector}
+     * @return The square of the euclidean distance
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code map.size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #subtract
+     * @see #euclideanNormPow2
+     */
+    @Override
+    public BigDecimal euclideanDistancePow2(final DecimalVector vector) {
+<span class="nc" id="L276">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L278">                vector.size());</span>
+<span class="nc" id="L279">        return subtract(vector).euclideanNormPow2();</span>
+    }
+
+    /**
+     * Returns the euclidean distance from this {@link DecimalVector} to the given
+     * one
+     *
+     * @param vector
+     *            The other {@link DecimalVector}
+     * @return The euclidean distance
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code map.size != vector.size}
+     * @see #euclideanDistancePow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigDecimal euclideanDistance(final DecimalVector vector) {
+<span class="nc" id="L300">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L302">                vector.size());</span>
+<span class="nc" id="L303">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector));</span>
+    }
+
+    /**
+     * Returns the euclidean distance from this {@link DecimalVector} to the given
+     * one
+     *
+     * @param vector
+     *            The other {@link DecimalVector}
+     * @param precision
+     *            the precision for the termination condition
+     * @return The euclidean distance
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code map.size != vector.size}
+     * @throws IllegalArgumentException
+     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanDistancePow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal)
+     */
+    @Override
+    public BigDecimal euclideanDistance(final DecimalVector vector, final BigDecimal precision) {
+<span class="nc" id="L330">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L332">                vector.size());</span>
+<span class="nc" id="L333">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="nc bnc" id="L334" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual {}&quot;, precision);
+<span class="nc" id="L336">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision);</span>
+    }
+
+    /**
+     * Returns the euclidean distance from this {@link DecimalVector} to the given
+     * one
+     *
+     * @param vector
+     *            The other {@link DecimalVector}
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
+     * @return The deuclidean istance
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code map.size != vector.size}
+     * @throws IllegalArgumentException
+     *             if {@code scale &lt; 0}
+     * @throws IllegalArgumentException
+     *             if {@code roundingMode &lt; 0 || 7 &lt; roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanDistancePow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, int, int)
+     */
+    @Override
+    public BigDecimal euclideanDistance(final DecimalVector vector, final int scale, final int roundingMode) {
+<span class="nc" id="L366">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L368">                vector.size());</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual {}&quot;, scale);</span>
+<span class="nc bnc" id="L370" title="All 4 branches missed.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual {}&quot;,</span>
+                roundingMode);
+<span class="nc" id="L372">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), scale, roundingMode);</span>
+    }
+
+    /**
+     * Returns the euclidean distance from this {@link DecimalVector} to the given
+     * one
+     *
+     * @param vector
+     *            The other {@link DecimalVector}
+     * @param precision
+     *            the precision for the termination condition
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
+     * @return The euclidean distance
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code map.size != vector.size}
+     * @throws IllegalArgumentException
+     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @throws IllegalArgumentException
+     *             if {@code scale &lt; 0}
+     * @throws IllegalArgumentException
+     *             if {@code roundingMode &lt; 0 || 7 &lt; roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #euclideanDistancePow2
+     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal, int, int)
+     */
+    @Override
+    public BigDecimal euclideanDistance(final DecimalVector vector, final BigDecimal precision, final int scale,
+            final int roundingMode) {
+<span class="nc" id="L409">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L411">                vector.size());</span>
+<span class="nc" id="L412">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="nc bnc" id="L413" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual {}&quot;, precision);
+<span class="nc bnc" id="L415" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual {}&quot;, scale);</span>
+<span class="nc bnc" id="L416" title="All 4 branches missed.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual {}&quot;,</span>
+                roundingMode);
+<span class="nc" id="L418">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision, scale, roundingMode);</span>
+    }
+
+    /**
+     * Returns the size of the underlying {@link Map}
+     *
+     * @return size the size
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public int size() {
+<span class="fc" id="L430">        return map.size();</span>
+    }
+
+    /**
+     * Returns a {@link DecimalVectorBuilder}
+     *
+     * @param size
+     *            the size the resulting {@link DecimalVector}
+     * @return A {@link DecimalVectorBuilder}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public static DecimalVectorBuilder builder(final int size) {
+<span class="pc bpc" id="L443" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L444">        return new DecimalVectorBuilder(size);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L449">        return Objects.hash(map);</span>
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+<span class="nc bnc" id="L454" title="All 2 branches missed.">        if (this == object) {</span>
+<span class="nc" id="L455">            return true;</span>
+        }
+<span class="nc bnc" id="L457" title="All 2 branches missed.">        if (!(object instanceof DecimalVector)) {</span>
+<span class="nc" id="L458">            return false;</span>
+        }
+<span class="nc" id="L460">        final DecimalVector other = (DecimalVector) object;</span>
+<span class="nc" id="L461">        return Objects.deepEquals(map, other.getMap());</span>
+    }
+
+    /**
+     * The builder for {@link DecimalVector DecimalVectors}
+     *
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Beta
+    public static final class DecimalVectorBuilder
+            extends AbstractVectorBuilder&lt;BigDecimal, DecimalVector, DecimalVectorBuilder&gt; {
+        private DecimalVectorBuilder(final int size) {
+<span class="fc" id="L474">            super(size);</span>
+<span class="fc" id="L475">        }</span>
+
+        /**
+         * Puts the given entry on the first free index and returns {@code this}
+         *
+         * @param entry
+         *            the entry
+         * @return {@code this}
+         * @throws NullPointerException
+         *             if {@code entry == null}
+         * @throws ArithmeticException
+         *             if ({@code map.size() + 1} overflows
+         * @throws IllegalStateException
+         *             if {@code map.size == size}
+         * @since 1
+         * @author Lars Tennstedt
+         */
+        public DecimalVectorBuilder put(final BigDecimal entry) {
+<span class="fc" id="L493">            requireNonNull(entry, &quot;entry&quot;);</span>
+<span class="fc" id="L494">            final int index = addExact(map.size(), 1);</span>
+<span class="pc bpc" id="L495" title="1 of 2 branches missed.">            checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L496">            map.put(index, entry);</span>
+<span class="fc" id="L497">            return this;</span>
+        }
+
+        /**
+         * Puts the given entry on the given index and returns {@code this}
+         *
+         * @param index
+         *            the index
+         * @param entry
+         *            the entry
+         * @return {@code this}
+         * @throws NullPointerException
+         *             if {@code index == null}
+         * @throws NullPointerException
+         *             if {@code entry == null}
+         * @throws IllegalArgumentException
+         *             if {@code index &lt;= 0 || size &lt; index}
+         * @since 1
+         * @author Lars Tennstedt
+         */
+        public DecimalVectorBuilder put(final Integer index, final BigDecimal entry) {
+<span class="fc" id="L518">            requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L519">            requireNonNull(entry, &quot;entry&quot;);</span>
+<span class="pc bpc" id="L520" title="2 of 4 branches missed.">            checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L521">            map.put(index, entry);</span>
+<span class="fc" id="L522">            return this;</span>
+        }
+
+        /**
+         * Puts the given entry on all indices and returns {@code this}
+         *
+         * @param entry
+         *            the entry
+         * @return {@code this}
+         * @throws NullPointerException
+         *             if {@code entry == null}
+         * @since 1
+         * @author Lars Tennstedt
+         */
+        public DecimalVectorBuilder putAll(final BigDecimal entry) {
+<span class="fc" id="L537">            requireNonNull(entry, &quot;entry&quot;);</span>
+<span class="fc bfc" id="L538" title="All 2 branches covered.">            for (int index = 1; index &lt;= size; index++) {</span>
+<span class="fc" id="L539">                map.put(index, entry);</span>
+            }
+<span class="fc" id="L541">            return this;</span>
+        }
+
+        /**
+         * Returns the built {@link DecimalVector}
+         *
+         * @return The {@link DecimalVector}
+         * @throws NullPointerException
+         *             if one {@code entry == null}
+         * @since 1
+         * @author Lars Tennstedt
+         * @see ImmutableMap#copyOf
+         */
+        @Override
+        public DecimalVector build() {
+<span class="fc" id="L556">            map.values().forEach(entry -&gt; {</span>
+<span class="fc" id="L557">                requireNonNull(entry, &quot;entry&quot;);</span>
+<span class="fc" id="L558">            });</span>
+<span class="fc" id="L559">            return new DecimalVector(ImmutableMap.copyOf(map));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

@@ -275,6 +275,13 @@ public final class FractionTest {
     }
 
     @Test
+    public void negateTwiceShouldBeEqualToSelf() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.negate().negate()).isEqualTo(fraction);
+        });
+    }
+
+    @Test
     public void multiplyMinusOneShouldBeEqualToNegated() {
         fractions.forEach(fraction -> {
             assertThat(fraction.multiply(Fraction.ONE.negate())).isEqualTo(fraction.negate());
@@ -355,6 +362,13 @@ public final class FractionTest {
         invertibles.forEach(invertible -> {
             assertThat(invertible.invert().reduce().normalize())
                     .isEqualTo(Fraction.ONE.divide(invertible).reduce().normalize());
+        });
+    }
+
+    @Test
+    public void invertTwiceShouldBeEqualToSelf() {
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.invert().invert()).isEqualTo(invertible);
         });
     }
 

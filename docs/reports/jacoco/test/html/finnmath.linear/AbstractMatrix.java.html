@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractMatrix.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnmath</a> &gt; <a href="index.source.html" class="el_package">finnmath.linear</a> &gt; <span class="el_source">AbstractMatrix.java</span></div><h1>AbstractMatrix.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package finnmath.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+
+import com.google.common.annotations.Beta;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
+import com.google.common.collect.Table.Cell;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * @since 1
+ * @author Lars Tennstedt
+ * @see ImmutableTable
+ */
+@Beta
+abstract class AbstractMatrix&lt;E, V, M&gt; {
+    /**
+     * The table holding the entries of this {@link AbstractMatrix}
+     *
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    protected final ImmutableTable&lt;Integer, Integer, E&gt; table;
+
+<span class="fc" id="L48">    protected AbstractMatrix(final ImmutableTable&lt;Integer, Integer, E&gt; table) {</span>
+<span class="fc" id="L49">        this.table = table;</span>
+<span class="fc" id="L50">    }</span>
+
+    protected abstract M add(M summand);
+
+    protected abstract M subtract(M subtrahend);
+
+    protected abstract M multiply(M factor);
+
+    protected abstract V multiplyVector(V vector);
+
+    protected abstract E multiplyRowWithColumn(Map&lt;Integer, E&gt; row, Map&lt;Integer, E&gt; column);
+
+    protected abstract M scalarMultiply(E scalar);
+
+    protected abstract M negate();
+
+    protected abstract E trace();
+
+    protected abstract E determinant();
+
+    protected abstract E ruleOfSarrus();
+
+    protected abstract M transpose();
+
+    protected abstract M minor(final Integer rowIndex, final Integer columnIndex);
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is a
+     * square one
+     *
+     * @return {@code true} if {@code rowSize == columnSize}, {@code false}
+     *         otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public boolean square() {
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        return table.rowKeySet().size() == table.columnKeySet().size();</span>
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
+     * triangular
+     *
+     * @return {@code true} if {@code upperTriangular || lowerTriangular},
+     *         {@code false} otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #upperTriangular
+     * @see #lowerTriangular
+     */
+    public boolean triangular() {
+<span class="fc bfc" id="L101" title="All 4 branches covered.">        return upperTriangular() || lowerTriangular();</span>
+    }
+
+    protected abstract boolean upperTriangular();
+
+    protected abstract boolean lowerTriangular();
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
+     * diagonal
+     *
+     * @return {@code true} if {@code upperTriangular &amp;&amp; lowerTriangular},
+     *         {@code false} otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #upperTriangular
+     * @see #lowerTriangular
+     */
+    public boolean diagonal() {
+<span class="pc bpc" id="L120" title="1 of 4 branches missed.">        return upperTriangular() &amp;&amp; lowerTriangular();</span>
+    }
+
+    protected abstract boolean identity();
+
+    protected abstract boolean invertible();
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
+     * symmetric
+     *
+     * @return {@code true} if {@code square &amp;&amp; equals(transpose)}, {@code false}
+     *         otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #square
+     * @see #transpose
+     */
+    public boolean symmetric() {
+<span class="fc bfc" id="L139" title="All 4 branches covered.">        return square() &amp;&amp; equals(transpose());</span>
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
+     * skew symmetric
+     *
+     * @return {@code true} if {@code square &amp;&amp; equals(transpose.negate)},
+     *         {@code false} otherwise
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #square
+     * @see #transpose
+     * @see #negate
+     */
+    public boolean skewSymmetric() {
+<span class="fc bfc" id="L155" title="All 4 branches covered.">        return square() &amp;&amp; transpose().equals(negate());</span>
+    }
+
+    /**
+     * Returns the row indices starting from {@code 1}
+     *
+     * @return The row indices
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#rowKeySet
+     */
+    public ImmutableSet&lt;Integer&gt; rowIndexes() {
+<span class="fc" id="L167">        return table.rowKeySet();</span>
+    }
+
+    /**
+     * Returns the column indices starting from {@code 1}
+     *
+     * @return The column indices
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#columnKeySet
+     */
+    public ImmutableSet&lt;Integer&gt; columnIndexes() {
+<span class="fc" id="L179">        return table.columnKeySet();</span>
+    }
+
+    /**
+     * Returns the matrix entry dependent on the given row and column index
+     *
+     * @param rowIndex
+     *            the row index
+     * @param columnIndex
+     *            the column index
+     * @return The entry
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#get
+     */
+    public E entry(final Integer rowIndex, final Integer columnIndex) {
+<span class="fc" id="L203">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L204">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L205">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L206">                table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L207">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L208">                table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L209">        return table.get(rowIndex, columnIndex);</span>
+    }
+
+    /**
+     * Returns all matrix cells as {@link ImmutableSet}
+     *
+     * @return The columns
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#cellSet
+     */
+    public ImmutableSet&lt;Cell&lt;Integer, Integer, E&gt;&gt; cells() {
+<span class="fc" id="L221">        return table.cellSet();</span>
+    }
+
+    /**
+     * Returns the matrix row as {@link ImmutableMap} dependent on the given row
+     * index
+     *
+     * @param rowIndex
+     *            the row index
+     * @return The row
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#row
+     */
+    public ImmutableMap&lt;Integer, E&gt; row(final Integer rowIndex) {
+<span class="nc" id="L240">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="nc" id="L241">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
+<span class="nc" id="L242">                table.rowKeySet().size(), rowIndex);</span>
+<span class="nc" id="L243">        return table.row(rowIndex);</span>
+    }
+
+    /**
+     * Returns the matrix column as {@link ImmutableMap} dependent on the given
+     * column index
+     *
+     * @param columnIndex
+     *            the column index
+     * @return The column
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#column
+     */
+    public ImmutableMap&lt;Integer, E&gt; column(final Integer columnIndex) {
+<span class="nc" id="L262">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
+<span class="nc" id="L263">                table.columnKeySet().size(), columnIndex);</span>
+<span class="nc" id="L264">        return table.column(columnIndex);</span>
+    }
+
+    /**
+     * Returns all matrix rows as {@link ImmutableMap}
+     *
+     * @return The rows
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#rowMap
+     */
+    public ImmutableMap&lt;Integer, Map&lt;Integer, E&gt;&gt; rows() {
+<span class="fc" id="L276">        return table.rowMap();</span>
+    }
+
+    /**
+     * Returns all matrix columns as {@link ImmutableMap}
+     *
+     * @return The columns
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#columnMap
+     */
+    public ImmutableMap&lt;Integer, Map&lt;Integer, E&gt;&gt; columns() {
+<span class="fc" id="L288">        return table.columnMap();</span>
+    }
+
+    /**
+     * Returns all matrix entries as {@link ImmutableCollection}
+     *
+     * @return The columns
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Table#values
+     */
+    public ImmutableCollection&lt;E&gt; entries() {
+<span class="fc" id="L300">        return table.values();</span>
+    }
+
+    /**
+     * Returns the size of matrix
+     *
+     * @return The size
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public long size() {
+<span class="nc" id="L311">        return Long.valueOf(table.rowKeySet().size()) * Long.valueOf(table.columnKeySet().size());</span>
+    }
+
+    /**
+     * Returns the row size of matrix
+     *
+     * @return The row size
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Set#size
+     */
+    public int rowSize() {
+<span class="fc" id="L323">        return table.rowKeySet().size();</span>
+    }
+
+    /**
+     * Returns the column size of matrix
+     *
+     * @return The column size
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Set#size
+     */
+    public int columnSize() {
+<span class="fc" id="L335">        return table.columnKeySet().size();</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L340">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+    }
+
+    public ImmutableTable&lt;Integer, Integer, E&gt; getTable() {
+<span class="fc" id="L344">        return table;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

@@ -314,6 +314,25 @@ public final class RealComplexNumberTest {
     }
 
     @Test
+    public void addNegatedShouldBeEqualToZero() {
+        complexNumbers.forEach(complexNumber -> {
+            final RealComplexNumber actual = complexNumber.add(complexNumber.negate());
+            final int realScale = actual.getReal().scale();
+            final int imaginaryScale = actual.getImaginary().scale();
+            final RealComplexNumber expected = new RealComplexNumber(BigDecimal.ZERO.setScale(realScale),
+                    BigDecimal.ZERO.setScale(imaginaryScale));
+            assertThat(actual).isEqualTo(expected);
+        });
+    }
+
+    @Test
+    public void negateTwiceShouldBeEqualToSelf() {
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.negate().negate()).isEqualTo(complexNumber);
+        });
+    }
+
+    @Test
     public void multiplyMinusOneShouldBeEqualToNegated() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.multiply(RealComplexNumber.ONE.negate())).isEqualTo(complexNumber.negate());
@@ -324,18 +343,6 @@ public final class RealComplexNumberTest {
     public void divideMinusOneShouldBeEqualToNegated() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.divide(RealComplexNumber.ONE.negate())).isEqualTo(complexNumber.negate());
-        });
-    }
-
-    @Test
-    public void addNegatedShouldBeEqualToZero() {
-        complexNumbers.forEach(complexNumber -> {
-            final RealComplexNumber actual = complexNumber.add(complexNumber.negate());
-            final int realScale = actual.getReal().scale();
-            final int imaginaryScale = actual.getImaginary().scale();
-            final RealComplexNumber expected = new RealComplexNumber(BigDecimal.ZERO.setScale(realScale),
-                    BigDecimal.ZERO.setScale(imaginaryScale));
-            assertThat(actual).isEqualTo(expected);
         });
     }
 
