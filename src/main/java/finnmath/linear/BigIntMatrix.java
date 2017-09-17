@@ -22,6 +22,7 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import finnmath.linear.BigIntVector.BigIntVectorBuilder;
 import java.math.BigInteger;
@@ -31,7 +32,7 @@ import java.util.Objects;
 
 /**
  * An immutable implementation of a matrix which uses {@link BigInteger} as type
- * for its entries
+ * for its elements
  *
  * @since 1
  * @author Lars Tennstedt
@@ -69,7 +70,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
             final Integer columnKey = cell.getColumnKey();
-            builder.put(rowKey, columnKey, cell.getValue().add(summand.entry(rowKey, columnKey)));
+            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey)));
         });
         return builder.build();
     }
@@ -102,7 +103,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
             final Integer columnKey = cell.getColumnKey();
-            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.entry(rowKey, columnKey)));
+            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.element(rowKey, columnKey)));
         });
         return builder.build();
     }
@@ -130,8 +131,8 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         final BigIntMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());
         table.rowMap().forEach((rowIndex, row) -> {
             factor.columns().forEach((columnIndex, column) -> {
-                final BigInteger entry = multiplyRowWithColumn(row, column);
-                builder.put(rowIndex, columnIndex, entry);
+                final BigInteger element = multiplyRowWithColumn(row, column);
+                builder.put(rowIndex, columnIndex, element);
             });
         });
         return builder.build();
@@ -160,8 +161,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         final BigIntVectorBuilder builder = BigIntVector.builder(table.rowKeySet().size());
         table.rowMap().forEach((rowIndex, row) -> {
             row.forEach((columnIndex, matrixEntry) -> {
-                final BigInteger oldEntry = builder.entry(rowIndex) != null ? builder.entry(rowIndex) : BigInteger.ZERO;
-                builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.entry(columnIndex))));
+                final BigInteger oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex)
+                        : BigInteger.ZERO;
+                builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));
             });
         });
         return builder.build();
@@ -476,23 +478,35 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             super(rowSize, columnSize);
         }
 
-        public BigIntMatrixBuilder put(final Integer rowIndex, final Integer columnIndex, final BigInteger entry) {
-            requireNonNull(entry, "entry");
+        /**
+         * Puts the given element on the {@link Table} dependent on the given row and
+         * column index
+         *
+         * @param rowIndex
+         *            thr row index
+         * @param columnIndex
+         *            the column index
+         * @param element
+         *            the element
+         * @return {@code this}
+         */
+        public BigIntMatrixBuilder put(final Integer rowIndex, final Integer columnIndex, final BigInteger element) {
+            requireNonNull(element, "element");
             requireNonNull(rowIndex, "rowIndex");
             requireNonNull(columnIndex, "columnIndex");
             checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
                     table.rowKeySet().size(), rowIndex);
             checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
                     table.columnKeySet().size(), columnIndex);
-            table.put(rowIndex, columnIndex, entry);
+            table.put(rowIndex, columnIndex, element);
             return this;
         }
 
-        public BigIntMatrixBuilder putAll(final BigInteger entry) {
-            requireNonNull(entry, "entry");
+        public BigIntMatrixBuilder putAll(final BigInteger element) {
+            requireNonNull(element, "element");
             table.rowKeySet().forEach(rowKey -> {
                 table.columnKeySet().forEach(columnKey -> {
-                    table.put(rowKey, columnKey, entry);
+                    table.put(rowKey, columnKey, element);
                 });
             });
             return this;
@@ -503,7 +517,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
          *
          * @return The {@link BigIntMatrix}
          * @throws NullPointerException
-         *             if one {@code entry == null}
+         *             if one {@code element == null}
          * @since 1
          * @author Lars Tennstedt
          * @see ImmutableTable#copyOf

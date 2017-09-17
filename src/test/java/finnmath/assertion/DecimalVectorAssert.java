@@ -32,7 +32,7 @@ public final class DecimalVectorAssert extends AbstractAssert<DecimalVectorAsser
     public DecimalVectorAssert isEqualToByBigDecimalComparator(final DecimalVector expected) {
         isNotNull();
         actual.entries().forEach(entry -> {
-            final int compareTo = entry.getValue().compareTo(expected.entry(entry.getKey()));
+            final int compareTo = entry.getValue().compareTo(expected.element(entry.getKey()));
             if (compareTo != 0) {
                 failWithMessage("expected compareTo == 0 but actual %s", compareTo);
             }

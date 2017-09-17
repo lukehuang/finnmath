@@ -31,7 +31,7 @@ import java.util.Objects;
 
 /**
  * An immutable implementation of a vector which uses {@link BigInteger} as type
- * for its entries
+ * for its elements
  *
  * @since 1
  * @author Lars Tennstedt
@@ -59,8 +59,8 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         checkArgument(map.size() == summand.size(), "equal sizes expected but actual %s != %s", map.size(),
                 summand.size());
         final BigIntVectorBuilder builder = builder(map.size());
-        map.forEach((index, entry) -> {
-            builder.put(entry.add(summand.entry(index)));
+        map.forEach((index, element) -> {
+            builder.put(element.add(summand.element(index)));
         });
         return builder.build();
     }
@@ -82,8 +82,8 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         checkArgument(map.size() == subtrahend.size(), "equal sizes expected but actual %s != %s", map.size(),
                 subtrahend.size());
         final BigIntVectorBuilder builder = builder(map.size());
-        map.forEach((index, entry) -> {
-            builder.put(entry.subtract(subtrahend.entry(index)));
+        map.forEach((index, element) -> {
+            builder.put(element.subtract(subtrahend.element(index)));
         });
         return builder.build();
     }
@@ -103,8 +103,8 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     public BigIntVector scalarMultiply(final BigInteger scalar) {
         requireNonNull(scalar, "scalar");
         final BigIntVectorBuilder builder = builder(map.size());
-        map.values().forEach(entry -> {
-            builder.put(scalar.multiply(entry));
+        map.values().forEach(element -> {
+            builder.put(scalar.multiply(element));
         });
         return builder.build();
     }
@@ -252,7 +252,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
                 vector.size());
         BigInteger result = BigInteger.ZERO;
         for (final Integer index : map.keySet()) {
-            result = result.add(map.get(index).multiply(vector.entry(index)));
+            result = result.add(map.get(index).multiply(vector.element(index)));
         }
         return result;
     }
@@ -477,13 +477,13 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         }
 
         /**
-         * Puts the given entry on the first free index and returns {@code this}
+         * Puts the given element on the first free index and returns {@code this}
          *
-         * @param entry
-         *            the entry
+         * @param element
+         *            the element
          * @return {@code this}
          * @throws NullPointerException
-         *             if {@code entry == null}
+         *             if {@code element == null}
          * @throws ArithmeticException
          *             if ({@code map.size + 1} overflows
          * @throws IllegalStateException
@@ -491,54 +491,54 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
          * @since 1
          * @author Lars Tennstedt
          */
-        public BigIntVectorBuilder put(final BigInteger entry) {
-            requireNonNull(entry, "entry");
+        public BigIntVectorBuilder put(final BigInteger element) {
+            requireNonNull(element, "element");
             final int index = addExact(map.size(), 1);
             checkState(map.size() < size, "expected index in [1, %s] but actual %s", size, index);
-            map.put(index, entry);
+            map.put(index, element);
             return this;
         }
 
         /**
-         * Puts the given entry on the given index and returns {@code this}
+         * Puts the given element on the given index and returns {@code this}
          *
          * @param index
          *            the index
-         * @param entry
-         *            the entry
+         * @param element
+         *            the element
          * @return {@code this}
          * @throws NullPointerException
          *             if {@code index == null}
          * @throws NullPointerException
-         *             if {@code entry == null}
+         *             if {@code element == null}
          * @throws IllegalArgumentException
          *             if {@code index <= 0 || size < index}
          * @since 1
          * @author Lars Tennstedt
          */
-        public BigIntVectorBuilder put(final Integer index, final BigInteger entry) {
+        public BigIntVectorBuilder put(final Integer index, final BigInteger element) {
             requireNonNull(index, "index");
-            requireNonNull(entry, "entry");
+            requireNonNull(element, "element");
             checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s", size, index);
-            map.put(index, entry);
+            map.put(index, element);
             return this;
         }
 
         /**
-         * Puts the given entry on all indices and returns {@code this}
+         * Puts the given element on all indices and returns {@code this}
          *
-         * @param entry
-         *            the entry
+         * @param element
+         *            the element
          * @return {@code this}
          * @throws NullPointerException
-         *             if {@code entry == null}
+         *             if {@code element == null}
          * @since 1
          * @author Lars Tennstedt
          */
-        public BigIntVectorBuilder putAll(final BigInteger entry) {
-            requireNonNull(entry, "entry");
+        public BigIntVectorBuilder putAll(final BigInteger element) {
+            requireNonNull(element, "element");
             for (int index = 1; index <= size; index++) {
-                map.put(index, entry);
+                map.put(index, element);
             }
             return this;
         }
@@ -548,15 +548,15 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
          *
          * @return The {@link BigIntVector}
          * @throws NullPointerException
-         *             if one {@code entry == null}
+         *             if one {@code element == null}
          * @since 1
          * @author Lars Tennstedt
          * @see ImmutableMap#copyOf
          */
         @Override
         public BigIntVector build() {
-            map.values().forEach(entry -> {
-                requireNonNull(entry, "entry");
+            map.values().forEach(element -> {
+                requireNonNull(element, "element");
             });
             return new BigIntVector(ImmutableMap.copyOf(map));
         }

@@ -17,6 +17,7 @@
 package finnmath.linear;
 
 import com.google.common.annotations.Beta;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ArrayTable;
 import com.google.common.collect.Table;
 import java.util.List;
@@ -32,5 +33,14 @@ abstract class AbstractMatrixBuilder<E, M> implements Builder<M> {
         final List<Integer> rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());
         final List<Integer> columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());
         table = ArrayTable.create(rowIndexes, columnIndexes);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("table", table).toString();
+    }
+
+    public Table<Integer, Integer, E> getTable() {
+        return table;
     }
 }

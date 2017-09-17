@@ -31,7 +31,7 @@ import java.util.Objects;
 
 /**
  * An immutable implementation of a vector which uses {@link BigInteger} as type
- * for its entries
+ * for its elements
  *
  * @since 1
  * @author Lars Tennstedt
@@ -59,8 +59,8 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="fc bfc" id="L59" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
 <span class="fc" id="L60">                summand.size());</span>
 <span class="fc" id="L61">        final BigIntVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L62">        map.forEach((index, entry) -&gt; {</span>
-<span class="fc" id="L63">            builder.put(entry.add(summand.entry(index)));</span>
+<span class="fc" id="L62">        map.forEach((index, element) -&gt; {</span>
+<span class="fc" id="L63">            builder.put(element.add(summand.element(index)));</span>
 <span class="fc" id="L64">        });</span>
 <span class="fc" id="L65">        return builder.build();</span>
     }
@@ -82,8 +82,8 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="fc bfc" id="L82" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
 <span class="fc" id="L83">                subtrahend.size());</span>
 <span class="fc" id="L84">        final BigIntVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L85">        map.forEach((index, entry) -&gt; {</span>
-<span class="fc" id="L86">            builder.put(entry.subtract(subtrahend.entry(index)));</span>
+<span class="fc" id="L85">        map.forEach((index, element) -&gt; {</span>
+<span class="fc" id="L86">            builder.put(element.subtract(subtrahend.element(index)));</span>
 <span class="fc" id="L87">        });</span>
 <span class="fc" id="L88">        return builder.build();</span>
     }
@@ -103,8 +103,8 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
     public BigIntVector scalarMultiply(final BigInteger scalar) {
 <span class="fc" id="L104">        requireNonNull(scalar, &quot;scalar&quot;);</span>
 <span class="fc" id="L105">        final BigIntVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L106">        map.values().forEach(entry -&gt; {</span>
-<span class="fc" id="L107">            builder.put(scalar.multiply(entry));</span>
+<span class="fc" id="L106">        map.values().forEach(element -&gt; {</span>
+<span class="fc" id="L107">            builder.put(scalar.multiply(element));</span>
 <span class="fc" id="L108">        });</span>
 <span class="fc" id="L109">        return builder.build();</span>
     }
@@ -252,7 +252,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="nc" id="L252">                vector.size());</span>
 <span class="nc" id="L253">        BigInteger result = BigInteger.ZERO;</span>
 <span class="nc bnc" id="L254" title="All 2 branches missed.">        for (final Integer index : map.keySet()) {</span>
-<span class="nc" id="L255">            result = result.add(map.get(index).multiply(vector.entry(index)));</span>
+<span class="nc" id="L255">            result = result.add(map.get(index).multiply(vector.element(index)));</span>
 <span class="nc" id="L256">        }</span>
 <span class="nc" id="L257">        return result;</span>
     }
@@ -442,13 +442,13 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
      * @author Lars Tennstedt
      */
     public static BigIntVectorBuilder builder(final int size) {
-<span class="pc bpc" id="L445" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
 <span class="fc" id="L446">        return new BigIntVectorBuilder(size);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L451">        return Objects.hash(map);</span>
+<span class="fc" id="L451">        return Objects.hash(map);</span>
     }
 
     @Override
@@ -456,8 +456,8 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="pc bpc" id="L456" title="1 of 2 branches missed.">        if (this == object) {</span>
 <span class="nc" id="L457">            return true;</span>
         }
-<span class="pc bpc" id="L459" title="1 of 2 branches missed.">        if (!(object instanceof BigIntVector)) {</span>
-<span class="nc" id="L460">            return false;</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">        if (!(object instanceof BigIntVector)) {</span>
+<span class="fc" id="L460">            return false;</span>
         }
 <span class="fc" id="L462">        final BigIntVector other = (BigIntVector) object;</span>
 <span class="fc" id="L463">        return Objects.deepEquals(map, other.getMap());</span>
@@ -477,13 +477,13 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="fc" id="L477">        }</span>
 
         /**
-         * Puts the given entry on the first free index and returns {@code this}
+         * Puts the given element on the first free index and returns {@code this}
          *
-         * @param entry
-         *            the entry
+         * @param element
+         *            the element
          * @return {@code this}
          * @throws NullPointerException
-         *             if {@code entry == null}
+         *             if {@code element == null}
          * @throws ArithmeticException
          *             if ({@code map.size + 1} overflows
          * @throws IllegalStateException
@@ -491,54 +491,54 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
          * @since 1
          * @author Lars Tennstedt
          */
-        public BigIntVectorBuilder put(final BigInteger entry) {
-<span class="fc" id="L495">            requireNonNull(entry, &quot;entry&quot;);</span>
+        public BigIntVectorBuilder put(final BigInteger element) {
+<span class="fc" id="L495">            requireNonNull(element, &quot;element&quot;);</span>
 <span class="fc" id="L496">            final int index = addExact(map.size(), 1);</span>
 <span class="pc bpc" id="L497" title="1 of 2 branches missed.">            checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="fc" id="L498">            map.put(index, entry);</span>
+<span class="fc" id="L498">            map.put(index, element);</span>
 <span class="fc" id="L499">            return this;</span>
         }
 
         /**
-         * Puts the given entry on the given index and returns {@code this}
+         * Puts the given element on the given index and returns {@code this}
          *
          * @param index
          *            the index
-         * @param entry
-         *            the entry
+         * @param element
+         *            the element
          * @return {@code this}
          * @throws NullPointerException
          *             if {@code index == null}
          * @throws NullPointerException
-         *             if {@code entry == null}
+         *             if {@code element == null}
          * @throws IllegalArgumentException
          *             if {@code index &lt;= 0 || size &lt; index}
          * @since 1
          * @author Lars Tennstedt
          */
-        public BigIntVectorBuilder put(final Integer index, final BigInteger entry) {
+        public BigIntVectorBuilder put(final Integer index, final BigInteger element) {
 <span class="fc" id="L520">            requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L521">            requireNonNull(entry, &quot;entry&quot;);</span>
+<span class="fc" id="L521">            requireNonNull(element, &quot;element&quot;);</span>
 <span class="pc bpc" id="L522" title="2 of 4 branches missed.">            checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="fc" id="L523">            map.put(index, entry);</span>
+<span class="fc" id="L523">            map.put(index, element);</span>
 <span class="fc" id="L524">            return this;</span>
         }
 
         /**
-         * Puts the given entry on all indices and returns {@code this}
+         * Puts the given element on all indices and returns {@code this}
          *
-         * @param entry
-         *            the entry
+         * @param element
+         *            the element
          * @return {@code this}
          * @throws NullPointerException
-         *             if {@code entry == null}
+         *             if {@code element == null}
          * @since 1
          * @author Lars Tennstedt
          */
-        public BigIntVectorBuilder putAll(final BigInteger entry) {
-<span class="fc" id="L539">            requireNonNull(entry, &quot;entry&quot;);</span>
+        public BigIntVectorBuilder putAll(final BigInteger element) {
+<span class="fc" id="L539">            requireNonNull(element, &quot;element&quot;);</span>
 <span class="fc bfc" id="L540" title="All 2 branches covered.">            for (int index = 1; index &lt;= size; index++) {</span>
-<span class="fc" id="L541">                map.put(index, entry);</span>
+<span class="fc" id="L541">                map.put(index, element);</span>
             }
 <span class="fc" id="L543">            return this;</span>
         }
@@ -548,15 +548,15 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
          *
          * @return The {@link BigIntVector}
          * @throws NullPointerException
-         *             if one {@code entry == null}
+         *             if one {@code element == null}
          * @since 1
          * @author Lars Tennstedt
          * @see ImmutableMap#copyOf
          */
         @Override
         public BigIntVector build() {
-<span class="fc" id="L558">            map.values().forEach(entry -&gt; {</span>
-<span class="fc" id="L559">                requireNonNull(entry, &quot;entry&quot;);</span>
+<span class="fc" id="L558">            map.values().forEach(element -&gt; {</span>
+<span class="fc" id="L559">                requireNonNull(element, &quot;element&quot;);</span>
 <span class="fc" id="L560">            });</span>
 <span class="fc" id="L561">            return new BigIntVector(ImmutableMap.copyOf(map));</span>
         }

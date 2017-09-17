@@ -30,7 +30,7 @@ import java.util.Objects;
 
 /**
  * An immutable implementation of a vector which uses {@link BigDecimal} as type
- * for its entries
+ * for its elements
  *
  * @since 1
  * @author Lars Tennstedt
@@ -57,8 +57,8 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         checkArgument(map.size() == summand.size(), "expected equal sizes but actual %s != %s", map.size(),
                 summand.size());
         final DecimalVectorBuilder builder = builder(map.size());
-        map.forEach((index, entry) -> {
-            builder.put(entry.add(summand.entry(index)));
+        map.forEach((index, element) -> {
+            builder.put(element.add(summand.element(index)));
         });
         return builder.build();
     }
@@ -79,8 +79,8 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         checkArgument(map.size() == subtrahend.size(), "expected equal sizes but actual %s != %s", map.size(),
                 subtrahend.size());
         final DecimalVectorBuilder builder = builder(map.size());
-        map.forEach((index, entry) -> {
-            builder.put(entry.subtract(subtrahend.entry(index)));
+        map.forEach((index, element) -> {
+            builder.put(element.subtract(subtrahend.element(index)));
         });
         return builder.build();
     }
@@ -105,7 +105,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
                 vector.size());
         BigDecimal result = BigDecimal.ZERO;
         for (final Integer index : map.keySet()) {
-            result = result.add(map.get(index).multiply(vector.entry(index)));
+            result = result.add(map.get(index).multiply(vector.element(index)));
         }
         return result;
     }
@@ -125,8 +125,8 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     public DecimalVector scalarMultiply(final BigDecimal scalar) {
         requireNonNull(scalar, "scalar");
         final DecimalVectorBuilder builder = builder(map.size());
-        map.values().forEach(entry -> {
-            builder.put(scalar.multiply(entry));
+        map.values().forEach(element -> {
+            builder.put(scalar.multiply(element));
         });
         return builder.build();
     }
@@ -475,13 +475,13 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         }
 
         /**
-         * Puts the given entry on the first free index and returns {@code this}
+         * Puts the given element on the first free index and returns {@code this}
          *
-         * @param entry
-         *            the entry
+         * @param element
+         *            the element
          * @return {@code this}
          * @throws NullPointerException
-         *             if {@code entry == null}
+         *             if {@code element == null}
          * @throws ArithmeticException
          *             if ({@code map.size() + 1} overflows
          * @throws IllegalStateException
@@ -489,54 +489,54 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
          * @since 1
          * @author Lars Tennstedt
          */
-        public DecimalVectorBuilder put(final BigDecimal entry) {
-            requireNonNull(entry, "entry");
+        public DecimalVectorBuilder put(final BigDecimal element) {
+            requireNonNull(element, "element");
             final int index = addExact(map.size(), 1);
             checkState(map.size() < size, "expected index in [1, %s] but actual %s", size, index);
-            map.put(index, entry);
+            map.put(index, element);
             return this;
         }
 
         /**
-         * Puts the given entry on the given index and returns {@code this}
+         * Puts the given element on the given index and returns {@code this}
          *
          * @param index
          *            the index
-         * @param entry
-         *            the entry
+         * @param element
+         *            the element
          * @return {@code this}
          * @throws NullPointerException
          *             if {@code index == null}
          * @throws NullPointerException
-         *             if {@code entry == null}
+         *             if {@code element == null}
          * @throws IllegalArgumentException
          *             if {@code index <= 0 || size < index}
          * @since 1
          * @author Lars Tennstedt
          */
-        public DecimalVectorBuilder put(final Integer index, final BigDecimal entry) {
+        public DecimalVectorBuilder put(final Integer index, final BigDecimal element) {
             requireNonNull(index, "index");
-            requireNonNull(entry, "entry");
+            requireNonNull(element, "element");
             checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s", size, index);
-            map.put(index, entry);
+            map.put(index, element);
             return this;
         }
 
         /**
-         * Puts the given entry on all indices and returns {@code this}
+         * Puts the given element on all indices and returns {@code this}
          *
-         * @param entry
-         *            the entry
+         * @param element
+         *            the element
          * @return {@code this}
          * @throws NullPointerException
-         *             if {@code entry == null}
+         *             if {@code element == null}
          * @since 1
          * @author Lars Tennstedt
          */
-        public DecimalVectorBuilder putAll(final BigDecimal entry) {
-            requireNonNull(entry, "entry");
+        public DecimalVectorBuilder putAll(final BigDecimal element) {
+            requireNonNull(element, "element");
             for (int index = 1; index <= size; index++) {
-                map.put(index, entry);
+                map.put(index, element);
             }
             return this;
         }
@@ -546,15 +546,15 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
          *
          * @return The {@link DecimalVector}
          * @throws NullPointerException
-         *             if one {@code entry == null}
+         *             if one {@code element == null}
          * @since 1
          * @author Lars Tennstedt
          * @see ImmutableMap#copyOf
          */
         @Override
         public DecimalVector build() {
-            map.values().forEach(entry -> {
-                requireNonNull(entry, "entry");
+            map.values().forEach(element -> {
+                requireNonNull(element, "element");
             });
             return new DecimalVector(ImmutableMap.copyOf(map));
         }

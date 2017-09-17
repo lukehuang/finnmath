@@ -38,7 +38,7 @@ import java.util.Set;
 @Beta
 abstract class AbstractMatrix<E, V, M> {
     /**
-     * The table holding the entries of this {@link AbstractMatrix}
+     * The table holding the elements of this {@link AbstractMatrix}
      *
      * @since 1
      * @author Lars Tennstedt
@@ -180,13 +180,13 @@ abstract class AbstractMatrix<E, V, M> {
     }
 
     /**
-     * Returns the matrix entry dependent on the given row and column index
+     * Returns the matrix element dependent on the given row and column index
      *
      * @param rowIndex
      *            the row index
      * @param columnIndex
      *            the column index
-     * @return The entry
+     * @return The element
      * @throws NullPointerException
      *             if {@code rowIndex == null}
      * @throws NullPointerException
@@ -199,7 +199,7 @@ abstract class AbstractMatrix<E, V, M> {
      * @author Lars Tennstedt
      * @see Table#get
      */
-    public E entry(final Integer rowIndex, final Integer columnIndex) {
+    public E element(final Integer rowIndex, final Integer columnIndex) {
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
@@ -289,14 +289,14 @@ abstract class AbstractMatrix<E, V, M> {
     }
 
     /**
-     * Returns all matrix entries as {@link ImmutableCollection}
+     * Returns all matrix elements as {@link ImmutableCollection}
      *
      * @return The columns
      * @since 1
      * @author Lars Tennstedt
      * @see Table#values
      */
-    public ImmutableCollection<E> entries() {
+    public ImmutableCollection<E> elements() {
         return table.values();
     }
 

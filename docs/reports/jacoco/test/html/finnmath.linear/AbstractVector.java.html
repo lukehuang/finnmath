@@ -21,11 +21,12 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * @since 1
@@ -35,23 +36,23 @@ import java.util.Set;
 @Beta
 abstract class AbstractVector&lt;E, V, N&gt; {
     /**
-     * The map holding the entries of this {@link AbstractVector}
+     * The map holding the elements of this {@link AbstractVector}
      *
      * @since 1
      * @author Lars Tennstedt
      */
     protected final ImmutableMap&lt;Integer, E&gt; map;
 
-<span class="fc" id="L45">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
-<span class="fc" id="L46">        this.map = map;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L46">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
+<span class="fc" id="L47">        this.map = map;</span>
+<span class="fc" id="L48">    }</span>
 
     /**
-     * Returns the entry dependent on the given index
+     * Returns the element dependent on the given index
      *
      * @param index
-     *            the index of the entry
-     * @return The entry
+     *            the index of the element
+     * @return The element
      * @throws NullPointerException
      *             if {@code index == null}
      * @throws IllegalArgumentException
@@ -60,22 +61,35 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * @author Lars Tennstedt
      * @see Map#containsKey
      */
-    public E entry(final Integer index) {
-<span class="fc" id="L64">        requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L65">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
-<span class="fc" id="L66">        return map.get(index);</span>
+    public E element(final Integer index) {
+<span class="fc" id="L65">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L66">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
+<span class="fc" id="L67">        return map.get(index);</span>
     }
 
     /**
-     * Returns all entries of this {@link AbstractVector}
+     * Returns all entries of the underlying {@link Map} of this
+     * {@link AbstractVector}
      *
-     * @return The entries
+     * @return The elements
      * @since 1
      * @author Lars Tennstedt
-     * @see Map#values()
+     * @see Map#entrySet
      */
-    public Set&lt;Entry&lt;Integer, E&gt;&gt; entries() {
-<span class="fc" id="L78">        return map.entrySet();</span>
+    public ImmutableSet&lt;Entry&lt;Integer, E&gt;&gt; entries() {
+<span class="fc" id="L80">        return map.entrySet();</span>
+    }
+
+    /**
+     * Returns all elements of this {@link AbstractVector}
+     *
+     * @return The elements
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Map#values
+     */
+    public ImmutableCollection&lt;E&gt; elements() {
+<span class="fc" id="L92">        return map.values();</span>
     }
 
     protected abstract V add(V summand);
@@ -116,16 +130,16 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * @author Lars Tennstedt
      */
     public int size() {
-<span class="nc" id="L119">        return map.size();</span>
+<span class="nc" id="L133">        return map.size();</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L124">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
+<span class="fc" id="L138">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
     }
 
     public ImmutableMap&lt;Integer, E&gt; getMap() {
-<span class="fc" id="L128">        return map;</span>
+<span class="fc" id="L142">        return map;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

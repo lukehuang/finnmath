@@ -19,12 +19,14 @@ package finnmath.number;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.google.common.base.MoreObjects;
 import finnmath.linear.DecimalMatrix;
 import finnmath.util.MathRandom;
 import finnmath.util.SquareRootCalculator;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -448,6 +450,44 @@ public final class RealComplexNumberTest {
             final DecimalMatrix expected = DecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate())
                     .put(2, 1, imaginary).put(2, 2, real).build();
             assertThat(complexNumber.matrix()).isExactlyInstanceOf(DecimalMatrix.class).isEqualTo(expected);
+        });
+    }
+
+    @Test
+    public void hashCodeShouldSucceed() {
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.hashCode()).isExactlyInstanceOf(Integer.class)
+                    .isEqualTo(Objects.hash(complexNumber.getReal(), complexNumber.getImaginary()));
+        });
+    }
+
+    @Test
+    public void equalsNotSimpleComplexNumberShouldReturnFalse() {
+        assertThat(SimpleComplexNumber.ZERO.equals(new Object())).isFalse();
+    }
+
+    @Test
+    public void equalsNotEqualShouldReturnFalse() {
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.equals(complexNumber.add(RealComplexNumber.ONE))).isFalse();
+        });
+    }
+
+    @Test
+    public void equalsEqualShouldReturnTrue() {
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(
+                    complexNumber.equals(new RealComplexNumber(complexNumber.getReal(), complexNumber.getImaginary())))
+                            .isTrue();
+        });
+    }
+
+    @Test
+    public void toStringShouldSucceed() {
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.toString()).isExactlyInstanceOf(String.class)
+                    .isEqualTo(MoreObjects.toStringHelper(complexNumber).add("real", complexNumber.getReal())
+                            .add("imaginary", complexNumber.getImaginary()).toString());
         });
     }
 }

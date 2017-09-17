@@ -1275,13 +1275,13 @@ public final class MathRandom {
         final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                final BigInteger entry = BigInteger.valueOf(nextLong(bound));
+                final BigInteger element = BigInteger.valueOf(nextLong(bound));
                 if (rowIndex < columnIndex) {
-                    builder.put(rowIndex, columnIndex, entry);
-                    builder.put(columnIndex, rowIndex, entry);
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element);
                 }
                 if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, entry);
+                    builder.put(rowIndex, columnIndex, element);
                 }
             });
         });
@@ -1311,9 +1311,9 @@ public final class MathRandom {
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
                 if (rowIndex < columnIndex) {
-                    final BigInteger entry = BigInteger.valueOf(nextLong(bound));
-                    builder.put(rowIndex, columnIndex, entry);
-                    builder.put(columnIndex, rowIndex, entry.negate());
+                    final BigInteger element = BigInteger.valueOf(nextLong(bound));
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element.negate());
                 }
                 if (rowIndex.equals(columnIndex)) {
                     builder.put(rowIndex, columnIndex, BigInteger.ZERO);
@@ -1842,13 +1842,13 @@ public final class MathRandom {
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                final BigDecimal entry = nextDecimal(bound, scale);
+                final BigDecimal element = nextDecimal(bound, scale);
                 if (rowIndex < columnIndex) {
-                    builder.put(rowIndex, columnIndex, entry);
-                    builder.put(columnIndex, rowIndex, entry);
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element);
                 }
                 if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, entry);
+                    builder.put(rowIndex, columnIndex, element);
                 }
             });
         });
@@ -1882,9 +1882,9 @@ public final class MathRandom {
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
                 if (rowIndex < columnIndex) {
-                    final BigDecimal entry = nextDecimal(bound, scale);
-                    builder.put(rowIndex, columnIndex, entry);
-                    builder.put(columnIndex, rowIndex, entry.negate());
+                    final BigDecimal element = nextDecimal(bound, scale);
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element.negate());
                 }
                 if (rowIndex.equals(columnIndex)) {
                     builder.put(rowIndex, columnIndex, BigDecimal.ZERO);

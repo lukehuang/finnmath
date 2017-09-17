@@ -32,7 +32,7 @@ import org.apache.commons.lang3.builder.Builder;
 @Beta
 abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt;V&gt; {
     /**
-     * The map holding the entries of this {@link AbstractVectorBuilder}
+     * The map holding the elements of this {@link AbstractVectorBuilder}
      */
 <span class="fc" id="L37">    protected final Map&lt;Integer, E&gt; map = new HashMap&lt;&gt;();</span>
 
@@ -57,11 +57,11 @@ abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt;V&gt; 
 <span class="fc" id="L57">    }</span>
 
     /**
-     * Returns the entry dependent on the given index
+     * Returns the element dependent on the given index
      *
      * @param index
-     *            the index of the entry
-     * @return The entry
+     *            the index of the element
+     * @return The element
      * @throws NullPointerException
      *             if {@code index == null}
      * @throws IllegalArgumentException
@@ -70,7 +70,7 @@ abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt;V&gt; 
      * @author Lars Tennstedt
      * @see Map#containsKey
      */
-    public E entry(final Integer index) {
+    public E element(final Integer index) {
 <span class="fc" id="L74">        requireNonNull(index, &quot;index&quot;);</span>
 <span class="pc bpc" id="L75" title="2 of 4 branches missed.">        checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
 <span class="fc" id="L76">        return map.get(index);</span>

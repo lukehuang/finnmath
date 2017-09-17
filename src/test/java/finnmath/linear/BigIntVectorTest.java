@@ -1,13 +1,31 @@
+/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package finnmath.linear;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.google.common.base.MoreObjects;
 import finnmath.linear.BigIntVector.BigIntVectorBuilder;
 import finnmath.util.MathRandom;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -58,8 +76,8 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 final BigIntVectorBuilder builder = BigIntVector.builder(size);
-                vector.entries().forEach(entry -> {
-                    builder.put(entry.getValue().add(other.entry(entry.getKey())));
+                vector.entries().forEach(element -> {
+                    builder.put(element.getValue().add(other.element(element.getKey())));
                 });
                 assertThat(vector.add(other)).isExactlyInstanceOf(BigIntVector.class).isEqualTo(builder.build());
             });
@@ -114,8 +132,8 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 final BigIntVectorBuilder builder = BigIntVector.builder(size);
-                vector.entries().forEach(entry -> {
-                    builder.put(entry.getValue().subtract(other.entry(entry.getKey())));
+                vector.entries().forEach(element -> {
+                    builder.put(element.getValue().subtract(other.element(element.getKey())));
                 });
                 assertThat(vector.subtract(other)).isExactlyInstanceOf(BigIntVector.class).isEqualTo(builder.build());
             });
@@ -148,8 +166,8 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
                 final BigIntVectorBuilder builder = BigIntVector.builder(size);
-                vector.entries().forEach(entry -> {
-                    builder.put(scalar.multiply(entry.getValue()));
+                vector.entries().forEach(element -> {
+                    builder.put(scalar.multiply(element.getValue()));
                 });
                 assertThat(vector.scalarMultiply(scalar)).isExactlyInstanceOf(BigIntVector.class)
                         .isEqualTo(builder.build());
@@ -230,8 +248,8 @@ public final class BigIntVectorTest {
     @Test
     public void addNegatedShouldBeEqualToZeroMatrix() {
         vectors.forEach(vector -> {
-            vector.add(vector.negate()).entries().forEach(entry -> {
-                assertThat(entry.getValue()).isEqualTo(BigInteger.ZERO);
+            vector.add(vector.negate()).entries().forEach(element -> {
+                assertThat(element.getValue()).isEqualTo(BigInteger.ZERO);
             });
         });
     }
@@ -240,6 +258,62 @@ public final class BigIntVectorTest {
     public void scalarMultiplyWithMinusOneShouldBeEqualToNegated() {
         vectors.forEach(vector -> {
             assertThat(vector.scalarMultiply(BigInteger.ONE.negate())).isEqualTo(vector.negate());
+        });
+    }
+
+    @Test
+    public void builderRowIndexTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            BigIntMatrix.builder(0, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row size > 0 but actual 0");
+    }
+
+    @Test
+    public void builderSizeTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            BigIntVector.builder(0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+    }
+
+    @Test
+    public void hashCodeShouldSucceed() {
+        vectors.forEach(vector -> {
+            assertThat(vector.hashCode()).isExactlyInstanceOf(Integer.class).isEqualTo(Objects.hash(vector.getMap()));
+        });
+    }
+
+    @Test
+    public void equalsNotSimpleComplexNumberShouldReturnFalse() {
+        assertThat(zeroVector.equals(new Object())).isFalse();
+    }
+
+    @Test
+    public void equalsNotEqualShouldReturnFalse() {
+        vectors.forEach(vector -> {
+            final BigIntVectorBuilder builder = BigIntVector.builder(size);
+            for (int i = 0; i < size; i++) {
+                builder.put(BigInteger.ONE);
+            }
+            assertThat(vector.equals(vector.add(builder.build()))).isFalse();
+        });
+    }
+
+    @Test
+    public void equalsEqualShouldReturnTrue() {
+        vectors.forEach(vector -> {
+            final BigIntVectorBuilder builder = BigIntVector.builder(size);
+            vector.elements().forEach(element -> {
+                builder.put(element);
+            });
+            assertThat(vector.equals(builder.build())).isTrue();
+        });
+    }
+
+    @Test
+    public void toStringShouldSucceed() {
+        vectors.forEach(vector -> {
+            assertThat(vector.toString()).isExactlyInstanceOf(String.class)
+                    .isEqualTo(MoreObjects.toStringHelper(vector).add("map", vector.getMap()).toString());
         });
     }
 }

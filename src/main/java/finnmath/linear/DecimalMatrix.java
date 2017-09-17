@@ -31,7 +31,7 @@ import java.util.Objects;
 
 /**
  * An immutable implementation of a matrix which uses {@link BigDecimal} as type
- * for its entries
+ * for its elements
  *
  * @since 1
  * @author Lars Tennstedt
@@ -69,7 +69,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
             final Integer columnKey = cell.getColumnKey();
-            builder.put(rowKey, columnKey, cell.getValue().add(summand.entry(rowKey, columnKey)));
+            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey)));
         });
         return builder.build();
     }
@@ -102,7 +102,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
             final Integer columnKey = cell.getColumnKey();
-            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.entry(rowKey, columnKey)));
+            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.element(rowKey, columnKey)));
         });
         return builder.build();
     }
@@ -130,8 +130,8 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         final DecimalMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());
         table.rowMap().forEach((rowIndex, row) -> {
             factor.columns().forEach((columnIndex, column) -> {
-                final BigDecimal entry = multiplyRowWithColumn(row, column);
-                builder.put(rowIndex, columnIndex, entry);
+                final BigDecimal element = multiplyRowWithColumn(row, column);
+                builder.put(rowIndex, columnIndex, element);
             });
         });
         return builder.build();
@@ -160,8 +160,9 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         final DecimalVectorBuilder builder = DecimalVector.builder(table.rowKeySet().size());
         table.rowMap().forEach((rowIndex, row) -> {
             row.forEach((columnIndex, matrixEntry) -> {
-                final BigDecimal oldEntry = builder.entry(rowIndex) != null ? builder.entry(rowIndex) : BigDecimal.ZERO;
-                builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.entry(columnIndex))));
+                final BigDecimal oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex)
+                        : BigDecimal.ZERO;
+                builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));
             });
         });
         return builder.build();
@@ -479,23 +480,23 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
             super(rowSize, columnSize);
         }
 
-        public DecimalMatrixBuilder put(final Integer rowIndex, final Integer columnIndex, final BigDecimal entry) {
-            requireNonNull(entry, "entry");
+        public DecimalMatrixBuilder put(final Integer rowIndex, final Integer columnIndex, final BigDecimal element) {
+            requireNonNull(element, "element");
             requireNonNull(rowIndex, "rowIndex");
             requireNonNull(columnIndex, "columnIndex");
             checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
                     table.rowKeySet().size(), rowIndex);
             checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
                     table.columnKeySet().size(), columnIndex);
-            table.put(rowIndex, columnIndex, entry);
+            table.put(rowIndex, columnIndex, element);
             return this;
         }
 
-        public DecimalMatrixBuilder putAll(final BigDecimal entry) {
-            requireNonNull(entry, "entry");
+        public DecimalMatrixBuilder putAll(final BigDecimal element) {
+            requireNonNull(element, "element");
             table.rowKeySet().forEach(rowKey -> {
                 table.columnKeySet().forEach(columnKey -> {
-                    table.put(rowKey, columnKey, entry);
+                    table.put(rowKey, columnKey, element);
                 });
             });
             return this;
@@ -506,7 +507,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
          *
          * @return The {@link DecimalMatrix}
          * @throws NullPointerException
-         *             if one {@code entry == null}
+         *             if one {@code element == null}
          * @since 1
          * @author Lars Tennstedt
          * @see ImmutableTable#copyOf

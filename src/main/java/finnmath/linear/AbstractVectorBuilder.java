@@ -32,7 +32,7 @@ import org.apache.commons.lang3.builder.Builder;
 @Beta
 abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
     /**
-     * The map holding the entries of this {@link AbstractVectorBuilder}
+     * The map holding the elements of this {@link AbstractVectorBuilder}
      */
     protected final Map<Integer, E> map = new HashMap<>();
 
@@ -57,11 +57,11 @@ abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
     }
 
     /**
-     * Returns the entry dependent on the given index
+     * Returns the element dependent on the given index
      *
      * @param index
-     *            the index of the entry
-     * @return The entry
+     *            the index of the element
+     * @return The element
      * @throws NullPointerException
      *             if {@code index == null}
      * @throws IllegalArgumentException
@@ -70,7 +70,7 @@ abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
      * @author Lars Tennstedt
      * @see Map#containsKey
      */
-    public E entry(final Integer index) {
+    public E element(final Integer index) {
         requireNonNull(index, "index");
         checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s", size, index);
         return map.get(index);

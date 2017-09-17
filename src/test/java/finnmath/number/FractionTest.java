@@ -19,10 +19,13 @@ package finnmath.number;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.google.common.base.MoreObjects;
 import finnmath.util.MathRandom;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -70,6 +73,42 @@ public final class FractionTest {
         assertThat(fraction).isExactlyInstanceOf(Fraction.class);
         assertThat(fraction.getNumerator()).isExactlyInstanceOf(BigInteger.class);
         assertThat(fraction.getDenominator()).isExactlyInstanceOf(BigInteger.class);
+    }
+
+    @Test
+    public void intValueShouldSucceed() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.intValue()).isExactlyInstanceOf(Integer.class)
+                    .isEqualTo(new BigDecimal(fraction.getNumerator())
+                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).intValue());
+        });
+    }
+
+    @Test
+    public void longValueShouldSucceed() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.longValue()).isExactlyInstanceOf(Long.class)
+                    .isEqualTo(new BigDecimal(fraction.getNumerator())
+                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).longValue());
+        });
+    }
+
+    @Test
+    public void floatValueShouldSucceed() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.floatValue()).isExactlyInstanceOf(Float.class)
+                    .isEqualTo(new BigDecimal(fraction.getNumerator())
+                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).floatValue());
+        });
+    }
+
+    @Test
+    public void doubleValueShouldSucceed() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.doubleValue()).isExactlyInstanceOf(Double.class)
+                    .isEqualTo(new BigDecimal(fraction.getNumerator())
+                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).doubleValue());
+        });
     }
 
     @Test
@@ -560,6 +599,36 @@ public final class FractionTest {
     }
 
     @Test
+    public void compareToNullShouldThrowException() {
+        assertThatThrownBy(() -> {
+            Fraction.ZERO.compareTo(null);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
+    }
+
+    @Test
+    public void compareToGreaterShouldReturnMinusOne() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.compareTo(fraction.add(Fraction.ONE))).isExactlyInstanceOf(Integer.class).isEqualTo(-1);
+        });
+    }
+
+    @Test
+    public void compareToEqualShouldReturnZero() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.compareTo(new Fraction(fraction.getNumerator(), fraction.getDenominator())))
+                    .isExactlyInstanceOf(Integer.class).isEqualTo(0);
+        });
+    }
+
+    @Test
+    public void compareToLowerShouldReturnMinusOne() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.compareTo(fraction.subtract(Fraction.ONE))).isExactlyInstanceOf(Integer.class)
+                    .isEqualTo(1);
+        });
+    }
+
+    @Test
     public void signumShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.signum())
@@ -656,6 +725,42 @@ public final class FractionTest {
                     }
                 });
             });
+        });
+    }
+
+    @Test
+    public void hashCodeShouldSucceed() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.hashCode()).isExactlyInstanceOf(Integer.class)
+                    .isEqualTo(Objects.hash(fraction.getNumerator(), fraction.getDenominator()));
+        });
+    }
+
+    @Test
+    public void equalsNotFractionShouldReturnFalse() {
+        assertThat(Fraction.ZERO.equals(new Object())).isFalse();
+    }
+
+    @Test
+    public void equalsNotEqualShouldReturnFalse() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.equals(fraction.add(Fraction.ONE))).isFalse();
+        });
+    }
+
+    @Test
+    public void equalsEqualShouldReturnTrue() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.equals(new Fraction(fraction.getNumerator(), fraction.getDenominator()))).isTrue();
+        });
+    }
+
+    @Test
+    public void toStringShouldSucceed() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.toString()).isExactlyInstanceOf(String.class)
+                    .isEqualTo(MoreObjects.toStringHelper(fraction).add("numerator", fraction.getNumerator())
+                            .add("denominator", fraction.getDenominator()).toString());
         });
     }
 }

@@ -235,10 +235,10 @@ import org.apache.commons.lang3.RandomUtils;
 <span class="fc bfc" id="L235" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L236" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
 <span class="fc" id="L237">        final BigDecimal decimal = nextDecimal(bound, scale);</span>
-<span class="fc bfc" id="L238" title="All 2 branches covered.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
 <span class="fc" id="L239">            return decimal.negate();</span>
         }
-<span class="fc" id="L241">        return decimal;</span>
+<span class="nc" id="L241">        return decimal;</span>
     }
 
     /**
@@ -1275,13 +1275,13 @@ import org.apache.commons.lang3.RandomUtils;
 <span class="fc" id="L1275">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
 <span class="fc" id="L1276">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
 <span class="fc" id="L1277">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc" id="L1278">                final BigInteger entry = BigInteger.valueOf(nextLong(bound));</span>
+<span class="fc" id="L1278">                final BigInteger element = BigInteger.valueOf(nextLong(bound));</span>
 <span class="fc bfc" id="L1279" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="fc" id="L1280">                    builder.put(rowIndex, columnIndex, entry);</span>
-<span class="fc" id="L1281">                    builder.put(columnIndex, rowIndex, entry);</span>
+<span class="fc" id="L1280">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L1281">                    builder.put(columnIndex, rowIndex, element);</span>
                 }
 <span class="fc bfc" id="L1283" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="fc" id="L1284">                    builder.put(rowIndex, columnIndex, entry);</span>
+<span class="fc" id="L1284">                    builder.put(rowIndex, columnIndex, element);</span>
                 }
 <span class="fc" id="L1286">            });</span>
 <span class="fc" id="L1287">        });</span>
@@ -1311,9 +1311,9 @@ import org.apache.commons.lang3.RandomUtils;
 <span class="fc" id="L1311">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
 <span class="fc" id="L1312">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
 <span class="fc bfc" id="L1313" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="fc" id="L1314">                    final BigInteger entry = BigInteger.valueOf(nextLong(bound));</span>
-<span class="fc" id="L1315">                    builder.put(rowIndex, columnIndex, entry);</span>
-<span class="fc" id="L1316">                    builder.put(columnIndex, rowIndex, entry.negate());</span>
+<span class="fc" id="L1314">                    final BigInteger element = BigInteger.valueOf(nextLong(bound));</span>
+<span class="fc" id="L1315">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L1316">                    builder.put(columnIndex, rowIndex, element.negate());</span>
                 }
 <span class="fc bfc" id="L1318" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
 <span class="fc" id="L1319">                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);</span>
@@ -1842,13 +1842,13 @@ import org.apache.commons.lang3.RandomUtils;
 <span class="fc" id="L1842">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
 <span class="fc" id="L1843">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
 <span class="fc" id="L1844">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc" id="L1845">                final BigDecimal entry = nextDecimal(bound, scale);</span>
+<span class="fc" id="L1845">                final BigDecimal element = nextDecimal(bound, scale);</span>
 <span class="fc bfc" id="L1846" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="fc" id="L1847">                    builder.put(rowIndex, columnIndex, entry);</span>
-<span class="fc" id="L1848">                    builder.put(columnIndex, rowIndex, entry);</span>
+<span class="fc" id="L1847">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L1848">                    builder.put(columnIndex, rowIndex, element);</span>
                 }
 <span class="fc bfc" id="L1850" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="fc" id="L1851">                    builder.put(rowIndex, columnIndex, entry);</span>
+<span class="fc" id="L1851">                    builder.put(rowIndex, columnIndex, element);</span>
                 }
 <span class="fc" id="L1853">            });</span>
 <span class="fc" id="L1854">        });</span>
@@ -1882,9 +1882,9 @@ import org.apache.commons.lang3.RandomUtils;
 <span class="fc" id="L1882">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
 <span class="fc" id="L1883">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
 <span class="fc bfc" id="L1884" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="fc" id="L1885">                    final BigDecimal entry = nextDecimal(bound, scale);</span>
-<span class="fc" id="L1886">                    builder.put(rowIndex, columnIndex, entry);</span>
-<span class="fc" id="L1887">                    builder.put(columnIndex, rowIndex, entry.negate());</span>
+<span class="fc" id="L1885">                    final BigDecimal element = nextDecimal(bound, scale);</span>
+<span class="fc" id="L1886">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L1887">                    builder.put(columnIndex, rowIndex, element.negate());</span>
                 }
 <span class="fc bfc" id="L1889" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
 <span class="fc" id="L1890">                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);</span>

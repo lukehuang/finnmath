@@ -21,11 +21,12 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * @since 1
@@ -35,7 +36,7 @@ import java.util.Set;
 @Beta
 abstract class AbstractVector<E, V, N> {
     /**
-     * The map holding the entries of this {@link AbstractVector}
+     * The map holding the elements of this {@link AbstractVector}
      *
      * @since 1
      * @author Lars Tennstedt
@@ -47,11 +48,11 @@ abstract class AbstractVector<E, V, N> {
     }
 
     /**
-     * Returns the entry dependent on the given index
+     * Returns the element dependent on the given index
      *
      * @param index
-     *            the index of the entry
-     * @return The entry
+     *            the index of the element
+     * @return The element
      * @throws NullPointerException
      *             if {@code index == null}
      * @throws IllegalArgumentException
@@ -60,22 +61,35 @@ abstract class AbstractVector<E, V, N> {
      * @author Lars Tennstedt
      * @see Map#containsKey
      */
-    public E entry(final Integer index) {
+    public E element(final Integer index) {
         requireNonNull(index, "index");
         checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(), index);
         return map.get(index);
     }
 
     /**
-     * Returns all entries of this {@link AbstractVector}
+     * Returns all entries of the underlying {@link Map} of this
+     * {@link AbstractVector}
      *
-     * @return The entries
+     * @return The elements
      * @since 1
      * @author Lars Tennstedt
-     * @see Map#values()
+     * @see Map#entrySet
      */
-    public Set<Entry<Integer, E>> entries() {
+    public ImmutableSet<Entry<Integer, E>> entries() {
         return map.entrySet();
+    }
+
+    /**
+     * Returns all elements of this {@link AbstractVector}
+     *
+     * @return The elements
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Map#values
+     */
+    public ImmutableCollection<E> elements() {
+        return map.values();
     }
 
     protected abstract V add(V summand);
