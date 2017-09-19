@@ -234,10 +234,10 @@ import org.apache.commons.lang3.RandomUtils;
 <span class="fc bfc" id="L234" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L235" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
 <span class="fc" id="L236">        final BigDecimal decimal = nextDecimal(bound, scale);</span>
-<span class="pc bpc" id="L237" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
 <span class="fc" id="L238">            return decimal.negate();</span>
         }
-<span class="nc" id="L240">        return decimal;</span>
+<span class="fc" id="L240">        return decimal;</span>
     }
 
     /**

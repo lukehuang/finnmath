@@ -115,8 +115,6 @@ uploadArchives.repositories { mavenLocal() }
 task deleteJavadoc(type: Delete) { delete 'docs/javadoc' }
 
 task copyJavadoc(type: Copy) {
-    dependsOn 'javadoc'
-    dependsOn 'deleteJavadoc'
     from 'build/docs/javadoc'
     into 'docs/javadoc'
 }
@@ -124,8 +122,6 @@ task copyJavadoc(type: Copy) {
 task deleteBuildDashboard(type: Delete) { delete 'docs/reports' }
 
 task copyBuildDashboard(type: Copy) {
-    dependsOn 'buildDashboard'
-    dependsOn 'deleteBuildDashboard'
     from 'build/reports'
     into 'docs/reports'
 }
@@ -135,6 +131,10 @@ task all(type: GradleBuild) {
         'check',
         'htmlDependencyReport',
         'jacocoTestReport',
+        'buildDashboard',
+        'javadoc',
+        'deleteJavadoc',
+        'deleteBuildDashboard',
         'copyJavadoc',
         'copyBuildDashboard',
         'install'
