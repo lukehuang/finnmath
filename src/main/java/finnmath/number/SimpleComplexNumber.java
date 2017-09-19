@@ -19,7 +19,6 @@ package finnmath.number;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
-
 import com.google.common.annotations.Beta;
 import finnmath.linear.BigIntMatrix;
 import finnmath.util.SquareRootCalculator;
@@ -36,7 +35,7 @@ import java.util.Objects;
  */
 @Beta
 public final class SimpleComplexNumber
-        extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
+                extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
     /**
      * {@code 0} as {@link SimpleComplexNumber}
      */
@@ -102,7 +101,7 @@ public final class SimpleComplexNumber
     public SimpleComplexNumber subtract(final SimpleComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new SimpleComplexNumber(real.subtract(subtrahend.getReal()),
-                imaginary.subtract(subtrahend.getImaginary()));
+                        imaginary.subtract(subtrahend.getImaginary()));
     }
 
     /**
@@ -254,7 +253,7 @@ public final class SimpleComplexNumber
     @Override
     public BigIntMatrix matrix() {
         return BigIntMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-                .put(2, 2, real).build();
+                        .put(2, 2, real).build();
     }
 
     @Override

@@ -19,7 +19,6 @@ package finnmath.number;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
-
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -123,7 +122,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     public Fraction add(final Fraction summand) {
         requireNonNull(summand, "summand");
         final BigInteger newNumerator = summand.getDenominator().multiply(numerator)
-                .add(denominator.multiply(summand.getNumerator()));
+                        .add(denominator.multiply(summand.getNumerator()));
         final BigInteger newDenominator = denominator.multiply(summand.getDenominator());
         return new Fraction(newNumerator, newDenominator);
     }
@@ -148,7 +147,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     public Fraction subtract(final Fraction subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         final BigInteger newNumerator = subtrahend.getDenominator().multiply(numerator)
-                .subtract(denominator.multiply(subtrahend.getNumerator()));
+                        .subtract(denominator.multiply(subtrahend.getNumerator()));
         final BigInteger newDenominator = denominator.multiply(subtrahend.getDenominator());
         return new Fraction(newNumerator, newDenominator);
     }

@@ -17,7 +17,6 @@
 package finnmath.number;
 
 import static java.util.Objects.requireNonNull;
-
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
@@ -58,10 +57,10 @@ public final class ScientificNotation {
      * @since 1
      * @author Lars Tennstedt
      */
-<span class="fc" id="L61">    public ScientificNotation(final BigDecimal coefficient, final int exponent) {</span>
-<span class="fc" id="L62">        this.coefficient = requireNonNull(coefficient, &quot;coefficient&quot;);</span>
-<span class="fc" id="L63">        this.exponent = exponent;</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L60">    public ScientificNotation(final BigDecimal coefficient, final int exponent) {</span>
+<span class="fc" id="L61">        this.coefficient = requireNonNull(coefficient, &quot;coefficient&quot;);</span>
+<span class="fc" id="L62">        this.exponent = exponent;</span>
+<span class="fc" id="L63">    }</span>
 
     /**
      * Returns a string representation of this {@link ScientificNotation}
@@ -71,45 +70,45 @@ public final class ScientificNotation {
      * @author Lars Tennstedt
      */
     public String asString() {
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (exponent &lt; 0) {</span>
-<span class="nc" id="L75">            return new StringBuilder(coefficient.toPlainString()).append(&quot; * 10**(&quot;).append(exponent).append(&quot;)&quot;)</span>
-<span class="nc" id="L76">                    .toString();</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        } else if (exponent == 0) {</span>
-<span class="fc" id="L78">            return coefficient.toPlainString();</span>
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        } else if (exponent == 1) {</span>
-<span class="nc" id="L80">            return new StringBuilder(coefficient.toPlainString()).append(&quot; * 10&quot;).toString();</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (exponent &lt; 0) {</span>
+<span class="nc" id="L74">            return new StringBuilder(coefficient.toPlainString()).append(&quot; * 10**(&quot;).append(exponent).append(&quot;)&quot;)</span>
+<span class="nc" id="L75">                            .toString();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        } else if (exponent == 0) {</span>
+<span class="fc" id="L77">            return coefficient.toPlainString();</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">        } else if (exponent == 1) {</span>
+<span class="nc" id="L79">            return new StringBuilder(coefficient.toPlainString()).append(&quot; * 10&quot;).toString();</span>
         }
-<span class="fc" id="L82">        return new StringBuilder(coefficient.toPlainString()).append(&quot; * 10**&quot;).append(exponent).toString();</span>
+<span class="fc" id="L81">        return new StringBuilder(coefficient.toPlainString()).append(&quot; * 10**&quot;).append(exponent).toString();</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L87">        return Objects.hash(coefficient, exponent);</span>
+<span class="nc" id="L86">        return Objects.hash(coefficient, exponent);</span>
     }
 
     @Override
     public boolean equals(final Object object) {
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (this == object) {</span>
-<span class="nc" id="L93">            return true;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (this == object) {</span>
+<span class="nc" id="L92">            return true;</span>
         }
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (!(object instanceof ScientificNotation)) {</span>
-<span class="nc" id="L96">            return false;</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (!(object instanceof ScientificNotation)) {</span>
+<span class="nc" id="L95">            return false;</span>
         }
-<span class="fc" id="L98">        final ScientificNotation other = (ScientificNotation) object;</span>
-<span class="pc bpc" id="L99" title="2 of 4 branches missed.">        return coefficient.equals(other.getCoefficient()) &amp;&amp; (exponent == other.getExponent());</span>
+<span class="fc" id="L97">        final ScientificNotation other = (ScientificNotation) object;</span>
+<span class="pc bpc" id="L98" title="2 of 4 branches missed.">        return coefficient.equals(other.getCoefficient()) &amp;&amp; (exponent == other.getExponent());</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L104">        return MoreObjects.toStringHelper(this).add(&quot;coefficient&quot;, coefficient).add(&quot;exponent&quot;, exponent).toString();</span>
+<span class="nc" id="L103">        return MoreObjects.toStringHelper(this).add(&quot;coefficient&quot;, coefficient).add(&quot;exponent&quot;, exponent).toString();</span>
     }
 
     public BigDecimal getCoefficient() {
-<span class="fc" id="L108">        return coefficient;</span>
+<span class="fc" id="L107">        return coefficient;</span>
     }
 
     public int getExponent() {
-<span class="fc" id="L112">        return exponent;</span>
+<span class="fc" id="L111">        return exponent;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

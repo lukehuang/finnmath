@@ -19,7 +19,6 @@ package finnmath.util;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.lang.Math.addExact;
 import static java.util.Objects.requireNonNull;
-
 import com.google.common.annotations.Beta;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.math.BigIntegerMath;
@@ -124,7 +123,7 @@ public final class SquareRootCalculator {
         requireNonNull(precision, "precision");
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         return sqrt(new BigDecimal(integer), precision, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
     }
 
@@ -153,7 +152,7 @@ public final class SquareRootCalculator {
         requireNonNull(precision, "precision");
         checkArgument(decimal.compareTo(BigDecimal.ZERO) > -1, "expected decimal >= 0 but actual %s", decimal);
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         return heronsMethod(decimal, precision).setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
     }
 
@@ -186,7 +185,7 @@ public final class SquareRootCalculator {
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
+                        roundingMode);
         return sqrt(new BigDecimal(integer), DEFAULT_PRECISION, scale, roundingMode);
     }
 
@@ -219,7 +218,7 @@ public final class SquareRootCalculator {
         checkArgument(decimal.compareTo(BigDecimal.ZERO) > -1, "expected decimal >= 0 but actual %s", decimal);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
+                        roundingMode);
         return heronsMethod(decimal, DEFAULT_PRECISION).setScale(scale, roundingMode);
     }
 
@@ -254,15 +253,15 @@ public final class SquareRootCalculator {
      * @see BigDecimal#setScale(int, int)
      */
     public static BigDecimal sqrt(final BigInteger integer, final BigDecimal precision, final int scale,
-            final int roundingMode) {
+                    final int roundingMode) {
         requireNonNull(integer, "integer");
         requireNonNull(precision, "precision");
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
+                        roundingMode);
         return sqrt(new BigDecimal(integer), precision, scale, roundingMode);
     }
 
@@ -297,15 +296,15 @@ public final class SquareRootCalculator {
      * @see BigDecimal#setScale(int, int)
      */
     public static BigDecimal sqrt(final BigDecimal decimal, final BigDecimal precision, final int scale,
-            final int roundingMode) {
+                    final int roundingMode) {
         requireNonNull(decimal, "decimal");
         requireNonNull(precision, "precision");
         checkArgument(decimal.compareTo(BigDecimal.ZERO) > -1, "expected decimal >= 0 but actual %s", decimal);
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
+                        roundingMode);
         return heronsMethod(decimal, precision).setScale(scale, roundingMode);
     }
 
@@ -360,7 +359,7 @@ public final class SquareRootCalculator {
 
     private static BigDecimal heronsMethod(final BigDecimal decimal, final BigDecimal precision) {
         log.debug("calculating square root for {} with precision = {}", decimal.toPlainString(),
-                precision.toPlainString());
+                        precision.toPlainString());
         BigDecimal predecessor = seedValue(decimal);
         log.debug("seed value = {}", predecessor.toPlainString());
         BigDecimal successor = calculateSuccessor(predecessor, decimal);
@@ -380,7 +379,7 @@ public final class SquareRootCalculator {
         log.debug("iteration");
         log.debug("predecessor = {}", predecessor.toPlainString());
         final BigDecimal successor = predecessor.pow(2).add(decimal).divide(BigDecimal.valueOf(2).multiply(predecessor),
-                DEFAULT_SCALE, BigDecimal.ROUND_HALF_UP);
+                        DEFAULT_SCALE, BigDecimal.ROUND_HALF_UP);
         log.debug("successor = {}", successor.toPlainString());
         return successor;
     }

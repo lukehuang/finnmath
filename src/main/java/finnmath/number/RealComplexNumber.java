@@ -19,7 +19,6 @@ package finnmath.number;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
-
 import com.google.common.annotations.Beta;
 import finnmath.linear.DecimalMatrix;
 import finnmath.util.SquareRootCalculator;
@@ -35,7 +34,7 @@ import java.util.Objects;
  */
 @Beta
 public final class RealComplexNumber
-        extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
+                extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
     /**
      * {@code 0} as {@link RealComplexNumber}
      */
@@ -82,7 +81,7 @@ public final class RealComplexNumber
      */
     public RealComplexNumber(final SimpleComplexNumber complexNumber) {
         super(new BigDecimal(requireNonNull(complexNumber, "complexNumber").getReal()),
-                new BigDecimal(complexNumber.getImaginary()));
+                        new BigDecimal(complexNumber.getImaginary()));
     }
 
     /**
@@ -117,7 +116,7 @@ public final class RealComplexNumber
     public RealComplexNumber subtract(final RealComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new RealComplexNumber(real.subtract(subtrahend.getReal()),
-                imaginary.subtract(subtrahend.getImaginary()));
+                        imaginary.subtract(subtrahend.getImaginary()));
     }
 
     /**
@@ -158,9 +157,9 @@ public final class RealComplexNumber
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
         final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));
         final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))
-                .divide(denominator, BigDecimal.ROUND_HALF_UP);
+                        .divide(denominator, BigDecimal.ROUND_HALF_UP);
         final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())
-                .subtract(real.multiply(divisor.getImaginary())).divide(denominator, BigDecimal.ROUND_HALF_UP);
+                        .subtract(real.multiply(divisor.getImaginary())).divide(denominator, BigDecimal.ROUND_HALF_UP);
         return new RealComplexNumber(newReal, newImaginary);
     }
 
@@ -271,7 +270,7 @@ public final class RealComplexNumber
     @Override
     public DecimalMatrix matrix() {
         return DecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-                .put(2, 2, real).build();
+                        .put(2, 2, real).build();
     }
 
     @Override

@@ -19,7 +19,6 @@ package finnmath.linear;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
-
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table.Cell;
@@ -62,9 +61,10 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public DecimalMatrix add(final DecimalMatrix summand) {
         requireNonNull(summand, "summand");
         checkArgument(table.rowKeySet().size() == summand.rowSize(), "expected equal row sizes but actual %s != %s",
-                table.rowKeySet().size(), summand.rowSize());
+                        table.rowKeySet().size(), summand.rowSize());
         checkArgument(table.columnKeySet().size() == summand.columnSize(),
-                "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), summand.columnSize());
+                        "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
+                        summand.columnSize());
         final DecimalMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -94,10 +94,10 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public DecimalMatrix subtract(final DecimalMatrix subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), "expected equal row sizes but actual %s != %s",
-                table.rowKeySet().size(), subtrahend.rowSize());
+                        table.rowKeySet().size(), subtrahend.rowSize());
         checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),
-                "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
-                subtrahend.columnSize());
+                        "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
+                        subtrahend.columnSize());
         final DecimalMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -125,8 +125,8 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public DecimalMatrix multiply(final DecimalMatrix factor) {
         requireNonNull(factor, "factor");
         checkArgument(table.columnKeySet().size() == factor.rowSize(),
-                "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(),
-                factor.rowSize());
+                        "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(),
+                        factor.rowSize());
         final DecimalMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());
         table.rowMap().forEach((rowIndex, row) -> {
             factor.columns().forEach((columnIndex, column) -> {
@@ -156,12 +156,13 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public DecimalVector multiplyVector(final DecimalVector vector) {
         requireNonNull(vector, "vector");
         checkArgument(table.columnKeySet().size() == vector.size(),
-                "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(), vector.size());
+                        "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(),
+                        vector.size());
         final DecimalVectorBuilder builder = DecimalVector.builder(table.rowKeySet().size());
         table.rowMap().forEach((rowIndex, row) -> {
             row.forEach((columnIndex, matrixEntry) -> {
                 final BigDecimal oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex)
-                        : BigDecimal.ZERO;
+                                : BigDecimal.ZERO;
                 builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));
             });
         });
@@ -170,11 +171,11 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
 
     @Override
     protected BigDecimal multiplyRowWithColumn(final Map<Integer, BigDecimal> row,
-            final Map<Integer, BigDecimal> column) {
+                    final Map<Integer, BigDecimal> column) {
         requireNonNull(row, "row");
         requireNonNull(column, "column");
         checkArgument(row.size() == column.size(), "expected row size == column size but actual %s != %s", row.size(),
-                column.size());
+                        column.size());
         BigDecimal result = BigDecimal.ZERO;
         for (final Entry<Integer, BigDecimal> rowEntry : row.entrySet()) {
             result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));
@@ -228,7 +229,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     @Override
     public BigDecimal trace() {
         checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
-                table.columnKeySet().size());
+                        table.columnKeySet().size());
         BigDecimal result = BigDecimal.ZERO;
         for (final Integer index : table.rowKeySet()) {
             result = result.add(table.get(index, index));
@@ -258,9 +259,9 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public BigDecimal determinant() {
         checkState(table.rowKeySet().size() < 4, "expected row size < 4 but actual %s", table.rowKeySet().size());
         checkState(table.columnKeySet().size() < 4, "expected column size < 4 but actual %s",
-                table.columnKeySet().size());
+                        table.columnKeySet().size());
         checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
-                table.columnKeySet().size());
+                        table.columnKeySet().size());
         final int scale = table.get(1, 1).scale();
         if (triangular()) {
             BigDecimal result = BigDecimal.ONE.setScale(scale);
@@ -276,7 +277,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         }
         if (table.rowKeySet().size() == 2) {
             return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)))
-                    .setScale(scale, BigDecimal.ROUND_HALF_UP);
+                            .setScale(scale, BigDecimal.ROUND_HALF_UP);
         }
         return table.get(1, 1);
     }
@@ -290,7 +291,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         final BigDecimal fifthSummand = table.get(1, 2).multiply(table.get(2, 1)).multiply(table.get(3, 3)).negate();
         final BigDecimal sixthSummand = table.get(1, 1).multiply(table.get(2, 3)).multiply(table.get(3, 2)).negate();
         return firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand).add(fifthSummand).add(sixthSummand)
-                .setScale(table.get(1, 1).scale(), BigDecimal.ROUND_HALF_UP);
+                        .setScale(table.get(1, 1).scale(), BigDecimal.ROUND_HALF_UP);
     }
 
     /**
@@ -336,9 +337,9 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.containsRow(rowIndex), "expected row index in [1, %s] but actual %s",
-                table.rowKeySet().size(), rowIndex);
+                        table.rowKeySet().size(), rowIndex);
         checkArgument(table.containsColumn(columnIndex), "expected column index in [1, %s] but actual %s",
-                table.columnKeySet().size(), columnIndex);
+                        table.columnKeySet().size(), columnIndex);
         final DecimalMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -485,9 +486,9 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
             requireNonNull(rowIndex, "rowIndex");
             requireNonNull(columnIndex, "columnIndex");
             checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
-                    table.rowKeySet().size(), rowIndex);
+                            table.rowKeySet().size(), rowIndex);
             checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
-                    table.columnKeySet().size(), columnIndex);
+                            table.columnKeySet().size(), columnIndex);
             table.put(rowIndex, columnIndex, element);
             return this;
         }

@@ -17,7 +17,6 @@
 package finnmath.number;
 
 import static java.util.Objects.requireNonNull;
-
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 

@@ -18,7 +18,6 @@ package finnmath.linear;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Table.Cell;
 import finnmath.assertion.DecimalMatrixAssert;
@@ -95,8 +94,8 @@ public final class DecimalMatrixTest {
             othersForAddition.add(mathRandom.nextDecimalMatrix(bound, scale, rowSize, columnSize));
             additionalOthersForAddition.add(mathRandom.nextDecimalMatrix(bound, scale, rowSize, columnSize));
             othersForMultiplication.add(mathRandom.nextDecimalMatrix(bound, scale, columnSize, columnSizeForOthers));
-            additionalOthersForMultiplication.add(
-                    mathRandom.nextDecimalMatrix(bound, scale, columnSizeForOthers, columnSizeForAdditionalOthers));
+            additionalOthersForMultiplication.add(mathRandom.nextDecimalMatrix(bound, scale, columnSizeForOthers,
+                            columnSizeForAdditionalOthers));
             threeByThreeMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, 3, 3));
             twoByTwoMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, 2, 2));
             oneByOneMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, 1, 1));
@@ -139,7 +138,7 @@ public final class DecimalMatrixTest {
             final DecimalMatrix summand = DecimalMatrix.builder(3, 2).putAll(BigDecimal.ZERO).build();
             matrix.add(summand);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected equal column sizes but actual 3 != 2");
+                        .hasMessage("expected equal column sizes but actual 3 != 2");
 
     }
 
@@ -174,7 +173,7 @@ public final class DecimalMatrixTest {
             othersForAddition.forEach(other -> {
                 additionalOthersForAddition.forEach(additionalOthers -> {
                     DecimalMatrixAssert.assertThat(matrix.add(other).add(additionalOthers))
-                            .isEqualToByBigDecimalComparator(matrix.add(other.add(additionalOthers)));
+                                    .isEqualToByBigDecimalComparator(matrix.add(other.add(additionalOthers)));
                 });
             });
         });
@@ -213,7 +212,7 @@ public final class DecimalMatrixTest {
             final DecimalMatrix subtrahend = DecimalMatrix.builder(3, 2).putAll(BigDecimal.ZERO).build();
             minuend.subtract(subtrahend);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected equal column sizes but actual 3 != 2");
+                        .hasMessage("expected equal column sizes but actual 3 != 2");
 
     }
 
@@ -229,7 +228,7 @@ public final class DecimalMatrixTest {
                     builder.put(rowIndex, columnIndex, expectedEntry);
                 });
                 DecimalMatrixAssert.assertThat(matrix.subtract(other)).isExactlyInstanceOf(DecimalMatrix.class)
-                        .isEqualToByBigDecimalComparator(builder.build());
+                                .isEqualToByBigDecimalComparator(builder.build());
             });
         });
     }
@@ -238,7 +237,7 @@ public final class DecimalMatrixTest {
     public void subtractZeroMatrixShouldBeEqualToSelf() {
         matrices.forEach(matrix -> {
             DecimalMatrixAssert.assertThat(matrix.subtract(zeroMatrixForAddition))
-                    .isEqualToByBigDecimalComparator(matrix);
+                            .isEqualToByBigDecimalComparator(matrix);
         });
     }
 
@@ -246,7 +245,7 @@ public final class DecimalMatrixTest {
     public void subtractSelfShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> {
             DecimalMatrixAssert.assertThat(matrix.subtract(matrix))
-                    .isEqualToByBigDecimalComparator(zeroMatrixForAddition);
+                            .isEqualToByBigDecimalComparator(zeroMatrixForAddition);
         });
     }
 
@@ -265,7 +264,7 @@ public final class DecimalMatrixTest {
             final DecimalMatrix factor = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
             matrix.multiply(factor);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnSize == factor.rowSize but actual 3 != 2");
+                        .hasMessage("expected columnSize == factor.rowSize but actual 3 != 2");
 
     }
 
@@ -284,7 +283,7 @@ public final class DecimalMatrixTest {
                     });
                 });
                 DecimalMatrixAssert.assertThat(matrix.multiply(other)).isExactlyInstanceOf(DecimalMatrix.class)
-                        .isEqualToByBigDecimalComparator(builder.build());
+                                .isEqualToByBigDecimalComparator(builder.build());
             });
         });
     }
@@ -311,7 +310,7 @@ public final class DecimalMatrixTest {
             othersForMultiplication.forEach(other -> {
                 additionalOthersForMultiplication.forEach(additionalOthers -> {
                     DecimalMatrixAssert.assertThat(matrix.multiply(other).multiply(additionalOthers))
-                            .isEqualToByBigDecimalComparator(matrix.multiply(other.multiply(additionalOthers)));
+                                    .isEqualToByBigDecimalComparator(matrix.multiply(other.multiply(additionalOthers)));
                 });
             });
         });
@@ -323,8 +322,8 @@ public final class DecimalMatrixTest {
             squareMatrices.forEach(other -> {
                 squareMatrices.forEach(additionalOther -> {
                     DecimalMatrixAssert.assertThat(matrix.multiply(other.add(additionalOther)))
-                            .isEqualToByBigDecimalComparator(
-                                    matrix.multiply(other).add(matrix.multiply(additionalOther)));
+                                    .isEqualToByBigDecimalComparator(
+                                                    matrix.multiply(other).add(matrix.multiply(additionalOther)));
                 });
             });
         });
@@ -344,7 +343,7 @@ public final class DecimalMatrixTest {
             final DecimalVector vector = DecimalVector.builder(2).putAll(BigDecimal.ZERO).build();
             matrix.multiplyVector(vector);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnSize == vectorSize but actual 3 != 2");
+                        .hasMessage("expected columnSize == vectorSize but actual 3 != 2");
     }
 
     @Test
@@ -360,7 +359,7 @@ public final class DecimalMatrixTest {
                     builder.put(element);
                 });
                 DecimalVectorAssert.assertThat(matrix.multiplyVector(vector))
-                        .isEqualToByBigDecimalComparator(builder.build());
+                                .isEqualToByBigDecimalComparator(builder.build());
             });
         });
     }
@@ -391,7 +390,7 @@ public final class DecimalMatrixTest {
                     builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue()));
                 });
                 DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar)).isExactlyInstanceOf(DecimalMatrix.class)
-                        .isEqualToByBigDecimalComparator(builder.build());
+                                .isEqualToByBigDecimalComparator(builder.build());
             });
         });
     }
@@ -402,7 +401,8 @@ public final class DecimalMatrixTest {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
                     DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar.multiply(otherScalar)))
-                            .isEqualToByBigDecimalComparator(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar));
+                                    .isEqualToByBigDecimalComparator(
+                                                    matrix.scalarMultiply(otherScalar).scalarMultiply(scalar));
                 });
             });
         });
@@ -414,7 +414,7 @@ public final class DecimalMatrixTest {
             othersForMultiplication.forEach(other -> {
                 scalars.forEach(scalar -> {
                     DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar).multiply(other))
-                            .isEqualToByBigDecimalComparator(matrix.multiply(other).scalarMultiply(scalar));
+                                    .isEqualToByBigDecimalComparator(matrix.multiply(other).scalarMultiply(scalar));
                 });
             });
         });
@@ -426,8 +426,8 @@ public final class DecimalMatrixTest {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
                     DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar.add(otherScalar)))
-                            .isEqualToByBigDecimalComparator(
-                                    matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar)));
+                                    .isEqualToByBigDecimalComparator(matrix.scalarMultiply(scalar)
+                                                    .add(matrix.scalarMultiply(otherScalar)));
                 });
             });
         });
@@ -439,8 +439,8 @@ public final class DecimalMatrixTest {
             othersForAddition.forEach(other -> {
                 scalars.forEach(scalar -> {
                     DecimalMatrixAssert.assertThat(matrix.add(other).scalarMultiply(scalar))
-                            .isEqualToByBigDecimalComparator(
-                                    matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)));
+                                    .isEqualToByBigDecimalComparator(
+                                                    matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)));
                 });
             });
         });
@@ -450,7 +450,7 @@ public final class DecimalMatrixTest {
     public void scalarMultiplyWithZeroShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> {
             DecimalMatrixAssert.assertThat(matrix.scalarMultiply(BigDecimal.ZERO))
-                    .isEqualToByBigDecimalComparator(zeroMatrixForAddition);
+                            .isEqualToByBigDecimalComparator(zeroMatrixForAddition);
         });
     }
 
@@ -458,7 +458,7 @@ public final class DecimalMatrixTest {
     public void scalarMultiplyWithOneShouldBeEqualToSelf() {
         matrices.forEach(matrix -> {
             DecimalMatrixAssert.assertThat(matrix.scalarMultiply(BigDecimal.ONE))
-                    .isEqualToByBigDecimalComparator(matrix);
+                            .isEqualToByBigDecimalComparator(matrix);
         });
     }
 
@@ -468,7 +468,8 @@ public final class DecimalMatrixTest {
             vectors.forEach(vector -> {
                 scalars.forEach(scalar -> {
                     DecimalVectorAssert.assertThat(matrix.scalarMultiply(scalar).multiplyVector(vector))
-                            .isEqualToByBigDecimalComparator(matrix.multiplyVector(vector).scalarMultiply(scalar));
+                                    .isEqualToByBigDecimalComparator(
+                                                    matrix.multiplyVector(vector).scalarMultiply(scalar));
                 });
             });
         });
@@ -478,14 +479,14 @@ public final class DecimalMatrixTest {
     public void negateShouldSucceed() {
         matrices.forEach(matrix -> {
             DecimalMatrixAssert.assertThat(matrix.negate()).isExactlyInstanceOf(DecimalMatrix.class)
-                    .isEqualToByBigDecimalComparator(matrix.scalarMultiply(BigDecimal.ONE.negate()));
+                            .isEqualToByBigDecimalComparator(matrix.scalarMultiply(BigDecimal.ONE.negate()));
         });
     }
 
     @Test
     public void negateZeroMatrixShouldBeEqualToSelf() {
         DecimalMatrixAssert.assertThat(zeroMatrixForAddition.negate())
-                .isEqualToByBigDecimalComparator(zeroMatrixForAddition);
+                        .isEqualToByBigDecimalComparator(zeroMatrixForAddition);
     }
 
     @Test
@@ -508,12 +509,12 @@ public final class DecimalMatrixTest {
     public void multiplyNegativeIdentityMatrixShouldBeEqualToNegated() {
         squareMatrices.forEach(matrix -> {
             final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize())
-                    .putAll(BigDecimal.ZERO);
+                            .putAll(BigDecimal.ZERO);
             matrix.rowIndexes().forEach(index -> {
                 builder.put(index, index, BigDecimal.ONE.negate());
             });
             DecimalMatrixAssert.assertThat(matrix.multiply(builder.build()))
-                    .isEqualToByBigDecimalComparator(matrix.negate());
+                            .isEqualToByBigDecimalComparator(matrix.negate());
         });
     }
 
@@ -521,7 +522,7 @@ public final class DecimalMatrixTest {
     public void scalarMultiplyWithMinusOneShouldBeEqualToNegated() {
         matrices.forEach(matrix -> {
             DecimalMatrixAssert.assertThat(matrix.scalarMultiply(BigDecimal.ONE.negate()))
-                    .isEqualToByBigDecimalComparator(matrix.negate());
+                            .isEqualToByBigDecimalComparator(matrix.negate());
         });
     }
 
@@ -562,7 +563,7 @@ public final class DecimalMatrixTest {
         squareMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).trace().compareTo(scalar.multiply(matrix.trace())))
-                        .isEqualTo(0);
+                                .isEqualTo(0);
             });
         });
     }
@@ -608,7 +609,7 @@ public final class DecimalMatrixTest {
     public void detOfTwoByTwoMatricesShouldSucceed() {
         twoByTwoMatrices.forEach(matrix -> {
             final BigDecimal expected = matrix.element(1, 1).multiply(matrix.element(2, 2))
-                    .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
+                            .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
             assertThat(matrix.determinant().compareTo(expected)).isEqualTo(0);
         });
     }
@@ -644,7 +645,7 @@ public final class DecimalMatrixTest {
         });
         final DecimalMatrix identityThreeByThreeMatrix = identityThreeByThreeMatrixBuilder.build();
         final DecimalMatrix identityTwoByTwoMatrix = DecimalMatrix.builder(2, 2).put(1, 1, BigDecimal.ONE)
-                .put(1, 2, BigDecimal.ZERO).put(2, 1, BigDecimal.ZERO).put(2, 2, BigDecimal.ONE).build();
+                        .put(1, 2, BigDecimal.ZERO).put(2, 1, BigDecimal.ZERO).put(2, 2, BigDecimal.ONE).build();
         final DecimalMatrix identityOneByOneMatrix = DecimalMatrix.builder(1, 1).put(1, 1, BigDecimal.ONE).build();
         assertThat(identityThreeByThreeMatrix.determinant().compareTo(BigDecimal.ONE)).isEqualTo(0);
         assertThat(identityTwoByTwoMatrix.determinant().compareTo(BigDecimal.ONE)).isEqualTo(0);
@@ -656,19 +657,19 @@ public final class DecimalMatrixTest {
         threeByThreeMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).determinant()
-                        .compareTo(scalar.pow(3).multiply(matrix.determinant()))).isEqualTo(0);
+                                .compareTo(scalar.pow(3).multiply(matrix.determinant()))).isEqualTo(0);
             });
         });
         twoByTwoMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).determinant()
-                        .compareTo(scalar.pow(2).multiply(matrix.determinant()))).isEqualTo(0);
+                                .compareTo(scalar.pow(2).multiply(matrix.determinant()))).isEqualTo(0);
             });
         });
         oneByOneMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).determinant().compareTo(scalar.multiply(matrix.determinant())))
-                        .isEqualTo(0);
+                                .isEqualTo(0);
             });
         });
     }
@@ -727,7 +728,7 @@ public final class DecimalMatrixTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 DecimalMatrixAssert.assertThat(matrix.add(other).transpose())
-                        .isEqualToByBigDecimalComparator(matrix.transpose().add(other.transpose()));
+                                .isEqualToByBigDecimalComparator(matrix.transpose().add(other.transpose()));
             });
         });
     }
@@ -737,7 +738,7 @@ public final class DecimalMatrixTest {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 DecimalMatrixAssert.assertThat(matrix.scalarMultiply(scalar).transpose())
-                        .isEqualToByBigDecimalComparator(matrix.transpose().scalarMultiply(scalar));
+                                .isEqualToByBigDecimalComparator(matrix.transpose().scalarMultiply(scalar));
             });
         });
     }
@@ -747,7 +748,7 @@ public final class DecimalMatrixTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 DecimalMatrixAssert.assertThat(matrix.multiply(other).transpose())
-                        .isEqualToByBigDecimalComparator(other.transpose().multiply(matrix.transpose()));
+                                .isEqualToByBigDecimalComparator(other.transpose().multiply(matrix.transpose()));
             });
         });
     }
@@ -771,7 +772,7 @@ public final class DecimalMatrixTest {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(0, 1);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row index in [1, %s] but actual 0",
-                zeroMatrixForAddition.rowSize());
+                        zeroMatrixForAddition.rowSize());
     }
 
     @Test
@@ -780,15 +781,15 @@ public final class DecimalMatrixTest {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(invalidRowIndex, 1);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row index in [1, %s] but actual %s",
-                zeroMatrixForAddition.rowSize(), invalidRowIndex);
+                        zeroMatrixForAddition.rowSize(), invalidRowIndex);
     }
 
     @Test
     public void minorColumnIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(1, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected column index in [1, %s] but actual 0", zeroMatrixForAddition.columnSize());
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
+                        "expected column index in [1, %s] but actual 0", zeroMatrixForAddition.columnSize());
     }
 
     @Test
@@ -797,8 +798,8 @@ public final class DecimalMatrixTest {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(1, invalidColumnIndex);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                "expected column index in [1, %s] but actual %s", zeroMatrixForAddition.columnSize(),
-                invalidColumnIndex);
+                        "expected column index in [1, %s] but actual %s", zeroMatrixForAddition.columnSize(),
+                        invalidColumnIndex);
     }
 
     @Test
@@ -819,7 +820,7 @@ public final class DecimalMatrixTest {
                 }
             });
             DecimalMatrixAssert.assertThat(matrix.minor(rowIndex, columnIndex)).isExactlyInstanceOf(DecimalMatrix.class)
-                    .isEqualToByBigDecimalComparator(builder.build());
+                            .isEqualToByBigDecimalComparator(builder.build());
         });
     }
 
@@ -1176,7 +1177,7 @@ public final class DecimalMatrixTest {
     public void toStringShouldSucceed() {
         matrices.forEach(matrix -> {
             assertThat(matrix.toString()).isExactlyInstanceOf(String.class)
-                    .isEqualTo(MoreObjects.toStringHelper(matrix).add("table", matrix.getTable()).toString());
+                            .isEqualTo(MoreObjects.toStringHelper(matrix).add("table", matrix.getTable()).toString());
         });
     }
 }

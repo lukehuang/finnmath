@@ -18,7 +18,6 @@ package finnmath.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
-
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.util.HashMap;
@@ -34,7 +33,7 @@ abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt;V&gt; 
     /**
      * The map holding the elements of this {@link AbstractVectorBuilder}
      */
-<span class="fc" id="L37">    protected final Map&lt;Integer, E&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L36">    protected final Map&lt;Integer, E&gt; map = new HashMap&lt;&gt;();</span>
 
     /**
      * The size of the map
@@ -51,10 +50,10 @@ abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt;V&gt; 
      * @since 1
      * @author Lars Tennstedt
      */
-<span class="fc" id="L54">    protected AbstractVectorBuilder(final int size) {</span>
-<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L56">        this.size = size;</span>
-<span class="fc" id="L57">    }</span>
+<span class="fc" id="L53">    protected AbstractVectorBuilder(final int size) {</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L55">        this.size = size;</span>
+<span class="fc" id="L56">    }</span>
 
     /**
      * Returns the element dependent on the given index
@@ -71,22 +70,22 @@ abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt;V&gt; 
      * @see Map#containsKey
      */
     public E element(final Integer index) {
-<span class="fc" id="L74">        requireNonNull(index, &quot;index&quot;);</span>
-<span class="pc bpc" id="L75" title="2 of 4 branches missed.">        checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="fc" id="L76">        return map.get(index);</span>
+<span class="fc" id="L73">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="pc bpc" id="L74" title="2 of 4 branches missed.">        checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L75">        return map.get(index);</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L81">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).add(&quot;size&quot;, size).toString();</span>
+<span class="nc" id="L80">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).add(&quot;size&quot;, size).toString();</span>
     }
 
     public Map&lt;Integer, E&gt; getMap() {
-<span class="nc" id="L85">        return map;</span>
+<span class="nc" id="L84">        return map;</span>
     }
 
     public int getSize() {
-<span class="nc" id="L89">        return size;</span>
+<span class="nc" id="L88">        return size;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

@@ -17,7 +17,6 @@
 package finnmath.number;
 
 import static java.util.Objects.requireNonNull;
-
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
@@ -73,7 +72,7 @@ public final class ScientificNotation {
     public String asString() {
         if (exponent < 0) {
             return new StringBuilder(coefficient.toPlainString()).append(" * 10**(").append(exponent).append(")")
-                    .toString();
+                            .toString();
         } else if (exponent == 0) {
             return coefficient.toPlainString();
         } else if (exponent == 1) {

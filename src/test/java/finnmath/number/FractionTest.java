@@ -18,7 +18,6 @@ package finnmath.number;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import com.google.common.base.MoreObjects;
 import finnmath.util.MathRandom;
 import java.math.BigDecimal;
@@ -79,8 +78,9 @@ public final class FractionTest {
     public void intValueShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.intValue()).isExactlyInstanceOf(Integer.class)
-                    .isEqualTo(new BigDecimal(fraction.getNumerator())
-                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).intValue());
+                            .isEqualTo(new BigDecimal(fraction.getNumerator())
+                                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP)
+                                            .intValue());
         });
     }
 
@@ -88,8 +88,9 @@ public final class FractionTest {
     public void longValueShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.longValue()).isExactlyInstanceOf(Long.class)
-                    .isEqualTo(new BigDecimal(fraction.getNumerator())
-                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).longValue());
+                            .isEqualTo(new BigDecimal(fraction.getNumerator())
+                                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP)
+                                            .longValue());
         });
     }
 
@@ -97,8 +98,9 @@ public final class FractionTest {
     public void floatValueShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.floatValue()).isExactlyInstanceOf(Float.class)
-                    .isEqualTo(new BigDecimal(fraction.getNumerator())
-                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).floatValue());
+                            .isEqualTo(new BigDecimal(fraction.getNumerator())
+                                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP)
+                                            .floatValue());
         });
     }
 
@@ -106,8 +108,9 @@ public final class FractionTest {
     public void doubleValueShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.doubleValue()).isExactlyInstanceOf(Double.class)
-                    .isEqualTo(new BigDecimal(fraction.getNumerator())
-                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).doubleValue());
+                            .isEqualTo(new BigDecimal(fraction.getNumerator())
+                                            .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP)
+                                            .doubleValue());
         });
     }
 
@@ -123,7 +126,7 @@ public final class FractionTest {
         fractions.forEach(fraction -> {
             others.forEach(other -> {
                 final BigInteger expectedNumerator = other.getDenominator().multiply(fraction.getNumerator())
-                        .add(fraction.getDenominator().multiply(other.getNumerator()));
+                                .add(fraction.getDenominator().multiply(other.getNumerator()));
                 final BigInteger expectedDenominator = fraction.getDenominator().multiply(other.getDenominator());
                 final Fraction actual = fraction.add(other);
                 final Fraction expected = new Fraction(expectedNumerator, expectedDenominator);
@@ -171,7 +174,7 @@ public final class FractionTest {
         fractions.forEach(fraction -> {
             others.forEach(other -> {
                 final BigInteger expectedNumerator = other.getDenominator().multiply(fraction.getNumerator())
-                        .subtract(fraction.getDenominator().multiply(other.getNumerator()));
+                                .subtract(fraction.getDenominator().multiply(other.getNumerator()));
                 final BigInteger expectedDenominator = fraction.getDenominator().multiply(other.getDenominator());
                 final Fraction actual = fraction.subtract(other);
                 final Fraction expected = new Fraction(expectedNumerator, expectedDenominator);
@@ -243,7 +246,7 @@ public final class FractionTest {
             others.forEach(other -> {
                 invertibles.forEach(invertible -> {
                     assertThat(fraction.multiply(other).multiply(invertible))
-                            .isEqualTo(fraction.multiply(other.multiply(invertible)));
+                                    .isEqualTo(fraction.multiply(other.multiply(invertible)));
                 });
             });
         });
@@ -255,7 +258,7 @@ public final class FractionTest {
             others.forEach(other -> {
                 invertibles.forEach(invertible -> {
                     assertThat(fraction.multiply(other.add(invertible)).reduce())
-                            .isEqualTo(fraction.multiply(other).add(fraction.multiply(invertible)).reduce());
+                                    .isEqualTo(fraction.multiply(other).add(fraction.multiply(invertible)).reduce());
                 });
             });
         });
@@ -273,7 +276,7 @@ public final class FractionTest {
         assertThatThrownBy(() -> {
             Fraction.ZERO.divide(Fraction.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected divisor to be invertible but actual %s", Fraction.ZERO);
+                        .hasMessage("expected divisor to be invertible but actual %s", Fraction.ZERO);
     }
 
     @Test
@@ -281,7 +284,7 @@ public final class FractionTest {
         fractions.forEach(fraction -> {
             invertibles.forEach(invertible -> {
                 assertThat(fraction.divide(invertible)).isExactlyInstanceOf(Fraction.class)
-                        .isEqualTo(fraction.multiply(invertible.invert()));
+                                .isEqualTo(fraction.multiply(invertible.invert()));
             });
         });
     }
@@ -297,7 +300,7 @@ public final class FractionTest {
     public void negateShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.negate()).isExactlyInstanceOf(Fraction.class)
-                    .isEqualTo(new Fraction(fraction.getNumerator().negate(), fraction.getDenominator()));
+                            .isEqualTo(new Fraction(fraction.getNumerator().negate(), fraction.getDenominator()));
         });
     }
 
@@ -331,7 +334,7 @@ public final class FractionTest {
     public void divideMinusOneShouldBeEqualToNegated() {
         fractions.forEach(fraction -> {
             assertThat(fraction.divide(Fraction.ONE.negate()).normalize().reduce())
-                    .isEqualTo(fraction.negate().reduce());
+                            .isEqualTo(fraction.negate().reduce());
         });
     }
 
@@ -346,7 +349,7 @@ public final class FractionTest {
     public void powShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.pow(3)).isExactlyInstanceOf(Fraction.class)
-                    .isEqualTo(fraction.multiply(fraction).multiply(fraction));
+                            .isEqualTo(fraction.multiply(fraction).multiply(fraction));
             assertThat(fraction.pow(2)).isEqualTo(fraction.multiply(fraction));
         });
     }
@@ -380,14 +383,14 @@ public final class FractionTest {
         assertThatThrownBy(() -> {
             Fraction.ZERO.invert();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected to be invertible but actual %s",
-                Fraction.ZERO);
+                        Fraction.ZERO);
     }
 
     @Test
     public void invertShouldSucceed() {
         invertibles.forEach(invertible -> {
             assertThat(invertible.invert()).isExactlyInstanceOf(Fraction.class)
-                    .isEqualTo(new Fraction(invertible.getDenominator(), invertible.getNumerator()));
+                            .isEqualTo(new Fraction(invertible.getDenominator(), invertible.getNumerator()));
         });
     }
 
@@ -400,7 +403,7 @@ public final class FractionTest {
     public void invertSelfShouldBeEqualToOneDividedBySelf() {
         invertibles.forEach(invertible -> {
             assertThat(invertible.invert().reduce().normalize())
-                    .isEqualTo(Fraction.ONE.divide(invertible).reduce().normalize());
+                            .isEqualTo(Fraction.ONE.divide(invertible).reduce().normalize());
         });
     }
 
@@ -579,7 +582,7 @@ public final class FractionTest {
     public void absShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.abs()).isExactlyInstanceOf(Fraction.class)
-                    .isEqualTo(new Fraction(fraction.getNumerator().abs(), fraction.getDenominator().abs()));
+                            .isEqualTo(new Fraction(fraction.getNumerator().abs(), fraction.getDenominator().abs()));
         });
     }
 
@@ -616,7 +619,7 @@ public final class FractionTest {
     public void compareToEqualShouldReturnZero() {
         fractions.forEach(fraction -> {
             assertThat(fraction.compareTo(new Fraction(fraction.getNumerator(), fraction.getDenominator())))
-                    .isExactlyInstanceOf(Integer.class).isEqualTo(0);
+                            .isExactlyInstanceOf(Integer.class).isEqualTo(0);
         });
     }
 
@@ -624,7 +627,7 @@ public final class FractionTest {
     public void compareToLowerShouldReturnMinusOne() {
         fractions.forEach(fraction -> {
             assertThat(fraction.compareTo(fraction.subtract(Fraction.ONE))).isExactlyInstanceOf(Integer.class)
-                    .isEqualTo(1);
+                            .isEqualTo(1);
         });
     }
 
@@ -632,7 +635,7 @@ public final class FractionTest {
     public void signumShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.signum())
-                    .isEqualTo(fraction.getNumerator().signum() * fraction.getDenominator().signum());
+                            .isEqualTo(fraction.getNumerator().signum() * fraction.getDenominator().signum());
         });
     }
 
@@ -656,7 +659,7 @@ public final class FractionTest {
         fractions.forEach(fraction -> {
             final BigInteger gcd = fraction.getNumerator().gcd(fraction.getDenominator());
             final Fraction expected = new Fraction(fraction.getNumerator().divide(gcd),
-                    fraction.getDenominator().divide(gcd));
+                            fraction.getDenominator().divide(gcd));
             assertThat(fraction.reduce()).isExactlyInstanceOf(Fraction.class).isEqualTo(expected);
         });
     }
@@ -732,7 +735,7 @@ public final class FractionTest {
     public void hashCodeShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.hashCode()).isExactlyInstanceOf(Integer.class)
-                    .isEqualTo(Objects.hash(fraction.getNumerator(), fraction.getDenominator()));
+                            .isEqualTo(Objects.hash(fraction.getNumerator(), fraction.getDenominator()));
         });
     }
 
@@ -759,8 +762,8 @@ public final class FractionTest {
     public void toStringShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.toString()).isExactlyInstanceOf(String.class)
-                    .isEqualTo(MoreObjects.toStringHelper(fraction).add("numerator", fraction.getNumerator())
-                            .add("denominator", fraction.getDenominator()).toString());
+                            .isEqualTo(MoreObjects.toStringHelper(fraction).add("numerator", fraction.getNumerator())
+                                            .add("denominator", fraction.getDenominator()).toString());
         });
     }
 }

@@ -18,7 +18,6 @@ package finnmath.number;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import com.google.common.base.MoreObjects;
 import finnmath.linear.BigIntMatrix;
 import finnmath.util.MathRandom;
@@ -76,7 +75,7 @@ public final class SimpleComplexNumberTest {
                 final BigInteger expectedReal = complexNumber.getReal().add(other.getReal());
                 final BigInteger expectedImaginary = complexNumber.getImaginary().add(other.getImaginary());
                 assertThat(complexNumber.add(other)).isExactlyInstanceOf(SimpleComplexNumber.class)
-                        .isEqualTo(new SimpleComplexNumber(expectedReal, expectedImaginary));
+                                .isEqualTo(new SimpleComplexNumber(expectedReal, expectedImaginary));
             });
         });
     }
@@ -103,7 +102,7 @@ public final class SimpleComplexNumberTest {
             others.forEach(other -> {
                 invertibles.forEach(invertible -> {
                     assertThat(complexNumber.add(other).add(invertible))
-                            .isEqualTo(complexNumber.add(other.add(invertible)));
+                                    .isEqualTo(complexNumber.add(other.add(invertible)));
                 });
             });
         });
@@ -123,7 +122,7 @@ public final class SimpleComplexNumberTest {
                 final BigInteger expectedReal = complexNumber.getReal().subtract(other.getReal());
                 final BigInteger expectedImaginary = complexNumber.getImaginary().subtract(other.getImaginary());
                 assertThat(complexNumber.subtract(other)).isExactlyInstanceOf(SimpleComplexNumber.class)
-                        .isEqualTo(new SimpleComplexNumber(expectedReal, expectedImaginary));
+                                .isEqualTo(new SimpleComplexNumber(expectedReal, expectedImaginary));
             });
         });
     }
@@ -154,11 +153,11 @@ public final class SimpleComplexNumberTest {
         complexNumbers.forEach(complexNumber -> {
             others.forEach(other -> {
                 final BigInteger expectedReal = complexNumber.getReal().multiply(other.getReal())
-                        .subtract(complexNumber.getImaginary().multiply(other.getImaginary()));
+                                .subtract(complexNumber.getImaginary().multiply(other.getImaginary()));
                 final BigInteger expectedImaginary = complexNumber.getImaginary().multiply(other.getReal())
-                        .add(complexNumber.getReal().multiply(other.getImaginary()));
+                                .add(complexNumber.getReal().multiply(other.getImaginary()));
                 assertThat(complexNumber.multiply(other)).isExactlyInstanceOf(SimpleComplexNumber.class)
-                        .isEqualTo(new SimpleComplexNumber(expectedReal, expectedImaginary));
+                                .isEqualTo(new SimpleComplexNumber(expectedReal, expectedImaginary));
             });
         });
     }
@@ -192,7 +191,7 @@ public final class SimpleComplexNumberTest {
             others.forEach(other -> {
                 invertibles.forEach(invertible -> {
                     assertThat(complexNumber.multiply(other).multiply(invertible))
-                            .isEqualTo(complexNumber.multiply(other.multiply(invertible)));
+                                    .isEqualTo(complexNumber.multiply(other.multiply(invertible)));
                 });
             });
         });
@@ -204,7 +203,7 @@ public final class SimpleComplexNumberTest {
             others.forEach(other -> {
                 invertibles.forEach(invertible -> {
                     assertThat(complexNumber.multiply(other.add(invertible)))
-                            .isEqualTo(complexNumber.multiply(other).add(complexNumber.multiply(invertible)));
+                                    .isEqualTo(complexNumber.multiply(other).add(complexNumber.multiply(invertible)));
                 });
             });
         });
@@ -222,7 +221,7 @@ public final class SimpleComplexNumberTest {
         assertThatThrownBy(() -> {
             SimpleComplexNumber.ONE.divide(SimpleComplexNumber.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected divisor to be invertible but actual %s", SimpleComplexNumber.ZERO);
+                        .hasMessage("expected divisor to be invertible but actual %s", SimpleComplexNumber.ZERO);
     }
 
     @Test
@@ -230,16 +229,16 @@ public final class SimpleComplexNumberTest {
         complexNumbers.forEach(complexNumber -> {
             invertibles.forEach(invertible -> {
                 final BigDecimal denominator = new BigDecimal(
-                        invertible.getReal().pow(2).add(invertible.getImaginary().pow(2)));
+                                invertible.getReal().pow(2).add(invertible.getImaginary().pow(2)));
                 final BigDecimal expectedReal = new BigDecimal(complexNumber.getReal().multiply(invertible.getReal())
-                        .add(complexNumber.getImaginary().multiply(invertible.getImaginary()))).divide(denominator,
-                                BigDecimal.ROUND_HALF_UP);
+                                .add(complexNumber.getImaginary().multiply(invertible.getImaginary())))
+                                                .divide(denominator, BigDecimal.ROUND_HALF_UP);
                 final BigDecimal expectedImaginary = new BigDecimal(
-                        complexNumber.getImaginary().multiply(invertible.getReal())
-                                .subtract(complexNumber.getReal().multiply(invertible.getImaginary())))
-                                        .divide(denominator, BigDecimal.ROUND_HALF_UP);
+                                complexNumber.getImaginary().multiply(invertible.getReal())
+                                                .subtract(complexNumber.getReal().multiply(invertible.getImaginary())))
+                                                                .divide(denominator, BigDecimal.ROUND_HALF_UP);
                 assertThat(complexNumber.divide(invertible)).isExactlyInstanceOf(RealComplexNumber.class)
-                        .isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary));
+                                .isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary));
             });
         });
     }
@@ -262,7 +261,7 @@ public final class SimpleComplexNumberTest {
     public void powShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.pow(3)).isExactlyInstanceOf(SimpleComplexNumber.class)
-                    .isEqualTo(complexNumber.multiply(complexNumber).multiply(complexNumber));
+                            .isEqualTo(complexNumber.multiply(complexNumber).multiply(complexNumber));
             assertThat(complexNumber.pow(2)).isEqualTo(complexNumber.multiply(complexNumber));
         });
     }
@@ -299,8 +298,9 @@ public final class SimpleComplexNumberTest {
     @Test
     public void negateShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
-            assertThat(complexNumber.negate()).isExactlyInstanceOf(SimpleComplexNumber.class).isEqualTo(
-                    new SimpleComplexNumber(complexNumber.getReal().negate(), complexNumber.getImaginary().negate()));
+            assertThat(complexNumber.negate()).isExactlyInstanceOf(SimpleComplexNumber.class)
+                            .isEqualTo(new SimpleComplexNumber(complexNumber.getReal().negate(),
+                                            complexNumber.getImaginary().negate()));
         });
     }
 
@@ -327,7 +327,7 @@ public final class SimpleComplexNumberTest {
     public void divideMinusOneShouldBeEqualToNegated() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.divide(SimpleComplexNumber.ONE.negate()))
-                    .isEqualTo(new RealComplexNumber(complexNumber).negate());
+                            .isEqualTo(new RealComplexNumber(complexNumber).negate());
         });
     }
 
@@ -343,14 +343,14 @@ public final class SimpleComplexNumberTest {
         assertThatThrownBy(() -> {
             SimpleComplexNumber.ZERO.invert();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected to be invertible but actual %s",
-                SimpleComplexNumber.ZERO);
+                        SimpleComplexNumber.ZERO);
     }
 
     @Test
     public void invertShouldSucceed() {
         invertibles.forEach(invertible -> {
             assertThat(invertible.invert()).isExactlyInstanceOf(RealComplexNumber.class)
-                    .isEqualTo(SimpleComplexNumber.ONE.divide(invertible));
+                            .isEqualTo(SimpleComplexNumber.ONE.divide(invertible));
         });
     }
 
@@ -389,7 +389,7 @@ public final class SimpleComplexNumberTest {
     public void absPow2ShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.absPow2()).isExactlyInstanceOf(BigInteger.class)
-                    .isEqualTo(complexNumber.getReal().pow(2).add(complexNumber.getImaginary().pow(2)));
+                            .isEqualTo(complexNumber.getReal().pow(2).add(complexNumber.getImaginary().pow(2)));
         });
     }
 
@@ -412,15 +412,15 @@ public final class SimpleComplexNumberTest {
     public void absShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.abs()).isExactlyInstanceOf(BigDecimal.class)
-                    .isEqualTo(SquareRootCalculator.sqrt(complexNumber.absPow2()));
+                            .isEqualTo(SquareRootCalculator.sqrt(complexNumber.absPow2()));
         });
     }
 
     @Test
     public void conjugateShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
-            assertThat(complexNumber.conjugate()).isExactlyInstanceOf(SimpleComplexNumber.class)
-                    .isEqualTo(new SimpleComplexNumber(complexNumber.getReal(), complexNumber.getImaginary().negate()));
+            assertThat(complexNumber.conjugate()).isExactlyInstanceOf(SimpleComplexNumber.class).isEqualTo(
+                            new SimpleComplexNumber(complexNumber.getReal(), complexNumber.getImaginary().negate()));
         });
     }
 
@@ -438,7 +438,7 @@ public final class SimpleComplexNumberTest {
             final BigInteger real = complexNumber.getReal();
             final BigInteger imaginary = complexNumber.getImaginary();
             final BigIntMatrix expected = BigIntMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate())
-                    .put(2, 1, imaginary).put(2, 2, real).build();
+                            .put(2, 1, imaginary).put(2, 2, real).build();
             assertThat(complexNumber.matrix()).isExactlyInstanceOf(BigIntMatrix.class).isEqualTo(expected);
         });
     }
@@ -447,7 +447,7 @@ public final class SimpleComplexNumberTest {
     public void hashCodeShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.hashCode()).isExactlyInstanceOf(Integer.class)
-                    .isEqualTo(Objects.hash(complexNumber.getReal(), complexNumber.getImaginary()));
+                            .isEqualTo(Objects.hash(complexNumber.getReal(), complexNumber.getImaginary()));
         });
     }
 
@@ -467,7 +467,8 @@ public final class SimpleComplexNumberTest {
     public void equalsEqualShouldReturnTrue() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber
-                    .equals(new SimpleComplexNumber(complexNumber.getReal(), complexNumber.getImaginary()))).isTrue();
+                            .equals(new SimpleComplexNumber(complexNumber.getReal(), complexNumber.getImaginary())))
+                                            .isTrue();
         });
     }
 
@@ -475,8 +476,8 @@ public final class SimpleComplexNumberTest {
     public void toStringShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.toString()).isExactlyInstanceOf(String.class)
-                    .isEqualTo(MoreObjects.toStringHelper(complexNumber).add("real", complexNumber.getReal())
-                            .add("imaginary", complexNumber.getImaginary()).toString());
+                            .isEqualTo(MoreObjects.toStringHelper(complexNumber).add("real", complexNumber.getReal())
+                                            .add("imaginary", complexNumber.getImaginary()).toString());
         });
     }
 }
