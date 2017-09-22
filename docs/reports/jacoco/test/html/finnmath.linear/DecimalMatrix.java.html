@@ -411,8 +411,8 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
     public boolean identity() {
 <span class="fc bfc" id="L412" title="All 2 branches covered.">        if (diagonal()) {</span>
 <span class="fc bfc" id="L413" title="All 2 branches covered.">            for (final Integer index : table.rowKeySet()) {</span>
-<span class="fc bfc" id="L414" title="All 2 branches covered.">                if (!table.get(index, index).equals(BigDecimal.ONE)) {</span>
-<span class="fc" id="L415">                    return false;</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">                if (!table.get(index, index).equals(BigDecimal.ONE)) {</span>
+<span class="nc" id="L415">                    return false;</span>
                 }
 <span class="fc" id="L417">            }</span>
 <span class="fc" id="L418">            return true;</span>

@@ -126,6 +126,21 @@ task copyBuildDashboard(type: Copy) {
     into 'docs/reports'
 }
 
+task all(type: GradleBuild) {
+    tasks = [
+        'check',
+        'htmlDependencyReport',
+        'jacocoTestReport',
+        'buildDashboard',
+        'javadoc',
+        'deleteJavadoc',
+        'deleteBuildDashboard',
+        'copyJavadoc',
+        'copyBuildDashboard',
+        'install'
+    ]
+}
+
 eclipse.classpath {
     downloadJavadoc true
     downloadSources true
