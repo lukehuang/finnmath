@@ -25,8 +25,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.builder.Builder;
 
+/**
+ * @since 1
+ * @author Lars Tennstedt
+ */
 @Beta
 abstract class AbstractMatrixBuilder<E, M> implements Builder<M> {
+    /**
+     * The table holding the elements of this {@link AbstractVectorBuilder}
+     */
     protected final Table<Integer, Integer, E> table;
 
     protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {

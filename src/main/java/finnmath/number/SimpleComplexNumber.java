@@ -134,9 +134,11 @@ public final class SimpleComplexNumber
      * @throws NullPointerException
      *             if {@code divisor == null}
      * @throws IllegalArgumentException
-     *             if {@code divisor == 0}
+     *             if {@code !divisor.invertble}
      * @since 1
      * @author Lars Tennstedt
+     * @see #invertible
+     * @see RealComplexNumber#divide
      */
     @Override
     public RealComplexNumber divide(final SimpleComplexNumber divisor) {
@@ -156,6 +158,7 @@ public final class SimpleComplexNumber
      *             if {@code exponent < 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #multiply
      */
     @Override
     public SimpleComplexNumber pow(final int exponent) {
@@ -188,6 +191,8 @@ public final class SimpleComplexNumber
      *             if {@code numerator == 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #invertible
+     * @see #divide
      */
     @Override
     public RealComplexNumber invert() {
@@ -196,7 +201,8 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns if this {@link SimpleComplexNumber} is invertible
+     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumber}
+     * is invertible
      *
      * @return {@code true} if {@code this != 0}, {@code false} otherwise
      * @since 1
@@ -214,6 +220,7 @@ public final class SimpleComplexNumber
      * @return The absolute
      * @since 1
      * @author Lars Tennstedt
+     * @see SquareRootCalculator#sqrt(BigDecimal)
      */
     @Override
     public BigDecimal abs() {
@@ -250,6 +257,7 @@ public final class SimpleComplexNumber
      * @return The matrix representation
      * @since 1
      * @author Lars Tennstedt
+     * @see BigIntMatrix#builder
      */
     @Override
     public BigIntMatrix matrix() {

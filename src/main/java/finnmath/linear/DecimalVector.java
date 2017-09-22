@@ -27,6 +27,8 @@ import finnmath.util.SquareRootCalculator;
 import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * An immutable implementation of a vector which uses {@link BigDecimal} as type
@@ -54,6 +56,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      */
     @Override
     public DecimalVector add(final DecimalVector summand) {
+        requireNonNull(summand, "summand");
         checkArgument(map.size() == summand.size(), "expected equal sizes but actual %s != %s", map.size(),
                 summand.size());
         final DecimalVectorBuilder builder = builder(map.size());
@@ -76,6 +79,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      */
     @Override
     public DecimalVector subtract(final DecimalVector subtrahend) {
+        requireNonNull(subtrahend, "subtrahend");
         checkArgument(map.size() == subtrahend.size(), "expected equal sizes but actual %s != %s", map.size(),
                 subtrahend.size());
         final DecimalVectorBuilder builder = builder(map.size());
@@ -265,7 +269,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @throws NullPointerException
      *             if {@code vector == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @since 1
      * @author Lars Tennstedt
      * @see #subtract
@@ -289,7 +293,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @throws NullPointerException
      *             if {@code vector == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
@@ -317,7 +321,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @throws NullPointerException
      *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @throws IllegalArgumentException
      *             if {@code precision <= 0 || 1 <= precision}
      * @since 1
@@ -351,7 +355,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @throws NullPointerException
      *             if {@code vector == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
      * @throws IllegalArgumentException
@@ -391,7 +395,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @throws NullPointerException
      *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @throws IllegalArgumentException
      *             if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
@@ -483,9 +487,9 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
          * @throws NullPointerException
          *             if {@code element == null}
          * @throws ArithmeticException
-         *             if ({@code map.size() + 1} overflows
+         *             if ({@code size + 1} overflows
          * @throws IllegalStateException
-         *             if {@code map.size == size}
+         *             if {@code size == size}
          * @since 1
          * @author Lars Tennstedt
          */
@@ -553,8 +557,8 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
          */
         @Override
         public DecimalVector build() {
-            map.values().forEach(element -> {
-                requireNonNull(element, "element");
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(index -> {
+                requireNonNull(map.get(index), "map.value");
             });
             return new DecimalVector(ImmutableMap.copyOf(map));
         }

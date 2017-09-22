@@ -187,11 +187,13 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      *            the divisor
      * @return The quotient
      * @throws NullPointerException
-     *             if {@code divisor.getNumerator() == null}
+     *             if {@code divisor == null}
      * @throws IllegalArgumentException
-     *             if {@code divisor.getNumerator() == 0}
+     *             if {@code !divisor.invertible}
      * @since 1
      * @author Lars Tennstedt
+     * @see #invert
+     * @see #multiply
      * @see #normalize
      * @see #reduce
      */

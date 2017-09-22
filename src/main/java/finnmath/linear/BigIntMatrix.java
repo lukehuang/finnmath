@@ -174,7 +174,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             final Map<Integer, BigInteger> column) {
         requireNonNull(row, "row");
         requireNonNull(column, "column");
-        checkArgument(row.size() == column.size(), "expected row size == column size but actual %s != %s", row.size(),
+        checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
                 column.size());
         BigInteger result = BigInteger.ZERO;
         for (final Entry<Integer, BigInteger> rowEntry : row.entrySet()) {
@@ -257,8 +257,8 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      */
     @Override
     public BigInteger determinant() {
-        checkState(table.rowKeySet().size() < 4, "expected row size < 4 but actual %s", table.rowKeySet().size());
-        checkState(table.columnKeySet().size() < 4, "expected column size < 4 but actual %s",
+        checkState(table.rowKeySet().size() < 4, "expected rowSize < 4 but actual %s", table.rowKeySet().size());
+        checkState(table.columnKeySet().size() < 4, "expected columnSize < 4 but actual %s",
                 table.columnKeySet().size());
         checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
                 table.columnKeySet().size());
@@ -333,9 +333,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigIntMatrix minor(final Integer rowIndex, final Integer columnIndex) {
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
-        checkArgument(table.containsRow(rowIndex), "expected row index in [1, %s] but actual %s",
+        checkArgument(table.containsRow(rowIndex), "expected rowIndex in [1, %s] but actual %s",
                 table.rowKeySet().size(), rowIndex);
-        checkArgument(table.containsColumn(columnIndex), "expected column index in [1, %s] but actual %s",
+        checkArgument(table.containsColumn(columnIndex), "expected columnIndex in [1, %s] but actual %s",
                 table.columnKeySet().size(), columnIndex);
         final BigIntMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
         table.cellSet().forEach(cell -> {
@@ -444,8 +444,8 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      * @author Lars Tennstedt
      */
     public static BigIntMatrixBuilder builder(final int rowSize, final int columnSize) {
-        checkArgument(rowSize > 0, "expected row size > 0 but actual %s", rowSize);
-        checkArgument(columnSize > 0, "expected column size > 0 but actual %s", columnSize);
+        checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
+        checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         return new BigIntMatrixBuilder(rowSize, columnSize);
     }
 
@@ -494,14 +494,25 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             requireNonNull(element, "element");
             requireNonNull(rowIndex, "rowIndex");
             requireNonNull(columnIndex, "columnIndex");
-            checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
+            checkArgument(table.rowKeySet().contains(rowIndex), "expected rowIndex in [1, %s] but actual %s",
                     table.rowKeySet().size(), rowIndex);
-            checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
+            checkArgument(table.columnKeySet().contains(columnIndex), "expected columnIndex in [1, %s] but actual %s",
                     table.columnKeySet().size(), columnIndex);
             table.put(rowIndex, columnIndex, element);
             return this;
         }
 
+        /**
+         * Puts the given element on all indices and returns {@code this}
+         *
+         * @param element
+         *            the element
+         * @return {@code this}
+         * @throws NullPointerException
+         *             if {@code element == null}
+         * @since 1
+         * @author Lars Tennstedt
+         */
         public BigIntMatrixBuilder putAll(final BigInteger element) {
             requireNonNull(element, "element");
             table.rowKeySet().forEach(rowKey -> {
@@ -525,7 +536,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         @Override
         public BigIntMatrix build() {
             table.cellSet().forEach(cell -> {
-                requireNonNull(cell.getValue(), "it.value");
+                requireNonNull(cell.getValue(), "cell.value");
             });
             return new BigIntMatrix(ImmutableTable.copyOf(table));
         }

@@ -151,6 +151,7 @@ public final class RealComplexNumber
      *             if {@code divisor == 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #invertible
      */
     @Override
     public RealComplexNumber divide(final RealComplexNumber divisor) {
@@ -174,6 +175,8 @@ public final class RealComplexNumber
      *             if {@code exponent < 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #pow
+     * @see #multiply
      */
     @Override
     public RealComplexNumber pow(final int exponent) {
@@ -206,6 +209,8 @@ public final class RealComplexNumber
      *             if {@code this == 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #invertible
+     * @see #divide
      */
     @Override
     public RealComplexNumber invert() {
@@ -214,7 +219,8 @@ public final class RealComplexNumber
     }
 
     /**
-     * Returns if this {@link RealComplexNumber} is invertible
+     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber}
+     * is invertible
      *
      * @return {@code true} if {@code this != ZERO}, {@code false} otherwise
      * @since 1
@@ -231,6 +237,7 @@ public final class RealComplexNumber
      * @return The absolute
      * @since 1
      * @author Lars Tennstedt
+     * @see SquareRootCalculator#sqrt(BigDecimal)
      */
     @Override
     public BigDecimal abs() {
@@ -267,6 +274,7 @@ public final class RealComplexNumber
      * @return The matrix representation
      * @since 1
      * @author Lars Tennstedt
+     * @see DecimalMatrix#builder
      */
     @Override
     public DecimalMatrix matrix() {

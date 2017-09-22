@@ -4,11 +4,21 @@
 </file>
 <file name="/home/raimund/git/finnmath/src/test/java/finnmath/assertion/DecimalVectorAssert.java">
 </file>
+<file name="/home/raimund/git/finnmath/src/test/java/finnmath/linear/BigIntMatrixBuilderTest.java">
+</file>
 <file name="/home/raimund/git/finnmath/src/test/java/finnmath/linear/BigIntMatrixTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/finnmath/linear/BigIntVectorBuilderTest.java">
 </file>
 <file name="/home/raimund/git/finnmath/src/test/java/finnmath/linear/BigIntVectorTest.java">
 </file>
+<file name="/home/raimund/git/finnmath/src/test/java/finnmath/linear/DecimalMatrixBuilderTest.java">
+</file>
 <file name="/home/raimund/git/finnmath/src/test/java/finnmath/linear/DecimalMatrixTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/finnmath/linear/DecimalVectorBuilderTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/finnmath/linear/DecimalVectorTest.java">
 </file>
 <file name="/home/raimund/git/finnmath/src/test/java/finnmath/number/FractionTest.java">
 </file>

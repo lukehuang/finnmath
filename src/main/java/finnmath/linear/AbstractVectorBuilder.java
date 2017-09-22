@@ -41,16 +41,6 @@ abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
      */
     protected final int size;
 
-    /**
-     * Constructs a {@link AbstractVectorBuilder} from the given size
-     *
-     * @param size
-     *            the size
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
-     * @author Lars Tennstedt
-     */
     protected AbstractVectorBuilder(final int size) {
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         this.size = size;

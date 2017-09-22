@@ -594,14 +594,14 @@ public final class DecimalMatrixTest {
     public void detRowSizeTooLargeShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(4, 3).putAll(BigDecimal.ZERO).build().determinant();
-        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected row size < 4 but actual 4");
+        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected rowSize < 4 but actual 4");
     }
 
     @Test
     public void detColumnSizeTooLargeShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(3, 4).putAll(BigDecimal.ZERO).build().determinant();
-        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected column size < 4 but actual 4");
+        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected columnSize < 4 but actual 4");
     }
 
     @Test
@@ -770,7 +770,7 @@ public final class DecimalMatrixTest {
     public void minorRowIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(0, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row index in [1, %s] but actual 0",
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual 0",
                 zeroMatrixForAddition.rowSize());
     }
 
@@ -779,7 +779,7 @@ public final class DecimalMatrixTest {
         final Integer invalidRowIndex = zeroMatrixForAddition.rowSize() + 1;
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(invalidRowIndex, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row index in [1, %s] but actual %s",
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual %s",
                 zeroMatrixForAddition.rowSize(), invalidRowIndex);
     }
 
@@ -788,7 +788,7 @@ public final class DecimalMatrixTest {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(1, 0);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected column index in [1, %s] but actual 0", zeroMatrixForAddition.columnSize());
+                .hasMessage("expected columnIndex in [1, %s] but actual 0", zeroMatrixForAddition.columnSize());
     }
 
     @Test
@@ -797,7 +797,7 @@ public final class DecimalMatrixTest {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(1, invalidColumnIndex);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                "expected column index in [1, %s] but actual %s", zeroMatrixForAddition.columnSize(),
+                "expected columnIndex in [1, %s] but actual %s", zeroMatrixForAddition.columnSize(),
                 invalidColumnIndex);
     }
 
@@ -1132,14 +1132,14 @@ public final class DecimalMatrixTest {
     public void builderRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(0, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row size > 0 but actual 0");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void builderColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(1, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected column size > 0 but actual 0");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 
     @Test

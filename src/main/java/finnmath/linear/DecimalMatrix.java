@@ -22,6 +22,7 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import finnmath.linear.DecimalVector.DecimalVectorBuilder;
 import java.math.BigDecimal;
@@ -173,7 +174,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
             final Map<Integer, BigDecimal> column) {
         requireNonNull(row, "row");
         requireNonNull(column, "column");
-        checkArgument(row.size() == column.size(), "expected row size == column size but actual %s != %s", row.size(),
+        checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
                 column.size());
         BigDecimal result = BigDecimal.ZERO;
         for (final Entry<Integer, BigDecimal> rowEntry : row.entrySet()) {
@@ -256,8 +257,8 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
      */
     @Override
     public BigDecimal determinant() {
-        checkState(table.rowKeySet().size() < 4, "expected row size < 4 but actual %s", table.rowKeySet().size());
-        checkState(table.columnKeySet().size() < 4, "expected column size < 4 but actual %s",
+        checkState(table.rowKeySet().size() < 4, "expected rowSize < 4 but actual %s", table.rowKeySet().size());
+        checkState(table.columnKeySet().size() < 4, "expected columnSize < 4 but actual %s",
                 table.columnKeySet().size());
         checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
                 table.columnKeySet().size());
@@ -335,9 +336,9 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public DecimalMatrix minor(final Integer rowIndex, final Integer columnIndex) {
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
-        checkArgument(table.containsRow(rowIndex), "expected row index in [1, %s] but actual %s",
+        checkArgument(table.containsRow(rowIndex), "expected rowIndex in [1, %s] but actual %s",
                 table.rowKeySet().size(), rowIndex);
-        checkArgument(table.containsColumn(columnIndex), "expected column index in [1, %s] but actual %s",
+        checkArgument(table.containsColumn(columnIndex), "expected columnIndex in [1, %s] but actual %s",
                 table.columnKeySet().size(), columnIndex);
         final DecimalMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
         table.cellSet().forEach(cell -> {
@@ -446,8 +447,8 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
      * @author Lars Tennstedt
      */
     public static DecimalMatrixBuilder builder(final int rowSize, final int columnSize) {
-        checkArgument(rowSize > 0, "expected row size > 0 but actual %s", rowSize);
-        checkArgument(columnSize > 0, "expected column size > 0 but actual %s", columnSize);
+        checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
+        checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         return new DecimalMatrixBuilder(rowSize, columnSize);
     }
 
@@ -480,18 +481,53 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
             super(rowSize, columnSize);
         }
 
+        /**
+         * Puts the given element on the {@link Table} dependent on the given row and
+         * column index
+         *
+         * @param rowIndex
+         *            thr row index
+         * @param columnIndex
+         *            the column index
+         * @param element
+         *            the element
+         * @return {@code this}
+         * @throws NullPointerException
+         *             if {@code rowIndex == null}
+         * @throws NullPointerException
+         *             if {@code columnIndex == null}
+         * @throws NullPointerException
+         *             if {@code element == null}
+         * @throws IllegalArgumentException
+         *             if {@code rowIndex < 0 || rowSize < rowIndex}
+         * @throws IllegalArgumentException
+         *             if {@code columnIndex < 0 || columnSize < columnIndex}
+         * @since 1
+         * @author Lars Tennstedt
+         */
         public DecimalMatrixBuilder put(final Integer rowIndex, final Integer columnIndex, final BigDecimal element) {
             requireNonNull(element, "element");
             requireNonNull(rowIndex, "rowIndex");
             requireNonNull(columnIndex, "columnIndex");
-            checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
+            checkArgument(table.rowKeySet().contains(rowIndex), "expected rowIndex in [1, %s] but actual %s",
                     table.rowKeySet().size(), rowIndex);
-            checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
+            checkArgument(table.columnKeySet().contains(columnIndex), "expected columnIndex in [1, %s] but actual %s",
                     table.columnKeySet().size(), columnIndex);
             table.put(rowIndex, columnIndex, element);
             return this;
         }
 
+        /**
+         * Puts the given element on all indices of the {@link Table}
+         *
+         * @param element
+         *            the element
+         * @return {@code this}
+         * @throws NullPointerException
+         *             if {@code element == null}
+         * @since 1
+         * @author Lars Tennstedt
+         */
         public DecimalMatrixBuilder putAll(final BigDecimal element) {
             requireNonNull(element, "element");
             table.rowKeySet().forEach(rowKey -> {

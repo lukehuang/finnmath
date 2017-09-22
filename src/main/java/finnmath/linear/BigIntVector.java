@@ -28,6 +28,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * An immutable implementation of a vector which uses {@link BigInteger} as type
@@ -50,6 +52,8 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @return The sum
      * @throws NullPointerException
      *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != summand.size}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -73,6 +77,8 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @return The difference
      * @throws NullPointerException
      *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != subtrahend.size}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -241,7 +247,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @throws NullPointerException
      *             if {@code vector == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -267,7 +273,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @throws NullPointerException
      *             if {@code vector == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @since 1
      * @author Lars Tennstedt
      * @see #subtract
@@ -291,7 +297,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @throws NullPointerException
      *             if {@code vector == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
@@ -319,7 +325,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @throws NullPointerException
      *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @throws IllegalArgumentException
      *             if {@code precision <= 0 || 1 <= precision}
      * @since 1
@@ -353,7 +359,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @throws NullPointerException
      *             if {@code vector == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
      * @throws IllegalArgumentException
@@ -393,7 +399,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @throws NullPointerException
      *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code map.size != vector.size}
+     *             if {@code size != vector.size}
      * @throws IllegalArgumentException
      *             if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
@@ -485,9 +491,9 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
          * @throws NullPointerException
          *             if {@code element == null}
          * @throws ArithmeticException
-         *             if ({@code map.size + 1} overflows
+         *             if ({@code size + 1} overflows
          * @throws IllegalStateException
-         *             if {@code map.size == size}
+         *             if {@code size == size}
          * @since 1
          * @author Lars Tennstedt
          */
@@ -555,8 +561,8 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
          */
         @Override
         public BigIntVector build() {
-            map.values().forEach(element -> {
-                requireNonNull(element, "element");
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(index -> {
+                requireNonNull(map.get(index), "map.value");
             });
             return new BigIntVector(ImmutableMap.copyOf(map));
         }
