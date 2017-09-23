@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/togliu/finnmath.svg?branch=master)](https://travis-ci.org/togliu/finnmath)
 [![codecov](https://codecov.io/gh/togliu/finnmath/branch/master/graph/badge.svg)](https://codecov.io/gh/togliu/finnmath)
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](http://shields.io)
+[![License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](http://shields.io)
 
 finnMath is a free software library for the JVM which provides or will provide implementations for fractions, 
 complex numbers, matrices and vectors and their arithmetics based on BigInteger and BigDecimal so that this 
@@ -20,7 +20,7 @@ What finnMath will not provide:
 * Matrix decomposition, reduction or factorization
 * Polynomials
 
-finnMath is written in Java and uses Maven as its build automation tool so it should interoperate seamlessly with 
+finnMath is written in Java and uses Gradle as its build automation tool so it should interoperate seamlessly with 
 other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 ## Implementation details
@@ -33,9 +33,9 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 * Early failing with meaningful messages
 * Logging facade instead of a hard dependency on a specific logging framework
 
-## Javadoc and Maven site
+## Javadoc and build dashboard
 * Javadoc: [link https://togliu.github.io/finnmath/javadoc/index.html]
-* Maven site: [link https://togliu.github.io/finnmath/site/index.html]
+* Build dashboard: [link https://togliu.github.io/finnmath/reports/buildDashboard/index.html]
 
 finnMath is open source and free software and is licensed under the permissive Apache License.
 
@@ -45,16 +45,23 @@ finnMath is still in a very early state and a work in progress.
 
 #### Prerequisites
 * JDK
-* Maven
+* Gradle
 * Git (optional)
 #
     git clone https://github.com/togliu/finnmath.git
     cd finnmath
-    mvn install
+    gradle install
 
 This will clone the remote Git repository, build finnmath and install it into your local Maven repository.
 
 ## Developing
+
+The Eclipse and IDEA plugin for Gradle are applied to the build so that the commands
+
+    gradle eclipse
+    gradle idea
+
+will create an Eclipse or IntelliJ IDEA project inside your cloned folder which is ready to import.
 
 The code formatting follows loosely the Google Java style guide found here on GitHub.    
 
@@ -71,16 +78,22 @@ are the impact on the runtime speed, the higher memory consumption and the cumbe
 I find its assertions more readable in comparison to JUnit and Hamcrest and the fluent assertions are more IDE 
 friendly.
 
+#### Why Gradle?
+Its DSL is less verbose than Maven's XML approach and thanks to Groovy customizing all the tasks involved in the 
+build process is very comfortable. I want to point out that conventions are a very good thing that simplifies a 
+developer's life extremely and thanks to Maven convention over configuration arrived at the Java world.
+
 ## Thanks to
 * Oracle for the JVM, Java and OpenJDK
 * the Eclipse Foundation for the Eclipse IDE
 * JetBrains s.r.o. for IntelliJ IDEA Community Edition
 * Google for Guava and Error Prone
-* the Apache Software Foundation for Maven, Commons Lang, Commons Math and the Apache License
+* the Apache Software Foundation for Groovy, Commons Lang, Commons Math and the Apache License
 * QOS.ch for SLF4J 
 * Joel Costigliola for AssertJ
 * the JUnit team for JUnit
 * Linus Torvalds for Git
+* Gradle Inc. for Gradle
 * Thomas Broyer for the Gradle Error Prone plugin
 * the developers of Checkstyle
 * the University of Maryland for FindBugs

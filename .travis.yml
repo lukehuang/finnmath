@@ -15,8 +15,8 @@
 #
 
 language: java
-install: mvn clean
+install: gradle -b wrapper.gradle wrapper
 after_script:
-              - mvn install
+              - ./gradlew jacocoTestReport htmlDependencyReport buildDashboard install
+              - ./gradlew deleteJavadoc deleteBuildDashboard copyJavadoc copyBuildDashboard
               - bash <(curl -s https://codecov.io/bash)
-
