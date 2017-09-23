@@ -103,6 +103,10 @@ install.repositories.mavenInstaller.pom.project {
         system 'GitHub'
         url 'https://github.com/togliu/finnmath/issues'
     }
+    ciManagement {
+        system 'Travis'
+        url 'https://travis-ci.org/togliu/finnmath'
+    }
     scm {
         connection 'scm:git:https://github.com/togliu/finnmath.git'
         tag 'master'

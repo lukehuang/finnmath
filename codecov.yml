@@ -14,9 +14,5 @@
 # limitations under the License.
 #
 
-language: java
-install: gradle -b wrapper.gradle wrapper
-after_script:
-              - ./gradlew jacocoTestReport htmlDependencyReport buildDashboard install
-              - ./gradlew deleteJavadoc deleteBuildDashboard copyJavadoc copyBuildDashboard
-              - bash <(curl -s https://codecov.io/bash)
+coverage:
+    round: nearest
