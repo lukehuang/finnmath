@@ -104,14 +104,14 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal dotProduct(final DecimalVector vector) {
-<span class="nc" id="L107">        requireNonNull(vector, &quot;vector&quot;);</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="nc" id="L109">                vector.size());</span>
-<span class="nc" id="L110">        BigDecimal result = BigDecimal.ZERO;</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">        for (final Integer index : map.keySet()) {</span>
-<span class="nc" id="L112">            result = result.add(map.get(index).multiply(vector.element(index)));</span>
-<span class="nc" id="L113">        }</span>
-<span class="nc" id="L114">        return result;</span>
+<span class="fc" id="L107">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L109">                vector.size());</span>
+<span class="fc" id="L110">        BigDecimal result = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        for (final Integer index : map.keySet()) {</span>
+<span class="fc" id="L112">            result = result.add(map.get(index).multiply(vector.element(index)));</span>
+<span class="fc" id="L113">        }</span>
+<span class="fc" id="L114">        return result;</span>
     }
 
     /**
@@ -158,7 +158,7 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNormPow2() {
-<span class="nc" id="L161">        return dotProduct(this);</span>
+<span class="fc" id="L161">        return dotProduct(this);</span>
     }
 
     /**
@@ -172,7 +172,7 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNorm() {
-<span class="nc" id="L175">        return SquareRootCalculator.sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L175">        return SquareRootCalculator.sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -192,10 +192,10 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision) {
-<span class="nc" id="L195">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="nc bnc" id="L196" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-                &quot;expected precision in (0, 1) but actual {}&quot;, precision);
-<span class="nc" id="L198">        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision);</span>
+<span class="fc" id="L195">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L196" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc" id="L198">        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision);</span>
     }
 
     /**
@@ -218,10 +218,10 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNorm(final int scale, final int roundingMode) {
-<span class="nc bnc" id="L221" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual {}&quot;, scale);</span>
-<span class="nc bnc" id="L222" title="All 4 branches missed.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual {}&quot;,</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L222" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
                 roundingMode);
-<span class="nc" id="L224">        return SquareRootCalculator.sqrt(euclideanNormPow2(), scale, roundingMode);</span>
+<span class="fc" id="L224">        return SquareRootCalculator.sqrt(euclideanNormPow2(), scale, roundingMode);</span>
     }
 
     /**
@@ -250,13 +250,13 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final int roundingMode) {
-<span class="nc" id="L253">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="nc bnc" id="L254" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-                &quot;expected precision in (0, 1) but actual {}&quot;, precision);
-<span class="nc bnc" id="L256" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual {}&quot;, scale);</span>
-<span class="nc bnc" id="L257" title="All 4 branches missed.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual {}&quot;,</span>
+<span class="fc" id="L253">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L254" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc bfc" id="L256" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L257" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
                 roundingMode);
-<span class="nc" id="L259">        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision, scale, roundingMode);</span>
+<span class="fc" id="L259">        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision, scale, roundingMode);</span>
     }
 
     /**
@@ -277,10 +277,10 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanDistancePow2(final DecimalVector vector) {
-<span class="nc" id="L280">        requireNonNull(vector, &quot;vector&quot;);</span>
-<span class="nc bnc" id="L281" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="nc" id="L282">                vector.size());</span>
-<span class="nc" id="L283">        return subtract(vector).euclideanNormPow2();</span>
+<span class="fc" id="L280">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L282">                vector.size());</span>
+<span class="fc" id="L283">        return subtract(vector).euclideanNormPow2();</span>
     }
 
     /**
@@ -301,10 +301,10 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector vector) {
-<span class="nc" id="L304">        requireNonNull(vector, &quot;vector&quot;);</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="nc" id="L306">                vector.size());</span>
-<span class="nc" id="L307">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector));</span>
+<span class="fc" id="L304">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L306">                vector.size());</span>
+<span class="fc" id="L307">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector));</span>
     }
 
     /**
@@ -331,13 +331,13 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector vector, final BigDecimal precision) {
-<span class="nc" id="L334">        requireNonNull(vector, &quot;vector&quot;);</span>
-<span class="nc bnc" id="L335" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="nc" id="L336">                vector.size());</span>
-<span class="nc" id="L337">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="nc bnc" id="L338" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-                &quot;expected precision in (0, 1) but actual {}&quot;, precision);
-<span class="nc" id="L340">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision);</span>
+<span class="fc" id="L334">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L336">                vector.size());</span>
+<span class="fc" id="L337">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L338" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc" id="L340">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision);</span>
     }
 
     /**
@@ -367,13 +367,13 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector vector, final int scale, final int roundingMode) {
-<span class="nc" id="L370">        requireNonNull(vector, &quot;vector&quot;);</span>
-<span class="nc bnc" id="L371" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="nc" id="L372">                vector.size());</span>
-<span class="nc bnc" id="L373" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual {}&quot;, scale);</span>
-<span class="nc bnc" id="L374" title="All 4 branches missed.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual {}&quot;,</span>
+<span class="fc" id="L370">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L372">                vector.size());</span>
+<span class="fc bfc" id="L373" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L374" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
                 roundingMode);
-<span class="nc" id="L376">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), scale, roundingMode);</span>
+<span class="fc" id="L376">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), scale, roundingMode);</span>
     }
 
     /**
@@ -410,16 +410,16 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
     @Override
     public BigDecimal euclideanDistance(final DecimalVector vector, final BigDecimal precision, final int scale,
             final int roundingMode) {
-<span class="nc" id="L413">        requireNonNull(vector, &quot;vector&quot;);</span>
-<span class="nc bnc" id="L414" title="All 2 branches missed.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="nc" id="L415">                vector.size());</span>
-<span class="nc" id="L416">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="nc bnc" id="L417" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-                &quot;expected precision in (0, 1) but actual {}&quot;, precision);
-<span class="nc bnc" id="L419" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual {}&quot;, scale);</span>
-<span class="nc bnc" id="L420" title="All 4 branches missed.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual {}&quot;,</span>
+<span class="fc" id="L413">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L415">                vector.size());</span>
+<span class="fc" id="L416">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L417" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc bfc" id="L419" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L420" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
                 roundingMode);
-<span class="nc" id="L422">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision, scale, roundingMode);</span>
+<span class="fc" id="L422">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision, scale, roundingMode);</span>
     }
 
     /**
