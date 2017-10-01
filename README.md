@@ -20,7 +20,7 @@ What finnMath will not provide:
 * Matrix decomposition, reduction or factorization
 * Polynomials
 
-finnMath is written in Java and uses Gradle as its build automation tool so it should interoperate seamlessly with 
+finnMath is written in Java and uses Maven as its build automation tool so it should interoperate seamlessly with 
 other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 ## Implementation details
@@ -33,9 +33,8 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 * Early failing with meaningful messages
 * Logging facade instead of a hard dependency on a specific logging framework
 
-## Javadoc and build dashboard
-* Javadoc: [link https://togliu.github.io/finnmath/javadoc/index.html]
-* Build dashboard: [link https://togliu.github.io/finnmath/reports/buildDashboard/index.html]
+## Information
+Maven Site: [link https://togliu.github.io/finnmath/index.html]
 
 finnMath is open source and free software and is licensed under the permissive Apache License.
 
@@ -45,23 +44,16 @@ finnMath is still in a very early state and a work in progress.
 
 #### Prerequisites
 * JDK
-* Gradle
+* Maven
 * Git (optional)
 #
     git clone https://github.com/togliu/finnmath.git
     cd finnmath
-    gradle install
+    mvn install
 
 This will clone the remote Git repository, build finnmath and install it into your local Maven repository.
 
 ## Developing
-
-The Eclipse and IDEA plugin for Gradle are applied to the build so that the commands
-
-    gradle eclipse
-    gradle idea
-
-will create an Eclipse or IntelliJ IDEA project inside your cloned folder which is ready to import.
 
 The code formatting follows loosely the Google Java style guide found here on GitHub.    
 
@@ -78,23 +70,28 @@ are the impact on the runtime speed, the higher memory consumption and the cumbe
 I find its assertions more readable in comparison to JUnit and Hamcrest and the fluent assertions are more IDE 
 friendly.
 
-#### Why Gradle?
-Its DSL is less verbose than Maven's XML approach and thanks to Groovy customizing all the tasks involved in the 
-build process is very comfortable. I want to point out that conventions are a very good thing that simplifies a 
-developer's life extremely and thanks to Maven convention over configuration arrived at the Java world.
+#### Why the change from Gradle to Maven?
+Gradle is a wonderful tool and I think that it will conquer the throne of build automation tools for the JVM in the 
+near future. Its DSL is less verbose than Maven's XML approach and thanks to Groovy customizing all the tasks involved in 
+the build process is very comfortable.
+So why I moved away from it? I have noticed at work that I need more expertise regarding Maven and a standard Java 
+library project is by far the most suitable candidate for a Maven project because of its very standardized structure. 
+Maven is very strict in terms of its build lifecycle, supports multi-project setups worse than Gradle and mixing 
+languages is very ugly. Maven performs best when it manages a project which is a Maven project through and through. 
+But I will start a new free software project for the JVM in the near future which will be based on Gradle again. If 
+you want to do things which are not covered by Maven's lifecycle very well, go for a multi-module or mixed-languages 
+project, need custom tasks or choose Groovy or Kotlin as a programming language, Gradle is indeed very hard to beat. 
 
 ## Thanks to
 * Oracle for the JVM, Java and OpenJDK
 * the Eclipse Foundation for the Eclipse IDE
 * JetBrains s.r.o. for IntelliJ IDEA Community Edition
 * Google for Guava and Error Prone
-* the Apache Software Foundation for Groovy, Commons Lang, Commons Math and the Apache License
+* the Apache Software Foundation for Maven, Commons Lang, Commons Math and the Apache License
 * QOS.ch for SLF4J 
 * Joel Costigliola for AssertJ
 * the JUnit team for JUnit
 * Linus Torvalds for Git
-* Gradle Inc. for Gradle
-* Thomas Broyer for the Gradle Error Prone plugin
 * the developers of Checkstyle
 * the University of Maryland for FindBugs
 * the developers of PMD
