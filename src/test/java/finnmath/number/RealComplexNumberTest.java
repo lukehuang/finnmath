@@ -462,14 +462,32 @@ public final class RealComplexNumberTest {
     }
 
     @Test
+    public void equalsSelfShouldReturnTrue() {
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.equals(complexNumber)).isTrue();
+        });
+    }
+
+    @Test
     public void equalsNotSimpleComplexNumberShouldReturnFalse() {
         assertThat(SimpleComplexNumber.ZERO.equals(new Object())).isFalse();
     }
 
     @Test
-    public void equalsNotEqualShouldReturnFalse() {
+    public void equalsRealNotEqualShouldReturnFalse() {
         complexNumbers.forEach(complexNumber -> {
-            assertThat(complexNumber.equals(complexNumber.add(RealComplexNumber.ONE))).isFalse();
+            final BigDecimal real = complexNumber.getReal().add(BigDecimal.ONE);
+            final RealComplexNumber other = new RealComplexNumber(real, complexNumber.getImaginary());
+            assertThat(complexNumber.equals(other)).isFalse();
+        });
+    }
+
+    @Test
+    public void equalsImaginaryNotEqualShouldReturnFalse() {
+        complexNumbers.forEach(complexNumber -> {
+            final BigDecimal imaginary = complexNumber.getImaginary().add(BigDecimal.ONE);
+            final RealComplexNumber other = new RealComplexNumber(complexNumber.getReal(), imaginary);
+            assertThat(complexNumber.equals(other)).isFalse();
         });
     }
 

@@ -668,6 +668,13 @@ public final class DecimalVectorTest {
     }
 
     @Test
+    public void equalsSelfShouldReturnTrue() {
+        vectors.forEach(vector -> {
+            assertThat(vector.equals(vector)).isTrue();
+        });
+    }
+
+    @Test
     public void equalsNotDecimalVectorShouldReturnFalse() {
         assertThat(zeroVector.equals(new Object())).isFalse();
     }

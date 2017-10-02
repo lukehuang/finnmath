@@ -452,14 +452,32 @@ public final class SimpleComplexNumberTest {
     }
 
     @Test
+    public void equalsSelfShouldReturnTrue() {
+        complexNumbers.forEach(complexNumber -> {
+            assertThat(complexNumber.equals(complexNumber)).isTrue();
+        });
+    }
+
+    @Test
     public void equalsNotSimpleComplexNumberShouldReturnFalse() {
         assertThat(SimpleComplexNumber.ZERO.equals(new Object())).isFalse();
     }
 
     @Test
-    public void equalsNotEqualShouldReturnFalse() {
+    public void equalsRealNotEqualShouldReturnFalse() {
         complexNumbers.forEach(complexNumber -> {
-            assertThat(complexNumber.equals(complexNumber.add(SimpleComplexNumber.ONE))).isFalse();
+            final BigInteger real = complexNumber.getReal().add(BigInteger.ONE);
+            final SimpleComplexNumber other = new SimpleComplexNumber(real, complexNumber.getImaginary());
+            assertThat(complexNumber.equals(other)).isFalse();
+        });
+    }
+
+    @Test
+    public void equalsImaginaryNotEqualShouldReturnFalse() {
+        complexNumbers.forEach(complexNumber -> {
+            final BigInteger imaginary = complexNumber.getImaginary().add(BigInteger.ONE);
+            final SimpleComplexNumber other = new SimpleComplexNumber(complexNumber.getReal(), imaginary);
+            assertThat(complexNumber.equals(other)).isFalse();
         });
     }
 

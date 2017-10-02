@@ -737,14 +737,22 @@ public final class FractionTest {
     }
 
     @Test
+    public void equalsSelfShouldReturnTrue() {
+        fractions.forEach(fraction -> {
+            assertThat(fraction.equals(fraction)).isTrue();
+        });
+    }
+
+    @Test
     public void equalsNotFractionShouldReturnFalse() {
         assertThat(Fraction.ZERO.equals(new Object())).isFalse();
     }
 
     @Test
-    public void equalsNotEqualShouldReturnFalse() {
+    public void equalsDenominatorNotEqualShouldReturnFalse() {
         fractions.forEach(fraction -> {
-            assertThat(fraction.equals(fraction.add(Fraction.ONE))).isFalse();
+            final Fraction other = new Fraction(fraction.getNumerator(), fraction.getDenominator().add(BigInteger.ONE));
+            assertThat(fraction.equals(other)).isFalse();
         });
     }
 

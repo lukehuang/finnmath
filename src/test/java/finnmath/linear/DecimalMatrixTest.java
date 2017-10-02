@@ -1150,6 +1150,13 @@ public final class DecimalMatrixTest {
     }
 
     @Test
+    public void equalsSelfShouldReturnTrue() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.equals(matrix)).isTrue();
+        });
+    }
+
+    @Test
     public void equalsNotSimpleComplexNumberShouldReturnFalse() {
         assertThat(zeroMatrixForAddition.equals(new Object())).isFalse();
     }

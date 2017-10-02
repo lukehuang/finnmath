@@ -663,6 +663,13 @@ public final class BigIntVectorTest {
     }
 
     @Test
+    public void equalsSelfShouldReturnTrue() {
+        vectors.forEach(vector -> {
+            assertThat(vector.equals(vector)).isTrue();
+        });
+    }
+
+    @Test
     public void equalsNotBigIntVectorShouldReturnFalse() {
         assertThat(zeroVector.equals(new Object())).isFalse();
     }

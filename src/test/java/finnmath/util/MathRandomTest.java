@@ -19,6 +19,7 @@ package finnmath.util;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.google.common.base.MoreObjects;
 import finnmath.linear.BigIntMatrix;
 import finnmath.linear.BigIntVector;
 import finnmath.linear.DecimalMatrix;
@@ -1686,5 +1687,11 @@ public final class MathRandomTest {
                             "lower bound of the element"))
                     .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
         });
+    }
+
+    @Test
+    public void toStringShouldSucceed() {
+        assertThat(mathRandom.toString()).isExactlyInstanceOf(String.class)
+                .isEqualTo(MoreObjects.toStringHelper(mathRandom).add("random", mathRandom.getRandom()).toString());
     }
 }
