@@ -18,7 +18,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>finnmath</groupId>
+    <groupId>com.github.togliu</groupId>
     <artifactId>finnmath</artifactId>
     <version>1-SNAPSHOT</version>
     <dependencies>
@@ -308,6 +308,13 @@
                     <noqualifier>all</noqualifier>
                     <show>private</show>
                 </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
         </plugins>
     </reporting>

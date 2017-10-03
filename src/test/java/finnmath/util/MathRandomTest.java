@@ -88,8 +88,8 @@ public final class MathRandomTest {
     @Test
     public void nextPositiveLongsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextPositiveLongs(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextPositiveLongs(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -105,8 +105,8 @@ public final class MathRandomTest {
     @Test
     public void nextNegativeLongsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextNegativeLongs(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextNegativeLongs(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -121,7 +121,7 @@ public final class MathRandomTest {
     @Test
     public void nextLongsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextLongs(bound, 1);
+            mathRandom.nextLongs(bound, 0);
         }).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -145,8 +145,8 @@ public final class MathRandomTest {
     @Test
     public void nextPositiveDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextPositiveDecimal(bound, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextPositiveDecimal(bound, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -168,8 +168,8 @@ public final class MathRandomTest {
     @Test
     public void nextNegativeDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextNegativeDecimal(bound, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextNegativeDecimal(bound, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -191,8 +191,8 @@ public final class MathRandomTest {
     @Test
     public void nextDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDecimal(bound, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextDecimal(bound, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -214,8 +214,8 @@ public final class MathRandomTest {
     @Test
     public void nextInvertiblePositiveDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertiblePositiveDecimal(bound, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextInvertiblePositiveDecimal(bound, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -237,8 +237,8 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleNegativeDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleNegativeDecimal(bound, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextInvertibleNegativeDecimal(bound, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -260,8 +260,8 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleDecimal(bound, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextInvertibleDecimal(bound, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -284,16 +284,16 @@ public final class MathRandomTest {
     @Test
     public void nextPositiveDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextPositiveDecimals(bound, 0, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextPositiveDecimals(bound, -1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextPositiveDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextPositiveDecimals(bound, validScale, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextPositiveDecimals(bound, validScale, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -316,15 +316,15 @@ public final class MathRandomTest {
     @Test
     public void nextNegativeDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextNegativeDecimals(bound, 0, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextNegativeDecimals(bound, -1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextNegativeDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextNegativeDecimals(bound, validScale, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextNegativeDecimals(bound, validScale, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -346,15 +346,15 @@ public final class MathRandomTest {
     @Test
     public void nextDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDecimals(bound, 0, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextDecimals(bound, -1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDecimals(bound, validScale, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextDecimals(bound, validScale, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -377,16 +377,16 @@ public final class MathRandomTest {
     @Test
     public void nextInvertiblePositiveDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertiblePositiveDecimals(bound, 0, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextInvertiblePositiveDecimals(bound, -1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextInvertiblePositiveDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertiblePositiveDecimals(bound, validScale, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextInvertiblePositiveDecimals(bound, validScale, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -409,15 +409,15 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleNegativeDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleNegativeDecimals(bound, 0, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextInvertibleNegativeDecimals(bound, -1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextInvertibleNegativeDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleNegativeDecimals(bound, validScale, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextInvertibleNegativeDecimals(bound, validScale, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -439,15 +439,15 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleDecimals(bound, 0, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextInvertibleDecimals(bound, -1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextInvertibleDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleDecimals(bound, validScale, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextInvertibleDecimals(bound, validScale, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -555,8 +555,8 @@ public final class MathRandomTest {
     @Test
     public void nextPositiveFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextPositiveFractions(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextPositiveFractions(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -583,8 +583,8 @@ public final class MathRandomTest {
     @Test
     public void nextNegativeFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextNegativeFractions(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextNegativeFractions(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -612,8 +612,8 @@ public final class MathRandomTest {
     @Test
     public void nextFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextFractions(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextFractions(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -641,8 +641,8 @@ public final class MathRandomTest {
     @Test
     public void nextInvertiblePositiveFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertiblePositiveFractions(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextInvertiblePositiveFractions(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -669,8 +669,8 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleNegativeFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleNegativeFractions(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextInvertibleNegativeFractions(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -698,8 +698,8 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleFractions(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextInvertibleFractions(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -759,8 +759,8 @@ public final class MathRandomTest {
     @Test
     public void nextSimpleComplexNumbersTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextSimpleComplexNumbers(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextSimpleComplexNumbers(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -789,8 +789,8 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleSimpleComplexNumbersTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleSimpleComplexNumbers(bound, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextInvertibleSimpleComplexNumbers(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -820,8 +820,8 @@ public final class MathRandomTest {
     @Test
     public void nextRealComplexNumberScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextRealComplexNumber(bound, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextRealComplexNumber(bound, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -845,8 +845,8 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleRealComplexNumberScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleRealComplexNumber(bound, 0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextInvertibleRealComplexNumber(bound, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -854,11 +854,11 @@ public final class MathRandomTest {
     public void nextInvertibleRealComplexNumberShouldSucceed() {
         final RealComplexNumber actual = mathRandom.nextInvertibleRealComplexNumber(bound, validScale);
         assertThat(actual.getReal()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"))
-                .is(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) != 0, "not zero (real part)"));
+                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
         assertThat(actual.getImaginary()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"))
-                .is(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) != 0, "not zero (imaginary part)"));
+                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
+        assertThat((actual.getReal().compareTo(BigDecimal.ZERO) != 0)
+                || (actual.getImaginary().compareTo(BigDecimal.ZERO) != 0)).isTrue();
     }
 
     @Test
@@ -872,16 +872,16 @@ public final class MathRandomTest {
     @Test
     public void nextRealComplexNumbersScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextRealComplexNumbers(bound, 0, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextRealComplexNumbers(bound, -1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextRealComplexNumbersTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextRealComplexNumbers(bound, validScale, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextRealComplexNumbers(bound, validScale, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -914,16 +914,16 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleRealComplexNumbersScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleRealComplexNumbers(bound, 0, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextInvertibleRealComplexNumbers(bound, -1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextInvertibleRealComplexNumbersTooLessShoudThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextInvertibleRealComplexNumbers(bound, validScale, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextInvertibleRealComplexNumbers(bound, validScale, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -944,10 +944,8 @@ public final class MathRandomTest {
                         "scale of the real part"))
                 .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
                         "scale of the imaginary part"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(BigDecimal.ZERO) != 0,
-                        "not zero (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(BigDecimal.ZERO) != 0,
-                        "not zero (imaginary part)"));
+                .are(new Condition<>(complexNumber -> (complexNumber.getReal().compareTo(BigDecimal.ZERO) != 0)
+                        || (complexNumber.getImaginary().compareTo(BigDecimal.ZERO) != 0), "invertible"));
     }
 
     @Test
@@ -994,8 +992,8 @@ public final class MathRandomTest {
     @Test
     public void nextBigIntVectorsTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextBigIntVectors(bound, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextBigIntVectors(bound, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -1217,8 +1215,8 @@ public final class MathRandomTest {
     @Test
     public void nextBigIntMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextBigIntMatrices(bound, validRowSize, validColumnSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextBigIntMatrices(bound, validRowSize, validColumnSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1253,8 +1251,8 @@ public final class MathRandomTest {
     @Test
     public void nextUpperTriangularBigIntMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextUpperTriangularBigIntMatrices(bound, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextUpperTriangularBigIntMatrices(bound, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1288,8 +1286,8 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularBigIntMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextLowerTriangularBigIntMatrices(bound, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextLowerTriangularBigIntMatrices(bound, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1323,8 +1321,8 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularBigIntMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextTriangularBigIntMatrices(bound, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextTriangularBigIntMatrices(bound, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1358,8 +1356,8 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalBigIntMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDiagonalBigIntMatrices(bound, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextDiagonalBigIntMatrices(bound, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1393,8 +1391,8 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricBigIntMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextSymmetricBigIntMatrices(bound, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextSymmetricBigIntMatrices(bound, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1428,8 +1426,8 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricBigIntMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextSkewSymmetricBigIntMatrices(bound, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextSkewSymmetricBigIntMatrices(bound, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1457,7 +1455,7 @@ public final class MathRandomTest {
     @Test
     public void nextDecimalVectorScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDecimalVector(bound, 0, validSize);
+            mathRandom.nextDecimalVector(bound, -1, validSize);
         }).isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
@@ -1491,8 +1489,8 @@ public final class MathRandomTest {
     @Test
     public void nextDecimalVectorsScaleTooLowhouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDecimalVectors(bound, 0, validSize, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextDecimalVectors(bound, -1, validSize, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -1507,8 +1505,8 @@ public final class MathRandomTest {
     @Test
     public void nextDecimalVectorsTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDecimalVectors(bound, validScale, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextDecimalVectors(bound, validScale, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -1536,8 +1534,8 @@ public final class MathRandomTest {
     @Test
     public void nextDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDecimalMatrix(bound, 0, validRowSize, validColumnSize);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextDecimalMatrix(bound, -1, validRowSize, validColumnSize);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1576,8 +1574,8 @@ public final class MathRandomTest {
     @Test
     public void nextUpperTriangularDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextUpperTriangularDecimalMatrix(bound, 0, validSize);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextUpperTriangularDecimalMatrix(bound, -1, validSize);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1614,8 +1612,8 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextLowerTriangularDecimalMatrix(bound, 0, validSize);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextLowerTriangularDecimalMatrix(bound, -1, validSize);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1652,8 +1650,8 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextTriangularDecimalMatrix(bound, 0, validSize);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextTriangularDecimalMatrix(bound, -1, validSize);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1693,8 +1691,8 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDiagonalDecimalMatrix(bound, 0, validSize);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextDiagonalDecimalMatrix(bound, -1, validSize);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1731,8 +1729,8 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextSymmetricDecimalMatrix(bound, 0, validSize);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextSymmetricDecimalMatrix(bound, -1, validSize);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1767,8 +1765,8 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextSkewSymmetricDecimalMatrix(bound, 0, validSize);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextSkewSymmetricDecimalMatrix(bound, -1, validSize);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1805,8 +1803,8 @@ public final class MathRandomTest {
     @Test
     public void nextDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDecimalMatrices(bound, 0, validRowSize, validColumnSize, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextDecimalMatrices(bound, -1, validRowSize, validColumnSize, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1826,8 +1824,8 @@ public final class MathRandomTest {
     @Test
     public void nextDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDecimalMatrices(bound, validScale, validRowSize, validColumnSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextDecimalMatrices(bound, validScale, validRowSize, validColumnSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1855,8 +1853,8 @@ public final class MathRandomTest {
     @Test
     public void nextUpperTriangularDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextUpperTriangularDecimalMatrices(bound, 0, validSize, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextUpperTriangularDecimalMatrices(bound, -1, validSize, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1869,8 +1867,8 @@ public final class MathRandomTest {
     @Test
     public void nextUpperTriangularDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextUpperTriangularDecimalMatrices(bound, validScale, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextUpperTriangularDecimalMatrices(bound, validScale, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1898,8 +1896,8 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextLowerTriangularDecimalMatrices(bound, 0, validSize, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextLowerTriangularDecimalMatrices(bound, -1, validSize, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1912,8 +1910,8 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextLowerTriangularDecimalMatrices(bound, validScale, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextLowerTriangularDecimalMatrices(bound, validScale, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1941,8 +1939,8 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextTriangularDecimalMatrices(bound, 0, validSize, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextTriangularDecimalMatrices(bound, -1, validSize, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1955,8 +1953,8 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextTriangularDecimalMatrices(bound, validScale, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextTriangularDecimalMatrices(bound, validScale, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -1984,8 +1982,8 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDiagonalDecimalMatrices(bound, 0, validSize, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextDiagonalDecimalMatrices(bound, -1, validSize, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -1998,8 +1996,8 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextDiagonalDecimalMatrices(bound, validScale, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextDiagonalDecimalMatrices(bound, validScale, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -2027,8 +2025,8 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextSymmetricDecimalMatrices(bound, 0, validSize, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextSymmetricDecimalMatrices(bound, -1, validSize, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -2041,8 +2039,8 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextSymmetricDecimalMatrices(bound, validScale, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextSymmetricDecimalMatrices(bound, validScale, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -2070,8 +2068,8 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextSkewSymmetricDecimalMatrices(bound, 0, validSize, howMany);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+            mathRandom.nextSkewSymmetricDecimalMatrices(bound, -1, validSize, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -2084,8 +2082,8 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> {
-            mathRandom.nextSkewSymmetricDecimalMatrices(bound, validScale, validSize, 1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+            mathRandom.nextSkewSymmetricDecimalMatrices(bound, validScale, validSize, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test

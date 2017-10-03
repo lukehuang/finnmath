@@ -20,6 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
+import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -32,6 +33,7 @@ import java.util.Objects;
  * @since 1
  * @author Lars Tennstedt
  */
+@Beta
 public final class Fraction extends Number implements MathNumber<Fraction, Fraction, Fraction>, Comparable<Fraction> {
     /**
      * {@code 0} as {@link Fraction}

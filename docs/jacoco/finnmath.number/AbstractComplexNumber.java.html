@@ -18,6 +18,7 @@ package finnmath.number;
 
 import static java.util.Objects.requireNonNull;
 
+import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 
@@ -25,6 +26,7 @@ import java.math.BigDecimal;
  * @since 1
  * @author Lars Tennstedt
  */
+@Beta
 abstract class AbstractComplexNumber&lt;B, S, R, M&gt; implements MathNumber&lt;S, R, BigDecimal&gt; {
     /**
      * {@code real} part of this {@link AbstractComplexNumber}
@@ -36,10 +38,10 @@ abstract class AbstractComplexNumber&lt;B, S, R, M&gt; implements MathNumber&lt;
      */
     protected final B imaginary;
 
-<span class="fc" id="L39">    protected AbstractComplexNumber(final B real, final B imaginary) {</span>
-<span class="fc" id="L40">        this.real = requireNonNull(real, &quot;real&quot;);</span>
-<span class="fc" id="L41">        this.imaginary = requireNonNull(imaginary, &quot;imaginary&quot;);</span>
-<span class="fc" id="L42">    }</span>
+<span class="fc" id="L41">    protected AbstractComplexNumber(final B real, final B imaginary) {</span>
+<span class="fc" id="L42">        this.real = requireNonNull(real, &quot;real&quot;);</span>
+<span class="fc" id="L43">        this.imaginary = requireNonNull(imaginary, &quot;imaginary&quot;);</span>
+<span class="fc" id="L44">    }</span>
 
     protected abstract B absPow2();
 
@@ -49,15 +51,15 @@ abstract class AbstractComplexNumber&lt;B, S, R, M&gt; implements MathNumber&lt;
 
     @Override
     public String toString() {
-<span class="fc" id="L52">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary).toString();</span>
+<span class="fc" id="L54">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary).toString();</span>
     }
 
     public B getReal() {
-<span class="fc" id="L56">        return real;</span>
+<span class="fc" id="L58">        return real;</span>
     }
 
     public B getImaginary() {
-<span class="fc" id="L60">        return imaginary;</span>
+<span class="fc" id="L62">        return imaginary;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

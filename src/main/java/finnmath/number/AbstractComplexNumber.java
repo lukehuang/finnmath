@@ -18,6 +18,7 @@ package finnmath.number;
 
 import static java.util.Objects.requireNonNull;
 
+import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 
@@ -25,6 +26,7 @@ import java.math.BigDecimal;
  * @since 1
  * @author Lars Tennstedt
  */
+@Beta
 abstract class AbstractComplexNumber<B, S, R, M> implements MathNumber<S, R, BigDecimal> {
     /**
      * {@code real} part of this {@link AbstractComplexNumber}

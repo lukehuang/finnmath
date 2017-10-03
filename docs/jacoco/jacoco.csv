@@ -1,5 +1,5 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-finnMath,finnmath.util,MathRandom,30,3321,12,458,7,500,11,322,0,98
+finnMath,finnmath.util,MathRandom,28,3314,11,459,6,501,10,323,0,98
 finnMath,finnmath.util,SquareRootCalculator,9,579,6,62,2,88,7,43,1,15
 finnMath,finnmath.linear,AbstractVector,4,44,0,0,1,10,1,6,1,6
 finnMath,finnmath.linear,AbstractVectorBuilder,20,43,3,3,3,8,6,2,3,2

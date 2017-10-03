@@ -16,10 +16,13 @@
 
 package finnmath.number;
 
+import com.google.common.annotations.Beta;
+
 /**
  * @since 1
  * @author Lars Tennstedt
  */
+@Beta
 public interface MathNumber<S, T, A> {
     S add(S summand);
 

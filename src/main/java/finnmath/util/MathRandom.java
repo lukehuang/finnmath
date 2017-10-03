@@ -128,7 +128,7 @@ public final class MathRandom {
      */
     public long[] nextPositiveLongs(final long bound, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final long[] ints = new long[howMany];
         for (int i = 0; i < howMany; i++) {
             ints[i] = nextPositiveLong(bound);
@@ -155,7 +155,7 @@ public final class MathRandom {
      */
     public long[] nextNegativeLongs(final long bound, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final long[] ints = new long[howMany];
         for (int i = 0; i < howMany; i++) {
             ints[i] = nextNegativeLong(bound);
@@ -182,7 +182,7 @@ public final class MathRandom {
      */
     public long[] nextLongs(final long bound, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final long[] ints = new long[howMany];
         for (int i = 0; i < howMany; i++) {
             ints[i] = nextLong(bound);
@@ -202,13 +202,13 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @since 1
      * @author Lars Tennstedt
      */
     public BigDecimal nextPositiveDecimal(final long bound, final int scale) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal decimal = nextDecimal(bound, scale);
         if (decimal.compareTo(BigDecimal.ZERO) < 0) {
             return decimal.negate();
@@ -228,13 +228,13 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @since 1
      * @author Lars Tennstedt
      */
     public BigDecimal nextNegativeDecimal(final long bound, final int scale) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal decimal = nextDecimal(bound, scale);
         if (decimal.compareTo(BigDecimal.ZERO) > 0) {
             return decimal.negate();
@@ -254,13 +254,13 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @since 1
      * @author Lars Tennstedt
      */
     public BigDecimal nextDecimal(final long bound, final int scale) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal decimal = BigDecimal.valueOf(RandomUtils.nextLong(0, bound));
         return keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP);
     }
@@ -276,14 +276,14 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @see #nextPositiveDecimal
      * @since 1
      * @author Lars Tennstedt
      */
     public BigDecimal nextInvertiblePositiveDecimal(final long bound, final int scale) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal decimal = nextInvertibleDecimal(bound, scale);
         if (decimal.compareTo(BigDecimal.ZERO) < 0) {
             return decimal.negate();
@@ -302,7 +302,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @see #nextNegativeDecimal
      * @see #nextInvertibleDecimal
      * @since 1
@@ -310,7 +310,7 @@ public final class MathRandom {
      */
     public BigDecimal nextInvertibleNegativeDecimal(final long bound, final int scale) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal decimal = nextInvertibleDecimal(bound, scale);
         if (decimal.compareTo(BigDecimal.ZERO) > 0) {
             return decimal.negate();
@@ -329,14 +329,14 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @see #nextDecimal
      * @since 1
      * @author Lars Tennstedt
      */
     public BigDecimal nextInvertibleDecimal(final long bound, final int scale) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal decimal = BigDecimal.valueOf(RandomUtils.nextLong(1, bound));
         return keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP);
     }
@@ -372,7 +372,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code howMany < 2}
      * @see #nextPositiveDecimal
@@ -381,8 +381,8 @@ public final class MathRandom {
      */
     public List<BigDecimal> nextPositiveDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigDecimal> decimals = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             decimals.add(nextPositiveDecimal(bound, scale));
@@ -404,7 +404,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code howMany < 2}
      * @see #nextNegativeDecimal
@@ -413,8 +413,8 @@ public final class MathRandom {
      */
     public List<BigDecimal> nextNegativeDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigDecimal> decimals = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             decimals.add(nextNegativeDecimal(bound, scale));
@@ -436,7 +436,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code howMany < 2}
      * @see #nextDecimal
@@ -445,8 +445,8 @@ public final class MathRandom {
      */
     public List<BigDecimal> nextDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigDecimal> decimals = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             decimals.add(nextDecimal(bound, scale));
@@ -468,7 +468,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code howMany < 2}
      * @see #nextInvertiblePositiveDecimal
@@ -477,8 +477,8 @@ public final class MathRandom {
      */
     public List<BigDecimal> nextInvertiblePositiveDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigDecimal> decimals = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             decimals.add(nextInvertiblePositiveDecimal(bound, scale));
@@ -500,7 +500,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code howMany < 2}
      * @see #nextInvertibleNegativeDecimal
@@ -509,8 +509,8 @@ public final class MathRandom {
      */
     public List<BigDecimal> nextInvertibleNegativeDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigDecimal> decimals = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             decimals.add(nextInvertibleNegativeDecimal(bound, scale));
@@ -532,7 +532,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code howMany < 2}
      * @see #nextInvertibleDecimal
@@ -541,8 +541,8 @@ public final class MathRandom {
      */
     public List<BigDecimal> nextInvertibleDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigDecimal> decimals = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             decimals.add(nextInvertibleDecimal(bound, scale));
@@ -687,7 +687,7 @@ public final class MathRandom {
      */
     public List<Fraction> nextPositiveFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<Fraction> fractions = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             fractions.add(nextPositiveFraction(bound));
@@ -714,7 +714,7 @@ public final class MathRandom {
      */
     public List<Fraction> nextNegativeFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<Fraction> fractions = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             fractions.add(nextNegativeFraction(bound));
@@ -741,7 +741,7 @@ public final class MathRandom {
      */
     public List<Fraction> nextFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<Fraction> fractions = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             fractions.add(nextFraction(bound));
@@ -768,7 +768,7 @@ public final class MathRandom {
      */
     public List<Fraction> nextInvertiblePositiveFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<Fraction> fractions = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             fractions.add(nextInvertiblePositiveFraction(bound));
@@ -795,7 +795,7 @@ public final class MathRandom {
      */
     public List<Fraction> nextInvertibleNegativeFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<Fraction> fractions = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             fractions.add(nextInvertibleNegativeFraction(bound));
@@ -822,7 +822,7 @@ public final class MathRandom {
      */
     public List<Fraction> nextInvertibleFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<Fraction> fractions = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             fractions.add(nextInvertibleFraction(bound));
@@ -892,7 +892,7 @@ public final class MathRandom {
      */
     public List<SimpleComplexNumber> nextSimpleComplexNumbers(final long bound, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<SimpleComplexNumber> complexNumbers = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             complexNumbers.add(nextSimpleComplexNumber(bound));
@@ -920,7 +920,7 @@ public final class MathRandom {
      */
     public List<SimpleComplexNumber> nextInvertibleSimpleComplexNumbers(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<SimpleComplexNumber> complexNumbers = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             complexNumbers.add(nextInvertibleSimpleComplexNumber(bound));
@@ -945,7 +945,7 @@ public final class MathRandom {
      */
     public RealComplexNumber nextRealComplexNumber(final long bound, final int scale) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal real = nextDecimal(bound, scale);
         final BigDecimal imaginary = nextDecimal(bound, scale);
         return new RealComplexNumber(real, imaginary);
@@ -967,7 +967,7 @@ public final class MathRandom {
      */
     public RealComplexNumber nextInvertibleRealComplexNumber(final long bound, final int scale) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal nonZeroPart = nextInvertibleDecimal(bound, scale);
         final BigDecimal possibleZeroPart = random.nextBoolean() ? nextInvertibleDecimal(bound, scale)
                 : nextDecimal(bound, scale);
@@ -999,8 +999,8 @@ public final class MathRandom {
      */
     public List<RealComplexNumber> nextRealComplexNumbers(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<RealComplexNumber> complexNumbers = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             complexNumbers.add(nextRealComplexNumber(bound, scale));
@@ -1031,8 +1031,8 @@ public final class MathRandom {
     public List<RealComplexNumber> nextInvertibleRealComplexNumbers(final long bound, final int scale,
             final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<RealComplexNumber> complexNumbers = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             complexNumbers.add(nextInvertibleRealComplexNumber(bound, scale));
@@ -1088,7 +1088,7 @@ public final class MathRandom {
     public List<BigIntVector> nextBigIntVectors(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigIntVector> vectors = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             vectors.add(nextBigIntVector(bound, size));
@@ -1355,7 +1355,7 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigIntMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextBigIntMatrix(bound, rowSize, columnSize));
@@ -1389,7 +1389,7 @@ public final class MathRandom {
     public List<BigIntMatrix> nextUpperTriangularBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigIntMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextUpperTriangularBigIntMatrix(bound, size));
@@ -1423,7 +1423,7 @@ public final class MathRandom {
     public List<BigIntMatrix> nextLowerTriangularBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigIntMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextLowerTriangularBigIntMatrix(bound, size));
@@ -1457,7 +1457,7 @@ public final class MathRandom {
     public List<BigIntMatrix> nextTriangularBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigIntMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextTriangularBigIntMatrix(bound, size));
@@ -1491,7 +1491,7 @@ public final class MathRandom {
     public List<BigIntMatrix> nextDiagonalBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigIntMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextDiagonalBigIntMatrix(bound, size));
@@ -1525,7 +1525,7 @@ public final class MathRandom {
     public List<BigIntMatrix> nextSymmetricBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigIntMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextSymmetricBigIntMatrix(bound, size));
@@ -1559,7 +1559,7 @@ public final class MathRandom {
     public List<BigIntMatrix> nextSkewSymmetricBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<BigIntMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextSkewSymmetricBigIntMatrix(bound, size));
@@ -1580,7 +1580,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @see #nextDecimal
@@ -1589,7 +1589,7 @@ public final class MathRandom {
      */
     public DecimalVector nextDecimalVector(final long bound, final int scale, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final DecimalVectorBuilder builder = DecimalVector.builder(size);
         for (int i = 0; i < size; i++) {
@@ -1614,7 +1614,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code rowSize < 1}
      * @throws IllegalArgumentException
@@ -1628,9 +1628,9 @@ public final class MathRandom {
     public List<DecimalVector> nextDecimalVectors(final long bound, final int scale, final int size,
             final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<DecimalVector> vectors = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             vectors.add(nextDecimalVector(bound, scale, size));
@@ -1653,7 +1653,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code rowSize < 1}
      * @throws IllegalArgumentException
@@ -1664,7 +1664,7 @@ public final class MathRandom {
      */
     public DecimalMatrix nextDecimalMatrix(final long bound, final int scale, final int rowSize, final int columnSize) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(rowSize, columnSize);
@@ -1689,7 +1689,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @since 1
@@ -1726,7 +1726,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @since 1
@@ -1763,7 +1763,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @since 1
@@ -1794,7 +1794,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @since 1
@@ -1830,7 +1830,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @since 1
@@ -1869,7 +1869,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @since 1
@@ -1916,7 +1916,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code rowSize < 1}
      * @throws IllegalArgumentException
@@ -1930,10 +1930,10 @@ public final class MathRandom {
     public List<DecimalMatrix> nextDecimalMatrices(final long bound, final int scale, final int rowSize,
             final int columnSize, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextDecimalMatrix(bound, scale, rowSize, columnSize));
@@ -1959,7 +1959,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @throws IllegalArgumentException
@@ -1971,9 +1971,9 @@ public final class MathRandom {
     public List<DecimalMatrix> nextUpperTriangularDecimalMatrices(final long bound, final int scale, final int size,
             final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextUpperTriangularDecimalMatrix(bound, scale, size));
@@ -1999,7 +1999,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @throws IllegalArgumentException
@@ -2011,9 +2011,9 @@ public final class MathRandom {
     public List<DecimalMatrix> nextLowerTriangularDecimalMatrices(final long bound, final int scale, final int size,
             final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextLowerTriangularDecimalMatrix(bound, scale, size));
@@ -2039,7 +2039,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @throws IllegalArgumentException
@@ -2051,9 +2051,9 @@ public final class MathRandom {
     public List<DecimalMatrix> nextTriangularDecimalMatrices(final long bound, final int scale, final int size,
             final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextTriangularDecimalMatrix(bound, scale, size));
@@ -2079,7 +2079,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @throws IllegalArgumentException
@@ -2091,9 +2091,9 @@ public final class MathRandom {
     public List<DecimalMatrix> nextDiagonalDecimalMatrices(final long bound, final int scale, final int size,
             final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextDiagonalDecimalMatrix(bound, scale, size));
@@ -2119,7 +2119,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @throws IllegalArgumentException
@@ -2131,9 +2131,9 @@ public final class MathRandom {
     public List<DecimalMatrix> nextSymmetricDecimalMatrices(final long bound, final int scale, final int size,
             final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextSymmetricDecimalMatrix(bound, scale, size));
@@ -2159,7 +2159,7 @@ public final class MathRandom {
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
-     *             if {@code scale < 1}
+     *             if {@code scale < 0}
      * @throws IllegalArgumentException
      *             if {@code size < 1}
      * @throws IllegalArgumentException
@@ -2171,9 +2171,9 @@ public final class MathRandom {
     public List<DecimalMatrix> nextSkewSymmetricDecimalMatrices(final long bound, final int scale, final int size,
             final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
-        checkArgument(scale > 0, "expected scale > 0 but actual %s", scale);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        checkArgument(howMany > 1, "expected howMany > 1 but actual %s", howMany);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextSkewSymmetricDecimalMatrix(bound, scale, size));
