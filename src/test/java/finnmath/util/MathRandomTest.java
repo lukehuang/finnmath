@@ -204,6 +204,76 @@ public final class MathRandomTest {
     }
 
     @Test
+    public void nextInvertiblePositiveDecimalBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertiblePositiveDecimal(1, validScale);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertiblePositiveDecimalScaleTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertiblePositiveDecimal(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+
+    }
+
+    @Test
+    public void nextInvertiblePositiveDecimalShouldSucceed() {
+        final BigDecimal actual = mathRandom.nextInvertiblePositiveDecimal(bound, validScale);
+        assertThat(actual).isGreaterThan(BigDecimal.ZERO).isLessThan(decimalBound);
+        assertThat(actual.scale()).isEqualTo(validScale);
+    }
+
+    @Test
+    public void nextInvertibleNegativeDecimalBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleNegativeDecimal(1, validScale);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleNegativeDecimalScaleTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleNegativeDecimal(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+
+    }
+
+    @Test
+    public void nextInvertibleNegativeDecimalShouldSucceed() {
+        final BigDecimal actual = mathRandom.nextInvertibleNegativeDecimal(bound, validScale);
+        assertThat(actual).isGreaterThan(decimalBound.negate()).isLessThan(BigDecimal.ZERO);
+        assertThat(actual.scale()).isEqualTo(validScale);
+    }
+
+    @Test
+    public void nextInvertibleDecimalBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleDecimal(1, validScale);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleDecimalScaleTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleDecimal(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+
+    }
+
+    @Test
+    public void nextInvertibleDecimalShouldSucceed() {
+        final BigDecimal actual = mathRandom.nextInvertibleDecimal(bound, validScale);
+        assertThat(actual).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
+                .isNotEqualByComparingTo(BigDecimal.ZERO);
+        assertThat(actual.scale()).isEqualTo(validScale);
+    }
+
+    @Test
     public void nextPositiveDecimalsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
             mathRandom.nextPositiveDecimals(0, validScale, howMany);
@@ -297,6 +367,100 @@ public final class MathRandomTest {
     }
 
     @Test
+    public void nextInvertiblePositiveDecimalsBoundTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertiblePositiveDecimals(1, validScale, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertiblePositiveDecimalsScaleTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertiblePositiveDecimals(bound, 0, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+
+    }
+
+    @Test
+    public void nextInvertiblePositiveDecimalsTooLessShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertiblePositiveDecimals(bound, validScale, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertiblePositiveDecimalsShouldSucceed() {
+        final List<BigDecimal> decimals = mathRandom.nextInvertiblePositiveDecimals(bound, validScale, howMany);
+        assertThat(decimals).hasSize(howMany)
+                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) > 0, "lower bound"))
+                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound"))
+                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
+    }
+
+    @Test
+    public void nextInvertibleNegativeDecimalsBoundTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleNegativeDecimals(1, validScale, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertibleNegativeDecimalsScaleTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleNegativeDecimals(bound, 0, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+    }
+
+    @Test
+    public void nextInvertibleNegativeDecimalsTooLessShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleNegativeDecimals(bound, validScale, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertibleNegativeDecimalsShouldSucceed() {
+        final List<BigDecimal> decimals = mathRandom.nextInvertibleNegativeDecimals(bound, validScale, howMany);
+        assertThat(decimals).hasSize(howMany)
+                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
+                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) < 0, "upper bound"))
+                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
+    }
+
+    @Test
+    public void nextInvertibleDecimalsBoundTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleDecimals(1, validScale, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertibleDecimalsScaleTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleDecimals(bound, 0, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+    }
+
+    @Test
+    public void nextInvertibleDecimalsTooLessShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleDecimals(bound, validScale, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertibleDecimalsShouldSucceed() {
+        final List<BigDecimal> decimals = mathRandom.nextInvertibleDecimals(bound, validScale, howMany);
+        assertThat(decimals).hasSize(howMany)
+                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
+                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound"))
+                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) != 0, "not zero"))
+                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
+    }
+
+    @Test
     public void nextPositiveFractionBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             mathRandom.nextPositiveFraction(1);
@@ -339,6 +503,49 @@ public final class MathRandomTest {
     }
 
     @Test
+    public void nextInvertiblePositiveFractionBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertiblePositiveFraction(1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertiblePositiveFractionShouldSucceed() {
+        final Fraction fraction = mathRandom.nextInvertiblePositiveFraction(bound);
+        assertThat(fraction.getNumerator()).isGreaterThan(BigInteger.ZERO).isLessThan(bigBound);
+        assertThat(fraction.getDenominator()).isGreaterThanOrEqualTo(BigInteger.ZERO).isLessThan(bigBound);
+    }
+
+    @Test
+    public void nextInvertibleNegativeFractionBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleNegativeFraction(1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertibleNegativeFractionShouldSucceed() {
+        final Fraction fraction = mathRandom.nextInvertibleNegativeFraction(bound);
+        assertThat(fraction.getNumerator()).isGreaterThan(bigBound.negate()).isLessThan(BigInteger.ZERO);
+        assertThat(fraction.getDenominator()).isGreaterThanOrEqualTo(BigInteger.ZERO).isLessThan(bigBound);
+    }
+
+    @Test
+    public void nextInvertibleFractionBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleFraction(1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertibleFractionShouldSucceed() {
+        final Fraction fraction = mathRandom.nextInvertibleFraction(bound);
+        assertThat(fraction.getNumerator()).isGreaterThan(bigBound.negate()).isLessThan(bigBound)
+                .isNotEqualTo(BigInteger.ZERO);
+        assertThat(fraction.getDenominator()).isGreaterThan(bigBound.negate()).isLessThanOrEqualTo(bigBound);
+    }
+
+    @Test
     public void nextPositiveFractionsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
             mathRandom.nextPositiveFractions(1, howMany);
@@ -357,13 +564,13 @@ public final class MathRandomTest {
         final List<Fraction> fractions = mathRandom.nextPositiveFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
                 .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound of the numerator"))
+                        "lower bound (numerator)"))
                 .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound of the numerator"))
+                        "upper bound (numerator)"))
                 .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound of the denominator"))
+                        "lower bound (denominator)"))
                 .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound of the denominator"));
+                        "upper bound (denominator)"));
     }
 
     @Test
@@ -385,13 +592,13 @@ public final class MathRandomTest {
         final List<Fraction> fractions = mathRandom.nextNegativeFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
                 .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
-                        "lower bound of the numerator"))
+                        "lower bound (numerator)"))
                 .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
-                        "upper bound of the numerator"))
+                        "upper bound (numerator)"))
                 .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound of the denominator"))
+                        "lower bound (denominator)"))
                 .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound of the denominator"));
+                        "upper bound (denominator)"));
     }
 
     @Test
@@ -415,13 +622,99 @@ public final class MathRandomTest {
         final List<Fraction> fractions = mathRandom.nextFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
                 .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
-                        "lower bound of the numerator"))
+                        "lower bound (numerator)"))
                 .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound of the numerator"))
+                        "upper bound (numerator)"))
                 .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound.negate()) > 0,
-                        "lower bound of the denominator"))
+                        "lower bound (denominator)"))
                 .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound of the denominator"));
+                        "upper bound (denominator)"));
+    }
+
+    @Test
+    public void nextInvertiblePositiveFractionsBoundTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertiblePositiveFractions(1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertiblePositiveFractionsTooLessShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertiblePositiveFractions(bound, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertiblePositiveFractionsShouldSucceed() {
+        final List<Fraction> fractions = mathRandom.nextInvertiblePositiveFractions(bound, howMany);
+        assertThat(fractions).hasSize(howMany)
+                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
+                        "lower bound (numerator)"))
+                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
+                        "upper bound (numerator)"))
+                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                        "lower bound (denominator)"))
+                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                        "upper bound (denominator)"));
+    }
+
+    @Test
+    public void nextInvertibleNegativeFractionsBoundTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleNegativeFractions(1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertibleNegativeFractionsTooLessShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleNegativeFractions(bound, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+    }
+
+    @Test
+    public void nextInvertibleNegativeFractionsShouldSucceed() {
+        final List<Fraction> fractions = mathRandom.nextInvertibleNegativeFractions(bound, howMany);
+        assertThat(fractions).hasSize(howMany)
+                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
+                        "lower bound (numerator)"))
+                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
+                        "upper bound (numerator)"))
+                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                        "lower bound (denominator)"))
+                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                        "upper bound (denominator)"));
+    }
+
+    @Test
+    public void nextInvertibleFractionsBoundTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleFractions(1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleFractionsTooLessShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleFractions(bound, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleFractionsShouldSucceed() {
+        final List<Fraction> fractions = mathRandom.nextInvertibleFractions(bound, howMany);
+        assertThat(fractions).hasSize(howMany)
+                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
+                        "lower bound (numerator)"))
+                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
+                        "upper bound (numerator)"))
+                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound.negate()) > 0,
+                        "lower bound (denominator)"))
+                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                        "upper bound (denominator)"));
     }
 
     @Test
@@ -437,6 +730,22 @@ public final class MathRandomTest {
         final SimpleComplexNumber actual = mathRandom.nextSimpleComplexNumber(bound);
         assertThat(actual.getReal()).isGreaterThan(bigBound.negate()).isLessThan(bigBound);
         assertThat(actual.getImaginary()).isGreaterThan(bigBound.negate()).isLessThan(bigBound);
+    }
+
+    @Test
+    public void nextInvertibleSimpleComplexNumberBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleSimpleComplexNumber(1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleSimpleComplexNumberShouldSucceed() {
+        final SimpleComplexNumber actual = mathRandom.nextInvertibleSimpleComplexNumber(bound);
+        assertThat(actual.getReal()).isGreaterThan(bigBound.negate()).isLessThan(bigBound);
+        assertThat(actual.getImaginary()).isGreaterThan(bigBound.negate()).isLessThan(bigBound);
+        assertThat(actual).isNotEqualTo(SimpleComplexNumber.ZERO);
     }
 
     @Test
@@ -460,13 +769,44 @@ public final class MathRandomTest {
         final List<SimpleComplexNumber> complexNumbers = mathRandom.nextSimpleComplexNumbers(bound, howMany);
         assertThat(complexNumbers).hasSize(howMany)
                 .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound.negate()) > 0,
-                        "lower bound of the real part"))
+                        "lower bound (real part)"))
                 .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
-                        "upper bound of the real part"))
+                        "upper bound (real part)"))
                 .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound.negate()) > 0,
-                        "lower bound of the imaginary part"))
+                        "lower bound (imaginary part)"))
                 .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound of the imaginary part"));
+                        "upper bound (imaginary part)"));
+    }
+
+    @Test
+    public void nextInvertibleSimpleComplexNumbersBoundTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleSimpleComplexNumbers(1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleSimpleComplexNumbersTooLessShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleSimpleComplexNumbers(bound, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleSimpleComplexNumbersShouldSucceed() {
+        final List<SimpleComplexNumber> complexNumbers = mathRandom.nextInvertibleSimpleComplexNumbers(bound, howMany);
+        assertThat(complexNumbers).hasSize(howMany)
+                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound.negate()) > 0,
+                        "lower bound (real part)"))
+                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
+                        "upper bound (real part)"))
+                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound.negate()) > 0,
+                        "lower bound (imaginary part)"))
+                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
+                        "upper bound (imaginary part)"))
+                .are(new Condition<>(complexNumber -> !complexNumber.equals(SimpleComplexNumber.ZERO), "invertible"));
     }
 
     @Test
@@ -489,9 +829,36 @@ public final class MathRandomTest {
     public void nextRealComplexNumberShouldSucceed() {
         final RealComplexNumber actual = mathRandom.nextRealComplexNumber(bound, validScale);
         assertThat(actual.getReal()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
-                .has(new Condition<>(decimal -> decimal.scale() == validScale, "scale of the real part"));
+                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
         assertThat(actual.getImaginary()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
-                .has(new Condition<>(decimal -> decimal.scale() == validScale, "scale of the imaginary part"));
+                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
+    }
+
+    @Test
+    public void nextInvertibleRealComplexNumberBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleRealComplexNumber(1, validScale);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleRealComplexNumberScaleTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleRealComplexNumber(bound, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+
+    }
+
+    @Test
+    public void nextInvertibleRealComplexNumberShouldSucceed() {
+        final RealComplexNumber actual = mathRandom.nextInvertibleRealComplexNumber(bound, validScale);
+        assertThat(actual.getReal()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
+                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"))
+                .is(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) != 0, "not zero (real part)"));
+        assertThat(actual.getImaginary()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
+                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"))
+                .is(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) != 0, "not zero (imaginary part)"));
     }
 
     @Test
@@ -523,17 +890,64 @@ public final class MathRandomTest {
         final List<RealComplexNumber> complexNumbers = mathRandom.nextRealComplexNumbers(bound, validScale, howMany);
         assertThat(complexNumbers).hasSize(howMany)
                 .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound.negate()) > 0,
-                        "lower bound of the real part"))
+                        "lower bound (real part)"))
                 .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
-                        "upper bound of the real part"))
+                        "upper bound (real part)"))
                 .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound.negate()) > 0,
-                        "lower bound of the imaginary part"))
+                        "lower bound (imaginary part)"))
                 .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound of the imaginary part"))
+                        "upper bound (imaginary part)"))
+                .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale,
+                        "scaled (real part)"))
+                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
+                        "scaled (imaginary part)"));
+    }
+
+    @Test
+    public void nextInvertibleRealComplexNumbersBoundTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleRealComplexNumbers(1, validScale, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleRealComplexNumbersScaleTooLowShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleRealComplexNumbers(bound, 0, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > 0 but actual 0");
+
+    }
+
+    @Test
+    public void nextInvertibleRealComplexNumbersTooLessShoudThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextInvertibleRealComplexNumbers(bound, validScale, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 1 but actual 1");
+
+    }
+
+    @Test
+    public void nextInvertibleRealComplexNumbersShouldSucceed() {
+        final List<RealComplexNumber> complexNumbers = mathRandom.nextInvertibleRealComplexNumbers(bound, validScale,
+                howMany);
+        assertThat(complexNumbers).hasSize(howMany)
+                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound.negate()) > 0,
+                        "lower bound (real part)"))
+                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
+                        "upper bound (real part)"))
+                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound.negate()) > 0,
+                        "lower bound (imaginary part)"))
+                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
+                        "upper bound (imaginary part)"))
                 .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale,
                         "scale of the real part"))
                 .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
-                        "scale of the imaginary part"));
+                        "scale of the imaginary part"))
+                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(BigDecimal.ZERO) != 0,
+                        "not zero (real part)"))
+                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(BigDecimal.ZERO) != 0,
+                        "not zero (imaginary part)"));
     }
 
     @Test

@@ -236,10 +236,10 @@ import org.apache.commons.lang3.RandomUtils;
 <span class="fc bfc" id="L236" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L237" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
 <span class="fc" id="L238">        final BigDecimal decimal = nextDecimal(bound, scale);</span>
-<span class="fc bfc" id="L239" title="All 2 branches covered.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
 <span class="fc" id="L240">            return decimal.negate();</span>
         }
-<span class="fc" id="L242">        return decimal;</span>
+<span class="nc" id="L242">        return decimal;</span>
     }
 
     /**
@@ -282,8 +282,8 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public BigDecimal nextInvertiblePositiveDecimal(final long bound, final int scale) {
-<span class="pc bpc" id="L285" title="1 of 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="pc bpc" id="L286" title="1 of 2 branches missed.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
 <span class="fc" id="L287">        final BigDecimal decimal = nextInvertibleDecimal(bound, scale);</span>
 <span class="pc bpc" id="L288" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
 <span class="nc" id="L289">            return decimal.negate();</span>
@@ -309,11 +309,11 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public BigDecimal nextInvertibleNegativeDecimal(final long bound, final int scale) {
-<span class="nc bnc" id="L312" title="All 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L313" title="All 2 branches missed.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
-<span class="nc" id="L314">        final BigDecimal decimal = nextInvertibleDecimal(bound, scale);</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
-<span class="nc" id="L316">            return decimal.negate();</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L314">        final BigDecimal decimal = nextInvertibleDecimal(bound, scale);</span>
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="fc" id="L316">            return decimal.negate();</span>
         }
 <span class="nc" id="L318">        return decimal;</span>
     }
@@ -335,8 +335,8 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public BigDecimal nextInvertibleDecimal(final long bound, final int scale) {
-<span class="pc bpc" id="L338" title="1 of 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="pc bpc" id="L339" title="1 of 2 branches missed.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
 <span class="fc" id="L340">        final BigDecimal decimal = BigDecimal.valueOf(RandomUtils.nextLong(1, bound));</span>
 <span class="fc" id="L341">        return keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP);</span>
     }
@@ -476,14 +476,14 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;BigDecimal&gt; nextInvertiblePositiveDecimals(final long bound, final int scale, final int howMany) {
-<span class="nc bnc" id="L479" title="All 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L480" title="All 2 branches missed.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L481" title="All 2 branches missed.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L482">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L483" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L484">            decimals.add(nextInvertiblePositiveDecimal(bound, scale));</span>
+<span class="fc bfc" id="L479" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L480" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L481" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L482">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L484">            decimals.add(nextInvertiblePositiveDecimal(bound, scale));</span>
         }
-<span class="nc" id="L486">        return decimals;</span>
+<span class="fc" id="L486">        return decimals;</span>
     }
 
     /**
@@ -508,14 +508,14 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;BigDecimal&gt; nextInvertibleNegativeDecimals(final long bound, final int scale, final int howMany) {
-<span class="nc bnc" id="L511" title="All 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L512" title="All 2 branches missed.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L513" title="All 2 branches missed.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L514">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L515" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L516">            decimals.add(nextInvertibleNegativeDecimal(bound, scale));</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L513" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L514">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L515" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L516">            decimals.add(nextInvertibleNegativeDecimal(bound, scale));</span>
         }
-<span class="nc" id="L518">        return decimals;</span>
+<span class="fc" id="L518">        return decimals;</span>
     }
 
     /**
@@ -540,14 +540,14 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;BigDecimal&gt; nextInvertibleDecimals(final long bound, final int scale, final int howMany) {
-<span class="nc bnc" id="L543" title="All 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L544" title="All 2 branches missed.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L545" title="All 2 branches missed.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L546">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L547" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L548">            decimals.add(nextInvertibleDecimal(bound, scale));</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L544" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L545" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L546">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L547" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L548">            decimals.add(nextInvertibleDecimal(bound, scale));</span>
         }
-<span class="nc" id="L550">        return decimals;</span>
+<span class="fc" id="L550">        return decimals;</span>
     }
 
     /**
@@ -613,6 +613,62 @@ import org.apache.commons.lang3.RandomUtils;
     }
 
     /**
+     * Returns a positive {@link Fraction} which is invertible
+     *
+     * @param bound
+     *            the bound
+     * @return A pseudo random {@link Fraction}
+     * @throws IllegalArgumentException
+     *             if {@code bound &lt; 2}
+     * @see #nextPositiveFraction
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public Fraction nextInvertiblePositiveFraction(final long bound) {
+<span class="fc bfc" id="L628" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc" id="L629">        final BigInteger numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
+<span class="fc" id="L630">        final BigInteger denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
+<span class="fc" id="L631">        return new Fraction(numerator, denominator);</span>
+    }
+
+    /**
+     * Returns a negative {@link Fraction} which is invertible
+     *
+     * @param bound
+     *            the bound
+     * @return A pseudo random {@link Fraction}
+     * @throws IllegalArgumentException
+     *             if {@code bound &lt; 2}
+     * @see #nextNegativeFraction
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public Fraction nextInvertibleNegativeFraction(final long bound) {
+<span class="fc bfc" id="L647" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc" id="L648">        return nextInvertiblePositiveFraction(bound).negate();</span>
+    }
+
+    /**
+     * Returns a {@link Fraction} which is invertible
+     *
+     * @param bound
+     *            the bound
+     * @return A pseudo random {@link Fraction}
+     * @throws IllegalArgumentException
+     *             if {@code bound &lt; 2}
+     * @see #nextFraction
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public Fraction nextInvertibleFraction(final long bound) {
+<span class="fc bfc" id="L664" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L665" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L666">            return nextInvertibleNegativeFraction(bound);</span>
+        }
+<span class="fc" id="L668">        return nextInvertiblePositiveFraction(bound);</span>
+    }
+
+    /**
      * Returns a {@link List} of the size of {@code howMany} containing positive
      * {@link Fraction Fractions}
      *
@@ -630,13 +686,13 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;Fraction&gt; nextPositiveFractions(final long bound, final int howMany) {
-<span class="fc bfc" id="L633" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L634" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L635">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L636" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L637">            fractions.add(nextPositiveFraction(bound));</span>
+<span class="fc bfc" id="L689" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L690" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L691">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L692" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L693">            fractions.add(nextPositiveFraction(bound));</span>
         }
-<span class="fc" id="L639">        return fractions;</span>
+<span class="fc" id="L695">        return fractions;</span>
     }
 
     /**
@@ -657,13 +713,13 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;Fraction&gt; nextNegativeFractions(final long bound, final int howMany) {
-<span class="fc bfc" id="L660" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L661" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L662">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L663" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L664">            fractions.add(nextNegativeFraction(bound));</span>
+<span class="fc bfc" id="L716" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L717" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L718">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L719" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L720">            fractions.add(nextNegativeFraction(bound));</span>
         }
-<span class="fc" id="L666">        return fractions;</span>
+<span class="fc" id="L722">        return fractions;</span>
     }
 
     /**
@@ -684,69 +740,13 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;Fraction&gt; nextFractions(final long bound, final int howMany) {
-<span class="fc bfc" id="L687" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L688" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L689">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L690" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L691">            fractions.add(nextFraction(bound));</span>
+<span class="fc bfc" id="L743" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L744" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L745">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L746" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L747">            fractions.add(nextFraction(bound));</span>
         }
-<span class="fc" id="L693">        return fractions;</span>
-    }
-
-    /**
-     * Returns a positive {@link Fraction} which is invertible
-     *
-     * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound &lt; 2}
-     * @see #nextPositiveFraction
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    public Fraction nextInvertiblePositiveFraction(final long bound) {
-<span class="pc bpc" id="L709" title="1 of 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc" id="L710">        final BigInteger numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
-<span class="fc" id="L711">        final BigInteger denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
-<span class="fc" id="L712">        return new Fraction(numerator, denominator);</span>
-    }
-
-    /**
-     * Returns a negative {@link Fraction} which is invertible
-     *
-     * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound &lt; 2}
-     * @see #nextNegativeFraction
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    public Fraction nextInvertibleNegativeFraction(final long bound) {
-<span class="pc bpc" id="L728" title="1 of 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc" id="L729">        return nextInvertiblePositiveFraction(bound).negate();</span>
-    }
-
-    /**
-     * Returns a {@link Fraction} which is invertible
-     *
-     * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound &lt; 2}
-     * @see #nextFraction
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    public Fraction nextInvertibleFraction(final long bound) {
-<span class="pc bpc" id="L745" title="1 of 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L746" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
-<span class="fc" id="L747">            return nextInvertibleNegativeFraction(bound);</span>
-        }
-<span class="fc" id="L749">        return nextInvertiblePositiveFraction(bound);</span>
+<span class="fc" id="L749">        return fractions;</span>
     }
 
     /**
@@ -767,8 +767,8 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;Fraction&gt; nextInvertiblePositiveFractions(final long bound, final int howMany) {
-<span class="pc bpc" id="L770" title="1 of 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="pc bpc" id="L771" title="1 of 2 branches missed.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc bfc" id="L770" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L771" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
 <span class="fc" id="L772">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
 <span class="fc bfc" id="L773" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
 <span class="fc" id="L774">            fractions.add(nextInvertiblePositiveFraction(bound));</span>
@@ -794,13 +794,13 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;Fraction&gt; nextInvertibleNegativeFractions(final long bound, final int howMany) {
-<span class="nc bnc" id="L797" title="All 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L798" title="All 2 branches missed.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L799">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L800" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L801">            fractions.add(nextInvertibleNegativeFraction(bound));</span>
+<span class="fc bfc" id="L797" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L798" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L799">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L800" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L801">            fractions.add(nextInvertibleNegativeFraction(bound));</span>
         }
-<span class="nc" id="L803">        return fractions;</span>
+<span class="fc" id="L803">        return fractions;</span>
     }
 
     /**
@@ -821,13 +821,13 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;Fraction&gt; nextInvertibleFractions(final long bound, final int howMany) {
-<span class="nc bnc" id="L824" title="All 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L825" title="All 2 branches missed.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L826">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L827" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L828">            fractions.add(nextInvertibleFraction(bound));</span>
+<span class="fc bfc" id="L824" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L825" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L826">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L827" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L828">            fractions.add(nextInvertibleFraction(bound));</span>
         }
-<span class="nc" id="L830">        return fractions;</span>
+<span class="fc" id="L830">        return fractions;</span>
     }
 
     /**
@@ -863,7 +863,7 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public SimpleComplexNumber nextInvertibleSimpleComplexNumber(final long bound) {
-<span class="pc bpc" id="L866" title="1 of 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L866" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
 <span class="fc" id="L867">        final BigInteger nonZeroPart = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
 <span class="fc bfc" id="L868" title="All 2 branches covered.">        final long possibleZeroPart = random.nextBoolean() ? RandomUtils.nextLong(1, bound) : nextLong(bound);</span>
 <span class="fc bfc" id="L869" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
@@ -919,13 +919,13 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public List&lt;SimpleComplexNumber&gt; nextInvertibleSimpleComplexNumbers(final long bound, final int howMany) {
-<span class="nc bnc" id="L922" title="All 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L923" title="All 2 branches missed.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L924">        final List&lt;SimpleComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L925" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L926">            complexNumbers.add(nextInvertibleSimpleComplexNumber(bound));</span>
+<span class="fc bfc" id="L922" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L923" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L924">        final List&lt;SimpleComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L925" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L926">            complexNumbers.add(nextInvertibleSimpleComplexNumber(bound));</span>
         }
-<span class="nc" id="L928">        return complexNumbers;</span>
+<span class="fc" id="L928">        return complexNumbers;</span>
     }
 
     /**
@@ -966,8 +966,8 @@ import org.apache.commons.lang3.RandomUtils;
      * @author Lars Tennstedt
      */
     public RealComplexNumber nextInvertibleRealComplexNumber(final long bound, final int scale) {
-<span class="pc bpc" id="L969" title="1 of 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="pc bpc" id="L970" title="1 of 2 branches missed.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L969" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L970" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
 <span class="fc" id="L971">        final BigDecimal nonZeroPart = nextInvertibleDecimal(bound, scale);</span>
 <span class="fc bfc" id="L972" title="All 2 branches covered.">        final BigDecimal possibleZeroPart = random.nextBoolean() ? nextInvertibleDecimal(bound, scale)</span>
 <span class="fc" id="L973">                : nextDecimal(bound, scale);</span>
@@ -1030,14 +1030,14 @@ import org.apache.commons.lang3.RandomUtils;
      */
     public List&lt;RealComplexNumber&gt; nextInvertibleRealComplexNumbers(final long bound, final int scale,
             final int howMany) {
-<span class="nc bnc" id="L1033" title="All 2 branches missed.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L1034" title="All 2 branches missed.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L1035" title="All 2 branches missed.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L1036">        final List&lt;RealComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L1037" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L1038">            complexNumbers.add(nextInvertibleRealComplexNumber(bound, scale));</span>
+<span class="fc bfc" id="L1033" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1034" title="All 2 branches covered.">        checkArgument(scale &gt; 0, &quot;expected scale &gt; 0 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L1035" title="All 2 branches covered.">        checkArgument(howMany &gt; 1, &quot;expected howMany &gt; 1 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1036">        final List&lt;RealComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1037" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1038">            complexNumbers.add(nextInvertibleRealComplexNumber(bound, scale));</span>
         }
-<span class="nc" id="L1040">        return complexNumbers;</span>
+<span class="fc" id="L1040">        return complexNumbers;</span>
     }
 
     /**

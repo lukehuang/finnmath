@@ -613,6 +613,62 @@ public final class MathRandom {
     }
 
     /**
+     * Returns a positive {@link Fraction} which is invertible
+     *
+     * @param bound
+     *            the bound
+     * @return A pseudo random {@link Fraction}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 2}
+     * @see #nextPositiveFraction
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public Fraction nextInvertiblePositiveFraction(final long bound) {
+        checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
+        final BigInteger numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));
+        final BigInteger denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));
+        return new Fraction(numerator, denominator);
+    }
+
+    /**
+     * Returns a negative {@link Fraction} which is invertible
+     *
+     * @param bound
+     *            the bound
+     * @return A pseudo random {@link Fraction}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 2}
+     * @see #nextNegativeFraction
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public Fraction nextInvertibleNegativeFraction(final long bound) {
+        checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
+        return nextInvertiblePositiveFraction(bound).negate();
+    }
+
+    /**
+     * Returns a {@link Fraction} which is invertible
+     *
+     * @param bound
+     *            the bound
+     * @return A pseudo random {@link Fraction}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 2}
+     * @see #nextFraction
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public Fraction nextInvertibleFraction(final long bound) {
+        checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
+        if (random.nextBoolean()) {
+            return nextInvertibleNegativeFraction(bound);
+        }
+        return nextInvertiblePositiveFraction(bound);
+    }
+
+    /**
      * Returns a {@link List} of the size of {@code howMany} containing positive
      * {@link Fraction Fractions}
      *
@@ -691,62 +747,6 @@ public final class MathRandom {
             fractions.add(nextFraction(bound));
         }
         return fractions;
-    }
-
-    /**
-     * Returns a positive {@link Fraction} which is invertible
-     *
-     * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
-     * @see #nextPositiveFraction
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    public Fraction nextInvertiblePositiveFraction(final long bound) {
-        checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        final BigInteger numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));
-        final BigInteger denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));
-        return new Fraction(numerator, denominator);
-    }
-
-    /**
-     * Returns a negative {@link Fraction} which is invertible
-     *
-     * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
-     * @see #nextNegativeFraction
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    public Fraction nextInvertibleNegativeFraction(final long bound) {
-        checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        return nextInvertiblePositiveFraction(bound).negate();
-    }
-
-    /**
-     * Returns a {@link Fraction} which is invertible
-     *
-     * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
-     * @see #nextFraction
-     * @since 1
-     * @author Lars Tennstedt
-     */
-    public Fraction nextInvertibleFraction(final long bound) {
-        checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
-        if (random.nextBoolean()) {
-            return nextInvertibleNegativeFraction(bound);
-        }
-        return nextInvertiblePositiveFraction(bound);
     }
 
     /**
