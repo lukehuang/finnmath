@@ -747,6 +747,14 @@ public final class FractionTest {
     public void equalsNotFractionShouldReturnFalse() {
         assertThat(Fraction.ZERO.equals(new Object())).isFalse();
     }
+    
+    @Test
+    public void equalsNumeratorNotEqualShouldReturnFalse() {
+        fractions.forEach(fraction -> {
+            final Fraction other = new Fraction(fraction.getNumerator().add(BigInteger.ONE), fraction.getDenominator());
+            assertThat(fraction.equals(other)).isFalse();
+        });
+    }
 
     @Test
     public void equalsDenominatorNotEqualShouldReturnFalse() {

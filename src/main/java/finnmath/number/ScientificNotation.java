@@ -71,12 +71,17 @@ public final class ScientificNotation {
      * @author Lars Tennstedt
      */
     public String asString() {
+        if (coefficient.compareTo(BigDecimal.ZERO) == 0) {
+            return "0";
+        }
         if (exponent < 0) {
             return new StringBuilder(coefficient.toPlainString()).append(" * 10**(").append(exponent).append(")")
                     .toString();
-        } else if (exponent == 0) {
+        } 
+        if (exponent == 0) {
             return coefficient.toPlainString();
-        } else if (exponent == 1) {
+        }
+        if (exponent == 1) {
             return new StringBuilder(coefficient.toPlainString()).append(" * 10").toString();
         }
         return new StringBuilder(coefficient.toPlainString()).append(" * 10**").append(exponent).toString();

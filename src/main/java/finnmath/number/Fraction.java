@@ -84,22 +84,54 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
         this.denominator = requireNonNull(denominator, "denominator");
         checkArgument(!denominator.equals(BigInteger.ZERO), "expected denominator != 0 but actual %s", denominator);
     }
-
+    
+    /**
+     * Returns an {@code int} representation of this {@link Fraction}
+     * 
+     * @return The {@code int} value
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigDecimal#intValue
+     */
     @Override
     public int intValue() {
         return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).intValue();
     }
-
+    
+    /**
+     * Returns a {@code long} representation of this {@link Fraction}
+     * 
+     * @return The {@code long} value
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigDecimal#intValue
+     */
     @Override
     public long longValue() {
         return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).longValue();
     }
-
+    
+    /**
+     * Returns a {@code float} representation of this {@link Fraction}
+     * 
+     * @return The {@code float} value
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigDecimal#intValue
+     */
     @Override
     public float floatValue() {
         return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
+    /**
+     * Returns a {@code double} representation of this {@link Fraction}
+     * 
+     * @return The {@code double} value
+     * @since 1
+     * @author Lars Tennstedt
+     * @see BigDecimal#intValue
+     */
     @Override
     public double doubleValue() {
         return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).doubleValue();
