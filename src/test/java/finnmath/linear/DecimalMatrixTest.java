@@ -584,28 +584,28 @@ public final class DecimalMatrixTest {
     }
 
     @Test
-    public void detNotSquareShouldThrowException() {
+    public void determinatNotSquareShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build().determinant();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected square matrix but actual 2 x 3");
     }
 
     @Test
-    public void detRowSizeTooLargeShouldThrowException() {
+    public void determinatRowSizeTooLargeShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(4, 3).putAll(BigDecimal.ZERO).build().determinant();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected rowSize < 4 but actual 4");
     }
 
     @Test
-    public void detColumnSizeTooLargeShouldThrowException() {
+    public void determinatColumnSizeTooLargeShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(3, 4).putAll(BigDecimal.ZERO).build().determinant();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected columnSize < 4 but actual 4");
     }
 
     @Test
-    public void detOfTwoByTwoMatricesShouldSucceed() {
+    public void determinatOfTwoByTwoMatricesShouldSucceed() {
         twoByTwoMatrices.forEach(matrix -> {
             final BigDecimal expected = matrix.element(1, 1).multiply(matrix.element(2, 2))
                     .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
@@ -614,14 +614,14 @@ public final class DecimalMatrixTest {
     }
 
     @Test
-    public void detOfOneByOneMatricesShouldSucceed() {
+    public void determinatOfOneByOneMatricesShouldSucceed() {
         oneByOneMatrices.forEach(matrix -> {
             assertThat(matrix.determinant().compareTo(matrix.element(1, 1))).isEqualTo(0);
         });
     }
 
     @Test
-    public void detOfZeroMatrixShouldBeEqualToZero() {
+    public void determinatOfZeroMatrixShouldBeEqualToZero() {
         final DecimalMatrix zeroThreeByThreeMatrix = DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build();
         final DecimalMatrix zeroTwoByTwoMatrix = DecimalMatrix.builder(2, 2).putAll(BigDecimal.ZERO).build();
         final DecimalMatrix zeroOneByOneMatrix = DecimalMatrix.builder(1, 1).put(1, 1, BigDecimal.ZERO).build();
@@ -631,7 +631,7 @@ public final class DecimalMatrixTest {
     }
 
     @Test
-    public void detOfIdentityMatrixShouldBeEqualToOne() {
+    public void determinatOfIdentityMatrixShouldBeEqualToOne() {
         final DecimalMatrixBuilder identityThreeByThreeMatrixBuilder = DecimalMatrix.builder(3, 3);
         IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
@@ -652,7 +652,7 @@ public final class DecimalMatrixTest {
     }
 
     @Test
-    public void detWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet() {
+    public void determinatWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet() {
         threeByThreeMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).determinant()
@@ -674,7 +674,7 @@ public final class DecimalMatrixTest {
     }
 
     @Test
-    public void detOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries() {
+    public void determinatOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries() {
         threeByThreeTriangularMatrices.forEach(matrix -> {
             BigDecimal expected = BigDecimal.ONE;
             for (final Cell<Integer, Integer, BigDecimal> cell : matrix.cells()) {
@@ -984,13 +984,17 @@ public final class DecimalMatrixTest {
 
     @Test
     public void identityNotDiagonalhouldReturnFalse() {
-        final DecimalMatrix matrix = DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build();
-        assertThat(matrix.identity()).isFalse();
+        assertThat(DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build().identity()).isFalse();
     }
 
     @Test
-    public void identityNotIdShouldReturnFalse() {
-        assertThat(zeroMatrixForAddition.identity()).isFalse();
+    public void identityNotDiagonalShouldReturnFalse() {
+        assertThat(DecimalMatrix.builder(2, 3).putAll(BigDecimal.ZERO).build().identity()).isFalse();
+    }
+
+    @Test
+    public void identityNotIdentityMatrixShouldReturnFalse() {
+        assertThat(DecimalMatrix.builder(3, 3).putAll(BigDecimal.ZERO).build().identity()).isFalse();
     }
 
     @Test

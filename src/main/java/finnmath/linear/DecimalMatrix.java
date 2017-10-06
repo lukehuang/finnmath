@@ -275,11 +275,8 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         if (table.rowKeySet().size() == 3) {
             return ruleOfSarrus();
         }
-        if (table.rowKeySet().size() == 2) {
-            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)))
-                    .setScale(scale, BigDecimal.ROUND_HALF_UP);
-        }
-        return table.get(1, 1);
+        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)))
+                .setScale(scale, BigDecimal.ROUND_HALF_UP);
     }
 
     @Override
@@ -366,7 +363,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public boolean upperTriangular() {
         if (square()) {
             for (final Cell<Integer, Integer, BigDecimal> cell : table.cellSet()) {
-                if ((cell.getRowKey() > cell.getColumnKey()) && !cell.getValue().equals(BigDecimal.ZERO)) {
+                if ((cell.getRowKey() > cell.getColumnKey()) && (cell.getValue().compareTo(BigDecimal.ZERO) != 0)) {
                     return false;
                 }
             }
@@ -388,7 +385,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public boolean lowerTriangular() {
         if (square()) {
             for (final Cell<Integer, Integer, BigDecimal> cell : table.cellSet()) {
-                if ((cell.getRowKey() < cell.getColumnKey()) && !cell.getValue().equals(BigDecimal.ZERO)) {
+                if ((cell.getRowKey() < cell.getColumnKey()) && (cell.getValue().compareTo(BigDecimal.ZERO) != 0)) {
                     return false;
                 }
             }
@@ -411,7 +408,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public boolean identity() {
         if (diagonal()) {
             for (final Integer index : table.rowKeySet()) {
-                if (!table.get(index, index).equals(BigDecimal.ONE)) {
+                if (table.get(index, index).compareTo(BigDecimal.ONE) != 0) {
                     return false;
                 }
             }
@@ -432,7 +429,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
      */
     @Override
     public boolean invertible() {
-        return !determinant().equals(BigDecimal.ZERO);
+        return determinant().compareTo(BigDecimal.ZERO) != 0;
     }
 
     /**

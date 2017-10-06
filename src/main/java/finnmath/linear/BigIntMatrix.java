@@ -274,10 +274,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         if (table.rowKeySet().size() == 3) {
             return ruleOfSarrus();
         }
-        if (table.rowKeySet().size() == 2) {
-            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
-        }
-        return table.get(1, 1);
+        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
     }
 
     @Override

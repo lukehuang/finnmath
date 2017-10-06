@@ -23,4 +23,5 @@
 *.iws
 /.idea/
 /target/
+.README.md.html
 

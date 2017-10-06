@@ -568,28 +568,28 @@ public final class BigIntMatrixTest {
     }
 
     @Test
-    public void detNotSquareShouldThrowException() {
+    public void determinatNotSquareShouldThrowException() {
         assertThatThrownBy(() -> {
             BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build().determinant();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected square matrix but actual 2 x 3");
     }
 
     @Test
-    public void detRowSizeTooLargeShouldThrowException() {
+    public void determinatRowSizeTooLargeShouldThrowException() {
         assertThatThrownBy(() -> {
             BigIntMatrix.builder(4, 3).putAll(BigInteger.ZERO).build().determinant();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected rowSize < 4 but actual 4");
     }
 
     @Test
-    public void detColumnSizeTooLargeShouldThrowException() {
+    public void determinatColumnSizeTooLargeShouldThrowException() {
         assertThatThrownBy(() -> {
             BigIntMatrix.builder(3, 4).putAll(BigInteger.ZERO).build().determinant();
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected columnSize < 4 but actual 4");
     }
 
     @Test
-    public void detOfThreeByThreeMatricesShouldSucceed() {
+    public void determinatOfThreeByThreeMatricesShouldSucceed() {
         threeByThreeMatrices.forEach(matrix -> {
             final BigInteger firstSummand = matrix.element(1, 1).multiply(matrix.element(2, 2))
                     .multiply(matrix.element(3, 3));
@@ -610,7 +610,7 @@ public final class BigIntMatrixTest {
     }
 
     @Test
-    public void detOfTwoByTwoMatricesShouldSucceed() {
+    public void determinatOfTwoByTwoMatricesShouldSucceed() {
         twoByTwoMatrices.forEach(matrix -> {
             final BigInteger expected = matrix.element(1, 1).multiply(matrix.element(2, 2))
                     .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
@@ -619,14 +619,14 @@ public final class BigIntMatrixTest {
     }
 
     @Test
-    public void detOfOneByOneMatricesShouldSucceed() {
+    public void determinatOfOneByOneMatricesShouldSucceed() {
         oneByOneMatrices.forEach(matrix -> {
             assertThat(matrix.determinant()).isExactlyInstanceOf(BigInteger.class).isEqualTo(matrix.element(1, 1));
         });
     }
 
     @Test
-    public void detOfZeroMatrixShouldBeEqualToZero() {
+    public void determinatOfZeroMatrixShouldBeEqualToZero() {
         final BigIntMatrix zeroThreeByThreeMatrix = BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build();
         final BigIntMatrix zeroTwoByTwoMatrix = BigIntMatrix.builder(2, 2).putAll(BigInteger.ZERO).build();
         final BigIntMatrix zeroOneByOneMatrix = BigIntMatrix.builder(1, 1).put(1, 1, BigInteger.ZERO).build();
@@ -636,7 +636,7 @@ public final class BigIntMatrixTest {
     }
 
     @Test
-    public void detOfIdentityMatrixShouldBeEqualToOne() {
+    public void determinatOfIdentityMatrixShouldBeEqualToOne() {
         final BigIntMatrixBuilder identityThreeByThreeMatrixBuilder = BigIntMatrix.builder(3, 3);
         IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, 3).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
@@ -656,7 +656,7 @@ public final class BigIntMatrixTest {
     }
 
     @Test
-    public void detOfTransposeShouldBeEqualToDet() {
+    public void determinatOfTransposeShouldBeEqualToDet() {
         threeByThreeMatrices.forEach(matrix -> {
             assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant());
         });
@@ -669,7 +669,7 @@ public final class BigIntMatrixTest {
     }
 
     @Test
-    public void detShouldBeMultiplicative() {
+    public void determinatShouldBeMultiplicative() {
         threeByThreeMatrices.forEach(matrix -> {
             threeByThreeMatrices.forEach(other -> {
                 assertThat(matrix.multiply(other).determinant())
@@ -691,7 +691,7 @@ public final class BigIntMatrixTest {
     }
 
     @Test
-    public void detWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet() {
+    public void determinatWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet() {
         threeByThreeMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).determinant())
@@ -713,7 +713,7 @@ public final class BigIntMatrixTest {
     }
 
     @Test
-    public void detOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries() {
+    public void determinatOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries() {
         threeByThreeTriangularMatrices.forEach(matrix -> {
             BigInteger expected = BigInteger.ONE;
             for (final Cell<Integer, Integer, BigInteger> cell : matrix.cells()) {
@@ -1027,8 +1027,13 @@ public final class BigIntMatrixTest {
     }
 
     @Test
-    public void identityNotIdShouldReturnFalse() {
-        assertThat(zeroMatrixForAddition.identity()).isFalse();
+    public void identityNotDiagonalShouldReturnFalse() {
+        assertThat(BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build().identity()).isFalse();
+    }
+
+    @Test
+    public void identityNotIdentityMatrixShouldReturnFalse() {
+        assertThat(BigIntMatrix.builder(3, 3).putAll(BigInteger.ZERO).build().identity()).isFalse();
     }
 
     @Test
