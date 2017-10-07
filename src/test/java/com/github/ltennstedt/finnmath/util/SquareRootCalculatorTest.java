@@ -33,7 +33,7 @@ public final class SquareRootCalculatorTest {
     private static final BigDecimal validPrecision = BigDecimal.valueOf(0.00000001);
     private static final int validScale = 8;
     private static final int validRoundingMode = BigDecimal.ROUND_HALF_EVEN;
-    private static final MathRandom mathRandom = new MathRandom();
+    private static final MathRandom mathRandom = new MathRandom(7);
     private static final Logger log = LoggerFactory.getLogger(SquareRootCalculatorTest.class);
 
     @After
