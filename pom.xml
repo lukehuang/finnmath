@@ -15,10 +15,9 @@
    limitations under the License.
  -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.togliu</groupId>
+    <groupId>com.github.ltennstedt</groupId>
     <artifactId>finnmath</artifactId>
     <version>1-SNAPSHOT</version>
     <dependencies>
@@ -320,7 +319,7 @@
     </reporting>
     <name>finnMath</name>
     <description>A math library for the JVM based on BigInteger and BigDecimal</description>
-    <url>https://github.com/togliu/finnmath</url>
+    <url>https://github.com/ltennstedt/finnmath</url>
     <inceptionYear>2017</inceptionYear>
     <licenses>
         <license>
@@ -330,7 +329,7 @@
     </licenses>
     <developers>
         <developer>
-            <id>togliu</id>
+            <id>ltennstedt</id>
             <name>Lars Tenstedt</name>
             <roles>
                 <role>architect</role>
@@ -341,15 +340,15 @@
     </developers>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/togliu/finnmath/issues</url>
+        <url>https://github.com/ltennstedt/finnmath/issues</url>
     </issueManagement>
     <ciManagement>
         <system>Travis CI</system>
-        <url>https://travis-ci.org/togliu/finnmath</url>
+        <url>https://travis-ci.org/ltennstedt/finnmath</url>
     </ciManagement>
     <scm>
-        <connection>scm:git:https://github.com/togliu/finnmath.git</connection>
+        <connection>scm:git:https://github.com/ltennstedt/finnmath.git</connection>
         <tag>master</tag>
-        <url>https://github.com/togliu/finnmath</url>
+        <url>https://github.com/ltennstedt/finnmath</url>
     </scm>
 </project>

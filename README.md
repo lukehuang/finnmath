@@ -1,7 +1,7 @@
 # finnMath: Math library for the JVM based on BigInteger and BigDecimal
 
-[![Build Status](https://travis-ci.org/togliu/finnmath.svg?branch=master)](https://travis-ci.org/togliu/finnmath)
-[![codecov](https://codecov.io/gh/togliu/finnmath/branch/master/graph/badge.svg)](https://codecov.io/gh/togliu/finnmath)
+[![Build Status](https://travis-ci.org/ltennstedt/finnmath.svg?branch=master)](https://travis-ci.org/ltennstedt/finnmath)
+[![codecov](https://codecov.io/gh/ltennstedt/finnmath/branch/master/graph/badge.svg)](https://codecov.io/gh/ltennstedt/finnmath)
 [![License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](http://shields.io)
 
 finnMath is a free software library for the JVM which provides or will provide implementations for fractions, 
@@ -34,7 +34,7 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 * Logging facade instead of a hard dependency on a specific logging framework
 
 ## Information
-Maven Site: [link https://togliu.github.io/finnmath/index.html]
+Maven Site: [link https://ltennstedt.github.io/finnmath/index.html]
 
 finnMath is open source and free software and is licensed under the permissive Apache License.
 
@@ -47,7 +47,7 @@ finnMath is still in a very early state and a work in progress.
 * Maven
 * Git (optional)
 #
-    git clone https://github.com/togliu/finnmath.git
+    git clone https://github.com/ltennstedt/finnmath.git
     cd finnmath
     mvn install
 
