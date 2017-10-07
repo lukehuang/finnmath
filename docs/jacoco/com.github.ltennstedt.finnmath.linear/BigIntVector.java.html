@@ -152,7 +152,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
      */
     @Override
     public BigDecimal euclideanNorm() {
-<span class="fc" id="L155">        return SquareRootCalculator.sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L155">        return new SquareRootCalculator().sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -168,14 +168,14 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal)
+     * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision) {
 <span class="fc" id="L175">        requireNonNull(precision, &quot;precision&quot;);</span>
 <span class="fc bfc" id="L176" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
                 &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc" id="L178">        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision);</span>
+<span class="fc" id="L178">        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -194,14 +194,14 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigInteger, int, int)
+     * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
     public BigDecimal euclideanNorm(final int scale, final int roundingMode) {
 <span class="fc bfc" id="L201" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L202" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
                 roundingMode);
-<span class="fc" id="L204">        return SquareRootCalculator.sqrt(euclideanNormPow2(), scale, roundingMode);</span>
+<span class="fc" id="L204">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -226,7 +226,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal, int, int)
+     * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final int roundingMode) {
@@ -236,7 +236,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="fc bfc" id="L236" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L237" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
                 roundingMode);
-<span class="fc" id="L239">        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision, scale, roundingMode);</span>
+<span class="fc" id="L239">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -309,7 +309,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="fc" id="L309">        requireNonNull(vector, &quot;vector&quot;);</span>
 <span class="fc bfc" id="L310" title="All 2 branches covered.">        checkArgument(map.size() == vector.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
 <span class="fc" id="L311">                vector.size());</span>
-<span class="fc" id="L312">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector));</span>
+<span class="fc" id="L312">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(vector));</span>
     }
 
     /**
@@ -332,7 +332,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal)
+     * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntVector vector, final BigDecimal precision) {
@@ -342,7 +342,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="fc" id="L342">        requireNonNull(precision, &quot;precision&quot;);</span>
 <span class="fc bfc" id="L343" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
                 &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc" id="L345">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision);</span>
+<span class="fc" id="L345">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(vector));</span>
     }
 
     /**
@@ -368,7 +368,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigInteger, int, int)
+     * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntVector vector, final int scale, final int roundingMode) {
@@ -378,7 +378,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="fc bfc" id="L378" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L379" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
                 roundingMode);
-<span class="fc" id="L381">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), scale, roundingMode);</span>
+<span class="fc" id="L381">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(vector));</span>
     }
 
     /**
@@ -410,7 +410,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigInteger, BigDecimal, int, int)
+     * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntVector vector, final BigDecimal precision, final int scale,
@@ -424,7 +424,7 @@ public final class BigIntVector extends AbstractVector&lt;BigInteger, BigIntVect
 <span class="fc bfc" id="L424" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L425" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
                 roundingMode);
-<span class="fc" id="L427">        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision, scale, roundingMode);</span>
+<span class="fc" id="L427">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(vector));</span>
     }
 
     /**

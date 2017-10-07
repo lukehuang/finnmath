@@ -422,7 +422,7 @@ public final class RealComplexNumberTest {
     public void absShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.abs()).isExactlyInstanceOf(BigDecimal.class)
-                    .isEqualTo(SquareRootCalculator.sqrt(complexNumber.absPow2()));
+                    .isEqualTo(new SquareRootCalculator().sqrt(complexNumber.absPow2()));
         });
     }
 

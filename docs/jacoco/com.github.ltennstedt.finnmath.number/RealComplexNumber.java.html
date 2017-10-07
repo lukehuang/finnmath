@@ -241,7 +241,7 @@ public final class RealComplexNumber
      */
     @Override
     public BigDecimal abs() {
-<span class="fc" id="L244">        return SquareRootCalculator.sqrt(absPow2());</span>
+<span class="fc" id="L244">        return new SquareRootCalculator().sqrt(absPow2());</span>
     }
 
     /**

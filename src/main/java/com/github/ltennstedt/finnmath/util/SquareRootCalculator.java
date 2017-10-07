@@ -23,6 +23,7 @@ import static java.util.Objects.requireNonNull;
 import com.github.ltennstedt.finnmath.number.ScientificNotation;
 import com.google.common.annotations.Beta;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.MoreObjects;
 import com.google.common.math.BigIntegerMath;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -56,7 +57,113 @@ public final class SquareRootCalculator {
 
     private static Logger log = LoggerFactory.getLogger(SquareRootCalculator.class);
 
-    private SquareRootCalculator() {
+    /**
+     * Precision
+     */
+    private final BigDecimal precision;
+
+    /**
+     * Scale
+     */
+    private final int scale;
+
+    /**
+     * Rounding mode
+     */
+    private final int roundingMode;
+
+    /**
+     * Constructs a {@link SquareRootCalculator} from defaults only
+     *
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public SquareRootCalculator() {
+        precision = DEFAULT_PRECISION;
+        scale = DEFAULT_SCALE;
+        roundingMode = DEFAULT_ROUNDING_MODE;
+    }
+
+    /**
+     * Constructs a {@link SquareRootCalculator} from a given precision
+     *
+     * @param precision
+     *            the precision for the termination condition
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public SquareRootCalculator(final BigDecimal precision) {
+        requireNonNull(precision, "precision");
+        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
+                "expected precision in (0, 1) but actual %s", precision);
+        this.precision = precision;
+        scale = DEFAULT_SCALE;
+        roundingMode = DEFAULT_ROUNDING_MODE;
+    }
+
+    /**
+     * Constructs a {@link SquareRootCalculator} from a given scale and rounding
+     * mode
+     * 
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public SquareRootCalculator(final int scale, final int roundingMode) {
+        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
+                roundingMode);
+        precision = DEFAULT_PRECISION;
+        this.scale = scale;
+        this.roundingMode = roundingMode;
+    }
+
+    /**
+     * Constructs a {@link SquareRootCalculator} from a given precision, scale and
+     * rounding mode
+     *
+     * @param precision
+     *            the precision for the termination condition
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code integer < 0}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code roundingMode < 0 || 7 < roundingMode}
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public SquareRootCalculator(final BigDecimal precision, final int scale, final int roundingMode) {
+        requireNonNull(precision, "precision");
+        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
+                "expected precision in (0, 1) but actual %s", precision);
+        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
+                roundingMode);
+        this.precision = precision;
+        this.scale = scale;
+        this.roundingMode = roundingMode;
     }
 
     /**
@@ -71,12 +178,12 @@ public final class SquareRootCalculator {
      *             if {@code integer < 0}
      * @since 1
      * @author Lars Tennstedt
-     * @see #sqrt(BigDecimal, BigDecimal, int, int)
+     * @see #sqrt(BigDecimal)
      */
-    public static BigDecimal sqrt(final BigInteger integer) {
+    public BigDecimal sqrt(final BigInteger integer) {
         requireNonNull(integer, "integer");
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
-        return sqrt(new BigDecimal(integer), DEFAULT_PRECISION, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
+        return sqrt(new BigDecimal(integer));
     }
 
     /**
@@ -93,220 +200,10 @@ public final class SquareRootCalculator {
      * @author Lars Tennstedt
      * @see #heronsMethod
      */
-    public static BigDecimal sqrt(final BigDecimal decimal) {
+    public BigDecimal sqrt(final BigDecimal decimal) {
         requireNonNull(decimal, "decimal");
         checkArgument(decimal.compareTo(BigDecimal.ZERO) > -1, "expected decimal >= 0 but actual %s", decimal);
-        return heronsMethod(decimal, DEFAULT_PRECISION).setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
-    }
-
-    /**
-     * Returns the square root of the given {@link BigInteger}
-     *
-     * @param integer
-     *            the integer whose square root is to be calculated
-     * @param precision
-     *            the precision for the termination condition
-     * @return The square root of the given integer
-     * @throws NullPointerException
-     *             if {@code integer == null}
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code integer < 0}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #sqrt(BigDecimal, BigDecimal, int, int)
-     */
-    public static BigDecimal sqrt(final BigInteger integer, final BigDecimal precision) {
-        requireNonNull(integer, "integer");
-        requireNonNull(precision, "precision");
-        checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
-        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
-        return sqrt(new BigDecimal(integer), precision, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
-    }
-
-    /**
-     * Returns the square root of the given {@link BigDecimal}
-     *
-     * @param decimal
-     *            the decimal number whose square root is to be calculated
-     * @param precision
-     *            the precision for the termination condition
-     * @return The square root of the given decimal
-     * @throws NullPointerException
-     *             if {@code decimal == null}
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code decimal < 0}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #heronsMethod
-     */
-    public static BigDecimal sqrt(final BigDecimal decimal, final BigDecimal precision) {
-        requireNonNull(decimal, "decimal");
-        requireNonNull(precision, "precision");
-        checkArgument(decimal.compareTo(BigDecimal.ZERO) > -1, "expected decimal >= 0 but actual %s", decimal);
-        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
-        return heronsMethod(decimal, precision).setScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
-    }
-
-    /**
-     * Returns the square root of the given {@link BigInteger}
-     *
-     * @param integer
-     *            the integer whose square root is to be calculated
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
-     * @return The square root of the given integer
-     * @throws NullPointerException
-     *             if {@code integer == null}
-     * @throws IllegalArgumentException
-     *             if {@code integer < 0}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #sqrt(BigDecimal, BigDecimal, int, int)
-     * @see BigDecimal#setScale(int, int)
-     */
-    public static BigDecimal sqrt(final BigInteger integer, final int scale, final int roundingMode) {
-        requireNonNull(integer, "integer");
-        checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
-        return sqrt(new BigDecimal(integer), DEFAULT_PRECISION, scale, roundingMode);
-    }
-
-    /**
-     * Returns the square root of the given {@link BigDecimal}
-     *
-     * @param decimal
-     *            the decimal number whose square root is to be calculated
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
-     * @return The square root of the given decimal
-     * @throws NullPointerException
-     *             if {@code decimal == null}
-     * @throws IllegalArgumentException
-     *             if {@code decimal < 0}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #heronsMethod
-     * @see BigDecimal#setScale(int, int)
-     */
-    public static BigDecimal sqrt(final BigDecimal decimal, final int scale, final int roundingMode) {
-        requireNonNull(decimal, "decimal");
-        checkArgument(decimal.compareTo(BigDecimal.ZERO) > -1, "expected decimal >= 0 but actual %s", decimal);
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
-        return heronsMethod(decimal, DEFAULT_PRECISION).setScale(scale, roundingMode);
-    }
-
-    /**
-     * Returns the square root of the given {@link BigInteger}
-     *
-     * @param integer
-     *            the integer whose square root is to be calculated
-     * @param precision
-     *            the precision for the termination condition
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
-     * @return The square root of the given integer
-     * @throws NullPointerException
-     *             if {@code integer == null}
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code integer < 0}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #sqrt(BigDecimal, BigDecimal, int, int)
-     * @see BigDecimal#setScale(int, int)
-     */
-    public static BigDecimal sqrt(final BigInteger integer, final BigDecimal precision, final int scale,
-            final int roundingMode) {
-        requireNonNull(integer, "integer");
-        requireNonNull(precision, "precision");
-        checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
-        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
-        return sqrt(new BigDecimal(integer), precision, scale, roundingMode);
-    }
-
-    /**
-     * Returns the square root of the given {@link BigDecimal}
-     *
-     * @param decimal
-     *            the decimal number whose square root is to be calculated
-     * @param precision
-     *            the precision for the termination condition
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
-     * @return The square root of the given decimal
-     * @throws NullPointerException
-     *             if {@code decimal == null}
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code decimal < 0}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see #heronsMethod
-     * @see BigDecimal#setScale(int, int)
-     */
-    public static BigDecimal sqrt(final BigDecimal decimal, final BigDecimal precision, final int scale,
-            final int roundingMode) {
-        requireNonNull(decimal, "decimal");
-        requireNonNull(precision, "precision");
-        checkArgument(decimal.compareTo(BigDecimal.ZERO) > -1, "expected decimal >= 0 but actual %s", decimal);
-        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
-        return heronsMethod(decimal, precision).setScale(scale, roundingMode);
+        return heronsMethod(decimal).setScale(scale, roundingMode);
     }
 
     /**
@@ -327,7 +224,7 @@ public final class SquareRootCalculator {
      * @since 1
      * @author Lars Tennstedt
      */
-    public static BigInteger sqrtOfPerfectSquare(final BigInteger integer) {
+    public BigInteger sqrtOfPerfectSquare(final BigInteger integer) {
         requireNonNull(integer, "integer");
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
         checkArgument(perfectSquare(integer), "expected perfect square but actual %s", integer);
@@ -348,7 +245,7 @@ public final class SquareRootCalculator {
      * @since 1
      * @author Lars Tennstedt
      */
-    public static boolean perfectSquare(final BigInteger integer) {
+    public boolean perfectSquare(final BigInteger integer) {
         requireNonNull(integer, "integer");
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
         BigInteger sum = BigInteger.ZERO;
@@ -358,7 +255,7 @@ public final class SquareRootCalculator {
         return sum.equals(integer);
     }
 
-    private static BigDecimal heronsMethod(final BigDecimal decimal, final BigDecimal precision) {
+    private BigDecimal heronsMethod(final BigDecimal decimal) {
         log.debug("calculating square root for {} with precision = {}", decimal.toPlainString(),
                 precision.toPlainString());
         BigDecimal predecessor = seedValue(decimal);
@@ -376,16 +273,16 @@ public final class SquareRootCalculator {
         return successor;
     }
 
-    private static BigDecimal calculateSuccessor(final BigDecimal predecessor, final BigDecimal decimal) {
+    private BigDecimal calculateSuccessor(final BigDecimal predecessor, final BigDecimal decimal) {
         log.debug("iteration");
         log.debug("predecessor = {}", predecessor.toPlainString());
         final BigDecimal successor = predecessor.pow(2).add(decimal).divide(BigDecimal.valueOf(2).multiply(predecessor),
-                DEFAULT_SCALE, BigDecimal.ROUND_HALF_UP);
+                scale, roundingMode);
         log.debug("successor = {}", successor.toPlainString());
         return successor;
     }
 
-    private static BigDecimal seedValue(final BigDecimal decimal) {
+    private BigDecimal seedValue(final BigDecimal decimal) {
         final ScientificNotation scientificNotation = scientificNotationForSqrt(decimal);
         log.debug("Scientific notation of {} is {}.", decimal.toPlainString(), scientificNotation.asString());
         if (scientificNotation.getCoefficient().compareTo(BigDecimal.TEN) > -1) {
@@ -395,7 +292,7 @@ public final class SquareRootCalculator {
     }
 
     @VisibleForTesting
-    static ScientificNotation scientificNotationForSqrt(final BigDecimal decimal) {
+    ScientificNotation scientificNotationForSqrt(final BigDecimal decimal) {
         log.debug("calculating scientific notification for {}", decimal.toPlainString());
         BigDecimal coefficient = decimal;
         int exponent = 0;
@@ -403,11 +300,29 @@ public final class SquareRootCalculator {
         log.debug("exponent = {}", exponent);
         while (coefficient.compareTo(BigDecimal.valueOf(100)) > -1) {
             log.debug("iteration for scientific notification");
-            coefficient = coefficient.divide(BigDecimal.valueOf(100), DEFAULT_ROUNDING_MODE);
+            coefficient = coefficient.divide(BigDecimal.valueOf(100), roundingMode);
             exponent = addExact(exponent, 2);
             log.debug("coefficient = {}", coefficient.toPlainString());
             log.debug("exponent = {}", exponent);
         }
         return new ScientificNotation(coefficient, exponent);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("precision", precision).add("scale", scale)
+                .add("roundingMode", roundingMode).toString();
+    }
+
+    public BigDecimal getPrecision() {
+        return precision;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public int getRoundingMode() {
+        return roundingMode;
     }
 }

@@ -172,7 +172,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      */
     @Override
     public BigDecimal euclideanNorm() {
-        return SquareRootCalculator.sqrt(euclideanNormPow2());
+        return new SquareRootCalculator().sqrt(euclideanNormPow2());
     }
 
     /**
@@ -188,14 +188,14 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal)
+     * @see SquareRootCalculator#sqrt(BigDecimal)
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
-        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision);
+        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());
     }
 
     /**
@@ -214,14 +214,14 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal, int, int)
+     * @see SquareRootCalculator#sqrt(BigDecimal)
      */
     @Override
     public BigDecimal euclideanNorm(final int scale, final int roundingMode) {
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
                 roundingMode);
-        return SquareRootCalculator.sqrt(euclideanNormPow2(), scale, roundingMode);
+        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());
     }
 
     /**
@@ -246,7 +246,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal, int, int)
+     * @see SquareRootCalculator#sqrt(BigDecimal)
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final int roundingMode) {
@@ -256,7 +256,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
                 roundingMode);
-        return SquareRootCalculator.sqrt(euclideanNormPow2(), precision, scale, roundingMode);
+        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());
     }
 
     /**
@@ -304,7 +304,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         requireNonNull(vector, "vector");
         checkArgument(map.size() == vector.size(), "expected equal sizes but actual %s != %s", map.size(),
                 vector.size());
-        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector));
+        return new SquareRootCalculator().sqrt(euclideanDistancePow2(vector));
     }
 
     /**
@@ -327,7 +327,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal)
+     * @see SquareRootCalculator#sqrt(BigDecimal)
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector vector, final BigDecimal precision) {
@@ -337,7 +337,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
-        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision);
+        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(vector));
     }
 
     /**
@@ -363,7 +363,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigDecimal, int, int)
+     * @see SquareRootCalculator#sqrt(BigDecimal)
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector vector, final int scale, final int roundingMode) {
@@ -373,7 +373,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
                 roundingMode);
-        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), scale, roundingMode);
+        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(vector));
     }
 
     /**
@@ -405,7 +405,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigDecimal, BigDecimal, int, int)
+     * @see SquareRootCalculator#sqrt(BigDecimal)
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector vector, final BigDecimal precision, final int scale,
@@ -419,7 +419,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
                 roundingMode);
-        return SquareRootCalculator.sqrt(euclideanDistancePow2(vector), precision, scale, roundingMode);
+        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(vector));
     }
 
     /**

@@ -224,7 +224,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal abs() {
-<span class="fc" id="L227">        return SquareRootCalculator.sqrt(absPow2());</span>
+<span class="fc" id="L227">        return new SquareRootCalculator().sqrt(absPow2());</span>
     }
 
     /**
