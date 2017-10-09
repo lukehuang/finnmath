@@ -108,7 +108,7 @@ public final class SquareRootCalculator {
     /**
      * Constructs a {@link SquareRootCalculator} from a given scale and rounding
      * mode
-     * 
+     *
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
@@ -276,8 +276,10 @@ public final class SquareRootCalculator {
     private BigDecimal calculateSuccessor(final BigDecimal predecessor, final BigDecimal decimal) {
         log.debug("iteration");
         log.debug("predecessor = {}", predecessor.toPlainString());
-        final BigDecimal successor = predecessor.pow(2).add(decimal).divide(BigDecimal.valueOf(2).multiply(predecessor),
-                scale, roundingMode);
+        final BigDecimal divisor = BigDecimal.valueOf(2).multiply(predecessor);
+        final BigDecimal successor = divisor.compareTo(BigDecimal.ZERO) != 0
+                ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode)
+                : DEFAULT_PRECISION;
         log.debug("successor = {}", successor.toPlainString());
         return successor;
     }

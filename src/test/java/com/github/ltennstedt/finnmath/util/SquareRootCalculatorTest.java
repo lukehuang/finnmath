@@ -489,6 +489,13 @@ public final class SquareRootCalculatorTest {
     }
 
     @Test
+    public void scientificNotationForSqrtExponentShouldBePowerOfTwo() {
+        mathRandom.nextDecimals(10, 2, 10).forEach(decimal -> {
+            assertThat(squareRootCalculator.scientificNotationForSqrt(decimal).getExponent() % 2).isEqualTo(0);
+        });
+    }
+
+    @Test
     public void toStringShouldSucceed() {
         final String expected = MoreObjects.toStringHelper(squareRootCalculator)
                 .add("precision", SquareRootCalculator.DEFAULT_PRECISION)

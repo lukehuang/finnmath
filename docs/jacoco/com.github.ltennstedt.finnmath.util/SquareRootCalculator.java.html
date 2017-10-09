@@ -108,7 +108,7 @@ public final class SquareRootCalculator {
     /**
      * Constructs a {@link SquareRootCalculator} from a given scale and rounding
      * mode
-     * 
+     *
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
@@ -276,54 +276,56 @@ public final class SquareRootCalculator {
     private BigDecimal calculateSuccessor(final BigDecimal predecessor, final BigDecimal decimal) {
 <span class="fc" id="L277">        log.debug(&quot;iteration&quot;);</span>
 <span class="fc" id="L278">        log.debug(&quot;predecessor = {}&quot;, predecessor.toPlainString());</span>
-<span class="fc" id="L279">        final BigDecimal successor = predecessor.pow(2).add(decimal).divide(BigDecimal.valueOf(2).multiply(predecessor),</span>
-                scale, roundingMode);
-<span class="fc" id="L281">        log.debug(&quot;successor = {}&quot;, successor.toPlainString());</span>
-<span class="fc" id="L282">        return successor;</span>
+<span class="fc" id="L279">        final BigDecimal divisor = BigDecimal.valueOf(2).multiply(predecessor);</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        final BigDecimal successor = divisor.compareTo(BigDecimal.ZERO) != 0</span>
+<span class="fc" id="L281">                ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode)</span>
+<span class="pc" id="L282">                : DEFAULT_PRECISION;</span>
+<span class="fc" id="L283">        log.debug(&quot;successor = {}&quot;, successor.toPlainString());</span>
+<span class="fc" id="L284">        return successor;</span>
     }
 
     private BigDecimal seedValue(final BigDecimal decimal) {
-<span class="fc" id="L286">        final ScientificNotation scientificNotation = scientificNotationForSqrt(decimal);</span>
-<span class="fc" id="L287">        log.debug(&quot;Scientific notation of {} is {}.&quot;, decimal.toPlainString(), scientificNotation.asString());</span>
-<span class="fc bfc" id="L288" title="All 2 branches covered.">        if (scientificNotation.getCoefficient().compareTo(BigDecimal.TEN) &gt; -1) {</span>
-<span class="fc" id="L289">            return BigDecimal.valueOf(6).multiply(BigDecimal.TEN.pow(scientificNotation.getExponent() / 2));</span>
+<span class="fc" id="L288">        final ScientificNotation scientificNotation = scientificNotationForSqrt(decimal);</span>
+<span class="fc" id="L289">        log.debug(&quot;Scientific notation of {} is {}.&quot;, decimal.toPlainString(), scientificNotation.asString());</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        if (scientificNotation.getCoefficient().compareTo(BigDecimal.TEN) &gt; -1) {</span>
+<span class="fc" id="L291">            return BigDecimal.valueOf(6).multiply(BigDecimal.TEN.pow(scientificNotation.getExponent() / 2));</span>
         }
-<span class="fc" id="L291">        return BigDecimal.valueOf(2).multiply(BigDecimal.TEN.pow(scientificNotation.getExponent() / 2));</span>
+<span class="fc" id="L293">        return BigDecimal.valueOf(2).multiply(BigDecimal.TEN.pow(scientificNotation.getExponent() / 2));</span>
     }
 
     @VisibleForTesting
     ScientificNotation scientificNotationForSqrt(final BigDecimal decimal) {
-<span class="fc" id="L296">        log.debug(&quot;calculating scientific notification for {}&quot;, decimal.toPlainString());</span>
-<span class="fc" id="L297">        BigDecimal coefficient = decimal;</span>
-<span class="fc" id="L298">        int exponent = 0;</span>
-<span class="fc" id="L299">        log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
-<span class="fc" id="L300">        log.debug(&quot;exponent = {}&quot;, exponent);</span>
-<span class="fc bfc" id="L301" title="All 2 branches covered.">        while (coefficient.compareTo(BigDecimal.valueOf(100)) &gt; -1) {</span>
-<span class="fc" id="L302">            log.debug(&quot;iteration for scientific notification&quot;);</span>
-<span class="fc" id="L303">            coefficient = coefficient.divide(BigDecimal.valueOf(100), roundingMode);</span>
-<span class="fc" id="L304">            exponent = addExact(exponent, 2);</span>
-<span class="fc" id="L305">            log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
-<span class="fc" id="L306">            log.debug(&quot;exponent = {}&quot;, exponent);</span>
+<span class="fc" id="L298">        log.debug(&quot;calculating scientific notification for {}&quot;, decimal.toPlainString());</span>
+<span class="fc" id="L299">        BigDecimal coefficient = decimal;</span>
+<span class="fc" id="L300">        int exponent = 0;</span>
+<span class="fc" id="L301">        log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
+<span class="fc" id="L302">        log.debug(&quot;exponent = {}&quot;, exponent);</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">        while (coefficient.compareTo(BigDecimal.valueOf(100)) &gt; -1) {</span>
+<span class="fc" id="L304">            log.debug(&quot;iteration for scientific notification&quot;);</span>
+<span class="fc" id="L305">            coefficient = coefficient.divide(BigDecimal.valueOf(100), roundingMode);</span>
+<span class="fc" id="L306">            exponent = addExact(exponent, 2);</span>
+<span class="fc" id="L307">            log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
+<span class="fc" id="L308">            log.debug(&quot;exponent = {}&quot;, exponent);</span>
         }
-<span class="fc" id="L308">        return new ScientificNotation(coefficient, exponent);</span>
+<span class="fc" id="L310">        return new ScientificNotation(coefficient, exponent);</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L313">        return MoreObjects.toStringHelper(this).add(&quot;precision&quot;, precision).add(&quot;scale&quot;, scale)</span>
-<span class="fc" id="L314">                .add(&quot;roundingMode&quot;, roundingMode).toString();</span>
+<span class="fc" id="L315">        return MoreObjects.toStringHelper(this).add(&quot;precision&quot;, precision).add(&quot;scale&quot;, scale)</span>
+<span class="fc" id="L316">                .add(&quot;roundingMode&quot;, roundingMode).toString();</span>
     }
 
     public BigDecimal getPrecision() {
-<span class="fc" id="L318">        return precision;</span>
+<span class="fc" id="L320">        return precision;</span>
     }
 
     public int getScale() {
-<span class="fc" id="L322">        return scale;</span>
+<span class="fc" id="L324">        return scale;</span>
     }
 
     public int getRoundingMode() {
-<span class="fc" id="L326">        return roundingMode;</span>
+<span class="fc" id="L328">        return roundingMode;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

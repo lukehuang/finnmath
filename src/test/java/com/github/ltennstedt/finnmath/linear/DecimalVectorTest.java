@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -657,6 +659,51 @@ public final class DecimalVectorTest {
     }
 
     @Test
+    public void elementNullShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroVector.element(null);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("index");
+    }
+
+    @Test
+    public void elementIndexOutOfBoundShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroVector.element(0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual 0",
+                zeroVector.size());
+    }
+
+    @Test
+    public void elementShouldSucceed() {
+        vectors.forEach(vector -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(index -> {
+                assertThat(vector.element(index)).isEqualTo(vector.getMap().get(index));
+            });
+        });
+    }
+
+    @Test
+    public void entriesShouldSucceed() {
+        vectors.forEach(vector -> {
+            assertThat(vector.entries()).isEqualTo(vector.getMap().entrySet());
+        });
+    }
+
+    @Test
+    public void elementsShouldSucceed() {
+        vectors.forEach(vector -> {
+            assertThat(vector.elements()).isEqualTo(vector.getMap().values());
+        });
+    }
+
+    @Test
+    public void sizeShouldSucceed() {
+        vectors.forEach(vector -> {
+            assertThat(vector.size()).isEqualTo(vector.getMap().size());
+        });
+    }
+
+    @Test
     public void builderSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalVector.builder(0);
@@ -707,7 +754,7 @@ public final class DecimalVectorTest {
     @Test
     public void toStringShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.toString()).isExactlyInstanceOf(String.class)
+            assertThat(vector.toString())
                     .isEqualTo(MoreObjects.toStringHelper(vector).add("map", vector.getMap()).toString());
         });
     }

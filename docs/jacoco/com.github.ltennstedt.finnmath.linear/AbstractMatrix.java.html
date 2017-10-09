@@ -237,10 +237,10 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
      * @see Table#row
      */
     public ImmutableMap&lt;Integer, E&gt; row(final Integer rowIndex) {
-<span class="nc" id="L240">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
-<span class="nc" id="L241">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
-<span class="nc" id="L242">                table.rowKeySet().size(), rowIndex);</span>
-<span class="nc" id="L243">        return table.row(rowIndex);</span>
+<span class="fc" id="L240">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L241">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L242">                table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L243">        return table.row(rowIndex);</span>
     }
 
     /**
@@ -259,9 +259,10 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
      * @see Table#column
      */
     public ImmutableMap&lt;Integer, E&gt; column(final Integer columnIndex) {
-<span class="nc" id="L262">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
-<span class="nc" id="L263">                table.columnKeySet().size(), columnIndex);</span>
-<span class="nc" id="L264">        return table.column(columnIndex);</span>
+<span class="fc" id="L262">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L263">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L264">                table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L265">        return table.column(columnIndex);</span>
     }
 
     /**
@@ -273,7 +274,7 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
      * @see Table#rowMap
      */
     public ImmutableMap&lt;Integer, Map&lt;Integer, E&gt;&gt; rows() {
-<span class="fc" id="L276">        return table.rowMap();</span>
+<span class="fc" id="L277">        return table.rowMap();</span>
     }
 
     /**
@@ -285,7 +286,7 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
      * @see Table#columnMap
      */
     public ImmutableMap&lt;Integer, Map&lt;Integer, E&gt;&gt; columns() {
-<span class="fc" id="L288">        return table.columnMap();</span>
+<span class="fc" id="L289">        return table.columnMap();</span>
     }
 
     /**
@@ -297,7 +298,7 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
      * @see Table#values
      */
     public ImmutableCollection&lt;E&gt; elements() {
-<span class="fc" id="L300">        return table.values();</span>
+<span class="fc" id="L301">        return table.values();</span>
     }
 
     /**
@@ -308,7 +309,7 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
      * @author Lars Tennstedt
      */
     public long size() {
-<span class="nc" id="L311">        return Long.valueOf(table.rowKeySet().size()) * Long.valueOf(table.columnKeySet().size());</span>
+<span class="fc" id="L312">        return Long.valueOf(table.rowKeySet().size()) * Long.valueOf(table.columnKeySet().size());</span>
     }
 
     /**
@@ -320,7 +321,7 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
      * @see Set#size
      */
     public int rowSize() {
-<span class="fc" id="L323">        return table.rowKeySet().size();</span>
+<span class="fc" id="L324">        return table.rowKeySet().size();</span>
     }
 
     /**
@@ -332,16 +333,16 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
      * @see Set#size
      */
     public int columnSize() {
-<span class="fc" id="L335">        return table.columnKeySet().size();</span>
+<span class="fc" id="L336">        return table.columnKeySet().size();</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L340">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+<span class="fc" id="L341">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
     }
 
     public ImmutableTable&lt;Integer, Integer, E&gt; getTable() {
-<span class="fc" id="L344">        return table;</span>
+<span class="fc" id="L345">        return table;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

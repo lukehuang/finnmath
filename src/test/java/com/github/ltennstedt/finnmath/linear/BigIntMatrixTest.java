@@ -1172,6 +1172,161 @@ public final class BigIntMatrixTest {
     }
 
     @Test
+    public void rowIndexesShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.rowIndexes()).isEqualTo(matrix.getTable().rowKeySet());
+        });
+    }
+
+    @Test
+    public void columnIndexesShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.columnIndexes()).isEqualTo(matrix.getTable().columnKeySet());
+        });
+    }
+
+    @Test
+    public void elementRowIndexNullShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.element(null, 1);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("rowIndex");
+    }
+
+    @Test
+    public void elementRowIndexOutOfBoundShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.element(0, 1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row index in [1, %s] but actual 0",
+                zeroSquareMatrix.rowSize());
+    }
+
+    @Test
+    public void elementColumnIndexNullShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.element(1, null);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("columnIndex");
+    }
+
+    @Test
+    public void elementColumnIndexOutOfBoundShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.element(1, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage("expected column index in [1, %s] but actual 0", zeroSquareMatrix.columnSize());
+    }
+
+    @Test
+    public void elementShouldSucceed() {
+        matrices.forEach(matrix -> {
+            IntStream.rangeClosed(1, matrix.rowSize()).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+                IntStream.rangeClosed(1, matrix.columnSize()).boxed().collect(Collectors.toList())
+                        .forEach(columnIndex -> {
+                            assertThat(matrix.element(rowIndex, columnIndex))
+                                    .isEqualTo(matrix.getTable().get(rowIndex, columnIndex));
+                        });
+            });
+        });
+    }
+
+    @Test
+    public void cellsShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.cells()).isEqualTo(matrix.getTable().cellSet());
+        });
+    }
+
+    @Test
+    public void rowRowIndexNullShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.row(null);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("rowIndex");
+    }
+
+    @Test
+    public void rowRowIndexOutOfBoundShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.row(0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row index in [1, %s] but actual 0",
+                zeroSquareMatrix.rowSize());
+    }
+
+    @Test
+    public void rowShouldSucceed() {
+        matrices.forEach(matrix -> {
+            IntStream.rangeClosed(1, matrix.rowSize()).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+                assertThat(matrix.row(rowIndex)).isEqualTo(matrix.getTable().row(rowIndex));
+            });
+        });
+    }
+
+    @Test
+    public void columnColumnIndexNullShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.column(null);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("columnIndex");
+    }
+
+    @Test
+    public void columnColumnIndexOutOfBoundShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.column(0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class)
+                .hasMessage("expected column index in [1, %s] but actual 0", zeroSquareMatrix.columnSize());
+    }
+
+    @Test
+    public void columnShouldSucceed() {
+        matrices.forEach(matrix -> {
+            IntStream.rangeClosed(1, matrix.columnSize()).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                assertThat(matrix.column(columnIndex)).isEqualTo(matrix.getTable().column(columnIndex));
+            });
+        });
+    }
+
+    @Test
+    public void rowsShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.rows()).isEqualTo(matrix.getTable().rowMap());
+        });
+    }
+
+    @Test
+    public void columnsShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.columns()).isEqualTo(matrix.getTable().columnMap());
+        });
+    }
+
+    @Test
+    public void elementsShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.elements()).isEqualTo(matrix.getTable().values());
+        });
+    }
+
+    @Test
+    public void sizeShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.size()).isEqualTo(Long.valueOf(matrix.getTable().rowKeySet().size())
+                    * Long.valueOf(matrix.getTable().columnKeySet().size()));
+        });
+    }
+
+    @Test
+    public void rowSizeShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.rowSize()).isEqualTo(matrix.getTable().rowKeySet().size());
+        });
+    }
+
+    @Test
+    public void columnSizeShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.columnSize()).isEqualTo(matrix.getTable().columnKeySet().size());
+        });
+    }
+
+    @Test
     public void builderRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             BigIntMatrix.builder(0, 1);

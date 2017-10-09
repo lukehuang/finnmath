@@ -259,6 +259,7 @@ abstract class AbstractMatrix<E, V, M> {
      * @see Table#column
      */
     public ImmutableMap<Integer, E> column(final Integer columnIndex) {
+        requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
                 table.columnKeySet().size(), columnIndex);
         return table.column(columnIndex);
