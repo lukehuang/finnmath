@@ -17,7 +17,6 @@
 package com.github.ltennstedt.finnmath.util;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static java.util.Objects.requireNonNull;
 
 import com.github.ltennstedt.finnmath.linear.BigIntMatrix;
 import com.github.ltennstedt.finnmath.linear.BigIntMatrix.BigIntMatrixBuilder;
@@ -363,9 +362,8 @@ public final class MathRandom {
         return keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP);
     }
 
-    private BigDecimal keepDecimalInBound(final BigDecimal decimal, final long bound) {
-        requireNonNull(decimal, "decimal");
-        checkArgument(bound > 0, "expected > 0 but actual %s", bound);
+    @VisibleForTesting
+    BigDecimal keepDecimalInBound(final BigDecimal decimal, final long bound) {
         BigDecimal result = decimal;
         final BigDecimal decimalBound = BigDecimal.valueOf(bound);
         if (result.compareTo(BigDecimal.ZERO) > -1) {

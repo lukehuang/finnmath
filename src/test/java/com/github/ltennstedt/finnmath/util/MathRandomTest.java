@@ -274,6 +274,32 @@ public final class MathRandomTest {
     }
 
     @Test
+    public void keepDecimalInBoundDecimalGreaterThanOrEqualToZeroAndDecimalGreaterThanOrEqualToBound() {
+        final BigDecimal expected = mathRandom.nextPositiveDecimal(bound, validScale);
+        final BigDecimal decimal = expected.add(decimalBound);
+        assertThat(mathRandom.keepDecimalInBound(decimal, bound)).isEqualByComparingTo(expected);
+    }
+
+    @Test
+    public void keepDecimalInBoundDecimalGreaterThanOrEqualToZeroAndDecimalLowerThanBound() {
+        final BigDecimal decimal = mathRandom.nextPositiveDecimal(bound, validScale);
+        assertThat(mathRandom.keepDecimalInBound(decimal, bound)).isEqualByComparingTo(decimal);
+    }
+
+    @Test
+    public void keepDecimalInBoundDecimalLowerThanZeroAndDecimalLowerThanOrEqualToMinusBound() {
+        final BigDecimal expected = mathRandom.nextNegativeDecimal(bound, validScale);
+        final BigDecimal decimal = expected.subtract(decimalBound);
+        assertThat(mathRandom.keepDecimalInBound(decimal, bound)).isEqualByComparingTo(expected);
+    }
+
+    @Test
+    public void keepDecimalInBoundDecimalLowerThanZeroAndDecimalGreaterThanMinusBound() {
+        final BigDecimal decimal = mathRandom.nextNegativeDecimal(bound, validScale);
+        assertThat(mathRandom.keepDecimalInBound(decimal, bound)).isEqualByComparingTo(decimal);
+    }
+
+    @Test
     public void nextPositiveDecimalsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> {
             mathRandom.nextPositiveDecimals(0, validScale, howMany);

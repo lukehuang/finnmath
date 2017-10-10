@@ -16,9 +16,11 @@
 
 package com.github.ltennstedt.finnmath.linear;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ltennstedt.finnmath.linear.BigIntVector.BigIntVectorBuilder;
+import com.google.common.base.MoreObjects;
 import java.math.BigInteger;
 import org.junit.Test;
 
@@ -67,5 +69,12 @@ public final class BigIntVectorBuilderTest {
         assertThatThrownBy(() -> {
             BigIntVector.builder(3).build();
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("map.value");
+    }
+
+    @Test
+    public void toStringShouldSucceed() {
+        final BigIntVectorBuilder builder = BigIntVector.builder(4).putAll(BigInteger.ZERO);
+        assertThat(builder.toString()).isEqualTo(MoreObjects.toStringHelper(builder).add("map", builder.getMap())
+                .add("size", builder.getSize()).toString());
     }
 }

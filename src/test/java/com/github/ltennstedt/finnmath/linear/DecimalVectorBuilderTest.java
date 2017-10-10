@@ -16,9 +16,11 @@
 
 package com.github.ltennstedt.finnmath.linear;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ltennstedt.finnmath.linear.DecimalVector.DecimalVectorBuilder;
+import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import org.junit.Test;
 
@@ -67,5 +69,12 @@ public final class DecimalVectorBuilderTest {
         assertThatThrownBy(() -> {
             DecimalVector.builder(3).build();
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("map.value");
+    }
+
+    @Test
+    public void toStringShouldSucceed() {
+        final DecimalVectorBuilder builder = DecimalVector.builder(4).putAll(BigDecimal.ZERO);
+        assertThat(builder.toString()).isEqualTo(MoreObjects.toStringHelper(builder).add("map", builder.getMap())
+                .add("size", builder.getSize()).toString());
     }
 }
