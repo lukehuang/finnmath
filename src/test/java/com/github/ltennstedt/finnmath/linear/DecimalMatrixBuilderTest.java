@@ -16,9 +16,11 @@
 
 package com.github.ltennstedt.finnmath.linear;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ltennstedt.finnmath.linear.DecimalMatrix.DecimalMatrixBuilder;
+import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import org.junit.Test;
 
@@ -90,5 +92,12 @@ public final class DecimalMatrixBuilderTest {
         assertThatThrownBy(() -> {
             BigIntMatrix.builder(2, 3).build();
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("cell.value");
+    }
+
+    @Test
+    public void toStringShouldSucceed() {
+        final DecimalMatrixBuilder builder = DecimalMatrix.builder(3, 4).putAll(BigDecimal.ZERO);
+        assertThat(builder.toString())
+                .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
     }
 }

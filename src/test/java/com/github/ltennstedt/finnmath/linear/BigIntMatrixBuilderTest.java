@@ -16,9 +16,11 @@
 
 package com.github.ltennstedt.finnmath.linear;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ltennstedt.finnmath.linear.BigIntMatrix.BigIntMatrixBuilder;
+import com.google.common.base.MoreObjects;
 import java.math.BigInteger;
 import org.junit.Test;
 
@@ -90,5 +92,12 @@ public final class BigIntMatrixBuilderTest {
         assertThatThrownBy(() -> {
             BigIntMatrix.builder(2, 3).build();
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("cell.value");
+    }
+
+    @Test
+    public void toStringShouldSucceed() {
+        final BigIntMatrixBuilder builder = BigIntMatrix.builder(3, 4).putAll(BigInteger.ZERO);
+        assertThat(builder.toString())
+                .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
     }
 }
