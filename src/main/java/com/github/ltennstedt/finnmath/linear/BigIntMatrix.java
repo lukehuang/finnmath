@@ -21,10 +21,12 @@ import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
 import com.github.ltennstedt.finnmath.linear.BigIntVector.BigIntVectorBuilder;
+import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -345,6 +347,78 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             }
         });
         return builder.build();
+    }
+
+    /**
+     * Returns the maximum absolute column sum norm of this {@link BigIntMatrix}
+     *
+     * @return The maximum absolute column sum norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigInteger maxAbsColumnSumNorm() {
+        BigInteger norm = BigInteger.ZERO;
+        for (final Map<Integer, BigInteger> column : table.columnMap().values().asList()) {
+            BigInteger sum = BigInteger.ZERO;
+            for (final BigInteger element : column.values()) {
+                sum = sum.add(element);
+            }
+            if (sum.compareTo(norm) > 0) {
+                norm = sum;
+            }
+        }
+        return norm;
+    }
+
+    /**
+     * Returns the maximum absolute row sum norm of this {@link BigIntMatrix}
+     *
+     * @return The maximum absolute row sum norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigInteger maxAbsRowSumNorm() {
+        BigInteger norm = BigInteger.ZERO;
+        for (final Map<Integer, BigInteger> row : table.rowMap().values().asList()) {
+            BigInteger sum = BigInteger.ZERO;
+            for (final BigInteger element : row.values()) {
+                sum = sum.add(element);
+            }
+            if (sum.compareTo(norm) > 0) {
+                norm = sum;
+            }
+        }
+        return norm;
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntMatrix}
+     *
+     * @return The frobenius norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigDecimal frobeniusNorm() {
+        BigInteger normPow2 = BigInteger.ZERO;
+        for (final BigInteger element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return new SquareRootCalculator().sqrt(normPow2);
+    }
+
+    /**
+     * Returns the maximum norm of this {@link BigIntMatrix}
+     *
+     * @return The maximum norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigInteger maxNorm() {
+        return null;
     }
 
     /**

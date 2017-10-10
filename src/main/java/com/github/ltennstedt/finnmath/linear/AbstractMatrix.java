@@ -27,6 +27,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Set;
 
@@ -72,6 +73,14 @@ abstract class AbstractMatrix<E, V, M> {
     protected abstract M transpose();
 
     protected abstract M minor(final Integer rowIndex, final Integer columnIndex);
+
+    protected abstract E maxAbsColumnSumNorm();
+
+    protected abstract E maxAbsRowSumNorm();
+
+    protected abstract BigDecimal frobeniusNorm();
+
+    protected abstract E maxNorm();
 
     /**
      * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is a

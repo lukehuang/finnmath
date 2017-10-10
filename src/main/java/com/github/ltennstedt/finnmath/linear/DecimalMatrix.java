@@ -350,6 +350,26 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         return builder.build();
     }
 
+    @Override
+    public BigDecimal maxAbsColumnSumNorm() {
+        return null;
+    }
+
+    @Override
+    public BigDecimal maxAbsRowSumNorm() {
+        return null;
+    }
+
+    @Override
+    public BigDecimal frobeniusNorm() {
+        return null;
+    }
+
+    @Override
+    public BigDecimal maxNorm() {
+        return null;
+    }
+
     /**
      * Returns a {@code boolean} which indicates if this {@link DecimalMatrix} is
      * upper triangular
