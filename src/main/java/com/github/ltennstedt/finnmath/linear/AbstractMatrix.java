@@ -28,10 +28,17 @@ import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Set;
 
 /**
+ * @param <E>
+ *            The type of the elements of the matrix
+ * @param <V>
+ *            The type of the related vector
+ * @param <M>
+ *            The type of the matrix
  * @since 1
  * @author Lars Tennstedt
  * @see ImmutableTable
@@ -82,9 +89,9 @@ abstract class AbstractMatrix<E, V, M> {
 
     protected abstract BigDecimal frobeniusNorm(BigDecimal precision);
 
-    protected abstract BigDecimal frobeniusNorm(int scale, int roundingMode);
+    protected abstract BigDecimal frobeniusNorm(int scale, RoundingMode roundingMode);
 
-    protected abstract BigDecimal frobeniusNorm(BigDecimal precision, int scale, int roundingMode);
+    protected abstract BigDecimal frobeniusNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
 
     protected abstract E maxNorm();
 

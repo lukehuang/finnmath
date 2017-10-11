@@ -26,6 +26,10 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.builder.Builder;
 
 /**
+ * @param &lt;E&gt;
+ *            The type of the elements of the matrix
+ * @param &lt;M&gt;
+ *            The type of the matrix
  * @since 1
  * @author Lars Tennstedt
  */
@@ -36,19 +40,19 @@ abstract class AbstractMatrixBuilder&lt;E, M&gt; implements Builder&lt;M&gt; {
      */
     protected final Table&lt;Integer, Integer, E&gt; table;
 
-<span class="fc" id="L39">    protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {</span>
-<span class="fc" id="L40">        final List&lt;Integer&gt; rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());</span>
-<span class="fc" id="L41">        final List&lt;Integer&gt; columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());</span>
-<span class="fc" id="L42">        table = ArrayTable.create(rowIndexes, columnIndexes);</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L43">    protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {</span>
+<span class="fc" id="L44">        final List&lt;Integer&gt; rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());</span>
+<span class="fc" id="L45">        final List&lt;Integer&gt; columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());</span>
+<span class="fc" id="L46">        table = ArrayTable.create(rowIndexes, columnIndexes);</span>
+<span class="fc" id="L47">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L47">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+<span class="fc" id="L51">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
     }
 
     public Table&lt;Integer, Integer, E&gt; getTable() {
-<span class="fc" id="L51">        return table;</span>
+<span class="fc" id="L55">        return table;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

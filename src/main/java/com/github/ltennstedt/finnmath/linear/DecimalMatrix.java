@@ -21,11 +21,13 @@ import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
 import com.github.ltennstedt.finnmath.linear.DecimalVector.DecimalVectorBuilder;
+import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -350,39 +352,168 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         return builder.build();
     }
 
+    /**
+     * Returns the maximum absolute column sum norm of this {@link DecimalMatrix}
+     *
+     * @return The maximum absolute column sum norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
     @Override
     public BigDecimal maxAbsColumnSumNorm() {
-        return null;
+        BigDecimal norm = BigDecimal.ZERO;
+        for (final Map<Integer, BigDecimal> column : table.columnMap().values().asList()) {
+            BigDecimal sum = BigDecimal.ZERO;
+            for (final BigDecimal element : column.values()) {
+                sum = sum.add(element);
+            }
+            if (sum.compareTo(norm) > 0) {
+                norm = sum;
+            }
+        }
+        return norm;
     }
 
+    /**
+     * Returns the maximum absolute row sum norm of this {@link DecimalMatrix}
+     *
+     * @return The maximum absolute row sum norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
     @Override
     public BigDecimal maxAbsRowSumNorm() {
-        return null;
+        BigDecimal norm = BigDecimal.ZERO;
+        for (final Map<Integer, BigDecimal> row : table.rowMap().values().asList()) {
+            BigDecimal sum = BigDecimal.ZERO;
+            for (final BigDecimal element : row.values()) {
+                sum = sum.add(element);
+            }
+            if (sum.compareTo(norm) > 0) {
+                norm = sum;
+            }
+        }
+        return norm;
     }
 
+    /**
+     * Returns the frobenius norm of this {@link DecimalMatrix}
+     *
+     * @return The frobenius norm
+     * @since 1
+     * @author Lars Tennstedt
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
     @Override
     public BigDecimal frobeniusNorm() {
-        return null;
+        BigDecimal normPow2 = BigDecimal.ZERO;
+        for (final BigDecimal element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return new SquareRootCalculator().sqrt(normPow2);
     }
 
+    /**
+     * Returns the frobenius norm of this {@link DecimalMatrix}
+     *
+     * @param precision
+     *            the precision for the termination condition
+     * @return The frobenius norm
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
     @Override
     public BigDecimal frobeniusNorm(final BigDecimal precision) {
-        return null;
+        requireNonNull(precision, "precision");
+        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
+                "expected precision in (0, 1) but actual %s", precision);
+        BigDecimal normPow2 = BigDecimal.ZERO;
+        for (final BigDecimal element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return new SquareRootCalculator(precision).sqrt(normPow2);
     }
 
+    /**
+     * Returns the frobenius norm of this {@link DecimalMatrix}
+     *
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
+     * @return The frobenius norm
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
     @Override
-    public BigDecimal frobeniusNorm(final int scale, final int roundingMode) {
-        return null;
+    public BigDecimal frobeniusNorm(final int scale, final RoundingMode roundingMode) {
+        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        BigDecimal normPow2 = BigDecimal.ZERO;
+        for (final BigDecimal element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return new SquareRootCalculator(scale, roundingMode).sqrt(normPow2);
     }
 
+    /**
+     * Returns the frobenius norm of this {@link DecimalMatrix}
+     *
+     * @param precision
+     *            the precision for the termination condition
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
+     * @return The frobenius norm
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
     @Override
-    public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final int roundingMode) {
-        return null;
+    public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
+        requireNonNull(precision, "precision");
+        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
+                "expected precision in (0, 1) but actual %s", precision);
+        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        BigDecimal normPow2 = BigDecimal.ZERO;
+        for (final BigDecimal element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(normPow2);
     }
 
+    /**
+     * Returns the maximum norm of this {@link DecimalMatrix}
+     *
+     * @return The maximum norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
     @Override
     public BigDecimal maxNorm() {
-        return null;
+        BigDecimal norm = BigDecimal.ZERO;
+        for (final BigDecimal element : table.values()) {
+            if (element.compareTo(norm) > 0) {
+                norm = element;
+            }
+        }
+        return norm;
     }
 
     /**

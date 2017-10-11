@@ -30,6 +30,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
+ * @param <E>
+ *            The type of the elements of the vector
+ * @param <V>
+ *            The type of the vector
+ * @param <N>
+ *            The type of the euclidean norm of the vector
  * @since 1
  * @author Lars Tennstedt
  * @see ImmutableMap
@@ -103,6 +109,10 @@ abstract class AbstractVector<E, V, N> {
 
     protected abstract V negate();
 
+    protected abstract E taxicabNorm();
+
+    protected abstract E taxicabDistance(V vector);
+
     protected abstract E euclideanNormPow2();
 
     protected abstract N euclideanNorm();
@@ -122,6 +132,10 @@ abstract class AbstractVector<E, V, N> {
     protected abstract N euclideanDistance(V vector, int scale, RoundingMode roundingMode);
 
     protected abstract N euclideanDistance(V vector, BigDecimal precision, int scale, RoundingMode roundingMode);
+
+    protected abstract E infinityNorm();
+
+    protected abstract E infinityDistance(V vector);
 
     /**
      * Returns the size of the underlying {@link Map}

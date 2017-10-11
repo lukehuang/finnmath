@@ -116,8 +116,6 @@ public final class SquareRootCalculator {
      *            the result
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      */
@@ -142,13 +140,9 @@ public final class SquareRootCalculator {
      * @throws NullPointerException
      *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code integer < 0}
-     * @throws IllegalArgumentException
      *             if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      */

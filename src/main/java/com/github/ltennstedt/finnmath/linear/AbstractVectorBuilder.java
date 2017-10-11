@@ -26,6 +26,12 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.Builder;
 
 /**
+ * @param <E>
+ *            The type of the elements of the vector
+ * @param <V>
+ *            The type of the vector
+ * @param <B>
+ *            The type of the builder
  * @since 1
  * @author Lars Tennstedt
  */

@@ -130,6 +130,45 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
+     * Returns the taxicab norm of this {@link BigIntVector}
+     *
+     * @return The taxicab norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    protected BigInteger taxicabNorm() {
+        BigInteger norm = BigInteger.ZERO;
+        for (final BigInteger element : map.values()) {
+            norm = norm.add(element.abs());
+        }
+        return norm;
+    }
+
+    /**
+     * Returns the taxicab distance from this {@link BigIntVector} to the given one
+     *
+     * @param vector
+     *            The other {@link BigIntVector}
+     * @return The taxicab distance
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #subtract
+     * @see #taxicabNorm
+     */
+    @Override
+    protected BigInteger taxicabDistance(final BigIntVector vector) {
+        requireNonNull(vector, "vector");
+        checkArgument(map.size() == vector.size(), "expected equal sizes but actual %s != %s", map.size(),
+                vector.size());
+        return subtract(vector).taxicabNorm();
+    }
+
+    /**
      * Returns the square of the euclidean norm of this {@link BigIntVector}
      *
      * @return The square of the euclidean norm
@@ -410,6 +449,47 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
                 "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(vector));
+    }
+
+    /**
+     * Returns the infinity norm of this {@link BigIntVector}
+     *
+     * @return The infinity norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    protected BigInteger infinityNorm() {
+        BigInteger norm = BigInteger.ZERO;
+        for (final BigInteger element : map.values()) {
+            if (element.compareTo(norm) > 0) {
+                norm = element;
+            }
+        }
+        return norm;
+    }
+
+    /**
+     * Returns the infinity distance from this {@link BigIntVector} to the given one
+     *
+     * @param vector
+     *            The other {@link BigIntVector}
+     * @return The infinity distance
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != vector.size}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see #subtract
+     * @see #infinityNorm
+     */
+    @Override
+    protected BigInteger infinityDistance(final BigIntVector vector) {
+        requireNonNull(vector, "vector");
+        checkArgument(map.size() == vector.size(), "expected equal sizes but actual %s != %s", map.size(),
+                vector.size());
+        return subtract(vector).infinityNorm();
     }
 
     /**
