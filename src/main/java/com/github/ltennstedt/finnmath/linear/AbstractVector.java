@@ -25,6 +25,7 @@ import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -108,9 +109,9 @@ abstract class AbstractVector<E, V, N> {
 
     protected abstract N euclideanNorm(BigDecimal precision);
 
-    protected abstract N euclideanNorm(int scale, int roundingMode);
+    protected abstract N euclideanNorm(int scale, RoundingMode roundingMode);
 
-    protected abstract N euclideanNorm(BigDecimal precision, int scale, int roundingMode);
+    protected abstract N euclideanNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
 
     protected abstract E euclideanDistancePow2(V vector);
 
@@ -118,9 +119,9 @@ abstract class AbstractVector<E, V, N> {
 
     protected abstract N euclideanDistance(V vector, BigDecimal precision);
 
-    protected abstract N euclideanDistance(V vector, int scale, int roundingMode);
+    protected abstract N euclideanDistance(V vector, int scale, RoundingMode roundingMode);
 
-    protected abstract N euclideanDistance(V vector, BigDecimal precision, int scale, int roundingMode);
+    protected abstract N euclideanDistance(V vector, BigDecimal precision, int scale, RoundingMode roundingMode);
 
     /**
      * Returns the size of the underlying {@link Map}

@@ -25,6 +25,7 @@ import com.github.ltennstedt.finnmath.util.MathRandom;
 import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -42,7 +43,7 @@ public final class DecimalVectorTest {
     private static final int scale = 2;
     private static final int differentSize = size + 1;
     private static final BigDecimal precision = BigDecimal.valueOf(0.00001);
-    private static final int roundingMode = BigDecimal.ROUND_HALF_DOWN;
+    private static final RoundingMode roundingMode = RoundingMode.HALF_DOWN;
     private static final DecimalVector zeroVector = DecimalVector.builder(size).putAll(BigDecimal.ZERO).build();
     private static final DecimalVector vectorWithAnotherSize = DecimalVector.builder(differentSize)
             .putAll(BigDecimal.ZERO).build();
@@ -329,22 +330,6 @@ public final class DecimalVectorTest {
     }
 
     @Test
-    public void euclideanNormRoundingModeTooLowAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> {
-            zeroVector.euclideanNorm(scale, -1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual -1");
-    }
-
-    @Test
-    public void euclideanNormRoundingModeTooHighAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> {
-            zeroVector.euclideanNorm(scale, 8);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual 8");
-    }
-
-    @Test
     public void euclideanNormWithScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
             assertThat(vector.euclideanNorm(scale, roundingMode)).isExactlyInstanceOf(BigDecimal.class)
@@ -380,22 +365,6 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.euclideanNorm(precision, -1, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void euclideanNormRoundingModeTooLowAndPrecisionAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> {
-            zeroVector.euclideanNorm(precision, scale, -1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual -1");
-    }
-
-    @Test
-    public void euclideanNormRoundingModeTooHighAndPrecisionAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> {
-            zeroVector.euclideanNorm(precision, scale, 8);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual 8");
     }
 
     @Test
@@ -560,22 +529,6 @@ public final class DecimalVectorTest {
     }
 
     @Test
-    public void euclideanDistanceWithScaleAndRoundingTooLowModeShouldThrowException() {
-        assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(zeroVector, scale, -1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual -1");
-    }
-
-    @Test
-    public void euclideanDistanceWithScaleAndRoundingTooHighModeShouldThrowException() {
-        assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(zeroVector, scale, 8);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual 8");
-    }
-
-    @Test
     public void euclideanDistanceWithScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
@@ -628,22 +581,6 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(zeroVector, precision, -1, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void euclideanDistanceWithPrecisionAndScaleAndRoundingTooLowModeShouldThrowException() {
-        assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(zeroVector, precision, scale, -1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual -1");
-    }
-
-    @Test
-    public void euclideanDistanceWithPrecisionAndScaleAndRoundingTooHighModeShouldThrowException() {
-        assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(zeroVector, precision, scale, 8);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual 8");
     }
 
     @Test

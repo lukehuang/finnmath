@@ -80,6 +80,12 @@ abstract class AbstractMatrix<E, V, M> {
 
     protected abstract BigDecimal frobeniusNorm();
 
+    protected abstract BigDecimal frobeniusNorm(BigDecimal precision);
+
+    protected abstract BigDecimal frobeniusNorm(int scale, int roundingMode);
+
+    protected abstract BigDecimal frobeniusNorm(BigDecimal precision, int scale, int roundingMode);
+
     protected abstract E maxNorm();
 
     /**

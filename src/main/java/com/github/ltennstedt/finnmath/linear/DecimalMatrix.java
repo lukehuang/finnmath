@@ -366,6 +366,21 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     }
 
     @Override
+    public BigDecimal frobeniusNorm(final BigDecimal precision) {
+        return null;
+    }
+
+    @Override
+    public BigDecimal frobeniusNorm(final int scale, final int roundingMode) {
+        return null;
+    }
+
+    @Override
+    public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final int roundingMode) {
+        return null;
+    }
+
+    @Override
     public BigDecimal maxNorm() {
         return null;
     }

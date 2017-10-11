@@ -23,6 +23,7 @@ import com.github.ltennstedt.finnmath.number.ScientificNotation;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import org.junit.After;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public final class SquareRootCalculatorTest {
     private static final SquareRootCalculator squareRootCalculator = new SquareRootCalculator();
     private static final BigDecimal validPrecision = BigDecimal.valueOf(0.00000001);
     private static final int validScale = 8;
-    private static final int validRoundingMode = BigDecimal.ROUND_HALF_EVEN;
+    private static final RoundingMode roundingMode = RoundingMode.HALF_EVEN;
     private static final MathRandom mathRandom = new MathRandom(7);
     private static final Logger log = LoggerFactory.getLogger(SquareRootCalculatorTest.class);
 
@@ -74,30 +75,13 @@ public final class SquareRootCalculatorTest {
     @Test
     public void newScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            new SquareRootCalculator(-1, validRoundingMode);
+            new SquareRootCalculator(-1, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void newRoundingModeTooLowShouldThrowException() {
-        assertThatThrownBy(() -> {
-            new SquareRootCalculator(validScale, -1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual -1");
-    }
-
-    @Test
-    public void newRoundingModeTooHighShouldThrowException() {
-        assertThatThrownBy(() -> {
-            new SquareRootCalculator(validScale, 8);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual 8");
     }
 
     @Test
     public void newScaleAndRoundingModeShouldSucceed() {
         final int scale = 8;
-        final int roundingMode = BigDecimal.ROUND_HALF_EVEN;
         final SquareRootCalculator actual = new SquareRootCalculator(scale, roundingMode);
         assertThat(actual.getPrecision()).isEqualByComparingTo(SquareRootCalculator.DEFAULT_PRECISION);
         assertThat(actual.getScale()).isEqualTo(scale);
@@ -107,52 +91,35 @@ public final class SquareRootCalculatorTest {
     @Test
     public void newAllPrecisionNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            new SquareRootCalculator(null, validScale, validRoundingMode);
+            new SquareRootCalculator(null, validScale, roundingMode);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("precision");
     }
 
     @Test
     public void newAllPrecisionTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            new SquareRootCalculator(BigDecimal.ZERO, validScale, validRoundingMode);
+            new SquareRootCalculator(BigDecimal.ZERO, validScale, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 0");
     }
 
     @Test
     public void newAllPrecisionTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
-            new SquareRootCalculator(BigDecimal.ONE, validScale, validRoundingMode);
+            new SquareRootCalculator(BigDecimal.ONE, validScale, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 1");
     }
 
     @Test
     public void newAllScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            new SquareRootCalculator(validPrecision, -1, validRoundingMode);
+            new SquareRootCalculator(validPrecision, -1, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void newAllRoundingModeTooLowShouldThrowException() {
-        assertThatThrownBy(() -> {
-            new SquareRootCalculator(validPrecision, validScale, -1);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual -1");
-    }
-
-    @Test
-    public void newAllRoundingModeTooHighShouldThrowException() {
-        assertThatThrownBy(() -> {
-            new SquareRootCalculator(validPrecision, validScale, 8);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected roundingMode in [0, 7] but actual 8");
     }
 
     @Test
     public void newAllShouldSucceed() {
         final BigDecimal precision = BigDecimal.valueOf(0.00000001);
         final int scale = 8;
-        final int roundingMode = BigDecimal.ROUND_HALF_EVEN;
         final SquareRootCalculator actual = new SquareRootCalculator(precision, scale, roundingMode);
         assertThat(actual.getPrecision()).isEqualByComparingTo(precision);
         assertThat(actual.getScale()).isEqualTo(scale);
@@ -484,7 +451,7 @@ public final class SquareRootCalculatorTest {
                 .add(BigDecimal.valueOf(100));
         final ScientificNotation actual = squareRootCalculator.scientificNotationForSqrt(decimal);
         final ScientificNotation expected = new ScientificNotation(
-                decimal.divide(BigDecimal.valueOf(100), validRoundingMode), 2);
+                decimal.divide(BigDecimal.valueOf(100), roundingMode), 2);
         assertThat(actual).isEqualTo(expected);
     }
 

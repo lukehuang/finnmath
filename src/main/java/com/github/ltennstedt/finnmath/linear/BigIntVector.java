@@ -26,6 +26,7 @@ import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -189,18 +190,14 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @return The euclidean norm
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
-    public BigDecimal euclideanNorm(final int scale, final int roundingMode) {
+    public BigDecimal euclideanNorm(final int scale, final RoundingMode roundingMode) {
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
         return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());
     }
 
@@ -221,21 +218,17 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      *             if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
-    public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final int roundingMode) {
+    public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());
     }
 
@@ -363,21 +356,17 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      *             if {@code size != vector.size}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
-    public BigDecimal euclideanDistance(final BigIntVector vector, final int scale, final int roundingMode) {
+    public BigDecimal euclideanDistance(final BigIntVector vector, final int scale, final RoundingMode roundingMode) {
         requireNonNull(vector, "vector");
         checkArgument(map.size() == vector.size(), "expected equal sizes but actual %s != %s", map.size(),
                 vector.size());
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
         return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(vector));
     }
 
@@ -405,8 +394,6 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      *             if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code roundingMode < 0 || 7 < roundingMode}
      * @since 1
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
@@ -414,7 +401,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntVector vector, final BigDecimal precision, final int scale,
-            final int roundingMode) {
+            final RoundingMode roundingMode) {
         requireNonNull(vector, "vector");
         checkArgument(map.size() == vector.size(), "expected equal sizes but actual %s != %s", map.size(),
                 vector.size());
@@ -422,8 +409,6 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(vector));
     }
 

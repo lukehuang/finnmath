@@ -53,7 +53,7 @@ public final class SquareRootCalculator {
     /**
      * Default rounding mode
      */
-    public static final int DEFAULT_ROUNDING_MODE = BigDecimal.ROUND_HALF_UP;
+    public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;
 
     private static Logger log = LoggerFactory.getLogger(SquareRootCalculator.class);
 
@@ -70,7 +70,7 @@ public final class SquareRootCalculator {
     /**
      * Rounding mode
      */
-    private final int roundingMode;
+    private final RoundingMode roundingMode;
 
     /**
      * Constructs a {@link SquareRootCalculator} from defaults only
@@ -121,10 +121,8 @@ public final class SquareRootCalculator {
      * @since 1
      * @author Lars Tennstedt
      */
-    public SquareRootCalculator(final int scale, final int roundingMode) {
+    public SquareRootCalculator(final int scale, final RoundingMode roundingMode) {
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
         precision = DEFAULT_PRECISION;
         this.scale = scale;
         this.roundingMode = roundingMode;
@@ -154,13 +152,11 @@ public final class SquareRootCalculator {
      * @since 1
      * @author Lars Tennstedt
      */
-    public SquareRootCalculator(final BigDecimal precision, final int scale, final int roundingMode) {
+    public SquareRootCalculator(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        checkArgument((0 <= roundingMode) && (roundingMode <= 7), "expected roundingMode in [0, 7] but actual %s",
-                roundingMode);
         this.precision = precision;
         this.scale = scale;
         this.roundingMode = roundingMode;
@@ -324,7 +320,7 @@ public final class SquareRootCalculator {
         return scale;
     }
 
-    public int getRoundingMode() {
+    public RoundingMode getRoundingMode() {
         return roundingMode;
     }
 }

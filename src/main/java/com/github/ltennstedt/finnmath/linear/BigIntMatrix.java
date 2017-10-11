@@ -410,6 +410,54 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
+     * Returns the frobenius norm of this {@link BigIntMatrix}
+     *
+     * @return The frobenius norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final BigDecimal precision) {
+        BigInteger normPow2 = BigInteger.ZERO;
+        for (final BigInteger element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return new SquareRootCalculator().sqrt(normPow2);
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntMatrix}
+     *
+     * @return The frobenius norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final int scale, final int roundingMode) {
+        BigInteger normPow2 = BigInteger.ZERO;
+        for (final BigInteger element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return new SquareRootCalculator().sqrt(normPow2);
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntMatrix}
+     *
+     * @return The frobenius norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final int roundingMode) {
+        BigInteger normPow2 = BigInteger.ZERO;
+        for (final BigInteger element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return new SquareRootCalculator().sqrt(normPow2);
+    }
+
+    /**
      * Returns the maximum norm of this {@link BigIntMatrix}
      *
      * @return The maximum norm

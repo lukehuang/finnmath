@@ -53,7 +53,7 @@ public final class SquareRootCalculator {
     /**
      * Default rounding mode
      */
-    public static final int DEFAULT_ROUNDING_MODE = BigDecimal.ROUND_HALF_UP;
+<span class="fc" id="L56">    public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;</span>
 
 <span class="fc" id="L58">    private static Logger log = LoggerFactory.getLogger(SquareRootCalculator.class);</span>
 
@@ -70,7 +70,7 @@ public final class SquareRootCalculator {
     /**
      * Rounding mode
      */
-    private final int roundingMode;
+    private final RoundingMode roundingMode;
 
     /**
      * Constructs a {@link SquareRootCalculator} from defaults only
@@ -121,14 +121,12 @@ public final class SquareRootCalculator {
      * @since 1
      * @author Lars Tennstedt
      */
-<span class="fc" id="L124">    public SquareRootCalculator(final int scale, final int roundingMode) {</span>
+<span class="fc" id="L124">    public SquareRootCalculator(final int scale, final RoundingMode roundingMode) {</span>
 <span class="fc bfc" id="L125" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L126" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
-                roundingMode);
-<span class="fc" id="L128">        precision = DEFAULT_PRECISION;</span>
-<span class="fc" id="L129">        this.scale = scale;</span>
-<span class="fc" id="L130">        this.roundingMode = roundingMode;</span>
-<span class="fc" id="L131">    }</span>
+<span class="fc" id="L126">        precision = DEFAULT_PRECISION;</span>
+<span class="fc" id="L127">        this.scale = scale;</span>
+<span class="fc" id="L128">        this.roundingMode = roundingMode;</span>
+<span class="fc" id="L129">    }</span>
 
     /**
      * Constructs a {@link SquareRootCalculator} from a given precision, scale and
@@ -154,17 +152,15 @@ public final class SquareRootCalculator {
      * @since 1
      * @author Lars Tennstedt
      */
-<span class="fc" id="L157">    public SquareRootCalculator(final BigDecimal precision, final int scale, final int roundingMode) {</span>
-<span class="fc" id="L158">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L159" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+<span class="fc" id="L155">    public SquareRootCalculator(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {</span>
+<span class="fc" id="L156">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L157" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
                 &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L162" title="All 4 branches covered.">        checkArgument((0 &lt;= roundingMode) &amp;&amp; (roundingMode &lt;= 7), &quot;expected roundingMode in [0, 7] but actual %s&quot;,</span>
-                roundingMode);
-<span class="fc" id="L164">        this.precision = precision;</span>
-<span class="fc" id="L165">        this.scale = scale;</span>
-<span class="fc" id="L166">        this.roundingMode = roundingMode;</span>
-<span class="fc" id="L167">    }</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L160">        this.precision = precision;</span>
+<span class="fc" id="L161">        this.scale = scale;</span>
+<span class="fc" id="L162">        this.roundingMode = roundingMode;</span>
+<span class="fc" id="L163">    }</span>
 
     /**
      * Returns the square root of the given {@link BigInteger}
@@ -181,9 +177,9 @@ public final class SquareRootCalculator {
      * @see #sqrt(BigDecimal)
      */
     public BigDecimal sqrt(final BigInteger integer) {
-<span class="fc" id="L184">        requireNonNull(integer, &quot;integer&quot;);</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
-<span class="fc" id="L186">        return sqrt(new BigDecimal(integer));</span>
+<span class="fc" id="L180">        requireNonNull(integer, &quot;integer&quot;);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
+<span class="fc" id="L182">        return sqrt(new BigDecimal(integer));</span>
     }
 
     /**
@@ -201,9 +197,9 @@ public final class SquareRootCalculator {
      * @see #heronsMethod
      */
     public BigDecimal sqrt(final BigDecimal decimal) {
-<span class="fc" id="L204">        requireNonNull(decimal, &quot;decimal&quot;);</span>
-<span class="pc bpc" id="L205" title="1 of 2 branches missed.">        checkArgument(decimal.compareTo(BigDecimal.ZERO) &gt; -1, &quot;expected decimal &gt;= 0 but actual %s&quot;, decimal);</span>
-<span class="fc" id="L206">        return heronsMethod(decimal).setScale(scale, roundingMode);</span>
+<span class="fc" id="L200">        requireNonNull(decimal, &quot;decimal&quot;);</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">        checkArgument(decimal.compareTo(BigDecimal.ZERO) &gt; -1, &quot;expected decimal &gt;= 0 but actual %s&quot;, decimal);</span>
+<span class="fc" id="L202">        return heronsMethod(decimal).setScale(scale, roundingMode);</span>
     }
 
     /**
@@ -225,10 +221,10 @@ public final class SquareRootCalculator {
      * @author Lars Tennstedt
      */
     public BigInteger sqrtOfPerfectSquare(final BigInteger integer) {
-<span class="fc" id="L228">        requireNonNull(integer, &quot;integer&quot;);</span>
-<span class="pc bpc" id="L229" title="1 of 2 branches missed.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
-<span class="fc" id="L230">        checkArgument(perfectSquare(integer), &quot;expected perfect square but actual %s&quot;, integer);</span>
-<span class="fc" id="L231">        return BigIntegerMath.sqrt(integer, RoundingMode.UNNECESSARY);</span>
+<span class="fc" id="L224">        requireNonNull(integer, &quot;integer&quot;);</span>
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
+<span class="fc" id="L226">        checkArgument(perfectSquare(integer), &quot;expected perfect square but actual %s&quot;, integer);</span>
+<span class="fc" id="L227">        return BigIntegerMath.sqrt(integer, RoundingMode.UNNECESSARY);</span>
     }
 
     /**
@@ -246,86 +242,86 @@ public final class SquareRootCalculator {
      * @author Lars Tennstedt
      */
     public boolean perfectSquare(final BigInteger integer) {
-<span class="fc" id="L249">        requireNonNull(integer, &quot;integer&quot;);</span>
-<span class="pc bpc" id="L250" title="1 of 2 branches missed.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
-<span class="fc" id="L251">        BigInteger sum = BigInteger.ZERO;</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">        for (BigInteger odd = BigInteger.ONE; sum.compareTo(integer) &lt; 0; odd = odd.add(BigInteger.valueOf(2))) {</span>
-<span class="fc" id="L253">            sum = sum.add(odd);</span>
+<span class="fc" id="L245">        requireNonNull(integer, &quot;integer&quot;);</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
+<span class="fc" id="L247">        BigInteger sum = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">        for (BigInteger odd = BigInteger.ONE; sum.compareTo(integer) &lt; 0; odd = odd.add(BigInteger.valueOf(2))) {</span>
+<span class="fc" id="L249">            sum = sum.add(odd);</span>
         }
-<span class="fc" id="L255">        return sum.equals(integer);</span>
+<span class="fc" id="L251">        return sum.equals(integer);</span>
     }
 
     private BigDecimal heronsMethod(final BigDecimal decimal) {
-<span class="fc" id="L259">        log.debug(&quot;calculating square root for {} with precision = {}&quot;, decimal.toPlainString(),</span>
-<span class="fc" id="L260">                precision.toPlainString());</span>
-<span class="fc" id="L261">        BigDecimal predecessor = seedValue(decimal);</span>
-<span class="fc" id="L262">        log.debug(&quot;seed value = {}&quot;, predecessor.toPlainString());</span>
-<span class="fc" id="L263">        BigDecimal successor = calculateSuccessor(predecessor, decimal);</span>
-<span class="fc" id="L264">        long iterations = 1;</span>
-<span class="fc bfc" id="L265" title="All 2 branches covered.">        while (successor.subtract(predecessor).abs().compareTo(precision) &gt; -1) {</span>
-<span class="fc" id="L266">            log.debug(&quot;|successor - predecessor| = {}&quot;, successor.subtract(predecessor).abs().toPlainString());</span>
-<span class="fc" id="L267">            predecessor = successor;</span>
-<span class="fc" id="L268">            successor = calculateSuccessor(successor, decimal);</span>
-<span class="fc" id="L269">            iterations++;</span>
+<span class="fc" id="L255">        log.debug(&quot;calculating square root for {} with precision = {}&quot;, decimal.toPlainString(),</span>
+<span class="fc" id="L256">                precision.toPlainString());</span>
+<span class="fc" id="L257">        BigDecimal predecessor = seedValue(decimal);</span>
+<span class="fc" id="L258">        log.debug(&quot;seed value = {}&quot;, predecessor.toPlainString());</span>
+<span class="fc" id="L259">        BigDecimal successor = calculateSuccessor(predecessor, decimal);</span>
+<span class="fc" id="L260">        long iterations = 1;</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        while (successor.subtract(predecessor).abs().compareTo(precision) &gt; -1) {</span>
+<span class="fc" id="L262">            log.debug(&quot;|successor - predecessor| = {}&quot;, successor.subtract(predecessor).abs().toPlainString());</span>
+<span class="fc" id="L263">            predecessor = successor;</span>
+<span class="fc" id="L264">            successor = calculateSuccessor(successor, decimal);</span>
+<span class="fc" id="L265">            iterations++;</span>
         }
-<span class="fc" id="L271">        log.debug(&quot;terminated after {} iterations&quot;, iterations);</span>
-<span class="fc" id="L272">        log.debug(&quot;sqrt({}) = {}&quot;, decimal.toPlainString(), successor.toPlainString());</span>
-<span class="fc" id="L273">        return successor;</span>
+<span class="fc" id="L267">        log.debug(&quot;terminated after {} iterations&quot;, iterations);</span>
+<span class="fc" id="L268">        log.debug(&quot;sqrt({}) = {}&quot;, decimal.toPlainString(), successor.toPlainString());</span>
+<span class="fc" id="L269">        return successor;</span>
     }
 
     private BigDecimal calculateSuccessor(final BigDecimal predecessor, final BigDecimal decimal) {
-<span class="fc" id="L277">        log.debug(&quot;iteration&quot;);</span>
-<span class="fc" id="L278">        log.debug(&quot;predecessor = {}&quot;, predecessor.toPlainString());</span>
-<span class="fc" id="L279">        final BigDecimal divisor = BigDecimal.valueOf(2).multiply(predecessor);</span>
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        final BigDecimal successor = divisor.compareTo(BigDecimal.ZERO) != 0</span>
-<span class="fc" id="L281">                ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode)</span>
-<span class="pc" id="L282">                : DEFAULT_PRECISION;</span>
-<span class="fc" id="L283">        log.debug(&quot;successor = {}&quot;, successor.toPlainString());</span>
-<span class="fc" id="L284">        return successor;</span>
+<span class="fc" id="L273">        log.debug(&quot;iteration&quot;);</span>
+<span class="fc" id="L274">        log.debug(&quot;predecessor = {}&quot;, predecessor.toPlainString());</span>
+<span class="fc" id="L275">        final BigDecimal divisor = BigDecimal.valueOf(2).multiply(predecessor);</span>
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">        final BigDecimal successor = divisor.compareTo(BigDecimal.ZERO) != 0</span>
+<span class="fc" id="L277">                ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode)</span>
+<span class="pc" id="L278">                : DEFAULT_PRECISION;</span>
+<span class="fc" id="L279">        log.debug(&quot;successor = {}&quot;, successor.toPlainString());</span>
+<span class="fc" id="L280">        return successor;</span>
     }
 
     private BigDecimal seedValue(final BigDecimal decimal) {
-<span class="fc" id="L288">        final ScientificNotation scientificNotation = scientificNotationForSqrt(decimal);</span>
-<span class="fc" id="L289">        log.debug(&quot;Scientific notation of {} is {}.&quot;, decimal.toPlainString(), scientificNotation.asString());</span>
-<span class="fc bfc" id="L290" title="All 2 branches covered.">        if (scientificNotation.getCoefficient().compareTo(BigDecimal.TEN) &gt; -1) {</span>
-<span class="fc" id="L291">            return BigDecimal.valueOf(6).multiply(BigDecimal.TEN.pow(scientificNotation.getExponent() / 2));</span>
+<span class="fc" id="L284">        final ScientificNotation scientificNotation = scientificNotationForSqrt(decimal);</span>
+<span class="fc" id="L285">        log.debug(&quot;Scientific notation of {} is {}.&quot;, decimal.toPlainString(), scientificNotation.asString());</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">        if (scientificNotation.getCoefficient().compareTo(BigDecimal.TEN) &gt; -1) {</span>
+<span class="fc" id="L287">            return BigDecimal.valueOf(6).multiply(BigDecimal.TEN.pow(scientificNotation.getExponent() / 2));</span>
         }
-<span class="fc" id="L293">        return BigDecimal.valueOf(2).multiply(BigDecimal.TEN.pow(scientificNotation.getExponent() / 2));</span>
+<span class="fc" id="L289">        return BigDecimal.valueOf(2).multiply(BigDecimal.TEN.pow(scientificNotation.getExponent() / 2));</span>
     }
 
     @VisibleForTesting
     ScientificNotation scientificNotationForSqrt(final BigDecimal decimal) {
-<span class="fc" id="L298">        log.debug(&quot;calculating scientific notification for {}&quot;, decimal.toPlainString());</span>
-<span class="fc" id="L299">        BigDecimal coefficient = decimal;</span>
-<span class="fc" id="L300">        int exponent = 0;</span>
-<span class="fc" id="L301">        log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
-<span class="fc" id="L302">        log.debug(&quot;exponent = {}&quot;, exponent);</span>
-<span class="fc bfc" id="L303" title="All 2 branches covered.">        while (coefficient.compareTo(BigDecimal.valueOf(100)) &gt; -1) {</span>
-<span class="fc" id="L304">            log.debug(&quot;iteration for scientific notification&quot;);</span>
-<span class="fc" id="L305">            coefficient = coefficient.divide(BigDecimal.valueOf(100), roundingMode);</span>
-<span class="fc" id="L306">            exponent = addExact(exponent, 2);</span>
-<span class="fc" id="L307">            log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
-<span class="fc" id="L308">            log.debug(&quot;exponent = {}&quot;, exponent);</span>
+<span class="fc" id="L294">        log.debug(&quot;calculating scientific notification for {}&quot;, decimal.toPlainString());</span>
+<span class="fc" id="L295">        BigDecimal coefficient = decimal;</span>
+<span class="fc" id="L296">        int exponent = 0;</span>
+<span class="fc" id="L297">        log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
+<span class="fc" id="L298">        log.debug(&quot;exponent = {}&quot;, exponent);</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">        while (coefficient.compareTo(BigDecimal.valueOf(100)) &gt; -1) {</span>
+<span class="fc" id="L300">            log.debug(&quot;iteration for scientific notification&quot;);</span>
+<span class="fc" id="L301">            coefficient = coefficient.divide(BigDecimal.valueOf(100), roundingMode);</span>
+<span class="fc" id="L302">            exponent = addExact(exponent, 2);</span>
+<span class="fc" id="L303">            log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
+<span class="fc" id="L304">            log.debug(&quot;exponent = {}&quot;, exponent);</span>
         }
-<span class="fc" id="L310">        return new ScientificNotation(coefficient, exponent);</span>
+<span class="fc" id="L306">        return new ScientificNotation(coefficient, exponent);</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L315">        return MoreObjects.toStringHelper(this).add(&quot;precision&quot;, precision).add(&quot;scale&quot;, scale)</span>
-<span class="fc" id="L316">                .add(&quot;roundingMode&quot;, roundingMode).toString();</span>
+<span class="fc" id="L311">        return MoreObjects.toStringHelper(this).add(&quot;precision&quot;, precision).add(&quot;scale&quot;, scale)</span>
+<span class="fc" id="L312">                .add(&quot;roundingMode&quot;, roundingMode).toString();</span>
     }
 
     public BigDecimal getPrecision() {
-<span class="fc" id="L320">        return precision;</span>
+<span class="fc" id="L316">        return precision;</span>
     }
 
     public int getScale() {
-<span class="fc" id="L324">        return scale;</span>
+<span class="fc" id="L320">        return scale;</span>
     }
 
-    public int getRoundingMode() {
-<span class="fc" id="L328">        return roundingMode;</span>
+    public RoundingMode getRoundingMode() {
+<span class="fc" id="L324">        return roundingMode;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

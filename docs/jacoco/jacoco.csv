@@ -1,14 +1,14 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractMatrix,0,205,1,17,0,34,1,28,0,20
 finnMath,com.github.ltennstedt.finnmath.linear,DecimalVector.DecimalVectorBuilder,1,118,1,7,0,20,1,9,0,6
-finnMath,com.github.ltennstedt.finnmath.linear,DecimalMatrix,9,1054,1,71,4,152,5,64,4,29
+finnMath,com.github.ltennstedt.finnmath.linear,DecimalMatrix,15,1054,1,71,7,152,8,64,7,29
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractMatrixBuilder,0,35,0,0,0,7,0,3,0,3
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractVector,4,44,0,0,1,10,1,6,1,6
-finnMath,com.github.ltennstedt.finnmath.linear,DecimalVector,0,552,0,64,0,84,0,55,0,23
-finnMath,com.github.ltennstedt.finnmath.linear,BigIntMatrix,116,1032,15,73,26,149,12,65,4,29
+finnMath,com.github.ltennstedt.finnmath.linear,DecimalVector,0,504,0,48,0,80,0,47,0,23
+finnMath,com.github.ltennstedt.finnmath.linear,BigIntMatrix,197,1032,21,73,41,149,18,65,7,29
 finnMath,com.github.ltennstedt.finnmath.linear,BigIntVector.BigIntVectorBuilder,1,119,1,7,0,20,1,9,0,6
 finnMath,com.github.ltennstedt.finnmath.linear,BigIntMatrix.BigIntMatrixBuilder,0,100,0,0,0,22,0,7,0,7
-finnMath,com.github.ltennstedt.finnmath.linear,BigIntVector,0,553,0,64,0,84,0,55,0,23
+finnMath,com.github.ltennstedt.finnmath.linear,BigIntVector,0,505,0,48,0,80,0,47,0,23
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractVectorBuilder,2,61,3,3,0,11,3,5,0,5
 finnMath,com.github.ltennstedt.finnmath.linear,DecimalMatrix.DecimalMatrixBuilder,0,100,0,0,0,22,0,7,0,7
 finnMath,com.github.ltennstedt.finnmath.number,RealComplexNumber,2,360,1,15,1,46,1,24,0,17
@@ -17,4 +17,4 @@ finnMath,com.github.ltennstedt.finnmath.number,SimpleComplexNumber,0,298,0,16,0,
 finnMath,com.github.ltennstedt.finnmath.number,Fraction,0,495,0,42,0,87,0,52,0,31
 finnMath,com.github.ltennstedt.finnmath.number,AbstractComplexNumber,0,31,0,0,0,7,0,4,0,4
 finnMath,com.github.ltennstedt.finnmath.util,MathRandom,11,3326,6,462,3,506,6,327,0,99
-finnMath,com.github.ltennstedt.finnmath.util,SquareRootCalculator,4,458,4,34,0,90,4,32,0,17
+finnMath,com.github.ltennstedt.finnmath.util,SquareRootCalculator,4,436,4,26,0,89,4,28,0,17

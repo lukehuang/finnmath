@@ -366,8 +366,23 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
     }
 
     @Override
-    public BigDecimal maxNorm() {
+    public BigDecimal frobeniusNorm(final BigDecimal precision) {
 <span class="nc" id="L370">        return null;</span>
+    }
+
+    @Override
+    public BigDecimal frobeniusNorm(final int scale, final int roundingMode) {
+<span class="nc" id="L375">        return null;</span>
+    }
+
+    @Override
+    public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final int roundingMode) {
+<span class="nc" id="L380">        return null;</span>
+    }
+
+    @Override
+    public BigDecimal maxNorm() {
+<span class="nc" id="L385">        return null;</span>
     }
 
     /**
@@ -381,15 +396,15 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
      */
     @Override
     public boolean upperTriangular() {
-<span class="fc bfc" id="L384" title="All 2 branches covered.">        if (square()) {</span>
-<span class="fc bfc" id="L385" title="All 2 branches covered.">            for (final Cell&lt;Integer, Integer, BigDecimal&gt; cell : table.cellSet()) {</span>
-<span class="fc bfc" id="L386" title="All 4 branches covered.">                if ((cell.getRowKey() &gt; cell.getColumnKey()) &amp;&amp; (cell.getValue().compareTo(BigDecimal.ZERO) != 0)) {</span>
-<span class="fc" id="L387">                    return false;</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">        if (square()) {</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">            for (final Cell&lt;Integer, Integer, BigDecimal&gt; cell : table.cellSet()) {</span>
+<span class="fc bfc" id="L401" title="All 4 branches covered.">                if ((cell.getRowKey() &gt; cell.getColumnKey()) &amp;&amp; (cell.getValue().compareTo(BigDecimal.ZERO) != 0)) {</span>
+<span class="fc" id="L402">                    return false;</span>
                 }
-<span class="fc" id="L389">            }</span>
-<span class="fc" id="L390">            return true;</span>
+<span class="fc" id="L404">            }</span>
+<span class="fc" id="L405">            return true;</span>
         }
-<span class="fc" id="L392">        return false;</span>
+<span class="fc" id="L407">        return false;</span>
     }
 
     /**
@@ -403,15 +418,15 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
      */
     @Override
     public boolean lowerTriangular() {
-<span class="fc bfc" id="L406" title="All 2 branches covered.">        if (square()) {</span>
-<span class="fc bfc" id="L407" title="All 2 branches covered.">            for (final Cell&lt;Integer, Integer, BigDecimal&gt; cell : table.cellSet()) {</span>
-<span class="fc bfc" id="L408" title="All 4 branches covered.">                if ((cell.getRowKey() &lt; cell.getColumnKey()) &amp;&amp; (cell.getValue().compareTo(BigDecimal.ZERO) != 0)) {</span>
-<span class="fc" id="L409">                    return false;</span>
+<span class="fc bfc" id="L421" title="All 2 branches covered.">        if (square()) {</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">            for (final Cell&lt;Integer, Integer, BigDecimal&gt; cell : table.cellSet()) {</span>
+<span class="fc bfc" id="L423" title="All 4 branches covered.">                if ((cell.getRowKey() &lt; cell.getColumnKey()) &amp;&amp; (cell.getValue().compareTo(BigDecimal.ZERO) != 0)) {</span>
+<span class="fc" id="L424">                    return false;</span>
                 }
-<span class="fc" id="L411">            }</span>
-<span class="fc" id="L412">            return true;</span>
+<span class="fc" id="L426">            }</span>
+<span class="fc" id="L427">            return true;</span>
         }
-<span class="fc" id="L414">        return false;</span>
+<span class="fc" id="L429">        return false;</span>
     }
 
     /**
@@ -426,15 +441,15 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
      */
     @Override
     public boolean identity() {
-<span class="fc bfc" id="L429" title="All 2 branches covered.">        if (diagonal()) {</span>
-<span class="fc bfc" id="L430" title="All 2 branches covered.">            for (final Integer index : table.rowKeySet()) {</span>
-<span class="fc bfc" id="L431" title="All 2 branches covered.">                if (table.get(index, index).compareTo(BigDecimal.ONE) != 0) {</span>
-<span class="fc" id="L432">                    return false;</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">        if (diagonal()) {</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">            for (final Integer index : table.rowKeySet()) {</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">                if (table.get(index, index).compareTo(BigDecimal.ONE) != 0) {</span>
+<span class="fc" id="L447">                    return false;</span>
                 }
-<span class="fc" id="L434">            }</span>
-<span class="fc" id="L435">            return true;</span>
+<span class="fc" id="L449">            }</span>
+<span class="fc" id="L450">            return true;</span>
         }
-<span class="fc" id="L437">        return false;</span>
+<span class="fc" id="L452">        return false;</span>
     }
 
     /**
@@ -449,7 +464,7 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
      */
     @Override
     public boolean invertible() {
-<span class="fc bfc" id="L452" title="All 2 branches covered.">        return determinant().compareTo(BigDecimal.ZERO) != 0;</span>
+<span class="fc bfc" id="L467" title="All 2 branches covered.">        return determinant().compareTo(BigDecimal.ZERO) != 0;</span>
     }
 
     /**
@@ -464,26 +479,26 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
      * @author Lars Tennstedt
      */
     public static DecimalMatrixBuilder builder(final int rowSize, final int columnSize) {
-<span class="fc bfc" id="L467" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="fc bfc" id="L468" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="fc" id="L469">        return new DecimalMatrixBuilder(rowSize, columnSize);</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L484">        return new DecimalMatrixBuilder(rowSize, columnSize);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L474">        return Objects.hash(table);</span>
+<span class="fc" id="L489">        return Objects.hash(table);</span>
     }
 
     @Override
     public boolean equals(final Object object) {
-<span class="fc bfc" id="L479" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L480">            return true;</span>
+<span class="fc bfc" id="L494" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L495">            return true;</span>
         }
-<span class="fc bfc" id="L482" title="All 2 branches covered.">        if (!(object instanceof DecimalMatrix)) {</span>
-<span class="fc" id="L483">            return false;</span>
+<span class="fc bfc" id="L497" title="All 2 branches covered.">        if (!(object instanceof DecimalMatrix)) {</span>
+<span class="fc" id="L498">            return false;</span>
         }
-<span class="fc" id="L485">        final DecimalMatrix other = (DecimalMatrix) object;</span>
-<span class="fc" id="L486">        return Objects.deepEquals(table, other.getTable());</span>
+<span class="fc" id="L500">        final DecimalMatrix other = (DecimalMatrix) object;</span>
+<span class="fc" id="L501">        return Objects.deepEquals(table, other.getTable());</span>
     }
 
     /**
@@ -495,8 +510,8 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
     @Beta
     public static final class DecimalMatrixBuilder extends AbstractMatrixBuilder&lt;BigDecimal, DecimalMatrix&gt; {
         public DecimalMatrixBuilder(final int rowSize, final int columnSize) {
-<span class="fc" id="L498">            super(rowSize, columnSize);</span>
-<span class="fc" id="L499">        }</span>
+<span class="fc" id="L513">            super(rowSize, columnSize);</span>
+<span class="fc" id="L514">        }</span>
 
         /**
          * Puts the given element on the {@link Table} dependent on the given row and
@@ -523,15 +538,15 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
          * @author Lars Tennstedt
          */
         public DecimalMatrixBuilder put(final Integer rowIndex, final Integer columnIndex, final BigDecimal element) {
-<span class="fc" id="L526">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc" id="L527">            requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
-<span class="fc" id="L528">            requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
-<span class="fc" id="L529">            checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L530">                    table.rowKeySet().size(), rowIndex);</span>
-<span class="fc" id="L531">            checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L532">                    table.columnKeySet().size(), columnIndex);</span>
-<span class="fc" id="L533">            table.put(rowIndex, columnIndex, element);</span>
-<span class="fc" id="L534">            return this;</span>
+<span class="fc" id="L541">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L542">            requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L543">            requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L544">            checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L545">                    table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L546">            checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L547">                    table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L548">            table.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L549">            return this;</span>
         }
 
         /**
@@ -546,13 +561,13 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
          * @author Lars Tennstedt
          */
         public DecimalMatrixBuilder putAll(final BigDecimal element) {
-<span class="fc" id="L549">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc" id="L550">            table.rowKeySet().forEach(rowKey -&gt; {</span>
-<span class="fc" id="L551">                table.columnKeySet().forEach(columnKey -&gt; {</span>
-<span class="fc" id="L552">                    table.put(rowKey, columnKey, element);</span>
-<span class="fc" id="L553">                });</span>
-<span class="fc" id="L554">            });</span>
-<span class="fc" id="L555">            return this;</span>
+<span class="fc" id="L564">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L565">            table.rowKeySet().forEach(rowKey -&gt; {</span>
+<span class="fc" id="L566">                table.columnKeySet().forEach(columnKey -&gt; {</span>
+<span class="fc" id="L567">                    table.put(rowKey, columnKey, element);</span>
+<span class="fc" id="L568">                });</span>
+<span class="fc" id="L569">            });</span>
+<span class="fc" id="L570">            return this;</span>
         }
 
         /**
@@ -567,10 +582,10 @@ public final class DecimalMatrix extends AbstractMatrix&lt;BigDecimal, DecimalVe
          */
         @Override
         public DecimalMatrix build() {
-<span class="fc" id="L570">            table.cellSet().forEach(cell -&gt; {</span>
-<span class="fc" id="L571">                requireNonNull(cell.getValue(), &quot;cell.value&quot;);</span>
-<span class="fc" id="L572">            });</span>
-<span class="fc" id="L573">            return new DecimalMatrix(ImmutableTable.copyOf(table));</span>
+<span class="fc" id="L585">            table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L586">                requireNonNull(cell.getValue(), &quot;cell.value&quot;);</span>
+<span class="fc" id="L587">            });</span>
+<span class="fc" id="L588">            return new DecimalMatrix(ImmutableTable.copyOf(table));</span>
         }
     }
 }
