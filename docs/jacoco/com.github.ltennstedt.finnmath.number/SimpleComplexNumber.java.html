@@ -28,29 +28,32 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 /**
- * An immutable implementation of a complex number which uses {@link BigInteger}
- * as type for its real and imaginary part
+ * An immutable implementation of a complex number which uses {@link BigInteger} as type for its
+ * real and imaginary part
  *
  * @since 1
  * @author Lars Tennstedt
  */
 @Beta
-public final class SimpleComplexNumber
-        extends AbstractComplexNumber&lt;BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix&gt; {
+public final class SimpleComplexNumber extends
+        AbstractComplexNumber&lt;BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix&gt; {
     /**
      * {@code 0} as {@link SimpleComplexNumber}
      */
-<span class="fc" id="L43">    public static final SimpleComplexNumber ZERO = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ZERO);</span>
+<span class="fc" id="L43">    public static final SimpleComplexNumber ZERO = new SimpleComplexNumber(BigInteger.ZERO,</span>
+            BigInteger.ZERO);
 
     /**
      * {@code 1} as {@link SimpleComplexNumber}
      */
-<span class="fc" id="L48">    public static final SimpleComplexNumber ONE = new SimpleComplexNumber(BigInteger.ONE, BigInteger.ZERO);</span>
+<span class="fc" id="L49">    public static final SimpleComplexNumber ONE = new SimpleComplexNumber(BigInteger.ONE,</span>
+            BigInteger.ZERO);
 
     /**
      * {@code i} as {@link SimpleComplexNumber}
      */
-<span class="fc" id="L53">    public static final SimpleComplexNumber IMAGINARY = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ONE);</span>
+<span class="fc" id="L55">    public static final SimpleComplexNumber IMAGINARY = new SimpleComplexNumber(BigInteger.ZERO,</span>
+            BigInteger.ONE);
 
     /**
      * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part
@@ -67,8 +70,8 @@ public final class SimpleComplexNumber
      * @author Lars Tennstedt
      */
     public SimpleComplexNumber(final BigInteger real, final BigInteger imaginary) {
-<span class="fc" id="L70">        super(real, imaginary);</span>
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L73">        super(real, imaginary);</span>
+<span class="fc" id="L74">    }</span>
 
     /**
      * Returns the sum of this {@link SimpleComplexNumber} and the given one
@@ -83,8 +86,9 @@ public final class SimpleComplexNumber
      */
     @Override
     public SimpleComplexNumber add(final SimpleComplexNumber summand) {
-<span class="fc" id="L86">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc" id="L87">        return new SimpleComplexNumber(real.add(summand.getReal()), imaginary.add(summand.getImaginary()));</span>
+<span class="fc" id="L89">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc" id="L90">        return new SimpleComplexNumber(real.add(summand.getReal()),</span>
+<span class="fc" id="L91">                imaginary.add(summand.getImaginary()));</span>
     }
 
     /**
@@ -100,9 +104,9 @@ public final class SimpleComplexNumber
      */
     @Override
     public SimpleComplexNumber subtract(final SimpleComplexNumber subtrahend) {
-<span class="fc" id="L103">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc" id="L104">        return new SimpleComplexNumber(real.subtract(subtrahend.getReal()),</span>
-<span class="fc" id="L105">                imaginary.subtract(subtrahend.getImaginary()));</span>
+<span class="fc" id="L107">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc" id="L108">        return new SimpleComplexNumber(real.subtract(subtrahend.getReal()),</span>
+<span class="fc" id="L109">                imaginary.subtract(subtrahend.getImaginary()));</span>
     }
 
     /**
@@ -118,15 +122,17 @@ public final class SimpleComplexNumber
      */
     @Override
     public SimpleComplexNumber multiply(final SimpleComplexNumber factor) {
-<span class="fc" id="L121">        requireNonNull(factor, &quot;factor&quot;);</span>
-<span class="fc" id="L122">        final BigInteger newReal = real.multiply(factor.getReal()).subtract(imaginary.multiply(factor.getImaginary()));</span>
-<span class="fc" id="L123">        final BigInteger newImaginary = real.multiply(factor.getImaginary()).add(imaginary.multiply(factor.getReal()));</span>
-<span class="fc" id="L124">        return new SimpleComplexNumber(newReal, newImaginary);</span>
+<span class="fc" id="L125">        requireNonNull(factor, &quot;factor&quot;);</span>
+<span class="fc" id="L126">        final BigInteger newReal = real.multiply(factor.getReal())</span>
+<span class="fc" id="L127">                .subtract(imaginary.multiply(factor.getImaginary()));</span>
+<span class="fc" id="L128">        final BigInteger newImaginary = real.multiply(factor.getImaginary())</span>
+<span class="fc" id="L129">                .add(imaginary.multiply(factor.getReal()));</span>
+<span class="fc" id="L130">        return new SimpleComplexNumber(newReal, newImaginary);</span>
     }
 
     /**
-     * Returns the quotient as {@link RealComplexNumber} of this
-     * {@link SimpleComplexNumber} and the given one
+     * Returns the quotient as {@link RealComplexNumber} of this {@link SimpleComplexNumber} and the
+     * given one
      *
      * @param divisor
      *            the divisor
@@ -142,14 +148,14 @@ public final class SimpleComplexNumber
      */
     @Override
     public RealComplexNumber divide(final SimpleComplexNumber divisor) {
-<span class="fc" id="L145">        requireNonNull(divisor, &quot;divisor&quot;);</span>
-<span class="fc" id="L146">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
-<span class="fc" id="L147">        return new RealComplexNumber(this).divide(new RealComplexNumber(divisor));</span>
+<span class="fc" id="L151">        requireNonNull(divisor, &quot;divisor&quot;);</span>
+<span class="fc" id="L152">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;,</span>
+                divisor);
+<span class="fc" id="L154">        return new RealComplexNumber(this).divide(new RealComplexNumber(divisor));</span>
     }
 
     /**
-     * Returns the power of this {@link SimpleComplexNumber} raised by the given
-     * exponent
+     * Returns the power of this {@link SimpleComplexNumber} raised by the given exponent
      *
      * @param exponent
      *            the exponent
@@ -162,13 +168,13 @@ public final class SimpleComplexNumber
      */
     @Override
     public SimpleComplexNumber pow(final int exponent) {
-<span class="fc bfc" id="L165" title="All 2 branches covered.">        checkArgument(exponent &gt; -1, &quot;expected exponent &gt; -1 but actual %s&quot;, exponent);</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (exponent &gt; 1) {</span>
-<span class="fc" id="L167">            return multiply(pow(exponent - 1));</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">        } else if (exponent == 1) {</span>
-<span class="fc" id="L169">            return this;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        checkArgument(exponent &gt; -1, &quot;expected exponent &gt; -1 but actual %s&quot;, exponent);</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (exponent &gt; 1) {</span>
+<span class="fc" id="L173">            return multiply(pow(exponent - 1));</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        } else if (exponent == 1) {</span>
+<span class="fc" id="L175">            return this;</span>
         }
-<span class="fc" id="L171">        return ONE;</span>
+<span class="fc" id="L177">        return ONE;</span>
     }
 
     /**
@@ -180,7 +186,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public SimpleComplexNumber negate() {
-<span class="fc" id="L183">        return new SimpleComplexNumber(real.negate(), imaginary.negate());</span>
+<span class="fc" id="L189">        return new SimpleComplexNumber(real.negate(), imaginary.negate());</span>
     }
 
     /**
@@ -196,13 +202,12 @@ public final class SimpleComplexNumber
      */
     @Override
     public RealComplexNumber invert() {
-<span class="fc" id="L199">        checkState(invertible(), &quot;expected to be invertible but actual %s&quot;, this);</span>
-<span class="fc" id="L200">        return ONE.divide(this);</span>
+<span class="fc" id="L205">        checkState(invertible(), &quot;expected to be invertible but actual %s&quot;, this);</span>
+<span class="fc" id="L206">        return ONE.divide(this);</span>
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumber}
-     * is invertible
+     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumber} is invertible
      *
      * @return {@code true} if {@code this != 0}, {@code false} otherwise
      * @since 1
@@ -210,12 +215,11 @@ public final class SimpleComplexNumber
      */
     @Override
     public boolean invertible() {
-<span class="fc bfc" id="L213" title="All 2 branches covered.">        return !equals(ZERO);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        return !equals(ZERO);</span>
     }
 
     /**
-     * Returns the absolute as {@link RealComplexNumber} of this
-     * {@link SimpleComplexNumber}
+     * Returns the absolute as {@link RealComplexNumber} of this {@link SimpleComplexNumber}
      *
      * @return The absolute
      * @since 1
@@ -224,7 +228,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal abs() {
-<span class="fc" id="L227">        return new SquareRootCalculator().sqrt(absPow2());</span>
+<span class="fc" id="L231">        return new SquareRootCalculator().sqrt(absPow2());</span>
     }
 
     /**
@@ -236,7 +240,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigInteger absPow2() {
-<span class="fc" id="L239">        return real.pow(2).add(imaginary.pow(2));</span>
+<span class="fc" id="L243">        return real.pow(2).add(imaginary.pow(2));</span>
     }
 
     /**
@@ -248,7 +252,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public SimpleComplexNumber conjugate() {
-<span class="fc" id="L251">        return new SimpleComplexNumber(real, imaginary.negate());</span>
+<span class="fc" id="L255">        return new SimpleComplexNumber(real, imaginary.negate());</span>
     }
 
     /**
@@ -261,25 +265,25 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigIntMatrix matrix() {
-<span class="fc" id="L264">        return BigIntMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)</span>
-<span class="fc" id="L265">                .put(2, 2, real).build();</span>
+<span class="fc" id="L268">        return BigIntMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate())</span>
+<span class="fc" id="L269">                .put(2, 1, imaginary).put(2, 2, real).build();</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L270">        return Objects.hash(real, imaginary);</span>
+<span class="fc" id="L274">        return Objects.hash(real, imaginary);</span>
     }
 
     @Override
     public boolean equals(final Object object) {
-<span class="fc bfc" id="L275" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L276">            return true;</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L280">            return true;</span>
         }
-<span class="fc bfc" id="L278" title="All 2 branches covered.">        if (!(object instanceof SimpleComplexNumber)) {</span>
-<span class="fc" id="L279">            return false;</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">        if (!(object instanceof SimpleComplexNumber)) {</span>
+<span class="fc" id="L283">            return false;</span>
         }
-<span class="fc" id="L281">        final SimpleComplexNumber other = (SimpleComplexNumber) object;</span>
-<span class="fc bfc" id="L282" title="All 4 branches covered.">        return real.equals(other.getReal()) &amp;&amp; imaginary.equals(other.getImaginary());</span>
+<span class="fc" id="L285">        final SimpleComplexNumber other = (SimpleComplexNumber) object;</span>
+<span class="fc bfc" id="L286" title="All 4 branches covered.">        return real.equals(other.getReal()) &amp;&amp; imaginary.equals(other.getImaginary());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -30,123 +30,125 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class ScientificNotationTest {
-  private static final int howMany = 10;
-  private static final List<ScientificNotation> scientificNotations = new ArrayList<>(howMany);
+    private static final int howMany = 10;
+    private static final List<ScientificNotation> scientificNotations = new ArrayList<>(howMany);
 
-  @BeforeClass
-  public static void setUpClass() {
-    final MathRandom mathRandom = new MathRandom(7);
-    final int bound = 10;
-    for (int i = 0; i < howMany; i++) {
-      scientificNotations
-          .add(new ScientificNotation(mathRandom.nextDecimal(10, 2), new Random().nextInt(bound)));
+    @BeforeClass
+    public static void setUpClass() {
+        final MathRandom mathRandom = new MathRandom(7);
+        final int bound = 10;
+        for (int i = 0; i < howMany; i++) {
+            scientificNotations.add(new ScientificNotation(mathRandom.nextDecimal(10, 2),
+                    new Random().nextInt(bound)));
+        }
     }
-  }
 
-  @Test
-  public void newCoefficientNullShouldThrowException() {
-    assertThatThrownBy(() -> {
-      new ScientificNotation(null, 0);
-    }).isExactlyInstanceOf(NullPointerException.class).hasMessage("coefficient");
-  }
+    @Test
+    public void newCoefficientNullShouldThrowException() {
+        assertThatThrownBy(() -> {
+            new ScientificNotation(null, 0);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("coefficient");
+    }
 
-  @Test
-  public void newShouldSucceed() {
-    final ScientificNotation actual = new ScientificNotation(BigDecimal.ZERO, 0);
-    assertThat(actual.getCoefficient()).isExactlyInstanceOf(BigDecimal.class);
-    assertThat(actual.getExponent()).isExactlyInstanceOf(Integer.class);
-  }
+    @Test
+    public void newShouldSucceed() {
+        final ScientificNotation actual = new ScientificNotation(BigDecimal.ZERO, 0);
+        assertThat(actual.getCoefficient()).isExactlyInstanceOf(BigDecimal.class);
+        assertThat(actual.getExponent()).isExactlyInstanceOf(Integer.class);
+    }
 
-  @Test
-  public void asStringCoefficientIsZero() {
-    assertThat(new ScientificNotation(BigDecimal.ZERO, 1).asString())
-        .isExactlyInstanceOf(String.class).isEqualTo("0");
-  }
+    @Test
+    public void asStringCoefficientIsZero() {
+        assertThat(new ScientificNotation(BigDecimal.ZERO, 1).asString())
+                .isExactlyInstanceOf(String.class).isEqualTo("0");
+    }
 
-  @Test
-  public void asStringExponentIsNegative() {
-    final String expected = new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**(")
-        .append(-1).append(")").toString();
-    assertThat(new ScientificNotation(BigDecimal.ONE, -1).asString())
-        .isExactlyInstanceOf(String.class).isEqualTo(expected);
-  }
+    @Test
+    public void asStringExponentIsNegative() {
+        final String expected = new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**(")
+                .append(-1).append(")").toString();
+        assertThat(new ScientificNotation(BigDecimal.ONE, -1).asString())
+                .isExactlyInstanceOf(String.class).isEqualTo(expected);
+    }
 
-  @Test
-  public void asStringExponentIsZero() {
-    assertThat(new ScientificNotation(BigDecimal.ONE, 0).asString())
-        .isExactlyInstanceOf(String.class).isEqualTo(BigDecimal.ONE.toPlainString());
-  }
+    @Test
+    public void asStringExponentIsZero() {
+        assertThat(new ScientificNotation(BigDecimal.ONE, 0).asString())
+                .isExactlyInstanceOf(String.class).isEqualTo(BigDecimal.ONE.toPlainString());
+    }
 
-  @Test
-  public void asStringExponentIsOne() {
-    final String expected = new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10")
-        .toString();
-    assertThat(new ScientificNotation(BigDecimal.ONE, 1).asString())
-        .isExactlyInstanceOf(String.class).isEqualTo(expected);
-  }
+    @Test
+    public void asStringExponentIsOne() {
+        final String expected = new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10")
+                .toString();
+        assertThat(new ScientificNotation(BigDecimal.ONE, 1).asString())
+                .isExactlyInstanceOf(String.class).isEqualTo(expected);
+    }
 
-  @Test
-  public void asStringExponentGreaterThanOne() {
-    final String expected = new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**")
-        .append(2).toString();
-    assertThat(new ScientificNotation(BigDecimal.ONE, 2).asString())
-        .isExactlyInstanceOf(String.class).isEqualTo(expected);
-  }
+    @Test
+    public void asStringExponentGreaterThanOne() {
+        final String expected = new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**")
+                .append(2).toString();
+        assertThat(new ScientificNotation(BigDecimal.ONE, 2).asString())
+                .isExactlyInstanceOf(String.class).isEqualTo(expected);
+    }
 
-  @Test
-  public void hashCodeShouldSucceed() {
-    scientificNotations.forEach(scientificNotation -> {
-      assertThat(scientificNotation.hashCode()).isExactlyInstanceOf(Integer.class).isEqualTo(
-          Objects.hash(scientificNotation.getCoefficient(), scientificNotation.getExponent()));
-    });
-  }
+    @Test
+    public void hashCodeShouldSucceed() {
+        scientificNotations.forEach(scientificNotation -> {
+            assertThat(scientificNotation.hashCode()).isExactlyInstanceOf(Integer.class)
+                    .isEqualTo(Objects.hash(scientificNotation.getCoefficient(),
+                            scientificNotation.getExponent()));
+        });
+    }
 
-  @Test
-  public void equalsSelfShouldReturnTrue() {
-    scientificNotations.forEach(scientificNotation -> {
-      assertThat(scientificNotation.equals(scientificNotation)).isTrue();
-    });
-  }
+    @Test
+    public void equalsSelfShouldReturnTrue() {
+        scientificNotations.forEach(scientificNotation -> {
+            assertThat(scientificNotation.equals(scientificNotation)).isTrue();
+        });
+    }
 
-  @Test
-  public void equalsNotScientificNotationShouldReturnFalse() {
-    assertThat(new ScientificNotation(BigDecimal.ZERO, 0).equals(new Object())).isFalse();
-  }
+    @Test
+    public void equalsNotScientificNotationShouldReturnFalse() {
+        assertThat(new ScientificNotation(BigDecimal.ZERO, 0).equals(new Object())).isFalse();
+    }
 
-  @Test
-  public void equalsCoefficientNotEqualShouldReturnFalse() {
-    scientificNotations.forEach(scientificNotation -> {
-      final ScientificNotation other = new ScientificNotation(
-          scientificNotation.getCoefficient().add(BigDecimal.ONE),
-          scientificNotation.getExponent());
-      assertThat(scientificNotation.equals(other)).isFalse();
-    });
-  }
+    @Test
+    public void equalsCoefficientNotEqualShouldReturnFalse() {
+        scientificNotations.forEach(scientificNotation -> {
+            final ScientificNotation other = new ScientificNotation(
+                    scientificNotation.getCoefficient().add(BigDecimal.ONE),
+                    scientificNotation.getExponent());
+            assertThat(scientificNotation.equals(other)).isFalse();
+        });
+    }
 
-  @Test
-  public void equalsExponentNotEqualShouldReturnFalse() {
-    scientificNotations.forEach(scientificNotation -> {
-      final ScientificNotation other = new ScientificNotation(scientificNotation.getCoefficient(),
-          scientificNotation.getExponent() + 1);
-      assertThat(scientificNotation.equals(other)).isFalse();
-    });
-  }
+    @Test
+    public void equalsExponentNotEqualShouldReturnFalse() {
+        scientificNotations.forEach(scientificNotation -> {
+            final ScientificNotation other = new ScientificNotation(
+                    scientificNotation.getCoefficient(), scientificNotation.getExponent() + 1);
+            assertThat(scientificNotation.equals(other)).isFalse();
+        });
+    }
 
-  @Test
-  public void equalsEqualShouldReturnTrue() {
-    scientificNotations.forEach(scientificNotation -> {
-      assertThat(scientificNotation.equals(new ScientificNotation(
-          scientificNotation.getCoefficient(), scientificNotation.getExponent()))).isTrue();
-    });
-  }
+    @Test
+    public void equalsEqualShouldReturnTrue() {
+        scientificNotations.forEach(scientificNotation -> {
+            assertThat(scientificNotation.equals(new ScientificNotation(
+                    scientificNotation.getCoefficient(), scientificNotation.getExponent())))
+                            .isTrue();
+        });
+    }
 
-  @Test
-  public void toStringShouldSucceed() {
-    scientificNotations.forEach(scientificNotation -> {
-      assertThat(scientificNotation.toString()).isExactlyInstanceOf(String.class)
-          .isEqualTo(MoreObjects.toStringHelper(scientificNotation)
-              .add("coefficient", scientificNotation.getCoefficient())
-              .add("exponent", scientificNotation.getExponent()).toString());
-    });
-  }
+    @Test
+    public void toStringShouldSucceed() {
+        scientificNotations.forEach(scientificNotation -> {
+            assertThat(scientificNotation.toString()).isExactlyInstanceOf(String.class)
+                    .isEqualTo(MoreObjects.toStringHelper(scientificNotation)
+                            .add("coefficient", scientificNotation.getCoefficient())
+                            .add("exponent", scientificNotation.getExponent()).toString());
+        });
+    }
 }

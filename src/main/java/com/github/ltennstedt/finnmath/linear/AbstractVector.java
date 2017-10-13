@@ -31,130 +31,130 @@ import java.util.Map.Entry;
 
 /**
  * @param <E>
- *          The type of the elements of the vector
+ *            The type of the elements of the vector
  * @param <V>
- *          The type of the vector
+ *            The type of the vector
  * @param <N>
- *          The type of the euclidean norm of the vector
+ *            The type of the euclidean norm of the vector
  * @since 1
  * @author Lars Tennstedt
  * @see ImmutableMap
  */
 @Beta
 abstract class AbstractVector<E, V, N> {
-  /**
-   * The map holding the elements of this {@link AbstractVector}
-   *
-   * @since 1
-   * @author Lars Tennstedt
-   */
-  protected final ImmutableMap<Integer, E> map;
+    /**
+     * The map holding the elements of this {@link AbstractVector}
+     *
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    protected final ImmutableMap<Integer, E> map;
 
-  protected AbstractVector(final ImmutableMap<Integer, E> map) {
-    this.map = map;
-  }
+    protected AbstractVector(final ImmutableMap<Integer, E> map) {
+        this.map = map;
+    }
 
-  /**
-   * Returns the element dependent on the given index
-   *
-   * @param index
-   *          the index of the element
-   * @return The element
-   * @throws NullPointerException
-   *           if {@code index == null}
-   * @throws IllegalArgumentException
-   *           if {@code !map.containsKey(index)}
-   * @since 1
-   * @author Lars Tennstedt
-   * @see Map#containsKey
-   */
-  public E element(final Integer index) {
-    requireNonNull(index, "index");
-    checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(),
-        index);
-    return map.get(index);
-  }
+    /**
+     * Returns the element dependent on the given index
+     *
+     * @param index
+     *            the index of the element
+     * @return The element
+     * @throws NullPointerException
+     *             if {@code index == null}
+     * @throws IllegalArgumentException
+     *             if {@code !map.containsKey(index)}
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Map#containsKey
+     */
+    public E element(final Integer index) {
+        requireNonNull(index, "index");
+        checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(),
+                index);
+        return map.get(index);
+    }
 
-  /**
-   * Returns all elements of the underlying {@link Map} of this {@link AbstractVector}
-   *
-   * @return The elements
-   * @since 1
-   * @author Lars Tennstedt
-   * @see Map#entrySet
-   */
-  public ImmutableSet<Entry<Integer, E>> entries() {
-    return map.entrySet();
-  }
+    /**
+     * Returns all elements of the underlying {@link Map} of this {@link AbstractVector}
+     *
+     * @return The elements
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Map#entrySet
+     */
+    public ImmutableSet<Entry<Integer, E>> entries() {
+        return map.entrySet();
+    }
 
-  /**
-   * Returns all elements of this {@link AbstractVector}
-   *
-   * @return The elements
-   * @since 1
-   * @author Lars Tennstedt
-   * @see Map#values
-   */
-  public ImmutableCollection<E> elements() {
-    return map.values();
-  }
+    /**
+     * Returns all elements of this {@link AbstractVector}
+     *
+     * @return The elements
+     * @since 1
+     * @author Lars Tennstedt
+     * @see Map#values
+     */
+    public ImmutableCollection<E> elements() {
+        return map.values();
+    }
 
-  protected abstract V add(V summand);
+    protected abstract V add(V summand);
 
-  protected abstract V subtract(V subtrahend);
+    protected abstract V subtract(V subtrahend);
 
-  protected abstract E dotProduct(V other);
+    protected abstract E dotProduct(V other);
 
-  protected abstract V scalarMultiply(E scalar);
+    protected abstract V scalarMultiply(E scalar);
 
-  protected abstract V negate();
+    protected abstract V negate();
 
-  protected abstract E taxicabNorm();
+    protected abstract E taxicabNorm();
 
-  protected abstract E taxicabDistance(V other);
+    protected abstract E taxicabDistance(V other);
 
-  protected abstract E euclideanNormPow2();
+    protected abstract E euclideanNormPow2();
 
-  protected abstract N euclideanNorm();
+    protected abstract N euclideanNorm();
 
-  protected abstract N euclideanNorm(BigDecimal precision);
+    protected abstract N euclideanNorm(BigDecimal precision);
 
-  protected abstract N euclideanNorm(int scale, RoundingMode roundingMode);
+    protected abstract N euclideanNorm(int scale, RoundingMode roundingMode);
 
-  protected abstract N euclideanNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
+    protected abstract N euclideanNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
 
-  protected abstract E euclideanDistancePow2(V other);
+    protected abstract E euclideanDistancePow2(V other);
 
-  protected abstract N euclideanDistance(V other);
+    protected abstract N euclideanDistance(V other);
 
-  protected abstract N euclideanDistance(V other, BigDecimal precision);
+    protected abstract N euclideanDistance(V other, BigDecimal precision);
 
-  protected abstract N euclideanDistance(V other, int scale, RoundingMode roundingMode);
+    protected abstract N euclideanDistance(V other, int scale, RoundingMode roundingMode);
 
-  protected abstract N euclideanDistance(V other, BigDecimal precision, int scale,
-      RoundingMode roundingMode);
+    protected abstract N euclideanDistance(V other, BigDecimal precision, int scale,
+            RoundingMode roundingMode);
 
-  protected abstract E maxNorm();
+    protected abstract E maxNorm();
 
-  protected abstract E maxDistance(V other);
+    protected abstract E maxDistance(V other);
 
-  /**
-   * Returns the size of the underlying {@link Map}
-   *
-   * @return size the size
-   * @since 1
-   * @author Lars Tennstedt
-   */
-  public int size() {
-    return map.size();
-  }
+    /**
+     * Returns the size of the underlying {@link Map}
+     *
+     * @return size the size
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    public int size() {
+        return map.size();
+    }
 
-  @Override
-  public String toString() {
-    return MoreObjects.toStringHelper(this).add("map", map).toString();
-  }
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("map", map).toString();
+    }
 
-  public ImmutableMap<Integer, E> getMap() {
-    return map;
-  }
+    public ImmutableMap<Integer, E> getMap() {
+        return map;
+    }
 }
