@@ -1,11 +1,11 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractMatrix,0,205,1,17,0,34,1,28,0,20
 finnMath,com.github.ltennstedt.finnmath.linear,DecimalVector.DecimalVectorBuilder,1,118,1,7,0,20,1,9,0,6
-finnMath,com.github.ltennstedt.finnmath.linear,DecimalMatrix,299,1054,39,71,57,152,28,64,8,29
-finnMath,com.github.ltennstedt.finnmath.linear,AbstractMatrixBuilder,0,35,0,0,0,7,0,3,0,3
+finnMath,com.github.ltennstedt.finnmath.linear,DecimalMatrix,1,1349,1,103,0,206,1,88,0,37
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractVector,4,44,0,0,1,10,1,6,1,6
+finnMath,com.github.ltennstedt.finnmath.linear,AbstractMatrixBuilder,0,35,0,0,0,7,0,3,0,3
 finnMath,com.github.ltennstedt.finnmath.linear,DecimalVector,95,504,10,48,19,80,9,47,4,23
-finnMath,com.github.ltennstedt.finnmath.linear,BigIntMatrix,60,1189,11,89,10,178,8,79,2,35
+finnMath,com.github.ltennstedt.finnmath.linear,BigIntMatrix,1,1247,1,97,0,187,1,85,0,37
 finnMath,com.github.ltennstedt.finnmath.linear,BigIntVector.BigIntVectorBuilder,1,119,1,7,0,20,1,9,0,6
 finnMath,com.github.ltennstedt.finnmath.linear,BigIntMatrix.BigIntMatrixBuilder,0,100,0,0,0,22,0,7,0,7
 finnMath,com.github.ltennstedt.finnmath.linear,BigIntVector,95,505,10,48,19,80,9,47,4,23
@@ -16,5 +16,5 @@ finnMath,com.github.ltennstedt.finnmath.number,ScientificNotation,0,132,0,16,0,2
 finnMath,com.github.ltennstedt.finnmath.number,SimpleComplexNumber,0,298,0,16,0,39,0,24,0,16
 finnMath,com.github.ltennstedt.finnmath.number,Fraction,0,495,0,42,0,87,0,52,0,31
 finnMath,com.github.ltennstedt.finnmath.number,AbstractComplexNumber,0,31,0,0,0,7,0,4,0,4
-finnMath,com.github.ltennstedt.finnmath.util,MathRandom,11,3326,6,462,3,506,6,327,0,99
+finnMath,com.github.ltennstedt.finnmath.util,MathRandom,13,3324,7,461,4,505,7,326,0,99
 finnMath,com.github.ltennstedt.finnmath.util,SquareRootCalculator,4,436,4,26,0,89,4,28,0,17

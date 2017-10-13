@@ -365,7 +365,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             for (final BigInteger element : column.values()) {
                 sum = sum.add(element.abs());
             }
-            norm = sum.max(norm);
+            norm = norm.max(sum);
         }
         return norm;
     }
@@ -385,7 +385,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             for (final BigInteger element : row.values()) {
                 sum = sum.add(element.abs());
             }
-            norm = sum.max(norm);
+            norm = norm.max(sum);
         }
         return norm;
     }
@@ -507,9 +507,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigInteger maxNorm() {
         BigInteger norm = BigInteger.ZERO;
         for (final BigInteger element : table.values()) {
-            if (element.compareTo(norm) > 0) {
-                norm = element;
-            }
+            norm = norm.max(element.abs());
         }
         return norm;
     }

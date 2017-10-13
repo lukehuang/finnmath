@@ -365,11 +365,9 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         for (final Map<Integer, BigDecimal> column : table.columnMap().values().asList()) {
             BigDecimal sum = BigDecimal.ZERO;
             for (final BigDecimal element : column.values()) {
-                sum = sum.add(element);
+                sum = sum.add(element.abs());
             }
-            if (sum.compareTo(norm) > 0) {
-                norm = sum;
-            }
+            norm = norm.max(sum);
         }
         return norm;
     }
@@ -387,11 +385,9 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         for (final Map<Integer, BigDecimal> row : table.rowMap().values().asList()) {
             BigDecimal sum = BigDecimal.ZERO;
             for (final BigDecimal element : row.values()) {
-                sum = sum.add(element);
+                sum = sum.add(element.abs());
             }
-            if (sum.compareTo(norm) > 0) {
-                norm = sum;
-            }
+            norm = norm.max(sum);
         }
         return norm;
     }
@@ -525,9 +521,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public BigDecimal maxNorm() {
         BigDecimal norm = BigDecimal.ZERO;
         for (final BigDecimal element : table.values()) {
-            if (element.compareTo(norm) > 0) {
-                norm = element;
-            }
+            norm = norm.max(element.abs());
         }
         return norm;
     }

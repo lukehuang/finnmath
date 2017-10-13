@@ -875,9 +875,7 @@ public final class BigIntMatrixTest {
                 for (final BigInteger element : column.values()) {
                     sum = sum.add(element.abs());
                 }
-                if (sum.compareTo(expected) > 0) {
-                    expected = sum;
-                }
+                expected = expected.max(sum);
             }
             assertThat(matrix.maxAbsColumnSumNorm()).isEqualTo(expected);
         });
@@ -934,9 +932,7 @@ public final class BigIntMatrixTest {
                 for (final BigInteger element : row.values()) {
                     sum = sum.add(element.abs());
                 }
-                if (sum.compareTo(expected) > 0) {
-                    expected = sum;
-                }
+                expected = expected.max(sum);
             }
             assertThat(matrix.maxAbsRowSumNorm()).isEqualTo(expected);
         });
@@ -1089,6 +1085,87 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             assertThat(matrix.frobeniusNorm(2, RoundingMode.HALF_EVEN)).isEqualByComparingTo(
                     new SquareRootCalculator(2, RoundingMode.HALF_EVEN).sqrt(matrix.frobeniusNormPow2()));
+        });
+    }
+
+    @Test
+    public void frobeniusNormWithPrecisionNullAndScaleAndRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.frobeniusNorm(null, 2, RoundingMode.HALF_EVEN);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("precision");
+    }
+
+    @Test
+    public void frobeniusNormWithPrecisionTooLowAndScaleAndRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.frobeniusNorm(BigDecimal.ZERO, 2, RoundingMode.HALF_EVEN);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
+                BigDecimal.ZERO);
+    }
+
+    @Test
+    public void frobeniusNormWithPrecisionTooHighAndScaleAndRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.frobeniusNorm(BigDecimal.ONE, 2, RoundingMode.HALF_EVEN);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
+                BigDecimal.ONE);
+    }
+
+    @Test
+    public void frobeniusNormWithPrecisionAndScaleTooLowAndRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroSquareMatrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION, -1, RoundingMode.HALF_EVEN);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
+    }
+
+    @Test
+    public void frobeniusNormWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN))
+                    .isEqualTo(
+                            new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN)
+                                    .sqrt(matrix.frobeniusNormPow2()));
+        });
+    }
+
+    @Test
+    public void maxNormShouldBeSucceed() {
+        matrices.forEach(matrix -> {
+            BigInteger expected = BigInteger.ZERO;
+            for (final BigInteger element : matrix.elements()) {
+                expected = expected.max(element.abs());
+            }
+            assertThat(matrix.maxNorm()).isEqualTo(expected);
+        });
+    }
+
+    @Test
+    public void maxNormOfZeroMatrixShouldBeEqualToZero() {
+        assertThat(zeroSquareMatrix.maxNorm()).isEqualTo(BigInteger.ZERO);
+    }
+
+    @Test
+    public void maxNormShouldBePositiveValued() {
+        matrices.forEach(matrix -> {
+            assertThat(matrix.maxNorm()).isGreaterThanOrEqualTo(BigInteger.ZERO);
+        });
+    }
+
+    @Test
+    public void maxNormShouldBeAbsolutelyHomogeneous() {
+        matrices.forEach(matrix -> {
+            scalars.forEach(scalar -> {
+                assertThat(matrix.scalarMultiply(scalar).maxNorm()).isEqualTo(scalar.abs().multiply(matrix.maxNorm()));
+            });
+        });
+    }
+
+    @Test
+    public void maxNormShouldBeSubadditive() {
+        squareMatrices.forEach(matrix -> {
+            squareMatrices.forEach(other -> {
+                assertThat(matrix.add(other).maxNorm()).isLessThanOrEqualTo(matrix.maxNorm().add(other.maxNorm()));
+            });
         });
     }
 
