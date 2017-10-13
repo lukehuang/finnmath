@@ -25,79 +25,77 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 public final class DecimalMatrixBuilderTest {
-    private static final DecimalMatrixBuilder builder = DecimalMatrix.builder(2, 3);
+  @Test
+  public void putRowIndexNullShouldThrowException() {
+    assertThatThrownBy(() -> {
+      DecimalMatrix.builder(4, 5).put(null, 1, BigDecimal.ZERO);
+    }).isExactlyInstanceOf(NullPointerException.class).hasMessage("rowIndex");
+  }
 
-    @Test
-    public void putRowIndexNullShouldThrowException() {
-        assertThatThrownBy(() -> {
-            builder.put(null, 1, BigDecimal.ZERO);
-        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("rowIndex");
-    }
+  @Test
+  public void putColumnIndexNullShouldThrowException() {
+    assertThatThrownBy(() -> {
+      DecimalMatrix.builder(4, 5).put(1, null, BigDecimal.ZERO);
+    }).isExactlyInstanceOf(NullPointerException.class).hasMessage("columnIndex");
+  }
 
-    @Test
-    public void putColumnIndexNullShouldThrowException() {
-        assertThatThrownBy(() -> {
-            builder.put(1, null, BigDecimal.ZERO);
-        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("columnIndex");
-    }
+  @Test
+  public void putElementNullShouldThrowException() {
+    assertThatThrownBy(() -> {
+      DecimalMatrix.builder(4, 5).put(1, 1, null);
+    }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
+  }
 
-    @Test
-    public void putElementNullShouldThrowException() {
-        assertThatThrownBy(() -> {
-            builder.put(1, 1, null);
-        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
-    }
+  @Test
+  public void putRowIndexTooLowShouldThrowException() {
+    assertThatThrownBy(() -> {
+      DecimalMatrix.builder(4, 5).put(0, 1, BigDecimal.ZERO);
+    }).isExactlyInstanceOf(IllegalArgumentException.class)
+        .hasMessage("expected rowIndex in [1, %s] but actual %s", 4, 0);
+  }
 
-    @Test
-    public void putRowIndexTooLowShouldThrowException() {
-        assertThatThrownBy(() -> {
-            builder.put(0, 1, BigDecimal.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual %s",
-                2, 0);
-    }
+  @Test
+  public void putRowIndexTooHighShouldThrowException() {
+    assertThatThrownBy(() -> {
+      DecimalMatrix.builder(4, 5).put(5, 1, BigDecimal.ZERO);
+    }).isExactlyInstanceOf(IllegalArgumentException.class)
+        .hasMessage("expected rowIndex in [1, %s] but actual %s", 4, 5);
+  }
 
-    @Test
-    public void putRowIndexTooHighShouldThrowException() {
-        assertThatThrownBy(() -> {
-            builder.put(3, 1, BigDecimal.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual %s",
-                2, 3);
-    }
+  @Test
+  public void putColumnIndexTooLowShouldThrowException() {
+    assertThatThrownBy(() -> {
+      DecimalMatrix.builder(4, 5).put(1, 0, BigDecimal.ZERO);
+    }).isExactlyInstanceOf(IllegalArgumentException.class)
+        .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 0);
+  }
 
-    @Test
-    public void putColumnIndexTooLowShouldThrowException() {
-        assertThatThrownBy(() -> {
-            builder.put(1, 0, BigDecimal.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnIndex in [1, %s] but actual %s", 3, 0);
-    }
+  @Test
+  public void putColumnIndexTooHighShouldThrowException() {
+    assertThatThrownBy(() -> {
+      DecimalMatrix.builder(4, 5).put(1, 6, BigDecimal.ZERO);
+    }).isExactlyInstanceOf(IllegalArgumentException.class)
+        .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 6);
+  }
 
-    @Test
-    public void putColumnIndexTooHighShouldThrowException() {
-        assertThatThrownBy(() -> {
-            builder.put(1, 4, BigDecimal.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnIndex in [1, %s] but actual %s", 3, 4);
-    }
+  @Test
+  public void putAllNullShouldThrowException() {
+    assertThatThrownBy(() -> {
+      DecimalMatrix.builder(4, 5).putAll(null);
+    }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
+  }
 
-    @Test
-    public void putAllNullShouldThrowException() {
-        assertThatThrownBy(() -> {
-            builder.putAll(null);
-        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
-    }
+  @Test
+  public void buildNullShouldThrowException() {
+    assertThatThrownBy(() -> {
+      DecimalMatrix.builder(4, 5).build();
+    }).isExactlyInstanceOf(NullPointerException.class).hasMessage("cell.value");
+  }
 
-    @Test
-    public void buildNullShouldThrowException() {
-        assertThatThrownBy(() -> {
-            BigIntMatrix.builder(2, 3).build();
-        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("cell.value");
-    }
-
-    @Test
-    public void toStringShouldSucceed() {
-        final DecimalMatrixBuilder builder = DecimalMatrix.builder(3, 4).putAll(BigDecimal.ZERO);
-        assertThat(builder.toString())
-                .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
-    }
+  @Test
+  public void toStringShouldSucceed() {
+    final DecimalMatrixBuilder builder = DecimalMatrix.builder(4, 5).putAll(BigDecimal.ZERO);
+    assertThat(builder.toString())
+        .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
+  }
 }

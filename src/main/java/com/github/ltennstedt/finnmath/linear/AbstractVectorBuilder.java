@@ -27,61 +27,62 @@ import org.apache.commons.lang3.builder.Builder;
 
 /**
  * @param <E>
- *            The type of the elements of the vector
+ *          The type of the elements of the vector
  * @param <V>
- *            The type of the vector
+ *          The type of the vector
  * @param <B>
- *            The type of the builder
+ *          The type of the builder
  * @since 1
  * @author Lars Tennstedt
  */
 @Beta
 abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
-    /**
-     * The map holding the elements of this {@link AbstractVectorBuilder}
-     */
-    protected final Map<Integer, E> map = new HashMap<>();
+  /**
+   * The map holding the elements of this {@link AbstractVectorBuilder}
+   */
+  protected final Map<Integer, E> map = new HashMap<>();
 
-    /**
-     * The size of the map
-     */
-    protected final int size;
+  /**
+   * The size of the map
+   */
+  protected final int size;
 
-    protected AbstractVectorBuilder(final int size) {
-        checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        this.size = size;
-    }
+  protected AbstractVectorBuilder(final int size) {
+    checkArgument(size > 0, "expected size > 0 but actual %s", size);
+    this.size = size;
+  }
 
-    /**
-     * Returns the element dependent on the given index
-     *
-     * @param index
-     *            the index of the element
-     * @return The element
-     * @throws NullPointerException
-     *             if {@code index == null}
-     * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
-     * @since 1
-     * @author Lars Tennstedt
-     * @see Map#containsKey
-     */
-    public E element(final Integer index) {
-        requireNonNull(index, "index");
-        checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s", size, index);
-        return map.get(index);
-    }
+  /**
+   * Returns the element dependent on the given index
+   *
+   * @param index
+   *          the index of the element
+   * @return The element
+   * @throws NullPointerException
+   *           if {@code index == null}
+   * @throws IllegalArgumentException
+   *           if {@code !map.containsKey(index)}
+   * @since 1
+   * @author Lars Tennstedt
+   * @see Map#containsKey
+   */
+  public E element(final Integer index) {
+    requireNonNull(index, "index");
+    checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s", size,
+        index);
+    return map.get(index);
+  }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("map", map).add("size", size).toString();
-    }
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("map", map).add("size", size).toString();
+  }
 
-    public Map<Integer, E> getMap() {
-        return map;
-    }
+  public Map<Integer, E> getMap() {
+    return map;
+  }
 
-    public int getSize() {
-        return size;
-    }
+  public int getSize() {
+    return size;
+  }
 }

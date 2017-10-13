@@ -20,31 +20,31 @@ import com.google.common.annotations.Beta;
 
 /**
  * @param <S>
- *            The type of the number
+ *          The type of the number
  * @param <T>
- *            The type for quotients of the number
+ *          The type for quotients of the number
  * @param <A>
- *            The type of the absolute value of the number
+ *          The type of the absolute value of the number
  * @since 1
  * @author Lars Tennstedt
  */
 @Beta
 public interface MathNumber<S, T, A> {
-    S add(S summand);
+  S add(S summand);
 
-    S subtract(S subtrahend);
+  S subtract(S subtrahend);
 
-    S multiply(S factor);
+  S multiply(S factor);
 
-    T divide(S divisor);
+  T divide(S divisor);
 
-    S pow(int exponent);
+  S pow(int exponent);
 
-    S negate();
+  S negate();
 
-    T invert();
+  T invert();
 
-    boolean invertible();
+  boolean invertible();
 
-    A abs();
+  A abs();
 }

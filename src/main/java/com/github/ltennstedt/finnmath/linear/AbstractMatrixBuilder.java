@@ -27,31 +27,33 @@ import org.apache.commons.lang3.builder.Builder;
 
 /**
  * @param <E>
- *            The type of the elements of the matrix
+ *          The type of the elements of the matrix
  * @param <M>
- *            The type of the matrix
+ *          The type of the matrix
  * @since 1
  * @author Lars Tennstedt
  */
 @Beta
 abstract class AbstractMatrixBuilder<E, M> implements Builder<M> {
-    /**
-     * The table holding the elements of this {@link AbstractVectorBuilder}
-     */
-    protected final Table<Integer, Integer, E> table;
+  /**
+   * The table holding the elements of this {@link AbstractVectorBuilder}
+   */
+  protected final Table<Integer, Integer, E> table;
 
-    protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {
-        final List<Integer> rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());
-        final List<Integer> columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());
-        table = ArrayTable.create(rowIndexes, columnIndexes);
-    }
+  protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {
+    final List<Integer> rowIndexes = IntStream.rangeClosed(1, rowSize).boxed()
+        .collect(Collectors.toList());
+    final List<Integer> columnIndexes = IntStream.rangeClosed(1, columnSize).boxed()
+        .collect(Collectors.toList());
+    table = ArrayTable.create(rowIndexes, columnIndexes);
+  }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("table", table).toString();
-    }
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("table", table).toString();
+  }
 
-    public Table<Integer, Integer, E> getTable() {
-        return table;
-    }
+  public Table<Integer, Integer, E> getTable() {
+    return table;
+  }
 }

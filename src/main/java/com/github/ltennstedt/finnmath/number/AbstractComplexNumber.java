@@ -24,49 +24,50 @@ import java.math.BigDecimal;
 
 /**
  * @param <B>
- *            The type of the real and imaginary part of the complex number
+ *          The type of the real and imaginary part of the complex number
  * @param <S>
- *            The type of the complex number
+ *          The type of the complex number
  * @param <R>
- *            The type for quotients of the complex number
+ *          The type for quotients of the complex number
  * @param <M>
- *            The type of the related matrix
+ *          The type of the related matrix
  * @since 1
  * @author Lars Tennstedt
  */
 @Beta
 abstract class AbstractComplexNumber<B, S, R, M> implements MathNumber<S, R, BigDecimal> {
-    /**
-     * {@code real} part of this {@link AbstractComplexNumber}
-     */
-    protected final B real;
+  /**
+   * {@code real} part of this {@link AbstractComplexNumber}
+   */
+  protected final B real;
 
-    /**
-     * {@code imaginary} part of this {@link AbstractComplexNumber}
-     */
-    protected final B imaginary;
+  /**
+   * {@code imaginary} part of this {@link AbstractComplexNumber}
+   */
+  protected final B imaginary;
 
-    protected AbstractComplexNumber(final B real, final B imaginary) {
-        this.real = requireNonNull(real, "real");
-        this.imaginary = requireNonNull(imaginary, "imaginary");
-    }
+  protected AbstractComplexNumber(final B real, final B imaginary) {
+    this.real = requireNonNull(real, "real");
+    this.imaginary = requireNonNull(imaginary, "imaginary");
+  }
 
-    protected abstract B absPow2();
+  protected abstract B absPow2();
 
-    protected abstract S conjugate();
+  protected abstract S conjugate();
 
-    protected abstract M matrix();
+  protected abstract M matrix();
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("real", real).add("imaginary", imaginary).toString();
-    }
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("real", real).add("imaginary", imaginary)
+        .toString();
+  }
 
-    public B getReal() {
-        return real;
-    }
+  public B getReal() {
+    return real;
+  }
 
-    public B getImaginary() {
-        return imaginary;
-    }
+  public B getImaginary() {
+    return imaginary;
+  }
 }
