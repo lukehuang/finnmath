@@ -85,6 +85,8 @@ abstract class AbstractMatrix<E, V, M> {
 
     protected abstract E maxAbsRowSumNorm();
 
+    protected abstract E frobeniusNormPow2();
+
     protected abstract BigDecimal frobeniusNorm();
 
     protected abstract BigDecimal frobeniusNorm(BigDecimal precision);

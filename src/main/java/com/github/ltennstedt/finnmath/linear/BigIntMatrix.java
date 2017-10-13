@@ -363,11 +363,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         for (final Map<Integer, BigInteger> column : table.columnMap().values().asList()) {
             BigInteger sum = BigInteger.ZERO;
             for (final BigInteger element : column.values()) {
-                sum = sum.add(element);
+                sum = sum.add(element.abs());
             }
-            if (sum.compareTo(norm) > 0) {
-                norm = sum;
-            }
+            norm = sum.max(norm);
         }
         return norm;
     }
@@ -385,13 +383,27 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         for (final Map<Integer, BigInteger> row : table.rowMap().values().asList()) {
             BigInteger sum = BigInteger.ZERO;
             for (final BigInteger element : row.values()) {
-                sum = sum.add(element);
+                sum = sum.add(element.abs());
             }
-            if (sum.compareTo(norm) > 0) {
-                norm = sum;
-            }
+            norm = sum.max(norm);
         }
         return norm;
+    }
+
+    /**
+     * Returns the square of the frobenius norm of this {@link BigIntMatrix}
+     *
+     * @return The square of the frobenius norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigInteger frobeniusNormPow2() {
+        BigInteger normPow2 = BigInteger.ZERO;
+        for (final BigInteger element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return normPow2;
     }
 
     /**
@@ -400,15 +412,12 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      * @return The frobenius norm
      * @since 1
      * @author Lars Tennstedt
+     * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
     public BigDecimal frobeniusNorm() {
-        BigInteger normPow2 = BigInteger.ZERO;
-        for (final BigInteger element : table.values()) {
-            normPow2 = normPow2.add(element.pow(2));
-        }
-        return new SquareRootCalculator().sqrt(normPow2);
+        return new SquareRootCalculator().sqrt(frobeniusNormPow2());
     }
 
     /**
@@ -423,6 +432,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      *             if {@code precision <= 0 || 1 <= precision}
      * @since 1
      * @author Lars Tennstedt
+     * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
@@ -430,11 +440,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
-        BigInteger normPow2 = BigInteger.ZERO;
-        for (final BigInteger element : table.values()) {
-            normPow2 = normPow2.add(element.pow(2));
-        }
-        return new SquareRootCalculator(precision).sqrt(normPow2);
+        return new SquareRootCalculator(precision).sqrt(frobeniusNormPow2());
     }
 
     /**
@@ -450,16 +456,13 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      *             if {@code scale < 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
     public BigDecimal frobeniusNorm(final int scale, final RoundingMode roundingMode) {
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        BigInteger normPow2 = BigInteger.ZERO;
-        for (final BigInteger element : table.values()) {
-            normPow2 = normPow2.add(element.pow(2));
-        }
-        return new SquareRootCalculator(scale, roundingMode).sqrt(normPow2);
+        return new SquareRootCalculator(scale, roundingMode).sqrt(frobeniusNormPow2());
     }
 
     /**
@@ -481,6 +484,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      *             if {@code scale < 0}
      * @since 1
      * @author Lars Tennstedt
+     * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      */
     @Override
@@ -489,11 +493,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        BigInteger normPow2 = BigInteger.ZERO;
-        for (final BigInteger element : table.values()) {
-            normPow2 = normPow2.add(element.pow(2));
-        }
-        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(normPow2);
+        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(frobeniusNormPow2());
     }
 
     /**

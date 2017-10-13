@@ -397,6 +397,22 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     }
 
     /**
+     * Returns the square of the frobenius norm of this {@link BigIntMatrix}
+     *
+     * @return The square of the frobenius norm
+     * @since 1
+     * @author Lars Tennstedt
+     */
+    @Override
+    public BigDecimal frobeniusNormPow2() {
+        BigDecimal normPow2 = BigDecimal.ZERO;
+        for (final BigDecimal element : table.values()) {
+            normPow2 = normPow2.add(element.pow(2));
+        }
+        return normPow2;
+    }
+
+    /**
      * Returns the frobenius norm of this {@link DecimalMatrix}
      *
      * @return The frobenius norm
