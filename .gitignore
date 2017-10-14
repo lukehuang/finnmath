@@ -22,7 +22,7 @@
 *.ipr
 *.iws
 /.idea/
-/target/
+/build/
 .README.md.html
 /.gradle/
 /gradle/
