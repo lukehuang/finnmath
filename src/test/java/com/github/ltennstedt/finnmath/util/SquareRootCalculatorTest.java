@@ -30,9 +30,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class SquareRootCalculatorTest {
+    private static final int validScale = 8;
     private final SquareRootCalculator squareRootCalculator = new SquareRootCalculator();
     private final BigDecimal validPrecision = BigDecimal.valueOf(0.00000001);
-    private final int validScale = 8;
     private final RoundingMode roundingMode = RoundingMode.HALF_EVEN;
     private final MathRandom mathRandom = new MathRandom(7);
     private final Logger log = LoggerFactory.getLogger(SquareRootCalculatorTest.class);

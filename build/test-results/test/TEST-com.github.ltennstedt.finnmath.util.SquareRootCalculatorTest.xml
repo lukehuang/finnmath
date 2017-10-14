@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" tests="68" skipped="0" failures="0" errors="0" timestamp="2017-10-14T21:28:13" hostname="archlinux" time="0.125">
+  <properties/>
+  <testcase name="sqrtOfBigIntEightyOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.003"/>
+  <testcase name="toStringShouldSucceed" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="scientificNotationForSqrtGreaterThanOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="newPrecisionTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="newAllPrecisionTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfPerfectSquareEightyOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.027"/>
+  <testcase name="sqrtOfPerfectSquareOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="newAllShouldSucceed" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntSix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntTen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfBigIntTwo" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalSixtyFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="scientificNotationForSqrtForZero" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalTwentyFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfDecimalThirtySix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfPerfectSquareOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfPerfectSquareFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfPerfectSquareNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfPerfectSquareZero" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntZero" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="newPrecisionNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfPerfectSquareNotPerfectSquareShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="newAllScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="scientificNotationForSqrtExponentShouldBePowerOfTwo" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfBigIntSixteen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntNegativeShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfDecimalEight" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalSeven" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfDecimalThree" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.006"/>
+  <testcase name="newScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfDecimalFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalZero" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntFortyNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfDecimalOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="newPrecisionTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfPerfectSquareFortyNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalEightyOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.007"/>
+  <testcase name="sqrtOfPerfectSquareSixteen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="newScaleAndRoundingModeShouldSucceed" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntEight" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="newAllPrecisionTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntSeven" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntThree" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.005"/>
+  <testcase name="sqrtOfBigIntSixtyFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntThirtySix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfPerfectSquareSixtyFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="scientificNotationForSqrtInbetweenZeroAndOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfDecimalSix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalTen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfDecimalTwo" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfPerfectSquareThirtySix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalFortyNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfDecimalSixteen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfBigIntNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntTwentyFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="newPrecisionShouldSucceed" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <testcase name="sqrtOfPerfectSquareNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="newAllPrecisionNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.009"/>
+  <testcase name="sqrtOfPerfectSquareTwentyFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

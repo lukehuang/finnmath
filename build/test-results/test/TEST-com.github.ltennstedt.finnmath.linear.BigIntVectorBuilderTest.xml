@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.github.ltennstedt.finnmath.linear.BigIntVectorBuilderTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2017-10-14T21:28:18" hostname="archlinux" time="0.012">
+  <properties/>
+  <testcase name="putAllNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntVectorBuilderTest" time="0.002"/>
+  <testcase name="toStringShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntVectorBuilderTest" time="0.001"/>
+  <testcase name="putIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntVectorBuilderTest" time="0.002"/>
+  <testcase name="buildNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntVectorBuilderTest" time="0.002"/>
+  <testcase name="putIndexTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntVectorBuilderTest" time="0.001"/>
+  <testcase name="putElementNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntVectorBuilderTest" time="0.001"/>
+  <testcase name="putRowIndexTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntVectorBuilderTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
