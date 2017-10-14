@@ -24,4 +24,8 @@
 /.idea/
 /target/
 .README.md.html
+/.gradle/
+/gradle/
+gradlew
+gradlew.bat
 
