@@ -53,16 +53,14 @@ public final class SquareRootCalculatorTest {
     public void newPrecisionTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             new SquareRootCalculator(BigDecimal.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual 0");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 0");
     }
 
     @Test
     public void newPrecisionTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
             new SquareRootCalculator(BigDecimal.ONE);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual 1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 1");
     }
 
     @Test
@@ -78,16 +76,14 @@ public final class SquareRootCalculatorTest {
     public void newScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             new SquareRootCalculator(-1, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected scale >= 0 but actual -1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
     }
 
     @Test
     public void newScaleAndRoundingModeShouldSucceed() {
         final int scale = 8;
         final SquareRootCalculator actual = new SquareRootCalculator(scale, roundingMode);
-        assertThat(actual.getPrecision())
-                .isEqualByComparingTo(SquareRootCalculator.DEFAULT_PRECISION);
+        assertThat(actual.getPrecision()).isEqualByComparingTo(SquareRootCalculator.DEFAULT_PRECISION);
         assertThat(actual.getScale()).isEqualTo(scale);
         assertThat(actual.getRoundingMode()).isEqualTo(roundingMode);
     }
@@ -103,32 +99,28 @@ public final class SquareRootCalculatorTest {
     public void newAllPrecisionTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             new SquareRootCalculator(BigDecimal.ZERO, validScale, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual 0");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 0");
     }
 
     @Test
     public void newAllPrecisionTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
             new SquareRootCalculator(BigDecimal.ONE, validScale, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual 1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 1");
     }
 
     @Test
     public void newAllScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             new SquareRootCalculator(validPrecision, -1, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected scale >= 0 but actual -1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
     }
 
     @Test
     public void newAllShouldSucceed() {
         final BigDecimal precision = BigDecimal.valueOf(0.00000001);
         final int scale = 8;
-        final SquareRootCalculator actual = new SquareRootCalculator(precision, scale,
-                roundingMode);
+        final SquareRootCalculator actual = new SquareRootCalculator(precision, scale, roundingMode);
         assertThat(actual.getPrecision()).isEqualByComparingTo(precision);
         assertThat(actual.getScale()).isEqualTo(scale);
         assertThat(actual.getRoundingMode()).isEqualTo(roundingMode);
@@ -145,20 +137,19 @@ public final class SquareRootCalculatorTest {
     public void sqrtOfBigIntNegativeShouldThrowException() {
         assertThatThrownBy(() -> {
             squareRootCalculator.sqrt(BigInteger.ONE.negate());
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected integer >= 0 but actual -1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected integer >= 0 but actual -1");
     }
 
     @Test
     public void sqrtOfBigIntZero() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.ZERO)).isBetween(BigDecimal.valueOf(-0.001),
-                BigDecimal.valueOf(0.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.ZERO))
+                .isBetween(BigDecimal.valueOf(-0.001), BigDecimal.valueOf(0.001));
     }
 
     @Test
     public void sqrtOfBigIntOne() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.ONE)).isBetween(BigDecimal.valueOf(0.999),
-                BigDecimal.valueOf(1.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.ONE))
+                .isBetween(BigDecimal.valueOf(0.999), BigDecimal.valueOf(1.001));
     }
 
     @Test
@@ -211,8 +202,8 @@ public final class SquareRootCalculatorTest {
 
     @Test
     public void sqrtOfBigIntTen() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.TEN)).isBetween(BigDecimal.valueOf(3.161),
-                BigDecimal.valueOf(3.163));
+        assertThat(squareRootCalculator.sqrt(BigInteger.TEN))
+                .isBetween(BigDecimal.valueOf(3.161), BigDecimal.valueOf(3.163));
     }
 
     @Test
@@ -266,14 +257,14 @@ public final class SquareRootCalculatorTest {
 
     @Test
     public void sqrtOfDecimalZero() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.ZERO)).isBetween(BigDecimal.valueOf(-0.001),
-                BigDecimal.valueOf(0.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.ZERO))
+                .isBetween(BigDecimal.valueOf(-0.001), BigDecimal.valueOf(0.001));
     }
 
     @Test
     public void sqrtOfDecimalOne() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.ONE)).isBetween(BigDecimal.valueOf(0.999),
-                BigDecimal.valueOf(1.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.ONE))
+                .isBetween(BigDecimal.valueOf(0.999), BigDecimal.valueOf(1.001));
     }
 
     @Test
@@ -326,8 +317,8 @@ public final class SquareRootCalculatorTest {
 
     @Test
     public void sqrtOfDecimalTen() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.TEN)).isBetween(BigDecimal.valueOf(3.161),
-                BigDecimal.valueOf(3.163));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.TEN))
+                .isBetween(BigDecimal.valueOf(3.161), BigDecimal.valueOf(3.163));
     }
 
     @Test
@@ -383,80 +374,67 @@ public final class SquareRootCalculatorTest {
     public void sqrtOfPerfectSquareNotPerfectSquareShouldThrowException() {
         assertThatThrownBy(() -> {
             squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(2));
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected perfect square but actual 2");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected perfect square but actual 2");
     }
 
     @Test
     public void sqrtOfPerfectSquareZero() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.ZERO))
-                .isEqualTo(BigInteger.ZERO);
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.ZERO)).isEqualTo(BigInteger.ZERO);
     }
 
     @Test
     public void sqrtOfPerfectSquareOne() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.ONE))
-                .isEqualTo(BigInteger.ONE);
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.ONE)).isEqualTo(BigInteger.ONE);
     }
 
     @Test
     public void sqrtOfPerfectSquareFour() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(4)))
-                .isEqualTo(BigInteger.valueOf(2));
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(4))).isEqualTo(BigInteger.valueOf(2));
     }
 
     @Test
     public void sqrtOfPerfectSquareNine() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(9)))
-                .isEqualTo(BigInteger.valueOf(3));
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(9))).isEqualTo(BigInteger.valueOf(3));
     }
 
     @Test
     public void sqrtOfPerfectSquareSixteen() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(16)))
-                .isEqualTo(BigInteger.valueOf(4));
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(16))).isEqualTo(BigInteger.valueOf(4));
     }
 
     @Test
     public void sqrtOfPerfectSquareTwentyFive() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(25)))
-                .isEqualTo(BigInteger.valueOf(5));
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(25))).isEqualTo(BigInteger.valueOf(5));
     }
 
     @Test
     public void sqrtOfPerfectSquareThirtySix() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(36)))
-                .isEqualTo(BigInteger.valueOf(6));
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(36))).isEqualTo(BigInteger.valueOf(6));
     }
 
     @Test
     public void sqrtOfPerfectSquareFortyNine() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(49)))
-                .isEqualTo(BigInteger.valueOf(7));
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(49))).isEqualTo(BigInteger.valueOf(7));
     }
 
     @Test
     public void sqrtOfPerfectSquareSixtyFour() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(64)))
-                .isEqualTo(BigInteger.valueOf(8));
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(64))).isEqualTo(BigInteger.valueOf(8));
     }
 
     @Test
     public void sqrtOfPerfectSquareEightyOne() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(81)))
-                .isEqualTo(BigInteger.valueOf(9));
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(81))).isEqualTo(BigInteger.valueOf(9));
     }
 
     @Test
     public void sqrtOfPerfectSquareOneHundred() {
-        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(100)))
-                .isEqualTo(BigInteger.TEN);
+        assertThat(squareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(100))).isEqualTo(BigInteger.TEN);
     }
 
     @Test
     public void scientificNotationForSqrtForZero() {
-        final ScientificNotation actual = squareRootCalculator
-                .scientificNotationForSqrt(BigDecimal.ZERO);
+        final ScientificNotation actual = squareRootCalculator.scientificNotationForSqrt(BigDecimal.ZERO);
         assertThat(actual).isEqualTo(new ScientificNotation(BigDecimal.ZERO, 0));
     }
 
@@ -469,19 +447,18 @@ public final class SquareRootCalculatorTest {
 
     @Test
     public void scientificNotationForSqrtGreaterThanOneHundred() {
-        final BigDecimal decimal = mathRandom.nextInvertiblePositiveDecimal(100, validScale)
-                .add(BigDecimal.valueOf(100));
+        final BigDecimal decimal =
+                mathRandom.nextInvertiblePositiveDecimal(100, validScale).add(BigDecimal.valueOf(100));
         final ScientificNotation actual = squareRootCalculator.scientificNotationForSqrt(decimal);
-        final ScientificNotation expected = new ScientificNotation(
-                decimal.divide(BigDecimal.valueOf(100), roundingMode), 2);
+        final ScientificNotation expected =
+                new ScientificNotation(decimal.divide(BigDecimal.valueOf(100), roundingMode), 2);
         assertThat(actual).isEqualTo(expected);
     }
 
     @Test
     public void scientificNotationForSqrtExponentShouldBePowerOfTwo() {
         mathRandom.nextDecimals(10, 2, 10).forEach(decimal -> {
-            assertThat(squareRootCalculator.scientificNotationForSqrt(decimal).getExponent() % 2)
-                    .isEqualTo(0);
+            assertThat(squareRootCalculator.scientificNotationForSqrt(decimal).getExponent() % 2).isEqualTo(0);
         });
     }
 

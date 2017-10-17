@@ -95,7 +95,7 @@ public final class BigIntMatrixBuilderTest {
     @Test
     public void toStringShouldSucceed() {
         final BigIntMatrixBuilder builder = BigIntMatrix.builder(4, 5).putAll(BigInteger.ZERO);
-        assertThat(builder.toString()).isEqualTo(
-                MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
+        assertThat(builder.toString())
+                .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
     }
 }

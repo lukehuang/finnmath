@@ -23,16 +23,12 @@ import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 
 /**
- * @param <B>
- *            The type of the real and imaginary part of the complex number
- * @param <S>
- *            The type of the complex number
- * @param <R>
- *            The type for quotients of the complex number
- * @param <M>
- *            The type of the related matrix
- * @since 1
+ * @param <B> The type of the real and imaginary part of the complex number
+ * @param <S> The type of the complex number
+ * @param <R> The type for quotients of the complex number
+ * @param <M> The type of the related matrix
  * @author Lars Tennstedt
+ * @since 1
  */
 @Beta
 abstract class AbstractComplexNumber<B, S, R, M> implements MathNumber<S, R, BigDecimal> {
@@ -59,8 +55,7 @@ abstract class AbstractComplexNumber<B, S, R, M> implements MathNumber<S, R, Big
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).add("real", real).add("imaginary", imaginary)
-                .toString();
+        return MoreObjects.toStringHelper(this).add("real", real).add("imaginary", imaginary).toString();
     }
 
     public B getReal() {

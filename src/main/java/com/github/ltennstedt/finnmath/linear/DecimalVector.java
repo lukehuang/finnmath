@@ -34,8 +34,8 @@ import java.util.stream.IntStream;
 /**
  * An immutable implementation of a vector which uses {@link BigDecimal} as type for its elements
  *
- * @since 1
  * @author Lars Tennstedt
+ * @since 1
  */
 @Beta
 public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVector, BigDecimal> {
@@ -46,19 +46,17 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the sum of this {@link DecimalVector} and the given one
      *
-     * @param summand
-     *            the summand
+     * @param summand the summand
      * @return The sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @since 1
+     * @throws NullPointerException if {@code summand == null}
      * @author Lars Tennstedt
+     * @since 1
      */
     @Override
     public DecimalVector add(final DecimalVector summand) {
         requireNonNull(summand, "summand");
-        checkArgument(map.size() == summand.size(), "expected equal sizes but actual %s != %s",
-                map.size(), summand.size());
+        checkArgument(map.size() == summand.size(), "expected equal sizes but actual %s != %s", map.size(),
+                summand.size());
         final DecimalVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> {
             builder.put(element.add(summand.element(index)));
@@ -69,19 +67,17 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the difference of this {@link DecimalVector} and the given one
      *
-     * @param subtrahend
-     *            the subtrahend
+     * @param subtrahend the subtrahend
      * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @since 1
+     * @throws NullPointerException if {@code subtrahend == null}
      * @author Lars Tennstedt
+     * @since 1
      */
     @Override
     public DecimalVector subtract(final DecimalVector subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
-        checkArgument(map.size() == subtrahend.size(), "expected equal sizes but actual %s != %s",
-                map.size(), subtrahend.size());
+        checkArgument(map.size() == subtrahend.size(), "expected equal sizes but actual %s != %s", map.size(),
+                subtrahend.size());
         final DecimalVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> {
             builder.put(element.subtract(subtrahend.element(index)));
@@ -92,21 +88,17 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the dot product of this {@link DecimalVector} and the given one
      *
-     * @param other
-     *            The other {@link DecimalVector}
+     * @param other The other {@link DecimalVector}
      * @return The dot product
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code map.size != other.size}
-     * @since 1
+     * @throws NullPointerException     if {@code other == null}
+     * @throws IllegalArgumentException if {@code map.size != other.size}
      * @author Lars Tennstedt
+     * @since 1
      */
     @Override
     public BigDecimal dotProduct(final DecimalVector other) {
         requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s",
-                map.size(), other.size());
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         BigDecimal result = BigDecimal.ZERO;
         for (final Integer index : map.keySet()) {
             result = result.add(map.get(index).multiply(other.element(index)));
@@ -117,13 +109,11 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the scalar product of the given scalar and this {@link DecimalVector}
      *
-     * @param scalar
-     *            the scalar
+     * @param scalar the scalar
      * @return The scalar product
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @since 1
+     * @throws NullPointerException if {@code summand == null}
      * @author Lars Tennstedt
+     * @since 1
      */
     @Override
     public DecimalVector scalarMultiply(final BigDecimal scalar) {
@@ -139,9 +129,9 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * Returns the negated {@link DecimalVector} of this one
      *
      * @return The negated
-     * @since 1
      * @author Lars Tennstedt
      * @see #scalarMultiply
+     * @since 1
      */
     @Override
     public DecimalVector negate() {
@@ -152,8 +142,8 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * Returns the taxicab norm of this {@link DecimalVector}
      *
      * @return The taxicab norm
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     @Override
     protected BigDecimal taxicabNorm() {
@@ -167,23 +157,19 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the taxicab distance from this {@link DecimalVector} to the given one
      *
-     * @param other
-     *            The other {@link DecimalVector}
+     * @param other The other {@link DecimalVector}
      * @return The taxicab distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @since 1
+     * @throws NullPointerException     if {@code other == null}
+     * @throws IllegalArgumentException if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #subtract
      * @see #taxicabNorm
+     * @since 1
      */
     @Override
     protected BigDecimal taxicabDistance(final DecimalVector other) {
         requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s",
-                map.size(), other.size());
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         return subtract(other).taxicabNorm();
     }
 
@@ -191,9 +177,9 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * Returns the square of the euclidean norm of this {@link DecimalVector}
      *
      * @return The square of the euclidean norm
-     * @since 1
      * @author Lars Tennstedt
      * @see #dotProduct
+     * @since 1
      */
     @Override
     public BigDecimal euclideanNormPow2() {
@@ -204,10 +190,10 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * Returns the euclidean norm of this {@link DecimalVector}
      *
      * @return The euclidean norm
-     * @since 1
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
      */
     @Override
     public BigDecimal euclideanNorm() {
@@ -217,24 +203,19 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the euclidean norm of this {@link DecimalVector}
      *
-     * @param precision
-     *            the precision for the termination condition
+     * @param precision the precision for the termination condition
      * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @since 1
+     * @throws NullPointerException     if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision) {
         requireNonNull(precision, "precision");
-        checkArgument(
-                (BigDecimal.ZERO.compareTo(precision) < 0)
-                        && (precision.compareTo(BigDecimal.ONE) < 0),
+        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());
     }
@@ -242,17 +223,14 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the euclidean norm of this {@link DecimalVector}
      *
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     * @param scale        the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean norm
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @since 1
+     * @throws IllegalArgumentException if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
      */
     @Override
     public BigDecimal euclideanNorm(final int scale, final RoundingMode roundingMode) {
@@ -263,31 +241,22 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the euclidean norm of this {@link DecimalVector}
      *
-     * @param precision
-     *            the precision for the termination condition
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     * @param precision    the precision for the termination condition
+     * @param scale        the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @since 1
+     * @throws NullPointerException     if {@code precision == null}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
      */
     @Override
-    public BigDecimal euclideanNorm(final BigDecimal precision, final int scale,
-            final RoundingMode roundingMode) {
+    public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
-        checkArgument(
-                (BigDecimal.ZERO.compareTo(precision) < 0)
-                        && (precision.compareTo(BigDecimal.ONE) < 0),
+        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());
@@ -296,79 +265,62 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the square of the euclidean distance from this {@link DecimalVector} to the given one
      *
-     * @param other
-     *            The other {@link DecimalVector}
+     * @param other The other {@link DecimalVector}
      * @return The square of the euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @since 1
+     * @throws NullPointerException     if {@code other == null}
+     * @throws IllegalArgumentException if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #subtract
      * @see #euclideanNormPow2
+     * @since 1
      */
     @Override
     public BigDecimal euclideanDistancePow2(final DecimalVector other) {
         requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s",
-                map.size(), other.size());
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         return subtract(other).euclideanNormPow2();
     }
 
     /**
      * Returns the euclidean distance from this {@link DecimalVector} to the given one
      *
-     * @param other
-     *            The other {@link DecimalVector}
+     * @param other The other {@link DecimalVector}
      * @return The euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     * @throws NullPointerException     if {@code other == null}
+     * @throws IllegalArgumentException if {@code size != other.size}
+     * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
-     * @author Lars Tennstedt
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector other) {
         requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s",
-                map.size(), other.size());
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));
     }
 
     /**
      * Returns the euclidean distance from this {@link DecimalVector} to the given one
      *
-     * @param other
-     *            The other {@link DecimalVector}
-     * @param precision
-     *            the precision for the termination condition
+     * @param other     The other {@link DecimalVector}
+     * @param precision the precision for the termination condition
      * @return The euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @since 1
+     * @throws NullPointerException     if {@code other == null}
+     * @throws NullPointerException     if {@code precision == null}
+     * @throws IllegalArgumentException if {@code size != other.size}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector other, final BigDecimal precision) {
         requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s",
-                map.size(), other.size());
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         requireNonNull(precision, "precision");
-        checkArgument(
-                (BigDecimal.ZERO.compareTo(precision) < 0)
-                        && (precision.compareTo(BigDecimal.ONE) < 0),
+        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));
     }
@@ -376,30 +328,22 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the euclidean distance from this {@link DecimalVector} to the given one
      *
-     * @param other
-     *            The other {@link DecimalVector}
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     * @param other        The other {@link DecimalVector}
+     * @param scale        the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
      * @return The deuclidean istance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @since 1
+     * @throws NullPointerException     if {@code other == null}
+     * @throws IllegalArgumentException if {@code size != other.size}
+     * @throws IllegalArgumentException if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
      */
     @Override
-    public BigDecimal euclideanDistance(final DecimalVector other, final int scale,
-            final RoundingMode roundingMode) {
+    public BigDecimal euclideanDistance(final DecimalVector other, final int scale, final RoundingMode roundingMode) {
         requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s",
-                map.size(), other.size());
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));
     }
@@ -407,52 +351,39 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the euclidean distance from this {@link DecimalVector} to the given one
      *
-     * @param other
-     *            The other {@link DecimalVector}
-     * @param precision
-     *            the precision for the termination condition
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     * @param other        The other {@link DecimalVector}
+     * @param precision    the precision for the termination condition
+     * @param scale        the scale to be set on the result
+     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @since 1
+     * @throws NullPointerException     if {@code other == null}
+     * @throws NullPointerException     if {@code precision == null}
+     * @throws IllegalArgumentException if {@code size != other.size}
+     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
      */
     @Override
-    public BigDecimal euclideanDistance(final DecimalVector other, final BigDecimal precision,
-            final int scale, final RoundingMode roundingMode) {
+    public BigDecimal euclideanDistance(final DecimalVector other, final BigDecimal precision, final int scale,
+                                        final RoundingMode roundingMode) {
         requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s",
-                map.size(), other.size());
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         requireNonNull(precision, "precision");
-        checkArgument(
-                (BigDecimal.ZERO.compareTo(precision) < 0)
-                        && (precision.compareTo(BigDecimal.ONE) < 0),
+        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
                 "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        return new SquareRootCalculator(precision, scale, roundingMode)
-                .sqrt(euclideanDistancePow2(other));
+        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));
     }
 
     /**
      * Returns the max norm of this {@link DecimalVector}
      *
      * @return The max norm
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     @Override
     protected BigDecimal maxNorm() {
@@ -466,23 +397,19 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns the max distance from this {@link DecimalVector} to the given one
      *
-     * @param other
-     *            The other {@link DecimalVector}
+     * @param other The other {@link DecimalVector}
      * @return The max distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @since 1
+     * @throws NullPointerException     if {@code other == null}
+     * @throws IllegalArgumentException if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #subtract
      * @see #maxNorm
+     * @since 1
      */
     @Override
     protected BigDecimal maxDistance(final DecimalVector other) {
         requireNonNull(other, "vector");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s",
-                map.size(), other.size());
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         return subtract(other).maxNorm();
     }
 
@@ -490,8 +417,8 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      * Returns the size of the underlying {@link Map}
      *
      * @return size the size
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     @Override
     public int size() {
@@ -501,11 +428,10 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * Returns a {@link DecimalVectorBuilder}
      *
-     * @param size
-     *            the size the resulting {@link DecimalVector}
+     * @param size the size the resulting {@link DecimalVector}
      * @return A {@link DecimalVectorBuilder}
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     public static DecimalVectorBuilder builder(final int size) {
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -532,8 +458,8 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     /**
      * The builder for {@link DecimalVector DecimalVectors}
      *
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     @Beta
     public static final class DecimalVectorBuilder
@@ -545,17 +471,13 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         /**
          * Puts the given element on the first free index and returns {@code this}
          *
-         * @param element
-         *            the element
+         * @param element the element
          * @return {@code this}
-         * @throws NullPointerException
-         *             if {@code element == null}
-         * @throws ArithmeticException
-         *             if ({@code size + 1} overflows
-         * @throws IllegalStateException
-         *             if {@code size == size}
-         * @since 1
+         * @throws NullPointerException  if {@code element == null}
+         * @throws ArithmeticException   if ({@code size + 1} overflows
+         * @throws IllegalStateException if {@code size == size}
          * @author Lars Tennstedt
+         * @since 1
          */
         public DecimalVectorBuilder put(final BigDecimal element) {
             requireNonNull(element, "element");
@@ -568,25 +490,19 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         /**
          * Puts the given element on the given index and returns {@code this}
          *
-         * @param index
-         *            the index
-         * @param element
-         *            the element
+         * @param index   the index
+         * @param element the element
          * @return {@code this}
-         * @throws NullPointerException
-         *             if {@code index == null}
-         * @throws NullPointerException
-         *             if {@code element == null}
-         * @throws IllegalArgumentException
-         *             if {@code index <= 0 || size < index}
-         * @since 1
+         * @throws NullPointerException     if {@code index == null}
+         * @throws NullPointerException     if {@code element == null}
+         * @throws IllegalArgumentException if {@code index <= 0 || size < index}
          * @author Lars Tennstedt
+         * @since 1
          */
         public DecimalVectorBuilder put(final Integer index, final BigDecimal element) {
             requireNonNull(index, "index");
             requireNonNull(element, "element");
-            checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s",
-                    size, index);
+            checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s", size, index);
             map.put(index, element);
             return this;
         }
@@ -594,13 +510,11 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         /**
          * Puts the given element on all indices and returns {@code this}
          *
-         * @param element
-         *            the element
+         * @param element the element
          * @return {@code this}
-         * @throws NullPointerException
-         *             if {@code element == null}
-         * @since 1
+         * @throws NullPointerException if {@code element == null}
          * @author Lars Tennstedt
+         * @since 1
          */
         public DecimalVectorBuilder putAll(final BigDecimal element) {
             requireNonNull(element, "element");
@@ -614,11 +528,10 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
          * Returns the built {@link DecimalVector}
          *
          * @return The {@link DecimalVector}
-         * @throws NullPointerException
-         *             if one {@code element == null}
-         * @since 1
+         * @throws NullPointerException if one {@code element == null}
          * @author Lars Tennstedt
          * @see ImmutableMap#copyOf
+         * @since 1
          */
         @Override
         public DecimalVector build() {

@@ -26,14 +26,11 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.Builder;
 
 /**
- * @param <E>
- *            The type of the elements of the vector
- * @param <V>
- *            The type of the vector
- * @param <B>
- *            The type of the builder
- * @since 1
+ * @param <E> The type of the elements of the vector
+ * @param <V> The type of the vector
+ * @param <B> The type of the builder
  * @author Lars Tennstedt
+ * @since 1
  */
 @Beta
 abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
@@ -55,21 +52,17 @@ abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
     /**
      * Returns the element dependent on the given index
      *
-     * @param index
-     *            the index of the element
+     * @param index the index of the element
      * @return The element
-     * @throws NullPointerException
-     *             if {@code index == null}
-     * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
-     * @since 1
+     * @throws NullPointerException     if {@code index == null}
+     * @throws IllegalArgumentException if {@code !map.containsKey(index)}
      * @author Lars Tennstedt
      * @see Map#containsKey
+     * @since 1
      */
     public E element(final Integer index) {
         requireNonNull(index, "index");
-        checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s",
-                size, index);
+        checkArgument((0 < index) && (index <= size), "expected index in [1, %s] but actual %s", size, index);
         return map.get(index);
     }
 

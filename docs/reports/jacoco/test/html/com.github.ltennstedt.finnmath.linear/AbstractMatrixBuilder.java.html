@@ -26,12 +26,10 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.builder.Builder;
 
 /**
- * @param &lt;E&gt;
- *            The type of the elements of the matrix
- * @param &lt;M&gt;
- *            The type of the matrix
- * @since 1
+ * @param &lt;E&gt; The type of the elements of the matrix
+ * @param &lt;M&gt; The type of the matrix
  * @author Lars Tennstedt
+ * @since 1
  */
 @Beta
 abstract class AbstractMatrixBuilder&lt;E, M&gt; implements Builder&lt;M&gt; {
@@ -40,21 +38,19 @@ abstract class AbstractMatrixBuilder&lt;E, M&gt; implements Builder&lt;M&gt; {
      */
     protected final Table&lt;Integer, Integer, E&gt; table;
 
-<span class="fc" id="L43">    protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {</span>
-<span class="fc" id="L44">        final List&lt;Integer&gt; rowIndexes = IntStream.rangeClosed(1, rowSize).boxed()</span>
-<span class="fc" id="L45">                .collect(Collectors.toList());</span>
-<span class="fc" id="L46">        final List&lt;Integer&gt; columnIndexes = IntStream.rangeClosed(1, columnSize).boxed()</span>
-<span class="fc" id="L47">                .collect(Collectors.toList());</span>
-<span class="fc" id="L48">        table = ArrayTable.create(rowIndexes, columnIndexes);</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L41">    protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {</span>
+<span class="fc" id="L42">        final List&lt;Integer&gt; rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());</span>
+<span class="fc" id="L43">        final List&lt;Integer&gt; columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());</span>
+<span class="fc" id="L44">        table = ArrayTable.create(rowIndexes, columnIndexes);</span>
+<span class="fc" id="L45">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L53">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+<span class="fc" id="L49">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
     }
 
     public Table&lt;Integer, Integer, E&gt; getTable() {
-<span class="fc" id="L57">        return table;</span>
+<span class="fc" id="L53">        return table;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

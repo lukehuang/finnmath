@@ -34,8 +34,7 @@ public final class DecimalMatrixAssert extends AbstractAssert<DecimalMatrixAsser
     public DecimalMatrixAssert isEqualToByBigDecimalComparator(final DecimalMatrix expected) {
         isNotNull();
         actual.cells().forEach(cell -> {
-            final int compareTo = cell.getValue()
-                    .compareTo(expected.element(cell.getRowKey(), cell.getColumnKey()));
+            final int compareTo = cell.getValue().compareTo(expected.element(cell.getRowKey(), cell.getColumnKey()));
             if (compareTo != 0) {
                 failWithMessage("expected compareTo == 0 but actual %s", compareTo);
             }

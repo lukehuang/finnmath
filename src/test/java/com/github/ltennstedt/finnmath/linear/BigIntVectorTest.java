@@ -44,10 +44,9 @@ public final class BigIntVectorTest {
     private static final BigDecimal precision = BigDecimal.valueOf(0.00001);
     private static final int scale = 7;
     private static final RoundingMode roundingMode = RoundingMode.HALF_DOWN;
-    private static final BigIntVector zeroVector = BigIntVector.builder(size)
-            .putAll(BigInteger.ZERO).build();
-    private static final BigIntVector vectorWithAnotherSize = BigIntVector.builder(differentSize)
-            .putAll(BigInteger.ZERO).build();
+    private static final BigIntVector zeroVector = BigIntVector.builder(size).putAll(BigInteger.ZERO).build();
+    private static final BigIntVector vectorWithAnotherSize =
+            BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build();
     private static final List<BigIntVector> vectors = new ArrayList<>(howMany);
     private static final List<BigIntVector> others = new ArrayList<>(howMany);
     private static final List<BigIntVector> additionalOthers = new ArrayList<>(howMany);
@@ -90,8 +89,7 @@ public final class BigIntVectorTest {
                 vector.entries().forEach(element -> {
                     builder.put(element.getValue().add(other.element(element.getKey())));
                 });
-                assertThat(vector.add(other)).isExactlyInstanceOf(BigIntVector.class)
-                        .isEqualTo(builder.build());
+                assertThat(vector.add(other)).isExactlyInstanceOf(BigIntVector.class).isEqualTo(builder.build());
             });
         });
     }
@@ -147,8 +145,7 @@ public final class BigIntVectorTest {
                 vector.entries().forEach(element -> {
                     builder.put(element.getValue().subtract(other.element(element.getKey())));
                 });
-                assertThat(vector.subtract(other)).isExactlyInstanceOf(BigIntVector.class)
-                        .isEqualTo(builder.build());
+                assertThat(vector.subtract(other)).isExactlyInstanceOf(BigIntVector.class).isEqualTo(builder.build());
             });
         });
     }
@@ -205,8 +202,8 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
-                    assertThat(vector.scalarMultiply(scalar.add(otherScalar))).isEqualTo(
-                            vector.scalarMultiply(scalar).add(vector.scalarMultiply(otherScalar)));
+                    assertThat(vector.scalarMultiply(scalar.add(otherScalar)))
+                            .isEqualTo(vector.scalarMultiply(scalar).add(vector.scalarMultiply(otherScalar)));
                 });
             });
         });
@@ -217,8 +214,8 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 scalars.forEach(scalar -> {
-                    assertThat(vector.add(other).scalarMultiply(scalar)).isEqualTo(
-                            vector.scalarMultiply(scalar).add(other.scalarMultiply(scalar)));
+                    assertThat(vector.add(other).scalarMultiply(scalar))
+                            .isEqualTo(vector.scalarMultiply(scalar).add(other.scalarMultiply(scalar)));
                 });
             });
         });
@@ -327,8 +324,7 @@ public final class BigIntVectorTest {
     @Test
     public void taxicabDistanceSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.taxicabDistance(
-                    BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector.taxicabDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
     }
@@ -337,8 +333,7 @@ public final class BigIntVectorTest {
     public void taxicabDistanceShouldBeSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.taxicabDistance(other))
-                        .isEqualTo(vector.subtract(other).taxicabNorm());
+                assertThat(vector.taxicabDistance(other)).isEqualTo(vector.subtract(other).taxicabNorm());
             });
         });
     }
@@ -373,8 +368,8 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 additionalOthers.forEach(additionalOther -> {
-                    assertThat(vector.taxicabDistance(additionalOther)).isLessThanOrEqualTo(vector
-                            .taxicabDistance(other).add(other.taxicabDistance(additionalOther)));
+                    assertThat(vector.taxicabDistance(additionalOther)).isLessThanOrEqualTo(
+                            vector.taxicabDistance(other).add(other.taxicabDistance(additionalOther)));
                 });
             });
         });
@@ -422,8 +417,8 @@ public final class BigIntVectorTest {
     public void euclideanNormShouldBeSubadditive() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.add(other).euclideanNorm()).isLessThanOrEqualTo(
-                        vector.euclideanNorm().add(other.euclideanNorm()).add(tolerance));
+                assertThat(vector.add(other).euclideanNorm())
+                        .isLessThanOrEqualTo(vector.euclideanNorm().add(other.euclideanNorm()).add(tolerance));
             });
         });
     }
@@ -455,8 +450,7 @@ public final class BigIntVectorTest {
     public void euclideanNormWithPrecisionShouldSucceed() {
         vectors.forEach(vector -> {
             assertThat(vector.euclideanNorm(precision)).isExactlyInstanceOf(BigDecimal.class)
-                    .isEqualTo(
-                            new SquareRootCalculator(precision).sqrt(vector.euclideanNormPow2()));
+                    .isEqualTo(new SquareRootCalculator(precision).sqrt(vector.euclideanNormPow2()));
         });
     }
 
@@ -464,17 +458,14 @@ public final class BigIntVectorTest {
     public void euclideanNormScaleTooLowAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanNorm(-1, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected scale >= 0 but actual -1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
     }
 
     @Test
     public void euclideanNormWithScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.euclideanNorm(scale, roundingMode))
-                    .isExactlyInstanceOf(BigDecimal.class)
-                    .isEqualTo(new SquareRootCalculator(scale, roundingMode)
-                            .sqrt(vector.euclideanNormPow2()));
+            assertThat(vector.euclideanNorm(scale, roundingMode)).isExactlyInstanceOf(BigDecimal.class)
+                    .isEqualTo(new SquareRootCalculator(scale, roundingMode).sqrt(vector.euclideanNormPow2()));
         });
     }
 
@@ -505,17 +496,15 @@ public final class BigIntVectorTest {
     public void euclideanNormScaleTooLowAndPrecisionAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanNorm(precision, -1, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected scale >= 0 but actual -1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
     }
 
     @Test
     public void euclideanNormWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.euclideanNorm(precision, scale, roundingMode))
-                    .isExactlyInstanceOf(BigDecimal.class)
-                    .isEqualTo(new SquareRootCalculator(precision, scale, roundingMode)
-                            .sqrt(vector.euclideanNormPow2()));
+            assertThat(vector.euclideanNorm(precision, scale, roundingMode)).isExactlyInstanceOf(BigDecimal.class)
+                    .isEqualTo(
+                            new SquareRootCalculator(precision, scale, roundingMode).sqrt(vector.euclideanNormPow2()));
         });
     }
 
@@ -529,8 +518,7 @@ public final class BigIntVectorTest {
     @Test
     public void dotProductSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.dotProduct(
-                    BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector.dotProduct(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
     }
@@ -541,11 +529,9 @@ public final class BigIntVectorTest {
             others.forEach(other -> {
                 BigInteger expected = BigInteger.ZERO;
                 for (final Entry<Integer, BigInteger> entry : vector.entries()) {
-                    expected = expected
-                            .add(entry.getValue().multiply(other.element(entry.getKey())));
+                    expected = expected.add(entry.getValue().multiply(other.element(entry.getKey())));
                 }
-                assertThat(vector.dotProduct(other)).isExactlyInstanceOf(BigInteger.class)
-                        .isEqualTo(expected);
+                assertThat(vector.dotProduct(other)).isExactlyInstanceOf(BigInteger.class).isEqualTo(expected);
             });
         });
     }
@@ -560,8 +546,7 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistancePow2SizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistancePow2(
-                    BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector.euclideanDistancePow2(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
     }
@@ -574,8 +559,7 @@ public final class BigIntVectorTest {
                 vector.entries().forEach(entry -> {
                     builder.put(entry.getValue().subtract(other.element(entry.getKey())));
                 });
-                assertThat(vector.euclideanDistancePow2(other))
-                        .isExactlyInstanceOf(BigInteger.class)
+                assertThat(vector.euclideanDistancePow2(other)).isExactlyInstanceOf(BigInteger.class)
                         .isEqualTo(builder.build().euclideanNormPow2());
             });
         });
@@ -608,8 +592,7 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistanceSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(
-                    BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector.euclideanDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
     }
@@ -619,8 +602,7 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 assertThat(vector.euclideanDistance(other)).isExactlyInstanceOf(BigDecimal.class)
-                        .isEqualByComparingTo(new SquareRootCalculator()
-                                .sqrt(vector.euclideanDistancePow2(other)));
+                        .isEqualByComparingTo(new SquareRootCalculator().sqrt(vector.euclideanDistancePow2(other)));
             });
         });
     }
@@ -639,9 +621,9 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 additionalOthers.forEach(additionalOther -> {
-                    assertThat(vector.euclideanDistance(additionalOther))
-                            .isLessThanOrEqualTo(vector.euclideanDistance(other)
-                                    .add(other.euclideanDistance(additionalOther)).add(tolerance));
+                    assertThat(vector.euclideanDistance(additionalOther)).isLessThanOrEqualTo(
+                            vector.euclideanDistance(other).add(other.euclideanDistance(additionalOther))
+                                    .add(tolerance));
                 });
             });
         });
@@ -664,8 +646,8 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistanceSizesNotEqualWithPrecisionShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(
-                    BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build(), precision);
+            zeroVector
+                    .euclideanDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build(), precision);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
     }
@@ -674,26 +656,22 @@ public final class BigIntVectorTest {
     public void euclideanDistancePrecisionTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(zeroVector, BigDecimal.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual 0");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 0");
     }
 
     @Test
     public void euclideanDistancePrecisionTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(zeroVector, BigDecimal.ONE);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual 1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 1");
     }
 
     @Test
     public void euclideanDistanceWithPrecisionShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.euclideanDistance(other, precision))
-                        .isExactlyInstanceOf(BigDecimal.class)
-                        .isEqualTo(new SquareRootCalculator(precision)
-                                .sqrt(vector.euclideanDistancePow2(other)));
+                assertThat(vector.euclideanDistance(other, precision)).isExactlyInstanceOf(BigDecimal.class)
+                        .isEqualTo(new SquareRootCalculator(precision).sqrt(vector.euclideanDistancePow2(other)));
             });
         });
     }
@@ -708,8 +686,7 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistanceSizesNotEqualWithScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(
-                    BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build(), scale,
+            zeroVector.euclideanDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build(), scale,
                     roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
@@ -719,16 +696,14 @@ public final class BigIntVectorTest {
     public void euclideanDistanceScaleToLowAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(zeroVector, -1, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected scale >= 0 but actual -1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
     }
 
     @Test
     public void euclideanDistanceWithScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.euclideanDistance(other, scale, roundingMode))
-                        .isExactlyInstanceOf(BigDecimal.class)
+                assertThat(vector.euclideanDistance(other, scale, roundingMode)).isExactlyInstanceOf(BigDecimal.class)
                         .isEqualTo(new SquareRootCalculator(scale, roundingMode)
                                 .sqrt(vector.euclideanDistancePow2(other)));
             });
@@ -752,8 +727,7 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistanceSizesNotEqualWithPrecisionAndScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(
-                    BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build(), precision,
+            zeroVector.euclideanDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build(), precision,
                     scale, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
@@ -763,24 +737,21 @@ public final class BigIntVectorTest {
     public void euclideanDistanceWithPrecisionTooLowAndScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(zeroVector, BigDecimal.ZERO, scale, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual 0");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 0");
     }
 
     @Test
     public void euclideanDistancePrecisionTooHighAndScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(zeroVector, BigDecimal.ONE, scale, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual 1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual 1");
     }
 
     @Test
     public void euclideanDistanceWithPrecisionAndScaleToLowAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(zeroVector, precision, -1, roundingMode);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected scale >= 0 but actual -1");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
     }
 
     @Test
@@ -788,8 +759,8 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 assertThat(vector.euclideanDistance(other, precision, scale, roundingMode))
-                        .isExactlyInstanceOf(BigDecimal.class)
-                        .isEqualTo(new SquareRootCalculator(precision, scale, roundingMode)
+                        .isExactlyInstanceOf(BigDecimal.class).isEqualTo(
+                        new SquareRootCalculator(precision, scale, roundingMode)
                                 .sqrt(vector.euclideanDistancePow2(other)));
             });
         });
@@ -822,8 +793,7 @@ public final class BigIntVectorTest {
     public void maxNormShouldBeAbsolutelyHomogeneous() {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
-                assertThat(vector.scalarMultiply(scalar).maxNorm())
-                        .isEqualTo(scalar.abs().multiply(vector.maxNorm()));
+                assertThat(vector.scalarMultiply(scalar).maxNorm()).isEqualTo(scalar.abs().multiply(vector.maxNorm()));
             });
         });
     }
@@ -832,8 +802,7 @@ public final class BigIntVectorTest {
     public void maxNormShouldBeSubadditive() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.add(other).maxNorm())
-                        .isLessThanOrEqualTo(vector.maxNorm().add(other.maxNorm()));
+                assertThat(vector.add(other).maxNorm()).isLessThanOrEqualTo(vector.maxNorm().add(other.maxNorm()));
             });
         });
     }
@@ -848,8 +817,7 @@ public final class BigIntVectorTest {
     @Test
     public void maxDistanceSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.maxDistance(
-                    BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector.maxDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
     }
@@ -893,8 +861,8 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 additionalOthers.forEach(additionalOther -> {
-                    assertThat(vector.maxDistance(additionalOther)).isLessThanOrEqualTo(
-                            vector.maxDistance(other).add(other.maxDistance(additionalOther)));
+                    assertThat(vector.maxDistance(additionalOther))
+                            .isLessThanOrEqualTo(vector.maxDistance(other).add(other.maxDistance(additionalOther)));
                 });
             });
         });
@@ -949,15 +917,13 @@ public final class BigIntVectorTest {
     public void builderSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             BigIntVector.builder(0);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected size > 0 but actual 0");
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void hashCodeShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.hashCode()).isExactlyInstanceOf(Integer.class)
-                    .isEqualTo(Objects.hash(vector.getMap()));
+            assertThat(vector.hashCode()).isExactlyInstanceOf(Integer.class).isEqualTo(Objects.hash(vector.getMap()));
         });
     }
 
@@ -998,8 +964,8 @@ public final class BigIntVectorTest {
     @Test
     public void toStringShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.toString()).isEqualTo(
-                    MoreObjects.toStringHelper(vector).add("map", vector.getMap()).toString());
+            assertThat(vector.toString())
+                    .isEqualTo(MoreObjects.toStringHelper(vector).add("map", vector.getMap()).toString());
         });
     }
 }

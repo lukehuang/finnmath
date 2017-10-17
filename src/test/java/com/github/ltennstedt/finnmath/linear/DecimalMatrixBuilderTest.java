@@ -95,7 +95,7 @@ public final class DecimalMatrixBuilderTest {
     @Test
     public void toStringShouldSucceed() {
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(4, 5).putAll(BigDecimal.ZERO);
-        assertThat(builder.toString()).isEqualTo(
-                MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
+        assertThat(builder.toString())
+                .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
     }
 }

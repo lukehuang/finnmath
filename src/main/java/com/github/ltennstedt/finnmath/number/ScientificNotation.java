@@ -29,8 +29,8 @@ import java.util.Objects;
  * <p>
  * decimal = coefficient * 10^exponent
  *
- * @since 1
  * @author Lars Tennstedt
+ * @since 1
  */
 @Beta
 public final class ScientificNotation {
@@ -47,14 +47,11 @@ public final class ScientificNotation {
     /**
      * Constructs a {@link ScientificNotation} from the given coefficient and exponent
      *
-     * @param coefficient
-     *            the coefficient
-     * @param exponent
-     *            the exponent
-     * @throws NullPointerException
-     *             if {@code coefficient == null}
-     * @since 1
+     * @param coefficient the coefficient
+     * @param exponent    the exponent
+     * @throws NullPointerException if {@code coefficient == null}
      * @author Lars Tennstedt
+     * @since 1
      */
     public ScientificNotation(final BigDecimal coefficient, final int exponent) {
         this.coefficient = requireNonNull(coefficient, "coefficient");
@@ -65,16 +62,16 @@ public final class ScientificNotation {
      * Returns a string representation of this {@link ScientificNotation}
      *
      * @return The string representation
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     public String asString() {
         if (coefficient.compareTo(BigDecimal.ZERO) == 0) {
             return "0";
         }
         if (exponent < 0) {
-            return new StringBuilder(coefficient.toPlainString()).append(" * 10**(")
-                    .append(exponent).append(")").toString();
+            return new StringBuilder(coefficient.toPlainString()).append(" * 10**(").append(exponent).append(")")
+                    .toString();
         }
         if (exponent == 0) {
             return coefficient.toPlainString();
@@ -82,8 +79,7 @@ public final class ScientificNotation {
         if (exponent == 1) {
             return new StringBuilder(coefficient.toPlainString()).append(" * 10").toString();
         }
-        return new StringBuilder(coefficient.toPlainString()).append(" * 10**").append(exponent)
-                .toString();
+        return new StringBuilder(coefficient.toPlainString()).append(" * 10**").append(exponent).toString();
     }
 
     @Override
@@ -105,8 +101,7 @@ public final class ScientificNotation {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).add("coefficient", coefficient)
-                .add("exponent", exponent).toString();
+        return MoreObjects.toStringHelper(this).add("coefficient", coefficient).add("exponent", exponent).toString();
     }
 
     public BigDecimal getCoefficient() {

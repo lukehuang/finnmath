@@ -23,16 +23,12 @@ import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 
 /**
- * @param &lt;B&gt;
- *            The type of the real and imaginary part of the complex number
- * @param &lt;S&gt;
- *            The type of the complex number
- * @param &lt;R&gt;
- *            The type for quotients of the complex number
- * @param &lt;M&gt;
- *            The type of the related matrix
- * @since 1
+ * @param &lt;B&gt; The type of the real and imaginary part of the complex number
+ * @param &lt;S&gt; The type of the complex number
+ * @param &lt;R&gt; The type for quotients of the complex number
+ * @param &lt;M&gt; The type of the related matrix
  * @author Lars Tennstedt
+ * @since 1
  */
 @Beta
 abstract class AbstractComplexNumber&lt;B, S, R, M&gt; implements MathNumber&lt;S, R, BigDecimal&gt; {
@@ -46,10 +42,10 @@ abstract class AbstractComplexNumber&lt;B, S, R, M&gt; implements MathNumber&lt;
      */
     protected final B imaginary;
 
-<span class="fc" id="L49">    protected AbstractComplexNumber(final B real, final B imaginary) {</span>
-<span class="fc" id="L50">        this.real = requireNonNull(real, &quot;real&quot;);</span>
-<span class="fc" id="L51">        this.imaginary = requireNonNull(imaginary, &quot;imaginary&quot;);</span>
-<span class="fc" id="L52">    }</span>
+<span class="fc" id="L45">    protected AbstractComplexNumber(final B real, final B imaginary) {</span>
+<span class="fc" id="L46">        this.real = requireNonNull(real, &quot;real&quot;);</span>
+<span class="fc" id="L47">        this.imaginary = requireNonNull(imaginary, &quot;imaginary&quot;);</span>
+<span class="fc" id="L48">    }</span>
 
     protected abstract B absPow2();
 
@@ -59,16 +55,15 @@ abstract class AbstractComplexNumber&lt;B, S, R, M&gt; implements MathNumber&lt;
 
     @Override
     public String toString() {
-<span class="fc" id="L62">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary)</span>
-<span class="fc" id="L63">                .toString();</span>
+<span class="fc" id="L58">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary).toString();</span>
     }
 
     public B getReal() {
-<span class="fc" id="L67">        return real;</span>
+<span class="fc" id="L62">        return real;</span>
     }
 
     public B getImaginary() {
-<span class="fc" id="L71">        return imaginary;</span>
+<span class="fc" id="L66">        return imaginary;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

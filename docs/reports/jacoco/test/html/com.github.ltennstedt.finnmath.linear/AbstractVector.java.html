@@ -30,73 +30,66 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * @param &lt;E&gt;
- *            The type of the elements of the vector
- * @param &lt;V&gt;
- *            The type of the vector
- * @param &lt;N&gt;
- *            The type of the euclidean norm of the vector
- * @since 1
+ * @param &lt;E&gt; The type of the elements of the vector
+ * @param &lt;V&gt; The type of the vector
+ * @param &lt;N&gt; The type of the euclidean norm of the vector
  * @author Lars Tennstedt
  * @see ImmutableMap
+ * @since 1
  */
 @Beta
 abstract class AbstractVector&lt;E, V, N&gt; {
     /**
      * The map holding the elements of this {@link AbstractVector}
      *
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     protected final ImmutableMap&lt;Integer, E&gt; map;
 
-<span class="fc" id="L53">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
-<span class="fc" id="L54">        this.map = map;</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L50">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
+<span class="fc" id="L51">        this.map = map;</span>
+<span class="fc" id="L52">    }</span>
 
     /**
      * Returns the element dependent on the given index
      *
-     * @param index
-     *            the index of the element
+     * @param index the index of the element
      * @return The element
-     * @throws NullPointerException
-     *             if {@code index == null}
-     * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
-     * @since 1
+     * @throws NullPointerException     if {@code index == null}
+     * @throws IllegalArgumentException if {@code !map.containsKey(index)}
      * @author Lars Tennstedt
      * @see Map#containsKey
+     * @since 1
      */
     public E element(final Integer index) {
-<span class="fc" id="L72">        requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L73">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(),</span>
-                index);
-<span class="fc" id="L75">        return map.get(index);</span>
+<span class="fc" id="L66">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L67">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
+<span class="fc" id="L68">        return map.get(index);</span>
     }
 
     /**
      * Returns all elements of the underlying {@link Map} of this {@link AbstractVector}
      *
      * @return The elements
-     * @since 1
      * @author Lars Tennstedt
      * @see Map#entrySet
+     * @since 1
      */
     public ImmutableSet&lt;Entry&lt;Integer, E&gt;&gt; entries() {
-<span class="fc" id="L87">        return map.entrySet();</span>
+<span class="fc" id="L80">        return map.entrySet();</span>
     }
 
     /**
      * Returns all elements of this {@link AbstractVector}
      *
      * @return The elements
-     * @since 1
      * @author Lars Tennstedt
      * @see Map#values
+     * @since 1
      */
     public ImmutableCollection&lt;E&gt; elements() {
-<span class="fc" id="L99">        return map.values();</span>
+<span class="fc" id="L92">        return map.values();</span>
     }
 
     protected abstract V add(V summand);
@@ -131,8 +124,7 @@ abstract class AbstractVector&lt;E, V, N&gt; {
 
     protected abstract N euclideanDistance(V other, int scale, RoundingMode roundingMode);
 
-    protected abstract N euclideanDistance(V other, BigDecimal precision, int scale,
-            RoundingMode roundingMode);
+    protected abstract N euclideanDistance(V other, BigDecimal precision, int scale, RoundingMode roundingMode);
 
     protected abstract E maxNorm();
 
@@ -142,20 +134,20 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * Returns the size of the underlying {@link Map}
      *
      * @return size the size
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     public int size() {
-<span class="nc" id="L149">        return map.size();</span>
+<span class="nc" id="L141">        return map.size();</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L154">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
+<span class="fc" id="L146">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
     }
 
     public ImmutableMap&lt;Integer, E&gt; getMap() {
-<span class="fc" id="L158">        return map;</span>
+<span class="fc" id="L150">        return map;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.8.201612092310</span></div></body></html>

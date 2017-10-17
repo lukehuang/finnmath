@@ -19,14 +19,11 @@ package com.github.ltennstedt.finnmath.number;
 import com.google.common.annotations.Beta;
 
 /**
- * @param <S>
- *            The type of the number
- * @param <T>
- *            The type for quotients of the number
- * @param <A>
- *            The type of the absolute value of the number
- * @since 1
+ * @param <S> The type of the number
+ * @param <T> The type for quotients of the number
+ * @param <A> The type of the absolute value of the number
  * @author Lars Tennstedt
+ * @since 1
  */
 @Beta
 public interface MathNumber<S, T, A> {

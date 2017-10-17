@@ -46,8 +46,8 @@ import org.apache.commons.lang3.RandomUtils;
  * {@link SimpleComplexNumber}, {@link RealComplexNumber}, {@link BigIntVector},
  * {@link DecimalVector}, {@link BigIntMatrix} and {@link DecimalMatrix}
  *
- * @since 1
  * @author Lars Tennstedt
+ * @since 1
  */
 @Beta
 public final class MathRandom {
@@ -56,8 +56,8 @@ public final class MathRandom {
     /**
      * Default constructor
      *
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     public MathRandom() {
         random = new Random();
@@ -66,10 +66,9 @@ public final class MathRandom {
     /**
      * Constructor which has the seed value as parameter
      *
-     * @param seed
-     *            The seed
-     * @since 1
+     * @param seed The seed
      * @author Lars Tennstedt
+     * @since 1
      */
     public MathRandom(final long seed) {
         random = new Random(seed);
@@ -79,13 +78,11 @@ public final class MathRandom {
      * Returns a positive {@code long} bounded below by {@code 0} (inclusive) and above by
      * {@code bound} (exclusive)
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@code long}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
      * @author Lars Tennstedt
+     * @since 1
      */
     public long nextPositiveLong(final long bound) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -96,13 +93,11 @@ public final class MathRandom {
      * Returns a negative {@code long} bounded below by {@code -bound} (exclusive) and above by
      * {@code 0} (inclusive)
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@code long}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
      * @author Lars Tennstedt
+     * @since 1
      */
     public long nextNegativeLong(final long bound) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -113,13 +108,11 @@ public final class MathRandom {
      * Returns a {@code long} bounded below by {@code -bound} (exclusive) and above by {@code bound}
      * (exclusive)
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@code long}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
      * @author Lars Tennstedt
+     * @since 1
      */
     public long nextLong(final long bound) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -132,18 +125,14 @@ public final class MathRandom {
     /**
      * Returns an array of the length of {@code howMany} containing positive {@code long longs}
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the length of the resulting array
+     * @param bound   the bound
+     * @param howMany the length of the resulting array
      * @return An array of pseudo random {@code long longs}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextPositiveLong
      * @since 1
-     * @author Lars Tennstedt
      */
     public long[] nextPositiveLongs(final long bound, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -158,18 +147,14 @@ public final class MathRandom {
     /**
      * Returns an array of the length of {@code howMany} containing negative {@code long longs}
      *
-     * @param bound
-     *            {@code long}
-     * @param howMany
-     *            {@code int}
+     * @param bound   {@code long}
+     * @param howMany {@code int}
      * @return An array of pseudo random {@code long longs}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextNegativeLong
      * @since 1
-     * @author Lars Tennstedt
      */
     public long[] nextNegativeLongs(final long bound, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -184,18 +169,14 @@ public final class MathRandom {
     /**
      * Returns an array of the length of {@code howMany} containing {@code long longs}
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the length of the resulting array
+     * @param bound   the bound
+     * @param howMany the length of the resulting array
      * @return An array of pseudo random {@code long longs}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 1}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextLong
      * @since 1
-     * @author Lars Tennstedt
      */
     public long[] nextLongs(final long bound, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -211,17 +192,13 @@ public final class MathRandom {
      * Returns a positive {@link BigDecimal} of a given {@code scale} bounded below by {@code 0}
      * (inclusive) and above by {@code bound} (exclusive)
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
      * @return A pseudo random {@link BigDecimal}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
      * @author Lars Tennstedt
+     * @since 1
      */
     public BigDecimal nextPositiveDecimal(final long bound, final int scale) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -237,17 +214,13 @@ public final class MathRandom {
      * Returns a negative {@link BigDecimal} of a given {@code scale} bounded below by
      * {@code -bound} (exclusive) and above by {@code 0} (inclusive)
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
      * @return A pseudo random {@link BigDecimal}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
      * @author Lars Tennstedt
+     * @since 1
      */
     public BigDecimal nextNegativeDecimal(final long bound, final int scale) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -263,17 +236,13 @@ public final class MathRandom {
      * Returns a {@link BigDecimal} of a given {@code scale} bounded below by {@code -bound}
      * (exclusive) and above by {@code bound} (exclusive)
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
      * @return A pseudo random {@link BigDecimal}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
      * @author Lars Tennstedt
+     * @since 1
      */
     public BigDecimal nextDecimal(final long bound, final int scale) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -285,18 +254,14 @@ public final class MathRandom {
     /**
      * Returns a positive {@link BigDecimal} which is invertible
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
      * @return A pseudo random {@link BigDecimal}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code bound < 2}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @author Lars Tennstedt
      * @see #nextPositiveDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
     public BigDecimal nextInvertiblePositiveDecimal(final long bound, final int scale) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -311,19 +276,15 @@ public final class MathRandom {
     /**
      * Returns a negative {@link BigDecimal} which is invertible
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
      * @return A pseudo random {@link BigDecimal}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code bound < 2}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @author Lars Tennstedt
      * @see #nextNegativeDecimal
      * @see #nextInvertibleDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
     public BigDecimal nextInvertibleNegativeDecimal(final long bound, final int scale) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -338,18 +299,14 @@ public final class MathRandom {
     /**
      * Returns a {@link BigDecimal} which is invertible
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
      * @return A pseudo random {@link BigDecimal}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code bound < 2}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @author Lars Tennstedt
      * @see #nextDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
     public BigDecimal nextInvertibleDecimal(final long bound, final int scale) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -378,25 +335,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing positive {@link BigDecimal
      * BigDecimals}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextPositiveDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<BigDecimal> nextPositiveDecimals(final long bound, final int scale,
-            final int howMany) {
+    public List<BigDecimal> nextPositiveDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -411,25 +361,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing negative {@link BigDecimal
      * BigDecimals}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextNegativeDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<BigDecimal> nextNegativeDecimals(final long bound, final int scale,
-            final int howMany) {
+    public List<BigDecimal> nextNegativeDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -444,22 +387,16 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link BigDecimal
      * BigDecimals}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
     public List<BigDecimal> nextDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -476,25 +413,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing positive {@link BigDecimal
      * BigDecimals} which are invertible
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextInvertiblePositiveDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<BigDecimal> nextInvertiblePositiveDecimals(final long bound, final int scale,
-            final int howMany) {
+    public List<BigDecimal> nextInvertiblePositiveDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -509,25 +439,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing negative {@link BigDecimal
      * BigDecimals} which are invertible
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextInvertibleNegativeDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<BigDecimal> nextInvertibleNegativeDecimals(final long bound, final int scale,
-            final int howMany) {
+    public List<BigDecimal> nextInvertibleNegativeDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -542,25 +465,18 @@ public final class MathRandom {
      * Returns a {@code List} of the size of {@code howMany} containing {@link BigDecimal
      * BigDecimals} which are invertible
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextInvertibleDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<BigDecimal> nextInvertibleDecimals(final long bound, final int scale,
-            final int howMany) {
+    public List<BigDecimal> nextInvertibleDecimals(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -576,13 +492,11 @@ public final class MathRandom {
      * and above by {@code bound} (exclusive) and whose {@code denominator} is bounded below
      * {@code 1} (inclusive) and {@code bound} (exclusive)
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 2}
      * @author Lars Tennstedt
+     * @since 1
      */
     public Fraction nextPositiveFraction(final long bound) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -596,13 +510,11 @@ public final class MathRandom {
      * (exclusive) and above by {@code 0} (inclusive) and whose {@code denominator} is bounded below
      * {@code 1} (inclusive) and {@code bound} (exclusive)
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 2}
      * @author Lars Tennstedt
+     * @since 1
      */
     public Fraction nextNegativeFraction(final long bound) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -614,13 +526,11 @@ public final class MathRandom {
      * (exclusive) and above by {@code bound} (exclusive) and whose {@code denominator} is bounded
      * below {@code -bound} (exclusive) and {@code bound} (exclusive)
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 2}
      * @author Lars Tennstedt
+     * @since 1
      */
     public Fraction nextFraction(final long bound) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -633,14 +543,12 @@ public final class MathRandom {
     /**
      * Returns a positive {@link Fraction} which is invertible
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
+     * @throws IllegalArgumentException if {@code bound < 2}
+     * @author Lars Tennstedt
      * @see #nextPositiveFraction
      * @since 1
-     * @author Lars Tennstedt
      */
     public Fraction nextInvertiblePositiveFraction(final long bound) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -652,14 +560,12 @@ public final class MathRandom {
     /**
      * Returns a negative {@link Fraction} which is invertible
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
+     * @throws IllegalArgumentException if {@code bound < 2}
+     * @author Lars Tennstedt
      * @see #nextNegativeFraction
      * @since 1
-     * @author Lars Tennstedt
      */
     public Fraction nextInvertibleNegativeFraction(final long bound) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -669,14 +575,12 @@ public final class MathRandom {
     /**
      * Returns a {@link Fraction} which is invertible
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@link Fraction}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 2}
+     * @throws IllegalArgumentException if {@code bound < 2}
+     * @author Lars Tennstedt
      * @see #nextFraction
      * @since 1
-     * @author Lars Tennstedt
      */
     public Fraction nextInvertibleFraction(final long bound) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -690,18 +594,14 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing positive {@link Fraction
      * Fractions}
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextPositiveFraction
      * @since 1
-     * @author Lars Tennstedt
      */
     public List<Fraction> nextPositiveFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -717,18 +617,14 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing negative {@link Fraction
      * Fractions}
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextNegativeFraction
      * @since 1
-     * @author Lars Tennstedt
      */
     public List<Fraction> nextNegativeFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -743,18 +639,14 @@ public final class MathRandom {
     /**
      * Returns a {@link List} of the size of {@code howMany} containing {@link Fraction Fractions}
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextFraction
      * @since 1
-     * @author Lars Tennstedt
      */
     public List<Fraction> nextFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -770,18 +662,14 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing positive {@link Fraction
      * Fractions} which are invertible
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextInvertiblePositiveFraction
      * @since 1
-     * @author Lars Tennstedt
      */
     public List<Fraction> nextInvertiblePositiveFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -797,18 +685,14 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing negative {@link Fraction
      * Fractions} which are invertible
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextInvertibleNegativeFraction
      * @since 1
-     * @author Lars Tennstedt
      */
     public List<Fraction> nextInvertibleNegativeFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -824,18 +708,14 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link Fraction Fractions}
      * which are invertible
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link Fraction Fractions}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextInvertibleFraction
      * @since 1
-     * @author Lars Tennstedt
      */
     public List<Fraction> nextInvertibleFractions(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
@@ -851,13 +731,11 @@ public final class MathRandom {
      * Returns a {@link SimpleComplexNumber} whose {@code real} and {@code imaginary} part are
      * bounded below by {@code -bound} (exclusive) and above by {@code bound} (exclusive)
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@link SimpleComplexNumber}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
      * @author Lars Tennstedt
+     * @since 1
      */
     public SimpleComplexNumber nextSimpleComplexNumber(final long bound) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -869,20 +747,17 @@ public final class MathRandom {
     /**
      * Returns a {@link SimpleComplexNumber} which is invertible
      *
-     * @param bound
-     *            the bound
+     * @param bound the bound
      * @return A pseudo random {@link SimpleComplexNumber}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @author Lars Tennstedt
      * @see #nextSimpleComplexNumber
      * @since 1
-     * @author Lars Tennstedt
      */
     public SimpleComplexNumber nextInvertibleSimpleComplexNumber(final long bound) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         final BigInteger nonZeroPart = BigInteger.valueOf(RandomUtils.nextLong(1, bound));
-        final long possibleZeroPart = random.nextBoolean() ? RandomUtils.nextLong(1, bound)
-                : nextLong(bound);
+        final long possibleZeroPart = random.nextBoolean() ? RandomUtils.nextLong(1, bound) : nextLong(bound);
         if (random.nextBoolean()) {
             return new SimpleComplexNumber(BigInteger.valueOf(possibleZeroPart), nonZeroPart);
         }
@@ -893,18 +768,14 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link SimpleComplexNumber
      * SimpleComplexNumbers}
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param howMany the size of the resulting {@link List}
      * @return A List {@link List} of pseudo random {@link SimpleComplexNumber SimpleComplexNumbers}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextSimpleComplexNumber
      * @since 1
-     * @author Lars Tennstedt
      */
     public List<SimpleComplexNumber> nextSimpleComplexNumbers(final long bound, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -920,21 +791,16 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link SimpleComplexNumber
      * SimpleComplexNumbers} which are invertible
      *
-     * @param bound
-     *            the bound
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link SimpleComplexNumber SimpleComplexNumbers}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextInvertibleSimpleComplexNumber
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<SimpleComplexNumber> nextInvertibleSimpleComplexNumbers(final long bound,
-            final int howMany) {
+    public List<SimpleComplexNumber> nextInvertibleSimpleComplexNumbers(final long bound, final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
         final List<SimpleComplexNumber> complexNumbers = new ArrayList<>(howMany);
@@ -948,15 +814,12 @@ public final class MathRandom {
      * Returns a {@link RealComplexNumber} whose {@code real} and {@code imaginary} part are bounded
      * below by {@code -bound} (exclusive) and above by {@code bound} (exclusive)
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
      * @return A pseudo random {@link RealComplexNumber}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
      * @author Lars Tennstedt
+     * @since 1
      */
     public RealComplexNumber nextRealComplexNumber(final long bound, final int scale) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -969,24 +832,20 @@ public final class MathRandom {
     /**
      * Returns a {@link RealComplexNumber} which is invertible
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
      * @return A pseudo random {@link RealComplexNumber}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @author Lars Tennstedt
      * @see #nextRealComplexNumber
      * @since 1
-     * @author Lars Tennstedt
      */
     public RealComplexNumber nextInvertibleRealComplexNumber(final long bound, final int scale) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal nonZeroPart = nextInvertibleDecimal(bound, scale);
-        final BigDecimal possibleZeroPart = random.nextBoolean()
-                ? nextInvertibleDecimal(bound, scale)
-                : nextDecimal(bound, scale);
+        final BigDecimal possibleZeroPart =
+                random.nextBoolean() ? nextInvertibleDecimal(bound, scale) : nextDecimal(bound, scale);
         if (random.nextBoolean()) {
             return new RealComplexNumber(possibleZeroPart, nonZeroPart);
         }
@@ -997,23 +856,17 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link RealComplexNumber
      * RealComplexNumbers}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link RealComplexNumber RealComplexNumbers}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextRealComplexNumber
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<RealComplexNumber> nextRealComplexNumbers(final long bound, final int scale,
-            final int howMany) {
+    public List<RealComplexNumber> nextRealComplexNumbers(final long bound, final int scale, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1028,23 +881,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link RealComplexNumber
      * RealComplexNumbers} which are invertible
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link RealComplexNumber RealComplexNumbers}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextInvertibleRealComplexNumber
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<RealComplexNumber> nextInvertibleRealComplexNumbers(final long bound,
-            final int scale, final int howMany) {
+    public List<RealComplexNumber> nextInvertibleRealComplexNumbers(final long bound, final int scale,
+                                                                    final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1058,18 +906,14 @@ public final class MathRandom {
     /**
      * Returns a {@link BigIntVector}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the size of the resulting {@link BigIntVector}
+     * @param bound the bound
+     * @param size  the size of the resulting {@link BigIntVector}
      * @return A pseudo random {@link BigIntVector}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @author Lars Tennstedt
      * @see #nextLong
      * @since 1
-     * @author Lars Tennstedt
      */
     public BigIntVector nextBigIntVector(final long bound, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -1085,23 +929,17 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link BigIntVector
      * BigIntVectors}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the sizes of the resulting {@link BigIntVector BigIntVectors}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param size    the sizes of the resulting {@link BigIntVector BigIntVectors}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link BigIntVector BigIntVectors}
-     * @throws IllegalArgumentException
-     *             if {@code  bound < 2}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 2}
+     * @throws IllegalArgumentException if {@code  bound < 2}
+     * @throws IllegalArgumentException if {@code howMany < 2}
+     * @author Lars Tennstedt
      * @see #nextBigIntVector
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<BigIntVector> nextBigIntVectors(final long bound, final int size,
-            final int howMany) {
+    public List<BigIntVector> nextBigIntVectors(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1115,34 +953,26 @@ public final class MathRandom {
     /**
      * Returns a {@link BigIntMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param rowSize
-     *            the row size of the resulting {@link BigIntMatrix}
-     * @param columnSize
-     *            the column size of the resulting {@link BigIntMatrix}
+     * @param bound      the bound
+     * @param rowSize    the row size of the resulting {@link BigIntMatrix}
+     * @param columnSize the column size of the resulting {@link BigIntMatrix}
      * @return A pseudo random {@link BigIntMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize < 1}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize < 1}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code rowSize < 1}
+     * @throws IllegalArgumentException if {@code columnSize < 1}
+     * @author Lars Tennstedt
      * @see #nextLong
      * @since 1
-     * @author Lars Tennstedt
      */
-    public BigIntMatrix nextBigIntMatrix(final long bound, final int rowSize,
-            final int columnSize) {
+    public BigIntMatrix nextBigIntMatrix(final long bound, final int rowSize, final int columnSize) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         final BigIntMatrixBuilder builder = BigIntMatrix.builder(rowSize, columnSize);
         IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));
-                    });
+            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));
+            });
         });
         return builder.build();
     }
@@ -1150,33 +980,28 @@ public final class MathRandom {
     /**
      * Returns an upper triangular {@link BigIntMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of resulting {@link BigIntMatrix}
+     * @param bound the bound
+     * @param size  the row and column size of resulting {@link BigIntMatrix}
      * @return A pseudo random upper triangular {@link BigIntMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see #nextLong
      * @see BigIntMatrix#upperTriangular
+     * @since 1
      */
     public BigIntMatrix nextUpperTriangularBigIntMatrix(final long bound, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        if (rowIndex <= columnIndex) {
-                            builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));
-                        } else {
-                            builder.put(rowIndex, columnIndex, BigInteger.ZERO);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex <= columnIndex) {
+                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));
+                } else {
+                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                }
+            });
         });
         return builder.build();
     }
@@ -1184,33 +1009,28 @@ public final class MathRandom {
     /**
      * Returns an lower triangular {@link BigIntMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix}
+     * @param bound the bound
+     * @param size  the row and column size of the resulting {@link BigIntMatrix}
      * @return A pseudo random lower triangular {@link BigIntMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see #nextLong
      * @see BigIntMatrix#lowerTriangular
+     * @since 1
      */
     public BigIntMatrix nextLowerTriangularBigIntMatrix(final long bound, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        if (rowIndex >= columnIndex) {
-                            builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));
-                        } else {
-                            builder.put(rowIndex, columnIndex, BigInteger.ZERO);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex >= columnIndex) {
+                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));
+                } else {
+                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                }
+            });
         });
         return builder.build();
     }
@@ -1218,20 +1038,16 @@ public final class MathRandom {
     /**
      * Returns a triangular {@link BigIntMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix}
+     * @param bound the bound
+     * @param size  the row and column size of the resulting {@link BigIntMatrix}
      * @return A pseudo random triangular {@link BigIntMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see #nextUpperTriangularBigIntMatrix
      * @see #nextLowerTriangularBigIntMatrix
      * @see BigIntMatrix#triangular
+     * @since 1
      */
     public BigIntMatrix nextTriangularBigIntMatrix(final long bound, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -1245,32 +1061,27 @@ public final class MathRandom {
     /**
      * Returns a diagonal {@link BigIntMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix}
+     * @param bound the bound
+     * @param size  the row and column size of the resulting {@link BigIntMatrix}
      * @return A pseudo random diagonal {@link BigIntMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see BigIntMatrix#diagonal
+     * @since 1
      */
     public BigIntMatrix nextDiagonalBigIntMatrix(final long bound, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        if (rowIndex.equals(columnIndex)) {
-                            builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));
-                        } else {
-                            builder.put(rowIndex, columnIndex, BigInteger.ZERO);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));
+                } else {
+                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                }
+            });
         });
         return builder.build();
     }
@@ -1278,35 +1089,30 @@ public final class MathRandom {
     /**
      * Returns a symmetric {@link BigIntMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix}
+     * @param bound the bound
+     * @param size  the row and column size of the resulting {@link BigIntMatrix}
      * @return A pseudo random symmetric {@link BigIntMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see BigIntMatrix#symmetric
+     * @since 1
      */
     public BigIntMatrix nextSymmetricBigIntMatrix(final long bound, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        final BigInteger element = BigInteger.valueOf(nextLong(bound));
-                        if (rowIndex < columnIndex) {
-                            builder.put(rowIndex, columnIndex, element);
-                            builder.put(columnIndex, rowIndex, element);
-                        }
-                        if (rowIndex.equals(columnIndex)) {
-                            builder.put(rowIndex, columnIndex, element);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                final BigInteger element = BigInteger.valueOf(nextLong(bound));
+                if (rowIndex < columnIndex) {
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element);
+                }
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, element);
+                }
+            });
         });
         return builder.build();
     }
@@ -1314,35 +1120,30 @@ public final class MathRandom {
     /**
      * Returns a skew-symmetric {@link BigIntMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix}
+     * @param bound the bound
+     * @param size  the row and column size of the resulting {@link BigIntMatrix}
      * @return A pseudo random skew-symmetric {@link BigIntMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see BigIntMatrix#skewSymmetric
+     * @since 1
      */
     public BigIntMatrix nextSkewSymmetricBigIntMatrix(final long bound, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        if (rowIndex < columnIndex) {
-                            final BigInteger element = BigInteger.valueOf(nextLong(bound));
-                            builder.put(rowIndex, columnIndex, element);
-                            builder.put(columnIndex, rowIndex, element.negate());
-                        }
-                        if (rowIndex.equals(columnIndex)) {
-                            builder.put(rowIndex, columnIndex, BigInteger.ZERO);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex < columnIndex) {
+                    final BigInteger element = BigInteger.valueOf(nextLong(bound));
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element.negate());
+                }
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                }
+            });
         });
         return builder.build();
     }
@@ -1351,29 +1152,21 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link BigIntMatrix
      * BigIntMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param rowSize
-     *            the row size of the resulting {@link BigIntMatrix BigIntMatrices}
-     * @param columnSize
-     *            the column size of the resulting {@link BigIntMatrix BigIntMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound      the bound
+     * @param rowSize    the row size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param columnSize the column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany    the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link BigIntMatrix BigIntMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize < 1}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code rowSize < 1}
+     * @throws IllegalArgumentException if {@code columnSize < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @author Lars Tennstedt
      * @see #nextBigIntMatrix
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<BigIntMatrix> nextBigIntMatrices(final long bound, final int rowSize,
-            final int columnSize, final int howMany) {
+    public List<BigIntMatrix> nextBigIntMatrices(final long bound, final int rowSize, final int columnSize,
+                                                 final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
@@ -1389,25 +1182,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing upper triangular
      * {@link BigIntMatrix BigIntMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param size    the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random upper triangular {@link BigIntMatrix BigIntMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextUpperTriangularBigIntMatrix
+     * @since 1
      */
-    public List<BigIntMatrix> nextUpperTriangularBigIntMatrices(final long bound, final int size,
-            final int howMany) {
+    public List<BigIntMatrix> nextUpperTriangularBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1422,25 +1208,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing lower triangular
      * {@link BigIntMatrix BigIntMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param size    the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random lower triangular {@link BigIntMatrix BigIntMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextLowerTriangularBigIntMatrix
+     * @since 1
      */
-    public List<BigIntMatrix> nextLowerTriangularBigIntMatrices(final long bound, final int size,
-            final int howMany) {
+    public List<BigIntMatrix> nextLowerTriangularBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1455,25 +1234,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing triangular
      * {@link BigIntMatrix BigIntMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param size    the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random triangular {@link BigIntMatrix BigIntMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextTriangularBigIntMatrix
+     * @since 1
      */
-    public List<BigIntMatrix> nextTriangularBigIntMatrices(final long bound, final int size,
-            final int howMany) {
+    public List<BigIntMatrix> nextTriangularBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1488,25 +1260,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing diagonal {@link BigIntMatrix
      * BigIntMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param size    the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random diagonal {@link BigIntMatrix BigIntMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextDiagonalBigIntMatrix
+     * @since 1
      */
-    public List<BigIntMatrix> nextDiagonalBigIntMatrices(final long bound, final int size,
-            final int howMany) {
+    public List<BigIntMatrix> nextDiagonalBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1521,25 +1286,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing symmetric
      * {@link BigIntMatrix BigIntMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param size    the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random symmetric {@link BigIntMatrix BigIntMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextSymmetricBigIntMatrix
+     * @since 1
      */
-    public List<BigIntMatrix> nextSymmetricBigIntMatrices(final long bound, final int size,
-            final int howMany) {
+    public List<BigIntMatrix> nextSymmetricBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1554,25 +1312,18 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing skew-symmetric
      * {@link BigIntMatrix BigIntMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param size
-     *            the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param size    the row and column size of the resulting {@link BigIntMatrix BigIntMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random skew-symmetric {@link BigIntMatrix BigIntMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextSkewSymmetricBigIntMatrix
+     * @since 1
      */
-    public List<BigIntMatrix> nextSkewSymmetricBigIntMatrices(final long bound, final int size,
-            final int howMany) {
+    public List<BigIntMatrix> nextSkewSymmetricBigIntMatrices(final long bound, final int size, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1586,22 +1337,16 @@ public final class MathRandom {
     /**
      * Returns a {@link DecimalVector}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param size
-     *            the size of the resulting {@link DecimalVector}
+     * @param bound the bound
+     * @param scale the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param size  the size of the resulting {@link DecimalVector}
      * @return A speudo random {@link DecimalVector}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @author Lars Tennstedt
      * @see #nextDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
     public DecimalVector nextDecimalVector(final long bound, final int scale, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
@@ -1618,31 +1363,22 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link DecimalVector
      * DecimalVectors}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param size
-     *            the size of the resulting {@link DecimalVector DecimalVectors}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param size    the size of the resulting {@link DecimalVector DecimalVectors}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link DecimalVector DecimalVectors}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize < 1}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code rowSize < 1}
+     * @throws IllegalArgumentException if {@code columnSize < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @author Lars Tennstedt
      * @see #nextDecimalVector
      * @since 1
-     * @author Lars Tennstedt
      */
     public List<DecimalVector> nextDecimalVectors(final long bound, final int scale, final int size,
-            final int howMany) {
+                                                  final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -1657,39 +1393,29 @@ public final class MathRandom {
     /**
      * Returns a {@link DecimalMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param rowSize
-     *            the row size of the resulting {@link DecimalMatrix}
-     * @param columnSize
-     *            the column size of the resulting {@link DecimalMatrix}
+     * @param bound      the bound
+     * @param scale      the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param rowSize    the row size of the resulting {@link DecimalMatrix}
+     * @param columnSize the column size of the resulting {@link DecimalMatrix}
      * @return A pseudo random {@link DecimalMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize < 1}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize < 1}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code rowSize < 1}
+     * @throws IllegalArgumentException if {@code columnSize < 1}
+     * @author Lars Tennstedt
      * @see #nextDecimal
      * @since 1
-     * @author Lars Tennstedt
      */
-    public DecimalMatrix nextDecimalMatrix(final long bound, final int scale, final int rowSize,
-            final int columnSize) {
+    public DecimalMatrix nextDecimalMatrix(final long bound, final int scale, final int rowSize, final int columnSize) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(rowSize, columnSize);
         IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));
-                    });
+            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));
+            });
         });
         return builder.build();
     }
@@ -1697,38 +1423,30 @@ public final class MathRandom {
     /**
      * Returns an upper triangular {@link DecimalMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of resulting {@link DecimalMatrix}
+     * @param bound the bound
+     * @param scale the scale
+     * @param size  the row and column size of resulting {@link DecimalMatrix}
      * @return A pseudo random upper triangular {@link DecimalMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see #nextDecimal
      * @see DecimalMatrix#upperTriangular
+     * @since 1
      */
-    public DecimalMatrix nextUpperTriangularDecimalMatrix(final long bound, final int scale,
-            final int size) {
+    public DecimalMatrix nextUpperTriangularDecimalMatrix(final long bound, final int scale, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        if (rowIndex <= columnIndex) {
-                            builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));
-                        } else {
-                            builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex <= columnIndex) {
+                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));
+                } else {
+                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
+                }
+            });
         });
         return builder.build();
     }
@@ -1736,38 +1454,30 @@ public final class MathRandom {
     /**
      * Returns an lower triangular {@link DecimalMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix}
+     * @param bound the bound
+     * @param scale the scale
+     * @param size  the row and column size of the resulting {@link DecimalMatrix}
      * @return A pseudo random lower triangular {@link DecimalMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see #nextDecimal
      * @see DecimalMatrix#lowerTriangular
+     * @since 1
      */
-    public DecimalMatrix nextLowerTriangularDecimalMatrix(final long bound, final int scale,
-            final int size) {
+    public DecimalMatrix nextLowerTriangularDecimalMatrix(final long bound, final int scale, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        if (rowIndex >= columnIndex) {
-                            builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));
-                        } else {
-                            builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex >= columnIndex) {
+                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));
+                } else {
+                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
+                }
+            });
         });
         return builder.build();
     }
@@ -1775,27 +1485,20 @@ public final class MathRandom {
     /**
      * Returns a triangular {@link DecimalMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix}
+     * @param bound the bound
+     * @param scale the scale
+     * @param size  the row and column size of the resulting {@link DecimalMatrix}
      * @return A pseudo random triangular {@link DecimalMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see #nextUpperTriangularDecimalMatrix
      * @see #nextLowerTriangularDecimalMatrix
      * @see DecimalMatrix#triangular
+     * @since 1
      */
-    public DecimalMatrix nextTriangularDecimalMatrix(final long bound, final int scale,
-            final int size) {
+    public DecimalMatrix nextTriangularDecimalMatrix(final long bound, final int scale, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         if (random.nextBoolean()) {
@@ -1807,37 +1510,29 @@ public final class MathRandom {
     /**
      * Returns a diagonal {@link DecimalMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix}
+     * @param bound the bound
+     * @param scale the scale
+     * @param size  the row and column size of the resulting {@link DecimalMatrix}
      * @return A pseudo random diagonal {@link DecimalMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see DecimalMatrix#diagonal
+     * @since 1
      */
-    public DecimalMatrix nextDiagonalDecimalMatrix(final long bound, final int scale,
-            final int size) {
+    public DecimalMatrix nextDiagonalDecimalMatrix(final long bound, final int scale, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        if (rowIndex.equals(columnIndex)) {
-                            builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));
-                        } else {
-                            builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));
+                } else {
+                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
+                }
+            });
         });
         return builder.build();
     }
@@ -1845,40 +1540,32 @@ public final class MathRandom {
     /**
      * Returns a symmetric {@link DecimalMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix}
+     * @param bound the bound
+     * @param scale the scale
+     * @param size  the row and column size of the resulting {@link DecimalMatrix}
      * @return A pseudo random symmetric {@link DecimalMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see DecimalMatrix#symmetric
+     * @since 1
      */
-    public DecimalMatrix nextSymmetricDecimalMatrix(final long bound, final int scale,
-            final int size) {
+    public DecimalMatrix nextSymmetricDecimalMatrix(final long bound, final int scale, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        final BigDecimal element = nextDecimal(bound, scale);
-                        if (rowIndex < columnIndex) {
-                            builder.put(rowIndex, columnIndex, element);
-                            builder.put(columnIndex, rowIndex, element);
-                        }
-                        if (rowIndex.equals(columnIndex)) {
-                            builder.put(rowIndex, columnIndex, element);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                final BigDecimal element = nextDecimal(bound, scale);
+                if (rowIndex < columnIndex) {
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element);
+                }
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, element);
+                }
+            });
         });
         return builder.build();
     }
@@ -1886,40 +1573,32 @@ public final class MathRandom {
     /**
      * Returns a skew-symmetric {@link DecimalMatrix}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix}
+     * @param bound the bound
+     * @param scale the scale
+     * @param size  the row and column size of the resulting {@link DecimalMatrix}
      * @return A pseudo random skew-symmetric {@link DecimalMatrix}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
      * @author Lars Tennstedt
      * @see DecimalMatrix#skewSymmetric
+     * @since 1
      */
-    public DecimalMatrix nextSkewSymmetricDecimalMatrix(final long bound, final int scale,
-            final int size) {
+    public DecimalMatrix nextSkewSymmetricDecimalMatrix(final long bound, final int scale, final int size) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);
         IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())
-                    .forEach(columnIndex -> {
-                        if (rowIndex < columnIndex) {
-                            final BigDecimal element = nextDecimal(bound, scale);
-                            builder.put(rowIndex, columnIndex, element);
-                            builder.put(columnIndex, rowIndex, element.negate());
-                        }
-                        if (rowIndex.equals(columnIndex)) {
-                            builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
-                        }
-                    });
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex < columnIndex) {
+                    final BigDecimal element = nextDecimal(bound, scale);
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element.negate());
+                }
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
+                }
+            });
 
         });
         return builder.build();
@@ -1929,33 +1608,23 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing {@link DecimalMatrix
      * DecimalMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @param rowSize
-     *            the row size of the resulting {@link DecimalMatrix DecimalMatrices}
-     * @param columnSize
-     *            the column size of the resulting {@link DecimalMatrix DecimalMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound      the bound
+     * @param scale      the scale to be set on the {@link BigDecimal BigDecimals}
+     * @param rowSize    the row size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param columnSize the column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany    the size of the resulting {@link List}
      * @return A {@link List} of pseudo random {@link DecimalMatrix DecimalMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize < 1}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code rowSize < 1}
+     * @throws IllegalArgumentException if {@code columnSize < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
+     * @author Lars Tennstedt
      * @see #nextDecimalMatrix
      * @since 1
-     * @author Lars Tennstedt
      */
-    public List<DecimalMatrix> nextDecimalMatrices(final long bound, final int scale,
-            final int rowSize, final int columnSize, final int howMany) {
+    public List<DecimalMatrix> nextDecimalMatrices(final long bound, final int scale, final int rowSize,
+                                                   final int columnSize, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
@@ -1972,30 +1641,22 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing upper triangular
      * {@link DecimalMatrix DecimalMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale
+     * @param size    the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random upper triangular {@link DecimalMatrix
-     *         DecimalMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * DecimalMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextUpperTriangularDecimalMatrix
+     * @since 1
      */
-    public List<DecimalMatrix> nextUpperTriangularDecimalMatrices(final long bound, final int scale,
-            final int size, final int howMany) {
+    public List<DecimalMatrix> nextUpperTriangularDecimalMatrices(final long bound, final int scale, final int size,
+                                                                  final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2011,30 +1672,22 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing lower triangular
      * {@link DecimalMatrix DecimalMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale
+     * @param size    the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random lower triangular {@link DecimalMatrix
-     *         DecimalMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * DecimalMatrices}
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextLowerTriangularDecimalMatrix
+     * @since 1
      */
-    public List<DecimalMatrix> nextLowerTriangularDecimalMatrices(final long bound, final int scale,
-            final int size, final int howMany) {
+    public List<DecimalMatrix> nextLowerTriangularDecimalMatrices(final long bound, final int scale, final int size,
+                                                                  final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2050,29 +1703,21 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing triangular
      * {@link DecimalMatrix DecimalMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale
+     * @param size    the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random triangular {@link DecimalMatrix DecimalMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextTriangularDecimalMatrix
+     * @since 1
      */
-    public List<DecimalMatrix> nextTriangularDecimalMatrices(final long bound, final int scale,
-            final int size, final int howMany) {
+    public List<DecimalMatrix> nextTriangularDecimalMatrices(final long bound, final int scale, final int size,
+                                                             final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2088,29 +1733,21 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing diagonal
      * {@link DecimalMatrix DecimalMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale
+     * @param size    the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random diagonal {@link DecimalMatrix DecimalMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextDiagonalDecimalMatrix
+     * @since 1
      */
-    public List<DecimalMatrix> nextDiagonalDecimalMatrices(final long bound, final int scale,
-            final int size, final int howMany) {
+    public List<DecimalMatrix> nextDiagonalDecimalMatrices(final long bound, final int scale, final int size,
+                                                           final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2126,29 +1763,21 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing symmetric
      * {@link DecimalMatrix DecimalMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale
+     * @param size    the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random symmetric {@link DecimalMatrix DecimalMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextSymmetricDecimalMatrix
+     * @since 1
      */
-    public List<DecimalMatrix> nextSymmetricDecimalMatrices(final long bound, final int scale,
-            final int size, final int howMany) {
+    public List<DecimalMatrix> nextSymmetricDecimalMatrices(final long bound, final int scale, final int size,
+                                                            final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2164,29 +1793,21 @@ public final class MathRandom {
      * Returns a {@link List} of the size of {@code howMany} containing skew-symmetric
      * {@link DecimalMatrix DecimalMatrices}
      *
-     * @param bound
-     *            the bound
-     * @param scale
-     *            the scale
-     * @param size
-     *            the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
-     * @param howMany
-     *            the size of the resulting {@link List}
+     * @param bound   the bound
+     * @param scale   the scale
+     * @param size    the row and column size of the resulting {@link DecimalMatrix DecimalMatrices}
+     * @param howMany the size of the resulting {@link List}
      * @return A {@link List} of pseudo random skew-symmetric {@link DecimalMatrix DecimalMatrices}
-     * @throws IllegalArgumentException
-     *             if {@code bound < 1}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws IllegalArgumentException
-     *             if {@code size < 1}
-     * @throws IllegalArgumentException
-     *             if {@code howMany < 1}
-     * @since 1
+     * @throws IllegalArgumentException if {@code bound < 1}
+     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException if {@code size < 1}
+     * @throws IllegalArgumentException if {@code howMany < 1}
      * @author Lars Tennstedt
      * @see #nextSkewSymmetricDecimalMatrix
+     * @since 1
      */
-    public List<DecimalMatrix> nextSkewSymmetricDecimalMatrices(final long bound, final int scale,
-            final int size, final int howMany) {
+    public List<DecimalMatrix> nextSkewSymmetricDecimalMatrices(final long bound, final int scale, final int size,
+                                                                final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);

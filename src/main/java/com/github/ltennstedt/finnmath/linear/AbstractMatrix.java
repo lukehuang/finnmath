@@ -33,23 +33,20 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @param <E>
- *            The type of the elements of the matrix
- * @param <V>
- *            The type of the related vector
- * @param <M>
- *            The type of the matrix
- * @since 1
+ * @param <E> The type of the elements of the matrix
+ * @param <V> The type of the related vector
+ * @param <M> The type of the matrix
  * @author Lars Tennstedt
  * @see ImmutableTable
+ * @since 1
  */
 @Beta
 abstract class AbstractMatrix<E, V, M> {
     /**
      * The table holding the elements of this {@link AbstractMatrix}
      *
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     protected final ImmutableTable<Integer, Integer, E> table;
 
@@ -93,8 +90,7 @@ abstract class AbstractMatrix<E, V, M> {
 
     protected abstract BigDecimal frobeniusNorm(int scale, RoundingMode roundingMode);
 
-    protected abstract BigDecimal frobeniusNorm(BigDecimal precision, int scale,
-            RoundingMode roundingMode);
+    protected abstract BigDecimal frobeniusNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
 
     protected abstract E maxNorm();
 
@@ -102,8 +98,8 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is a square one
      *
      * @return {@code true} if {@code rowSize == columnSize}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     public boolean square() {
         return table.rowKeySet().size() == table.columnKeySet().size();
@@ -113,10 +109,10 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is triangular
      *
      * @return {@code true} if {@code upperTriangular || lowerTriangular}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
      * @see #upperTriangular
      * @see #lowerTriangular
+     * @since 1
      */
     public boolean triangular() {
         return upperTriangular() || lowerTriangular();
@@ -130,10 +126,10 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is diagonal
      *
      * @return {@code true} if {@code upperTriangular && lowerTriangular}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
      * @see #upperTriangular
      * @see #lowerTriangular
+     * @since 1
      */
     public boolean diagonal() {
         return upperTriangular() && lowerTriangular();
@@ -147,10 +143,10 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is symmetric
      *
      * @return {@code true} if {@code square && equals(transpose)}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
      * @see #square
      * @see #transpose
+     * @since 1
      */
     public boolean symmetric() {
         return square() && equals(transpose());
@@ -160,11 +156,11 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is skew symmetric
      *
      * @return {@code true} if {@code square && equals(transpose.negate)}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
      * @see #square
      * @see #transpose
      * @see #negate
+     * @since 1
      */
     public boolean skewSymmetric() {
         return square() && transpose().equals(negate());
@@ -174,9 +170,9 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns the row indices starting from {@code 1}
      *
      * @return The row indices
-     * @since 1
      * @author Lars Tennstedt
      * @see Table#rowKeySet
+     * @since 1
      */
     public ImmutableSet<Integer> rowIndexes() {
         return table.rowKeySet();
@@ -186,9 +182,9 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns the column indices starting from {@code 1}
      *
      * @return The column indices
-     * @since 1
      * @author Lars Tennstedt
      * @see Table#columnKeySet
+     * @since 1
      */
     public ImmutableSet<Integer> columnIndexes() {
         return table.columnKeySet();
@@ -197,31 +193,24 @@ abstract class AbstractMatrix<E, V, M> {
     /**
      * Returns the matrix element dependent on the given row and column index
      *
-     * @param rowIndex
-     *            the row index
-     * @param columnIndex
-     *            the column index
+     * @param rowIndex    the row index
+     * @param columnIndex the column index
      * @return The element
-     * @throws NullPointerException
-     *             if {@code rowIndex == null}
-     * @throws NullPointerException
-     *             if {@code columnIndex == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowIndex < 1 || rowSize < rowIndex}
-     * @throws IllegalArgumentException
-     *             if {@code columnIndex < 1 || columnSize < columnIndex}
-     * @since 1
+     * @throws NullPointerException     if {@code rowIndex == null}
+     * @throws NullPointerException     if {@code columnIndex == null}
+     * @throws IllegalArgumentException if {@code rowIndex < 1 || rowSize < rowIndex}
+     * @throws IllegalArgumentException if {@code columnIndex < 1 || columnSize < columnIndex}
      * @author Lars Tennstedt
      * @see Table#get
+     * @since 1
      */
     public E element(final Integer rowIndex, final Integer columnIndex) {
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
-        checkArgument(table.rowKeySet().contains(rowIndex),
-                "expected row index in [1, %s] but actual %s", table.rowKeySet().size(), rowIndex);
-        checkArgument(table.columnKeySet().contains(columnIndex),
-                "expected column index in [1, %s] but actual %s", table.columnKeySet().size(),
-                columnIndex);
+        checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
+                table.rowKeySet().size(), rowIndex);
+        checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
+                table.columnKeySet().size(), columnIndex);
         return table.get(rowIndex, columnIndex);
     }
 
@@ -229,9 +218,9 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns all matrix cells as {@link ImmutableSet}
      *
      * @return The columns
-     * @since 1
      * @author Lars Tennstedt
      * @see Table#cellSet
+     * @since 1
      */
     public ImmutableSet<Cell<Integer, Integer, E>> cells() {
         return table.cellSet();
@@ -240,43 +229,36 @@ abstract class AbstractMatrix<E, V, M> {
     /**
      * Returns the matrix row as {@link ImmutableMap} dependent on the given row index
      *
-     * @param rowIndex
-     *            the row index
+     * @param rowIndex the row index
      * @return The row
-     * @throws NullPointerException
-     *             if {@code rowIndex == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowIndex < 1 || rowSize < rowIndex}
-     * @since 1
+     * @throws NullPointerException     if {@code rowIndex == null}
+     * @throws IllegalArgumentException if {@code rowIndex < 1 || rowSize < rowIndex}
      * @author Lars Tennstedt
      * @see Table#row
+     * @since 1
      */
     public ImmutableMap<Integer, E> row(final Integer rowIndex) {
         requireNonNull(rowIndex, "rowIndex");
-        checkArgument(table.rowKeySet().contains(rowIndex),
-                "expected row index in [1, %s] but actual %s", table.rowKeySet().size(), rowIndex);
+        checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
+                table.rowKeySet().size(), rowIndex);
         return table.row(rowIndex);
     }
 
     /**
      * Returns the matrix column as {@link ImmutableMap} dependent on the given column index
      *
-     * @param columnIndex
-     *            the column index
+     * @param columnIndex the column index
      * @return The column
-     * @throws NullPointerException
-     *             if {@code columnIndex == null}
-     * @throws IllegalArgumentException
-     *             if {@code columnIndex < 1 || columnSize < columnIndex}
-     * @since 1
+     * @throws NullPointerException     if {@code columnIndex == null}
+     * @throws IllegalArgumentException if {@code columnIndex < 1 || columnSize < columnIndex}
      * @author Lars Tennstedt
      * @see Table#column
+     * @since 1
      */
     public ImmutableMap<Integer, E> column(final Integer columnIndex) {
         requireNonNull(columnIndex, "columnIndex");
-        checkArgument(table.columnKeySet().contains(columnIndex),
-                "expected column index in [1, %s] but actual %s", table.columnKeySet().size(),
-                columnIndex);
+        checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
+                table.columnKeySet().size(), columnIndex);
         return table.column(columnIndex);
     }
 
@@ -284,9 +266,9 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns all matrix rows as {@link ImmutableMap}
      *
      * @return The rows
-     * @since 1
      * @author Lars Tennstedt
      * @see Table#rowMap
+     * @since 1
      */
     public ImmutableMap<Integer, Map<Integer, E>> rows() {
         return table.rowMap();
@@ -296,9 +278,9 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns all matrix columns as {@link ImmutableMap}
      *
      * @return The columns
-     * @since 1
      * @author Lars Tennstedt
      * @see Table#columnMap
+     * @since 1
      */
     public ImmutableMap<Integer, Map<Integer, E>> columns() {
         return table.columnMap();
@@ -308,9 +290,9 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns all matrix elements as {@link ImmutableCollection}
      *
      * @return The columns
-     * @since 1
      * @author Lars Tennstedt
      * @see Table#values
+     * @since 1
      */
     public ImmutableCollection<E> elements() {
         return table.values();
@@ -320,8 +302,8 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns the size of matrix
      *
      * @return The size
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     public long size() {
         return Long.valueOf(table.rowKeySet().size()) * Long.valueOf(table.columnKeySet().size());
@@ -331,9 +313,9 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns the row size of matrix
      *
      * @return The row size
-     * @since 1
      * @author Lars Tennstedt
      * @see Set#size
+     * @since 1
      */
     public int rowSize() {
         return table.rowKeySet().size();
@@ -343,9 +325,9 @@ abstract class AbstractMatrix<E, V, M> {
      * Returns the column size of matrix
      *
      * @return The column size
-     * @since 1
      * @author Lars Tennstedt
      * @see Set#size
+     * @since 1
      */
     public int columnSize() {
         return table.columnKeySet().size();

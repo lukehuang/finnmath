@@ -30,23 +30,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * @param <E>
- *            The type of the elements of the vector
- * @param <V>
- *            The type of the vector
- * @param <N>
- *            The type of the euclidean norm of the vector
- * @since 1
+ * @param <E> The type of the elements of the vector
+ * @param <V> The type of the vector
+ * @param <N> The type of the euclidean norm of the vector
  * @author Lars Tennstedt
  * @see ImmutableMap
+ * @since 1
  */
 @Beta
 abstract class AbstractVector<E, V, N> {
     /**
      * The map holding the elements of this {@link AbstractVector}
      *
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     protected final ImmutableMap<Integer, E> map;
 
@@ -57,21 +54,17 @@ abstract class AbstractVector<E, V, N> {
     /**
      * Returns the element dependent on the given index
      *
-     * @param index
-     *            the index of the element
+     * @param index the index of the element
      * @return The element
-     * @throws NullPointerException
-     *             if {@code index == null}
-     * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
-     * @since 1
+     * @throws NullPointerException     if {@code index == null}
+     * @throws IllegalArgumentException if {@code !map.containsKey(index)}
      * @author Lars Tennstedt
      * @see Map#containsKey
+     * @since 1
      */
     public E element(final Integer index) {
         requireNonNull(index, "index");
-        checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(),
-                index);
+        checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(), index);
         return map.get(index);
     }
 
@@ -79,9 +72,9 @@ abstract class AbstractVector<E, V, N> {
      * Returns all elements of the underlying {@link Map} of this {@link AbstractVector}
      *
      * @return The elements
-     * @since 1
      * @author Lars Tennstedt
      * @see Map#entrySet
+     * @since 1
      */
     public ImmutableSet<Entry<Integer, E>> entries() {
         return map.entrySet();
@@ -91,9 +84,9 @@ abstract class AbstractVector<E, V, N> {
      * Returns all elements of this {@link AbstractVector}
      *
      * @return The elements
-     * @since 1
      * @author Lars Tennstedt
      * @see Map#values
+     * @since 1
      */
     public ImmutableCollection<E> elements() {
         return map.values();
@@ -131,8 +124,7 @@ abstract class AbstractVector<E, V, N> {
 
     protected abstract N euclideanDistance(V other, int scale, RoundingMode roundingMode);
 
-    protected abstract N euclideanDistance(V other, BigDecimal precision, int scale,
-            RoundingMode roundingMode);
+    protected abstract N euclideanDistance(V other, BigDecimal precision, int scale, RoundingMode roundingMode);
 
     protected abstract E maxNorm();
 
@@ -142,8 +134,8 @@ abstract class AbstractVector<E, V, N> {
      * Returns the size of the underlying {@link Map}
      *
      * @return size the size
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     public int size() {
         return map.size();

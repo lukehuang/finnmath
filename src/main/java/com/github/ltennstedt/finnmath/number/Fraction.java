@@ -30,12 +30,11 @@ import java.util.Objects;
  * An immutable implementation of a fraction which uses {@link BigInteger} as type for its numerator
  * and denominator
  *
- * @since 1
  * @author Lars Tennstedt
+ * @since 1
  */
 @Beta
-public final class Fraction extends Number
-        implements MathNumber<Fraction, Fraction, Fraction>, Comparable<Fraction> {
+public final class Fraction extends Number implements MathNumber<Fraction, Fraction, Fraction>, Comparable<Fraction> {
     /**
      * {@code 0} as {@link Fraction}
      */
@@ -60,129 +59,112 @@ public final class Fraction extends Number
 
     /**
      * Constructs a {@link Fraction} by the given numerator and denominator
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
-     * @param numerator
-     *            the numerator
-     * @param denominator
-     *            the denominator
-     * @throws NullPointerException
-     *             if {@code numerator == null}
-     * @throws NullPointerException
-     *             if {@code denominator == null}
-     * @throws IllegalArgumentException
-     *             if {@code denominator == 0}
-     * @since 1
+     * @param numerator   the numerator
+     * @param denominator the denominator
+     * @throws NullPointerException     if {@code numerator == null}
+     * @throws NullPointerException     if {@code denominator == null}
+     * @throws IllegalArgumentException if {@code denominator == 0}
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     public Fraction(final BigInteger numerator, final BigInteger denominator) {
         super();
         this.numerator = requireNonNull(numerator, "numerator");
         this.denominator = requireNonNull(denominator, "denominator");
-        checkArgument(!denominator.equals(BigInteger.ZERO),
-                "expected denominator != 0 but actual %s", denominator);
+        checkArgument(!denominator.equals(BigInteger.ZERO), "expected denominator != 0 but actual %s", denominator);
     }
 
     /**
      * Returns an {@code int} representation of this {@link Fraction}
      *
      * @return The {@code int} value
-     * @since 1
      * @author Lars Tennstedt
      * @see BigDecimal#intValue
+     * @since 1
      */
     @Override
     public int intValue() {
-        return new BigDecimal(numerator)
-                .divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).intValue();
+        return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).intValue();
     }
 
     /**
      * Returns a {@code long} representation of this {@link Fraction}
      *
      * @return The {@code long} value
-     * @since 1
      * @author Lars Tennstedt
      * @see BigDecimal#intValue
+     * @since 1
      */
     @Override
     public long longValue() {
-        return new BigDecimal(numerator)
-                .divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).longValue();
+        return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).longValue();
     }
 
     /**
      * Returns a {@code float} representation of this {@link Fraction}
      *
      * @return The {@code float} value
-     * @since 1
      * @author Lars Tennstedt
      * @see BigDecimal#intValue
+     * @since 1
      */
     @Override
     public float floatValue() {
-        return new BigDecimal(numerator)
-                .divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).floatValue();
+        return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
     /**
      * Returns a {@code double} representation of this {@link Fraction}
      *
      * @return The {@code double} value
-     * @since 1
      * @author Lars Tennstedt
      * @see BigDecimal#intValue
+     * @since 1
      */
     @Override
     public double doubleValue() {
-        return new BigDecimal(numerator)
-                .divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).doubleValue();
+        return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     /**
      * Returns the sum of this {@link Fraction} and the given one
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
-     * @param summand
-     *            the summand
+     * @param summand the summand
      * @return The sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @since 1
+     * @throws NullPointerException if {@code summand == null}
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     @Override
     public Fraction add(final Fraction summand) {
         requireNonNull(summand, "summand");
-        final BigInteger newNumerator = summand.getDenominator().multiply(numerator)
-                .add(denominator.multiply(summand.getNumerator()));
+        final BigInteger newNumerator =
+                summand.getDenominator().multiply(numerator).add(denominator.multiply(summand.getNumerator()));
         final BigInteger newDenominator = denominator.multiply(summand.getDenominator());
         return new Fraction(newNumerator, newDenominator);
     }
 
     /**
      * Returns the difference of this {@link Fraction} and the given one
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
-     * @param subtrahend
-     *            the subtrahend
+     * @param subtrahend the subtrahend
      * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @since 1
+     * @throws NullPointerException if {@code subtrahend == null}
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     @Override
     public Fraction subtract(final Fraction subtrahend) {
@@ -195,19 +177,16 @@ public final class Fraction extends Number
 
     /**
      * Returns the product of this {@link Fraction} and the given one
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
-     * @param factor
-     *            the factor
+     * @param factor the factor
      * @return The product
-     * @throws NullPointerException
-     *             if {@code factor == null}
-     * @since 1
+     * @throws NullPointerException if {@code factor == null}
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     @Override
     public Fraction multiply(final Fraction factor) {
@@ -219,47 +198,39 @@ public final class Fraction extends Number
 
     /**
      * Return the quotient of this {@link Fraction} and the given one
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
-     * @param divisor
-     *            the divisor
+     * @param divisor the divisor
      * @return The quotient
-     * @throws NullPointerException
-     *             if {@code divisor == null}
-     * @throws IllegalArgumentException
-     *             if {@code !divisor.invertible}
-     * @since 1
+     * @throws NullPointerException     if {@code divisor == null}
+     * @throws IllegalArgumentException if {@code !divisor.invertible}
      * @author Lars Tennstedt
      * @see #invert
      * @see #multiply
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     @Override
     public Fraction divide(final Fraction divisor) {
         requireNonNull(divisor, "divisor");
-        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s",
-                divisor);
+        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
         return multiply(divisor.invert());
     }
 
     /**
      * Returns the power of this {@link Fraction} raised by the given exponent
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
-     * @param exponent
-     *            the exponent
+     * @param exponent the exponent
      * @return The power
-     * @throws IllegalArgumentException
-     *             if {@code exponent < 0}
-     * @since 1
+     * @throws IllegalArgumentException if {@code exponent < 0}
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     @Override
     public Fraction pow(final int exponent) {
@@ -274,15 +245,14 @@ public final class Fraction extends Number
 
     /**
      * Returns the negated {@link Fraction} of this one
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @return The negated
-     * @since 1
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     @Override
     public Fraction negate() {
@@ -291,17 +261,15 @@ public final class Fraction extends Number
 
     /**
      * Returns the inverted {@link Fraction} of this one
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @return The inverted
-     * @throws IllegalStateException
-     *             if {@code numerator == 0}
-     * @since 1
+     * @throws IllegalStateException if {@code numerator == 0}
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     @Override
     public Fraction invert() {
@@ -313,8 +281,8 @@ public final class Fraction extends Number
      * Returns if this {@link Fraction} is invertible
      *
      * @return {@code true} if {@code numerator != 0}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
+     * @since 1
      */
     @Override
     public boolean invertible() {
@@ -323,16 +291,15 @@ public final class Fraction extends Number
 
     /**
      * Returns the absolute {@link Fraction} of this one
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @return The absolute
-     * @since 1
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
      * @see BigInteger#abs
+     * @since 1
      */
     @Override
     public Fraction abs() {
@@ -343,14 +310,13 @@ public final class Fraction extends Number
      * Compares this {@link Fraction} to the given one and returns an int which indicates which one
      * is less
      *
-     * @param other
-     *            another {@link Fraction}
+     * @param other another {@link Fraction}
      * @return {@code -1} if {@code this < other}, {@code 1} if {@code this > other}, {@code 0}
-     *         otherwise
-     * @since 1
+     * otherwise
      * @author Lars Tennstedt
      * @see #lessThan
      * @see #greaterThan
+     * @since 1
      */
     @Override
     public int compareTo(final Fraction other) {
@@ -368,21 +334,18 @@ public final class Fraction extends Number
      * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates
      * which one is less
      *
-     * @param other
-     *            another {@link Fraction}
+     * @param other another {@link Fraction}
      * @return {@code true} if {@code this <= other}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
      * @see #normalize
+     * @since 1
      */
     public boolean lessThanOrEqualTo(final Fraction other) {
         requireNonNull(other, "other");
         final Fraction normalized = normalize();
         final Fraction normalizedOther = other.normalize();
-        final BigInteger left = normalizedOther.getDenominator()
-                .multiply(normalized.getNumerator());
-        final BigInteger right = normalized.getDenominator()
-                .multiply(normalizedOther.getNumerator());
+        final BigInteger left = normalizedOther.getDenominator().multiply(normalized.getNumerator());
+        final BigInteger right = normalized.getDenominator().multiply(normalizedOther.getNumerator());
         return left.compareTo(right) < 1;
     }
 
@@ -390,13 +353,12 @@ public final class Fraction extends Number
      * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates
      * which one is greater
      *
-     * @param other
-     *            another {@link Fraction}
+     * @param other another {@link Fraction}
      * @return {@code true} if {@code this >= other}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
      * @see #lessThanOrEqualTo
      * @see #equivalent
+     * @since 1
      */
     public boolean greaterThanOrEqualTo(final Fraction other) {
         requireNonNull(other, "other");
@@ -407,12 +369,11 @@ public final class Fraction extends Number
      * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates
      * which one is less
      *
-     * @param other
-     *            another {@link Fraction}
+     * @param other another {@link Fraction}
      * @return {@code true} if {@code this < other}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
      * @see #greaterThanOrEqualTo
+     * @since 1
      */
     public boolean lessThan(final Fraction other) {
         requireNonNull(other, "other");
@@ -423,12 +384,11 @@ public final class Fraction extends Number
      * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates
      * which one is greater
      *
-     * @param other
-     *            another {@link Fraction}
+     * @param other another {@link Fraction}
      * @return {@code true} if {@code this < other}, {@code false} otherwise
-     * @since 1
      * @author Lars Tennstedt
      * @see #lessThanOrEqualTo
+     * @since 1
      */
     public boolean greaterThan(final Fraction other) {
         requireNonNull(other, "other");
@@ -437,18 +397,16 @@ public final class Fraction extends Number
 
     /**
      * Compares this {@link Fraction} to the given one and returns the minimum
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
-     * @param other
-     *            another {@link Fraction}
+     * @param other another {@link Fraction}
      * @return The minimum of this {@link Fraction} and the other one
-     * @since 1
      * @author Lars Tennstedt
      * @see #greaterThan
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     public Fraction min(final Fraction other) {
         requireNonNull(other, "other");
@@ -460,18 +418,16 @@ public final class Fraction extends Number
 
     /**
      * Compares this {@link Fraction} to the given one and returns the maximum
-     *
      * <p>
      * The returned {@link Fraction} is not reduced and not normalized.
      *
-     * @param other
-     *            another {@link Fraction}
+     * @param other another {@link Fraction}
      * @return The maximum of this {@link Fraction} and the other one
-     * @since 1
      * @author Lars Tennstedt
      * @see #lessThan
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     public Fraction max(final Fraction other) {
         requireNonNull(other, "other");
@@ -483,18 +439,17 @@ public final class Fraction extends Number
 
     /**
      * Returns the normalized {@link Fraction} of this one
-     *
      * <p>
      * The returned {@link Fraction} is not reduced.
      *
      * @return {@code new Fraction(-numerator.abs, denominator.abs)} if the {@code signum < 0},
-     *         {@code ZERO} if {@code signum == 0}, {@code this} otherwise
-     * @since 1
+     * {@code ZERO} if {@code signum == 0}, {@code this} otherwise
      * @author Lars Tennstedt
      * @see #signum
      * @see #abs
      * @see BigInteger#abs
      * @see #reduce
+     * @since 1
      */
     public Fraction normalize() {
         if (signum() < 0) {
@@ -511,15 +466,14 @@ public final class Fraction extends Number
 
     /**
      * Returns the reduced {@link Fraction} of this one
-     *
      * <p>
      * The returned {@link Fraction} is not normalized.
      *
      * @return The reduced
-     * @since 1
      * @author Lars Tennstedt
      * @see #normalize
      * @see BigInteger#gcd
+     * @since 1
      */
     public Fraction reduce() {
         final BigInteger gcd = numerator.gcd(denominator);
@@ -530,9 +484,9 @@ public final class Fraction extends Number
      * Returns the signum of this {@link Fraction}
      *
      * @return The signum of this {@link Fraction}
-     * @since 1
      * @author Lars Tennstedt
      * @see BigInteger#signum
+     * @since 1
      */
     public int signum() {
         return numerator.signum() * denominator.signum();
@@ -542,14 +496,13 @@ public final class Fraction extends Number
      * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates
      * if this {@link Fraction} is equivalent to the given one
      *
-     * @param other
-     *            another {@link Fraction}
+     * @param other another {@link Fraction}
      * @return {@code true} if the {@code this} is equivalent to {@code other}, {@code false}
-     *         otherwise
-     * @since 1
+     * otherwise
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce
+     * @since 1
      */
     public boolean equivalent(final Fraction other) {
         requireNonNull(other, "other");
@@ -575,8 +528,7 @@ public final class Fraction extends Number
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).add("numerator", numerator)
-                .add("denominator", denominator).toString();
+        return MoreObjects.toStringHelper(this).add("numerator", numerator).add("denominator", denominator).toString();
     }
 
     public BigInteger getNumerator() {
