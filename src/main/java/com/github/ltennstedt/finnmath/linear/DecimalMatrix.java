@@ -23,14 +23,19 @@ import static java.util.Objects.requireNonNull;
 import com.github.ltennstedt.finnmath.linear.DecimalVector.DecimalVectorBuilder;
 import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * An immutable implementation of a matrix which uses {@link BigDecimal} as type for its elements
@@ -157,7 +162,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
 
     @Override
     protected BigDecimal multiplyRowWithColumn(final Map<Integer, BigDecimal> row,
-                                               final Map<Integer, BigDecimal> column) {
+            final Map<Integer, BigDecimal> column) {
         requireNonNull(row, "row");
         requireNonNull(column, "column");
         checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
@@ -234,27 +239,49 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public BigDecimal determinant() {
         final int rowSize = table.rowKeySet().size();
         checkState(square(), "expected square matrix but actual %s x %s", rowSize, table.columnKeySet().size());
-        final int scale = table.get(1, 1).scale();
+
+        // Triangular matrices including 3x3, 2x2 and especially all 1x1 matrices
         if (triangular()) {
-            BigDecimal result = BigDecimal.ONE.setScale(scale);
+            BigDecimal result = BigDecimal.ONE;
             for (final Cell<Integer, Integer, BigDecimal> cell : table.cellSet()) {
                 if (cell.getRowKey().equals(cell.getColumnKey())) {
                     result = result.multiply(cell.getValue());
                 }
             }
-            return result.setScale(scale, BigDecimal.ROUND_HALF_UP);
+            return result;
         }
+
+        if (rowSize > 3) {
+            return calculateDeterminantWithPermutations();
+        }
+
         if (rowSize == 3) {
             return ruleOfSarrus();
         }
-        if (rowSize == 2) {
-            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)))
-                    .setScale(scale, BigDecimal.ROUND_HALF_UP);
-        }
-        BigDecimal result = BigDecimal.ZERO.ZERO;
-        for (final Integer columnIndex : table.columnKeySet()) {
-            result = result.add(BigDecimal.ONE.negate().pow(1 + columnIndex)).multiply(table.get(1, columnIndex))
-                    .multiply(minor(1, columnIndex).determinant());
+
+        // 2x2 matrices
+        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+    }
+
+    @Override
+    protected BigDecimal calculateDeterminantWithPermutations() {
+        BigDecimal result = BigDecimal.ZERO;
+        final int rowSize = table.rowKeySet().size();
+        final Collection<List<Integer>> permutations =
+                Collections2.permutations(IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()));
+        for (final List<Integer> permutation : permutations) {
+            BigDecimal product = BigDecimal.ONE;
+            int inversions = 0;
+            for (int i = 0; i < rowSize; i++) {
+                final Integer sigma = permutation.get(i);
+                for (int j = i + 1; j < rowSize; j++) {
+                    if (sigma > permutation.get(j)) {
+                        inversions++;
+                    }
+                }
+                product = product.multiply(table.get(i + 1, sigma));
+            }
+            result = result.add(BigDecimal.ONE.negate().pow(inversions).multiply(product));
         }
         return result;
     }
@@ -264,11 +291,10 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         final BigDecimal firstSummand = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));
         final BigDecimal secondSummand = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));
         final BigDecimal thirdSummand = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));
-        final BigDecimal fourthSummand = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(3, 1)).negate();
-        final BigDecimal fifthSummand = table.get(1, 2).multiply(table.get(2, 1)).multiply(table.get(3, 3)).negate();
-        final BigDecimal sixthSummand = table.get(1, 1).multiply(table.get(2, 3)).multiply(table.get(3, 2)).negate();
-        return firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand).add(fifthSummand).add(sixthSummand)
-                .setScale(table.get(1, 1).scale(), RoundingMode.HALF_UP);
+        final BigDecimal fourthSummand = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3)).negate();
+        final BigDecimal fifthSummand = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1)).negate();
+        final BigDecimal sixthSummand = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2)).negate();
+        return firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand).add(fifthSummand).add(sixthSummand);
     }
 
     /**

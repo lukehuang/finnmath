@@ -23,15 +23,20 @@ import static java.util.Objects.requireNonNull;
 import com.github.ltennstedt.finnmath.linear.BigIntVector.BigIntVectorBuilder;
 import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * An immutable implementation of a matrix which uses {@link BigInteger} as type for its elements
@@ -158,7 +163,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
 
     @Override
     protected BigInteger multiplyRowWithColumn(final Map<Integer, BigInteger> row,
-                                               final Map<Integer, BigInteger> column) {
+            final Map<Integer, BigInteger> column) {
         requireNonNull(row, "row");
         requireNonNull(column, "column");
         checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
@@ -235,6 +240,8 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigInteger determinant() {
         final int rowSize = table.rowKeySet().size();
         checkState(square(), "expected square matrix but actual %s x %s", rowSize, table.columnKeySet().size());
+
+        // Triangular matrices including 3x3, 2x2 and especially all 1x1 matrices
         if (triangular()) {
             BigInteger result = BigInteger.ONE;
             for (final Cell<Integer, Integer, BigInteger> cell : table.cellSet()) {
@@ -244,16 +251,38 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             }
             return result;
         }
+
+        if (rowSize > 3) {
+            return calculateDeterminantWithPermutations();
+        }
+
         if (rowSize == 3) {
             return ruleOfSarrus();
         }
-        if (rowSize == 2) {
-            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
-        }
+
+        // 2x2 matrices
+        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+    }
+
+    @Override
+    protected BigInteger calculateDeterminantWithPermutations() {
         BigInteger result = BigInteger.ZERO;
-        for (final Integer columnIndex : table.columnKeySet()) {
-            result = result.add(BigInteger.ONE.negate().pow(1 + columnIndex)).multiply(table.get(1, columnIndex))
-                    .multiply(minor(1, columnIndex).determinant());
+        final int rowSize = table.rowKeySet().size();
+        final Collection<List<Integer>> permutations =
+                Collections2.permutations(IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()));
+        for (final List<Integer> permutation : permutations) {
+            BigInteger product = BigInteger.ONE;
+            int inversions = 0;
+            for (int i = 0; i < rowSize; i++) {
+                final Integer sigma = permutation.get(i);
+                for (int j = i + 1; j < rowSize; j++) {
+                    if (sigma > permutation.get(j)) {
+                        inversions++;
+                    }
+                }
+                product = product.multiply(table.get(i + 1, sigma));
+            }
+            result = result.add(BigInteger.ONE.negate().pow(inversions).multiply(product));
         }
         return result;
     }

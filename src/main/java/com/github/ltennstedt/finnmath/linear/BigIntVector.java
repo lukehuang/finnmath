@@ -371,7 +371,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntVector other, final BigDecimal precision, final int scale,
-                                        final RoundingMode roundingMode) {
+            final RoundingMode roundingMode) {
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         requireNonNull(precision, "precision");

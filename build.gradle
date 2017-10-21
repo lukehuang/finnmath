@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-plugins { id 'net.ltgt.errorprone' version '0.0.13' }
-
-apply plugin: 'java-library'
-apply plugin: 'net.ltgt.errorprone'
-apply plugin: 'checkstyle'
-apply plugin: 'findbugs'
-apply plugin: 'pmd'
-apply plugin: 'jacoco'
-apply plugin: 'project-report'
-apply plugin: 'build-dashboard'
-apply plugin: 'maven'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+plugins {
+    id 'java-library'
+    id 'net.ltgt.errorprone' version '0.0.13'
+    id 'checkstyle'
+    id 'findbugs'
+    id 'pmd'
+    id 'jacoco'
+    id 'project-report'
+    id 'build-dashboard'
+    id 'maven'
+    id 'eclipse'
+    id 'idea'
+}
 
 description 'A math library for the JVM based on BigInteger and BigDecimal'
 group 'finnmath'
@@ -36,7 +36,7 @@ sourceCompatibility = 1.8
 repositories { jcenter() }
 
 dependencies {
-    api 'com.google.guava:guava:23.1-jre'
+    api 'com.google.guava:guava:23.2-jre'
     api 'org.apache.commons:commons-lang3:3.6'
     implementation 'org.slf4j:slf4j-api:1.7.25'
     testCompile 'junit:junit:4.12'
@@ -63,7 +63,6 @@ javadoc {
     options {
         noHelp false
         noQualifiers 'all'
-        showAll()
     }
 }
 
