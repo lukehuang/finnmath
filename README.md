@@ -34,8 +34,8 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 * Logging facade instead of a hard dependency on a specific logging framework
 
 ## Information
-* Javadoc: [link https://ltennstedt.github.io/finnmath/javadoc/index.html]
-* Build dashboard: [link https://ltennstedt.github.io/finnmath/reports/buildDashboard/index.html]
+* [Javadoc](https://ltennstedt.github.io/finnmath/javadoc/index.html)
+* [Build dashboard](https://ltennstedt.github.io/finnmath/reports/buildDashboard/index.html)
 
 finnMath is open source and free software and is licensed under the permissive Apache License.
 
@@ -61,6 +61,10 @@ The code formatting follows loosely the Google Java style guide found here on Gi
 #### Why finnMath?
 I searched for a mathematical library for another project which should be based on BigInteger and BigDecimal instead 
 of primitives and I could not find one.
+
+#### Who is Finn?
+* [Photo](https://www.flickr.com/photos/animalequalityde/34257121071/in/album-72157683138690476/)
+* [Video](https://www.youtube.com/watch?v=Z8-rtor3G9Q)
 
 #### Why BigInteger or BigDecimal?
 Both are protected against buffer overflows and BigDecimal is by far less prone to big rounding errors. In addition, 
