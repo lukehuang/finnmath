@@ -145,7 +145,7 @@ public final class BigIntVectorTest {
                 vector.entries().forEach(element -> {
                     builder.put(element.getValue().subtract(other.element(element.getKey())));
                 });
-                assertThat(vector.subtract(other)).isExactlyInstanceOf(BigIntVector.class).isEqualTo(builder.build());
+                assertThat(vector.subtract(other)).isEqualTo(builder.build());
             });
         });
     }
@@ -179,8 +179,7 @@ public final class BigIntVectorTest {
                 vector.entries().forEach(element -> {
                     builder.put(scalar.multiply(element.getValue()));
                 });
-                assertThat(vector.scalarMultiply(scalar)).isExactlyInstanceOf(BigIntVector.class)
-                        .isEqualTo(builder.build());
+                assertThat(vector.scalarMultiply(scalar)).isEqualTo(builder.build());
             });
         });
     }
@@ -238,8 +237,7 @@ public final class BigIntVectorTest {
     @Test
     public void negateShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.negate()).isExactlyInstanceOf(BigIntVector.class)
-                    .isEqualTo(vector.scalarMultiply(BigInteger.ONE.negate()));
+            assertThat(vector.negate()).isEqualTo(vector.scalarMultiply(BigInteger.ONE.negate()));
         });
     }
 
@@ -401,8 +399,7 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanNormShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.euclideanNorm()).isExactlyInstanceOf(BigDecimal.class)
-                    .isEqualTo(new SquareRootCalculator().sqrt(vector.euclideanNormPow2()));
+            assertThat(vector.euclideanNorm()).isEqualTo(new SquareRootCalculator().sqrt(vector.euclideanNormPow2()));
         });
     }
 
@@ -464,7 +461,7 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanNormWithScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.euclideanNorm(scale, roundingMode)).isExactlyInstanceOf(BigDecimal.class)
+            assertThat(vector.euclideanNorm(scale, roundingMode))
                     .isEqualTo(new SquareRootCalculator(scale, roundingMode).sqrt(vector.euclideanNormPow2()));
         });
     }
@@ -502,9 +499,10 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanNormWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.euclideanNorm(precision, scale, roundingMode)).isExactlyInstanceOf(BigDecimal.class)
-                    .isEqualTo(
-                            new SquareRootCalculator(precision, scale, roundingMode).sqrt(vector.euclideanNormPow2()));
+            final BigDecimal actual = vector.euclideanNorm(precision, scale, roundingMode);
+            final BigDecimal expected =
+                    new SquareRootCalculator(precision, scale, roundingMode).sqrt(vector.euclideanNormPow2());
+            assertThat(actual).isEqualTo(expected);
         });
     }
 
@@ -531,7 +529,7 @@ public final class BigIntVectorTest {
                 for (final Entry<Integer, BigInteger> entry : vector.entries()) {
                     expected = expected.add(entry.getValue().multiply(other.element(entry.getKey())));
                 }
-                assertThat(vector.dotProduct(other)).isExactlyInstanceOf(BigInteger.class).isEqualTo(expected);
+                assertThat(vector.dotProduct(other)).isEqualTo(expected);
             });
         });
     }
@@ -559,8 +557,7 @@ public final class BigIntVectorTest {
                 vector.entries().forEach(entry -> {
                     builder.put(entry.getValue().subtract(other.element(entry.getKey())));
                 });
-                assertThat(vector.euclideanDistancePow2(other)).isExactlyInstanceOf(BigInteger.class)
-                        .isEqualTo(builder.build().euclideanNormPow2());
+                assertThat(vector.euclideanDistancePow2(other)).isEqualTo(builder.build().euclideanNormPow2());
             });
         });
     }
@@ -601,7 +598,7 @@ public final class BigIntVectorTest {
     public void euclideanDistanceShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.euclideanDistance(other)).isExactlyInstanceOf(BigDecimal.class)
+                assertThat(vector.euclideanDistance(other))
                         .isEqualByComparingTo(new SquareRootCalculator().sqrt(vector.euclideanDistancePow2(other)));
             });
         });
@@ -670,7 +667,7 @@ public final class BigIntVectorTest {
     public void euclideanDistanceWithPrecisionShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.euclideanDistance(other, precision)).isExactlyInstanceOf(BigDecimal.class)
+                assertThat(vector.euclideanDistance(other, precision))
                         .isEqualTo(new SquareRootCalculator(precision).sqrt(vector.euclideanDistancePow2(other)));
             });
         });
@@ -703,9 +700,10 @@ public final class BigIntVectorTest {
     public void euclideanDistanceWithScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.euclideanDistance(other, scale, roundingMode)).isExactlyInstanceOf(BigDecimal.class)
-                        .isEqualTo(new SquareRootCalculator(scale, roundingMode)
-                                .sqrt(vector.euclideanDistancePow2(other)));
+                final BigDecimal actual = vector.euclideanDistance(other, scale, roundingMode);
+                final BigDecimal expected =
+                        new SquareRootCalculator(scale, roundingMode).sqrt(vector.euclideanDistancePow2(other));
+                assertThat(actual).isEqualTo(expected);
             });
         });
     }
@@ -758,10 +756,10 @@ public final class BigIntVectorTest {
     public void euclideanDistanceWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.euclideanDistance(other, precision, scale, roundingMode))
-                        .isExactlyInstanceOf(BigDecimal.class).isEqualTo(
-                        new SquareRootCalculator(precision, scale, roundingMode)
-                                .sqrt(vector.euclideanDistancePow2(other)));
+                final BigDecimal actual = vector.euclideanDistance(other, precision, scale, roundingMode);
+                final BigDecimal expected = new SquareRootCalculator(precision, scale, roundingMode)
+                        .sqrt(vector.euclideanDistancePow2(other));
+                assertThat(actual).isEqualTo(expected);
             });
         });
     }

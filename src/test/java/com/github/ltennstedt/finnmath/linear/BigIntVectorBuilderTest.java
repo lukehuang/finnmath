@@ -72,8 +72,9 @@ public final class BigIntVectorBuilderTest {
     @Test
     public void toStringShouldSucceed() {
         final BigIntVectorBuilder builder = BigIntVector.builder(4).putAll(BigInteger.ZERO);
-        assertThat(builder.toString()).isEqualTo(
+        final String expected =
                 MoreObjects.toStringHelper(builder).add("map", builder.getMap()).add("size", builder.getSize())
-                        .toString());
+                        .toString();
+        assertThat(builder.toString()).isEqualTo(expected);
     }
 }

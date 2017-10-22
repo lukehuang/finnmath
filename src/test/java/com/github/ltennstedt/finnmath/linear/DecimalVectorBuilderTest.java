@@ -72,7 +72,8 @@ public final class DecimalVectorBuilderTest {
     @Test
     public void toStringShouldSucceed() {
         final DecimalVectorBuilder builder = DecimalVector.builder(4).putAll(BigDecimal.ZERO);
-        assertThat(builder.toString()).isEqualTo(MoreObjects.toStringHelper(builder).add("map", builder.getMap())
-                .add("size", DecimalVector.builder(4).getSize()).toString());
+        final String expected = MoreObjects.toStringHelper(builder).add("map", builder.getMap())
+                .add("size", DecimalVector.builder(4).getSize()).toString();
+        assertThat(builder.toString()).isEqualTo(expected);
     }
 }

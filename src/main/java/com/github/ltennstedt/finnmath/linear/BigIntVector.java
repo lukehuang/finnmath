@@ -27,7 +27,6 @@ import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -414,18 +413,6 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         return subtract(other).maxNorm();
-    }
-
-    /**
-     * Returns the size of the underlying {@link Map}
-     *
-     * @return size the size
-     * @author Lars Tennstedt
-     * @since 1
-     */
-    @Override
-    public int size() {
-        return map.size();
     }
 
     /**

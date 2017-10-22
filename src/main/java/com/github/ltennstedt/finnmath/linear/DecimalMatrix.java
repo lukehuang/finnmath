@@ -254,7 +254,6 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         if (rowSize > 3) {
             return calculateDeterminantWithPermutations();
         }
-
         if (rowSize == 3) {
             return ruleOfSarrus();
         }
@@ -575,12 +574,13 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
      *
      * @return {@code true} if {@code det == -1 || det == 1}, {@code false} otherwise
      * @author Lars Tennstedt
+     * @see #square
      * @see #determinant
      * @since 1
      */
     @Override
     public boolean invertible() {
-        return determinant().compareTo(BigDecimal.ZERO) != 0;
+        return square() && (determinant().compareTo(BigDecimal.ZERO) != 0);
     }
 
     /**

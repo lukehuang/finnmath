@@ -564,12 +564,13 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      *
      * @return {@code true} if {@code det == -1 || det == 1}, {@code false} otherwise
      * @author Lars Tennstedt
+     * @see #square
      * @see #determinant
      * @since 1
      */
     @Override
     public boolean invertible() {
-        return determinant().equals(BigInteger.ONE.negate()) || determinant().equals(BigInteger.ONE);
+        return square() && (determinant().equals(BigInteger.ONE.negate()) || determinant().equals(BigInteger.ONE));
     }
 
     /**
