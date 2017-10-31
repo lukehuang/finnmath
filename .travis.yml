@@ -15,7 +15,6 @@
 #
 
 language: java
-install: gradle -b wrapper.gradle wrapper
 after_script:
     - mvn install site
     - bash <(curl -s https://codecov.io/bash)
