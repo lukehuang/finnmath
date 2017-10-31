@@ -70,7 +70,7 @@ are the impact on the runtime speed, the higher memory consumption and the cumbe
 I find its assertions more readable in comparison to JUnit and Hamcrest and the fluent assertions are more IDE 
 friendly.
 
-#### Why he move from Gradle to Maven?
+#### Why the move from Gradle to Maven?
 Gradle is a wonderful tool and I think that it will conquer the throne of build automation tools for the JVM in the 
 near future. Its DSL is less verbose than Maven's XML approach and thanks to Groovy customizing all the tasks involved in 
 the build process is very comfortable. So why I moved away from it? I have noticed at work that I need more expertise 
