@@ -34,7 +34,7 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 * Logging facade instead of a hard dependency on a specific logging framework
 
 ## Information
-* Maven site: [link https://ltennstedt.github.io/finnmath/index.html]
+* Maven site: https://ltennstedt.github.io/finnmath/index.html
 
 finnMath is open source and free software and is licensed under the permissive Apache License.
 
@@ -44,7 +44,7 @@ finnMath is still in a very early state and a work in progress.
 
 #### Prerequisites
 * JDK
-* Gradle
+* Maven
 * Git (optional)
 #
     git clone https://github.com/ltennstedt/finnmath.git
@@ -70,7 +70,7 @@ are the impact on the runtime speed, the higher memory consumption and the cumbe
 I find its assertions more readable in comparison to JUnit and Hamcrest and the fluent assertions are more IDE 
 friendly.
 
-#### Why Gradle?
+#### Why he move from Gradle to Maven?
 Gradle is a wonderful tool and I think that it will conquer the throne of build automation tools for the JVM in the 
 near future. Its DSL is less verbose than Maven's XML approach and thanks to Groovy customizing all the tasks involved in 
 the build process is very comfortable. So why I moved away from it? I have noticed at work that I need more expertise 
