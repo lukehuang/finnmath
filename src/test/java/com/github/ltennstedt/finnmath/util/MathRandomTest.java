@@ -269,7 +269,7 @@ public final class MathRandomTest {
     public void nextInvertibleDecimalShouldSucceed() {
         final BigDecimal actual = mathRandom.nextInvertibleDecimal(bound, validScale);
         assertThat(actual).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
-                .isNotEqualByComparingTo(BigDecimal.ZERO);
+                        .isNotEqualByComparingTo(BigDecimal.ZERO);
         assertThat(actual.scale()).isEqualTo(validScale);
     }
 
@@ -327,9 +327,9 @@ public final class MathRandomTest {
     public void nextPositiveDecimalsShouldSucceed() {
         final List<BigDecimal> decimals = mathRandom.nextPositiveDecimals(bound, validScale, howMany);
         assertThat(decimals).hasSize(howMany)
-                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) > -1, "lower bound"))
-                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound"))
-                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scale"));
+                        .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) > -1, "lower bound"))
+                        .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound"))
+                        .are(new Condition<>(decimal -> decimal.scale() == validScale, "scale"));
     }
 
     @Test
@@ -357,9 +357,9 @@ public final class MathRandomTest {
     public void nextNegativeDecimalsShouldSucceed() {
         final List<BigDecimal> decimals = mathRandom.nextNegativeDecimals(bound, validScale, howMany);
         assertThat(decimals).hasSize(howMany)
-                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
-                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) < 1, "upper bound"))
-                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scale"));
+                        .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
+                        .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) < 1, "upper bound"))
+                        .are(new Condition<>(decimal -> decimal.scale() == validScale, "scale"));
     }
 
     @Test
@@ -387,9 +387,9 @@ public final class MathRandomTest {
     public void nextDecimalsShouldSucceed() {
         final List<BigDecimal> decimals = mathRandom.nextDecimals(bound, validScale, howMany);
         assertThat(decimals).hasSize(howMany)
-                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
-                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 1, "upper bound"))
-                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scale"));
+                        .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
+                        .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 1, "upper bound"))
+                        .are(new Condition<>(decimal -> decimal.scale() == validScale, "scale"));
     }
 
     @Test
@@ -420,9 +420,9 @@ public final class MathRandomTest {
     public void nextInvertiblePositiveDecimalsShouldSucceed() {
         final List<BigDecimal> decimals = mathRandom.nextInvertiblePositiveDecimals(bound, validScale, howMany);
         assertThat(decimals).hasSize(howMany)
-                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) > 0, "lower bound"))
-                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound"))
-                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
+                        .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) > 0, "lower bound"))
+                        .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound"))
+                        .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
     }
 
     @Test
@@ -450,9 +450,9 @@ public final class MathRandomTest {
     public void nextInvertibleNegativeDecimalsShouldSucceed() {
         final List<BigDecimal> decimals = mathRandom.nextInvertibleNegativeDecimals(bound, validScale, howMany);
         assertThat(decimals).hasSize(howMany)
-                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
-                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) < 0, "upper bound"))
-                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
+                        .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
+                        .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) < 0, "upper bound"))
+                        .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
     }
 
     @Test
@@ -480,10 +480,10 @@ public final class MathRandomTest {
     public void nextInvertibleDecimalsShouldSucceed() {
         final List<BigDecimal> decimals = mathRandom.nextInvertibleDecimals(bound, validScale, howMany);
         assertThat(decimals).hasSize(howMany)
-                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
-                .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound"))
-                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) != 0, "not zero"))
-                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
+                        .are(new Condition<>(decimal -> decimal.compareTo(decimalBound.negate()) > 0, "lower bound"))
+                        .are(new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound"))
+                        .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) != 0, "not zero"))
+                        .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
     }
 
     @Test
@@ -567,7 +567,7 @@ public final class MathRandomTest {
     public void nextInvertibleFractionShouldSucceed() {
         final Fraction fraction = mathRandom.nextInvertibleFraction(bound);
         assertThat(fraction.getNumerator()).isGreaterThan(bigBound.negate()).isLessThan(bigBound)
-                .isNotEqualTo(BigInteger.ZERO);
+                        .isNotEqualTo(BigInteger.ZERO);
         assertThat(fraction.getDenominator()).isGreaterThan(bigBound.negate()).isLessThanOrEqualTo(bigBound);
     }
 
@@ -589,14 +589,14 @@ public final class MathRandomTest {
     public void nextPositiveFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextPositiveFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
+                                        "lower bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
+                                        "upper bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                                        "lower bound (denominator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                                        "upper bound (denominator)"));
     }
 
     @Test
@@ -617,14 +617,14 @@ public final class MathRandomTest {
     public void nextNegativeFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextNegativeFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
+                                        "upper bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                                        "lower bound (denominator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                                        "upper bound (denominator)"));
     }
 
     @Test
@@ -647,14 +647,14 @@ public final class MathRandomTest {
     public void nextFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound.negate()) > 0,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
+                                        "upper bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (denominator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                                        "upper bound (denominator)"));
     }
 
     @Test
@@ -675,14 +675,14 @@ public final class MathRandomTest {
     public void nextInvertiblePositiveFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextInvertiblePositiveFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
+                                        "lower bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
+                                        "upper bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                                        "lower bound (denominator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                                        "upper bound (denominator)"));
     }
 
     @Test
@@ -703,14 +703,14 @@ public final class MathRandomTest {
     public void nextInvertibleNegativeFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextInvertibleNegativeFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
+                                        "upper bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                                        "lower bound (denominator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                                        "upper bound (denominator)"));
     }
 
     @Test
@@ -733,14 +733,14 @@ public final class MathRandomTest {
     public void nextInvertibleFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextInvertibleFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound.negate()) > 0,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
+                                        "upper bound (numerator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (denominator)"))
+                        .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                                        "upper bound (denominator)"));
     }
 
     @Test
@@ -794,14 +794,15 @@ public final class MathRandomTest {
     public void nextSimpleComplexNumbersShouldSucceed() {
         final List<SimpleComplexNumber> complexNumbers = mathRandom.nextSimpleComplexNumbers(bound, howMany);
         assertThat(complexNumbers).hasSize(howMany)
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound.negate()) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound.negate()) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+                        .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (real part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
+                                        "upper bound (real part)"))
+                        .are(new Condition<>(
+                                        complexNumber -> complexNumber.getImaginary().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (imaginary part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
+                                        "upper bound (imaginary part)"));
     }
 
     @Test
@@ -824,15 +825,17 @@ public final class MathRandomTest {
     public void nextInvertibleSimpleComplexNumbersShouldSucceed() {
         final List<SimpleComplexNumber> complexNumbers = mathRandom.nextInvertibleSimpleComplexNumbers(bound, howMany);
         assertThat(complexNumbers).hasSize(howMany)
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound.negate()) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound.negate()) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> !complexNumber.equals(SimpleComplexNumber.ZERO), "invertible"));
+                        .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (real part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
+                                        "upper bound (real part)"))
+                        .are(new Condition<>(
+                                        complexNumber -> complexNumber.getImaginary().compareTo(bigBound.negate()) > 0,
+                                        "lower bound (imaginary part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
+                                        "upper bound (imaginary part)"))
+                        .are(new Condition<>(complexNumber -> !complexNumber.equals(SimpleComplexNumber.ZERO),
+                                        "invertible"));
     }
 
     @Test
@@ -855,9 +858,9 @@ public final class MathRandomTest {
     public void nextRealComplexNumberShouldSucceed() {
         final RealComplexNumber actual = mathRandom.nextRealComplexNumber(bound, validScale);
         assertThat(actual.getReal()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
+                        .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
         assertThat(actual.getImaginary()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
+                        .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
     }
 
     @Test
@@ -880,11 +883,11 @@ public final class MathRandomTest {
     public void nextInvertibleRealComplexNumberShouldSucceed() {
         final RealComplexNumber actual = mathRandom.nextInvertibleRealComplexNumber(bound, validScale);
         assertThat(actual.getReal()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
+                        .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
         assertThat(actual.getImaginary()).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
-        assertThat((actual.getReal().compareTo(BigDecimal.ZERO) != 0) ||
-                (actual.getImaginary().compareTo(BigDecimal.ZERO) != 0)).isTrue();
+                        .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
+        assertThat((actual.getReal().compareTo(BigDecimal.ZERO) != 0)
+                        || (actual.getImaginary().compareTo(BigDecimal.ZERO) != 0)).isTrue();
     }
 
     @Test
@@ -915,18 +918,21 @@ public final class MathRandomTest {
     public void nextRealComplexNumbersShouldSucceed() {
         final List<RealComplexNumber> complexNumbers = mathRandom.nextRealComplexNumbers(bound, validScale, howMany);
         assertThat(complexNumbers).hasSize(howMany)
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound.negate()) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound.negate()) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale,
-                        "scaled (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
-                        "scaled (imaginary part)"));
+                        .are(new Condition<>(
+                                        complexNumber -> complexNumber.getReal().compareTo(decimalBound.negate()) > 0,
+                                        "lower bound (real part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
+                                        "upper bound (real part)"))
+                        .are(new Condition<>(
+                                        complexNumber -> complexNumber.getImaginary()
+                                                        .compareTo(decimalBound.negate()) > 0,
+                                        "lower bound (imaginary part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
+                                        "upper bound (imaginary part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale,
+                                        "scaled (real part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
+                                        "scaled (imaginary part)"));
     }
 
     @Test
@@ -955,23 +961,27 @@ public final class MathRandomTest {
 
     @Test
     public void nextInvertibleRealComplexNumbersShouldSucceed() {
-        final List<RealComplexNumber> complexNumbers =
-                mathRandom.nextInvertibleRealComplexNumbers(bound, validScale, howMany);
+        final List<RealComplexNumber> complexNumbers = mathRandom.nextInvertibleRealComplexNumbers(bound, validScale,
+                        howMany);
         assertThat(complexNumbers).hasSize(howMany)
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound.negate()) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound.negate()) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale,
-                        "scale of the real part"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
-                        "scale of the imaginary part")).are(new Condition<>(
-                complexNumber -> (complexNumber.getReal().compareTo(BigDecimal.ZERO) != 0) ||
-                        (complexNumber.getImaginary().compareTo(BigDecimal.ZERO) != 0), "invertible"));
+                        .are(new Condition<>(
+                                        complexNumber -> complexNumber.getReal().compareTo(decimalBound.negate()) > 0,
+                                        "lower bound (real part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
+                                        "upper bound (real part)"))
+                        .are(new Condition<>(
+                                        complexNumber -> complexNumber.getImaginary()
+                                                        .compareTo(decimalBound.negate()) > 0,
+                                        "lower bound (imaginary part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
+                                        "upper bound (imaginary part)"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale,
+                                        "scale of the real part"))
+                        .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
+                                        "scale of the imaginary part"))
+                        .are(new Condition<>(complexNumber -> (complexNumber.getReal().compareTo(BigDecimal.ZERO) != 0)
+                                        || (complexNumber.getImaginary().compareTo(BigDecimal.ZERO) != 0),
+                                        "invertible"));
     }
 
     @Test
@@ -994,9 +1004,10 @@ public final class MathRandomTest {
         final BigIntVector actual = mathRandom.nextBigIntVector(bound, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.getMap().values())
-                .are(new Condition<>(element -> element instanceof BigInteger, "type of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+                        .are(new Condition<>(element -> element instanceof BigInteger, "type of the element"))
+                        .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
     }
 
     @Test
@@ -1027,12 +1038,13 @@ public final class MathRandomTest {
     public void nextBigIntVectorsShouldSucceed() {
         final List<BigIntVector> vectors = mathRandom.nextBigIntVectors(bound, validSize, howMany);
         assertThat(vectors).hasSize(howMany)
-                .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
+                        .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
         vectors.forEach(vector -> {
             assertThat(vector.getMap().values())
-                    .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
-                            "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+                            .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(bigBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1061,8 +1073,9 @@ public final class MathRandomTest {
     public void nextBigIntMatrixShouldSucceed() {
         final BigIntMatrix matrix = mathRandom.nextBigIntMatrix(bound, validRowSize, validColumnSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+                        .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualByComparingTo(validRowSize);
         assertThat(matrix.columnSize()).isEqualTo(validColumnSize);
     }
@@ -1085,8 +1098,9 @@ public final class MathRandomTest {
     public void nextUpperTriangularBigIntMatrixShouldSucceed() {
         final BigIntMatrix matrix = mathRandom.nextUpperTriangularBigIntMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+                        .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.upperTriangular()).isTrue();
@@ -1110,8 +1124,9 @@ public final class MathRandomTest {
     public void nextLowerTriangularBigIntMatrixShouldSucceed() {
         final BigIntMatrix matrix = mathRandom.nextLowerTriangularBigIntMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+                        .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.lowerTriangular()).isTrue();
@@ -1135,8 +1150,9 @@ public final class MathRandomTest {
     public void nextTriangularBigIntMatrixShouldSucceed() {
         final BigIntMatrix matrix = mathRandom.nextTriangularBigIntMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+                        .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.triangular()).isTrue();
@@ -1160,8 +1176,9 @@ public final class MathRandomTest {
     public void nextDiagonalBigIntMatrixShouldSucceed() {
         final BigIntMatrix matrix = mathRandom.nextDiagonalBigIntMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+                        .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.diagonal()).isTrue();
@@ -1185,8 +1202,9 @@ public final class MathRandomTest {
     public void nextSymmetricBigIntMatrixShouldSucceed() {
         final BigIntMatrix matrix = mathRandom.nextSymmetricBigIntMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+                        .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.symmetric()).isTrue();
@@ -1210,8 +1228,9 @@ public final class MathRandomTest {
     public void nextSkewSymmetricBigIntMatrixShouldSucceed() {
         final BigIntMatrix matrix = mathRandom.nextSkewSymmetricBigIntMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+                        .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.skewSymmetric()).isTrue();
@@ -1247,15 +1266,17 @@ public final class MathRandomTest {
 
     @Test
     public void nextBigIntMatricesShouldSucceed() {
-        final List<BigIntMatrix> matrices =
-                mathRandom.nextBigIntMatrices(bound, validRowSize, validColumnSize, howMany);
+        final List<BigIntMatrix> matrices = mathRandom.nextBigIntMatrices(bound, validRowSize, validColumnSize,
+                        howMany);
         assertThat(matrices).hasSize(howMany)
-                .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
+                        .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(bigBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1284,12 +1305,14 @@ public final class MathRandomTest {
     public void nextUpperTriangularBigIntMatricesShouldSucceed() {
         final List<BigIntMatrix> matrices = mathRandom.nextUpperTriangularBigIntMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.upperTriangular(), "upper triangular"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.upperTriangular(), "upper triangular"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(bigBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1318,12 +1341,14 @@ public final class MathRandomTest {
     public void nextLowerTriangularBigIntMatricesShouldSucceed() {
         final List<BigIntMatrix> matrices = mathRandom.nextLowerTriangularBigIntMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.lowerTriangular(), "lower triangular"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.lowerTriangular(), "lower triangular"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(bigBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1352,12 +1377,14 @@ public final class MathRandomTest {
     public void nextTriangularBigIntMatricesShouldSucceed() {
         final List<BigIntMatrix> matrices = mathRandom.nextTriangularBigIntMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(bigBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1386,12 +1413,14 @@ public final class MathRandomTest {
     public void nextDiagonalBigIntMatricesShouldSucceed() {
         final List<BigIntMatrix> matrices = mathRandom.nextDiagonalBigIntMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(bigBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1420,12 +1449,14 @@ public final class MathRandomTest {
     public void nextSymmetricBigIntMatricesShouldSucceed() {
         final List<BigIntMatrix> matrices = mathRandom.nextSymmetricBigIntMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(bigBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1454,12 +1485,14 @@ public final class MathRandomTest {
     public void nextSkewSymmetricBigIntMatricesShouldSucceed() {
         final List<BigIntMatrix> matrices = mathRandom.nextSkewSymmetricBigIntMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(bigBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(bigBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1491,10 +1524,12 @@ public final class MathRandomTest {
         final DecimalVector actual = mathRandom.nextDecimalVector(bound, validScale, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.getMap().values())
-                .are(new Condition<>(element -> element instanceof BigDecimal, "type of the element"))
-                .are(new Condition<>(element -> element.compareTo(BigDecimal.ZERO) > -1, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
-                .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
+                        .are(new Condition<>(element -> element instanceof BigDecimal, "type of the element"))
+                        .are(new Condition<>(element -> element.compareTo(BigDecimal.ZERO) > -1,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                        "upper bound of the element"))
+                        .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
     }
 
     @Test
@@ -1533,13 +1568,14 @@ public final class MathRandomTest {
     public void nextDecimalVectorsShouldSucceed() {
         final List<DecimalVector> vectors = mathRandom.nextDecimalVectors(bound, validScale, validSize, howMany);
         assertThat(vectors).hasSize(howMany)
-                .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
+                        .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
         vectors.forEach(vector -> {
             assertThat(vector.getMap().values())
-                    .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                            "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
-                    .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
+                            .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                            "upper bound of the element"))
+                            .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
         });
     }
 
@@ -1574,10 +1610,12 @@ public final class MathRandomTest {
     @Test
     public void nextDecimalMatrixShouldSucceed() {
         final DecimalMatrix matrix = mathRandom.nextDecimalMatrix(bound, validScale, validRowSize, validColumnSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
-                .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
+        assertThat(matrix.elements())
+                        .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                        "upper bound of the element"))
+                        .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validRowSize);
         assertThat(matrix.columnSize()).isEqualTo(validColumnSize);
     }
@@ -1606,9 +1644,11 @@ public final class MathRandomTest {
     @Test
     public void nextUpperTriangularDecimalMatrixShouldSucceed() {
         final DecimalMatrix matrix = mathRandom.nextUpperTriangularDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+                        .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                        "upper bound of the element"));
         matrix.cells().forEach(cell -> {
             if (cell.getRowKey() <= cell.getColumnKey()) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
@@ -1643,9 +1683,11 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularDecimalMatrixShouldSucceed() {
         final DecimalMatrix matrix = mathRandom.nextLowerTriangularDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+                        .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                        "upper bound of the element"));
         matrix.cells().forEach(cell -> {
             if (cell.getRowKey() >= cell.getColumnKey()) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
@@ -1680,9 +1722,11 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularDecimalMatrixShouldSucceed() {
         final DecimalMatrix matrix = mathRandom.nextTriangularDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+                        .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                        "upper bound of the element"));
         matrix.cells().forEach(cell -> {
             if (matrix.upperTriangular() && (cell.getRowKey() <= cell.getColumnKey())) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
@@ -1720,9 +1764,11 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalDecimalMatrixShouldSucceed() {
         final DecimalMatrix matrix = mathRandom.nextDiagonalDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+                        .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                        "upper bound of the element"));
         matrix.cells().forEach(cell -> {
             if (cell.getRowKey().equals(cell.getColumnKey())) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
@@ -1757,9 +1803,11 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricDecimalMatrixShouldSucceed() {
         final DecimalMatrix matrix = mathRandom.nextSymmetricDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+                        .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                        "upper bound of the element"));
         matrix.elements().forEach(element -> {
             assertThat(element.scale()).isEqualTo(validScale);
         });
@@ -1792,9 +1840,11 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricDecimalMatrixShouldSucceed() {
         final DecimalMatrix matrix = mathRandom.nextSkewSymmetricDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+                        .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                        "lower bound of the element"))
+                        .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                        "upper bound of the element"));
         matrix.cells().forEach(cell -> {
             if (!cell.getRowKey().equals(cell.getColumnKey())) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
@@ -1842,15 +1892,17 @@ public final class MathRandomTest {
 
     @Test
     public void nextDecimalMatricesShouldSucceed() {
-        final List<DecimalMatrix> matrices =
-                mathRandom.nextDecimalMatrices(bound, validScale, validRowSize, validColumnSize, howMany);
+        final List<DecimalMatrix> matrices = mathRandom.nextDecimalMatrices(bound, validScale, validRowSize,
+                        validColumnSize, howMany);
         assertThat(matrices).hasSize(howMany)
-                .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
+                        .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1884,15 +1936,17 @@ public final class MathRandomTest {
 
     @Test
     public void nextUpperTriangularDecimalMatricesShouldSucceed() {
-        final List<DecimalMatrix> matrices =
-                mathRandom.nextUpperTriangularDecimalMatrices(bound, validScale, validSize, howMany);
+        final List<DecimalMatrix> matrices = mathRandom.nextUpperTriangularDecimalMatrices(bound, validScale, validSize,
+                        howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.upperTriangular(), "upper triangular"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.upperTriangular(), "upper triangular"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1926,15 +1980,17 @@ public final class MathRandomTest {
 
     @Test
     public void nextLowerTriangularDecimalMatricesShouldSucceed() {
-        final List<DecimalMatrix> matrices =
-                mathRandom.nextLowerTriangularDecimalMatrices(bound, validScale, validSize, howMany);
+        final List<DecimalMatrix> matrices = mathRandom.nextLowerTriangularDecimalMatrices(bound, validScale, validSize,
+                        howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.lowerTriangular(), "lower triangular"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.lowerTriangular(), "lower triangular"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -1968,15 +2024,17 @@ public final class MathRandomTest {
 
     @Test
     public void nextTriangularDecimalMatricesShouldSucceed() {
-        final List<DecimalMatrix> matrices =
-                mathRandom.nextTriangularDecimalMatrices(bound, validScale, validSize, howMany);
+        final List<DecimalMatrix> matrices = mathRandom.nextTriangularDecimalMatrices(bound, validScale, validSize,
+                        howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -2010,15 +2068,17 @@ public final class MathRandomTest {
 
     @Test
     public void nextDiagonalDecimalMatricesShouldSucceed() {
-        final List<DecimalMatrix> matrices =
-                mathRandom.nextDiagonalDecimalMatrices(bound, validScale, validSize, howMany);
+        final List<DecimalMatrix> matrices = mathRandom.nextDiagonalDecimalMatrices(bound, validScale, validSize,
+                        howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -2052,15 +2112,17 @@ public final class MathRandomTest {
 
     @Test
     public void nextSymmetricDecimalMatricesShouldSucceed() {
-        final List<DecimalMatrix> matrices =
-                mathRandom.nextSymmetricDecimalMatrices(bound, validScale, validSize, howMany);
+        final List<DecimalMatrix> matrices = mathRandom.nextSymmetricDecimalMatrices(bound, validScale, validSize,
+                        howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
@@ -2094,21 +2156,23 @@ public final class MathRandomTest {
 
     @Test
     public void nextSkewSymmetricDecimalMatricesShouldSucceed() {
-        final List<DecimalMatrix> matrices =
-                mathRandom.nextSkewSymmetricDecimalMatrices(bound, validScale, validSize, howMany);
+        final List<DecimalMatrix> matrices = mathRandom.nextSkewSymmetricDecimalMatrices(bound, validScale, validSize,
+                        howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
+                        .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+                        .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
         matrices.forEach(matrix -> {
-            assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
-                    "lower bound of the element"))
-                    .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+            assertThat(matrix.elements())
+                            .are(new Condition<>(element -> element.compareTo(decimalBound.negate()) > 0,
+                                            "lower bound of the element"))
+                            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0,
+                                            "upper bound of the element"));
         });
     }
 
     @Test
     public void toStringShouldSucceed() {
-        assertThat(mathRandom.toString()).isExactlyInstanceOf(String.class)
-                .isEqualTo(MoreObjects.toStringHelper(mathRandom).add("random", mathRandom.getRandom()).toString());
+        assertThat(mathRandom.toString()).isEqualTo(
+                        MoreObjects.toStringHelper(mathRandom).add("random", mathRandom.getRandom()).toString());
     }
 }

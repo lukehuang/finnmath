@@ -30,9 +30,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * @param <E> The type of the elements of the vector
- * @param <V> The type of the vector
- * @param <N> The type of the euclidean norm of the vector
+ * @param <E>
+ *            The type of the elements of the vector
+ * @param <V>
+ *            The type of the vector
+ * @param <N>
+ *            The type of the euclidean norm of the vector
  * @author Lars Tennstedt
  * @see ImmutableMap
  * @since 1
@@ -54,10 +57,13 @@ abstract class AbstractVector<E, V, N> {
     /**
      * Returns the element dependent on the given index
      *
-     * @param index the index of the element
+     * @param index
+     *            the index of the element
      * @return The element
-     * @throws NullPointerException     if {@code index == null}
-     * @throws IllegalArgumentException if {@code !map.containsKey(index)}
+     * @throws NullPointerException
+     *             if {@code index == null}
+     * @throws IllegalArgumentException
+     *             if {@code !map.containsKey(index)}
      * @author Lars Tennstedt
      * @see Map#containsKey
      * @since 1
@@ -69,7 +75,8 @@ abstract class AbstractVector<E, V, N> {
     }
 
     /**
-     * Returns all elements of the underlying {@link Map} of this {@link AbstractVector}
+     * Returns all elements of the underlying {@link Map} of this
+     * {@link AbstractVector}
      *
      * @return The elements
      * @author Lars Tennstedt

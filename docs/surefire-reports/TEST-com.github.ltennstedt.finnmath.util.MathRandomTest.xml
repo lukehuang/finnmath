@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.ltennstedt.finnmath.util.MathRandomTest" time="2.325" tests="245" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/home/raimund/git/finnmath/target/test-classes:/home/raimund/git/finnmath/target/classes:/home/raimund/.m2/repository/com/google/guava/guava/23.2-jre/guava-23.2-jre.jar:/home/raimund/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar:/home/raimund/.m2/repository/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar:/home/raimund/.m2/repository/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar:/home/raimund/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar:/home/raimund/.m2/repository/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/raimund/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/raimund/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/raimund/.m2/repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar:/home/raimund/.m2/repository/org/assertj/assertj-guava/3.1.0/assertj-guava-3.1.0.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Linux"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/amd64"/>
+    <property name="sun.java.command" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar /home/raimund/git/finnmath/target/surefire 2017-10-31T23-57-56_034-jvmRun1 surefire1557013046127631234tmp surefire_08969395774441063601tmp"/>
+    <property name="surefire.test.class.path" value="/home/raimund/git/finnmath/target/test-classes:/home/raimund/git/finnmath/target/classes:/home/raimund/.m2/repository/com/google/guava/guava/23.2-jre/guava-23.2-jre.jar:/home/raimund/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar:/home/raimund/.m2/repository/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar:/home/raimund/.m2/repository/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar:/home/raimund/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar:/home/raimund/.m2/repository/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/raimund/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/raimund/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/raimund/.m2/repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar:/home/raimund/.m2/repository/org/assertj/assertj-guava/3.1.0/assertj-guava-3.1.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/raimund"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="/usr/lib/jvm/java-8-openjdk/jre"/>
+    <property name="basedir" value="/home/raimund/git/finnmath"/>
+    <property name="file.separator" value="/"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar:/home/raimund/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar"/>
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk/jre/classes"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_144-b01"/>
+    <property name="user.name" value="raimund"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="4.13.9-1-ARCH"/>
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-8-openjdk/jre/lib/endorsed"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/home/raimund/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="1.8.0_144"/>
+    <property name="user.dir" value="/home/raimund/git/finnmath"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.144-b01"/>
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-8-openjdk/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="nextInvertiblePositiveDecimalsScaleTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleNegativeFractionsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextTriangularDecimalMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.129"/>
+  <testcase name="nextLowerTriangularDecimalMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.032"/>
+  <testcase name="nextBigIntMatricesRowSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextUpperTriangularBigIntMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.128"/>
+  <testcase name="nextTriangularBigIntMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextLowerTriangularBigIntMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.011"/>
+  <testcase name="nextInvertibleDecimalsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.019"/>
+  <testcase name="nextTriangularDecimalMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDecimalMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.022"/>
+  <testcase name="nextRealComplexNumbersTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertiblePositiveFractionBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="toStringShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleDecimalsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextInvertibleDecimalBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextPositiveLongShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextSkewSymmetricDecimalMatrixScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.042"/>
+  <testcase name="nextDecimalVectorsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.058"/>
+  <testcase name="nextDiagonalBigIntMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextInvertibleNegativeFractionsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.006"/>
+  <testcase name="keepDecimalInBoundDecimalGreaterThanOrEqualToZeroAndDecimalGreaterThanOrEqualToBound" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDecimalVectorBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.006"/>
+  <testcase name="nextSymmetricDecimalMatricesScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.011"/>
+  <testcase name="nextPositiveDecimalsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextNegativeDecimalsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.013"/>
+  <testcase name="nextPositiveLongsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.02"/>
+  <testcase name="nextInvertibleSimpleComplexNumbersTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextSkewSymmetricBigIntMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.01"/>
+  <testcase name="nextUpperTriangularDecimalMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextBigIntMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextUpperTriangularBigIntMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.007"/>
+  <testcase name="nextSymmetricDecimalMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.01"/>
+  <testcase name="nextPositiveFractionShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextPositiveFractionBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.005"/>
+  <testcase name="nextPositiveDecimalScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertiblePositiveDecimalsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextSkewSymmetricDecimalMatricesScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="keepDecimalInBoundDecimalLowerThanZeroAndDecimalGreaterThanMinusBound" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextUpperTriangularBigIntMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.011"/>
+  <testcase name="nextUpperTriangularBigIntMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.015"/>
+  <testcase name="nextSimpleComplexNumbersBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.005"/>
+  <testcase name="nextPositiveDecimalsScaleTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextSymmetricDecimalMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextBigIntVectorSizeTooLowhouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextTriangularDecimalMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDecimalBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDiagonalDecimalMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleNegativeDecimalScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.007"/>
+  <testcase name="nextDecimalMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextNegativeDecimalsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextInvertibleNegativeFractionsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextSkewSymmetricDecimalMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.091"/>
+  <testcase name="nextLowerTriangularBigIntMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.01"/>
+  <testcase name="nextTriangularBigIntMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDecimalMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.005"/>
+  <testcase name="nextInvertibleSimpleComplexNumbersBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextPositiveLongsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleNegativeDecimalsScaleTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.009"/>
+  <testcase name="nextDiagonalBigIntMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextSkewSymmetricDecimalMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextSkewSymmetricDecimalMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDecimalMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.043"/>
+  <testcase name="nextSymmetricBigIntMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextLowerTriangularBigIntMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.014"/>
+  <testcase name="nextInvertibleFractionsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextBigIntVectorsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.03"/>
+  <testcase name="nextDecimalMatrixColumnSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextLongBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextInvertibleRealComplexNumbersShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.026"/>
+  <testcase name="nextLowerTriangularDecimalMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDiagonalDecimalMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.053"/>
+  <testcase name="nextPositiveFractionsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextNegativeFractionsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDecimalsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.01"/>
+  <testcase name="nextNegativeLongsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.01"/>
+  <testcase name="nextSimpleComplexNumbersTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDiagonalBigIntMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.053"/>
+  <testcase name="nextTriangularDecimalMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleSimpleComplexNumberShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextPositiveDecimalsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextLowerTriangularDecimalMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextTriangularDecimalMatricesScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.017"/>
+  <testcase name="nextBigIntVectorShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.015"/>
+  <testcase name="nextRealComplexNumberScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextBigIntVectorBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleRealComplexNumberBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.013"/>
+  <testcase name="nextNegativeLongBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextRealComplexNumbersScaleTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDiagonalDecimalMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.015"/>
+  <testcase name="nextSkewSymmetricBigIntMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextNegativeDecimalScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextLowerTriangularDecimalMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.037"/>
+  <testcase name="nextInvertibleNegativeDecimalsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.006"/>
+  <testcase name="nextSymmetricBigIntMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextNegativeDecimalsScaleTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.008"/>
+  <testcase name="nextTriangularBigIntMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDiagonalDecimalMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.009"/>
+  <testcase name="nextUpperTriangularDecimalMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleDecimalShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextUpperTriangularBigIntMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertiblePositiveFractionsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextBigIntMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextUpperTriangularDecimalMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.006"/>
+  <testcase name="nextInvertibleNegativeDecimalsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextInvertibleNegativeDecimalShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextSkewSymmetricBigIntMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextInvertiblePositiveDecimalsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.007"/>
+  <testcase name="nextInvertiblePositiveFractionShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDiagonalDecimalMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextBigIntVectorsSizeTooLowhouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.008"/>
+  <testcase name="nextTriangularBigIntMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.015"/>
+  <testcase name="nextTriangularBigIntMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.03"/>
+  <testcase name="nextDiagonalBigIntMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextTriangularBigIntMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextLongsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextBigIntVectorsBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.013"/>
+  <testcase name="nextDecimalVectorsBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextSkewSymmetricBigIntMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextRealComplexNumbersBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextPositiveFractionsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.01"/>
+  <testcase name="nextInvertibleFractionsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.006"/>
+  <testcase name="nextRealComplexNumberShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.005"/>
+  <testcase name="nextDecimalVectorsTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.005"/>
+  <testcase name="nextSymmetricBigIntMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextBigIntMatrixRowSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDecimalMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.01"/>
+  <testcase name="nextLowerTriangularDecimalMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.01"/>
+  <testcase name="nextInvertiblePositiveDecimalBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextLowerTriangularDecimalMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextSimpleComplexNumberBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextNegativeDecimalsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.005"/>
+  <testcase name="nextInvertibleNegativeDecimalsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextNegativeLongShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleDecimalScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.018"/>
+  <testcase name="nextInvertibleNegativeFractionBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleSimpleComplexNumberBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextInvertibleDecimalsScaleTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextDiagonalDecimalMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextDecimalVectorShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.017"/>
+  <testcase name="nextUpperTriangularDecimalMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextBigIntMatrixColumnSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDecimalMatrixRowSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDecimalVectorScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextDiagonalBigIntMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextLowerTriangularBigIntMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.031"/>
+  <testcase name="nextPositiveDecimalsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextUpperTriangularDecimalMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.024"/>
+  <testcase name="nextInvertibleFractionShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextSymmetricDecimalMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.059"/>
+  <testcase name="nextSymmetricDecimalMatrixScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.005"/>
+  <testcase name="nextNegativeDecimalShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.005"/>
+  <testcase name="nextSkewSymmetricDecimalMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextFractionsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDiagonalDecimalMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.015"/>
+  <testcase name="nextSkewSymmetricDecimalMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDecimalMatricesColumnSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextNegativeFractionBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextSymmetricDecimalMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextSymmetricBigIntMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.044"/>
+  <testcase name="nextDecimalsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextInvertibleSimpleComplexNumbersShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.014"/>
+  <testcase name="nextLowerTriangularBigIntMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextDecimalScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextLongsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextNegativeFractionShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextFractionsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextDecimalMatrixScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextPositiveDecimalBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextDecimalMatricesScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDecimalsScaleTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextSkewSymmetricDecimalMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextRealComplexNumbersShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.018"/>
+  <testcase name="nextInvertiblePositiveFractionsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.006"/>
+  <testcase name="keepDecimalInBoundDecimalGreaterThanOrEqualToZeroAndDecimalLowerThanBound" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextLowerTriangularBigIntMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDecimalShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextInvertibleNegativeDecimalBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextUpperTriangularBigIntMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextInvertibleDecimalsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextTriangularDecimalMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextDecimalVectorSizeTooLowhouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextLowerTriangularDecimalMatricesScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextPositiveLongBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextUpperTriangularBigIntMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextLongShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextSkewSymmetricBigIntMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextInvertibleFractionsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.01"/>
+  <testcase name="nextInvertiblePositiveDecimalShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextSkewSymmetricDecimalMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.014"/>
+  <testcase name="keepDecimalInBoundDecimalLowerThanZeroAndDecimalLowerThanOrEqualToMinusBound" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextTriangularDecimalMatrixScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.006"/>
+  <testcase name="nextBigIntVectorsTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextDiagonalBigIntMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextPositiveFractionsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextLowerTriangularDecimalMatrixScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextInvertibleRealComplexNumbersTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextSymmetricDecimalMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextNegativeFractionsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.02"/>
+  <testcase name="nextFractionsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextUpperTriangularDecimalMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextBigIntMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.012"/>
+  <testcase name="nextInvertiblePositiveFractionsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.012"/>
+  <testcase name="nextDecimalVectorsScaleTooLowhouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextInvertibleRealComplexNumberShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextInvertibleRealComplexNumberScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextNegativeLongsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextDecimalsBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextDiagonalDecimalMatricesScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.009"/>
+  <testcase name="nextFractionShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextInvertibleRealComplexNumbersScaleTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextSimpleComplexNumberShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextSkewSymmetricBigIntMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.061"/>
+  <testcase name="nextTriangularDecimalMatricesBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextDiagonalDecimalMatrixScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextUpperTriangularDecimalMatricesScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextRealComplexNumberBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextInvertibleFractionBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextSymmetricBigIntMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextNegativeDecimalBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextNegativeFractionsTooLessShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextUpperTriangularDecimalMatrixScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextInvertiblePositiveDecimalsShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.009"/>
+  <testcase name="nextBigIntMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.022"/>
+  <testcase name="nextDecimalMatricesRowSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextBigIntMatricesColumnSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextDiagonalBigIntMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextSymmetricBigIntMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.036"/>
+  <testcase name="nextUpperTriangularDecimalMatricesSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.008"/>
+  <testcase name="nextLowerTriangularDecimalMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextSymmetricBigIntMatrixBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextBigIntMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextPositiveDecimalShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.004"/>
+  <testcase name="nextTriangularDecimalMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.029"/>
+  <testcase name="nextDecimalVectorsSizeTooLowhouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextSymmetricDecimalMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.016"/>
+  <testcase name="nextLowerTriangularBigIntMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.003"/>
+  <testcase name="nextInvertibleNegativeFractionShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0"/>
+  <testcase name="nextSymmetricDecimalMatricesTooLessShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextInvertibleRealComplexNumbersBoundTooLowShoudThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+  <testcase name="nextFractionBoundTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextInvertiblePositiveDecimalScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.001"/>
+  <testcase name="nextSimpleComplexNumbersShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.007"/>
+  <testcase name="nextSkewSymmetricBigIntMatrixShouldSucceed" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.009"/>
+  <testcase name="nextTriangularBigIntMatrixSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.MathRandomTest" time="0.002"/>
+</testsuite>

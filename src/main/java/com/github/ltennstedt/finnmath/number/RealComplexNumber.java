@@ -27,15 +27,15 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * An immutable implementation of a complex number which uses {@link BigDecimal} as type for its
- * real and imaginary part
+ * An immutable implementation of a complex number which uses {@link BigDecimal}
+ * as type for its real and imaginary part
  *
  * @author Lars Tennstedt
  * @since 1
  */
 @Beta
 public final class RealComplexNumber
-        extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
+                extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
     /**
      * {@code 0} as {@link RealComplexNumber}
      */
@@ -54,10 +54,14 @@ public final class RealComplexNumber
     /**
      * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part
      *
-     * @param real      the real part
-     * @param imaginary the imaginary part
-     * @throws NullPointerException if {@code real == null}
-     * @throws NullPointerException if {@code imaginary == null}
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -66,24 +70,29 @@ public final class RealComplexNumber
     }
 
     /**
-     * Constructs a {@link RealComplexNumber} by the given {@link SimpleComplexNumber}
+     * Constructs a {@link RealComplexNumber} by the given
+     * {@link SimpleComplexNumber}
      *
-     * @param complexNumber {@link SimpleComplexNumber}
-     * @throws NullPointerException if {@code complexNumber == null}
+     * @param complexNumber
+     *            {@link SimpleComplexNumber}
+     * @throws NullPointerException
+     *             if {@code complexNumber == null}
      * @author Lars Tennstedt
      * @since 1
      */
     public RealComplexNumber(final SimpleComplexNumber complexNumber) {
         super(new BigDecimal(requireNonNull(complexNumber, "complexNumber").getReal()),
-                new BigDecimal(complexNumber.getImaginary()));
+                        new BigDecimal(complexNumber.getImaginary()));
     }
 
     /**
      * Returns the sum of this {@link RealComplexNumber} and the given one
      *
-     * @param summand the summand
+     * @param summand
+     *            the summand
      * @return The sum
-     * @throws NullPointerException if {@code summand == null}
+     * @throws NullPointerException
+     *             if {@code summand == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -96,9 +105,11 @@ public final class RealComplexNumber
     /**
      * Returns the difference of this {@link RealComplexNumber} and the given one
      *
-     * @param subtrahend the subtrahend
+     * @param subtrahend
+     *            the subtrahend
      * @return The difference
-     * @throws NullPointerException if {@code subtrahend == null}
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -106,15 +117,17 @@ public final class RealComplexNumber
     public RealComplexNumber subtract(final RealComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new RealComplexNumber(real.subtract(subtrahend.getReal()),
-                imaginary.subtract(subtrahend.getImaginary()));
+                        imaginary.subtract(subtrahend.getImaginary()));
     }
 
     /**
      * Returns the product of this {@link RealComplexNumber} and the given one
      *
-     * @param factor the factor
+     * @param factor
+     *            the factor
      * @return The product
-     * @throws NullPointerException if {@code factor == null}
+     * @throws NullPointerException
+     *             if {@code factor == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -129,10 +142,13 @@ public final class RealComplexNumber
     /**
      * Returns the quotient of this {@link RealComplexNumber} and the given one
      *
-     * @param divisor the divisor
+     * @param divisor
+     *            the divisor
      * @return The quotient
-     * @throws NullPointerException     if {@code divisor == null}
-     * @throws IllegalArgumentException if {@code divisor == 0}
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws IllegalArgumentException
+     *             if {@code divisor == 0}
      * @author Lars Tennstedt
      * @see #invertible
      * @since 1
@@ -143,19 +159,20 @@ public final class RealComplexNumber
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
         final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));
         final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))
-                .divide(denominator, BigDecimal.ROUND_HALF_UP);
-        final BigDecimal newImaginary =
-                imaginary.multiply(divisor.getReal()).subtract(real.multiply(divisor.getImaginary()))
                         .divide(denominator, BigDecimal.ROUND_HALF_UP);
+        final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())
+                        .subtract(real.multiply(divisor.getImaginary())).divide(denominator, BigDecimal.ROUND_HALF_UP);
         return new RealComplexNumber(newReal, newImaginary);
     }
 
     /**
      * Returns power of this {@link RealComplexNumber} by the given exponent
      *
-     * @param exponent the exponent
+     * @param exponent
+     *            the exponent
      * @return The power
-     * @throws IllegalArgumentException if {@code exponent < 0}
+     * @throws IllegalArgumentException
+     *             if {@code exponent < 0}
      * @author Lars Tennstedt
      * @see #pow
      * @see #multiply
@@ -188,7 +205,8 @@ public final class RealComplexNumber
      * Returns the inverted {@link RealComplexNumber} of this one
      *
      * @return The inverted
-     * @throws IllegalStateException if {@code this == 0}
+     * @throws IllegalStateException
+     *             if {@code this == 0}
      * @author Lars Tennstedt
      * @see #invertible
      * @see #divide
@@ -201,7 +219,8 @@ public final class RealComplexNumber
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber} is invertible
+     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber}
+     * is invertible
      *
      * @return {@code true} if {@code this != ZERO}, {@code false} otherwise
      * @author Lars Tennstedt
@@ -260,7 +279,7 @@ public final class RealComplexNumber
     @Override
     public DecimalMatrix matrix() {
         return DecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-                .put(2, 2, real).build();
+                        .put(2, 2, real).build();
     }
 
     @Override

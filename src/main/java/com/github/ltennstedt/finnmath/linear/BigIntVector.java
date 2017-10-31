@@ -27,12 +27,14 @@ import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * An immutable implementation of a vector which uses {@link BigInteger} as type for its elements
+ * An immutable implementation of a vector which uses {@link BigInteger} as type
+ * for its elements
  *
  * @author Lars Tennstedt
  * @since 1
@@ -46,10 +48,13 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     /**
      * Returns the sum of this {@link BigIntVector} and the given one
      *
-     * @param summand the summand
+     * @param summand
+     *            the summand
      * @return The sum
-     * @throws NullPointerException     if {@code summand == null}
-     * @throws IllegalArgumentException if {@code size != summand.size}
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != summand.size}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -57,7 +62,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     public BigIntVector add(final BigIntVector summand) {
         requireNonNull(summand, "summand");
         checkArgument(map.size() == summand.size(), "equal sizes expected but actual %s != %s", map.size(),
-                summand.size());
+                        summand.size());
         final BigIntVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> {
             builder.put(element.add(summand.element(index)));
@@ -68,10 +73,13 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     /**
      * Returns the difference of this {@link BigIntVector} and the given one
      *
-     * @param subtrahend the subtrahend
+     * @param subtrahend
+     *            the subtrahend
      * @return The difference
-     * @throws NullPointerException     if {@code subtrahend == null}
-     * @throws IllegalArgumentException if {@code size != subtrahend.size}
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != subtrahend.size}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -79,7 +87,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     public BigIntVector subtract(final BigIntVector subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         checkArgument(map.size() == subtrahend.size(), "equal sizes expected but actual %s != %s", map.size(),
-                subtrahend.size());
+                        subtrahend.size());
         final BigIntVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> {
             builder.put(element.subtract(subtrahend.element(index)));
@@ -90,9 +98,11 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     /**
      * Returns the scalar product of the given scalar and this {@link BigIntVector}
      *
-     * @param scalar the scalar
+     * @param scalar
+     *            the scalar
      * @return The scalar product
-     * @throws NullPointerException if {@code summand == null}
+     * @throws NullPointerException
+     *             if {@code summand == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -138,10 +148,13 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     /**
      * Returns the taxicab distance from this {@link BigIntVector} to the given one
      *
-     * @param other The other {@link BigIntVector}
+     * @param other
+     *            The other {@link BigIntVector}
      * @return The taxicab distance
-     * @throws NullPointerException     if {@code other == null}
-     * @throws IllegalArgumentException if {@code size != other.size}
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #subtract
      * @see #taxicabNorm
@@ -184,10 +197,13 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     /**
      * Returns the euclidean norm of this {@link BigIntVector}
      *
-     * @param precision the precision for the termination condition
+     * @param precision
+     *            the precision for the termination condition
      * @return The euclidean norm
-     * @throws NullPointerException     if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -197,17 +213,21 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     public BigDecimal euclideanNorm(final BigDecimal precision) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());
     }
 
     /**
      * Returns the euclidean norm of this {@link BigIntVector}
      *
-     * @param scale        the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The euclidean norm
-     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -222,13 +242,20 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     /**
      * Returns the euclidean norm of this {@link BigIntVector}
      *
-     * @param precision    the precision for the termination condition
-     * @param scale        the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @param precision
+     *            the precision for the termination condition
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The euclidean norm
-     * @throws NullPointerException     if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -238,7 +265,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());
     }
@@ -246,10 +273,13 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     /**
      * Returns the dot product of this {@link BigIntVector} and the given one
      *
-     * @param other The other {@link BigIntVector}
+     * @param other
+     *            The other {@link BigIntVector}
      * @return The dot product
-     * @throws NullPointerException     if {@code other == null}
-     * @throws IllegalArgumentException if {@code size != other.size}
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -265,12 +295,16 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the square of the euclidean distance from this {@link BigIntVector} to the given one
+     * Returns the square of the euclidean distance from this {@link BigIntVector}
+     * to the given one
      *
-     * @param other The other {@link BigIntVector}
+     * @param other
+     *            The other {@link BigIntVector}
      * @return The square of the euclidean distance
-     * @throws NullPointerException     if {@code other == null}
-     * @throws IllegalArgumentException if {@code size != other.size}
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #subtract
      * @see #euclideanNormPow2
@@ -284,12 +318,16 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given
+     * one
      *
-     * @param other The other {@link BigIntVector}
+     * @param other
+     *            The other {@link BigIntVector}
      * @return The euclidean distance
-     * @throws NullPointerException     if {@code other == null}
-     * @throws IllegalArgumentException if {@code size != other.size}
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -303,15 +341,22 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given
+     * one
      *
-     * @param other     The other {@link BigIntVector}
-     * @param precision the precision for the termination condition
+     * @param other
+     *            The other {@link BigIntVector}
+     * @param precision
+     *            the precision for the termination condition
      * @return The euclidean distance
-     * @throws NullPointerException     if {@code other == null}
-     * @throws NullPointerException     if {@code precision == null}
-     * @throws IllegalArgumentException if {@code size != other.size}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -323,20 +368,28 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given
+     * one
      *
-     * @param other        The other {@link BigIntVector}
-     * @param scale        the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @param other
+     *            The other {@link BigIntVector}
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The euclidean distance
-     * @throws NullPointerException     if {@code other == null}
-     * @throws IllegalArgumentException if {@code size != other.size}
-     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -351,18 +404,29 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given
+     * one
      *
-     * @param other        The other {@link BigIntVector}
-     * @param precision    the precision for the termination condition
-     * @param scale        the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @param other
+     *            The other {@link BigIntVector}
+     * @param precision
+     *            the precision for the termination condition
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The euclidean distance
-     * @throws NullPointerException     if {@code other == null}
-     * @throws NullPointerException     if {@code precision == null}
-     * @throws IllegalArgumentException if {@code size != other.size}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -370,12 +434,12 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntVector other, final BigDecimal precision, final int scale,
-            final RoundingMode roundingMode) {
+                    final RoundingMode roundingMode) {
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));
     }
@@ -399,10 +463,13 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     /**
      * Returns the max distance from this {@link BigIntVector} to the given one
      *
-     * @param other The other {@link BigIntVector}
+     * @param other
+     *            The other {@link BigIntVector}
      * @return The max distance
-     * @throws NullPointerException     if {@code vector == null}
-     * @throws IllegalArgumentException if {@code size != other.size}
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #subtract
      * @see #maxNorm
@@ -416,9 +483,22 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
+     * Returns the size of the underlying {@link Map}
+     *
+     * @return size the size
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    public int size() {
+        return map.size();
+    }
+
+    /**
      * Returns a {@link BigIntVectorBuilder}
      *
-     * @param size the size the resulting {@link BigIntVector}
+     * @param size
+     *            the size the resulting {@link BigIntVector}
      * @return A {@link BigIntVectorBuilder}
      * @author Lars Tennstedt
      * @since 1
@@ -453,7 +533,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      */
     @Beta
     public static final class BigIntVectorBuilder
-            extends AbstractVectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
+                    extends AbstractVectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
         private BigIntVectorBuilder(final Integer size) {
             super(size);
         }
@@ -461,11 +541,15 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         /**
          * Puts the given element on the first free index and returns {@code this}
          *
-         * @param element the element
+         * @param element
+         *            the element
          * @return {@code this}
-         * @throws NullPointerException  if {@code element == null}
-         * @throws ArithmeticException   if ({@code size + 1} overflows
-         * @throws IllegalStateException if {@code size == size}
+         * @throws NullPointerException
+         *             if {@code element == null}
+         * @throws ArithmeticException
+         *             if ({@code size + 1} overflows
+         * @throws IllegalStateException
+         *             if {@code size == size}
          * @author Lars Tennstedt
          * @since 1
          */
@@ -480,12 +564,17 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         /**
          * Puts the given element on the given index and returns {@code this}
          *
-         * @param index   the index
-         * @param element the element
+         * @param index
+         *            the index
+         * @param element
+         *            the element
          * @return {@code this}
-         * @throws NullPointerException     if {@code index == null}
-         * @throws NullPointerException     if {@code element == null}
-         * @throws IllegalArgumentException if {@code index <= 0 || size < index}
+         * @throws NullPointerException
+         *             if {@code index == null}
+         * @throws NullPointerException
+         *             if {@code element == null}
+         * @throws IllegalArgumentException
+         *             if {@code index <= 0 || size < index}
          * @author Lars Tennstedt
          * @since 1
          */
@@ -500,9 +589,11 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         /**
          * Puts the given element on all indices and returns {@code this}
          *
-         * @param element the element
+         * @param element
+         *            the element
          * @return {@code this}
-         * @throws NullPointerException if {@code element == null}
+         * @throws NullPointerException
+         *             if {@code element == null}
          * @author Lars Tennstedt
          * @since 1
          */
@@ -518,7 +609,8 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
          * Returns the built {@link BigIntVector}
          *
          * @return The {@link BigIntVector}
-         * @throws NullPointerException if one {@code element == null}
+         * @throws NullPointerException
+         *             if one {@code element == null}
          * @author Lars Tennstedt
          * @see ImmutableMap#copyOf
          * @since 1

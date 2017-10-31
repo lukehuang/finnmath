@@ -23,23 +23,19 @@ import static java.util.Objects.requireNonNull;
 import com.github.ltennstedt.finnmath.linear.BigIntVector.BigIntVectorBuilder;
 import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
- * An immutable implementation of a matrix which uses {@link BigInteger} as type for its elements
+ * An immutable implementation of a matrix which uses {@link BigInteger} as type
+ * for its elements
  *
  * @author Lars Tennstedt
  * @since 1
@@ -53,11 +49,15 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     /**
      * Returns the sum of this {@link BigIntMatrix} and the given one
      *
-     * @param summand The summand
+     * @param summand
+     *            The summand
      * @return The sum
-     * @throws NullPointerException     if {@code summand == null}
-     * @throws IllegalArgumentException if {@code rowSize != summand.rowSize}
-     * @throws IllegalArgumentException if {@code columnSize != summand.columnSize}
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -66,9 +66,10 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigIntMatrix add(final BigIntMatrix summand) {
         requireNonNull(summand, "summand");
         checkArgument(table.rowKeySet().size() == summand.rowSize(), "expected equal row sizes but actual %s != %s",
-                table.rowKeySet().size(), summand.rowSize());
+                        table.rowKeySet().size(), summand.rowSize());
         checkArgument(table.columnKeySet().size() == summand.columnSize(),
-                "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), summand.columnSize());
+                        "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
+                        summand.columnSize());
         final BigIntMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -81,11 +82,15 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     /**
      * Returns the difference of this {@link BigIntMatrix} and the given one
      *
-     * @param subtrahend the subtrahend
+     * @param subtrahend
+     *            the subtrahend
      * @return The difference
-     * @throws NullPointerException     if {@code subtrahend == null}
-     * @throws IllegalArgumentException if {@code rowSize != summand.rowSize}
-     * @throws IllegalArgumentException if {@code columnSize != summand.columnSize}
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -94,10 +99,10 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigIntMatrix subtract(final BigIntMatrix subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), "expected equal row sizes but actual %s != %s",
-                table.rowKeySet().size(), subtrahend.rowSize());
+                        table.rowKeySet().size(), subtrahend.rowSize());
         checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),
-                "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
-                subtrahend.columnSize());
+                        "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
+                        subtrahend.columnSize());
         final BigIntMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -110,10 +115,13 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     /**
      * Returns the product of this {@link BigIntMatrix} and the given one
      *
-     * @param factor the factor
+     * @param factor
+     *            the factor
      * @return The product
-     * @throws NullPointerException     if {@code factor == null}
-     * @throws IllegalArgumentException if {@code columnSize != factor.rowSize}
+     * @throws NullPointerException
+     *             if {@code factor == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != factor.rowSize}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -122,8 +130,8 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigIntMatrix multiply(final BigIntMatrix factor) {
         requireNonNull(factor, "factor");
         checkArgument(table.columnKeySet().size() == factor.rowSize(),
-                "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(),
-                factor.rowSize());
+                        "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(),
+                        factor.rowSize());
         final BigIntMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());
         table.rowMap().forEach((rowIndex, row) -> {
             factor.columns().forEach((columnIndex, column) -> {
@@ -135,12 +143,16 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the product of this {@link BigIntMatrix} and the given {@link BigIntVector}
+     * Returns the product of this {@link BigIntMatrix} and the given
+     * {@link BigIntVector}
      *
-     * @param vector the vector
+     * @param vector
+     *            the vector
      * @return The product
-     * @throws NullPointerException     if {@code vector == null}
-     * @throws IllegalArgumentException if {@code columnSize != vector.size}
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != vector.size}
      * @author Lars Tennstedt
      * @see BigIntVector#builder
      * @since 1
@@ -149,12 +161,13 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigIntVector multiplyVector(final BigIntVector vector) {
         requireNonNull(vector, "vector");
         checkArgument(table.columnKeySet().size() == vector.size(),
-                "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(), vector.size());
+                        "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(),
+                        vector.size());
         final BigIntVectorBuilder builder = BigIntVector.builder(table.rowKeySet().size());
         table.rowMap().forEach((rowIndex, row) -> {
             row.forEach((columnIndex, matrixEntry) -> {
-                final BigInteger oldEntry =
-                        builder.element(rowIndex) != null ? builder.element(rowIndex) : BigInteger.ZERO;
+                final BigInteger oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex)
+                                : BigInteger.ZERO;
                 builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));
             });
         });
@@ -163,11 +176,11 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
 
     @Override
     protected BigInteger multiplyRowWithColumn(final Map<Integer, BigInteger> row,
-            final Map<Integer, BigInteger> column) {
+                    final Map<Integer, BigInteger> column) {
         requireNonNull(row, "row");
         requireNonNull(column, "column");
         checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
-                column.size());
+                        column.size());
         BigInteger result = BigInteger.ZERO;
         for (final Entry<Integer, BigInteger> rowEntry : row.entrySet()) {
             result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));
@@ -176,11 +189,14 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the scalar product of this {@link BigIntMatrix} and the given {@link BigInteger}
+     * Returns the scalar product of this {@link BigIntMatrix} and the given
+     * {@link BigInteger}
      *
-     * @param scalar the scalar
+     * @param scalar
+     *            the scalar
      * @return The scalar product
-     * @throws NullPointerException if {@code scalar == null}
+     * @throws NullPointerException
+     *             if {@code scalar == null}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -218,7 +234,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     @Override
     public BigInteger trace() {
         checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
-                table.columnKeySet().size());
+                        table.columnKeySet().size());
         BigInteger result = BigInteger.ZERO;
         for (final Integer index : table.rowKeySet()) {
             result = result.add(table.get(index, index));
@@ -230,7 +246,8 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      * Returns the determinant of this {@link BigIntMatrix}
      *
      * @return The determinant
-     * @throws IllegalStateException if {@code !square}
+     * @throws IllegalStateException
+     *             if {@code !square}
      * @author Lars Tennstedt
      * @see #square
      * @see #minor
@@ -240,8 +257,6 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigInteger determinant() {
         final int rowSize = table.rowKeySet().size();
         checkState(square(), "expected square matrix but actual %s x %s", rowSize, table.columnKeySet().size());
-
-        // Triangular matrices including 3x3, 2x2 and especially all 1x1 matrices
         if (triangular()) {
             BigInteger result = BigInteger.ONE;
             for (final Cell<Integer, Integer, BigInteger> cell : table.cellSet()) {
@@ -251,38 +266,16 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             }
             return result;
         }
-
-        if (rowSize > 3) {
-            return calculateDeterminantWithPermutations();
-        }
-
         if (rowSize == 3) {
             return ruleOfSarrus();
         }
-
-        // 2x2 matrices
-        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
-    }
-
-    @Override
-    protected BigInteger calculateDeterminantWithPermutations() {
+        if (rowSize == 2) {
+            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+        }
         BigInteger result = BigInteger.ZERO;
-        final int rowSize = table.rowKeySet().size();
-        final Collection<List<Integer>> permutations =
-                Collections2.permutations(IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()));
-        for (final List<Integer> permutation : permutations) {
-            BigInteger product = BigInteger.ONE;
-            int inversions = 0;
-            for (int i = 0; i < rowSize; i++) {
-                final Integer sigma = permutation.get(i);
-                for (int j = i + 1; j < rowSize; j++) {
-                    if (sigma > permutation.get(j)) {
-                        inversions++;
-                    }
-                }
-                product = product.multiply(table.get(i + 1, sigma));
-            }
-            result = result.add(BigInteger.ONE.negate().pow(inversions).multiply(product));
+        for (final Integer columnIndex : table.columnKeySet()) {
+            result = result.add(BigInteger.ONE.negate().pow(1 + columnIndex)).multiply(table.get(1, columnIndex))
+                            .multiply(minor(1, columnIndex).determinant());
         }
         return result;
     }
@@ -316,15 +309,22 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the minor of this {@link BigIntMatrix} dependent on the given row and column index
+     * Returns the minor of this {@link BigIntMatrix} dependent on the given row and
+     * column index
      *
-     * @param rowIndex    the row index
-     * @param columnIndex the column index
+     * @param rowIndex
+     *            the row index
+     * @param columnIndex
+     *            the column index
      * @return The minor
-     * @throws NullPointerException     if {@code rowIndex == null}
-     * @throws NullPointerException     if {@code columnIndex == null}
-     * @throws IllegalArgumentException if {@code rowIndex < 1 || rowSize < rowIndex}
-     * @throws IllegalArgumentException if {@code columnIndex < 1 || columnSize < columnIndex}
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex < 1 || rowSize < rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex < 1 || columnSize < columnIndex}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -334,16 +334,16 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.containsRow(rowIndex), "expected rowIndex in [1, %s] but actual %s",
-                table.rowKeySet().size(), rowIndex);
+                        table.rowKeySet().size(), rowIndex);
         checkArgument(table.containsColumn(columnIndex), "expected columnIndex in [1, %s] but actual %s",
-                table.columnKeySet().size(), columnIndex);
+                        table.columnKeySet().size(), columnIndex);
         final BigIntMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
             final Integer columnKey = cell.getColumnKey();
             if (!rowKey.equals(rowIndex) && !columnKey.equals(columnIndex)) {
-                final Integer newRowIndex = rowKey > rowIndex ? rowKey - 1 : rowKey;
-                final Integer newColumnIndex = columnKey > columnIndex ? columnKey - 1 : columnKey;
+                final Integer newRowIndex = rowKey.compareTo(rowIndex) > 0 ? rowKey - 1 : rowKey;
+                final Integer newColumnIndex = columnKey.compareTo(columnIndex) > 0 ? columnKey - 1 : columnKey;
                 builder.put(newRowIndex, newColumnIndex, cell.getValue());
             }
         });
@@ -423,10 +423,13 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     /**
      * Returns the frobenius norm of this {@link BigIntMatrix}
      *
-     * @param precision the precision for the termination condition
+     * @param precision
+     *            the precision for the termination condition
      * @return The frobenius norm
-     * @throws NullPointerException     if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
      * @author Lars Tennstedt
      * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -436,17 +439,21 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigDecimal frobeniusNorm(final BigDecimal precision) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(frobeniusNormPow2());
     }
 
     /**
      * Returns the frobenius norm of this {@link BigIntMatrix}
      *
-     * @param scale        the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The frobenius norm
-     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -461,13 +468,20 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     /**
      * Returns the frobenius norm of this {@link BigIntMatrix}
      *
-     * @param precision    the precision for the termination condition
-     * @param scale        the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @param precision
+     *            the precision for the termination condition
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The frobenius norm
-     * @throws NullPointerException     if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
      * @author Lars Tennstedt
      * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -477,7 +491,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(frobeniusNormPow2());
     }
@@ -499,9 +513,11 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is upper triangular
+     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
+     * upper triangular
      *
-     * @return {@code true} if {@code this} is upper triangular, {@code false} otherwise
+     * @return {@code true} if {@code this} is upper triangular, {@code false}
+     *         otherwise
      * @author Lars Tennstedt
      * @since 1
      */
@@ -519,9 +535,11 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is lower triangular
+     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
+     * lower triangular
      *
-     * @return {@code true} if {@code this} is lower triangular, {@code false} otherwise
+     * @return {@code true} if {@code this} is lower triangular, {@code false}
+     *         otherwise
      * @author Lars Tennstedt
      * @since 1
      */
@@ -539,9 +557,11 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is the identity one
+     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is the
+     * identity one
      *
-     * @return {@code true} if {@code this} is the identity matrix, {@code false} otherwise
+     * @return {@code true} if {@code this} is the identity matrix, {@code false}
+     *         otherwise
      * @author Lars Tennstedt
      * @see #diagonal
      * @since 1
@@ -560,24 +580,27 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is invertible
+     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
+     * invertible
      *
-     * @return {@code true} if {@code det == -1 || det == 1}, {@code false} otherwise
+     * @return {@code true} if {@code det == -1 || det == 1}, {@code false}
+     *         otherwise
      * @author Lars Tennstedt
-     * @see #square
      * @see #determinant
      * @since 1
      */
     @Override
     public boolean invertible() {
-        return square() && (determinant().equals(BigInteger.ONE.negate()) || determinant().equals(BigInteger.ONE));
+        return determinant().equals(BigInteger.ONE.negate()) || determinant().equals(BigInteger.ONE);
     }
 
     /**
      * Returns a {@link BigIntMatrixBuilder}
      *
-     * @param rowSize    the row size the resulting {@link BigIntMatrix}
-     * @param columnSize the column size the resulting {@link BigIntMatrix}
+     * @param rowSize
+     *            the row size the resulting {@link BigIntMatrix}
+     * @param columnSize
+     *            the column size the resulting {@link BigIntMatrix}
      * @return A {@link BigIntMatrixBuilder}
      * @author Lars Tennstedt
      * @since 1
@@ -618,11 +641,15 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         }
 
         /**
-         * Puts the given element on the {@link Table} dependent on the given row and column index
+         * Puts the given element on the {@link Table} dependent on the given row and
+         * column index
          *
-         * @param rowIndex    thr row index
-         * @param columnIndex the column index
-         * @param element     the element
+         * @param rowIndex
+         *            thr row index
+         * @param columnIndex
+         *            the column index
+         * @param element
+         *            the element
          * @return {@code this}
          */
         public BigIntMatrixBuilder put(final Integer rowIndex, final Integer columnIndex, final BigInteger element) {
@@ -630,9 +657,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             requireNonNull(rowIndex, "rowIndex");
             requireNonNull(columnIndex, "columnIndex");
             checkArgument(table.rowKeySet().contains(rowIndex), "expected rowIndex in [1, %s] but actual %s",
-                    table.rowKeySet().size(), rowIndex);
+                            table.rowKeySet().size(), rowIndex);
             checkArgument(table.columnKeySet().contains(columnIndex), "expected columnIndex in [1, %s] but actual %s",
-                    table.columnKeySet().size(), columnIndex);
+                            table.columnKeySet().size(), columnIndex);
             table.put(rowIndex, columnIndex, element);
             return this;
         }
@@ -640,9 +667,11 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         /**
          * Puts the given element on all indices and returns {@code this}
          *
-         * @param element the element
+         * @param element
+         *            the element
          * @return {@code this}
-         * @throws NullPointerException if {@code element == null}
+         * @throws NullPointerException
+         *             if {@code element == null}
          * @author Lars Tennstedt
          * @since 1
          */
@@ -660,7 +689,8 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
          * Returns the built {@link BigIntMatrix}
          *
          * @return The {@link BigIntMatrix}
-         * @throws NullPointerException if one {@code element == null}
+         * @throws NullPointerException
+         *             if one {@code element == null}
          * @author Lars Tennstedt
          * @see ImmutableTable#copyOf
          * @since 1

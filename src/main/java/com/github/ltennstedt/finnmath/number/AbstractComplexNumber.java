@@ -23,10 +23,14 @@ import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 
 /**
- * @param <B> The type of the real and imaginary part of the complex number
- * @param <S> The type of the complex number
- * @param <R> The type for quotients of the complex number
- * @param <M> The type of the related matrix
+ * @param <B>
+ *            The type of the real and imaginary part of the complex number
+ * @param <S>
+ *            The type of the complex number
+ * @param <R>
+ *            The type for quotients of the complex number
+ * @param <M>
+ *            The type of the related matrix
  * @author Lars Tennstedt
  * @since 1
  */

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.314" tests="68" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/home/raimund/git/finnmath/target/test-classes:/home/raimund/git/finnmath/target/classes:/home/raimund/.m2/repository/com/google/guava/guava/23.2-jre/guava-23.2-jre.jar:/home/raimund/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar:/home/raimund/.m2/repository/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar:/home/raimund/.m2/repository/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar:/home/raimund/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar:/home/raimund/.m2/repository/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/raimund/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/raimund/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/raimund/.m2/repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar:/home/raimund/.m2/repository/org/assertj/assertj-guava/3.1.0/assertj-guava-3.1.0.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Linux"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/amd64"/>
+    <property name="sun.java.command" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar /home/raimund/git/finnmath/target/surefire 2017-10-31T23-57-56_034-jvmRun1 surefire1557013046127631234tmp surefire_08969395774441063601tmp"/>
+    <property name="surefire.test.class.path" value="/home/raimund/git/finnmath/target/test-classes:/home/raimund/git/finnmath/target/classes:/home/raimund/.m2/repository/com/google/guava/guava/23.2-jre/guava-23.2-jre.jar:/home/raimund/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar:/home/raimund/.m2/repository/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar:/home/raimund/.m2/repository/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar:/home/raimund/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar:/home/raimund/.m2/repository/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/raimund/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/raimund/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/raimund/.m2/repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar:/home/raimund/.m2/repository/org/assertj/assertj-guava/3.1.0/assertj-guava-3.1.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/raimund"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="/usr/lib/jvm/java-8-openjdk/jre"/>
+    <property name="basedir" value="/home/raimund/git/finnmath"/>
+    <property name="file.separator" value="/"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar:/home/raimund/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar"/>
+    <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk/jre/classes"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_144-b01"/>
+    <property name="user.name" value="raimund"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="4.13.9-1-ARCH"/>
+    <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-8-openjdk/jre/lib/endorsed"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/home/raimund/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="1.8.0_144"/>
+    <property name="user.dir" value="/home/raimund/git/finnmath"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.144-b01"/>
+    <property name="java.ext.dirs" value="/usr/lib/jvm/java-8-openjdk/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="sqrtOfBigIntEightyOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.031"/>
+  <testcase name="toStringShouldSucceed" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfBigIntOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="scientificNotationForSqrtGreaterThanOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="newPrecisionTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="newAllPrecisionTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfPerfectSquareEightyOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.05"/>
+  <testcase name="sqrtOfPerfectSquareOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.005"/>
+  <testcase name="newAllShouldSucceed" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfBigIntOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfBigIntSix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntTen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntTwo" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfDecimalSixtyFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="scientificNotationForSqrtForZero" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalTwentyFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfDecimalThirtySix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfPerfectSquareOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfPerfectSquareFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfPerfectSquareNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfPerfectSquareZero" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntZero" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="newPrecisionNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.011"/>
+  <testcase name="sqrtOfPerfectSquareNotPerfectSquareShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="newAllScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="scientificNotationForSqrtExponentShouldBePowerOfTwo" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfBigIntSixteen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.003"/>
+  <testcase name="sqrtOfBigIntNegativeShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfDecimalEight" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalSeven" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfDecimalThree" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.003"/>
+  <testcase name="newScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfDecimalFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfDecimalFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfDecimalNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfDecimalZero" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntFortyNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="newPrecisionTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.006"/>
+  <testcase name="sqrtOfPerfectSquareFortyNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalEightyOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.008"/>
+  <testcase name="sqrtOfPerfectSquareSixteen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="newScaleAndRoundingModeShouldSucceed" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.003"/>
+  <testcase name="sqrtOfBigIntEight" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="newAllPrecisionTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntSeven" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntThree" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.011"/>
+  <testcase name="sqrtOfBigIntSixtyFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfBigIntThirtySix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfPerfectSquareSixtyFour" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="scientificNotationForSqrtInbetweenZeroAndOneHundred" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalOne" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalSix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalTen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalTwo" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfPerfectSquareThirtySix" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfDecimalFortyNine" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="sqrtOfDecimalSixteen" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.006"/>
+  <testcase name="sqrtOfBigIntNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.002"/>
+  <testcase name="sqrtOfBigIntTwentyFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.001"/>
+  <testcase name="newPrecisionShouldSucceed" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+  <testcase name="sqrtOfPerfectSquareNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.004"/>
+  <testcase name="newAllPrecisionNullShouldThrowException" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0.006"/>
+  <testcase name="sqrtOfPerfectSquareTwentyFive" classname="com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest" time="0"/>
+</testsuite>

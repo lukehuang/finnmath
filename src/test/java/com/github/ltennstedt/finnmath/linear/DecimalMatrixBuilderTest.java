@@ -50,16 +50,16 @@ public final class DecimalMatrixBuilderTest {
     public void putRowIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(4, 5).put(0, 1, BigDecimal.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected rowIndex in [1, %s] but actual %s", 4, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual %s",
+                        4, 0);
     }
 
     @Test
     public void putRowIndexTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(4, 5).put(5, 1, BigDecimal.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected rowIndex in [1, %s] but actual %s", 4, 5);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual %s",
+                        4, 5);
     }
 
     @Test
@@ -67,7 +67,7 @@ public final class DecimalMatrixBuilderTest {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(4, 5).put(1, 0, BigDecimal.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 0);
+                        .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 0);
     }
 
     @Test
@@ -75,7 +75,7 @@ public final class DecimalMatrixBuilderTest {
         assertThatThrownBy(() -> {
             DecimalMatrix.builder(4, 5).put(1, 6, BigDecimal.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 6);
+                        .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 6);
     }
 
     @Test
@@ -96,6 +96,6 @@ public final class DecimalMatrixBuilderTest {
     public void toStringShouldSucceed() {
         final DecimalMatrixBuilder builder = DecimalMatrix.builder(4, 5).putAll(BigDecimal.ZERO);
         assertThat(builder.toString())
-                .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
+                        .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
     }
 }

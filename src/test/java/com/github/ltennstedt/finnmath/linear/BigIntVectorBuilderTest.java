@@ -43,16 +43,16 @@ public final class BigIntVectorBuilderTest {
     public void putIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
             BigIntVector.builder(4).put(0, BigInteger.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected index in [1, %s] but actual %s", 4, 0);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual %s", 4,
+                        0);
     }
 
     @Test
     public void putRowIndexTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
             BigIntVector.builder(4).put(5, BigInteger.ZERO);
-        }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected index in [1, %s] but actual %s", 4, 5);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual %s", 4,
+                        5);
     }
 
     @Test
@@ -72,9 +72,7 @@ public final class BigIntVectorBuilderTest {
     @Test
     public void toStringShouldSucceed() {
         final BigIntVectorBuilder builder = BigIntVector.builder(4).putAll(BigInteger.ZERO);
-        final String expected =
-                MoreObjects.toStringHelper(builder).add("map", builder.getMap()).add("size", builder.getSize())
-                        .toString();
-        assertThat(builder.toString()).isEqualTo(expected);
+        assertThat(builder.toString()).isEqualTo(MoreObjects.toStringHelper(builder).add("map", builder.getMap())
+                        .add("size", builder.getSize()).toString());
     }
 }

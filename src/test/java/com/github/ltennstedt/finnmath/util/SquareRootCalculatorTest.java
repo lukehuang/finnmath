@@ -142,110 +142,110 @@ public final class SquareRootCalculatorTest {
 
     @Test
     public void sqrtOfBigIntZero() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.ZERO))
-                .isBetween(BigDecimal.valueOf(-0.001), BigDecimal.valueOf(0.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.ZERO)).isBetween(BigDecimal.valueOf(-0.001),
+                        BigDecimal.valueOf(0.001));
     }
 
     @Test
     public void sqrtOfBigIntOne() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.ONE))
-                .isBetween(BigDecimal.valueOf(0.999), BigDecimal.valueOf(1.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.ONE)).isBetween(BigDecimal.valueOf(0.999),
+                        BigDecimal.valueOf(1.001));
     }
 
     @Test
     public void sqrtOfBigIntTwo() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(2)))
-                .isBetween(BigDecimal.valueOf(1.413), BigDecimal.valueOf(1.415));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(2))).isBetween(BigDecimal.valueOf(1.413),
+                        BigDecimal.valueOf(1.415));
     }
 
     @Test
     public void sqrtOfBigIntThree() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(3)))
-                .isBetween(BigDecimal.valueOf(1.731), BigDecimal.valueOf(1.733));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(3))).isBetween(BigDecimal.valueOf(1.731),
+                        BigDecimal.valueOf(1.733));
     }
 
     @Test
     public void sqrtOfBigIntFour() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(4)))
-                .isBetween(BigDecimal.valueOf(1.999), BigDecimal.valueOf(2.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(4))).isBetween(BigDecimal.valueOf(1.999),
+                        BigDecimal.valueOf(2.001));
     }
 
     @Test
     public void sqrtOfBigIntFive() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(5)))
-                .isBetween(BigDecimal.valueOf(2.235), BigDecimal.valueOf(2.237));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(5))).isBetween(BigDecimal.valueOf(2.235),
+                        BigDecimal.valueOf(2.237));
     }
 
     @Test
     public void sqrtOfBigIntSix() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(6)))
-                .isBetween(BigDecimal.valueOf(2.448), BigDecimal.valueOf(2.45));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(6))).isBetween(BigDecimal.valueOf(2.448),
+                        BigDecimal.valueOf(2.45));
     }
 
     @Test
     public void sqrtOfBigIntSeven() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(7)))
-                .isBetween(BigDecimal.valueOf(2.644), BigDecimal.valueOf(2.646));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(7))).isBetween(BigDecimal.valueOf(2.644),
+                        BigDecimal.valueOf(2.646));
     }
 
     @Test
     public void sqrtOfBigIntEight() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(8)))
-                .isBetween(BigDecimal.valueOf(2.827), BigDecimal.valueOf(2.829));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(8))).isBetween(BigDecimal.valueOf(2.827),
+                        BigDecimal.valueOf(2.829));
     }
 
     @Test
     public void sqrtOfBigIntNine() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(9)))
-                .isBetween(BigDecimal.valueOf(2.999), BigDecimal.valueOf(3.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(9))).isBetween(BigDecimal.valueOf(2.999),
+                        BigDecimal.valueOf(3.001));
     }
 
     @Test
     public void sqrtOfBigIntTen() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.TEN))
-                .isBetween(BigDecimal.valueOf(3.161), BigDecimal.valueOf(3.163));
+        assertThat(squareRootCalculator.sqrt(BigInteger.TEN)).isBetween(BigDecimal.valueOf(3.161),
+                        BigDecimal.valueOf(3.163));
     }
 
     @Test
     public void sqrtOfBigIntSixteen() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(16)))
-                .isBetween(BigDecimal.valueOf(3.999), BigDecimal.valueOf(4.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(16))).isBetween(BigDecimal.valueOf(3.999),
+                        BigDecimal.valueOf(4.001));
     }
 
     @Test
     public void sqrtOfBigIntTwentyFive() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(25)))
-                .isBetween(BigDecimal.valueOf(4.999), BigDecimal.valueOf(5.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(25))).isBetween(BigDecimal.valueOf(4.999),
+                        BigDecimal.valueOf(5.001));
     }
 
     @Test
     public void sqrtOfBigIntThirtySix() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(36)))
-                .isBetween(BigDecimal.valueOf(5.999), BigDecimal.valueOf(6.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(36))).isBetween(BigDecimal.valueOf(5.999),
+                        BigDecimal.valueOf(6.001));
     }
 
     @Test
     public void sqrtOfBigIntFortyNine() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(49)))
-                .isBetween(BigDecimal.valueOf(6.999), BigDecimal.valueOf(7.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(49))).isBetween(BigDecimal.valueOf(6.999),
+                        BigDecimal.valueOf(7.001));
     }
 
     @Test
     public void sqrtOfBigIntSixtyFour() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(64)))
-                .isBetween(BigDecimal.valueOf(7.999), BigDecimal.valueOf(8.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(64))).isBetween(BigDecimal.valueOf(7.999),
+                        BigDecimal.valueOf(8.001));
     }
 
     @Test
     public void sqrtOfBigIntEightyOne() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(81)))
-                .isBetween(BigDecimal.valueOf(8.999), BigDecimal.valueOf(9.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(81))).isBetween(BigDecimal.valueOf(8.999),
+                        BigDecimal.valueOf(9.001));
     }
 
     @Test
     public void sqrtOfBigIntOneHundred() {
-        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(100)))
-                .isBetween(BigDecimal.valueOf(9.999), BigDecimal.valueOf(10.001));
+        assertThat(squareRootCalculator.sqrt(BigInteger.valueOf(100))).isBetween(BigDecimal.valueOf(9.999),
+                        BigDecimal.valueOf(10.001));
     }
 
     @Test
@@ -257,110 +257,110 @@ public final class SquareRootCalculatorTest {
 
     @Test
     public void sqrtOfDecimalZero() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.ZERO))
-                .isBetween(BigDecimal.valueOf(-0.001), BigDecimal.valueOf(0.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.ZERO)).isBetween(BigDecimal.valueOf(-0.001),
+                        BigDecimal.valueOf(0.001));
     }
 
     @Test
     public void sqrtOfDecimalOne() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.ONE))
-                .isBetween(BigDecimal.valueOf(0.999), BigDecimal.valueOf(1.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.ONE)).isBetween(BigDecimal.valueOf(0.999),
+                        BigDecimal.valueOf(1.001));
     }
 
     @Test
     public void sqrtOfDecimalTwo() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(2)))
-                .isBetween(BigDecimal.valueOf(1.413), BigDecimal.valueOf(1.415));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(2))).isBetween(BigDecimal.valueOf(1.413),
+                        BigDecimal.valueOf(1.415));
     }
 
     @Test
     public void sqrtOfDecimalThree() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(3)))
-                .isBetween(BigDecimal.valueOf(1.731), BigDecimal.valueOf(1.733));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(3))).isBetween(BigDecimal.valueOf(1.731),
+                        BigDecimal.valueOf(1.733));
     }
 
     @Test
     public void sqrtOfDecimalFour() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(4)))
-                .isBetween(BigDecimal.valueOf(1.999), BigDecimal.valueOf(2.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(4))).isBetween(BigDecimal.valueOf(1.999),
+                        BigDecimal.valueOf(2.001));
     }
 
     @Test
     public void sqrtOfDecimalFive() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(5)))
-                .isBetween(BigDecimal.valueOf(2.235), BigDecimal.valueOf(2.237));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(5))).isBetween(BigDecimal.valueOf(2.235),
+                        BigDecimal.valueOf(2.237));
     }
 
     @Test
     public void sqrtOfDecimalSix() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(6)))
-                .isBetween(BigDecimal.valueOf(2.448), BigDecimal.valueOf(2.45));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(6))).isBetween(BigDecimal.valueOf(2.448),
+                        BigDecimal.valueOf(2.45));
     }
 
     @Test
     public void sqrtOfDecimalSeven() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(7)))
-                .isBetween(BigDecimal.valueOf(2.644), BigDecimal.valueOf(2.646));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(7))).isBetween(BigDecimal.valueOf(2.644),
+                        BigDecimal.valueOf(2.646));
     }
 
     @Test
     public void sqrtOfDecimalEight() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(8)))
-                .isBetween(BigDecimal.valueOf(2.827), BigDecimal.valueOf(2.829));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(8))).isBetween(BigDecimal.valueOf(2.827),
+                        BigDecimal.valueOf(2.829));
     }
 
     @Test
     public void sqrtOfDecimalNine() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(9)))
-                .isBetween(BigDecimal.valueOf(2.999), BigDecimal.valueOf(3.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(9))).isBetween(BigDecimal.valueOf(2.999),
+                        BigDecimal.valueOf(3.001));
     }
 
     @Test
     public void sqrtOfDecimalTen() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.TEN))
-                .isBetween(BigDecimal.valueOf(3.161), BigDecimal.valueOf(3.163));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.TEN)).isBetween(BigDecimal.valueOf(3.161),
+                        BigDecimal.valueOf(3.163));
     }
 
     @Test
     public void sqrtOfDecimalSixteen() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(16)))
-                .isBetween(BigDecimal.valueOf(3.999), BigDecimal.valueOf(4.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(16))).isBetween(BigDecimal.valueOf(3.999),
+                        BigDecimal.valueOf(4.001));
     }
 
     @Test
     public void sqrtOfDecimalTwentyFive() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(25)))
-                .isBetween(BigDecimal.valueOf(4.999), BigDecimal.valueOf(5.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(25))).isBetween(BigDecimal.valueOf(4.999),
+                        BigDecimal.valueOf(5.001));
     }
 
     @Test
     public void sqrtOfDecimalThirtySix() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(36)))
-                .isBetween(BigDecimal.valueOf(5.999), BigDecimal.valueOf(6.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(36))).isBetween(BigDecimal.valueOf(5.999),
+                        BigDecimal.valueOf(6.001));
     }
 
     @Test
     public void sqrtOfDecimalFortyNine() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(49)))
-                .isBetween(BigDecimal.valueOf(6.999), BigDecimal.valueOf(7.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(49))).isBetween(BigDecimal.valueOf(6.999),
+                        BigDecimal.valueOf(7.001));
     }
 
     @Test
     public void sqrtOfDecimalSixtyFour() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(64)))
-                .isBetween(BigDecimal.valueOf(7.999), BigDecimal.valueOf(8.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(64))).isBetween(BigDecimal.valueOf(7.999),
+                        BigDecimal.valueOf(8.001));
     }
 
     @Test
     public void sqrtOfDecimalEightyOne() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(81)))
-                .isBetween(BigDecimal.valueOf(8.999), BigDecimal.valueOf(9.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(81))).isBetween(BigDecimal.valueOf(8.999),
+                        BigDecimal.valueOf(9.001));
     }
 
     @Test
     public void sqrtOfDecimalOneHundred() {
-        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(100)))
-                .isBetween(BigDecimal.valueOf(9.999), BigDecimal.valueOf(10.001));
+        assertThat(squareRootCalculator.sqrt(BigDecimal.valueOf(100))).isBetween(BigDecimal.valueOf(9.999),
+                        BigDecimal.valueOf(10.001));
     }
 
     @Test
@@ -447,11 +447,11 @@ public final class SquareRootCalculatorTest {
 
     @Test
     public void scientificNotationForSqrtGreaterThanOneHundred() {
-        final BigDecimal decimal =
-                mathRandom.nextInvertiblePositiveDecimal(100, validScale).add(BigDecimal.valueOf(100));
+        final BigDecimal decimal = mathRandom.nextInvertiblePositiveDecimal(100, validScale)
+                        .add(BigDecimal.valueOf(100));
         final ScientificNotation actual = squareRootCalculator.scientificNotationForSqrt(decimal);
-        final ScientificNotation expected =
-                new ScientificNotation(decimal.divide(BigDecimal.valueOf(100), roundingMode), 2);
+        final ScientificNotation expected = new ScientificNotation(
+                        decimal.divide(BigDecimal.valueOf(100), roundingMode), 2);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -465,9 +465,9 @@ public final class SquareRootCalculatorTest {
     @Test
     public void toStringShouldSucceed() {
         final String expected = MoreObjects.toStringHelper(squareRootCalculator)
-                .add("precision", SquareRootCalculator.DEFAULT_PRECISION)
-                .add("scale", SquareRootCalculator.DEFAULT_SCALE)
-                .add("roundingMode", SquareRootCalculator.DEFAULT_ROUNDING_MODE).toString();
+                        .add("precision", SquareRootCalculator.DEFAULT_PRECISION)
+                        .add("scale", SquareRootCalculator.DEFAULT_SCALE)
+                        .add("roundingMode", SquareRootCalculator.DEFAULT_ROUNDING_MODE).toString();
         assertThat(squareRootCalculator.toString()).isEqualTo(expected);
     }
 }

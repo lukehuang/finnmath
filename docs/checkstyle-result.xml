@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.11.2">
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/number/ScientificNotation.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/number/Fraction.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/number/AbstractComplexNumber.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/number/MathNumber.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/number/SimpleComplexNumber.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/number/RealComplexNumber.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/util/SquareRootCalculator.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/util/MathRandom.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/linear/AbstractMatrixBuilder.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/linear/AbstractMatrix.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/linear/AbstractVector.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/linear/BigIntMatrix.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/linear/DecimalMatrix.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/linear/DecimalVector.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/linear/BigIntVector.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/linear/AbstractVectorBuilder.java">
+</file>
+</checkstyle>

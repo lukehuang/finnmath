@@ -26,9 +26,12 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.Builder;
 
 /**
- * @param <E> The type of the elements of the vector
- * @param <V> The type of the vector
- * @param <B> The type of the builder
+ * @param <E>
+ *            The type of the elements of the vector
+ * @param <V>
+ *            The type of the vector
+ * @param <B>
+ *            The type of the builder
  * @author Lars Tennstedt
  * @since 1
  */
@@ -52,10 +55,13 @@ abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
     /**
      * Returns the element dependent on the given index
      *
-     * @param index the index of the element
+     * @param index
+     *            the index of the element
      * @return The element
-     * @throws NullPointerException     if {@code index == null}
-     * @throws IllegalArgumentException if {@code !map.containsKey(index)}
+     * @throws NullPointerException
+     *             if {@code index == null}
+     * @throws IllegalArgumentException
+     *             if {@code !map.containsKey(index)}
      * @author Lars Tennstedt
      * @see Map#containsKey
      * @since 1

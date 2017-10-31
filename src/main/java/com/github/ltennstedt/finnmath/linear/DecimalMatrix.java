@@ -23,22 +23,18 @@ import static java.util.Objects.requireNonNull;
 import com.github.ltennstedt.finnmath.linear.DecimalVector.DecimalVectorBuilder;
 import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
- * An immutable implementation of a matrix which uses {@link BigDecimal} as type for its elements
+ * An immutable implementation of a matrix which uses {@link BigDecimal} as type
+ * for its elements
  *
  * @author Lars Tennstedt
  * @since 1
@@ -52,11 +48,15 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     /**
      * Returns the sum of this {@link DecimalMatrix} and the given one
      *
-     * @param summand The summand
+     * @param summand
+     *            The summand
      * @return The sum
-     * @throws NullPointerException     if {@code summand == null}
-     * @throws IllegalArgumentException if {@code rowSize != summand.rowSize}
-     * @throws IllegalArgumentException if {@code columnSize != summand.columnSize}
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -65,9 +65,10 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public DecimalMatrix add(final DecimalMatrix summand) {
         requireNonNull(summand, "summand");
         checkArgument(table.rowKeySet().size() == summand.rowSize(), "expected equal row sizes but actual %s != %s",
-                table.rowKeySet().size(), summand.rowSize());
+                        table.rowKeySet().size(), summand.rowSize());
         checkArgument(table.columnKeySet().size() == summand.columnSize(),
-                "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), summand.columnSize());
+                        "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
+                        summand.columnSize());
         final DecimalMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -80,11 +81,15 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     /**
      * Returns the difference of this {@link DecimalMatrix} and the given one
      *
-     * @param subtrahend the subtrahend
+     * @param subtrahend
+     *            the subtrahend
      * @return The difference
-     * @throws NullPointerException     if {@code subtrahend == null}
-     * @throws IllegalArgumentException if {@code rowSize != summand.rowSize}
-     * @throws IllegalArgumentException if {@code columnSize != summand.columnSize}
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -93,10 +98,10 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public DecimalMatrix subtract(final DecimalMatrix subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), "expected equal row sizes but actual %s != %s",
-                table.rowKeySet().size(), subtrahend.rowSize());
+                        table.rowKeySet().size(), subtrahend.rowSize());
         checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),
-                "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
-                subtrahend.columnSize());
+                        "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
+                        subtrahend.columnSize());
         final DecimalMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -109,10 +114,13 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     /**
      * Returns the product of this {@link DecimalMatrix} and the given one
      *
-     * @param factor the factor
+     * @param factor
+     *            the factor
      * @return The product
-     * @throws NullPointerException     if {@code factor == null}
-     * @throws IllegalArgumentException if {@code columnSize != factor.rowSize}
+     * @throws NullPointerException
+     *             if {@code factor == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != factor.rowSize}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -121,8 +129,8 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public DecimalMatrix multiply(final DecimalMatrix factor) {
         requireNonNull(factor, "factor");
         checkArgument(table.columnKeySet().size() == factor.rowSize(),
-                "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(),
-                factor.rowSize());
+                        "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(),
+                        factor.rowSize());
         final DecimalMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());
         table.rowMap().forEach((rowIndex, row) -> {
             factor.columns().forEach((columnIndex, column) -> {
@@ -134,12 +142,16 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     }
 
     /**
-     * Returns the product of this {@link DecimalMatrix} and the given {@link DecimalVector}
+     * Returns the product of this {@link DecimalMatrix} and the given
+     * {@link DecimalVector}
      *
-     * @param vector the vector
+     * @param vector
+     *            the vector
      * @return The product
-     * @throws NullPointerException     if {@code vector == null}
-     * @throws IllegalArgumentException if {@code columnSize != vector.size}
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != vector.size}
      * @author Lars Tennstedt
      * @see DecimalVector#builder
      * @since 1
@@ -148,12 +160,13 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public DecimalVector multiplyVector(final DecimalVector vector) {
         requireNonNull(vector, "vector");
         checkArgument(table.columnKeySet().size() == vector.size(),
-                "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(), vector.size());
+                        "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(),
+                        vector.size());
         final DecimalVectorBuilder builder = DecimalVector.builder(table.rowKeySet().size());
         table.rowMap().forEach((rowIndex, row) -> {
             row.forEach((columnIndex, matrixEntry) -> {
-                final BigDecimal oldEntry =
-                        builder.element(rowIndex) != null ? builder.element(rowIndex) : BigDecimal.ZERO;
+                final BigDecimal oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex)
+                                : BigDecimal.ZERO;
                 builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));
             });
         });
@@ -162,11 +175,11 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
 
     @Override
     protected BigDecimal multiplyRowWithColumn(final Map<Integer, BigDecimal> row,
-            final Map<Integer, BigDecimal> column) {
+                    final Map<Integer, BigDecimal> column) {
         requireNonNull(row, "row");
         requireNonNull(column, "column");
         checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
-                column.size());
+                        column.size());
         BigDecimal result = BigDecimal.ZERO;
         for (final Entry<Integer, BigDecimal> rowEntry : row.entrySet()) {
             result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));
@@ -175,11 +188,14 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     }
 
     /**
-     * Returns the scalar product of this {@link DecimalMatrix} and the given {@link BigDecimal}
+     * Returns the scalar product of this {@link DecimalMatrix} and the given
+     * {@link BigDecimal}
      *
-     * @param scalar the scalar
+     * @param scalar
+     *            the scalar
      * @return The scalar product
-     * @throws NullPointerException if {@code scalar == null}
+     * @throws NullPointerException
+     *             if {@code scalar == null}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -217,7 +233,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     @Override
     public BigDecimal trace() {
         checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
-                table.columnKeySet().size());
+                        table.columnKeySet().size());
         BigDecimal result = BigDecimal.ZERO;
         for (final Integer index : table.rowKeySet()) {
             result = result.add(table.get(index, index));
@@ -229,7 +245,8 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
      * Returns the determinant of this {@link DecimalMatrix}
      *
      * @return The determinant
-     * @throws IllegalStateException if {@code !square}
+     * @throws IllegalStateException
+     *             if {@code !square}
      * @author Lars Tennstedt
      * @see #square
      * @see #minor
@@ -239,48 +256,27 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public BigDecimal determinant() {
         final int rowSize = table.rowKeySet().size();
         checkState(square(), "expected square matrix but actual %s x %s", rowSize, table.columnKeySet().size());
-
-        // Triangular matrices including 3x3, 2x2 and especially all 1x1 matrices
+        final int scale = table.get(1, 1).scale();
         if (triangular()) {
-            BigDecimal result = BigDecimal.ONE;
+            BigDecimal result = BigDecimal.ONE.setScale(scale);
             for (final Cell<Integer, Integer, BigDecimal> cell : table.cellSet()) {
                 if (cell.getRowKey().equals(cell.getColumnKey())) {
                     result = result.multiply(cell.getValue());
                 }
             }
-            return result;
-        }
-
-        if (rowSize > 3) {
-            return calculateDeterminantWithPermutations();
+            return result.setScale(scale, BigDecimal.ROUND_HALF_UP);
         }
         if (rowSize == 3) {
             return ruleOfSarrus();
         }
-
-        // 2x2 matrices
-        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
-    }
-
-    @Override
-    protected BigDecimal calculateDeterminantWithPermutations() {
+        if (rowSize == 2) {
+            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)))
+                            .setScale(scale, BigDecimal.ROUND_HALF_UP);
+        }
         BigDecimal result = BigDecimal.ZERO;
-        final int rowSize = table.rowKeySet().size();
-        final Collection<List<Integer>> permutations =
-                Collections2.permutations(IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()));
-        for (final List<Integer> permutation : permutations) {
-            BigDecimal product = BigDecimal.ONE;
-            int inversions = 0;
-            for (int i = 0; i < rowSize; i++) {
-                final Integer sigma = permutation.get(i);
-                for (int j = i + 1; j < rowSize; j++) {
-                    if (sigma > permutation.get(j)) {
-                        inversions++;
-                    }
-                }
-                product = product.multiply(table.get(i + 1, sigma));
-            }
-            result = result.add(BigDecimal.ONE.negate().pow(inversions).multiply(product));
+        for (final Integer columnIndex : table.columnKeySet()) {
+            result = result.add(BigDecimal.ONE.negate().pow(1 + columnIndex)).multiply(table.get(1, columnIndex))
+                            .multiply(minor(1, columnIndex).determinant());
         }
         return result;
     }
@@ -290,10 +286,11 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         final BigDecimal firstSummand = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));
         final BigDecimal secondSummand = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));
         final BigDecimal thirdSummand = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));
-        final BigDecimal fourthSummand = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3)).negate();
-        final BigDecimal fifthSummand = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1)).negate();
-        final BigDecimal sixthSummand = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2)).negate();
-        return firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand).add(fifthSummand).add(sixthSummand);
+        final BigDecimal fourthSummand = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(3, 1)).negate();
+        final BigDecimal fifthSummand = table.get(1, 2).multiply(table.get(2, 1)).multiply(table.get(3, 3)).negate();
+        final BigDecimal sixthSummand = table.get(1, 1).multiply(table.get(2, 3)).multiply(table.get(3, 2)).negate();
+        return firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand).add(fifthSummand).add(sixthSummand)
+                        .setScale(table.get(1, 1).scale(), RoundingMode.HALF_UP);
     }
 
     /**
@@ -314,15 +311,22 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     }
 
     /**
-     * Returns the minor of this {@link DecimalMatrix} dependent on the given row and column index
+     * Returns the minor of this {@link DecimalMatrix} dependent on the given row
+     * and column index
      *
-     * @param rowIndex    the row index
-     * @param columnIndex the column index
+     * @param rowIndex
+     *            the row index
+     * @param columnIndex
+     *            the column index
      * @return The minor
-     * @throws NullPointerException     if {@code rowIndex == null}
-     * @throws NullPointerException     if {@code columnIndex == null}
-     * @throws IllegalArgumentException if {@code rowIndex < 1 || rowSize < rowIndex}
-     * @throws IllegalArgumentException if {@code columnIndex < 1 || columnSize < columnIndex}
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex < 1 || rowSize < rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex < 1 || columnSize < columnIndex}
      * @author Lars Tennstedt
      * @see #builder
      * @since 1
@@ -332,16 +336,16 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.containsRow(rowIndex), "expected rowIndex in [1, %s] but actual %s",
-                table.rowKeySet().size(), rowIndex);
+                        table.rowKeySet().size(), rowIndex);
         checkArgument(table.containsColumn(columnIndex), "expected columnIndex in [1, %s] but actual %s",
-                table.columnKeySet().size(), columnIndex);
+                        table.columnKeySet().size(), columnIndex);
         final DecimalMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
             final Integer columnKey = cell.getColumnKey();
             if (!rowKey.equals(rowIndex) && !columnKey.equals(columnIndex)) {
-                final Integer newRowIndex = rowKey > rowIndex ? rowKey - 1 : rowKey;
-                final Integer newColumnIndex = columnKey > columnIndex ? columnKey - 1 : columnKey;
+                final Integer newRowIndex = rowKey.compareTo(rowIndex) > 0 ? rowKey - 1 : rowKey;
+                final Integer newColumnIndex = columnKey.compareTo(columnIndex) > 0 ? columnKey - 1 : columnKey;
                 builder.put(newRowIndex, newColumnIndex, cell.getValue());
             }
         });
@@ -424,10 +428,13 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     /**
      * Returns the frobenius norm of this {@link DecimalMatrix}
      *
-     * @param precision the precision for the termination condition
+     * @param precision
+     *            the precision for the termination condition
      * @return The frobenius norm
-     * @throws NullPointerException     if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
      * @author Lars Tennstedt
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
@@ -436,7 +443,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public BigDecimal frobeniusNorm(final BigDecimal precision) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         BigDecimal normPow2 = BigDecimal.ZERO;
         for (final BigDecimal element : table.values()) {
             normPow2 = normPow2.add(element.pow(2));
@@ -447,10 +454,14 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     /**
      * Returns the frobenius norm of this {@link DecimalMatrix}
      *
-     * @param scale        the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The frobenius norm
-     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
      * @author Lars Tennstedt
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
@@ -468,13 +479,20 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     /**
      * Returns the frobenius norm of this {@link DecimalMatrix}
      *
-     * @param precision    the precision for the termination condition
-     * @param scale        the scale to be set on the result
-     * @param roundingMode the rounding mode to be used during the setting of the scale of the result
+     * @param precision
+     *            the precision for the termination condition
+     * @param scale
+     *            the scale to be set on the result
+     * @param roundingMode
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The frobenius norm
-     * @throws NullPointerException     if {@code precision == null}
-     * @throws IllegalArgumentException if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code precision == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
      * @author Lars Tennstedt
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
@@ -483,7 +501,7 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+                        "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         BigDecimal normPow2 = BigDecimal.ZERO;
         for (final BigDecimal element : table.values()) {
@@ -509,9 +527,11 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link DecimalMatrix} is upper triangular
+     * Returns a {@code boolean} which indicates if this {@link DecimalMatrix} is
+     * upper triangular
      *
-     * @return {@code true} if {@code this} is upper triangular, {@code false} otherwise
+     * @return {@code true} if {@code this} is upper triangular, {@code false}
+     *         otherwise
      * @author Lars Tennstedt
      * @since 1
      */
@@ -529,9 +549,11 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link DecimalMatrix} is lower triangular
+     * Returns a {@code boolean} which indicates if this {@link DecimalMatrix} is
+     * lower triangular
      *
-     * @return {@code true} if {@code this} is lower triangular, {@code false} otherwise
+     * @return {@code true} if {@code this} is lower triangular, {@code false}
+     *         otherwise
      * @author Lars Tennstedt
      * @since 1
      */
@@ -549,9 +571,11 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link DecimalMatrix} is the identity one
+     * Returns a {@code boolean} which indicates if this {@link DecimalMatrix} is
+     * the identity one
      *
-     * @return {@code true} if {@code this} is the identity matrix, {@code false} otherwise
+     * @return {@code true} if {@code this} is the identity matrix, {@code false}
+     *         otherwise
      * @author Lars Tennstedt
      * @see #diagonal
      * @since 1
@@ -570,24 +594,27 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link DecimalMatrix} is invertible
+     * Returns a {@code boolean} which indicates if this {@link DecimalMatrix} is
+     * invertible
      *
-     * @return {@code true} if {@code det == -1 || det == 1}, {@code false} otherwise
+     * @return {@code true} if {@code det == -1 || det == 1}, {@code false}
+     *         otherwise
      * @author Lars Tennstedt
-     * @see #square
      * @see #determinant
      * @since 1
      */
     @Override
     public boolean invertible() {
-        return square() && (determinant().compareTo(BigDecimal.ZERO) != 0);
+        return determinant().compareTo(BigDecimal.ZERO) != 0;
     }
 
     /**
      * Returns a {@link DecimalMatrixBuilder}
      *
-     * @param rowSize    the row size the resulting {@link DecimalMatrix}
-     * @param columnSize the column size the resulting {@link DecimalMatrix}
+     * @param rowSize
+     *            the row size the resulting {@link DecimalMatrix}
+     * @param columnSize
+     *            the column size the resulting {@link DecimalMatrix}
      * @return A {@link DecimalMatrixBuilder}
      * @author Lars Tennstedt
      * @since 1
@@ -628,17 +655,26 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         }
 
         /**
-         * Puts the given element on the {@link Table} dependent on the given row and column index
+         * Puts the given element on the {@link Table} dependent on the given row and
+         * column index
          *
-         * @param rowIndex    thr row index
-         * @param columnIndex the column index
-         * @param element     the element
+         * @param rowIndex
+         *            thr row index
+         * @param columnIndex
+         *            the column index
+         * @param element
+         *            the element
          * @return {@code this}
-         * @throws NullPointerException     if {@code rowIndex == null}
-         * @throws NullPointerException     if {@code columnIndex == null}
-         * @throws NullPointerException     if {@code element == null}
-         * @throws IllegalArgumentException if {@code rowIndex < 0 || rowSize < rowIndex}
-         * @throws IllegalArgumentException if {@code columnIndex < 0 || columnSize < columnIndex}
+         * @throws NullPointerException
+         *             if {@code rowIndex == null}
+         * @throws NullPointerException
+         *             if {@code columnIndex == null}
+         * @throws NullPointerException
+         *             if {@code element == null}
+         * @throws IllegalArgumentException
+         *             if {@code rowIndex < 0 || rowSize < rowIndex}
+         * @throws IllegalArgumentException
+         *             if {@code columnIndex < 0 || columnSize < columnIndex}
          * @author Lars Tennstedt
          * @since 1
          */
@@ -647,9 +683,9 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
             requireNonNull(rowIndex, "rowIndex");
             requireNonNull(columnIndex, "columnIndex");
             checkArgument(table.rowKeySet().contains(rowIndex), "expected rowIndex in [1, %s] but actual %s",
-                    table.rowKeySet().size(), rowIndex);
+                            table.rowKeySet().size(), rowIndex);
             checkArgument(table.columnKeySet().contains(columnIndex), "expected columnIndex in [1, %s] but actual %s",
-                    table.columnKeySet().size(), columnIndex);
+                            table.columnKeySet().size(), columnIndex);
             table.put(rowIndex, columnIndex, element);
             return this;
         }
@@ -657,9 +693,11 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
         /**
          * Puts the given element on all indices of the {@link Table}
          *
-         * @param element the element
+         * @param element
+         *            the element
          * @return {@code this}
-         * @throws NullPointerException if {@code element == null}
+         * @throws NullPointerException
+         *             if {@code element == null}
          * @author Lars Tennstedt
          * @since 1
          */
@@ -677,7 +715,8 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
          * Returns the built {@link DecimalMatrix}
          *
          * @return The {@link DecimalMatrix}
-         * @throws NullPointerException if one {@code element == null}
+         * @throws NullPointerException
+         *             if one {@code element == null}
          * @author Lars Tennstedt
          * @see ImmutableTable#copyOf
          * @since 1

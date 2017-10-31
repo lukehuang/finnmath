@@ -34,8 +34,7 @@ other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for t
 * Logging facade instead of a hard dependency on a specific logging framework
 
 ## Information
-* [Javadoc](https://ltennstedt.github.io/finnmath/javadoc/index.html)
-* [Build dashboard](https://ltennstedt.github.io/finnmath/reports/buildDashboard/index.html)
+* Maven site: [link https://ltennstedt.github.io/finnmath/index.html]
 
 finnMath is open source and free software and is licensed under the permissive Apache License.
 
@@ -50,7 +49,7 @@ finnMath is still in a very early state and a work in progress.
 #
     git clone https://github.com/ltennstedt/finnmath.git
     cd finnmath
-    gradle install
+    mvn install
 
 This will clone the remote Git repository, build finnmath and install it into your local Maven repository.
 
@@ -61,10 +60,6 @@ The code formatting follows loosely the Google Java style guide found here on Gi
 #### Why finnMath?
 I searched for a mathematical library for another project which should be based on BigInteger and BigDecimal instead 
 of primitives and I could not find one.
-
-#### Who is Finn?
-* [Photo](https://www.flickr.com/photos/animalequalityde/34257121071/in/album-72157683138690476/)
-* [Video](https://www.youtube.com/watch?v=Z8-rtor3G9Q)
 
 #### Why BigInteger or BigDecimal?
 Both are protected against buffer overflows and BigDecimal is by far less prone to big rounding errors. In addition, 
@@ -78,21 +73,29 @@ friendly.
 #### Why Gradle?
 Gradle is a wonderful tool and I think that it will conquer the throne of build automation tools for the JVM in the 
 near future. Its DSL is less verbose than Maven's XML approach and thanks to Groovy customizing all the tasks involved in 
-the build process is very comfortable.
+the build process is very comfortable. So why I moved away from it? I have noticed at work that I need more expertise 
+regarding Maven and a standard Java library project is by far the most suitable candidate for a Maven project because 
+of its very standardized structure and workflow. Maven is very strict in terms of its build lifecycle, supports 
+multi-project setups worse than Gradle and mixing languages is very ugly. Maven performs best when it manages a 
+project which is a Maven project through and through. If you want to do things which are not covered by Maven's 
+lifecycle very well, go for a multi-module or mixed-languages project, need custom tasks or choose Groovy or Kotlin as
+a programming language, Gradle is indeed very hard to beat. Maven provides you with a declarative and uniform way to 
+describe a build and it does it very well. The flexibility and power of Gradle is not needed for a standard Java 
+project like this one. 
+
 
 ## Thanks to
 * Oracle for the JVM, Java and OpenJDK
 * the Eclipse Foundation for the Eclipse IDE
 * JetBrains s.r.o. for IntelliJ IDEA Community Edition
 * Google for Guava and Error Prone
-* the Apache Software Foundation for Commons Lang, Commons Math and the Apache License
+* the Apache Software Foundation for Maven, Commons Lang, Commons Math and the Apache License
 * QOS.ch for SLF4J 
 * Joel Costigliola for AssertJ
 * the JUnit team for JUnit
-* Gradle Inc. for Gradle
 * Linus Torvalds for Git
 * the developers of Checkstyle
-* the University of Maryland for FindBugs
+* the developers of SpotBugs
 * the developers of PMD
 * the developers of JaCoCo and EclEmma
 * GitHub Inc. for GitHub

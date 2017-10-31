@@ -1,0 +1,17 @@
+com/github/ltennstedt/finnmath/number/RealComplexNumberTest.class
+com/github/ltennstedt/finnmath/linear/BigIntMatrixBuilderTest.class
+com/github/ltennstedt/finnmath/linear/DecimalVectorBuilderTest.class
+com/github/ltennstedt/finnmath/linear/DecimalVectorTest.class
+com/github/ltennstedt/finnmath/linear/BigIntMatrixTest.class
+com/github/ltennstedt/finnmath/linear/DecimalMatrixTest.class
+com/github/ltennstedt/finnmath/util/SquareRootCalculatorTest.class
+com/github/ltennstedt/finnmath/assertion/DecimalVectorAssert.class
+com/github/ltennstedt/finnmath/linear/BigIntVectorBuilderTest.class
+com/github/ltennstedt/finnmath/number/SimpleComplexNumberTest.class
+com/github/ltennstedt/finnmath/linear/DecimalMatrixGuavaTest.class
+com/github/ltennstedt/finnmath/number/ScientificNotationTest.class
+com/github/ltennstedt/finnmath/util/MathRandomTest.class
+com/github/ltennstedt/finnmath/linear/BigIntVectorTest.class
+com/github/ltennstedt/finnmath/linear/DecimalMatrixBuilderTest.class
+com/github/ltennstedt/finnmath/assertion/DecimalMatrixAssert.class
+com/github/ltennstedt/finnmath/number/FractionTest.class

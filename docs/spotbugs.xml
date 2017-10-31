@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BugCollection version='3.1.0-RC7' threshold='medium' effort='default'><Error></Error><Project><SrcDir>/home/raimund/git/finnmath/src/main/java</SrcDir><SrcDir>/home/raimund/git/finnmath/target/generated-sources/annotations</SrcDir><SrcDir>/home/raimund/git/finnmath/src/test/java</SrcDir><SrcDir>/home/raimund/git/finnmath/target/generated-test-sources/test-annotations</SrcDir></Project></BugCollection>
