@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="4.701" tests="27" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="2.715" tests="27" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="file.encoding.pkg" value="sun.io"/>
@@ -16,7 +16,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/amd64"/>
-    <property name="sun.java.command" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar /home/raimund/git/finnmath/target/surefire 2017-10-31T23-57-56_034-jvmRun1 surefire1557013046127631234tmp surefire_08969395774441063601tmp"/>
+    <property name="sun.java.command" value="/home/raimund/git/finnmath/target/surefire/surefirebooter9079258990144707742.jar /home/raimund/git/finnmath/target/surefire 2017-11-01T16-21-48_111-jvmRun1 surefire988001320110709264tmp surefire_06714070986443569134tmp"/>
     <property name="surefire.test.class.path" value="/home/raimund/git/finnmath/target/test-classes:/home/raimund/git/finnmath/target/classes:/home/raimund/.m2/repository/com/google/guava/guava/23.2-jre/guava-23.2-jre.jar:/home/raimund/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar:/home/raimund/.m2/repository/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar:/home/raimund/.m2/repository/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar:/home/raimund/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar:/home/raimund/.m2/repository/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/raimund/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/raimund/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/raimund/.m2/repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar:/home/raimund/.m2/repository/org/assertj/assertj-guava/3.1.0/assertj-guava-3.1.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/raimund"/>
@@ -29,7 +29,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar:/home/raimund/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar"/>
+    <property name="surefire.real.class.path" value="/home/raimund/git/finnmath/target/surefire/surefirebooter9079258990144707742.jar:/home/raimund/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar"/>
     <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk/jre/classes"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="1.8.0_144-b01"/>
@@ -57,31 +57,31 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="multiplyIdentityMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.036"/>
-  <testcase name="transposeShouldBeAdditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.081"/>
-  <testcase name="addShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.06"/>
-  <testcase name="scalarMultiplyShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.055"/>
-  <testcase name="subtractShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.048"/>
-  <testcase name="transposeShouldBeLinear" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.058"/>
-  <testcase name="addZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.009"/>
-  <testcase name="multiplyNegativeIdentityMatrixShouldBeEqualToNegated" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.005"/>
-  <testcase name="subtractZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.009"/>
-  <testcase name="addAndScalarMultiplyWithTwoScalarsShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.588"/>
+  <testcase name="multiplyIdentityMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.023"/>
+  <testcase name="transposeShouldBeAdditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.062"/>
+  <testcase name="addShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.037"/>
+  <testcase name="scalarMultiplyShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.03"/>
+  <testcase name="subtractShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.032"/>
+  <testcase name="transposeShouldBeLinear" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.04"/>
+  <testcase name="addZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.002"/>
+  <testcase name="multiplyNegativeIdentityMatrixShouldBeEqualToNegated" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.006"/>
+  <testcase name="subtractZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.004"/>
+  <testcase name="addAndScalarMultiplyWithTwoScalarsShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.411"/>
   <testcase name="scalarMultiplyWithMinusOneShouldBeEqualToNegated" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.005"/>
   <testcase name="transposeTwiceIsEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.003"/>
-  <testcase name="addShouldBeCommutative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.031"/>
+  <testcase name="addShouldBeCommutative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.023"/>
   <testcase name="negateZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0"/>
-  <testcase name="multiplyShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="1.204"/>
-  <testcase name="transposeShouldBeMultiplicativeWithInversedOrder" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.031"/>
-  <testcase name="addAndScalarMultiplyWithTwoMatricesShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.49"/>
-  <testcase name="scalarMultiplyWithTwoMatricesShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.596"/>
-  <testcase name="minorShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.012"/>
-  <testcase name="addShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.402"/>
-  <testcase name="negateTwiceShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.003"/>
-  <testcase name="addAndMultiplyShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.492"/>
-  <testcase name="scalarMultiplyWithTwoScalarsShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.246"/>
-  <testcase name="multiplyShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.055"/>
-  <testcase name="transposeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.004"/>
+  <testcase name="multiplyShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.769"/>
+  <testcase name="transposeShouldBeMultiplicativeWithInversedOrder" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.035"/>
+  <testcase name="addAndScalarMultiplyWithTwoMatricesShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.261"/>
+  <testcase name="scalarMultiplyWithTwoMatricesShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.317"/>
+  <testcase name="minorShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.003"/>
+  <testcase name="addShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.151"/>
+  <testcase name="negateTwiceShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0"/>
+  <testcase name="addAndMultiplyShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.31"/>
+  <testcase name="scalarMultiplyWithTwoScalarsShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.119"/>
+  <testcase name="multiplyShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.04"/>
+  <testcase name="transposeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.003"/>
   <testcase name="negateShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.002"/>
-  <testcase name="scalarMultiplyWithOneShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.002"/>
+  <testcase name="scalarMultiplyWithOneShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest" time="0.001"/>
 </testsuite>

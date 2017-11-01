@@ -26,4 +26,6 @@
 .README.md.html
 /out/
 /target/
+.checkstyle
+.eclipse-pmd
 

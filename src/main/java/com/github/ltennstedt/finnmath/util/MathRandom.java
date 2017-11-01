@@ -989,8 +989,8 @@ public final class MathRandom {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal nonZeroPart = nextInvertibleDecimal(bound, scale);
-        final BigDecimal possibleZeroPart = random.nextBoolean() ? nextInvertibleDecimal(bound, scale)
-                        : nextDecimal(bound, scale);
+        final BigDecimal possibleZeroPart =
+            random.nextBoolean() ? nextInvertibleDecimal(bound, scale) : nextDecimal(bound, scale);
         if (random.nextBoolean()) {
             return new RealComplexNumber(possibleZeroPart, nonZeroPart);
         }
@@ -1049,7 +1049,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<RealComplexNumber> nextInvertibleRealComplexNumbers(final long bound, final int scale,
-                    final int howMany) {
+        final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1371,7 +1371,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<BigIntMatrix> nextBigIntMatrices(final long bound, final int rowSize, final int columnSize,
-                    final int howMany) {
+        final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
@@ -1646,7 +1646,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalVector> nextDecimalVectors(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -1948,7 +1948,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextDecimalMatrices(final long bound, final int scale, final int rowSize,
-                    final int columnSize, final int howMany) {
+        final int columnSize, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
@@ -1989,7 +1989,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextUpperTriangularDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2029,7 +2029,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextLowerTriangularDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2069,7 +2069,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextTriangularDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2109,7 +2109,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextDiagonalDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2149,7 +2149,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextSymmetricDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2189,7 +2189,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextSkewSymmetricDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);

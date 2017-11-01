@@ -98,8 +98,8 @@ public final class BigIntMatrixTest {
             othersForAddition.add(mathRandom.nextBigIntMatrix(bound, rowSize, columnSize));
             additionalOthersForAddition.add(mathRandom.nextBigIntMatrix(bound, rowSize, columnSize));
             othersForMultiplication.add(mathRandom.nextBigIntMatrix(bound, columnSize, columnSizeForOthers));
-            additionalOthersForMultiplication.add(
-                            mathRandom.nextBigIntMatrix(bound, columnSizeForOthers, columnSizeForAdditionalOthers));
+            additionalOthersForMultiplication
+                .add(mathRandom.nextBigIntMatrix(bound, columnSizeForOthers, columnSizeForAdditionalOthers));
             fourByFourMatrices.add(mathRandom.nextBigIntMatrix(bound, 4, 4));
             threeByThreeMatrices.add(mathRandom.nextBigIntMatrix(bound, 3, 3));
             twoByTwoMatrices.add(mathRandom.nextBigIntMatrix(bound, 2, 2));
@@ -143,7 +143,7 @@ public final class BigIntMatrixTest {
             final BigIntMatrix summand = BigIntMatrix.builder(3, 2).putAll(BigInteger.ZERO).build();
             matrix.add(summand);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("expected equal column sizes but actual 3 != 2");
+            .hasMessage("expected equal column sizes but actual 3 != 2");
 
     }
 
@@ -178,7 +178,7 @@ public final class BigIntMatrixTest {
             othersForAddition.forEach(other -> {
                 additionalOthersForAddition.forEach(additionalOthers -> {
                     assertThat(matrix.add(other).add(additionalOthers))
-                                    .isEqualTo(matrix.add(other.add(additionalOthers)));
+                        .isEqualTo(matrix.add(other.add(additionalOthers)));
                 });
             });
         });
@@ -217,7 +217,7 @@ public final class BigIntMatrixTest {
             final BigIntMatrix subtrahend = BigIntMatrix.builder(3, 2).putAll(BigInteger.ZERO).build();
             minuend.subtract(subtrahend);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("expected equal column sizes but actual 3 != 2");
+            .hasMessage("expected equal column sizes but actual 3 != 2");
 
     }
 
@@ -266,7 +266,7 @@ public final class BigIntMatrixTest {
             final BigIntMatrix factor = BigIntMatrix.builder(2, 3).putAll(BigInteger.ZERO).build();
             matrix.multiply(factor);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("expected columnSize == factor.rowSize but actual 3 != 2");
+            .hasMessage("expected columnSize == factor.rowSize but actual 3 != 2");
 
     }
 
@@ -311,7 +311,7 @@ public final class BigIntMatrixTest {
             othersForMultiplication.forEach(other -> {
                 additionalOthersForMultiplication.forEach(additionalOthers -> {
                     assertThat(matrix.multiply(other).multiply(additionalOthers))
-                                    .isEqualTo(matrix.multiply(other.multiply(additionalOthers)));
+                        .isEqualTo(matrix.multiply(other.multiply(additionalOthers)));
                 });
             });
         });
@@ -323,7 +323,7 @@ public final class BigIntMatrixTest {
             squareMatrices.forEach(other -> {
                 squareMatrices.forEach(additionalOther -> {
                     assertThat(matrix.multiply(other.add(additionalOther)))
-                                    .isEqualTo(matrix.multiply(other).add(matrix.multiply(additionalOther)));
+                        .isEqualTo(matrix.multiply(other).add(matrix.multiply(additionalOther)));
                 });
             });
         });
@@ -343,7 +343,7 @@ public final class BigIntMatrixTest {
             final BigIntVector vector = BigIntVector.builder(2).putAll(BigInteger.ZERO).build();
             matrix.multiplyVector(vector);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("expected columnSize == vectorSize but actual 3 != 2");
+            .hasMessage("expected columnSize == vectorSize but actual 3 != 2");
     }
 
     @Test
@@ -399,7 +399,7 @@ public final class BigIntMatrixTest {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
                     assertThat(matrix.scalarMultiply(scalar.multiply(otherScalar)))
-                                    .isEqualTo(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar));
+                        .isEqualTo(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar));
                 });
             });
         });
@@ -411,7 +411,7 @@ public final class BigIntMatrixTest {
             othersForMultiplication.forEach(other -> {
                 scalars.forEach(scalar -> {
                     assertThat(matrix.scalarMultiply(scalar).multiply(other))
-                                    .isEqualTo(matrix.multiply(other).scalarMultiply(scalar));
+                        .isEqualTo(matrix.multiply(other).scalarMultiply(scalar));
                 });
             });
         });
@@ -423,7 +423,7 @@ public final class BigIntMatrixTest {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
                     assertThat(matrix.scalarMultiply(scalar.add(otherScalar)))
-                                    .isEqualTo(matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar)));
+                        .isEqualTo(matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar)));
                 });
             });
         });
@@ -435,7 +435,7 @@ public final class BigIntMatrixTest {
             othersForAddition.forEach(other -> {
                 scalars.forEach(scalar -> {
                     assertThat(matrix.add(other).scalarMultiply(scalar))
-                                    .isEqualTo(matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)));
+                        .isEqualTo(matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)));
                 });
             });
         });
@@ -461,7 +461,7 @@ public final class BigIntMatrixTest {
             vectors.forEach(vector -> {
                 scalars.forEach(scalar -> {
                     assertThat(matrix.scalarMultiply(scalar).multiplyVector(vector))
-                                    .isEqualTo(matrix.multiplyVector(vector).scalarMultiply(scalar));
+                        .isEqualTo(matrix.multiplyVector(vector).scalarMultiply(scalar));
                 });
             });
         });
@@ -498,8 +498,8 @@ public final class BigIntMatrixTest {
     @Test
     public void multiplyNegativeIdentityMatrixShouldBeEqualToNegated() {
         squareMatrices.forEach(matrix -> {
-            final BigIntMatrixBuilder builder = BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize())
-                            .putAll(BigInteger.ZERO);
+            final BigIntMatrixBuilder builder =
+                BigIntMatrix.builder(matrix.rowSize(), matrix.columnSize()).putAll(BigInteger.ZERO);
             matrix.rowIndexes().forEach(index -> {
                 builder.put(index, index, BigInteger.ONE.negate());
             });
@@ -584,8 +584,7 @@ public final class BigIntMatrixTest {
             BigInteger expected = BigInteger.ZERO;
             for (final Integer columnIndex : matrix.columnIndexes()) {
                 expected = expected.add(BigInteger.ONE.negate().pow(1 + columnIndex))
-                                .multiply(matrix.element(1, columnIndex))
-                                .multiply(matrix.minor(1, columnIndex).determinant());
+                    .multiply(matrix.element(1, columnIndex)).multiply(matrix.minor(1, columnIndex).determinant());
             }
             assertThat(matrix.determinant()).isEqualTo(expected);
         });
@@ -594,20 +593,20 @@ public final class BigIntMatrixTest {
     @Test
     public void determinatOfThreeByThreeMatricesShouldSucceed() {
         threeByThreeMatrices.forEach(matrix -> {
-            final BigInteger firstSummand = matrix.element(1, 1).multiply(matrix.element(2, 2))
-                            .multiply(matrix.element(3, 3));
-            final BigInteger secondSummand = matrix.element(1, 2).multiply(matrix.element(2, 3))
-                            .multiply(matrix.element(3, 1));
-            final BigInteger thirdSummand = matrix.element(1, 3).multiply(matrix.element(2, 1))
-                            .multiply(matrix.element(3, 2));
-            final BigInteger fourthSummand = matrix.element(3, 1).multiply(matrix.element(2, 2))
-                            .multiply(matrix.element(1, 3)).negate();
-            final BigInteger fifthSummand = matrix.element(3, 2).multiply(matrix.element(2, 3))
-                            .multiply(matrix.element(1, 1)).negate();
-            final BigInteger sixthSummand = matrix.element(3, 3).multiply(matrix.element(2, 1))
-                            .multiply(matrix.element(1, 2)).negate();
+            final BigInteger firstSummand =
+                matrix.element(1, 1).multiply(matrix.element(2, 2)).multiply(matrix.element(3, 3));
+            final BigInteger secondSummand =
+                matrix.element(1, 2).multiply(matrix.element(2, 3)).multiply(matrix.element(3, 1));
+            final BigInteger thirdSummand =
+                matrix.element(1, 3).multiply(matrix.element(2, 1)).multiply(matrix.element(3, 2));
+            final BigInteger fourthSummand =
+                matrix.element(3, 1).multiply(matrix.element(2, 2)).multiply(matrix.element(1, 3)).negate();
+            final BigInteger fifthSummand =
+                matrix.element(3, 2).multiply(matrix.element(2, 3)).multiply(matrix.element(1, 1)).negate();
+            final BigInteger sixthSummand =
+                matrix.element(3, 3).multiply(matrix.element(2, 1)).multiply(matrix.element(1, 2)).negate();
             final BigInteger expected = firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand)
-                            .add(fifthSummand).add(sixthSummand);
+                .add(fifthSummand).add(sixthSummand);
             assertThat(matrix.determinant()).isEqualTo(expected);
         });
     }
@@ -616,7 +615,7 @@ public final class BigIntMatrixTest {
     public void determinatOfTwoByTwoMatricesShouldSucceed() {
         twoByTwoMatrices.forEach(matrix -> {
             final BigInteger expected = matrix.element(1, 1).multiply(matrix.element(2, 2))
-                            .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
+                .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
             assertThat(matrix.determinant()).isEqualTo(expected);
         });
     }
@@ -652,10 +651,10 @@ public final class BigIntMatrixTest {
         });
         final BigIntMatrix identityThreeByThreeMatrix = identityThreeByThreeMatrixBuilder.build();
         final BigIntMatrix identityTwoByTwoMatrix = BigIntMatrix.builder(2, 2).put(1, 1, BigInteger.ONE)
-                        .put(1, 2, BigInteger.ZERO).put(2, 1, BigInteger.ZERO).put(2, 2, BigInteger.ONE).build();
+            .put(1, 2, BigInteger.ZERO).put(2, 1, BigInteger.ZERO).put(2, 2, BigInteger.ONE).build();
         final BigIntMatrix identityOneByOneMatrix = BigIntMatrix.builder(1, 1).put(1, 1, BigInteger.ONE).build();
         assertThat(identityThreeByThreeMatrix.determinant()).isEqualTo(identityTwoByTwoMatrix.determinant())
-                        .isEqualTo(identityOneByOneMatrix.determinant()).isEqualTo(BigInteger.ONE);
+            .isEqualTo(identityOneByOneMatrix.determinant()).isEqualTo(BigInteger.ONE);
     }
 
     @Test
@@ -676,19 +675,19 @@ public final class BigIntMatrixTest {
         threeByThreeMatrices.forEach(matrix -> {
             threeByThreeMatrices.forEach(other -> {
                 assertThat(matrix.multiply(other).determinant())
-                                .isEqualTo(matrix.determinant().multiply(other.determinant()));
+                    .isEqualTo(matrix.determinant().multiply(other.determinant()));
             });
         });
         twoByTwoMatrices.forEach(matrix -> {
             twoByTwoMatrices.forEach(other -> {
                 assertThat(matrix.multiply(other).determinant())
-                                .isEqualTo(matrix.determinant().multiply(other.determinant()));
+                    .isEqualTo(matrix.determinant().multiply(other.determinant()));
             });
         });
         oneByOneMatrices.forEach(matrix -> {
             oneByOneMatrices.forEach(other -> {
                 assertThat(matrix.multiply(other).determinant())
-                                .isEqualTo(matrix.determinant().multiply(other.determinant()));
+                    .isEqualTo(matrix.determinant().multiply(other.determinant()));
             });
         });
     }
@@ -698,19 +697,19 @@ public final class BigIntMatrixTest {
         threeByThreeMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).determinant())
-                                .isEqualTo(scalar.pow(3).multiply(matrix.determinant()));
+                    .isEqualTo(scalar.pow(3).multiply(matrix.determinant()));
             });
         });
         twoByTwoMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).determinant())
-                                .isEqualTo(scalar.pow(2).multiply(matrix.determinant()));
+                    .isEqualTo(scalar.pow(2).multiply(matrix.determinant()));
             });
         });
         oneByOneMatrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).determinant())
-                                .isEqualTo(scalar.multiply(matrix.determinant()));
+                    .isEqualTo(scalar.multiply(matrix.determinant()));
             });
         });
     }
@@ -778,7 +777,7 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).transpose())
-                                .isEqualTo(matrix.transpose().scalarMultiply(scalar));
+                    .isEqualTo(matrix.transpose().scalarMultiply(scalar));
             });
         });
     }
@@ -788,7 +787,7 @@ public final class BigIntMatrixTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 assertThat(matrix.multiply(other).transpose())
-                                .isEqualTo(other.transpose().multiply(matrix.transpose()));
+                    .isEqualTo(other.transpose().multiply(matrix.transpose()));
             });
         });
     }
@@ -812,7 +811,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(0, 1);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual 0",
-                        zeroMatrixForAddition.rowSize());
+            zeroMatrixForAddition.rowSize());
     }
 
     @Test
@@ -821,7 +820,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(invalidRowIndex, 1);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual %s",
-                        zeroMatrixForAddition.rowSize(), invalidRowIndex);
+            zeroMatrixForAddition.rowSize(), invalidRowIndex);
     }
 
     @Test
@@ -829,7 +828,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(1, 0);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("expected columnIndex in [1, %s] but actual 0", zeroMatrixForAddition.columnSize());
+            .hasMessage("expected columnIndex in [1, %s] but actual 0", zeroMatrixForAddition.columnSize());
     }
 
     @Test
@@ -838,8 +837,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroMatrixForAddition.minor(1, invalidColumnIndex);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage(
-                        "expected columnIndex in [1, %s] but actual %s", zeroMatrixForAddition.columnSize(),
-                        invalidColumnIndex);
+            "expected columnIndex in [1, %s] but actual %s", zeroMatrixForAddition.columnSize(), invalidColumnIndex);
     }
 
     @Test
@@ -895,7 +893,7 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).maxAbsColumnSumNorm())
-                                .isEqualTo(scalar.abs().multiply(matrix.maxAbsColumnSumNorm()));
+                    .isEqualTo(scalar.abs().multiply(matrix.maxAbsColumnSumNorm()));
             });
         });
     }
@@ -905,7 +903,7 @@ public final class BigIntMatrixTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 assertThat(matrix.add(other).maxAbsColumnSumNorm())
-                                .isLessThanOrEqualTo(matrix.maxAbsColumnSumNorm().add(other.maxAbsColumnSumNorm()));
+                    .isLessThanOrEqualTo(matrix.maxAbsColumnSumNorm().add(other.maxAbsColumnSumNorm()));
             });
         });
     }
@@ -914,8 +912,8 @@ public final class BigIntMatrixTest {
     public void maxAbsColumnSumNormShouldBeSubmultiplicative() {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
-                assertThat(matrix.multiply(other).maxAbsColumnSumNorm()).isLessThanOrEqualTo(
-                                matrix.maxAbsColumnSumNorm().multiply(other.maxAbsColumnSumNorm()));
+                assertThat(matrix.multiply(other).maxAbsColumnSumNorm())
+                    .isLessThanOrEqualTo(matrix.maxAbsColumnSumNorm().multiply(other.maxAbsColumnSumNorm()));
             });
         });
     }
@@ -952,7 +950,7 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).maxAbsRowSumNorm())
-                                .isEqualTo(scalar.abs().multiply(matrix.maxAbsRowSumNorm()));
+                    .isEqualTo(scalar.abs().multiply(matrix.maxAbsRowSumNorm()));
             });
         });
     }
@@ -962,7 +960,7 @@ public final class BigIntMatrixTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 assertThat(matrix.add(other).maxAbsRowSumNorm())
-                                .isLessThanOrEqualTo(matrix.maxAbsRowSumNorm().add(other.maxAbsRowSumNorm()));
+                    .isLessThanOrEqualTo(matrix.maxAbsRowSumNorm().add(other.maxAbsRowSumNorm()));
             });
         });
     }
@@ -972,7 +970,7 @@ public final class BigIntMatrixTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 assertThat(matrix.multiply(other).maxAbsRowSumNorm())
-                                .isLessThanOrEqualTo(matrix.maxAbsRowSumNorm().multiply(other.maxAbsRowSumNorm()));
+                    .isLessThanOrEqualTo(matrix.maxAbsRowSumNorm().multiply(other.maxAbsRowSumNorm()));
             });
         });
     }
@@ -998,7 +996,7 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).frobeniusNormPow2())
-                                .isEqualTo(scalar.pow(2).multiply(matrix.frobeniusNormPow2()));
+                    .isEqualTo(scalar.pow(2).multiply(matrix.frobeniusNormPow2()));
             });
         });
     }
@@ -1007,7 +1005,7 @@ public final class BigIntMatrixTest {
     public void frobeniusNormShouldSucceed() {
         matrices.forEach(matrix -> {
             assertThat(matrix.frobeniusNorm())
-                            .isEqualByComparingTo(new SquareRootCalculator().sqrt(matrix.frobeniusNormPow2()));
+                .isEqualByComparingTo(new SquareRootCalculator().sqrt(matrix.frobeniusNormPow2()));
         });
     }
 
@@ -1023,7 +1021,7 @@ public final class BigIntMatrixTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 assertThat(matrix.add(other).frobeniusNorm())
-                                .isLessThanOrEqualTo(matrix.frobeniusNorm().add(other.frobeniusNorm()).add(tolerance));
+                    .isLessThanOrEqualTo(matrix.frobeniusNorm().add(other.frobeniusNorm()).add(tolerance));
             });
         });
     }
@@ -1032,8 +1030,8 @@ public final class BigIntMatrixTest {
     public void frobeniusNormShouldBeSubmultiplicative() {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
-                assertThat(matrix.multiply(other).frobeniusNorm()).isLessThanOrEqualTo(
-                                matrix.frobeniusNorm().multiply(other.frobeniusNorm()).add(tolerance));
+                assertThat(matrix.multiply(other).frobeniusNorm())
+                    .isLessThanOrEqualTo(matrix.frobeniusNorm().multiply(other.frobeniusNorm()).add(tolerance));
             });
         });
     }
@@ -1050,7 +1048,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroSquareMatrix.frobeniusNorm(BigDecimal.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
-                        BigDecimal.ZERO);
+            BigDecimal.ZERO);
     }
 
     @Test
@@ -1058,15 +1056,15 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroSquareMatrix.frobeniusNorm(BigDecimal.ONE);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
-                        BigDecimal.ONE);
+            BigDecimal.ONE);
     }
 
     @Test
     public void frobeniusNormWithPrecisionShouldSucceed() {
         matrices.forEach(matrix -> {
             assertThat(matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION))
-                            .isLessThanOrEqualTo(new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION)
-                                            .sqrt(matrix.frobeniusNormPow2()).add(tolerance));
+                .isLessThanOrEqualTo(new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION)
+                    .sqrt(matrix.frobeniusNormPow2()).add(tolerance));
         });
     }
 
@@ -1081,7 +1079,7 @@ public final class BigIntMatrixTest {
     public void frobeniusNormWithScaleAndRoundingModeShouldSucceed() {
         matrices.forEach(matrix -> {
             assertThat(matrix.frobeniusNorm(2, RoundingMode.HALF_EVEN)).isEqualByComparingTo(
-                            new SquareRootCalculator(2, RoundingMode.HALF_EVEN).sqrt(matrix.frobeniusNormPow2()));
+                new SquareRootCalculator(2, RoundingMode.HALF_EVEN).sqrt(matrix.frobeniusNormPow2()));
         });
     }
 
@@ -1097,7 +1095,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroSquareMatrix.frobeniusNorm(BigDecimal.ZERO, 2, RoundingMode.HALF_EVEN);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
-                        BigDecimal.ZERO);
+            BigDecimal.ZERO);
     }
 
     @Test
@@ -1105,7 +1103,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroSquareMatrix.frobeniusNorm(BigDecimal.ONE, 2, RoundingMode.HALF_EVEN);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
-                        BigDecimal.ONE);
+            BigDecimal.ONE);
     }
 
     @Test
@@ -1119,8 +1117,8 @@ public final class BigIntMatrixTest {
     public void frobeniusNormWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
         matrices.forEach(matrix -> {
             assertThat(matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN))
-                            .isEqualTo(new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION, 2,
-                                            RoundingMode.HALF_EVEN).sqrt(matrix.frobeniusNormPow2()));
+                .isEqualTo(new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN)
+                    .sqrt(matrix.frobeniusNormPow2()));
         });
     }
 
@@ -1501,7 +1499,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroSquareMatrix.element(0, 1);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row index in [1, %s] but actual 0",
-                        zeroSquareMatrix.rowSize());
+            zeroSquareMatrix.rowSize());
     }
 
     @Test
@@ -1516,7 +1514,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroSquareMatrix.element(1, 0);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("expected column index in [1, %s] but actual 0", zeroSquareMatrix.columnSize());
+            .hasMessage("expected column index in [1, %s] but actual 0", zeroSquareMatrix.columnSize());
     }
 
     @Test
@@ -1524,10 +1522,10 @@ public final class BigIntMatrixTest {
         matrices.forEach(matrix -> {
             IntStream.rangeClosed(1, matrix.rowSize()).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
                 IntStream.rangeClosed(1, matrix.columnSize()).boxed().collect(Collectors.toList())
-                                .forEach(columnIndex -> {
-                                    assertThat(matrix.element(rowIndex, columnIndex))
-                                                    .isEqualTo(matrix.getTable().get(rowIndex, columnIndex));
-                                });
+                    .forEach(columnIndex -> {
+                        assertThat(matrix.element(rowIndex, columnIndex))
+                            .isEqualTo(matrix.getTable().get(rowIndex, columnIndex));
+                    });
             });
         });
     }
@@ -1551,7 +1549,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroSquareMatrix.row(0);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected row index in [1, %s] but actual 0",
-                        zeroSquareMatrix.rowSize());
+            zeroSquareMatrix.rowSize());
     }
 
     @Test
@@ -1575,7 +1573,7 @@ public final class BigIntMatrixTest {
         assertThatThrownBy(() -> {
             zeroSquareMatrix.column(0);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                        .hasMessage("expected column index in [1, %s] but actual 0", zeroSquareMatrix.columnSize());
+            .hasMessage("expected column index in [1, %s] but actual 0", zeroSquareMatrix.columnSize());
     }
 
     @Test
@@ -1612,7 +1610,7 @@ public final class BigIntMatrixTest {
     public void sizeShouldSucceed() {
         matrices.forEach(matrix -> {
             assertThat(matrix.size()).isEqualTo(Long.valueOf(matrix.getTable().rowKeySet().size())
-                            * Long.valueOf(matrix.getTable().columnKeySet().size()));
+                * Long.valueOf(matrix.getTable().columnKeySet().size()));
         });
     }
 
@@ -1685,7 +1683,7 @@ public final class BigIntMatrixTest {
     public void toStringShouldSucceed() {
         matrices.forEach(matrix -> {
             assertThat(matrix.toString())
-                            .isEqualTo(MoreObjects.toStringHelper(matrix).add("table", matrix.getTable()).toString());
+                .isEqualTo(MoreObjects.toStringHelper(matrix).add("table", matrix.getTable()).toString());
         });
     }
 }

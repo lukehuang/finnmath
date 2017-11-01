@@ -227,9 +227,9 @@ abstract class AbstractMatrix<E, V, M> {
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
-                        table.rowKeySet().size(), rowIndex);
+            table.rowKeySet().size(), rowIndex);
         checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
-                        table.columnKeySet().size(), columnIndex);
+            table.columnKeySet().size(), columnIndex);
         return table.get(rowIndex, columnIndex);
     }
 
@@ -263,7 +263,7 @@ abstract class AbstractMatrix<E, V, M> {
     public ImmutableMap<Integer, E> row(final Integer rowIndex) {
         requireNonNull(rowIndex, "rowIndex");
         checkArgument(table.rowKeySet().contains(rowIndex), "expected row index in [1, %s] but actual %s",
-                        table.rowKeySet().size(), rowIndex);
+            table.rowKeySet().size(), rowIndex);
         return table.row(rowIndex);
     }
 
@@ -285,7 +285,7 @@ abstract class AbstractMatrix<E, V, M> {
     public ImmutableMap<Integer, E> column(final Integer columnIndex) {
         requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.columnKeySet().contains(columnIndex), "expected column index in [1, %s] but actual %s",
-                        table.columnKeySet().size(), columnIndex);
+            table.columnKeySet().size(), columnIndex);
         return table.column(columnIndex);
     }
 

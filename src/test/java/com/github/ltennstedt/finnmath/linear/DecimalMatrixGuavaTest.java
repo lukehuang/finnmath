@@ -83,8 +83,8 @@ public final class DecimalMatrixGuavaTest {
             othersForAddition.add(mathRandom.nextDecimalMatrix(bound, scale, rowSize, columnSize));
             additionalOthersForAddition.add(mathRandom.nextDecimalMatrix(bound, scale, rowSize, columnSize));
             othersForMultiplication.add(mathRandom.nextDecimalMatrix(bound, scale, columnSize, columnSizeForOthers));
-            additionalOthersForMultiplication.add(mathRandom.nextDecimalMatrix(bound, scale, columnSizeForOthers,
-                            columnSizeForAdditionalOthers));
+            additionalOthersForMultiplication
+                .add(mathRandom.nextDecimalMatrix(bound, scale, columnSizeForOthers, columnSizeForAdditionalOthers));
             fourByFourMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, 4, 4));
             threeByThreeMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, 3, 3));
             twoByTwoMatrices.add(mathRandom.nextDecimalMatrix(bound, scale, 2, 2));
@@ -134,7 +134,7 @@ public final class DecimalMatrixGuavaTest {
             othersForAddition.forEach(other -> {
                 additionalOthersForAddition.forEach(additionalOthers -> {
                     assertThat(matrix.add(other).add(additionalOthers).getTable())
-                                    .isEqualTo(matrix.add(other.add(additionalOthers)).getTable());
+                        .isEqualTo(matrix.add(other.add(additionalOthers)).getTable());
                 });
             });
         });
@@ -202,7 +202,7 @@ public final class DecimalMatrixGuavaTest {
             othersForMultiplication.forEach(other -> {
                 additionalOthersForMultiplication.forEach(additionalOthers -> {
                     assertThat(matrix.multiply(other).multiply(additionalOthers).getTable())
-                                    .isEqualTo(matrix.multiply(other.multiply(additionalOthers)).getTable());
+                        .isEqualTo(matrix.multiply(other.multiply(additionalOthers)).getTable());
                 });
             });
         });
@@ -214,7 +214,7 @@ public final class DecimalMatrixGuavaTest {
             squareMatrices.forEach(other -> {
                 squareMatrices.forEach(additionalOther -> {
                     assertThat(matrix.multiply(other.add(additionalOther)).getTable())
-                                    .isEqualTo(matrix.multiply(other).add(matrix.multiply(additionalOther)).getTable());
+                        .isEqualTo(matrix.multiply(other).add(matrix.multiply(additionalOther)).getTable());
                 });
             });
         });
@@ -239,7 +239,7 @@ public final class DecimalMatrixGuavaTest {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
                     assertThat(matrix.scalarMultiply(scalar.multiply(otherScalar)).getTable())
-                                    .isEqualTo(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar).getTable());
+                        .isEqualTo(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar).getTable());
                 });
             });
         });
@@ -251,7 +251,7 @@ public final class DecimalMatrixGuavaTest {
             othersForMultiplication.forEach(other -> {
                 scalars.forEach(scalar -> {
                     assertThat(matrix.scalarMultiply(scalar).multiply(other).getTable())
-                                    .isEqualTo(matrix.multiply(other).scalarMultiply(scalar).getTable());
+                        .isEqualTo(matrix.multiply(other).scalarMultiply(scalar).getTable());
                 });
             });
         });
@@ -262,8 +262,8 @@ public final class DecimalMatrixGuavaTest {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
-                    assertThat(matrix.scalarMultiply(scalar.add(otherScalar)).getTable()).isEqualTo(
-                                    matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar)).getTable());
+                    assertThat(matrix.scalarMultiply(scalar.add(otherScalar)).getTable())
+                        .isEqualTo(matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar)).getTable());
                 });
             });
         });
@@ -274,8 +274,8 @@ public final class DecimalMatrixGuavaTest {
         matrices.forEach(matrix -> {
             othersForAddition.forEach(other -> {
                 scalars.forEach(scalar -> {
-                    assertThat(matrix.add(other).scalarMultiply(scalar).getTable()).isEqualTo(
-                                    matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)).getTable());
+                    assertThat(matrix.add(other).scalarMultiply(scalar).getTable())
+                        .isEqualTo(matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)).getTable());
                 });
             });
         });
@@ -310,8 +310,8 @@ public final class DecimalMatrixGuavaTest {
     @Test
     public void multiplyNegativeIdentityMatrixShouldBeEqualToNegated() {
         squareMatrices.forEach(matrix -> {
-            final DecimalMatrixBuilder builder = DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize())
-                            .putAll(BigDecimal.ZERO);
+            final DecimalMatrixBuilder builder =
+                DecimalMatrix.builder(matrix.rowSize(), matrix.columnSize()).putAll(BigDecimal.ZERO);
             matrix.rowIndexes().forEach(index -> {
                 builder.put(index, index, BigDecimal.ONE.negate());
             });
@@ -349,7 +349,7 @@ public final class DecimalMatrixGuavaTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 assertThat(matrix.add(other).transpose().getTable())
-                                .isEqualTo(matrix.transpose().add(other.transpose()).getTable());
+                    .isEqualTo(matrix.transpose().add(other.transpose()).getTable());
             });
         });
     }
@@ -359,7 +359,7 @@ public final class DecimalMatrixGuavaTest {
         matrices.forEach(matrix -> {
             scalars.forEach(scalar -> {
                 assertThat(matrix.scalarMultiply(scalar).transpose().getTable())
-                                .isEqualTo(matrix.transpose().scalarMultiply(scalar).getTable());
+                    .isEqualTo(matrix.transpose().scalarMultiply(scalar).getTable());
             });
         });
     }
@@ -369,7 +369,7 @@ public final class DecimalMatrixGuavaTest {
         squareMatrices.forEach(matrix -> {
             squareMatrices.forEach(other -> {
                 assertThat(matrix.multiply(other).transpose().getTable())
-                                .isEqualTo(other.transpose().multiply(matrix.transpose()).getTable());
+                    .isEqualTo(other.transpose().multiply(matrix.transpose()).getTable());
             });
         });
     }

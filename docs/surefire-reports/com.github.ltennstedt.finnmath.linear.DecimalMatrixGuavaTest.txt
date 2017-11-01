@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest
 -------------------------------------------------------------------------------
-Tests run: 27, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.701 s - in com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest
+Tests run: 27, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.715 s - in com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest

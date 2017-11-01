@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="4.337" tests="162" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="2.559" tests="162" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="file.encoding.pkg" value="sun.io"/>
@@ -16,7 +16,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/amd64"/>
-    <property name="sun.java.command" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar /home/raimund/git/finnmath/target/surefire 2017-10-31T23-57-56_034-jvmRun1 surefire1557013046127631234tmp surefire_08969395774441063601tmp"/>
+    <property name="sun.java.command" value="/home/raimund/git/finnmath/target/surefire/surefirebooter9079258990144707742.jar /home/raimund/git/finnmath/target/surefire 2017-11-01T16-21-48_111-jvmRun1 surefire988001320110709264tmp surefire_06714070986443569134tmp"/>
     <property name="surefire.test.class.path" value="/home/raimund/git/finnmath/target/test-classes:/home/raimund/git/finnmath/target/classes:/home/raimund/.m2/repository/com/google/guava/guava/23.2-jre/guava-23.2-jre.jar:/home/raimund/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar:/home/raimund/.m2/repository/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar:/home/raimund/.m2/repository/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar:/home/raimund/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar:/home/raimund/.m2/repository/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/raimund/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/raimund/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/raimund/.m2/repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar:/home/raimund/.m2/repository/org/assertj/assertj-guava/3.1.0/assertj-guava-3.1.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/raimund"/>
@@ -29,7 +29,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar:/home/raimund/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar"/>
+    <property name="surefire.real.class.path" value="/home/raimund/git/finnmath/target/surefire/surefirebooter9079258990144707742.jar:/home/raimund/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar"/>
     <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk/jre/classes"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="1.8.0_144-b01"/>
@@ -57,166 +57,166 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="multiplyZeroVectorShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.014"/>
-  <testcase name="determinatOfTransposeShouldBeEqualToDet" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.015"/>
-  <testcase name="multiplyIdentityMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.017"/>
-  <testcase name="transposeShouldBeAdditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.078"/>
-  <testcase name="frobeniusNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.051"/>
-  <testcase name="squareShouldBePredictable" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="identityShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.004"/>
-  <testcase name="addShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.028"/>
+  <testcase name="multiplyZeroVectorShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.009"/>
+  <testcase name="determinatOfTransposeShouldBeEqualToDet" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.005"/>
+  <testcase name="multiplyIdentityMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.005"/>
+  <testcase name="transposeShouldBeAdditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.028"/>
+  <testcase name="frobeniusNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.014"/>
+  <testcase name="squareShouldBePredictable" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="identityShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="addShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.041"/>
   <testcase name="skewSymmetricNotSymmetricShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="multiplyNullVectorShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="scalarMultiplyShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.05"/>
-  <testcase name="determinatOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.008"/>
-  <testcase name="subtractShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.033"/>
-  <testcase name="maxAbsRowSumNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="toStringShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.02"/>
-  <testcase name="invertibleIdShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="elementColumnIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="subtractRowSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.008"/>
-  <testcase name="columnSizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="frobeniusNormPow2OfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="frobeniusNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.098"/>
+  <testcase name="multiplyNullVectorShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="scalarMultiplyShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.036"/>
+  <testcase name="determinatOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
+  <testcase name="subtractShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.042"/>
+  <testcase name="maxAbsRowSumNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="toStringShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.006"/>
+  <testcase name="invertibleIdShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="elementColumnIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="subtractRowSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="columnSizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="frobeniusNormPow2OfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="frobeniusNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.024"/>
   <testcase name="maxNormOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="minorColumnIndexTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="maxAbsColumnSumNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.031"/>
+  <testcase name="minorColumnIndexTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="maxAbsColumnSumNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.027"/>
   <testcase name="maxAbsColumnSumNormOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="maxAbsRowSumNormShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="multiplyVectorShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.025"/>
+  <testcase name="maxAbsRowSumNormShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
+  <testcase name="multiplyVectorShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.021"/>
   <testcase name="lowerTriangularNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="minorRowIndexTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="transposeShouldBeLinear" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.035"/>
-  <testcase name="maxAbsColumnSumNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.005"/>
-  <testcase name="traceShouldBeLinear" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.03"/>
-  <testcase name="rowIndexesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.004"/>
-  <testcase name="determinatOfTwoByTwoMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="addZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="lowerTriangularNotLowerTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.009"/>
-  <testcase name="multiplyNegativeIdentityMatrixShouldBeEqualToNegated" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.012"/>
-  <testcase name="subtractZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="minorRowIndexTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="rowsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="muliplyZeroMatrixShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.01"/>
-  <testcase name="maxNormShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="scalarMultiplyNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="determinatWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.034"/>
-  <testcase name="addAndScalarMultiplyWithTwoScalarsShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.334"/>
+  <testcase name="minorRowIndexTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="transposeShouldBeLinear" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.073"/>
+  <testcase name="maxAbsColumnSumNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="traceShouldBeLinear" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.009"/>
+  <testcase name="rowIndexesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="determinatOfTwoByTwoMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="addZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
+  <testcase name="lowerTriangularNotLowerTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
+  <testcase name="multiplyNegativeIdentityMatrixShouldBeEqualToNegated" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.005"/>
+  <testcase name="subtractZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
+  <testcase name="minorRowIndexTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="rowsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="muliplyZeroMatrixShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.005"/>
+  <testcase name="maxNormShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="scalarMultiplyNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="determinatWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.025"/>
+  <testcase name="addAndScalarMultiplyWithTwoScalarsShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.444"/>
   <testcase name="lowerTriangularShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="elementShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.013"/>
+  <testcase name="elementShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
   <testcase name="squareOfSquareMatricesShouldBeTrue" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="minorColumnIndexTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="determinatOfIdentityMatrixShouldBeEqualToOne" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="frobeniusNormWithPrecisionAndScaleTooLowAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="multiplyNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.008"/>
+  <testcase name="minorColumnIndexTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="determinatOfIdentityMatrixShouldBeEqualToOne" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="frobeniusNormWithPrecisionAndScaleTooLowAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="multiplyNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="diagonalNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="invertibleMatrixWithDetEqualToMinusOneShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="scalarMultiplyWithMinusOneShouldBeEqualToNegated" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.008"/>
-  <testcase name="frobeniusNormWithPrecisionNullAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="symmetricNotSymmetricShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="traceShouldBeAdditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.018"/>
-  <testcase name="elementRowIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="rowRowIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
-  <testcase name="maxNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.022"/>
-  <testcase name="transposeTwiceIsEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.007"/>
-  <testcase name="builderColumnSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="equalsSelfShouldReturnTrue" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="invertibleMatrixWithDetEqualToMinusOneShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.005"/>
+  <testcase name="scalarMultiplyWithMinusOneShouldBeEqualToNegated" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="frobeniusNormWithPrecisionNullAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="symmetricNotSymmetricShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="traceShouldBeAdditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.009"/>
+  <testcase name="elementRowIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="rowRowIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="maxNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.008"/>
+  <testcase name="transposeTwiceIsEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="builderColumnSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="equalsSelfShouldReturnTrue" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="maxAbsRowSumNormOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
   <testcase name="invertibleZeroMatrixShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="addShouldBeCommutative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.029"/>
-  <testcase name="maxAbsRowSumNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.043"/>
-  <testcase name="traceShouldBeEqualToTheTraceOfTheTranspose" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="multiplyColumnSizeNotEqualToFactorRowSizeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.01"/>
+  <testcase name="addShouldBeCommutative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.014"/>
+  <testcase name="maxAbsRowSumNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.01"/>
+  <testcase name="traceShouldBeEqualToTheTraceOfTheTranspose" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="multiplyColumnSizeNotEqualToFactorRowSizeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="identityNotDiagonalhouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
   <testcase name="negateZeroMatrixShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="diagonalShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="multiplyShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.727"/>
+  <testcase name="diagonalShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="multiplyShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.499"/>
   <testcase name="invertibleNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="transposeShouldBeMultiplicativeWithInversedOrder" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.048"/>
-  <testcase name="addAndScalarMultiplyWithTwoMatricesShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.246"/>
-  <testcase name="columnShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.009"/>
-  <testcase name="elementRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="scalarMultiplyWithTwoMatricesShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.265"/>
+  <testcase name="transposeShouldBeMultiplicativeWithInversedOrder" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.013"/>
+  <testcase name="addAndScalarMultiplyWithTwoMatricesShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.223"/>
+  <testcase name="columnShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
+  <testcase name="elementRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="scalarMultiplyWithTwoMatricesShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.168"/>
   <testcase name="scalarMultiplyWithZeroShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="multiplyVectorColumnSizeNotEqualToVectorSizeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="equalsEqualShouldReturnTrue" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.005"/>
-  <testcase name="scalarMultiplyAndMultiplyVectorShouldBeCommutative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.167"/>
-  <testcase name="maxNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="squareOfNonSquareMatrixShouldBeFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="frobeniusNormWithPrecisionNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="equalsEqualShouldReturnTrue" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.004"/>
+  <testcase name="scalarMultiplyAndMultiplyVectorShouldBeCommutative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.081"/>
+  <testcase name="maxNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="squareOfNonSquareMatrixShouldBeFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="frobeniusNormWithPrecisionNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="frobeniusNormWithPrecisionTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="addColumnSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="minorShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.017"/>
+  <testcase name="addColumnSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="minorShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.006"/>
   <testcase name="hashCodeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="maxAbsColumnSumNormShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.01"/>
-  <testcase name="addShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.255"/>
-  <testcase name="builderRowSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="maxAbsColumnSumNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.015"/>
-  <testcase name="subtractColumnSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.013"/>
-  <testcase name="equalsNotEqualShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="addRowSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="rowSizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="negateTwiceShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.014"/>
-  <testcase name="minorColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="traceShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="maxAbsColumnSumNormShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="addShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.177"/>
+  <testcase name="builderRowSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="maxAbsColumnSumNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.006"/>
+  <testcase name="subtractColumnSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="equalsNotEqualShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="addRowSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="rowSizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="negateTwiceShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="minorColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="traceShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="symmetricShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
   <testcase name="identityNotIdentityMatrixShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="frobeniusNormWithPrecisionAndScaleAndRoundingModeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="maxNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.016"/>
+  <testcase name="frobeniusNormWithPrecisionAndScaleAndRoundingModeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="maxNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.006"/>
   <testcase name="skewSymmetricNotquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
   <testcase name="determinatOfThreeByThreeMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="addAndMultiplyShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.633"/>
-  <testcase name="frobeniusNormPow2ShouldBeHomogeneous" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.018"/>
-  <testcase name="cellsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="frobeniusNormWithPrecisionTooLowAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.006"/>
+  <testcase name="addAndMultiplyShouldBeDistributive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.122"/>
+  <testcase name="frobeniusNormPow2ShouldBeHomogeneous" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.006"/>
+  <testcase name="cellsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="frobeniusNormWithPrecisionTooLowAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
   <testcase name="symmetricNotquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="elementColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="rowShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.005"/>
+  <testcase name="elementColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="rowShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="frobeniusNormPow2ShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="traceNotSquareShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="traceNotSquareShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
   <testcase name="addNegatedShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.004"/>
-  <testcase name="columnColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="frobeniusNormWithPrecisionShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.004"/>
-  <testcase name="maxAbsColumnSumNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.049"/>
-  <testcase name="scalarMultiplyWithTwoScalarsShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.169"/>
-  <testcase name="elementsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="columnColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="frobeniusNormWithPrecisionShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="maxAbsColumnSumNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.006"/>
+  <testcase name="scalarMultiplyWithTwoScalarsShouldBeAssociative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.118"/>
+  <testcase name="elementsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="addNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="determinatOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="traceShouldBeIndependentOfTheOrderOfTheFactors" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.027"/>
-  <testcase name="multiplyShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.06"/>
-  <testcase name="minorRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="skewSymmetricShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
-  <testcase name="maxAbsRowSumNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.014"/>
+  <testcase name="determinatOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="traceShouldBeIndependentOfTheOrderOfTheFactors" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.01"/>
+  <testcase name="multiplyShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.018"/>
+  <testcase name="minorRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="skewSymmetricShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="maxAbsRowSumNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.004"/>
   <testcase name="rowRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="frobeniusNormWithRoundingModeAndScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="equalsNotSimpleComplexNumberShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="diagonalNotNotDiagonalShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.004"/>
-  <testcase name="triangularNotUpperTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.007"/>
-  <testcase name="frobeniusNormWithPrecisionTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="frobeniusNormWithRoundingModeAndScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="equalsNotSimpleComplexNumberShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="diagonalNotNotDiagonalShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="triangularNotUpperTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="frobeniusNormWithPrecisionTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="triangularShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="transposeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.003"/>
-  <testcase name="frobeniusNormWithPrecisionTooHighAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="determinatNotSquareShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="frobeniusNormWithScaleAndRoundingModeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.005"/>
-  <testcase name="determinatOfOneByOneMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="upperTriangularShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.008"/>
+  <testcase name="transposeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.004"/>
+  <testcase name="frobeniusNormWithPrecisionTooHighAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="determinatNotSquareShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="frobeniusNormWithScaleAndRoundingModeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="determinatOfOneByOneMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
+  <testcase name="upperTriangularShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="columnIndexesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="frobeniusNormShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
   <testcase name="traceOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
   <testcase name="columnColumnIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="columnsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="columnsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
   <testcase name="subtractNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="subtractSelfShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
   <testcase name="maxAbsRowSumNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.006"/>
   <testcase name="upperTriangularNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
-  <testcase name="negateShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="negateShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
   <testcase name="identityNotDiagonalShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
   <testcase name="sizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
-  <testcase name="upperTriangularNotUpperTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.009"/>
-  <testcase name="triangularNotLowerTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.007"/>
-  <testcase name="determinantOfFourByFourMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.019"/>
-  <testcase name="frobeniusNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.006"/>
-  <testcase name="triangularNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.001"/>
-  <testcase name="determinatShouldBeMultiplicative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.049"/>
+  <testcase name="upperTriangularNotUpperTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="triangularNotLowerTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="determinantOfFourByFourMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.004"/>
+  <testcase name="frobeniusNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
+  <testcase name="triangularNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0"/>
+  <testcase name="determinatShouldBeMultiplicative" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.014"/>
   <testcase name="scalarMultiplyWithOneShouldBeEqualToSelf" classname="com.github.ltennstedt.finnmath.linear.BigIntMatrixTest" time="0.002"/>
 </testsuite>

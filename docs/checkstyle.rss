@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 16,
+      <title>File: 31,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -44,20 +44,6 @@ under the License.
             </tr>
           </thead>
           <tbody>
-                          <tr>
-                <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.RealComplexNumber.java">com/github/ltennstedt/finnmath/number/RealComplexNumber.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
                           <tr>
                 <td>
                   <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.DecimalVector.java">com/github/ltennstedt/finnmath/linear/DecimalVector.java</a>
@@ -88,6 +74,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.FractionTest.java">com/github/ltennstedt/finnmath/number/FractionTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.AbstractVector.java">com/github/ltennstedt/finnmath/linear/AbstractVector.java</a>
                 </td>
                 <td>
@@ -102,7 +102,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.Fraction.java">com/github/ltennstedt/finnmath/number/Fraction.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.SimpleComplexNumber.java">com/github/ltennstedt/finnmath/number/SimpleComplexNumber.java</a>
                 </td>
                 <td>
                   0
@@ -116,7 +116,21 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.SimpleComplexNumber.java">com/github/ltennstedt/finnmath/number/SimpleComplexNumber.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.BigIntVectorTest.java">com/github/ltennstedt/finnmath/linear/BigIntVectorTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.BigIntMatrixTest.java">com/github/ltennstedt/finnmath/linear/BigIntMatrixTest.java</a>
                 </td>
                 <td>
                   0
@@ -158,7 +172,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.AbstractMatrix.java">com/github/ltennstedt/finnmath/linear/AbstractMatrix.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.BigIntVectorBuilderTest.java">com/github/ltennstedt/finnmath/linear/BigIntVectorBuilderTest.java</a>
                 </td>
                 <td>
                   0
@@ -172,7 +186,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.BigIntMatrix.java">com/github/ltennstedt/finnmath/linear/BigIntMatrix.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.util.MathRandomTest.java">com/github/ltennstedt/finnmath/util/MathRandomTest.java</a>
                 </td>
                 <td>
                   0
@@ -201,6 +215,216 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.util.MathRandom.java">com/github/ltennstedt/finnmath/util/MathRandom.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.ScientificNotationTest.java">com/github/ltennstedt/finnmath/number/ScientificNotationTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.DecimalVectorBuilderTest.java">com/github/ltennstedt/finnmath/linear/DecimalVectorBuilderTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.DecimalMatrixTest.java">com/github/ltennstedt/finnmath/linear/DecimalMatrixTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.DecimalMatrixGuavaTest.java">com/github/ltennstedt/finnmath/linear/DecimalMatrixGuavaTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.DecimalVectorTest.java">com/github/ltennstedt/finnmath/linear/DecimalVectorTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.ScientificNotation.java">com/github/ltennstedt/finnmath/number/ScientificNotation.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.RealComplexNumber.java">com/github/ltennstedt/finnmath/number/RealComplexNumber.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.Fraction.java">com/github/ltennstedt/finnmath/number/Fraction.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.SimpleComplexNumberTest.java">com/github/ltennstedt/finnmath/number/SimpleComplexNumberTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.RealComplexNumberTest.java">com/github/ltennstedt/finnmath/number/RealComplexNumberTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.DecimalMatrixBuilderTest.java">com/github/ltennstedt/finnmath/linear/DecimalMatrixBuilderTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.AbstractMatrix.java">com/github/ltennstedt/finnmath/linear/AbstractMatrix.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.BigIntMatrix.java">com/github/ltennstedt/finnmath/linear/BigIntMatrix.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.util.SquareRootCalculatorTest.java">com/github/ltennstedt/finnmath/util/SquareRootCalculatorTest.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.linear.BigIntMatrixBuilderTest.java">com/github/ltennstedt/finnmath/linear/BigIntMatrixBuilderTest.java</a>
                 </td>
                 <td>
                   0
@@ -243,20 +467,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.util.SquareRootCalculator.java">com/github/ltennstedt/finnmath/util/SquareRootCalculator.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.number.ScientificNotation.java">com/github/ltennstedt/finnmath/number/ScientificNotation.java</a>
                 </td>
                 <td>
                   0

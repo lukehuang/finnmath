@@ -154,8 +154,8 @@ public final class Fraction extends Number implements MathNumber&lt;Fraction, Fr
     @Override
     public Fraction add(final Fraction summand) {
 <span class="fc" id="L156">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc" id="L157">        final BigInteger newNumerator = summand.getDenominator().multiply(numerator)</span>
-<span class="fc" id="L158">                        .add(denominator.multiply(summand.getNumerator()));</span>
+<span class="fc" id="L157">        final BigInteger newNumerator =</span>
+<span class="fc" id="L158">            summand.getDenominator().multiply(numerator).add(denominator.multiply(summand.getNumerator()));</span>
 <span class="fc" id="L159">        final BigInteger newDenominator = denominator.multiply(summand.getDenominator());</span>
 <span class="fc" id="L160">        return new Fraction(newNumerator, newDenominator);</span>
     }
@@ -178,8 +178,8 @@ public final class Fraction extends Number implements MathNumber&lt;Fraction, Fr
     @Override
     public Fraction subtract(final Fraction subtrahend) {
 <span class="fc" id="L180">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc" id="L181">        final BigInteger newNumerator = subtrahend.getDenominator().multiply(numerator)</span>
-<span class="fc" id="L182">                        .subtract(denominator.multiply(subtrahend.getNumerator()));</span>
+<span class="fc" id="L181">        final BigInteger newNumerator =</span>
+<span class="fc" id="L182">            subtrahend.getDenominator().multiply(numerator).subtract(denominator.multiply(subtrahend.getNumerator()));</span>
 <span class="fc" id="L183">        final BigInteger newDenominator = denominator.multiply(subtrahend.getDenominator());</span>
 <span class="fc" id="L184">        return new Fraction(newNumerator, newDenominator);</span>
     }

@@ -44,7 +44,7 @@ public final class DecimalVectorBuilderTest {
         assertThatThrownBy(() -> {
             DecimalVector.builder(4).put(0, BigDecimal.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual %s", 4,
-                        0);
+            0);
     }
 
     @Test
@@ -52,7 +52,7 @@ public final class DecimalVectorBuilderTest {
         assertThatThrownBy(() -> {
             DecimalVector.builder(4).put(5, BigDecimal.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual %s", 4,
-                        5);
+            5);
     }
 
     @Test
@@ -73,6 +73,6 @@ public final class DecimalVectorBuilderTest {
     public void toStringShouldSucceed() {
         final DecimalVectorBuilder builder = DecimalVector.builder(4).putAll(BigDecimal.ZERO);
         assertThat(builder.toString()).isEqualTo(MoreObjects.toStringHelper(builder).add("map", builder.getMap())
-                        .add("size", DecimalVector.builder(4).getSize()).toString());
+            .add("size", DecimalVector.builder(4).getSize()).toString());
     }
 }

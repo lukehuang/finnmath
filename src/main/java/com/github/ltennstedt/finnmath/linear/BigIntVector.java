@@ -62,7 +62,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     public BigIntVector add(final BigIntVector summand) {
         requireNonNull(summand, "summand");
         checkArgument(map.size() == summand.size(), "equal sizes expected but actual %s != %s", map.size(),
-                        summand.size());
+            summand.size());
         final BigIntVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> {
             builder.put(element.add(summand.element(index)));
@@ -87,7 +87,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     public BigIntVector subtract(final BigIntVector subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         checkArgument(map.size() == subtrahend.size(), "equal sizes expected but actual %s != %s", map.size(),
-                        subtrahend.size());
+            subtrahend.size());
         final BigIntVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> {
             builder.put(element.subtract(subtrahend.element(index)));
@@ -213,7 +213,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     public BigDecimal euclideanNorm(final BigDecimal precision) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());
     }
 
@@ -265,7 +265,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());
     }
@@ -368,7 +368,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));
     }
 
@@ -434,12 +434,12 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntVector other, final BigDecimal precision, final int scale,
-                    final RoundingMode roundingMode) {
+        final RoundingMode roundingMode) {
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));
     }
@@ -533,7 +533,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      */
     @Beta
     public static final class BigIntVectorBuilder
-                    extends AbstractVectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
+        extends AbstractVectorBuilder<BigInteger, BigIntVector, BigIntVectorBuilder> {
         private BigIntVectorBuilder(final Integer size) {
             super(size);
         }

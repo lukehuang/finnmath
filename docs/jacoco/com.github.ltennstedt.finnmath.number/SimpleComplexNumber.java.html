@@ -36,7 +36,7 @@ import java.util.Objects;
  */
 @Beta
 public final class SimpleComplexNumber
-                extends AbstractComplexNumber&lt;BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix&gt; {
+    extends AbstractComplexNumber&lt;BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix&gt; {
     /**
      * {@code 0} as {@link SimpleComplexNumber}
      */
@@ -102,7 +102,7 @@ public final class SimpleComplexNumber
     public SimpleComplexNumber subtract(final SimpleComplexNumber subtrahend) {
 <span class="fc" id="L103">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
 <span class="fc" id="L104">        return new SimpleComplexNumber(real.subtract(subtrahend.getReal()),</span>
-<span class="fc" id="L105">                        imaginary.subtract(subtrahend.getImaginary()));</span>
+<span class="fc" id="L105">            imaginary.subtract(subtrahend.getImaginary()));</span>
     }
 
     /**
@@ -262,7 +262,7 @@ public final class SimpleComplexNumber
     @Override
     public BigIntMatrix matrix() {
 <span class="fc" id="L264">        return BigIntMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)</span>
-<span class="fc" id="L265">                        .put(2, 2, real).build();</span>
+<span class="fc" id="L265">            .put(2, 2, real).build();</span>
     }
 
     @Override

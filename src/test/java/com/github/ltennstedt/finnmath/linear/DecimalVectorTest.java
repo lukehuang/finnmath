@@ -46,8 +46,8 @@ public final class DecimalVectorTest {
     private static final BigDecimal precision = BigDecimal.valueOf(0.00001);
     private static final RoundingMode roundingMode = RoundingMode.HALF_DOWN;
     private static final DecimalVector zeroVector = DecimalVector.builder(size).putAll(BigDecimal.ZERO).build();
-    private static final DecimalVector vectorWithAnotherSize = DecimalVector.builder(differentSize)
-                    .putAll(BigDecimal.ZERO).build();
+    private static final DecimalVector vectorWithAnotherSize =
+        DecimalVector.builder(differentSize).putAll(BigDecimal.ZERO).build();
     private static final List<DecimalVector> vectors = new ArrayList<>(howMany);
     private static final List<DecimalVector> others = new ArrayList<>(howMany);
     private static final List<DecimalVector> additionalOthers = new ArrayList<>(howMany);
@@ -79,7 +79,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.add(vectorWithAnotherSize);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -110,8 +110,8 @@ public final class DecimalVectorTest {
             others.forEach(other -> {
                 additionalOthers.forEach(additionalOther -> {
                     assertThat(vector.add(other).add(additionalOther).getMap())
-                                    .usingComparatorForFields(BigDecimalComparator.BIG_DECIMAL_COMPARATOR)
-                                    .isEqualToComparingFieldByField(vector.add(other.add(additionalOther)).getMap());
+                        .usingComparatorForFields(BigDecimalComparator.BIG_DECIMAL_COMPARATOR)
+                        .isEqualToComparingFieldByField(vector.add(other.add(additionalOther)).getMap());
                 });
             });
         });
@@ -136,7 +136,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.subtract(vectorWithAnotherSize);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -186,7 +186,7 @@ public final class DecimalVectorTest {
                     builder.put(scalar.multiply(element.getValue()));
                 });
                 assertThat(vector.scalarMultiply(scalar).getMap())
-                                .isEqualToComparingFieldByField(builder.build().getMap());
+                    .isEqualToComparingFieldByField(builder.build().getMap());
             });
         });
     }
@@ -197,9 +197,9 @@ public final class DecimalVectorTest {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
                     assertThat(vector.scalarMultiply(scalar.multiply(otherScalar)).getMap())
-                                    .usingComparatorForFields(BigDecimalComparator.BIG_DECIMAL_COMPARATOR)
-                                    .isEqualToComparingFieldByField(
-                                                    vector.scalarMultiply(otherScalar).scalarMultiply(scalar).getMap());
+                        .usingComparatorForFields(BigDecimalComparator.BIG_DECIMAL_COMPARATOR)
+                        .isEqualToComparingFieldByField(
+                            vector.scalarMultiply(otherScalar).scalarMultiply(scalar).getMap());
                 });
             });
         });
@@ -211,9 +211,9 @@ public final class DecimalVectorTest {
             scalars.forEach(scalar -> {
                 otherScalars.forEach(otherScalar -> {
                     assertThat(vector.scalarMultiply(scalar.add(otherScalar)).getMap())
-                                    .usingComparatorForFields(BigDecimalComparator.BIG_DECIMAL_COMPARATOR)
-                                    .isEqualToComparingFieldByField(vector.scalarMultiply(scalar)
-                                                    .add(vector.scalarMultiply(otherScalar)).getMap());
+                        .usingComparatorForFields(BigDecimalComparator.BIG_DECIMAL_COMPARATOR)
+                        .isEqualToComparingFieldByField(
+                            vector.scalarMultiply(scalar).add(vector.scalarMultiply(otherScalar)).getMap());
                 });
             });
         });
@@ -225,7 +225,7 @@ public final class DecimalVectorTest {
             others.forEach(other -> {
                 scalars.forEach(scalar -> {
                     assertThat(vector.add(other).scalarMultiply(scalar).getMap()).isEqualToComparingFieldByField(
-                                    vector.scalarMultiply(scalar).add(other.scalarMultiply(scalar)).getMap());
+                        vector.scalarMultiply(scalar).add(other.scalarMultiply(scalar)).getMap());
                 });
             });
         });
@@ -253,7 +253,7 @@ public final class DecimalVectorTest {
     public void negateShouldSucceed() {
         vectors.forEach(vector -> {
             assertThat(vector.negate().getMap())
-                            .isEqualToComparingFieldByField(vector.scalarMultiply(BigDecimal.ONE.negate()).getMap());
+                .isEqualToComparingFieldByField(vector.scalarMultiply(BigDecimal.ONE.negate()).getMap());
         });
     }
 
@@ -284,7 +284,7 @@ public final class DecimalVectorTest {
     public void scalarMultiplyWithMinusOneShouldBeEqualToNegated() {
         vectors.forEach(vector -> {
             assertThat(vector.scalarMultiply(BigDecimal.ONE.negate()).getMap())
-                            .isEqualToComparingFieldByField(vector.negate().getMap());
+                .isEqualToComparingFieldByField(vector.negate().getMap());
         });
     }
 
@@ -316,7 +316,7 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
                 assertThat(vector.scalarMultiply(scalar).taxicabNorm())
-                                .isEqualTo(scalar.abs().multiply(vector.taxicabNorm()));
+                    .isEqualTo(scalar.abs().multiply(vector.taxicabNorm()));
             });
         });
     }
@@ -326,7 +326,7 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 assertThat(vector.add(other).taxicabNorm())
-                                .isLessThanOrEqualTo(vector.taxicabNorm().add(other.taxicabNorm()));
+                    .isLessThanOrEqualTo(vector.taxicabNorm().add(other.taxicabNorm()));
             });
         });
     }
@@ -343,7 +343,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.taxicabDistance(DecimalVector.builder(differentSize).putAll(BigDecimal.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -385,8 +385,8 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 additionalOthers.forEach(additionalOther -> {
-                    assertThat(vector.taxicabDistance(additionalOther)).isLessThanOrEqualTo(
-                                    vector.taxicabDistance(other).add(other.taxicabDistance(additionalOther)));
+                    assertThat(vector.taxicabDistance(additionalOther))
+                        .isLessThanOrEqualTo(vector.taxicabDistance(other).add(other.taxicabDistance(additionalOther)));
                 });
             });
         });
@@ -409,7 +409,7 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
                 assertThat(vector.scalarMultiply(scalar).euclideanNormPow2())
-                                .isEqualByComparingTo(scalar.pow(2).multiply(vector.euclideanNormPow2()));
+                    .isEqualByComparingTo(scalar.pow(2).multiply(vector.euclideanNormPow2()));
             });
         });
     }
@@ -433,7 +433,7 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 assertThat(vector.add(other).euclideanNorm())
-                                .isLessThanOrEqualTo(vector.euclideanNorm().add(other.euclideanNorm()).add(tolerance));
+                    .isLessThanOrEqualTo(vector.euclideanNorm().add(other.euclideanNorm()).add(tolerance));
             });
         });
     }
@@ -450,7 +450,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.euclideanNorm(BigDecimal.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
-                        BigDecimal.ZERO);
+            BigDecimal.ZERO);
     }
 
     @Test
@@ -458,14 +458,14 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.euclideanNorm(BigDecimal.ONE);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
-                        BigDecimal.ONE);
+            BigDecimal.ONE);
     }
 
     @Test
     public void euclideanNormWithPrecisionShouldSucceed() {
         vectors.forEach(vector -> {
             assertThat(vector.euclideanNorm(precision))
-                            .isEqualTo(new SquareRootCalculator(precision).sqrt(vector.euclideanNormPow2()));
+                .isEqualTo(new SquareRootCalculator(precision).sqrt(vector.euclideanNormPow2()));
         });
     }
 
@@ -480,7 +480,7 @@ public final class DecimalVectorTest {
     public void euclideanNormWithScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
             assertThat(vector.euclideanNorm(scale, roundingMode))
-                            .isEqualTo(new SquareRootCalculator(scale, roundingMode).sqrt(vector.euclideanNormPow2()));
+                .isEqualTo(new SquareRootCalculator(scale, roundingMode).sqrt(vector.euclideanNormPow2()));
         });
     }
 
@@ -496,7 +496,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.euclideanNorm(BigDecimal.ZERO, scale, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
-                        BigDecimal.ZERO);
+            BigDecimal.ZERO);
     }
 
     @Test
@@ -504,7 +504,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.euclideanNorm(BigDecimal.ONE, scale, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision in (0, 1) but actual %s",
-                        BigDecimal.ONE);
+            BigDecimal.ONE);
     }
 
     @Test
@@ -517,8 +517,8 @@ public final class DecimalVectorTest {
     @Test
     public void euclideanNormWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.euclideanNorm(precision, scale, roundingMode)).isEqualTo(
-                            new SquareRootCalculator(precision, scale, roundingMode).sqrt(vector.euclideanNormPow2()));
+            assertThat(vector.euclideanNorm(precision, scale, roundingMode))
+                .isEqualTo(new SquareRootCalculator(precision, scale, roundingMode).sqrt(vector.euclideanNormPow2()));
         });
     }
 
@@ -534,7 +534,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.dotProduct(DecimalVector.builder(differentSize).putAll(BigDecimal.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -562,7 +562,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistancePow2(DecimalVector.builder(differentSize).putAll(BigDecimal.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -590,7 +590,7 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 assertThat(vector.euclideanDistancePow2(other).abs())
-                                .isEqualTo(other.euclideanDistancePow2(vector).abs());
+                    .isEqualTo(other.euclideanDistancePow2(vector).abs());
             });
         });
     }
@@ -607,7 +607,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(DecimalVector.builder(differentSize).putAll(BigDecimal.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -615,7 +615,7 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 assertThat(vector.euclideanDistance(other))
-                                .isEqualTo(new SquareRootCalculator().sqrt(vector.euclideanDistancePow2(other)));
+                    .isEqualTo(new SquareRootCalculator().sqrt(vector.euclideanDistancePow2(other)));
             });
         });
     }
@@ -634,9 +634,8 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 additionalOthers.forEach(additionalOther -> {
-                    assertThat(vector.euclideanDistance(additionalOther))
-                                    .isLessThanOrEqualTo(vector.euclideanDistance(other)
-                                                    .add(other.euclideanDistance(additionalOther)).add(tolerance));
+                    assertThat(vector.euclideanDistance(additionalOther)).isLessThanOrEqualTo(
+                        vector.euclideanDistance(other).add(other.euclideanDistance(additionalOther)).add(tolerance));
                 });
             });
         });
@@ -660,9 +659,9 @@ public final class DecimalVectorTest {
     public void euclideanDistanceSizesNotEqualWithPrecisionShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(DecimalVector.builder(differentSize).putAll(BigDecimal.ZERO).build(),
-                            precision);
+                precision);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -683,8 +682,8 @@ public final class DecimalVectorTest {
     public void euclideanDistanceWithPrecisionShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.euclideanDistance(other, precision)).isEqualTo(
-                                new SquareRootCalculator(precision).sqrt(vector.euclideanDistancePow2(other)));
+                assertThat(vector.euclideanDistance(other, precision))
+                    .isEqualTo(new SquareRootCalculator(precision).sqrt(vector.euclideanDistancePow2(other)));
             });
         });
     }
@@ -700,9 +699,9 @@ public final class DecimalVectorTest {
     public void euclideanDistanceSizesNotEqualWithScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(DecimalVector.builder(differentSize).putAll(BigDecimal.ZERO).build(), scale,
-                            roundingMode);
+                roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -717,8 +716,7 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 assertThat(vector.euclideanDistance(other, scale, roundingMode))
-                                .isEqualTo(new SquareRootCalculator(scale, roundingMode)
-                                                .sqrt(vector.euclideanDistancePow2(other)));
+                    .isEqualTo(new SquareRootCalculator(scale, roundingMode).sqrt(vector.euclideanDistancePow2(other)));
             });
         });
     }
@@ -741,9 +739,9 @@ public final class DecimalVectorTest {
     public void euclideanDistanceSizesNotEqualWithPrecisionAndScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
             zeroVector.euclideanDistance(DecimalVector.builder(differentSize).putAll(BigDecimal.ZERO).build(),
-                            precision, scale, roundingMode);
+                precision, scale, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -771,9 +769,8 @@ public final class DecimalVectorTest {
     public void euclideanDistanceWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.euclideanDistance(other, precision, scale, roundingMode))
-                                .isEqualTo(new SquareRootCalculator(precision, scale, roundingMode)
-                                                .sqrt(vector.euclideanDistancePow2(other)));
+                assertThat(vector.euclideanDistance(other, precision, scale, roundingMode)).isEqualTo(
+                    new SquareRootCalculator(precision, scale, roundingMode).sqrt(vector.euclideanDistancePow2(other)));
             });
         });
     }
@@ -806,7 +803,7 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
                 assertThat(vector.scalarMultiply(scalar).maxNorm())
-                                .isEqualByComparingTo(scalar.abs().multiply(vector.maxNorm()));
+                    .isEqualByComparingTo(scalar.abs().multiply(vector.maxNorm()));
             });
         });
     }
@@ -832,7 +829,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.maxDistance(DecimalVector.builder(differentSize).putAll(BigDecimal.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
-                        size, differentSize);
+            size, differentSize);
     }
 
     @Test
@@ -874,8 +871,8 @@ public final class DecimalVectorTest {
         vectors.forEach(vector -> {
             others.forEach(other -> {
                 additionalOthers.forEach(additionalOther -> {
-                    assertThat(vector.maxDistance(additionalOther)).isLessThanOrEqualTo(
-                                    vector.maxDistance(other).add(other.maxDistance(additionalOther)));
+                    assertThat(vector.maxDistance(additionalOther))
+                        .isLessThanOrEqualTo(vector.maxDistance(other).add(other.maxDistance(additionalOther)));
                 });
             });
         });
@@ -893,7 +890,7 @@ public final class DecimalVectorTest {
         assertThatThrownBy(() -> {
             zeroVector.element(0);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual 0",
-                        zeroVector.size());
+            zeroVector.size());
     }
 
     @Test
@@ -978,7 +975,7 @@ public final class DecimalVectorTest {
     public void toStringShouldSucceed() {
         vectors.forEach(vector -> {
             assertThat(vector.toString())
-                            .isEqualTo(MoreObjects.toStringHelper(vector).add("map", vector.getMap()).toString());
+                .isEqualTo(MoreObjects.toStringHelper(vector).add("map", vector.getMap()).toString());
         });
     }
 }

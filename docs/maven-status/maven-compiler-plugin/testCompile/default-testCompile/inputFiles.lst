@@ -1,6 +1,5 @@
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/BigIntVectorBuilderTest.java
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/DecimalMatrixGuavaTest.java
-/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/assertion/DecimalVectorAssert.java
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/DecimalVectorBuilderTest.java
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/number/ScientificNotationTest.java
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/util/MathRandomTest.java
@@ -8,7 +7,6 @@
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/DecimalVectorTest.java
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/DecimalMatrixBuilderTest.java
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/number/SimpleComplexNumberTest.java
-/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/assertion/DecimalMatrixAssert.java
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/number/RealComplexNumberTest.java
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/BigIntVectorTest.java
 /home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/number/FractionTest.java

@@ -989,8 +989,8 @@ public final class MathRandom {
 <span class="fc bfc" id="L989" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L990" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc" id="L991">        final BigDecimal nonZeroPart = nextInvertibleDecimal(bound, scale);</span>
-<span class="fc bfc" id="L992" title="All 2 branches covered.">        final BigDecimal possibleZeroPart = random.nextBoolean() ? nextInvertibleDecimal(bound, scale)</span>
-<span class="fc" id="L993">                        : nextDecimal(bound, scale);</span>
+        final BigDecimal possibleZeroPart =
+<span class="fc bfc" id="L993" title="All 2 branches covered.">            random.nextBoolean() ? nextInvertibleDecimal(bound, scale) : nextDecimal(bound, scale);</span>
 <span class="fc bfc" id="L994" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
 <span class="fc" id="L995">            return new RealComplexNumber(possibleZeroPart, nonZeroPart);</span>
         }
@@ -1049,7 +1049,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;RealComplexNumber&gt; nextInvertibleRealComplexNumbers(final long bound, final int scale,
-                    final int howMany) {
+        final int howMany) {
 <span class="fc bfc" id="L1053" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L1054" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L1055" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
@@ -1371,7 +1371,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigIntMatrix&gt; nextBigIntMatrices(final long bound, final int rowSize, final int columnSize,
-                    final int howMany) {
+        final int howMany) {
 <span class="fc bfc" id="L1375" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L1376" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
 <span class="fc bfc" id="L1377" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
@@ -1646,7 +1646,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;DecimalVector&gt; nextDecimalVectors(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
 <span class="fc bfc" id="L1650" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L1651" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L1652" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
@@ -1948,7 +1948,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;DecimalMatrix&gt; nextDecimalMatrices(final long bound, final int scale, final int rowSize,
-                    final int columnSize, final int howMany) {
+        final int columnSize, final int howMany) {
 <span class="fc bfc" id="L1952" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L1953" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L1954" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
@@ -1989,7 +1989,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;DecimalMatrix&gt; nextUpperTriangularDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
 <span class="fc bfc" id="L1993" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L1994" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L1995" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
@@ -2029,7 +2029,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;DecimalMatrix&gt; nextLowerTriangularDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
 <span class="fc bfc" id="L2033" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L2034" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L2035" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
@@ -2069,7 +2069,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;DecimalMatrix&gt; nextTriangularDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
 <span class="fc bfc" id="L2073" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L2074" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L2075" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
@@ -2109,7 +2109,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;DecimalMatrix&gt; nextDiagonalDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
 <span class="fc bfc" id="L2113" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L2114" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L2115" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
@@ -2149,7 +2149,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;DecimalMatrix&gt; nextSymmetricDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
 <span class="fc bfc" id="L2153" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L2154" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L2155" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
@@ -2189,7 +2189,7 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;DecimalMatrix&gt; nextSkewSymmetricDecimalMatrices(final long bound, final int scale, final int size,
-                    final int howMany) {
+        final int howMany) {
 <span class="fc bfc" id="L2193" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
 <span class="fc bfc" id="L2194" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
 <span class="fc bfc" id="L2195" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>

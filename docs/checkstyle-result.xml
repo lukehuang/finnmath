@@ -32,4 +32,34 @@
 </file>
 <file name="/home/raimund/git/finnmath/src/main/java/com/github/ltennstedt/finnmath/linear/AbstractVectorBuilder.java">
 </file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/number/FractionTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/number/ScientificNotationTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/number/RealComplexNumberTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/number/SimpleComplexNumberTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/util/MathRandomTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/util/SquareRootCalculatorTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/DecimalVectorBuilderTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/BigIntMatrixTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/BigIntMatrixBuilderTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/BigIntVectorTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/BigIntVectorBuilderTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/DecimalVectorTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/DecimalMatrixBuilderTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/DecimalMatrixTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/src/test/java/com/github/ltennstedt/finnmath/linear/DecimalMatrixGuavaTest.java">
+</file>
 </checkstyle>

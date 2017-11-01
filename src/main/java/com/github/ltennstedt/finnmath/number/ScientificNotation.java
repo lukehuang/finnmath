@@ -76,7 +76,7 @@ public final class ScientificNotation {
         }
         if (exponent < 0) {
             return new StringBuilder(coefficient.toPlainString()).append(" * 10**(").append(exponent).append(")")
-                            .toString();
+                .toString();
         }
         if (exponent == 0) {
             return coefficient.toPlainString();

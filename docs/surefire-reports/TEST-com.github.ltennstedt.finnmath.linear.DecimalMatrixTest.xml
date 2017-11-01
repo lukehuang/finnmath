@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="2.06" tests="130" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="1.244" tests="130" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="file.encoding.pkg" value="sun.io"/>
@@ -16,7 +16,7 @@
     <property name="user.country" value="US"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/amd64"/>
-    <property name="sun.java.command" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar /home/raimund/git/finnmath/target/surefire 2017-10-31T23-57-56_034-jvmRun1 surefire1557013046127631234tmp surefire_08969395774441063601tmp"/>
+    <property name="sun.java.command" value="/home/raimund/git/finnmath/target/surefire/surefirebooter9079258990144707742.jar /home/raimund/git/finnmath/target/surefire 2017-11-01T16-21-48_111-jvmRun1 surefire988001320110709264tmp surefire_06714070986443569134tmp"/>
     <property name="surefire.test.class.path" value="/home/raimund/git/finnmath/target/test-classes:/home/raimund/git/finnmath/target/classes:/home/raimund/.m2/repository/com/google/guava/guava/23.2-jre/guava-23.2-jre.jar:/home/raimund/.m2/repository/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar:/home/raimund/.m2/repository/com/google/errorprone/error_prone_annotations/2.0.18/error_prone_annotations-2.0.18.jar:/home/raimund/.m2/repository/com/google/j2objc/j2objc-annotations/1.1/j2objc-annotations-1.1.jar:/home/raimund/.m2/repository/org/codehaus/mojo/animal-sniffer-annotations/1.14/animal-sniffer-annotations-1.14.jar:/home/raimund/.m2/repository/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar:/home/raimund/.m2/repository/org/slf4j/slf4j-simple/1.7.25/slf4j-simple-1.7.25.jar:/home/raimund/.m2/repository/junit/junit/4.12/junit-4.12.jar:/home/raimund/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/raimund/.m2/repository/org/assertj/assertj-core/3.8.0/assertj-core-3.8.0.jar:/home/raimund/.m2/repository/org/assertj/assertj-guava/3.1.0/assertj-guava-3.1.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/home/raimund"/>
@@ -29,7 +29,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/home/raimund/git/finnmath/target/surefire/surefirebooter3660726739793792242.jar:/home/raimund/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar"/>
+    <property name="surefire.real.class.path" value="/home/raimund/git/finnmath/target/surefire/surefirebooter9079258990144707742.jar:/home/raimund/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar"/>
     <property name="sun.boot.class.path" value="/usr/lib/jvm/java-8-openjdk/jre/lib/resources.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jsse.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jce.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/charsets.jar:/usr/lib/jvm/java-8-openjdk/jre/lib/jfr.jar:/usr/lib/jvm/java-8-openjdk/jre/classes"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="1.8.0_144-b01"/>
@@ -57,134 +57,134 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="frobeniusNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.148"/>
-  <testcase name="squareShouldBePredictable" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.011"/>
-  <testcase name="identityShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="frobeniusNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.069"/>
+  <testcase name="squareShouldBePredictable" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="identityShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
   <testcase name="skewSymmetricNotSymmetricShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
   <testcase name="multiplyNullVectorShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="determinatOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.021"/>
-  <testcase name="maxAbsRowSumNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.033"/>
-  <testcase name="toStringShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.031"/>
+  <testcase name="determinatOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.005"/>
+  <testcase name="maxAbsRowSumNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.014"/>
+  <testcase name="toStringShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.012"/>
   <testcase name="invertibleIdShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="elementColumnIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="subtractRowSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.005"/>
+  <testcase name="subtractRowSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="columnSizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="frobeniusNormPow2OfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="frobeniusNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.221"/>
+  <testcase name="frobeniusNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.164"/>
   <testcase name="maxNormOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
-  <testcase name="minorColumnIndexTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="maxAbsColumnSumNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.085"/>
+  <testcase name="minorColumnIndexTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="maxAbsColumnSumNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.064"/>
   <testcase name="maxAbsColumnSumNormOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
   <testcase name="maxAbsRowSumNormShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
-  <testcase name="lowerTriangularNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="minorRowIndexTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="lowerTriangularNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="minorRowIndexTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="maxAbsColumnSumNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="traceShouldBeLinear" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.032"/>
-  <testcase name="rowIndexesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
+  <testcase name="traceShouldBeLinear" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.038"/>
+  <testcase name="rowIndexesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="determinatOfTwoByTwoMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="lowerTriangularNotLowerTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
-  <testcase name="minorRowIndexTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="rowsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.068"/>
-  <testcase name="muliplyZeroMatrixShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.012"/>
+  <testcase name="lowerTriangularNotLowerTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.007"/>
+  <testcase name="minorRowIndexTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="rowsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.029"/>
+  <testcase name="muliplyZeroMatrixShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.01"/>
   <testcase name="maxNormShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="scalarMultiplyNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="determinatWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.097"/>
-  <testcase name="lowerTriangularShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="elementShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.013"/>
+  <testcase name="scalarMultiplyNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="determinatWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.037"/>
+  <testcase name="lowerTriangularShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="elementShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.005"/>
   <testcase name="squareOfSquareMatricesShouldBeTrue" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="minorColumnIndexTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.006"/>
+  <testcase name="minorColumnIndexTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="determinatOfIdentityMatrixShouldBeEqualToOne" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
-  <testcase name="frobeniusNormWithPrecisionAndScaleTooLowAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="multiplyNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="diagonalNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="invertibleMatrixWithDetEqualToMinusOneShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.004"/>
-  <testcase name="frobeniusNormWithPrecisionNullAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="frobeniusNormWithPrecisionAndScaleTooLowAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
+  <testcase name="multiplyNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="diagonalNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="invertibleMatrixWithDetEqualToMinusOneShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
+  <testcase name="frobeniusNormWithPrecisionNullAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="symmetricNotSymmetricShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
-  <testcase name="traceShouldBeAdditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.032"/>
+  <testcase name="traceShouldBeAdditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.025"/>
   <testcase name="elementRowIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="rowRowIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="maxNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.036"/>
-  <testcase name="builderColumnSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="rowRowIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="maxNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.024"/>
+  <testcase name="builderColumnSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="equalsSelfShouldReturnTrue" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="maxAbsRowSumNormOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
-  <testcase name="invertibleZeroMatrixShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="maxAbsRowSumNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.061"/>
-  <testcase name="traceShouldBeEqualToTheTraceOfTheTranspose" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.004"/>
+  <testcase name="invertibleZeroMatrixShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="maxAbsRowSumNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.076"/>
+  <testcase name="traceShouldBeEqualToTheTraceOfTheTranspose" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="multiplyColumnSizeNotEqualToFactorRowSizeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="identityNotDiagonalhouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="identityNotDiagonalhouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
   <testcase name="diagonalShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="invertibleNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="columnShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.018"/>
-  <testcase name="elementRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="scalarMultiplyWithZeroShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.024"/>
+  <testcase name="columnShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.011"/>
+  <testcase name="elementRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.005"/>
+  <testcase name="scalarMultiplyWithZeroShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.02"/>
   <testcase name="multiplyVectorColumnSizeNotEqualToVectorSizeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="equalsEqualShouldReturnTrue" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.005"/>
   <testcase name="maxNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="squareOfNonSquareMatrixShouldBeFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="frobeniusNormWithPrecisionNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.009"/>
+  <testcase name="squareOfNonSquareMatrixShouldBeFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="frobeniusNormWithPrecisionNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="frobeniusNormWithPrecisionTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="addColumnSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
-  <testcase name="hashCodeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.017"/>
+  <testcase name="addColumnSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="hashCodeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.006"/>
   <testcase name="maxAbsColumnSumNormShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="builderRowSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="maxAbsColumnSumNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.036"/>
-  <testcase name="subtractColumnSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="equalsNotEqualShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
+  <testcase name="builderRowSizeTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="maxAbsColumnSumNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.03"/>
+  <testcase name="subtractColumnSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="equalsNotEqualShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.013"/>
   <testcase name="addRowSizesNotEqualShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="rowSizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="minorColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="traceShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="symmetricShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.004"/>
-  <testcase name="identityNotIdentityMatrixShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.006"/>
+  <testcase name="rowSizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.006"/>
+  <testcase name="minorColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="traceShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="symmetricShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="identityNotIdentityMatrixShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="frobeniusNormWithPrecisionAndScaleAndRoundingModeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="maxNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.03"/>
+  <testcase name="maxNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.023"/>
   <testcase name="skewSymmetricNotquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="determinatOfThreeByThreeMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="frobeniusNormPow2ShouldBeHomogeneous" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.035"/>
+  <testcase name="determinatOfThreeByThreeMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.004"/>
+  <testcase name="frobeniusNormPow2ShouldBeHomogeneous" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.025"/>
   <testcase name="cellsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="frobeniusNormWithPrecisionTooLowAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="frobeniusNormWithPrecisionTooLowAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="symmetricNotquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
-  <testcase name="elementColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="rowShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.014"/>
+  <testcase name="elementColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="rowShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.004"/>
   <testcase name="frobeniusNormPow2ShouldBeSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="traceNotSquareShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="addNegatedShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.007"/>
+  <testcase name="traceNotSquareShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="addNegatedShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="columnColumnIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="frobeniusNormWithPrecisionShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
-  <testcase name="maxAbsColumnSumNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.053"/>
-  <testcase name="elementsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.004"/>
-  <testcase name="addNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="determinatOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="traceShouldBeIndependentOfTheOrderOfTheFactors" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.069"/>
+  <testcase name="frobeniusNormWithPrecisionShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="maxAbsColumnSumNormShouldBeSubmultiplicative" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.051"/>
+  <testcase name="elementsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="addNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="determinatOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="traceShouldBeIndependentOfTheOrderOfTheFactors" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.082"/>
   <testcase name="minorRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="skewSymmetricShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="maxAbsRowSumNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.028"/>
-  <testcase name="rowRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="skewSymmetricShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="maxAbsRowSumNormShouldBeSubadditive" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.027"/>
+  <testcase name="rowRowIndexNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="frobeniusNormWithRoundingModeAndScaleTooLowShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="equalsNotSimpleComplexNumberShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
-  <testcase name="diagonalNotNotDiagonalShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.009"/>
+  <testcase name="diagonalNotNotDiagonalShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.005"/>
   <testcase name="triangularNotUpperTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.004"/>
-  <testcase name="frobeniusNormWithPrecisionTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="frobeniusNormWithPrecisionTooHighShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="triangularShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="frobeniusNormWithPrecisionTooHighAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="frobeniusNormWithPrecisionTooHighAndScaleAndRoundingModeShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="determinatNotSquareShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="frobeniusNormWithScaleAndRoundingModeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="determinatOfOneByOneMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
-  <testcase name="upperTriangularShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="columnIndexesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.043"/>
-  <testcase name="frobeniusNormShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="upperTriangularShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="columnIndexesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="frobeniusNormShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
   <testcase name="traceOfZeroMatrixShouldBeEqualToZero" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
-  <testcase name="columnColumnIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.005"/>
-  <testcase name="columnsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.004"/>
-  <testcase name="subtractNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="subtractSelfShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.013"/>
-  <testcase name="maxAbsRowSumNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.029"/>
+  <testcase name="columnColumnIndexOutOfBoundShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="columnsShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="subtractNullShouldThrowException" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="subtractSelfShouldBeEqualToZeroMatrix" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.005"/>
+  <testcase name="maxAbsRowSumNormShouldBeAbsolutelyHomogeneous" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.037"/>
   <testcase name="upperTriangularNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
-  <testcase name="identityNotDiagonalShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="sizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
-  <testcase name="upperTriangularNotUpperTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
-  <testcase name="triangularNotLowerTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.003"/>
-  <testcase name="determinantOfFourByFourMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.025"/>
-  <testcase name="frobeniusNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.002"/>
+  <testcase name="identityNotDiagonalShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
+  <testcase name="sizeShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
+  <testcase name="upperTriangularNotUpperTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.006"/>
+  <testcase name="triangularNotLowerTriangularShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.006"/>
+  <testcase name="determinantOfFourByFourMatricesShouldSucceed" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.014"/>
+  <testcase name="frobeniusNormShouldBePositiveValued" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0.001"/>
   <testcase name="triangularNotSquareShouldReturnFalse" classname="com.github.ltennstedt.finnmath.linear.DecimalMatrixTest" time="0"/>
 </testsuite>

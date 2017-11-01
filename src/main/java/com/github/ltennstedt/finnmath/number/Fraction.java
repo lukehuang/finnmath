@@ -154,8 +154,8 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     @Override
     public Fraction add(final Fraction summand) {
         requireNonNull(summand, "summand");
-        final BigInteger newNumerator = summand.getDenominator().multiply(numerator)
-                        .add(denominator.multiply(summand.getNumerator()));
+        final BigInteger newNumerator =
+            summand.getDenominator().multiply(numerator).add(denominator.multiply(summand.getNumerator()));
         final BigInteger newDenominator = denominator.multiply(summand.getDenominator());
         return new Fraction(newNumerator, newDenominator);
     }
@@ -178,8 +178,8 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     @Override
     public Fraction subtract(final Fraction subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
-        final BigInteger newNumerator = subtrahend.getDenominator().multiply(numerator)
-                        .subtract(denominator.multiply(subtrahend.getNumerator()));
+        final BigInteger newNumerator =
+            subtrahend.getDenominator().multiply(numerator).subtract(denominator.multiply(subtrahend.getNumerator()));
         final BigInteger newDenominator = denominator.multiply(subtrahend.getDenominator());
         return new Fraction(newNumerator, newDenominator);
     }

@@ -66,10 +66,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigIntMatrix add(final BigIntMatrix summand) {
         requireNonNull(summand, "summand");
         checkArgument(table.rowKeySet().size() == summand.rowSize(), "expected equal row sizes but actual %s != %s",
-                        table.rowKeySet().size(), summand.rowSize());
+            table.rowKeySet().size(), summand.rowSize());
         checkArgument(table.columnKeySet().size() == summand.columnSize(),
-                        "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
-                        summand.columnSize());
+            "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), summand.columnSize());
         final BigIntMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -99,10 +98,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigIntMatrix subtract(final BigIntMatrix subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), "expected equal row sizes but actual %s != %s",
-                        table.rowKeySet().size(), subtrahend.rowSize());
+            table.rowKeySet().size(), subtrahend.rowSize());
         checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),
-                        "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
-                        subtrahend.columnSize());
+            "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), subtrahend.columnSize());
         final BigIntMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -130,8 +128,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigIntMatrix multiply(final BigIntMatrix factor) {
         requireNonNull(factor, "factor");
         checkArgument(table.columnKeySet().size() == factor.rowSize(),
-                        "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(),
-                        factor.rowSize());
+            "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(), factor.rowSize());
         final BigIntMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());
         table.rowMap().forEach((rowIndex, row) -> {
             factor.columns().forEach((columnIndex, column) -> {
@@ -161,13 +158,12 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigIntVector multiplyVector(final BigIntVector vector) {
         requireNonNull(vector, "vector");
         checkArgument(table.columnKeySet().size() == vector.size(),
-                        "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(),
-                        vector.size());
+            "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(), vector.size());
         final BigIntVectorBuilder builder = BigIntVector.builder(table.rowKeySet().size());
         table.rowMap().forEach((rowIndex, row) -> {
             row.forEach((columnIndex, matrixEntry) -> {
-                final BigInteger oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex)
-                                : BigInteger.ZERO;
+                final BigInteger oldEntry =
+                    builder.element(rowIndex) != null ? builder.element(rowIndex) : BigInteger.ZERO;
                 builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));
             });
         });
@@ -176,11 +172,11 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
 
     @Override
     protected BigInteger multiplyRowWithColumn(final Map<Integer, BigInteger> row,
-                    final Map<Integer, BigInteger> column) {
+        final Map<Integer, BigInteger> column) {
         requireNonNull(row, "row");
         requireNonNull(column, "column");
         checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
-                        column.size());
+            column.size());
         BigInteger result = BigInteger.ZERO;
         for (final Entry<Integer, BigInteger> rowEntry : row.entrySet()) {
             result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));
@@ -234,7 +230,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     @Override
     public BigInteger trace() {
         checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
-                        table.columnKeySet().size());
+            table.columnKeySet().size());
         BigInteger result = BigInteger.ZERO;
         for (final Integer index : table.rowKeySet()) {
             result = result.add(table.get(index, index));
@@ -275,7 +271,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         BigInteger result = BigInteger.ZERO;
         for (final Integer columnIndex : table.columnKeySet()) {
             result = result.add(BigInteger.ONE.negate().pow(1 + columnIndex)).multiply(table.get(1, columnIndex))
-                            .multiply(minor(1, columnIndex).determinant());
+                .multiply(minor(1, columnIndex).determinant());
         }
         return result;
     }
@@ -334,9 +330,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.containsRow(rowIndex), "expected rowIndex in [1, %s] but actual %s",
-                        table.rowKeySet().size(), rowIndex);
+            table.rowKeySet().size(), rowIndex);
         checkArgument(table.containsColumn(columnIndex), "expected columnIndex in [1, %s] but actual %s",
-                        table.columnKeySet().size(), columnIndex);
+            table.columnKeySet().size(), columnIndex);
         final BigIntMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -439,7 +435,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigDecimal frobeniusNorm(final BigDecimal precision) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(frobeniusNormPow2());
     }
 
@@ -491,7 +487,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(frobeniusNormPow2());
     }
@@ -657,9 +653,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             requireNonNull(rowIndex, "rowIndex");
             requireNonNull(columnIndex, "columnIndex");
             checkArgument(table.rowKeySet().contains(rowIndex), "expected rowIndex in [1, %s] but actual %s",
-                            table.rowKeySet().size(), rowIndex);
+                table.rowKeySet().size(), rowIndex);
             checkArgument(table.columnKeySet().contains(columnIndex), "expected columnIndex in [1, %s] but actual %s",
-                            table.columnKeySet().size(), columnIndex);
+                table.columnKeySet().size(), columnIndex);
             table.put(rowIndex, columnIndex, element);
             return this;
         }

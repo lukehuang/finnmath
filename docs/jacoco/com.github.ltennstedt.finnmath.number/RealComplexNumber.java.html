@@ -35,7 +35,7 @@ import java.util.Objects;
  */
 @Beta
 public final class RealComplexNumber
-                extends AbstractComplexNumber&lt;BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix&gt; {
+    extends AbstractComplexNumber&lt;BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix&gt; {
     /**
      * {@code 0} as {@link RealComplexNumber}
      */
@@ -82,7 +82,7 @@ public final class RealComplexNumber
      */
     public RealComplexNumber(final SimpleComplexNumber complexNumber) {
 <span class="fc" id="L84">        super(new BigDecimal(requireNonNull(complexNumber, &quot;complexNumber&quot;).getReal()),</span>
-<span class="fc" id="L85">                        new BigDecimal(complexNumber.getImaginary()));</span>
+<span class="fc" id="L85">            new BigDecimal(complexNumber.getImaginary()));</span>
 <span class="fc" id="L86">    }</span>
 
     /**
@@ -117,7 +117,7 @@ public final class RealComplexNumber
     public RealComplexNumber subtract(final RealComplexNumber subtrahend) {
 <span class="fc" id="L118">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
 <span class="fc" id="L119">        return new RealComplexNumber(real.subtract(subtrahend.getReal()),</span>
-<span class="fc" id="L120">                        imaginary.subtract(subtrahend.getImaginary()));</span>
+<span class="fc" id="L120">            imaginary.subtract(subtrahend.getImaginary()));</span>
     }
 
     /**
@@ -159,9 +159,9 @@ public final class RealComplexNumber
 <span class="fc" id="L159">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
 <span class="fc" id="L160">        final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));</span>
 <span class="fc" id="L161">        final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))</span>
-<span class="fc" id="L162">                        .divide(denominator, BigDecimal.ROUND_HALF_UP);</span>
+<span class="fc" id="L162">            .divide(denominator, BigDecimal.ROUND_HALF_UP);</span>
 <span class="fc" id="L163">        final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())</span>
-<span class="fc" id="L164">                        .subtract(real.multiply(divisor.getImaginary())).divide(denominator, BigDecimal.ROUND_HALF_UP);</span>
+<span class="fc" id="L164">            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, BigDecimal.ROUND_HALF_UP);</span>
 <span class="fc" id="L165">        return new RealComplexNumber(newReal, newImaginary);</span>
     }
 
@@ -279,7 +279,7 @@ public final class RealComplexNumber
     @Override
     public DecimalMatrix matrix() {
 <span class="fc" id="L281">        return DecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)</span>
-<span class="fc" id="L282">                        .put(2, 2, real).build();</span>
+<span class="fc" id="L282">            .put(2, 2, real).build();</span>
     }
 
     @Override

@@ -59,7 +59,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     public DecimalVector add(final DecimalVector summand) {
         requireNonNull(summand, "summand");
         checkArgument(map.size() == summand.size(), "expected equal sizes but actual %s != %s", map.size(),
-                        summand.size());
+            summand.size());
         final DecimalVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> {
             builder.put(element.add(summand.element(index)));
@@ -82,7 +82,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     public DecimalVector subtract(final DecimalVector subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         checkArgument(map.size() == subtrahend.size(), "expected equal sizes but actual %s != %s", map.size(),
-                        subtrahend.size());
+            subtrahend.size());
         final DecimalVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> {
             builder.put(element.subtract(subtrahend.element(index)));
@@ -232,7 +232,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     public BigDecimal euclideanNorm(final BigDecimal precision) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());
     }
 
@@ -284,7 +284,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());
     }
@@ -363,7 +363,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));
     }
 
@@ -429,12 +429,12 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector other, final BigDecimal precision, final int scale,
-                    final RoundingMode roundingMode) {
+        final RoundingMode roundingMode) {
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));
     }
@@ -528,7 +528,7 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
      */
     @Beta
     public static final class DecimalVectorBuilder
-                    extends AbstractVectorBuilder<BigDecimal, DecimalVector, DecimalVectorBuilder> {
+        extends AbstractVectorBuilder<BigDecimal, DecimalVector, DecimalVectorBuilder> {
         private DecimalVectorBuilder(final int size) {
             super(size);
         }

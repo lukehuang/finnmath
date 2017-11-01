@@ -99,7 +99,7 @@ public final class SquareRootCalculator {
     public SquareRootCalculator(final BigDecimal precision) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         this.precision = precision;
         scale = DEFAULT_SCALE;
         roundingMode = DEFAULT_ROUNDING_MODE;
@@ -149,7 +149,7 @@ public final class SquareRootCalculator {
     public SquareRootCalculator(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                        "expected precision in (0, 1) but actual %s", precision);
+            "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         this.precision = precision;
         this.scale = scale;
@@ -247,7 +247,7 @@ public final class SquareRootCalculator {
 
     private BigDecimal heronsMethod(final BigDecimal decimal) {
         log.debug("calculating square root for {} with precision = {}", decimal.toPlainString(),
-                        precision.toPlainString());
+            precision.toPlainString());
         BigDecimal predecessor = seedValue(decimal);
         log.debug("seed value = {}", predecessor.toPlainString());
         BigDecimal successor = calculateSuccessor(predecessor, decimal);
@@ -268,8 +268,7 @@ public final class SquareRootCalculator {
         log.debug("predecessor = {}", predecessor.toPlainString());
         final BigDecimal divisor = BigDecimal.valueOf(2).multiply(predecessor);
         final BigDecimal successor = divisor.compareTo(BigDecimal.ZERO) != 0
-                        ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode)
-                        : DEFAULT_PRECISION;
+            ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode) : DEFAULT_PRECISION;
         log.debug("successor = {}", successor.toPlainString());
         return successor;
     }
@@ -303,7 +302,7 @@ public final class SquareRootCalculator {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("precision", precision).add("scale", scale)
-                        .add("roundingMode", roundingMode).toString();
+            .add("roundingMode", roundingMode).toString();
     }
 
     public BigDecimal getPrecision() {

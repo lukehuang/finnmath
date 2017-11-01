@@ -63,8 +63,8 @@ public final class ScientificNotationTest {
 
     @Test
     public void asStringExponentIsNegative() {
-        final String expected = new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**(").append(-1)
-                        .append(")").toString();
+        final String expected =
+            new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**(").append(-1).append(")").toString();
         assertThat(new ScientificNotation(BigDecimal.ONE, -1).asString()).isEqualTo(expected);
     }
 
@@ -81,16 +81,16 @@ public final class ScientificNotationTest {
 
     @Test
     public void asStringExponentGreaterThanOne() {
-        final String expected = new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**").append(2)
-                        .toString();
+        final String expected =
+            new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**").append(2).toString();
         assertThat(new ScientificNotation(BigDecimal.ONE, 2).asString()).isEqualTo(expected);
     }
 
     @Test
     public void hashCodeShouldSucceed() {
         scientificNotations.forEach(scientificNotation -> {
-            assertThat(scientificNotation.hashCode()).isEqualTo(
-                            Objects.hash(scientificNotation.getCoefficient(), scientificNotation.getExponent()));
+            assertThat(scientificNotation.hashCode())
+                .isEqualTo(Objects.hash(scientificNotation.getCoefficient(), scientificNotation.getExponent()));
         });
     }
 
@@ -110,7 +110,7 @@ public final class ScientificNotationTest {
     public void equalsCoefficientNotEqualShouldReturnFalse() {
         scientificNotations.forEach(scientificNotation -> {
             final ScientificNotation other = new ScientificNotation(
-                            scientificNotation.getCoefficient().add(BigDecimal.ONE), scientificNotation.getExponent());
+                scientificNotation.getCoefficient().add(BigDecimal.ONE), scientificNotation.getExponent());
             assertThat(scientificNotation.equals(other)).isFalse();
         });
     }
@@ -118,8 +118,8 @@ public final class ScientificNotationTest {
     @Test
     public void equalsExponentNotEqualShouldReturnFalse() {
         scientificNotations.forEach(scientificNotation -> {
-            final ScientificNotation other = new ScientificNotation(scientificNotation.getCoefficient(),
-                            scientificNotation.getExponent() + 1);
+            final ScientificNotation other =
+                new ScientificNotation(scientificNotation.getCoefficient(), scientificNotation.getExponent() + 1);
             assertThat(scientificNotation.equals(other)).isFalse();
         });
     }
@@ -127,17 +127,18 @@ public final class ScientificNotationTest {
     @Test
     public void equalsEqualShouldReturnTrue() {
         scientificNotations.forEach(scientificNotation -> {
-            assertThat(scientificNotation.equals(new ScientificNotation(scientificNotation.getCoefficient(),
-                            scientificNotation.getExponent()))).isTrue();
+            assertThat(scientificNotation
+                .equals(new ScientificNotation(scientificNotation.getCoefficient(), scientificNotation.getExponent())))
+                    .isTrue();
         });
     }
 
     @Test
     public void toStringShouldSucceed() {
         scientificNotations.forEach(scientificNotation -> {
-            assertThat(scientificNotation.toString()).isEqualTo(MoreObjects.toStringHelper(scientificNotation)
-                            .add("coefficient", scientificNotation.getCoefficient())
-                            .add("exponent", scientificNotation.getExponent()).toString());
+            assertThat(scientificNotation.toString()).isEqualTo(
+                MoreObjects.toStringHelper(scientificNotation).add("coefficient", scientificNotation.getCoefficient())
+                    .add("exponent", scientificNotation.getExponent()).toString());
         });
     }
 }

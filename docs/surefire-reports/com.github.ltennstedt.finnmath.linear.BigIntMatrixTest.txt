@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.github.ltennstedt.finnmath.linear.BigIntMatrixTest
 -------------------------------------------------------------------------------
-Tests run: 162, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.337 s - in com.github.ltennstedt.finnmath.linear.BigIntMatrixTest
+Tests run: 162, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.559 s - in com.github.ltennstedt.finnmath.linear.BigIntMatrixTest

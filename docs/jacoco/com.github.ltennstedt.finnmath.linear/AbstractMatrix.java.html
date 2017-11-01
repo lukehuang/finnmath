@@ -227,9 +227,9 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
 <span class="fc" id="L227">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
 <span class="fc" id="L228">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
 <span class="fc" id="L229">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L230">                        table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L230">            table.rowKeySet().size(), rowIndex);</span>
 <span class="fc" id="L231">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L232">                        table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L232">            table.columnKeySet().size(), columnIndex);</span>
 <span class="fc" id="L233">        return table.get(rowIndex, columnIndex);</span>
     }
 
@@ -263,7 +263,7 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
     public ImmutableMap&lt;Integer, E&gt; row(final Integer rowIndex) {
 <span class="fc" id="L264">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
 <span class="fc" id="L265">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L266">                        table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L266">            table.rowKeySet().size(), rowIndex);</span>
 <span class="fc" id="L267">        return table.row(rowIndex);</span>
     }
 
@@ -285,7 +285,7 @@ abstract class AbstractMatrix&lt;E, V, M&gt; {
     public ImmutableMap&lt;Integer, E&gt; column(final Integer columnIndex) {
 <span class="fc" id="L286">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
 <span class="fc" id="L287">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L288">                        table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L288">            table.columnKeySet().size(), columnIndex);</span>
 <span class="fc" id="L289">        return table.column(columnIndex);</span>
     }
 
