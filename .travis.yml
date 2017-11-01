@@ -17,6 +17,6 @@
 language: java
 after_script:
     - mvn install site
-    - ant copyDocs
+    - ant
     - bash <(curl -s https://codecov.io/bash)
 
