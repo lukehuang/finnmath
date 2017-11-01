@@ -61,6 +61,10 @@ The code formatting follows loosely the Google Java style guide found here on Gi
 I searched for a mathematical library for another project which should be based on BigInteger and BigDecimal instead 
 of primitives and I could not find one.
 
+#### Who is Finn?
+* Long video: https://www.youtube.com/watch?v=Z8-rtor3G9Q
+* Short video: https://www.youtube.com/watch?v=0DZ1VT5kbw4
+
 #### Why BigInteger or BigDecimal?
 Both are protected against buffer overflows and BigDecimal is by far less prone to big rounding errors. In addition, 
 you are able to control the rounding behaviour and the scale in the case of BigDecimal. The downsides of using them 
