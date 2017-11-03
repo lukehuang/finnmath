@@ -75,6 +75,8 @@ abstract class AbstractMatrix<E, V, M> {
 
     protected abstract E determinant();
 
+    protected abstract E leibnizFormula();
+
     protected abstract E ruleOfSarrus();
 
     protected abstract M transpose();

@@ -23,11 +23,13 @@ import static java.util.Objects.requireNonNull;
 import com.github.ltennstedt.finnmath.linear.DecimalVector.DecimalVectorBuilder;
 import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -252,41 +254,56 @@ public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVecto
     public BigDecimal determinant() {
         final int rowSize = table.rowKeySet().size();
         checkState(square(), "expected square matrix but actual %s x %s", rowSize, table.columnKeySet().size());
-        final int scale = table.get(1, 1).scale();
         if (triangular()) {
-            BigDecimal result = BigDecimal.ONE.setScale(scale);
+            BigDecimal result = BigDecimal.ONE;
             for (final Cell<Integer, Integer, BigDecimal> cell : table.cellSet()) {
                 if (cell.getRowKey().equals(cell.getColumnKey())) {
                     result = result.multiply(cell.getValue());
                 }
             }
-            return result.setScale(scale, BigDecimal.ROUND_HALF_UP);
+            return result;
+        }
+        if (rowSize > 3) {
+            return leibnizFormula();
         }
         if (rowSize == 3) {
             return ruleOfSarrus();
         }
-        if (rowSize == 2) {
-            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)))
-                .setScale(scale, BigDecimal.ROUND_HALF_UP);
-        }
+
+        // rowSize == 2
+        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+    }
+
+    @Override
+    protected BigDecimal leibnizFormula() {
         BigDecimal result = BigDecimal.ZERO;
-        for (final Integer columnIndex : table.columnKeySet()) {
-            result = result.add(BigDecimal.ONE.negate().pow(1 + columnIndex)).multiply(table.get(1, columnIndex))
-                .multiply(minor(1, columnIndex).determinant());
+        for (final List<Integer> permutation : Collections2.permutations(table.rowKeySet())) {
+            BigDecimal product = BigDecimal.ONE;
+            int inversions = 0;
+            final int size = table.rowKeySet().size();
+            for (int i = 0; i < size; i++) {
+                final Integer sigma = permutation.get(i);
+                for (int j = i + 1; j < size; j++) {
+                    if (sigma > permutation.get(j)) {
+                        inversions++;
+                    }
+                }
+                product = product.multiply(table.get(sigma, i + 1));
+            }
+            result = result.add(BigDecimal.ONE.negate().pow(inversions).multiply(product));
         }
         return result;
     }
 
     @Override
     protected BigDecimal ruleOfSarrus() {
-        final BigDecimal firstSummand = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));
-        final BigDecimal secondSummand = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));
-        final BigDecimal thirdSummand = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));
-        final BigDecimal fourthSummand = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(3, 1)).negate();
-        final BigDecimal fifthSummand = table.get(1, 2).multiply(table.get(2, 1)).multiply(table.get(3, 3)).negate();
-        final BigDecimal sixthSummand = table.get(1, 1).multiply(table.get(2, 3)).multiply(table.get(3, 2)).negate();
-        return firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand).add(fifthSummand).add(sixthSummand)
-            .setScale(table.get(1, 1).scale(), RoundingMode.HALF_UP);
+        final BigDecimal first = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));
+        final BigDecimal second = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));
+        final BigDecimal third = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));
+        final BigDecimal fourth = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3));
+        final BigDecimal fifth = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1));
+        final BigDecimal sixth = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2));
+        return first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);
     }
 
     /**

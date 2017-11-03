@@ -23,12 +23,14 @@ import static java.util.Objects.requireNonNull;
 import com.github.ltennstedt.finnmath.linear.BigIntVector.BigIntVectorBuilder;
 import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -262,29 +264,47 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
             }
             return result;
         }
+        if (rowSize > 3) {
+            return leibnizFormula();
+        }
         if (rowSize == 3) {
             return ruleOfSarrus();
         }
-        if (rowSize == 2) {
-            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
-        }
+
+        // rowSize == 2
+        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+    }
+
+    @Override
+    protected BigInteger leibnizFormula() {
         BigInteger result = BigInteger.ZERO;
-        for (final Integer columnIndex : table.columnKeySet()) {
-            result = result.add(BigInteger.ONE.negate().pow(1 + columnIndex)).multiply(table.get(1, columnIndex))
-                .multiply(minor(1, columnIndex).determinant());
+        for (final List<Integer> permutation : Collections2.permutations(table.rowKeySet())) {
+            BigInteger product = BigInteger.ONE;
+            int inversions = 0;
+            final int size = table.rowKeySet().size();
+            for (int i = 0; i < size; i++) {
+                final Integer sigma = permutation.get(i);
+                for (int j = i + 1; j < size; j++) {
+                    if (sigma > permutation.get(j)) {
+                        inversions++;
+                    }
+                }
+                product = product.multiply(table.get(sigma, i + 1));
+            }
+            result = result.add(BigInteger.ONE.negate().pow(inversions).multiply(product));
         }
         return result;
     }
 
     @Override
     protected BigInteger ruleOfSarrus() {
-        final BigInteger firstSummand = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));
-        final BigInteger secondSummand = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));
-        final BigInteger thirdSummand = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));
-        final BigInteger fourthSummand = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3)).negate();
-        final BigInteger fifthSummand = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1)).negate();
-        final BigInteger sixthSummand = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2)).negate();
-        return firstSummand.add(secondSummand).add(thirdSummand).add(fourthSummand).add(fifthSummand).add(sixthSummand);
+        final BigInteger first = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));
+        final BigInteger second = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));
+        final BigInteger third = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));
+        final BigInteger fourth = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3));
+        final BigInteger fifth = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1));
+        final BigInteger sixth = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2));
+        return first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);
     }
 
     /**
