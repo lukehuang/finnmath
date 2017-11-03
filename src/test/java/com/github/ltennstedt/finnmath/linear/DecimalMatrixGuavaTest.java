@@ -31,12 +31,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class DecimalMatrixGuavaTest {
-    private static DecimalMatrix zeroMatrixForAddition;
-    private static DecimalMatrix identityMatrix;
     private static final int howMany = 10;
     private static final MathRandom mathRandom = new MathRandom(7);
     private static final long bound = 10;
     private static final int scale = 2;
+    private static final int rowSize = RandomUtils.nextInt(4, 10);
+    private static final int columnSize = RandomUtils.nextInt(4, 10);
+    private static final DecimalMatrix zeroMatrixForAddition =
+        DecimalMatrix.builder(rowSize, columnSize).putAll(BigDecimal.ZERO).build();
     private static final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
     private static final List<DecimalMatrix> squareMatrices = new ArrayList<>(howMany);
     private static final List<DecimalMatrix> othersForAddition = new ArrayList<>(howMany);
@@ -58,14 +60,12 @@ public final class DecimalMatrixGuavaTest {
     private static final List<DecimalVector> vectors = new ArrayList<>(howMany);
     private static final List<BigDecimal> scalars = new ArrayList<>(howMany);
     private static final List<BigDecimal> otherScalars = new ArrayList<>(howMany);
+    private static DecimalMatrix identityMatrix;
 
     @BeforeClass
     public static void setUp() {
-        final int rowSize = RandomUtils.nextInt(3, 10);
-        final int columnSize = RandomUtils.nextInt(3, 10);
         final int columnSizeForOthers = RandomUtils.nextInt(3, 10);
         final int columnSizeForAdditionalOthers = RandomUtils.nextInt(3, 10);
-        zeroMatrixForAddition = DecimalMatrix.builder(rowSize, columnSize).putAll(BigDecimal.ZERO).build();
         final DecimalMatrixBuilder identityMatrixBuilder = DecimalMatrix.builder(rowSize, rowSize);
         IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
             IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
@@ -377,8 +377,6 @@ public final class DecimalMatrixGuavaTest {
     @Test
     public void minorShouldSucceed() {
         matrices.forEach(matrix -> {
-            final int rowSize = matrix.rowSize();
-            final int columnSize = matrix.columnSize();
             final Integer rowIndex = RandomUtils.nextInt(1, rowSize + 1);
             final Integer columnIndex = RandomUtils.nextInt(1, columnSize + 1);
             final DecimalMatrixBuilder builder = DecimalMatrix.builder(rowSize - 1, columnSize - 1);
