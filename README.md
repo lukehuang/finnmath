@@ -14,6 +14,7 @@ What finnMath will provide:
 * Implementations for fractions and complex numbers
 * A pseudo random generator for all these implementations
 * A square root calculator for BigInteger and BigDecimal based on Heron's method
+* Determinant calculation based on the Leibniz Formula and the rule of Sarrus
 
 What finnMath will not provide:
 * Solver for equations
@@ -24,6 +25,7 @@ finnMath is written in Java and uses Maven as its build automation tool so it sh
 other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 ## Implementation details
+* Java 8
 * All types are immutable.
 * The matrices are based on ImmutableTable from Guava.
 * The vectors are based on ImmutableMap from Guava.
@@ -84,8 +86,8 @@ multi-project setups worse than Gradle and mixing languages is very ugly. Maven 
 project which is a Maven project through and through. If you want to do things which are not covered by Maven's 
 lifecycle very well, go for a multi-module or mixed-languages project, need custom tasks or choose Groovy or Kotlin as
 a programming language, Gradle is indeed very hard to beat. Maven provides you with a declarative and uniform way to 
-describe a build and it does it very well. The flexibility and power of Gradle is not needed for a standard Java 
-project like this one. 
+describe a build and it does it very well and the IDE support is outstanding. The flexibility and power of Gradle is 
+not needed for a standard Java project like this one. 
 
 
 ## Thanks to
