@@ -18,5 +18,6 @@ language: java
 after_script:
     - mvn install site
     - ant
+    - ant deleteDocs
     - bash <(curl -s https://codecov.io/bash)
 
