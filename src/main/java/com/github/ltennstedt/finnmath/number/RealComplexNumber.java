@@ -20,22 +20,25 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
+import ch.obermuhlner.math.big.BigFloat;
+import ch.obermuhlner.math.big.BigFloat.Context;
 import com.github.ltennstedt.finnmath.linear.DecimalMatrix;
 import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
- * An immutable implementation of a complex number which uses {@link BigDecimal}
- * as type for its real and imaginary part
+ * An immutable implementation of a complex number which uses {@link BigDecimal} as type for its real and imaginary part
  *
  * @author Lars Tennstedt
  * @since 1
  */
 @Beta
 public final class RealComplexNumber
-    extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
+        extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
     /**
      * {@code 0} as {@link RealComplexNumber}
      */
@@ -70,8 +73,7 @@ public final class RealComplexNumber
     }
 
     /**
-     * Constructs a {@link RealComplexNumber} by the given
-     * {@link SimpleComplexNumber}
+     * Constructs a {@link RealComplexNumber} by the given {@link SimpleComplexNumber}
      *
      * @param complexNumber
      *            {@link SimpleComplexNumber}
@@ -82,7 +84,7 @@ public final class RealComplexNumber
      */
     public RealComplexNumber(final SimpleComplexNumber complexNumber) {
         super(new BigDecimal(requireNonNull(complexNumber, "complexNumber").getReal()),
-            new BigDecimal(complexNumber.getImaginary()));
+                new BigDecimal(complexNumber.getImaginary()));
     }
 
     /**
@@ -117,7 +119,7 @@ public final class RealComplexNumber
     public RealComplexNumber subtract(final RealComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new RealComplexNumber(real.subtract(subtrahend.getReal()),
-            imaginary.subtract(subtrahend.getImaginary()));
+                imaginary.subtract(subtrahend.getImaginary()));
     }
 
     /**
@@ -159,9 +161,9 @@ public final class RealComplexNumber
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
         final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));
         final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))
-            .divide(denominator, BigDecimal.ROUND_HALF_UP);
+                .divide(denominator, BigDecimal.ROUND_HALF_UP);
         final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())
-            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, BigDecimal.ROUND_HALF_UP);
+                .subtract(real.multiply(divisor.getImaginary())).divide(denominator, BigDecimal.ROUND_HALF_UP);
         return new RealComplexNumber(newReal, newImaginary);
     }
 
@@ -219,8 +221,7 @@ public final class RealComplexNumber
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber}
-     * is invertible
+     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber} is invertible
      *
      * @return {@code true} if {@code this != ZERO}, {@code false} otherwise
      * @author Lars Tennstedt
@@ -269,6 +270,126 @@ public final class RealComplexNumber
     }
 
     /**
+     * Returns the argument of this complex number considering the given precision
+     *
+     * @param precision
+     *            The precision
+     * @return The argument
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected BigDecimal argument(final int precision) {
+        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
+        return null;
+    }
+
+    /**
+     * Returns the argument of this complex number considering the given precision and rounding mode
+     *
+     * @param precision
+     *            The precision
+     * @param roundingMode
+     *            The rounding mode
+     * @return The argument
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected BigDecimal argument(final int precision, final RoundingMode roundingMode) {
+        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0), "this == 0");
+        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
+        requireNonNull(roundingMode, "roundingMode");
+        final MathContext mathContext = new MathContext(precision, roundingMode);
+        final Context context = BigFloat.context(mathContext);
+        if (real.compareTo(BigDecimal.ZERO) != 0) {
+            final BigFloat arctan = BigFloat.atan(context.valueOf(imaginary.divide(real, mathContext)));
+            if (real.compareTo(BigDecimal.ZERO) > 0) {
+                return arctan.toBigDecimal();
+            }
+            final BigFloat pi = context.pi();
+            return imaginary.compareTo(BigDecimal.ZERO) > -1 ? arctan.add(pi).toBigDecimal()
+                    : arctan.subtract(pi).toBigDecimal();
+        }
+        final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();
+        return imaginary.compareTo(BigDecimal.ZERO) > 0 ? piDividedByTwo : piDividedByTwo.negate();
+    }
+
+    /**
+     * Return the corresponding polar form of the complex number
+     *
+     * @return The polar form
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected PolarForm polarForm() {
+        return null;
+    }
+
+    /**
+     * Return the corresponding polar form of the complex number considering the given precision
+     *
+     * @param precision
+     *            The precision
+     * @return The polar form
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected PolarForm polarForm(final int precision) {
+        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
+        return null;
+    }
+
+    /**
+     * Return the corresponding polar form of the complex number considering the given rounding mode
+     *
+     * @param roundingMode
+     *            The rounding mode
+     * @return The polar form
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected PolarForm polarForm(final RoundingMode roundingMode) {
+        requireNonNull(roundingMode, "roundingMode");
+        return null;
+    }
+
+    /**
+     * Return the corresponding polar form of the complex number considering the given precision and rounding mode
+     *
+     * @param precision
+     *            The precision
+     * @param roundingMode
+     *            The rounding mode
+     * @return The polar form
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
+        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
+        requireNonNull(roundingMode, "roundingMode");
+        return null;
+    }
+
+    /**
      * Returns a matrix representation of this {@link RealComplexNumber}
      *
      * @return The matrix representation
@@ -279,7 +400,7 @@ public final class RealComplexNumber
     @Override
     public DecimalMatrix matrix() {
         return DecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-            .put(2, 2, real).build();
+                .put(2, 2, real).build();
     }
 
     @Override

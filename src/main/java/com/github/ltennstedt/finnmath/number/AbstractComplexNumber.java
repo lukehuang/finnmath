@@ -21,6 +21,7 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * @param <B>
@@ -54,6 +55,45 @@ abstract class AbstractComplexNumber<B, S, R, M> implements MathNumber<S, R, Big
     protected abstract B absPow2();
 
     protected abstract S conjugate();
+
+    /**
+     * Returns the argument of this complex number
+     *
+     * @return The argument
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    public BigDecimal argument() {
+        return argument(PolarForm.DEFAULT_PRECISION);
+    }
+
+    protected abstract BigDecimal argument(int precision);
+
+    /**
+     * Returns the argument of this complex number considering the given rounding mode
+     *
+     * @param roundingMode
+     *            The rounding mode
+     * @return The argument
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    protected BigDecimal argument(final RoundingMode roundingMode) {
+        requireNonNull(roundingMode, "roundingMode");
+        return argument(PolarForm.DEFAULT_PRECISION, roundingMode);
+    }
+
+    protected abstract BigDecimal argument(int precision, RoundingMode roundingMode);
+
+    protected abstract PolarForm polarForm();
+
+    protected abstract PolarForm polarForm(int precision);
+
+    protected abstract PolarForm polarForm(RoundingMode roundingMode);
+
+    protected abstract PolarForm polarForm(int precision, RoundingMode roundingMode);
 
     protected abstract M matrix();
 

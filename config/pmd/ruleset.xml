@@ -53,6 +53,11 @@
     <rule ref="rulesets/java/naming.xml">
         <exclude name="VariableNamingConventions" />
     </rule>
+    <rule ref="rulesets/java/naming.xml/ShortVariable">
+        <properties>
+            <property name="minimum" value="2" />
+        </properties>
+    </rule>
     <rule ref="rulesets/java/naming.xml/LongVariable">
         <properties>
             <property name="minimum" value="33" />

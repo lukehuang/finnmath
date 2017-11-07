@@ -25,18 +25,18 @@ import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
- * An immutable implementation of a complex number which uses {@link BigInteger}
- * as type for its real and imaginary part
+ * An immutable implementation of a complex number which uses {@link BigInteger} as type for its real and imaginary part
  *
  * @author Lars Tennstedt
  * @since 1
  */
 @Beta
 public final class SimpleComplexNumber
-    extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
+        extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
     /**
      * {@code 0} as {@link SimpleComplexNumber}
      */
@@ -102,7 +102,7 @@ public final class SimpleComplexNumber
     public SimpleComplexNumber subtract(final SimpleComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new SimpleComplexNumber(real.subtract(subtrahend.getReal()),
-            imaginary.subtract(subtrahend.getImaginary()));
+                imaginary.subtract(subtrahend.getImaginary()));
     }
 
     /**
@@ -125,8 +125,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the quotient as {@link RealComplexNumber} of this
-     * {@link SimpleComplexNumber} and the given one
+     * Returns the quotient as {@link RealComplexNumber} of this {@link SimpleComplexNumber} and the given one
      *
      * @param divisor
      *            the divisor
@@ -148,8 +147,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the power of this {@link SimpleComplexNumber} raised by the given
-     * exponent
+     * Returns the power of this {@link SimpleComplexNumber} raised by the given exponent
      *
      * @param exponent
      *            the exponent
@@ -201,8 +199,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumber}
-     * is invertible
+     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumber} is invertible
      *
      * @return {@code true} if {@code this != 0}, {@code false} otherwise
      * @author Lars Tennstedt
@@ -214,8 +211,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the absolute as {@link RealComplexNumber} of this
-     * {@link SimpleComplexNumber}
+     * Returns the absolute as {@link RealComplexNumber} of this {@link SimpleComplexNumber}
      *
      * @return The absolute
      * @author Lars Tennstedt
@@ -252,6 +248,113 @@ public final class SimpleComplexNumber
     }
 
     /**
+     * Returns the argument of this complex number considering the given precision
+     *
+     * @param precision
+     *            The precision
+     * @return The argument
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected BigDecimal argument(final int precision) {
+        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
+        return null;
+    }
+
+    /**
+     * Returns the argument of this complex number considering the given precision and rounding mode
+     *
+     * @param precision
+     *            The precision
+     * @param roundingMode
+     *            The rounding mode
+     * @return The argument
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected BigDecimal argument(final int precision, final RoundingMode roundingMode) {
+        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
+        requireNonNull(roundingMode, "roundingMode");
+        return null;
+    }
+
+    /**
+     * Return the corresponding polar form of the complex number
+     *
+     * @return The polar form
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected PolarForm polarForm() {
+        return null;
+    }
+
+    /**
+     * Return the corresponding polar form of the complex number considering the given precision
+     *
+     * @param precision
+     *            The precision
+     * @return The polar form
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected PolarForm polarForm(final int precision) {
+        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
+        return null;
+    }
+
+    /**
+     * Return the corresponding polar form of the complex number considering the given rounding mode
+     *
+     * @param roundingMode
+     *            The rounding mode
+     * @return The polar form
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected PolarForm polarForm(final RoundingMode roundingMode) {
+        requireNonNull(roundingMode, "roundingMode");
+        return null;
+    }
+
+    /**
+     * Return the corresponding polar form of the complex number considering the given precision and rounding mode
+     *
+     * @param precision
+     *            The precision
+     * @param roundingMode
+     *            The rounding mode
+     * @return The polar form
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Override
+    protected PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
+        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
+        requireNonNull(roundingMode, "roundingMode");
+        return null;
+    }
+
+    /**
      * Returns a matrix representation of this {@link SimpleComplexNumber}
      *
      * @return The matrix representation
@@ -262,7 +365,7 @@ public final class SimpleComplexNumber
     @Override
     public BigIntMatrix matrix() {
         return BigIntMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-            .put(2, 2, real).build();
+                .put(2, 2, real).build();
     }
 
     @Override

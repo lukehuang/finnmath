@@ -14,7 +14,7 @@ What finnMath will provide:
 * Implementations for fractions and complex numbers
 * A pseudo random generator for all these implementations
 * A square root calculator for BigInteger and BigDecimal based on Heron's method
-* Determinant calculation based on the Leibniz Formula and the rule of Sarrus
+* Determinant calculation based on the Leibniz formula and the rule of Sarrus
 
 What finnMath will not provide:
 * Solver for equations
@@ -22,7 +22,7 @@ What finnMath will not provide:
 * Polynomials
 
 finnMath is written in Java and uses Maven as its build automation tool so it should interoperate seamlessly with 
-other JVM technologies. Dependencies are Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
+other JVM technologies. Dependencies are big-math, Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 ## Implementation details
 * Java 8
@@ -89,11 +89,20 @@ a programming language, Gradle is indeed very hard to beat. Maven provides you w
 describe a build and it does it very well and the IDE support is outstanding. The flexibility and power of Gradle is 
 not needed for a standard Java project like this one. 
 
+#### Notes
+* Please consider using free software
+* Please consider using open standards
+* Please consider using recent versions of software
+* Please consider reporting bugs
+* Please consider writing code, patches or documentation for free software projects
+* Please consider joining communities via forums, mailing lists or irc
+* Please consider donating to free software projects
+
 
 ## Thanks to
 * Oracle for the JVM, Java and OpenJDK
 * the Eclipse Foundation for the Eclipse IDE
-* JetBrains for IntelliJ IDEA Community Edition
+* Eric Obermühlner for big-math
 * Google for Guava and Error Prone
 * the Apache Software Foundation for Maven, Commons Lang, Commons Math and the Apache License
 * QOS.ch for SLF4J 
