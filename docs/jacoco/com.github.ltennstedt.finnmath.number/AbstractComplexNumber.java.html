@@ -21,6 +21,7 @@ import static java.util.Objects.requireNonNull;
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 
 /**
@@ -47,45 +48,24 @@ abstract class AbstractComplexNumber&lt;B, S, R, M&gt; implements MathNumber&lt;
      */
     protected final B imaginary;
 
-<span class="fc" id="L50">    protected AbstractComplexNumber(final B real, final B imaginary) {</span>
-<span class="fc" id="L51">        this.real = requireNonNull(real, &quot;real&quot;);</span>
-<span class="fc" id="L52">        this.imaginary = requireNonNull(imaginary, &quot;imaginary&quot;);</span>
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L51">    protected AbstractComplexNumber(final B real, final B imaginary) {</span>
+<span class="fc" id="L52">        this.real = requireNonNull(real, &quot;real&quot;);</span>
+<span class="fc" id="L53">        this.imaginary = requireNonNull(imaginary, &quot;imaginary&quot;);</span>
+<span class="fc" id="L54">    }</span>
 
     protected abstract B absPow2();
 
     protected abstract S conjugate();
 
-    /**
-     * Returns the argument of this complex number
-     *
-     * @return The argument
-     * @author Lars Tennstedt
-     * @since 1
-     */
-    public BigDecimal argument() {
-<span class="nc" id="L67">        return argument(PolarForm.DEFAULT_PRECISION);</span>
-    }
+    protected abstract BigDecimal argument();
 
     protected abstract BigDecimal argument(int precision);
 
-    /**
-     * Returns the argument of this complex number considering the given rounding mode
-     *
-     * @param roundingMode
-     *            The rounding mode
-     * @return The argument
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @author Lars Tennstedt
-     * @since 1
-     */
-    protected BigDecimal argument(final RoundingMode roundingMode) {
-<span class="nc" id="L84">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="nc" id="L85">        return argument(PolarForm.DEFAULT_PRECISION, roundingMode);</span>
-    }
+    protected abstract BigDecimal argument(final RoundingMode roundingMode);
 
     protected abstract BigDecimal argument(int precision, RoundingMode roundingMode);
+
+    protected abstract BigDecimal argument(MathContext mathContext);
 
     protected abstract PolarForm polarForm();
 
@@ -95,19 +75,21 @@ abstract class AbstractComplexNumber&lt;B, S, R, M&gt; implements MathNumber&lt;
 
     protected abstract PolarForm polarForm(int precision, RoundingMode roundingMode);
 
+    protected abstract PolarForm polarForm(MathContext mathContext);
+
     protected abstract M matrix();
 
     @Override
     public String toString() {
-<span class="fc" id="L102">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary).toString();</span>
+<span class="fc" id="L84">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary).toString();</span>
     }
 
     public B getReal() {
-<span class="fc" id="L106">        return real;</span>
+<span class="fc" id="L88">        return real;</span>
     }
 
     public B getImaginary() {
-<span class="fc" id="L110">        return imaginary;</span>
+<span class="fc" id="L92">        return imaginary;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -25,6 +25,7 @@ import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Objects;
 
@@ -36,7 +37,7 @@ import java.util.Objects;
  */
 @Beta
 public final class SimpleComplexNumber
-        extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
+    extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
     /**
      * {@code 0} as {@link SimpleComplexNumber}
      */
@@ -102,7 +103,7 @@ public final class SimpleComplexNumber
     public SimpleComplexNumber subtract(final SimpleComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new SimpleComplexNumber(real.subtract(subtrahend.getReal()),
-                imaginary.subtract(subtrahend.getImaginary()));
+            imaginary.subtract(subtrahend.getImaginary()));
     }
 
     /**
@@ -248,20 +249,61 @@ public final class SimpleComplexNumber
     }
 
     /**
+     * Returns the argument of this complex number
+     *
+     * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @author Lars Tennstedt
+     * @since 1
+     * @see #argument(MathContext)
+     */
+    @Override
+    public BigDecimal argument() {
+        checkState(!equals(ZERO), "this == 0");
+        return argument(new MathContext(PolarForm.DEFAULT_PRECISION));
+    }
+
+    /**
      * Returns the argument of this complex number considering the given precision
      *
      * @param precision
      *            The precision
      * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
      *             if {@code precision < 0}
      * @author Lars Tennstedt
      * @since 1
+     * @see #argument(MathContext)
      */
     @Override
-    protected BigDecimal argument(final int precision) {
+    public BigDecimal argument(final int precision) {
+        checkState(!equals(ZERO), "this == 0");
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        return null;
+        return argument(new MathContext(precision));
+    }
+
+    /**
+     * Returns the argument of this complex number considering the given rounding mode
+     *
+     * @param roundingMode
+     *            The rounding mode
+     * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @since 1
+     * @see #argument(MathContext)
+     */
+    @Override
+    public BigDecimal argument(final RoundingMode roundingMode) {
+        checkState(!equals(ZERO), "this == 0");
+        requireNonNull(roundingMode, "roundingMode");
+        return argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
     }
 
     /**
@@ -272,30 +314,59 @@ public final class SimpleComplexNumber
      * @param roundingMode
      *            The rounding mode
      * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
      *             if {@code precision < 0}
      * @throws NullPointerException
      *             if {@code roundingMode == null}
      * @author Lars Tennstedt
      * @since 1
+     * @see #argument(MathContext)
      */
     @Override
-    protected BigDecimal argument(final int precision, final RoundingMode roundingMode) {
+    public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
+        checkState(!equals(ZERO), "this == 0");
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         requireNonNull(roundingMode, "roundingMode");
-        return null;
+        return argument(new MathContext(precision, roundingMode));
+    }
+
+    /**
+     * Returns the argument of this complex number considering the given {@link MathContext}
+     *
+     * @param mathContext
+     *            The math context
+     * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @author Lars Tennstedt
+     * @since 1
+     * @see RealComplexNumber#argument(MathContext)
+     */
+    @Override
+    public BigDecimal argument(final MathContext mathContext) {
+        checkState(!equals(ZERO), "this == 0");
+        requireNonNull(mathContext, "mathContext");
+        return new RealComplexNumber(this).argument(mathContext);
     }
 
     /**
      * Return the corresponding polar form of the complex number
      *
      * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
      * @author Lars Tennstedt
      * @since 1
+     * @see #polarForm(MathContext)
      */
     @Override
-    protected PolarForm polarForm() {
-        return null;
+    public PolarForm polarForm() {
+        checkState(!equals(ZERO), "this == 0");
+        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));
     }
 
     /**
@@ -304,15 +375,19 @@ public final class SimpleComplexNumber
      * @param precision
      *            The precision
      * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
      *             if {@code precision < 0}
      * @author Lars Tennstedt
      * @since 1
+     * @see #polarForm(MathContext)
      */
     @Override
-    protected PolarForm polarForm(final int precision) {
+    public PolarForm polarForm(final int precision) {
+        checkState(!equals(ZERO), "this == 0");
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        return null;
+        return polarForm(new MathContext(precision));
     }
 
     /**
@@ -321,15 +396,19 @@ public final class SimpleComplexNumber
      * @param roundingMode
      *            The rounding mode
      * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
      * @throws NullPointerException
      *             if {@code roundingMode == null}
      * @author Lars Tennstedt
      * @since 1
+     * @see #polarForm(MathContext)
      */
     @Override
-    protected PolarForm polarForm(final RoundingMode roundingMode) {
+    public PolarForm polarForm(final RoundingMode roundingMode) {
+        checkState(!equals(ZERO), "this == 0");
         requireNonNull(roundingMode, "roundingMode");
-        return null;
+        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
     }
 
     /**
@@ -340,24 +419,50 @@ public final class SimpleComplexNumber
      * @param roundingMode
      *            The rounding mode
      * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
      *             if {@code precision < 0}
      * @throws NullPointerException
      *             if {@code roundingMode == null}
      * @author Lars Tennstedt
      * @since 1
+     * @see #polarForm(MathContext)
      */
     @Override
-    protected PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
+    public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
+        checkState(!equals(ZERO), "this == 0");
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         requireNonNull(roundingMode, "roundingMode");
-        return null;
+        return polarForm(new MathContext(precision, roundingMode));
+    }
+
+    /**
+     * Return the corresponding polar form of the complex number considering the given {@link MathContext}
+     *
+     * @param mathContext
+     *            The math context
+     * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @author Lars Tennstedt
+     * @since 1
+     * @see RealComplexNumber#polarForm(MathContext)
+     */
+    @Override
+    public PolarForm polarForm(final MathContext mathContext) {
+        checkState(!equals(ZERO), "this == 0");
+        requireNonNull(mathContext, "mathContext");
+        return new RealComplexNumber(this).polarForm(mathContext);
     }
 
     /**
      * Returns a matrix representation of this {@link SimpleComplexNumber}
      *
      * @return The matrix representation
+     *
      * @author Lars Tennstedt
      * @see BigIntMatrix#builder
      * @since 1
@@ -365,7 +470,7 @@ public final class SimpleComplexNumber
     @Override
     public BigIntMatrix matrix() {
         return BigIntMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-                .put(2, 2, real).build();
+            .put(2, 2, real).build();
     }
 
     @Override

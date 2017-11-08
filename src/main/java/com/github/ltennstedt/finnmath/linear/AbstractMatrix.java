@@ -100,11 +100,9 @@ abstract class AbstractMatrix<E, V, M> {
     protected abstract E maxNorm();
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is a
-     * square one
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is a square one
      *
-     * @return {@code true} if {@code rowSize == columnSize}, {@code false}
-     *         otherwise
+     * @return {@code true} if {@code rowSize == columnSize}, {@code false} otherwise
      * @author Lars Tennstedt
      * @since 1
      */
@@ -113,11 +111,9 @@ abstract class AbstractMatrix<E, V, M> {
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
-     * triangular
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is triangular
      *
-     * @return {@code true} if {@code upperTriangular || lowerTriangular},
-     *         {@code false} otherwise
+     * @return {@code true} if {@code upperTriangular || lowerTriangular}, {@code false} otherwise
      * @author Lars Tennstedt
      * @see #upperTriangular
      * @see #lowerTriangular
@@ -132,11 +128,9 @@ abstract class AbstractMatrix<E, V, M> {
     protected abstract boolean lowerTriangular();
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
-     * diagonal
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is diagonal
      *
-     * @return {@code true} if {@code upperTriangular && lowerTriangular},
-     *         {@code false} otherwise
+     * @return {@code true} if {@code upperTriangular && lowerTriangular}, {@code false} otherwise
      * @author Lars Tennstedt
      * @see #upperTriangular
      * @see #lowerTriangular
@@ -151,11 +145,9 @@ abstract class AbstractMatrix<E, V, M> {
     protected abstract boolean invertible();
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
-     * symmetric
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is symmetric
      *
-     * @return {@code true} if {@code square && equals(transpose)}, {@code false}
-     *         otherwise
+     * @return {@code true} if {@code square && equals(transpose)}, {@code false} otherwise
      * @author Lars Tennstedt
      * @see #square
      * @see #transpose
@@ -166,11 +158,9 @@ abstract class AbstractMatrix<E, V, M> {
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
-     * skew symmetric
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is skew symmetric
      *
-     * @return {@code true} if {@code square && equals(transpose.negate)},
-     *         {@code false} otherwise
+     * @return {@code true} if {@code square && equals(transpose.negate)}, {@code false} otherwise
      * @author Lars Tennstedt
      * @see #square
      * @see #transpose
@@ -248,8 +238,7 @@ abstract class AbstractMatrix<E, V, M> {
     }
 
     /**
-     * Returns the matrix row as {@link ImmutableMap} dependent on the given row
-     * index
+     * Returns the matrix row as {@link ImmutableMap} dependent on the given row index
      *
      * @param rowIndex
      *            the row index
@@ -270,8 +259,7 @@ abstract class AbstractMatrix<E, V, M> {
     }
 
     /**
-     * Returns the matrix column as {@link ImmutableMap} dependent on the given
-     * column index
+     * Returns the matrix column as {@link ImmutableMap} dependent on the given column index
      *
      * @param columnIndex
      *            the column index

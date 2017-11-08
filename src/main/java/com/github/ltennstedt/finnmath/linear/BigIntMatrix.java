@@ -36,8 +36,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 
 /**
- * An immutable implementation of a matrix which uses {@link BigInteger} as type
- * for its elements
+ * An immutable implementation of a matrix which uses {@link BigInteger} as type for its elements
  *
  * @author Lars Tennstedt
  * @since 1
@@ -142,8 +141,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the product of this {@link BigIntMatrix} and the given
-     * {@link BigIntVector}
+     * Returns the product of this {@link BigIntMatrix} and the given {@link BigIntVector}
      *
      * @param vector
      *            the vector
@@ -187,8 +185,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the scalar product of this {@link BigIntMatrix} and the given
-     * {@link BigInteger}
+     * Returns the scalar product of this {@link BigIntMatrix} and the given {@link BigInteger}
      *
      * @param scalar
      *            the scalar
@@ -325,8 +322,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the minor of this {@link BigIntMatrix} dependent on the given row and
-     * column index
+     * Returns the minor of this {@link BigIntMatrix} dependent on the given row and column index
      *
      * @param rowIndex
      *            the row index
@@ -465,8 +461,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The frobenius norm
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
@@ -489,8 +484,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The frobenius norm
      * @throws NullPointerException
      *             if {@code precision == null}
@@ -529,11 +523,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
-     * upper triangular
+     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is upper triangular
      *
-     * @return {@code true} if {@code this} is upper triangular, {@code false}
-     *         otherwise
+     * @return {@code true} if {@code this} is upper triangular, {@code false} otherwise
      * @author Lars Tennstedt
      * @since 1
      */
@@ -551,11 +543,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
-     * lower triangular
+     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is lower triangular
      *
-     * @return {@code true} if {@code this} is lower triangular, {@code false}
-     *         otherwise
+     * @return {@code true} if {@code this} is lower triangular, {@code false} otherwise
      * @author Lars Tennstedt
      * @since 1
      */
@@ -573,11 +563,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is the
-     * identity one
+     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is the identity one
      *
-     * @return {@code true} if {@code this} is the identity matrix, {@code false}
-     *         otherwise
+     * @return {@code true} if {@code this} is the identity matrix, {@code false} otherwise
      * @author Lars Tennstedt
      * @see #diagonal
      * @since 1
@@ -596,11 +584,9 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is
-     * invertible
+     * Returns a {@code boolean} which indicates if this {@link BigIntMatrix} is invertible
      *
-     * @return {@code true} if {@code det == -1 || det == 1}, {@code false}
-     *         otherwise
+     * @return {@code true} if {@code det == -1 || det == 1}, {@code false} otherwise
      * @author Lars Tennstedt
      * @see #determinant
      * @since 1
@@ -657,8 +643,7 @@ public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector,
         }
 
         /**
-         * Puts the given element on the {@link Table} dependent on the given row and
-         * column index
+         * Puts the given element on the {@link Table} dependent on the given row and column index
          *
          * @param rowIndex
          *            thr row index

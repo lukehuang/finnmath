@@ -27,8 +27,7 @@ import java.math.BigInteger;
 import java.util.Objects;
 
 /**
- * An immutable implementation of a fraction which uses {@link BigInteger} as
- * type for its numerator and denominator
+ * An immutable implementation of a fraction which uses {@link BigInteger} as type for its numerator and denominator
  *
  * @author Lars Tennstedt
  * @since 1
@@ -324,13 +323,11 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns an int which
-     * indicates which one is less
+     * Compares this {@link Fraction} to the given one and returns an int which indicates which one is less
      *
      * @param other
      *            another {@link Fraction}
-     * @return {@code -1} if {@code this < other}, {@code 1} if
-     *         {@code this > other}, {@code 0} otherwise
+     * @return {@code -1} if {@code this < other}, {@code 1} if {@code this > other}, {@code 0} otherwise
      * @author Lars Tennstedt
      * @see #lessThan
      * @see #greaterThan
@@ -349,8 +346,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
-     * which indicates which one is less
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates which one is less
      *
      * @param other
      *            another {@link Fraction}
@@ -369,8 +365,8 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
-     * which indicates which one is greater
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates which one is
+     * greater
      *
      * @param other
      *            another {@link Fraction}
@@ -386,8 +382,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
-     * which indicates which one is less
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates which one is less
      *
      * @param other
      *            another {@link Fraction}
@@ -402,8 +397,8 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
-     * which indicates which one is greater
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates which one is
+     * greater
      *
      * @param other
      *            another {@link Fraction}
@@ -466,9 +461,8 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * <p>
      * The returned {@link Fraction} is not reduced.
      *
-     * @return {@code new Fraction(-numerator.abs, denominator.abs)} if the
-     *         {@code signum < 0}, {@code ZERO} if {@code signum == 0}, {@code this}
-     *         otherwise
+     * @return {@code new Fraction(-numerator.abs, denominator.abs)} if the {@code signum < 0}, {@code ZERO} if
+     *         {@code signum == 0}, {@code this} otherwise
      * @author Lars Tennstedt
      * @see #signum
      * @see #abs
@@ -518,13 +512,12 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
-     * which indicates if this {@link Fraction} is equivalent to the given one
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates if this
+     * {@link Fraction} is equivalent to the given one
      *
      * @param other
      *            another {@link Fraction}
-     * @return {@code true} if the {@code this} is equivalent to {@code other},
-     *         {@code false} otherwise
+     * @return {@code true} if the {@code this} is equivalent to {@code other}, {@code false} otherwise
      * @author Lars Tennstedt
      * @see #normalize
      * @see #reduce

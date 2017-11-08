@@ -33,8 +33,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * An immutable implementation of a vector which uses {@link BigInteger} as type
- * for its elements
+ * An immutable implementation of a vector which uses {@link BigInteger} as type for its elements
  *
  * @author Lars Tennstedt
  * @since 1
@@ -223,8 +222,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean norm
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
@@ -247,8 +245,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean norm
      * @throws NullPointerException
      *             if {@code precision == null}
@@ -295,8 +292,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the square of the euclidean distance from this {@link BigIntVector}
-     * to the given one
+     * Returns the square of the euclidean distance from this {@link BigIntVector} to the given one
      *
      * @param other
      *            The other {@link BigIntVector}
@@ -318,8 +314,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntVector} to the given
-     * one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given one
      *
      * @param other
      *            The other {@link BigIntVector}
@@ -341,8 +336,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntVector} to the given
-     * one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given one
      *
      * @param other
      *            The other {@link BigIntVector}
@@ -373,16 +367,14 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntVector} to the given
-     * one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given one
      *
      * @param other
      *            The other {@link BigIntVector}
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean distance
      * @throws NullPointerException
      *             if {@code other == null}
@@ -404,8 +396,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntVector} to the given
-     * one
+     * Returns the euclidean distance from this {@link BigIntVector} to the given one
      *
      * @param other
      *            The other {@link BigIntVector}
@@ -414,8 +405,7 @@ public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector,
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean distance
      * @throws NullPointerException
      *             if {@code other == null}

@@ -75,8 +75,7 @@ abstract class AbstractVector&lt;E, V, N&gt; {
     }
 
     /**
-     * Returns all elements of the underlying {@link Map} of this
-     * {@link AbstractVector}
+     * Returns all elements of the underlying {@link Map} of this {@link AbstractVector}
      *
      * @return The elements
      * @author Lars Tennstedt
@@ -84,7 +83,7 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * @since 1
      */
     public ImmutableSet&lt;Entry&lt;Integer, E&gt;&gt; entries() {
-<span class="fc" id="L87">        return map.entrySet();</span>
+<span class="fc" id="L86">        return map.entrySet();</span>
     }
 
     /**
@@ -96,7 +95,7 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * @since 1
      */
     public ImmutableCollection&lt;E&gt; elements() {
-<span class="fc" id="L99">        return map.values();</span>
+<span class="fc" id="L98">        return map.values();</span>
     }
 
     protected abstract V add(V summand);
@@ -145,16 +144,16 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * @since 1
      */
     public int size() {
-<span class="nc" id="L148">        return map.size();</span>
+<span class="nc" id="L147">        return map.size();</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L153">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
+<span class="fc" id="L152">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
     }
 
     public ImmutableMap&lt;Integer, E&gt; getMap() {
-<span class="fc" id="L157">        return map;</span>
+<span class="fc" id="L156">        return map;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

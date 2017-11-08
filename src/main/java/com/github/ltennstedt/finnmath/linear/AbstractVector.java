@@ -75,8 +75,7 @@ abstract class AbstractVector<E, V, N> {
     }
 
     /**
-     * Returns all elements of the underlying {@link Map} of this
-     * {@link AbstractVector}
+     * Returns all elements of the underlying {@link Map} of this {@link AbstractVector}
      *
      * @return The elements
      * @author Lars Tennstedt

@@ -32,8 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation for calculating square roots of {@link BigInteger
- * BigIntegers} and {@link BigDecimal BigDecimals}
+ * An implementation for calculating square roots of {@link BigInteger BigIntegers} and {@link BigDecimal BigDecimals}
  *
  * @author Lars Tennstedt
  * @since 1
@@ -106,14 +105,12 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Constructs a {@link SquareRootCalculator} from a given scale and rounding
-     * mode
+     * Constructs a {@link SquareRootCalculator} from a given scale and rounding mode
      *
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
      * @author Lars Tennstedt
@@ -127,16 +124,14 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Constructs a {@link SquareRootCalculator} from a given precision, scale and
-     * rounding mode
+     * Constructs a {@link SquareRootCalculator} from a given precision, scale and rounding mode
      *
      * @param precision
      *            the precision for the termination condition
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @throws NullPointerException
      *             if {@code precision == null}
      * @throws IllegalArgumentException
@@ -197,8 +192,7 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigInteger} which has to be a
-     * perfect square
+     * Returns the square root of the given {@link BigInteger} which has to be a perfect square
      *
      * @param integer
      *            the perfect square whose square root is to be calculated
@@ -226,8 +220,7 @@ public final class SquareRootCalculator {
      *
      * @param integer
      *            the integer which should be checked
-     * @return {@code true} if the integer is a perfect square, {@code false}
-     *         otherwise
+     * @return {@code true} if the integer is a perfect square, {@code false} otherwise
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws IllegalArgumentException

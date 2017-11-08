@@ -113,7 +113,7 @@ public final class PolarFormTest {
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
             assertThat(polarForm.complexNumber(RoundingMode.HALF_DOWN))
-                    .isEqualTo(new RealComplexNumber(real, imaginary));
+                .isEqualTo(new RealComplexNumber(real, imaginary));
         });
     }
 
@@ -140,7 +140,7 @@ public final class PolarFormTest {
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
             assertThat(polarForm.complexNumber(99, RoundingMode.HALF_DOWN))
-                    .isEqualTo(new RealComplexNumber(real, imaginary));
+                .isEqualTo(new RealComplexNumber(real, imaginary));
         });
     }
 }

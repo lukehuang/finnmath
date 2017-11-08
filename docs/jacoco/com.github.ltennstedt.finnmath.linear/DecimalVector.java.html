@@ -32,8 +32,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * An immutable implementation of a vector which uses {@link BigDecimal} as type
- * for its elements
+ * An immutable implementation of a vector which uses {@link BigDecimal} as type for its elements
  *
  * @author Lars Tennstedt
  * @since 1
@@ -41,8 +40,8 @@ import java.util.stream.IntStream;
 @Beta
 public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVector, BigDecimal&gt; {
     private DecimalVector(final ImmutableMap&lt;Integer, BigDecimal&gt; map) {
-<span class="fc" id="L44">        super(map);</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L43">        super(map);</span>
+<span class="fc" id="L44">    }</span>
 
     /**
      * Returns the sum of this {@link DecimalVector} and the given one
@@ -57,14 +56,14 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public DecimalVector add(final DecimalVector summand) {
-<span class="fc" id="L60">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L62">            summand.size());</span>
-<span class="fc" id="L63">        final DecimalVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L64">        map.forEach((index, element) -&gt; {</span>
-<span class="fc" id="L65">            builder.put(element.add(summand.element(index)));</span>
-<span class="fc" id="L66">        });</span>
-<span class="fc" id="L67">        return builder.build();</span>
+<span class="fc" id="L59">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L61">            summand.size());</span>
+<span class="fc" id="L62">        final DecimalVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L63">        map.forEach((index, element) -&gt; {</span>
+<span class="fc" id="L64">            builder.put(element.add(summand.element(index)));</span>
+<span class="fc" id="L65">        });</span>
+<span class="fc" id="L66">        return builder.build();</span>
     }
 
     /**
@@ -80,14 +79,14 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public DecimalVector subtract(final DecimalVector subtrahend) {
-<span class="fc" id="L83">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L85">            subtrahend.size());</span>
-<span class="fc" id="L86">        final DecimalVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L87">        map.forEach((index, element) -&gt; {</span>
-<span class="fc" id="L88">            builder.put(element.subtract(subtrahend.element(index)));</span>
-<span class="fc" id="L89">        });</span>
-<span class="fc" id="L90">        return builder.build();</span>
+<span class="fc" id="L82">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L84">            subtrahend.size());</span>
+<span class="fc" id="L85">        final DecimalVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L86">        map.forEach((index, element) -&gt; {</span>
+<span class="fc" id="L87">            builder.put(element.subtract(subtrahend.element(index)));</span>
+<span class="fc" id="L88">        });</span>
+<span class="fc" id="L89">        return builder.build();</span>
     }
 
     /**
@@ -105,13 +104,13 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal dotProduct(final DecimalVector other) {
-<span class="fc" id="L108">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L109" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L110">        BigDecimal result = BigDecimal.ZERO;</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">        for (final Integer index : map.keySet()) {</span>
-<span class="fc" id="L112">            result = result.add(map.get(index).multiply(other.element(index)));</span>
-<span class="fc" id="L113">        }</span>
-<span class="fc" id="L114">        return result;</span>
+<span class="fc" id="L107">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L109">        BigDecimal result = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (final Integer index : map.keySet()) {</span>
+<span class="fc" id="L111">            result = result.add(map.get(index).multiply(other.element(index)));</span>
+<span class="fc" id="L112">        }</span>
+<span class="fc" id="L113">        return result;</span>
     }
 
     /**
@@ -127,12 +126,12 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public DecimalVector scalarMultiply(final BigDecimal scalar) {
-<span class="fc" id="L130">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L131">        final DecimalVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L132">        map.values().forEach(element -&gt; {</span>
-<span class="fc" id="L133">            builder.put(scalar.multiply(element));</span>
-<span class="fc" id="L134">        });</span>
-<span class="fc" id="L135">        return builder.build();</span>
+<span class="fc" id="L129">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L130">        final DecimalVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L131">        map.values().forEach(element -&gt; {</span>
+<span class="fc" id="L132">            builder.put(scalar.multiply(element));</span>
+<span class="fc" id="L133">        });</span>
+<span class="fc" id="L134">        return builder.build();</span>
     }
 
     /**
@@ -145,7 +144,7 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public DecimalVector negate() {
-<span class="fc" id="L148">        return scalarMultiply(BigDecimal.ONE.negate());</span>
+<span class="fc" id="L147">        return scalarMultiply(BigDecimal.ONE.negate());</span>
     }
 
     /**
@@ -157,11 +156,11 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     protected BigDecimal taxicabNorm() {
-<span class="fc" id="L160">        BigDecimal norm = BigDecimal.ZERO;</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        for (final BigDecimal element : map.values()) {</span>
-<span class="fc" id="L162">            norm = norm.add(element.abs());</span>
-<span class="fc" id="L163">        }</span>
-<span class="fc" id="L164">        return norm;</span>
+<span class="fc" id="L159">        BigDecimal norm = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (final BigDecimal element : map.values()) {</span>
+<span class="fc" id="L161">            norm = norm.add(element.abs());</span>
+<span class="fc" id="L162">        }</span>
+<span class="fc" id="L163">        return norm;</span>
     }
 
     /**
@@ -181,9 +180,9 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     protected BigDecimal taxicabDistance(final DecimalVector other) {
-<span class="fc" id="L184">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L186">        return subtract(other).taxicabNorm();</span>
+<span class="fc" id="L183">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L185">        return subtract(other).taxicabNorm();</span>
     }
 
     /**
@@ -196,7 +195,7 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNormPow2() {
-<span class="fc" id="L199">        return dotProduct(this);</span>
+<span class="fc" id="L198">        return dotProduct(this);</span>
     }
 
     /**
@@ -210,7 +209,7 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNorm() {
-<span class="fc" id="L213">        return new SquareRootCalculator().sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L212">        return new SquareRootCalculator().sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -230,10 +229,10 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision) {
-<span class="fc" id="L233">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L234" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+<span class="fc" id="L232">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L233" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc" id="L236">        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L235">        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -242,8 +241,7 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean norm
      * @throws IllegalArgumentException
      *             if {@code scale &lt; 0}
@@ -254,8 +252,8 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNorm(final int scale, final RoundingMode roundingMode) {
-<span class="fc bfc" id="L257" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L258">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L256">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -266,8 +264,7 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean norm
      * @throws NullPointerException
      *             if {@code precision == null}
@@ -282,16 +279,15 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
-<span class="fc" id="L285">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L286" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+<span class="fc" id="L282">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L283" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc bfc" id="L288" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L289">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L286">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
-     * Returns the square of the euclidean distance from this {@link DecimalVector}
-     * to the given one
+     * Returns the square of the euclidean distance from this {@link DecimalVector} to the given one
      *
      * @param other
      *            The other {@link DecimalVector}
@@ -307,14 +303,13 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanDistancePow2(final DecimalVector other) {
-<span class="fc" id="L310">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L311" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L312">        return subtract(other).euclideanNormPow2();</span>
+<span class="fc" id="L306">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L308">        return subtract(other).euclideanNormPow2();</span>
     }
 
     /**
-     * Returns the euclidean distance from this {@link DecimalVector} to the given
-     * one
+     * Returns the euclidean distance from this {@link DecimalVector} to the given one
      *
      * @param other
      *            The other {@link DecimalVector}
@@ -330,14 +325,13 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector other) {
-<span class="fc" id="L333">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L334" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L335">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L328">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L330">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
-     * Returns the euclidean distance from this {@link DecimalVector} to the given
-     * one
+     * Returns the euclidean distance from this {@link DecimalVector} to the given one
      *
      * @param other
      *            The other {@link DecimalVector}
@@ -359,25 +353,23 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector other, final BigDecimal precision) {
-<span class="fc" id="L362">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L363" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L364">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L365" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+<span class="fc" id="L356">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L358">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L359" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc" id="L367">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L361">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
-     * Returns the euclidean distance from this {@link DecimalVector} to the given
-     * one
+     * Returns the euclidean distance from this {@link DecimalVector} to the given one
      *
      * @param other
      *            The other {@link DecimalVector}
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The deuclidean istance
      * @throws NullPointerException
      *             if {@code other == null}
@@ -392,15 +384,14 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public BigDecimal euclideanDistance(final DecimalVector other, final int scale, final RoundingMode roundingMode) {
-<span class="fc" id="L395">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L396" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc bfc" id="L397" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L398">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L387">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc bfc" id="L389" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L390">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
-     * Returns the euclidean distance from this {@link DecimalVector} to the given
-     * one
+     * Returns the euclidean distance from this {@link DecimalVector} to the given one
      *
      * @param other
      *            The other {@link DecimalVector}
@@ -409,8 +400,7 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      * @param scale
      *            the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean distance
      * @throws NullPointerException
      *             if {@code other == null}
@@ -430,13 +420,13 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
     @Override
     public BigDecimal euclideanDistance(final DecimalVector other, final BigDecimal precision, final int scale,
         final RoundingMode roundingMode) {
-<span class="fc" id="L433">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L434" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L435">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L436" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+<span class="fc" id="L423">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L425">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L426" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc bfc" id="L438" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L439">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L429">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -448,11 +438,11 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     protected BigDecimal maxNorm() {
-<span class="fc" id="L451">        BigDecimal norm = BigDecimal.ZERO;</span>
-<span class="fc bfc" id="L452" title="All 2 branches covered.">        for (final BigDecimal element : map.values()) {</span>
-<span class="fc" id="L453">            norm = norm.max(element.abs());</span>
-<span class="fc" id="L454">        }</span>
-<span class="fc" id="L455">        return norm;</span>
+<span class="fc" id="L441">        BigDecimal norm = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L442" title="All 2 branches covered.">        for (final BigDecimal element : map.values()) {</span>
+<span class="fc" id="L443">            norm = norm.max(element.abs());</span>
+<span class="fc" id="L444">        }</span>
+<span class="fc" id="L445">        return norm;</span>
     }
 
     /**
@@ -472,9 +462,9 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     protected BigDecimal maxDistance(final DecimalVector other) {
-<span class="fc" id="L475">        requireNonNull(other, &quot;vector&quot;);</span>
-<span class="fc bfc" id="L476" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L477">        return subtract(other).maxNorm();</span>
+<span class="fc" id="L465">        requireNonNull(other, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L466" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L467">        return subtract(other).maxNorm();</span>
     }
 
     /**
@@ -486,7 +476,7 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      */
     @Override
     public int size() {
-<span class="fc" id="L489">        return map.size();</span>
+<span class="fc" id="L479">        return map.size();</span>
     }
 
     /**
@@ -499,25 +489,25 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
      * @since 1
      */
     public static DecimalVectorBuilder builder(final int size) {
-<span class="fc bfc" id="L502" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L503">        return new DecimalVectorBuilder(size);</span>
+<span class="fc bfc" id="L492" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L493">        return new DecimalVectorBuilder(size);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L508">        return Objects.hash(map);</span>
+<span class="fc" id="L498">        return Objects.hash(map);</span>
     }
 
     @Override
     public boolean equals(final Object object) {
-<span class="fc bfc" id="L513" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L514">            return true;</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L504">            return true;</span>
         }
-<span class="fc bfc" id="L516" title="All 2 branches covered.">        if (!(object instanceof DecimalVector)) {</span>
-<span class="fc" id="L517">            return false;</span>
+<span class="fc bfc" id="L506" title="All 2 branches covered.">        if (!(object instanceof DecimalVector)) {</span>
+<span class="fc" id="L507">            return false;</span>
         }
-<span class="fc" id="L519">        final DecimalVector other = (DecimalVector) object;</span>
-<span class="fc" id="L520">        return Objects.deepEquals(map, other.getMap());</span>
+<span class="fc" id="L509">        final DecimalVector other = (DecimalVector) object;</span>
+<span class="fc" id="L510">        return Objects.deepEquals(map, other.getMap());</span>
     }
 
     /**
@@ -530,8 +520,8 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
     public static final class DecimalVectorBuilder
         extends AbstractVectorBuilder&lt;BigDecimal, DecimalVector, DecimalVectorBuilder&gt; {
         private DecimalVectorBuilder(final int size) {
-<span class="fc" id="L533">            super(size);</span>
-<span class="fc" id="L534">        }</span>
+<span class="fc" id="L523">            super(size);</span>
+<span class="fc" id="L524">        }</span>
 
         /**
          * Puts the given element on the first free index and returns {@code this}
@@ -549,11 +539,11 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
          * @since 1
          */
         public DecimalVectorBuilder put(final BigDecimal element) {
-<span class="fc" id="L552">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc" id="L553">            final int index = addExact(map.size(), 1);</span>
-<span class="pc bpc" id="L554" title="1 of 2 branches missed.">            checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="fc" id="L555">            map.put(index, element);</span>
-<span class="fc" id="L556">            return this;</span>
+<span class="fc" id="L542">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L543">            final int index = addExact(map.size(), 1);</span>
+<span class="pc bpc" id="L544" title="1 of 2 branches missed.">            checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L545">            map.put(index, element);</span>
+<span class="fc" id="L546">            return this;</span>
         }
 
         /**
@@ -574,11 +564,11 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
          * @since 1
          */
         public DecimalVectorBuilder put(final Integer index, final BigDecimal element) {
-<span class="fc" id="L577">            requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L578">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="pc bpc" id="L579" title="1 of 4 branches missed.">            checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="nc" id="L580">            map.put(index, element);</span>
-<span class="nc" id="L581">            return this;</span>
+<span class="fc" id="L567">            requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L568">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="pc bpc" id="L569" title="1 of 4 branches missed.">            checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="nc" id="L570">            map.put(index, element);</span>
+<span class="nc" id="L571">            return this;</span>
         }
 
         /**
@@ -593,11 +583,11 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
          * @since 1
          */
         public DecimalVectorBuilder putAll(final BigDecimal element) {
-<span class="fc" id="L596">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc bfc" id="L597" title="All 2 branches covered.">            for (int index = 1; index &lt;= size; index++) {</span>
-<span class="fc" id="L598">                map.put(index, element);</span>
+<span class="fc" id="L586">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc bfc" id="L587" title="All 2 branches covered.">            for (int index = 1; index &lt;= size; index++) {</span>
+<span class="fc" id="L588">                map.put(index, element);</span>
             }
-<span class="fc" id="L600">            return this;</span>
+<span class="fc" id="L590">            return this;</span>
         }
 
         /**
@@ -612,10 +602,10 @@ public final class DecimalVector extends AbstractVector&lt;BigDecimal, DecimalVe
          */
         @Override
         public DecimalVector build() {
-<span class="fc" id="L615">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(index -&gt; {</span>
-<span class="fc" id="L616">                requireNonNull(map.get(index), &quot;map.value&quot;);</span>
-<span class="fc" id="L617">            });</span>
-<span class="fc" id="L618">            return new DecimalVector(ImmutableMap.copyOf(map));</span>
+<span class="fc" id="L605">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(index -&gt; {</span>
+<span class="fc" id="L606">                requireNonNull(map.get(index), &quot;map.value&quot;);</span>
+<span class="fc" id="L607">            });</span>
+<span class="fc" id="L608">            return new DecimalVector(ImmutableMap.copyOf(map));</span>
         }
     }
 }
