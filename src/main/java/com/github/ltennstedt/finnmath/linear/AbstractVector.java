@@ -35,13 +35,15 @@ import java.util.Map.Entry;
  * @param <V>
  *            The type of the vector
  * @param <N>
- *            The type of the euclidean norm of the vector
+ *            The type of the taxicab and max norm of the vector
+ * @param <P>
+ *            The type of the inner product
  * @author Lars Tennstedt
  * @see ImmutableMap
  * @since 1
  */
 @Beta
-abstract class AbstractVector<E, V, N> {
+abstract class AbstractVector<E, V, N, P> {
     /**
      * The map holding the elements of this {@link AbstractVector}
      *
@@ -108,33 +110,34 @@ abstract class AbstractVector<E, V, N> {
 
     protected abstract V negate();
 
-    protected abstract E taxicabNorm();
+    protected abstract N taxicabNorm();
 
-    protected abstract E taxicabDistance(V other);
+    protected abstract N taxicabDistance(V other);
 
-    protected abstract E euclideanNormPow2();
+    protected abstract P euclideanNormPow2();
 
-    protected abstract N euclideanNorm();
+    protected abstract BigDecimal euclideanNorm();
 
-    protected abstract N euclideanNorm(BigDecimal precision);
+    protected abstract BigDecimal euclideanNorm(BigDecimal precision);
 
-    protected abstract N euclideanNorm(int scale, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanNorm(int scale, RoundingMode roundingMode);
 
-    protected abstract N euclideanNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
 
-    protected abstract E euclideanDistancePow2(V other);
+    protected abstract P euclideanDistancePow2(V other);
 
-    protected abstract N euclideanDistance(V other);
+    protected abstract BigDecimal euclideanDistance(V other);
 
-    protected abstract N euclideanDistance(V other, BigDecimal precision);
+    protected abstract BigDecimal euclideanDistance(V other, BigDecimal precision);
 
-    protected abstract N euclideanDistance(V other, int scale, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanDistance(V other, int scale, RoundingMode roundingMode);
 
-    protected abstract N euclideanDistance(V other, BigDecimal precision, int scale, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanDistance(V other, BigDecimal precision, int scale,
+        RoundingMode roundingMode);
 
-    protected abstract E maxNorm();
+    protected abstract N maxNorm();
 
-    protected abstract E maxDistance(V other);
+    protected abstract N maxDistance(V other);
 
     /**
      * Returns the size of the underlying {@link Map}

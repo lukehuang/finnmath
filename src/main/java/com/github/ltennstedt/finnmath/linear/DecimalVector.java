@@ -38,7 +38,7 @@ import java.util.stream.IntStream;
  * @since 1
  */
 @Beta
-public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVector, BigDecimal> {
+public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVector, BigDecimal, BigDecimal> {
     private DecimalVector(final ImmutableMap<Integer, BigDecimal> map) {
         super(map);
     }

@@ -35,13 +35,15 @@ import java.util.Map.Entry;
  * @param &lt;V&gt;
  *            The type of the vector
  * @param &lt;N&gt;
- *            The type of the euclidean norm of the vector
+ *            The type of the taxicab and max norm of the vector
+ * @param &lt;P&gt;
+ *            The type of the inner product
  * @author Lars Tennstedt
  * @see ImmutableMap
  * @since 1
  */
 @Beta
-abstract class AbstractVector&lt;E, V, N&gt; {
+abstract class AbstractVector&lt;E, V, N, P&gt; {
     /**
      * The map holding the elements of this {@link AbstractVector}
      *
@@ -50,9 +52,9 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      */
     protected final ImmutableMap&lt;Integer, E&gt; map;
 
-<span class="fc" id="L53">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
-<span class="fc" id="L54">        this.map = map;</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L55">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
+<span class="fc" id="L56">        this.map = map;</span>
+<span class="fc" id="L57">    }</span>
 
     /**
      * Returns the element dependent on the given index
@@ -69,9 +71,9 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * @since 1
      */
     public E element(final Integer index) {
-<span class="fc" id="L72">        requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L73">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
-<span class="fc" id="L74">        return map.get(index);</span>
+<span class="fc" id="L74">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L75">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
+<span class="fc" id="L76">        return map.get(index);</span>
     }
 
     /**
@@ -83,7 +85,7 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * @since 1
      */
     public ImmutableSet&lt;Entry&lt;Integer, E&gt;&gt; entries() {
-<span class="fc" id="L86">        return map.entrySet();</span>
+<span class="fc" id="L88">        return map.entrySet();</span>
     }
 
     /**
@@ -95,7 +97,7 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * @since 1
      */
     public ImmutableCollection&lt;E&gt; elements() {
-<span class="fc" id="L98">        return map.values();</span>
+<span class="fc" id="L100">        return map.values();</span>
     }
 
     protected abstract V add(V summand);
@@ -108,33 +110,34 @@ abstract class AbstractVector&lt;E, V, N&gt; {
 
     protected abstract V negate();
 
-    protected abstract E taxicabNorm();
+    protected abstract N taxicabNorm();
 
-    protected abstract E taxicabDistance(V other);
+    protected abstract N taxicabDistance(V other);
 
-    protected abstract E euclideanNormPow2();
+    protected abstract P euclideanNormPow2();
 
-    protected abstract N euclideanNorm();
+    protected abstract BigDecimal euclideanNorm();
 
-    protected abstract N euclideanNorm(BigDecimal precision);
+    protected abstract BigDecimal euclideanNorm(BigDecimal precision);
 
-    protected abstract N euclideanNorm(int scale, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanNorm(int scale, RoundingMode roundingMode);
 
-    protected abstract N euclideanNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
 
-    protected abstract E euclideanDistancePow2(V other);
+    protected abstract P euclideanDistancePow2(V other);
 
-    protected abstract N euclideanDistance(V other);
+    protected abstract BigDecimal euclideanDistance(V other);
 
-    protected abstract N euclideanDistance(V other, BigDecimal precision);
+    protected abstract BigDecimal euclideanDistance(V other, BigDecimal precision);
 
-    protected abstract N euclideanDistance(V other, int scale, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanDistance(V other, int scale, RoundingMode roundingMode);
 
-    protected abstract N euclideanDistance(V other, BigDecimal precision, int scale, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanDistance(V other, BigDecimal precision, int scale,
+        RoundingMode roundingMode);
 
-    protected abstract E maxNorm();
+    protected abstract N maxNorm();
 
-    protected abstract E maxDistance(V other);
+    protected abstract N maxDistance(V other);
 
     /**
      * Returns the size of the underlying {@link Map}
@@ -144,16 +147,16 @@ abstract class AbstractVector&lt;E, V, N&gt; {
      * @since 1
      */
     public int size() {
-<span class="nc" id="L147">        return map.size();</span>
+<span class="nc" id="L150">        return map.size();</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L152">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
+<span class="fc" id="L155">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
     }
 
     public ImmutableMap&lt;Integer, E&gt; getMap() {
-<span class="fc" id="L156">        return map;</span>
+<span class="fc" id="L159">        return map;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

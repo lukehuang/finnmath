@@ -39,7 +39,7 @@ import java.util.stream.IntStream;
  * @since 1
  */
 @Beta
-public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector, BigDecimal> {
+public final class BigIntVector extends AbstractVector<BigInteger, BigIntVector, BigInteger, BigInteger> {
     private BigIntVector(final ImmutableMap<Integer, BigInteger> map) {
         super(map);
     }
