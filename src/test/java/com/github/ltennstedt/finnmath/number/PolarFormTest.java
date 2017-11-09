@@ -100,7 +100,7 @@ public final class PolarFormTest {
     @Test
     public void complexNumberRoundingModeNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroPolarForm.complexNumber(null);
+            zeroPolarForm.complexNumber((RoundingMode) null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
     }
 
@@ -141,6 +141,26 @@ public final class PolarFormTest {
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
             assertThat(polarForm.complexNumber(99, RoundingMode.HALF_DOWN))
                 .isEqualTo(new RealComplexNumber(real, imaginary));
+        });
+    }
+
+    @Test
+    public void complexNumberMathContextShouldThrowException() {
+        assertThatThrownBy(() -> {
+            zeroPolarForm.complexNumber((MathContext) null);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("mathContext");
+    }
+
+    @Test
+    public void complexNumberWithMathContextShouldSucceed() {
+        final MathContext mathContext = new MathContext(99, RoundingMode.HALF_DOWN);
+        final Context context = BigFloat.context(mathContext);
+        polarForms.forEach(polarForm -> {
+            final BigDecimal radial = polarForm.getRadial();
+            final BigDecimal angular = polarForm.getAngular();
+            final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
+            final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
+            assertThat(polarForm.complexNumber(mathContext)).isEqualTo(new RealComplexNumber(real, imaginary));
         });
     }
 }

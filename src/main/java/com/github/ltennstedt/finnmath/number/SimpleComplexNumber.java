@@ -260,7 +260,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument() {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         return argument(new MathContext(PolarForm.DEFAULT_PRECISION));
     }
 
@@ -280,7 +280,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument(final int precision) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         return argument(new MathContext(precision));
     }
@@ -301,7 +301,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument(final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(roundingMode, "roundingMode");
         return argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
     }
@@ -326,7 +326,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         requireNonNull(roundingMode, "roundingMode");
         return argument(new MathContext(precision, roundingMode));
@@ -348,7 +348,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(mathContext, "mathContext");
         return new RealComplexNumber(this).argument(mathContext);
     }
@@ -365,7 +365,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm() {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));
     }
 
@@ -385,7 +385,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm(final int precision) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         return polarForm(new MathContext(precision));
     }
@@ -406,7 +406,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm(final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(roundingMode, "roundingMode");
         return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
     }
@@ -431,7 +431,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         requireNonNull(roundingMode, "roundingMode");
         return polarForm(new MathContext(precision, roundingMode));
@@ -453,7 +453,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm(final MathContext mathContext) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(mathContext, "mathContext");
         return new RealComplexNumber(this).polarForm(mathContext);
     }

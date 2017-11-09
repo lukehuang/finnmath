@@ -80,8 +80,7 @@ public final class PolarForm {
      * @since 1
      */
     public RealComplexNumber complexNumber() {
-        final Context context = BigFloat.context(DEFAULT_PRECISION);
-        return calculateComplexNumer(context);
+        return complexNumer(BigFloat.context(DEFAULT_PRECISION));
     }
 
     /**
@@ -97,8 +96,7 @@ public final class PolarForm {
      */
     public RealComplexNumber complexNumber(final int precision) {
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        final Context context = BigFloat.context(new MathContext(precision));
-        return calculateComplexNumer(context);
+        return complexNumer(BigFloat.context(new MathContext(precision)));
     }
 
     /**
@@ -114,8 +112,7 @@ public final class PolarForm {
      */
     public RealComplexNumber complexNumber(final RoundingMode roundingMode) {
         requireNonNull(roundingMode, "roundingMode");
-        final Context context = BigFloat.context(new MathContext(DEFAULT_PRECISION, roundingMode));
-        return calculateComplexNumer(context);
+        return complexNumer(BigFloat.context(new MathContext(DEFAULT_PRECISION, roundingMode)));
     }
 
     /**
@@ -136,18 +133,26 @@ public final class PolarForm {
     public RealComplexNumber complexNumber(final int precision, final RoundingMode roundingMode) {
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         requireNonNull(roundingMode, "roundingMode");
-        final Context context = BigFloat.context(new MathContext(precision, roundingMode));
-        return calculateComplexNumer(context);
+        return complexNumer(BigFloat.context(new MathContext(precision, roundingMode)));
     }
 
     /**
-     * @param context
-     *            The context
+     * Returns the correspondig complex number of this polar form considering the {@link MathContext}
+     *
+     * @param mathContext
+     *            The math context
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
      * @return The complex number
-     * @see BigFloat
-     * @see MathContext
+     * @author Lars Tennstedt
+     * @since 1
      */
-    private RealComplexNumber calculateComplexNumer(final Context context) {
+    public RealComplexNumber complexNumber(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return complexNumer(BigFloat.context(mathContext));
+    }
+
+    private RealComplexNumber complexNumer(final Context context) {
         final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
         final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
         return new RealComplexNumber(real, imaginary);
