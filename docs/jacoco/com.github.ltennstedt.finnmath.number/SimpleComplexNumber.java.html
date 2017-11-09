@@ -260,8 +260,8 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument() {
-<span class="nc bnc" id="L263" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
-<span class="nc" id="L264">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L264">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
     }
 
     /**
@@ -280,9 +280,9 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument(final int precision) {
-<span class="nc bnc" id="L283" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
-<span class="nc bnc" id="L284" title="All 2 branches missed.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
-<span class="nc" id="L285">        return argument(new MathContext(precision));</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
+<span class="fc" id="L285">        return argument(new MathContext(precision));</span>
     }
 
     /**
@@ -301,9 +301,9 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument(final RoundingMode roundingMode) {
-<span class="nc bnc" id="L304" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
-<span class="nc" id="L305">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="nc" id="L306">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));</span>
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L305">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L306">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));</span>
     }
 
     /**
@@ -326,10 +326,10 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
-<span class="nc bnc" id="L329" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
-<span class="nc bnc" id="L330" title="All 2 branches missed.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
-<span class="nc" id="L331">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="nc" id="L332">        return argument(new MathContext(precision, roundingMode));</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
+<span class="fc" id="L331">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L332">        return argument(new MathContext(precision, roundingMode));</span>
     }
 
     /**
@@ -348,9 +348,9 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
-<span class="nc bnc" id="L351" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
-<span class="nc" id="L352">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L353">        return new RealComplexNumber(this).argument(mathContext);</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L352">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="fc" id="L353">        return new RealComplexNumber(this).argument(mathContext);</span>
     }
 
     /**
@@ -365,7 +365,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm() {
-<span class="nc bnc" id="L368" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
 <span class="nc" id="L369">        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
     }
 
@@ -385,7 +385,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm(final int precision) {
-<span class="nc bnc" id="L388" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
+<span class="nc bnc" id="L388" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
 <span class="nc bnc" id="L389" title="All 2 branches missed.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
 <span class="nc" id="L390">        return polarForm(new MathContext(precision));</span>
     }
@@ -406,7 +406,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm(final RoundingMode roundingMode) {
-<span class="nc bnc" id="L409" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
+<span class="nc bnc" id="L409" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
 <span class="nc" id="L410">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
 <span class="nc" id="L411">        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));</span>
     }
@@ -431,7 +431,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
-<span class="nc bnc" id="L434" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
+<span class="nc bnc" id="L434" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
 <span class="nc bnc" id="L435" title="All 2 branches missed.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
 <span class="nc" id="L436">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
 <span class="nc" id="L437">        return polarForm(new MathContext(precision, roundingMode));</span>
@@ -453,7 +453,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm(final MathContext mathContext) {
-<span class="nc bnc" id="L456" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;this == 0&quot;);</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
 <span class="nc" id="L457">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
 <span class="nc" id="L458">        return new RealComplexNumber(this).polarForm(mathContext);</span>
     }

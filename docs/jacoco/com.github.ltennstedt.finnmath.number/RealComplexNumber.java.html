@@ -369,15 +369,15 @@ public final class RealComplexNumber
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
-<span class="nc bnc" id="L372" title="All 4 branches missed.">        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0), &quot;this == 0&quot;);</span>
-<span class="nc" id="L373">        final Context context = BigFloat.context(mathContext);</span>
-<span class="nc bnc" id="L374" title="All 2 branches missed.">        if (real.compareTo(BigDecimal.ZERO) != 0) {</span>
-<span class="nc" id="L375">            final BigFloat arctan = BigFloat.atan(context.valueOf(imaginary.divide(real, mathContext)));</span>
-<span class="nc bnc" id="L376" title="All 2 branches missed.">            if (real.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
-<span class="nc" id="L377">                return arctan.toBigDecimal();</span>
+<span class="pc bpc" id="L372" title="3 of 4 branches missed.">        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0), &quot;this == 0&quot;);</span>
+<span class="fc" id="L373">        final Context context = BigFloat.context(mathContext);</span>
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">        if (real.compareTo(BigDecimal.ZERO) != 0) {</span>
+<span class="fc" id="L375">            final BigFloat arctan = BigFloat.atan(context.valueOf(imaginary.divide(real, mathContext)));</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">            if (real.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="fc" id="L377">                return arctan.toBigDecimal();</span>
             }
-<span class="nc" id="L379">            final BigFloat pi = context.pi();</span>
-<span class="nc bnc" id="L380" title="All 2 branches missed.">            return imaginary.compareTo(BigDecimal.ZERO) &gt; -1 ? arctan.add(pi).toBigDecimal()</span>
+<span class="fc" id="L379">            final BigFloat pi = context.pi();</span>
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">            return imaginary.compareTo(BigDecimal.ZERO) &gt; -1 ? arctan.add(pi).toBigDecimal()</span>
 <span class="nc" id="L381">                : arctan.subtract(pi).toBigDecimal();</span>
         }
 <span class="nc" id="L383">        final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();</span>
