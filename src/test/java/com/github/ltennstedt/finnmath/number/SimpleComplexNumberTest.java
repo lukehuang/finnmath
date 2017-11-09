@@ -551,6 +551,122 @@ public final class SimpleComplexNumberTest {
     }
 
     @Test
+    public void polarFormZeroShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ZERO.polarForm();
+        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
+            SimpleComplexNumber.ZERO);
+    }
+
+    @Test
+    public void polarFormShouldSucceed() {
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.polarForm())
+                .isEqualTo(invertible.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, RoundingMode.HALF_UP)));
+        });
+    }
+
+    @Test
+    public void polarFormZeroWithPrecisionShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ZERO.polarForm(PolarForm.DEFAULT_PRECISION);
+        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
+            SimpleComplexNumber.ZERO);
+    }
+
+    @Test
+    public void polarFormZeroPrecisionTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ONE.polarForm(-1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
+    }
+
+    @Test
+    public void polarFormWithPrecisionShouldSucceed() {
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.polarForm(99))
+                .isEqualTo(invertible.polarForm(new MathContext(99, RoundingMode.HALF_UP)));
+        });
+    }
+
+    @Test
+    public void polarFormZeroWithRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ZERO.polarForm(RoundingMode.HALF_UP);
+        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
+            SimpleComplexNumber.ZERO);
+    }
+
+    @Test
+    public void polarFormRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ONE.polarForm((RoundingMode) null);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
+    }
+
+    @Test
+    public void polarFormWithRoundingModeShouldSucceed() {
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.polarForm(RoundingMode.HALF_DOWN))
+                .isEqualTo(invertible.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, RoundingMode.HALF_DOWN)));
+        });
+    }
+
+    @Test
+    public void polarFormZeroWithPrecisionAndRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ZERO.polarForm(PolarForm.DEFAULT_PRECISION, RoundingMode.HALF_UP);
+        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
+            SimpleComplexNumber.ZERO);
+    }
+
+    @Test
+    public void polarFormZeroWithPrecisionTooLowAndRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ONE.polarForm(-1, RoundingMode.HALF_UP);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
+    }
+
+    @Test
+    public void polarFormWithPrecisionAndRoundingModeNullShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ONE.polarForm(100, (RoundingMode) null);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
+    }
+
+    @Test
+    public void polarFormWithPrecisionAndRoundingModeShouldSucceed() {
+        invertibles.forEach(invertible -> {
+            assertThat(invertible.polarForm(99, RoundingMode.HALF_DOWN))
+                .isEqualTo(invertible.polarForm(new MathContext(99, RoundingMode.HALF_DOWN)));
+        });
+    }
+
+    @Test
+    public void polarFormZeroWithMathContextShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ZERO.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));
+        }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
+            SimpleComplexNumber.ZERO);
+    }
+
+    @Test
+    public void polarFormWithMathContextNullShouldThrowException() {
+        assertThatThrownBy(() -> {
+            SimpleComplexNumber.ONE.polarForm((MathContext) null);
+        }).isExactlyInstanceOf(NullPointerException.class).hasMessage("mathContext");
+    }
+
+    @Test
+    public void polarFormWithMathContextShouldSucceed() {
+        invertibles.forEach(invertible -> {
+            final MathContext mathContext = new MathContext(99, RoundingMode.HALF_DOWN);
+            assertThat(invertible.polarForm(mathContext))
+                .isEqualTo(new RealComplexNumber(invertible).polarForm(mathContext));
+        });
+    }
+
+    @Test
     public void matrixShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
             final BigInteger real = complexNumber.getReal();

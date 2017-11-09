@@ -249,7 +249,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this complex number
+     * Returns the argument of this {@link SimpleComplexNumber}
      *
      * @return The argument
      * @throws IllegalStateException
@@ -265,7 +265,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this complex number considering the given precision
+     * Returns the argument of this {@link SimpleComplexNumber} considering the given precision
      *
      * @param precision
      *            The precision
@@ -286,7 +286,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this complex number considering the given rounding mode
+     * Returns the argument of this {@link SimpleComplexNumber} considering the given rounding mode
      *
      * @param roundingMode
      *            The rounding mode
@@ -307,7 +307,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this complex number considering the given precision and rounding mode
+     * Returns the argument of this {@link SimpleComplexNumber} considering the given precision and rounding mode
      *
      * @param precision
      *            The precision
@@ -333,7 +333,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this complex number considering the given {@link MathContext}
+     * Returns the argument of this {@link SimpleComplexNumber} considering the given {@link MathContext}
      *
      * @param mathContext
      *            The math context

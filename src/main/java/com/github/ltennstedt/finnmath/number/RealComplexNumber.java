@@ -270,7 +270,7 @@ public final class RealComplexNumber
     }
 
     /**
-     * Returns the argument of this complex number
+     * Returns the argument of this {@link RealComplexNumber}
      *
      * @return The argument
      * @throws IllegalStateException
@@ -281,12 +281,12 @@ public final class RealComplexNumber
      */
     @Override
     public BigDecimal argument() {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         return argument(new MathContext(PolarForm.DEFAULT_PRECISION));
     }
 
     /**
-     * Returns the argument of this complex number considering the given precision
+     * Returns the argument of this {@link RealComplexNumber} considering the given precision
      *
      * @param precision
      *            The precision
@@ -301,13 +301,13 @@ public final class RealComplexNumber
      */
     @Override
     public BigDecimal argument(final int precision) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         return argument(new MathContext(precision));
     }
 
     /**
-     * Returns the argument of this complex number considering the given rounding mode
+     * Returns the argument of this {@link RealComplexNumber} considering the given rounding mode
      *
      * @param roundingMode
      *            The rounding mode
@@ -322,13 +322,13 @@ public final class RealComplexNumber
      */
     @Override
     public BigDecimal argument(final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(roundingMode, "roundingMode");
         return argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
     }
 
     /**
-     * Returns the argument of this complex number considering the given precision and rounding mode
+     * Returns the argument of this {@link RealComplexNumber} considering the given precision and rounding mode
      *
      * @param precision
      *            The precision
@@ -347,14 +347,14 @@ public final class RealComplexNumber
      */
     @Override
     public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         requireNonNull(roundingMode, "roundingMode");
         return argument(new MathContext(precision, roundingMode));
     }
 
     /**
-     * Returns the argument of this complex number considering the given {@link MathContext}
+     * Returns the argument of this {@link RealComplexNumber} considering the given {@link MathContext}
      *
      * @param mathContext
      *            The math context
@@ -369,7 +369,9 @@ public final class RealComplexNumber
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
-        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0), "this == 0");
+        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0),
+            "expected this != 0 but actual %s", this);
+        requireNonNull(mathContext, "mathContext");
         final Context context = BigFloat.context(mathContext);
         if (real.compareTo(BigDecimal.ZERO) != 0) {
             final BigFloat arctan = BigFloat.atan(context.valueOf(imaginary.divide(real, mathContext)));
@@ -396,7 +398,7 @@ public final class RealComplexNumber
      */
     @Override
     public PolarForm polarForm() {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));
     }
 
@@ -416,7 +418,7 @@ public final class RealComplexNumber
      */
     @Override
     public PolarForm polarForm(final int precision) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         return polarForm(new MathContext(precision));
     }
@@ -437,7 +439,7 @@ public final class RealComplexNumber
      */
     @Override
     public PolarForm polarForm(final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(roundingMode, "roundingMode");
         return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
     }
@@ -462,7 +464,7 @@ public final class RealComplexNumber
      */
     @Override
     public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
         requireNonNull(roundingMode, "roundingMode");
         return polarForm(new MathContext(precision, roundingMode));
@@ -485,7 +487,7 @@ public final class RealComplexNumber
      */
     @Override
     public PolarForm polarForm(final MathContext mathContext) {
-        checkState(!equals(ZERO), "this == 0");
+        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(mathContext, "mathContext");
         return new PolarForm(abs(), argument(mathContext));
     }

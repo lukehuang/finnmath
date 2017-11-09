@@ -24,6 +24,7 @@ import com.github.ltennstedt.finnmath.linear.BigIntVector;
 import com.github.ltennstedt.finnmath.linear.DecimalMatrix;
 import com.github.ltennstedt.finnmath.linear.DecimalVector;
 import com.github.ltennstedt.finnmath.number.Fraction;
+import com.github.ltennstedt.finnmath.number.PolarForm;
 import com.github.ltennstedt.finnmath.number.RealComplexNumber;
 import com.github.ltennstedt.finnmath.number.SimpleComplexNumber;
 import com.google.common.base.MoreObjects;
@@ -971,6 +972,67 @@ public final class MathRandomTest {
                 "scale of the imaginary part"))
             .are(new Condition<>(complexNumber -> (complexNumber.getReal().compareTo(BigDecimal.ZERO) != 0)
                 || (complexNumber.getImaginary().compareTo(BigDecimal.ZERO) != 0), "invertible"));
+    }
+
+    @Test
+    public void nextPolarFormBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextPolarForm(0, validScale);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+    }
+
+    @Test
+    public void nextPolarFormScaleTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextPolarForm(bound, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+    }
+
+    @Test
+    public void nextPolarFormShouldSucceed() {
+        final PolarForm actual = mathRandom.nextPolarForm(bound, validScale);
+        final BigDecimal radial = actual.getRadial();
+        assertThat(radial).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound);
+        assertThat(radial.scale()).isEqualTo(validScale);
+        final BigDecimal angular = actual.getAngular();
+        assertThat(angular).isGreaterThan(decimalBound.negate()).isLessThan(decimalBound);
+        assertThat(angular.scale()).isEqualTo(validScale);
+    }
+
+    @Test
+    public void nextPolarFormsBoundTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextPolarForms(0, validScale, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+    }
+
+    @Test
+    public void nextPolarFormsScaleTooLowShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextPolarForms(bound, -1, howMany);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+    }
+
+    @Test
+    public void nextPolarFormsTooLessShouldThrowException() {
+        assertThatThrownBy(() -> {
+            mathRandom.nextPolarForms(bound, validScale, -1);
+        }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual -1");
+    }
+
+    @Test
+    public void nextPolarFormsShouldSucceed() {
+        assertThat(mathRandom.nextPolarForms(bound, validScale, howMany)).hasOnlyElementsOfType(PolarForm.class)
+            .hasSize(howMany)
+            .are(new Condition<>(polarForm -> polarForm.getRadial().compareTo(decimalBound.negate()) > 0,
+                "radial lower bound"))
+            .are(new Condition<>(polarForm -> polarForm.getRadial().compareTo(decimalBound) < 0, "radial upper bound"))
+            .are(new Condition<>(polarForm -> polarForm.getRadial().scale() == validScale, "radial scaled"))
+            .are(new Condition<>(polarForm -> polarForm.getAngular().compareTo(decimalBound.negate()) > 0,
+                "angular lower bound"))
+            .are(
+                new Condition<>(polarForm -> polarForm.getAngular().compareTo(decimalBound) < 0, "angluar upper bound"))
+            .are(new Condition<>(polarForm -> polarForm.getAngular().scale() == validScale, "angular scaled"));
     }
 
     @Test
