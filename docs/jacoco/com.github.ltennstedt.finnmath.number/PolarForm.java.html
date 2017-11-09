@@ -165,14 +165,14 @@ public final class PolarForm {
 
     @Override
     public boolean equals(final Object object) {
-<span class="nc bnc" id="L168" title="All 2 branches missed.">        if (this == object) {</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        if (this == object) {</span>
 <span class="nc" id="L169">            return true;</span>
         }
-<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (!(object instanceof PolarForm)) {</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        if (!(object instanceof PolarForm)) {</span>
 <span class="nc" id="L172">            return false;</span>
         }
-<span class="nc" id="L174">        final PolarForm other = (PolarForm) object;</span>
-<span class="nc bnc" id="L175" title="All 4 branches missed.">        return radial.equals(other.getRadial()) &amp;&amp; angular.equals(other.getAngular());</span>
+<span class="fc" id="L174">        final PolarForm other = (PolarForm) object;</span>
+<span class="pc bpc" id="L175" title="2 of 4 branches missed.">        return radial.equals(other.getRadial()) &amp;&amp; angular.equals(other.getAngular());</span>
     }
 
     @Override
