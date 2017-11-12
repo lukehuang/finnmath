@@ -161,9 +161,9 @@ public final class RealComplexNumber
 <span class="fc" id="L161">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
 <span class="fc" id="L162">        final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));</span>
 <span class="fc" id="L163">        final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))</span>
-<span class="fc" id="L164">            .divide(denominator, BigDecimal.ROUND_HALF_UP);</span>
+<span class="fc" id="L164">            .divide(denominator, RoundingMode.HALF_UP);</span>
 <span class="fc" id="L165">        final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())</span>
-<span class="fc" id="L166">            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, BigDecimal.ROUND_HALF_UP);</span>
+<span class="fc" id="L166">            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, RoundingMode.HALF_UP);</span>
 <span class="fc" id="L167">        return new RealComplexNumber(newReal, newImaginary);</span>
     }
 
@@ -369,21 +369,21 @@ public final class RealComplexNumber
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
-<span class="pc bpc" id="L372" title="1 of 4 branches missed.">        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0),</span>
+<span class="fc bfc" id="L372" title="All 4 branches covered.">        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0),</span>
             &quot;expected this != 0 but actual %s&quot;, this);
 <span class="fc" id="L374">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
 <span class="fc" id="L375">        final Context context = BigFloat.context(mathContext);</span>
-<span class="pc bpc" id="L376" title="1 of 2 branches missed.">        if (real.compareTo(BigDecimal.ZERO) != 0) {</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">        if (real.compareTo(BigDecimal.ZERO) != 0) {</span>
 <span class="fc" id="L377">            final BigFloat arctan = BigFloat.atan(context.valueOf(imaginary.divide(real, mathContext)));</span>
-<span class="fc bfc" id="L378" title="All 2 branches covered.">            if (real.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">            if (real.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
 <span class="fc" id="L379">                return arctan.toBigDecimal();</span>
             }
-<span class="fc" id="L381">            final BigFloat pi = context.pi();</span>
-<span class="pc bpc" id="L382" title="1 of 2 branches missed.">            return imaginary.compareTo(BigDecimal.ZERO) &gt; -1 ? arctan.add(pi).toBigDecimal()</span>
+<span class="nc" id="L381">            final BigFloat pi = context.pi();</span>
+<span class="nc bnc" id="L382" title="All 2 branches missed.">            return imaginary.compareTo(BigDecimal.ZERO) &gt; -1 ? arctan.add(pi).toBigDecimal()</span>
 <span class="nc" id="L383">                : arctan.subtract(pi).toBigDecimal();</span>
         }
-<span class="nc" id="L385">        final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();</span>
-<span class="nc bnc" id="L386" title="All 2 branches missed.">        return imaginary.compareTo(BigDecimal.ZERO) &gt; 0 ? piDividedByTwo : piDividedByTwo.negate();</span>
+<span class="fc" id="L385">        final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">        return imaginary.compareTo(BigDecimal.ZERO) &gt; 0 ? piDividedByTwo : piDividedByTwo.negate();</span>
     }
 
     /**

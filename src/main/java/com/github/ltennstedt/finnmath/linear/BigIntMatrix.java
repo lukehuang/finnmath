@@ -42,7 +42,7 @@ import java.util.Objects;
  * @since 1
  */
 @Beta
-public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector, BigIntMatrix> {
+public final class BigIntMatrix extends AbstractMatrix<BigInteger, BigIntVector, BigIntMatrix, BigInteger, BigInteger> {
     private BigIntMatrix(final ImmutableTable<Integer, Integer, BigInteger> table) {
         super(table);
     }

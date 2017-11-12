@@ -35,6 +35,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -277,7 +278,7 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal decimal = BigDecimal.valueOf(RandomUtils.nextLong(0, bound));
-        return keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP);
+        return keepDecimalInBound(decimal, bound).setScale(scale, RoundingMode.HALF_UP);
     }
 
     /**
@@ -353,7 +354,7 @@ public final class MathRandom {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal decimal = BigDecimal.valueOf(RandomUtils.nextLong(1, bound));
-        return keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP);
+        return keepDecimalInBound(decimal, bound).setScale(scale, RoundingMode.HALF_UP);
     }
 
     @VisibleForTesting

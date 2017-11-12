@@ -161,9 +161,9 @@ public final class RealComplexNumber
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
         final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));
         final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))
-            .divide(denominator, BigDecimal.ROUND_HALF_UP);
+            .divide(denominator, RoundingMode.HALF_UP);
         final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())
-            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, BigDecimal.ROUND_HALF_UP);
+            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, RoundingMode.HALF_UP);
         return new RealComplexNumber(newReal, newImaginary);
     }
 

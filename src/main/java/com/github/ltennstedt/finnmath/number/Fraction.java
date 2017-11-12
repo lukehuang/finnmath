@@ -24,6 +24,7 @@ import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
@@ -93,7 +94,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      */
     @Override
     public int intValue() {
-        return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).intValue();
+        return new BigDecimal(numerator).divide(new BigDecimal(denominator), RoundingMode.HALF_UP).intValue();
     }
 
     /**
@@ -106,7 +107,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      */
     @Override
     public long longValue() {
-        return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).longValue();
+        return new BigDecimal(numerator).divide(new BigDecimal(denominator), RoundingMode.HALF_UP).longValue();
     }
 
     /**
@@ -119,7 +120,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      */
     @Override
     public float floatValue() {
-        return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).floatValue();
+        return new BigDecimal(numerator).divide(new BigDecimal(denominator), RoundingMode.HALF_UP).floatValue();
     }
 
     /**
@@ -132,7 +133,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      */
     @Override
     public double doubleValue() {
-        return new BigDecimal(numerator).divide(new BigDecimal(denominator), BigDecimal.ROUND_HALF_UP).doubleValue();
+        return new BigDecimal(numerator).divide(new BigDecimal(denominator), RoundingMode.HALF_UP).doubleValue();
     }
 
     /**

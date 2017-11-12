@@ -41,7 +41,8 @@ import java.util.Objects;
  * @since 1
  */
 @Beta
-public final class DecimalMatrix extends AbstractMatrix<BigDecimal, DecimalVector, DecimalMatrix> {
+public final class DecimalMatrix
+    extends AbstractMatrix<BigDecimal, DecimalVector, DecimalMatrix, BigDecimal, BigDecimal> {
     private DecimalMatrix(final ImmutableTable<Integer, Integer, BigDecimal> table) {
         super(table);
     }

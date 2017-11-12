@@ -23,6 +23,7 @@ import com.github.ltennstedt.finnmath.util.MathRandom;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -79,7 +80,7 @@ public final class FractionTest {
     public void intValueShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.intValue()).isEqualTo(new BigDecimal(fraction.getNumerator())
-                .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).intValue());
+                .divide(new BigDecimal(fraction.getDenominator()), RoundingMode.HALF_UP).intValue());
         });
     }
 
@@ -87,7 +88,7 @@ public final class FractionTest {
     public void longValueShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.longValue()).isEqualTo(new BigDecimal(fraction.getNumerator())
-                .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).longValue());
+                .divide(new BigDecimal(fraction.getDenominator()), RoundingMode.HALF_UP).longValue());
         });
     }
 
@@ -95,7 +96,7 @@ public final class FractionTest {
     public void floatValueShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.floatValue()).isEqualTo(new BigDecimal(fraction.getNumerator())
-                .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).floatValue());
+                .divide(new BigDecimal(fraction.getDenominator()), RoundingMode.HALF_UP).floatValue());
         });
     }
 
@@ -103,7 +104,7 @@ public final class FractionTest {
     public void doubleValueShouldSucceed() {
         fractions.forEach(fraction -> {
             assertThat(fraction.doubleValue()).isEqualTo(new BigDecimal(fraction.getNumerator())
-                .divide(new BigDecimal(fraction.getDenominator()), BigDecimal.ROUND_HALF_UP).doubleValue());
+                .divide(new BigDecimal(fraction.getDenominator()), RoundingMode.HALF_UP).doubleValue());
         });
     }
 

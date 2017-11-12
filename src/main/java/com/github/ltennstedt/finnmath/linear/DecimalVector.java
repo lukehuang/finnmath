@@ -27,6 +27,7 @@ import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -477,6 +478,23 @@ public final class DecimalVector extends AbstractVector<BigDecimal, DecimalVecto
     @Override
     public int size() {
         return map.size();
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if the elements of the {@link DecimalVector DecimalVectors} are equal
+     * by the {@link BigDecimal#compareTo(BigDecimal) compareTo} method
+     *
+     * @param other
+     *            The other vector
+     * @return true if {@code compareTo == 0} for all elements, false otherwise
+     */
+    public boolean equalByComparingTo(final DecimalVector other) {
+        for (final Entry<Integer, BigDecimal> entry : map.entrySet()) {
+            if (entry.getValue().compareTo(other.element(entry.getKey())) != 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

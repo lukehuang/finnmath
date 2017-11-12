@@ -35,6 +35,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -60,9 +61,9 @@ public final class MathRandom {
      * @author Lars Tennstedt
      * @since 1
      */
-<span class="fc" id="L63">    public MathRandom() {</span>
-<span class="fc" id="L64">        random = new Random();</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L64">    public MathRandom() {</span>
+<span class="fc" id="L65">        random = new Random();</span>
+<span class="fc" id="L66">    }</span>
 
     /**
      * Constructor which has the seed value as parameter
@@ -72,9 +73,9 @@ public final class MathRandom {
      * @author Lars Tennstedt
      * @since 1
      */
-<span class="fc" id="L75">    public MathRandom(final long seed) {</span>
-<span class="fc" id="L76">        random = new Random(seed);</span>
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L76">    public MathRandom(final long seed) {</span>
+<span class="fc" id="L77">        random = new Random(seed);</span>
+<span class="fc" id="L78">    }</span>
 
     /**
      * Returns a positive {@code long} bounded below by {@code 0} (inclusive) and above by {@code bound} (exclusive)
@@ -88,8 +89,8 @@ public final class MathRandom {
      * @since 1
      */
     public long nextPositiveLong(final long bound) {
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc" id="L92">        return RandomUtils.nextLong(0, bound);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc" id="L93">        return RandomUtils.nextLong(0, bound);</span>
     }
 
     /**
@@ -104,8 +105,8 @@ public final class MathRandom {
      * @since 1
      */
     public long nextNegativeLong(final long bound) {
-<span class="fc bfc" id="L107" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc" id="L108">        return (-1) * RandomUtils.nextLong(0, bound);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc" id="L109">        return (-1) * RandomUtils.nextLong(0, bound);</span>
     }
 
     /**
@@ -120,11 +121,11 @@ public final class MathRandom {
      * @since 1
      */
     public long nextLong(final long bound) {
-<span class="fc bfc" id="L123" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
-<span class="fc" id="L125">            return nextNegativeLong(bound);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L126">            return nextNegativeLong(bound);</span>
         }
-<span class="fc" id="L127">        return nextPositiveLong(bound);</span>
+<span class="fc" id="L128">        return nextPositiveLong(bound);</span>
     }
 
     /**
@@ -144,13 +145,13 @@ public final class MathRandom {
      * @since 1
      */
     public long[] nextPositiveLongs(final long bound, final int howMany) {
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L149">        final long[] ints = new long[howMany];</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L151">            ints[i] = nextPositiveLong(bound);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L150">        final long[] ints = new long[howMany];</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L152">            ints[i] = nextPositiveLong(bound);</span>
         }
-<span class="fc" id="L153">        return ints;</span>
+<span class="fc" id="L154">        return ints;</span>
     }
 
     /**
@@ -170,13 +171,13 @@ public final class MathRandom {
      * @since 1
      */
     public long[] nextNegativeLongs(final long bound, final int howMany) {
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L175">        final long[] ints = new long[howMany];</span>
-<span class="fc bfc" id="L176" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L177">            ints[i] = nextNegativeLong(bound);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L176">        final long[] ints = new long[howMany];</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L178">            ints[i] = nextNegativeLong(bound);</span>
         }
-<span class="fc" id="L179">        return ints;</span>
+<span class="fc" id="L180">        return ints;</span>
     }
 
     /**
@@ -196,13 +197,13 @@ public final class MathRandom {
      * @since 1
      */
     public long[] nextLongs(final long bound, final int howMany) {
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L200" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L201">        final long[] ints = new long[howMany];</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L203">            ints[i] = nextLong(bound);</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L202">        final long[] ints = new long[howMany];</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L204">            ints[i] = nextLong(bound);</span>
         }
-<span class="fc" id="L205">        return ints;</span>
+<span class="fc" id="L206">        return ints;</span>
     }
 
     /**
@@ -222,13 +223,13 @@ public final class MathRandom {
      * @since 1
      */
     public BigDecimal nextPositiveDecimal(final long bound, final int scale) {
-<span class="fc bfc" id="L225" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L226" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc" id="L227">        final BigDecimal decimal = nextDecimal(bound, scale);</span>
-<span class="pc bpc" id="L228" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
-<span class="nc" id="L229">            return decimal.negate();</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc" id="L228">        final BigDecimal decimal = nextDecimal(bound, scale);</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
+<span class="nc" id="L230">            return decimal.negate();</span>
         }
-<span class="fc" id="L231">        return decimal;</span>
+<span class="fc" id="L232">        return decimal;</span>
     }
 
     /**
@@ -248,13 +249,13 @@ public final class MathRandom {
      * @since 1
      */
     public BigDecimal nextNegativeDecimal(final long bound, final int scale) {
-<span class="fc bfc" id="L251" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc" id="L253">        final BigDecimal decimal = nextDecimal(bound, scale);</span>
-<span class="fc bfc" id="L254" title="All 2 branches covered.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
-<span class="fc" id="L255">            return decimal.negate();</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc" id="L254">        final BigDecimal decimal = nextDecimal(bound, scale);</span>
+<span class="fc bfc" id="L255" title="All 2 branches covered.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="fc" id="L256">            return decimal.negate();</span>
         }
-<span class="fc" id="L257">        return decimal;</span>
+<span class="fc" id="L258">        return decimal;</span>
     }
 
     /**
@@ -274,10 +275,10 @@ public final class MathRandom {
      * @since 1
      */
     public BigDecimal nextDecimal(final long bound, final int scale) {
-<span class="fc bfc" id="L277" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L278" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc" id="L279">        final BigDecimal decimal = BigDecimal.valueOf(RandomUtils.nextLong(0, bound));</span>
-<span class="fc" id="L280">        return keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP);</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc" id="L280">        final BigDecimal decimal = BigDecimal.valueOf(RandomUtils.nextLong(0, bound));</span>
+<span class="fc" id="L281">        return keepDecimalInBound(decimal, bound).setScale(scale, RoundingMode.HALF_UP);</span>
     }
 
     /**
@@ -297,13 +298,13 @@ public final class MathRandom {
      * @since 1
      */
     public BigDecimal nextInvertiblePositiveDecimal(final long bound, final int scale) {
-<span class="fc bfc" id="L300" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L301" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc" id="L302">        final BigDecimal decimal = nextInvertibleDecimal(bound, scale);</span>
-<span class="pc bpc" id="L303" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
-<span class="nc" id="L304">            return decimal.negate();</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc" id="L303">        final BigDecimal decimal = nextInvertibleDecimal(bound, scale);</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &lt; 0) {</span>
+<span class="nc" id="L305">            return decimal.negate();</span>
         }
-<span class="fc" id="L306">        return decimal;</span>
+<span class="fc" id="L307">        return decimal;</span>
     }
 
     /**
@@ -324,13 +325,13 @@ public final class MathRandom {
      * @since 1
      */
     public BigDecimal nextInvertibleNegativeDecimal(final long bound, final int scale) {
-<span class="fc bfc" id="L327" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L328" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc" id="L329">        final BigDecimal decimal = nextInvertibleDecimal(bound, scale);</span>
-<span class="pc bpc" id="L330" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
-<span class="fc" id="L331">            return decimal.negate();</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc" id="L330">        final BigDecimal decimal = nextInvertibleDecimal(bound, scale);</span>
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">        if (decimal.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="fc" id="L332">            return decimal.negate();</span>
         }
-<span class="nc" id="L333">        return decimal;</span>
+<span class="nc" id="L334">        return decimal;</span>
     }
 
     /**
@@ -350,26 +351,26 @@ public final class MathRandom {
      * @since 1
      */
     public BigDecimal nextInvertibleDecimal(final long bound, final int scale) {
-<span class="fc bfc" id="L353" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L354" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc" id="L355">        final BigDecimal decimal = BigDecimal.valueOf(RandomUtils.nextLong(1, bound));</span>
-<span class="fc" id="L356">        return keepDecimalInBound(decimal, bound).setScale(scale, BigDecimal.ROUND_HALF_UP);</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc" id="L356">        final BigDecimal decimal = BigDecimal.valueOf(RandomUtils.nextLong(1, bound));</span>
+<span class="fc" id="L357">        return keepDecimalInBound(decimal, bound).setScale(scale, RoundingMode.HALF_UP);</span>
     }
 
     @VisibleForTesting
     BigDecimal keepDecimalInBound(final BigDecimal decimal, final long bound) {
-<span class="fc" id="L361">        BigDecimal result = decimal;</span>
-<span class="fc" id="L362">        final BigDecimal decimalBound = BigDecimal.valueOf(bound);</span>
-<span class="fc bfc" id="L363" title="All 2 branches covered.">        if (result.compareTo(BigDecimal.ZERO) &gt; -1) {</span>
-<span class="fc bfc" id="L364" title="All 2 branches covered.">            while (result.compareTo(decimalBound) &gt; -1) {</span>
-<span class="fc" id="L365">                result = result.subtract(decimalBound);</span>
+<span class="fc" id="L362">        BigDecimal result = decimal;</span>
+<span class="fc" id="L363">        final BigDecimal decimalBound = BigDecimal.valueOf(bound);</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">        if (result.compareTo(BigDecimal.ZERO) &gt; -1) {</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">            while (result.compareTo(decimalBound) &gt; -1) {</span>
+<span class="fc" id="L366">                result = result.subtract(decimalBound);</span>
             }
         } else {
-<span class="fc bfc" id="L368" title="All 2 branches covered.">            while (result.abs().compareTo(decimalBound) &gt; -1) {</span>
-<span class="fc" id="L369">                result = result.add(decimalBound);</span>
+<span class="fc bfc" id="L369" title="All 2 branches covered.">            while (result.abs().compareTo(decimalBound) &gt; -1) {</span>
+<span class="fc" id="L370">                result = result.add(decimalBound);</span>
             }
         }
-<span class="fc" id="L372">        return result;</span>
+<span class="fc" id="L373">        return result;</span>
     }
 
     /**
@@ -393,14 +394,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigDecimal&gt; nextPositiveDecimals(final long bound, final int scale, final int howMany) {
-<span class="fc bfc" id="L396" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L397" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L398" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L399">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L400" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L401">            decimals.add(nextPositiveDecimal(bound, scale));</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L400">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L402">            decimals.add(nextPositiveDecimal(bound, scale));</span>
         }
-<span class="fc" id="L403">        return decimals;</span>
+<span class="fc" id="L404">        return decimals;</span>
     }
 
     /**
@@ -424,14 +425,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigDecimal&gt; nextNegativeDecimals(final long bound, final int scale, final int howMany) {
-<span class="fc bfc" id="L427" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L428" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L429" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L430">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L431" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L432">            decimals.add(nextNegativeDecimal(bound, scale));</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L429" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L430" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L431">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L432" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L433">            decimals.add(nextNegativeDecimal(bound, scale));</span>
         }
-<span class="fc" id="L434">        return decimals;</span>
+<span class="fc" id="L435">        return decimals;</span>
     }
 
     /**
@@ -455,14 +456,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigDecimal&gt; nextDecimals(final long bound, final int scale, final int howMany) {
-<span class="fc bfc" id="L458" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L459" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L460" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L461">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L462" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L463">            decimals.add(nextDecimal(bound, scale));</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L460" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L461" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L462">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L464">            decimals.add(nextDecimal(bound, scale));</span>
         }
-<span class="fc" id="L465">        return decimals;</span>
+<span class="fc" id="L466">        return decimals;</span>
     }
 
     /**
@@ -487,14 +488,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigDecimal&gt; nextInvertiblePositiveDecimals(final long bound, final int scale, final int howMany) {
-<span class="fc bfc" id="L490" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L491" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L492" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L493">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L494" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L495">            decimals.add(nextInvertiblePositiveDecimal(bound, scale));</span>
+<span class="fc bfc" id="L491" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L492" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L493" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L494">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L495" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L496">            decimals.add(nextInvertiblePositiveDecimal(bound, scale));</span>
         }
-<span class="fc" id="L497">        return decimals;</span>
+<span class="fc" id="L498">        return decimals;</span>
     }
 
     /**
@@ -519,14 +520,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigDecimal&gt; nextInvertibleNegativeDecimals(final long bound, final int scale, final int howMany) {
-<span class="fc bfc" id="L522" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L523" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L524" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L525">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L526" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L527">            decimals.add(nextInvertibleNegativeDecimal(bound, scale));</span>
+<span class="fc bfc" id="L523" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L524" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L526">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L527" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L528">            decimals.add(nextInvertibleNegativeDecimal(bound, scale));</span>
         }
-<span class="fc" id="L529">        return decimals;</span>
+<span class="fc" id="L530">        return decimals;</span>
     }
 
     /**
@@ -551,14 +552,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigDecimal&gt; nextInvertibleDecimals(final long bound, final int scale, final int howMany) {
-<span class="fc bfc" id="L554" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L555" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L556" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L557">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L558" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L559">            decimals.add(nextInvertibleDecimal(bound, scale));</span>
+<span class="fc bfc" id="L555" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L556" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L558">        final List&lt;BigDecimal&gt; decimals = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L559" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L560">            decimals.add(nextInvertibleDecimal(bound, scale));</span>
         }
-<span class="fc" id="L561">        return decimals;</span>
+<span class="fc" id="L562">        return decimals;</span>
     }
 
     /**
@@ -575,10 +576,10 @@ public final class MathRandom {
      * @since 1
      */
     public Fraction nextPositiveFraction(final long bound) {
-<span class="fc bfc" id="L578" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc" id="L579">        final BigInteger numerator = BigInteger.valueOf(RandomUtils.nextLong(0, bound));</span>
-<span class="fc" id="L580">        final BigInteger denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
-<span class="fc" id="L581">        return new Fraction(numerator, denominator);</span>
+<span class="fc bfc" id="L579" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc" id="L580">        final BigInteger numerator = BigInteger.valueOf(RandomUtils.nextLong(0, bound));</span>
+<span class="fc" id="L581">        final BigInteger denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
+<span class="fc" id="L582">        return new Fraction(numerator, denominator);</span>
     }
 
     /**
@@ -595,8 +596,8 @@ public final class MathRandom {
      * @since 1
      */
     public Fraction nextNegativeFraction(final long bound) {
-<span class="fc bfc" id="L598" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc" id="L599">        return nextPositiveFraction(bound).negate();</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc" id="L600">        return nextPositiveFraction(bound).negate();</span>
     }
 
     /**
@@ -613,11 +614,11 @@ public final class MathRandom {
      * @since 1
      */
     public Fraction nextFraction(final long bound) {
-<span class="fc bfc" id="L616" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L617" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
-<span class="fc" id="L618">            return nextNegativeFraction(bound);</span>
+<span class="fc bfc" id="L617" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L618" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L619">            return nextNegativeFraction(bound);</span>
         }
-<span class="fc" id="L620">        return nextPositiveFraction(bound);</span>
+<span class="fc" id="L621">        return nextPositiveFraction(bound);</span>
     }
 
     /**
@@ -633,10 +634,10 @@ public final class MathRandom {
      * @since 1
      */
     public Fraction nextInvertiblePositiveFraction(final long bound) {
-<span class="fc bfc" id="L636" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc" id="L637">        final BigInteger numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
-<span class="fc" id="L638">        final BigInteger denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
-<span class="fc" id="L639">        return new Fraction(numerator, denominator);</span>
+<span class="fc bfc" id="L637" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc" id="L638">        final BigInteger numerator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
+<span class="fc" id="L639">        final BigInteger denominator = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
+<span class="fc" id="L640">        return new Fraction(numerator, denominator);</span>
     }
 
     /**
@@ -652,8 +653,8 @@ public final class MathRandom {
      * @since 1
      */
     public Fraction nextInvertibleNegativeFraction(final long bound) {
-<span class="fc bfc" id="L655" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc" id="L656">        return nextInvertiblePositiveFraction(bound).negate();</span>
+<span class="fc bfc" id="L656" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc" id="L657">        return nextInvertiblePositiveFraction(bound).negate();</span>
     }
 
     /**
@@ -669,11 +670,11 @@ public final class MathRandom {
      * @since 1
      */
     public Fraction nextInvertibleFraction(final long bound) {
-<span class="fc bfc" id="L672" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L673" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
-<span class="fc" id="L674">            return nextInvertibleNegativeFraction(bound);</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L674" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L675">            return nextInvertibleNegativeFraction(bound);</span>
         }
-<span class="fc" id="L676">        return nextInvertiblePositiveFraction(bound);</span>
+<span class="fc" id="L677">        return nextInvertiblePositiveFraction(bound);</span>
     }
 
     /**
@@ -693,13 +694,13 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;Fraction&gt; nextPositiveFractions(final long bound, final int howMany) {
-<span class="fc bfc" id="L696" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L697" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L698">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L699" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L700">            fractions.add(nextPositiveFraction(bound));</span>
+<span class="fc bfc" id="L697" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L698" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L699">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L700" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L701">            fractions.add(nextPositiveFraction(bound));</span>
         }
-<span class="fc" id="L702">        return fractions;</span>
+<span class="fc" id="L703">        return fractions;</span>
     }
 
     /**
@@ -719,13 +720,13 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;Fraction&gt; nextNegativeFractions(final long bound, final int howMany) {
-<span class="fc bfc" id="L722" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L723" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L724">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L725" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L726">            fractions.add(nextNegativeFraction(bound));</span>
+<span class="fc bfc" id="L723" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L724" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L725">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L726" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L727">            fractions.add(nextNegativeFraction(bound));</span>
         }
-<span class="fc" id="L728">        return fractions;</span>
+<span class="fc" id="L729">        return fractions;</span>
     }
 
     /**
@@ -745,13 +746,13 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;Fraction&gt; nextFractions(final long bound, final int howMany) {
-<span class="fc bfc" id="L748" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L749" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L750">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L751" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L752">            fractions.add(nextFraction(bound));</span>
+<span class="fc bfc" id="L749" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L750" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L751">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L752" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L753">            fractions.add(nextFraction(bound));</span>
         }
-<span class="fc" id="L754">        return fractions;</span>
+<span class="fc" id="L755">        return fractions;</span>
     }
 
     /**
@@ -772,13 +773,13 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;Fraction&gt; nextInvertiblePositiveFractions(final long bound, final int howMany) {
-<span class="fc bfc" id="L775" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L776" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L777">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L778" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L779">            fractions.add(nextInvertiblePositiveFraction(bound));</span>
+<span class="fc bfc" id="L776" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L777" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L778">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L779" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L780">            fractions.add(nextInvertiblePositiveFraction(bound));</span>
         }
-<span class="fc" id="L781">        return fractions;</span>
+<span class="fc" id="L782">        return fractions;</span>
     }
 
     /**
@@ -799,13 +800,13 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;Fraction&gt; nextInvertibleNegativeFractions(final long bound, final int howMany) {
-<span class="fc bfc" id="L802" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L803" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L804">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L805" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L806">            fractions.add(nextInvertibleNegativeFraction(bound));</span>
+<span class="fc bfc" id="L803" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L804" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L805">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L806" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L807">            fractions.add(nextInvertibleNegativeFraction(bound));</span>
         }
-<span class="fc" id="L808">        return fractions;</span>
+<span class="fc" id="L809">        return fractions;</span>
     }
 
     /**
@@ -825,13 +826,13 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;Fraction&gt; nextInvertibleFractions(final long bound, final int howMany) {
-<span class="fc bfc" id="L828" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L829" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L830">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L831" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L832">            fractions.add(nextInvertibleFraction(bound));</span>
+<span class="fc bfc" id="L829" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L830" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L831">        final List&lt;Fraction&gt; fractions = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L832" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L833">            fractions.add(nextInvertibleFraction(bound));</span>
         }
-<span class="fc" id="L834">        return fractions;</span>
+<span class="fc" id="L835">        return fractions;</span>
     }
 
     /**
@@ -847,10 +848,10 @@ public final class MathRandom {
      * @since 1
      */
     public SimpleComplexNumber nextSimpleComplexNumber(final long bound) {
-<span class="fc bfc" id="L850" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc" id="L851">        final BigInteger real = BigInteger.valueOf(nextLong(bound));</span>
-<span class="fc" id="L852">        final BigInteger imaginary = BigInteger.valueOf(nextLong(bound));</span>
-<span class="fc" id="L853">        return new SimpleComplexNumber(real, imaginary);</span>
+<span class="fc bfc" id="L851" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc" id="L852">        final BigInteger real = BigInteger.valueOf(nextLong(bound));</span>
+<span class="fc" id="L853">        final BigInteger imaginary = BigInteger.valueOf(nextLong(bound));</span>
+<span class="fc" id="L854">        return new SimpleComplexNumber(real, imaginary);</span>
     }
 
     /**
@@ -866,13 +867,13 @@ public final class MathRandom {
      * @since 1
      */
     public SimpleComplexNumber nextInvertibleSimpleComplexNumber(final long bound) {
-<span class="fc bfc" id="L869" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc" id="L870">        final BigInteger nonZeroPart = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
-<span class="fc bfc" id="L871" title="All 2 branches covered.">        final long possibleZeroPart = random.nextBoolean() ? RandomUtils.nextLong(1, bound) : nextLong(bound);</span>
-<span class="fc bfc" id="L872" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
-<span class="fc" id="L873">            return new SimpleComplexNumber(BigInteger.valueOf(possibleZeroPart), nonZeroPart);</span>
+<span class="fc bfc" id="L870" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc" id="L871">        final BigInteger nonZeroPart = BigInteger.valueOf(RandomUtils.nextLong(1, bound));</span>
+<span class="fc bfc" id="L872" title="All 2 branches covered.">        final long possibleZeroPart = random.nextBoolean() ? RandomUtils.nextLong(1, bound) : nextLong(bound);</span>
+<span class="fc bfc" id="L873" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L874">            return new SimpleComplexNumber(BigInteger.valueOf(possibleZeroPart), nonZeroPart);</span>
         }
-<span class="fc" id="L875">        return new SimpleComplexNumber(nonZeroPart, BigInteger.valueOf(possibleZeroPart));</span>
+<span class="fc" id="L876">        return new SimpleComplexNumber(nonZeroPart, BigInteger.valueOf(possibleZeroPart));</span>
     }
 
     /**
@@ -892,13 +893,13 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;SimpleComplexNumber&gt; nextSimpleComplexNumbers(final long bound, final int howMany) {
-<span class="fc bfc" id="L895" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L896" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L897">        final List&lt;SimpleComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L898" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L899">            complexNumbers.add(nextSimpleComplexNumber(bound));</span>
+<span class="fc bfc" id="L896" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L897" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L898">        final List&lt;SimpleComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L899" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L900">            complexNumbers.add(nextSimpleComplexNumber(bound));</span>
         }
-<span class="fc" id="L901">        return complexNumbers;</span>
+<span class="fc" id="L902">        return complexNumbers;</span>
     }
 
     /**
@@ -919,13 +920,13 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;SimpleComplexNumber&gt; nextInvertibleSimpleComplexNumbers(final long bound, final int howMany) {
-<span class="fc bfc" id="L922" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L923" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L924">        final List&lt;SimpleComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L925" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L926">            complexNumbers.add(nextInvertibleSimpleComplexNumber(bound));</span>
+<span class="fc bfc" id="L923" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L924" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L925">        final List&lt;SimpleComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L926" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L927">            complexNumbers.add(nextInvertibleSimpleComplexNumber(bound));</span>
         }
-<span class="fc" id="L928">        return complexNumbers;</span>
+<span class="fc" id="L929">        return complexNumbers;</span>
     }
 
     /**
@@ -943,11 +944,11 @@ public final class MathRandom {
      * @since 1
      */
     public RealComplexNumber nextRealComplexNumber(final long bound, final int scale) {
-<span class="fc bfc" id="L946" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L947" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc" id="L948">        final BigDecimal real = nextDecimal(bound, scale);</span>
-<span class="fc" id="L949">        final BigDecimal imaginary = nextDecimal(bound, scale);</span>
-<span class="fc" id="L950">        return new RealComplexNumber(real, imaginary);</span>
+<span class="fc bfc" id="L947" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L948" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc" id="L949">        final BigDecimal real = nextDecimal(bound, scale);</span>
+<span class="fc" id="L950">        final BigDecimal imaginary = nextDecimal(bound, scale);</span>
+<span class="fc" id="L951">        return new RealComplexNumber(real, imaginary);</span>
     }
 
     /**
@@ -965,15 +966,15 @@ public final class MathRandom {
      * @since 1
      */
     public RealComplexNumber nextInvertibleRealComplexNumber(final long bound, final int scale) {
-<span class="fc bfc" id="L968" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L969" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc" id="L970">        final BigDecimal nonZeroPart = nextInvertibleDecimal(bound, scale);</span>
+<span class="fc bfc" id="L969" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L970" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc" id="L971">        final BigDecimal nonZeroPart = nextInvertibleDecimal(bound, scale);</span>
         final BigDecimal possibleZeroPart =
-<span class="fc bfc" id="L972" title="All 2 branches covered.">            random.nextBoolean() ? nextInvertibleDecimal(bound, scale) : nextDecimal(bound, scale);</span>
-<span class="fc bfc" id="L973" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
-<span class="fc" id="L974">            return new RealComplexNumber(possibleZeroPart, nonZeroPart);</span>
+<span class="fc bfc" id="L973" title="All 2 branches covered.">            random.nextBoolean() ? nextInvertibleDecimal(bound, scale) : nextDecimal(bound, scale);</span>
+<span class="fc bfc" id="L974" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L975">            return new RealComplexNumber(possibleZeroPart, nonZeroPart);</span>
         }
-<span class="fc" id="L976">        return new RealComplexNumber(nonZeroPart, possibleZeroPart);</span>
+<span class="fc" id="L977">        return new RealComplexNumber(nonZeroPart, possibleZeroPart);</span>
     }
 
     /**
@@ -997,14 +998,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;RealComplexNumber&gt; nextRealComplexNumbers(final long bound, final int scale, final int howMany) {
-<span class="fc bfc" id="L1000" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1001" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L1002" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1003">        final List&lt;RealComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1004" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1005">            complexNumbers.add(nextRealComplexNumber(bound, scale));</span>
+<span class="fc bfc" id="L1001" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1002" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L1003" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1004">        final List&lt;RealComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1005" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1006">            complexNumbers.add(nextRealComplexNumber(bound, scale));</span>
         }
-<span class="fc" id="L1007">        return complexNumbers;</span>
+<span class="fc" id="L1008">        return complexNumbers;</span>
     }
 
     /**
@@ -1030,14 +1031,14 @@ public final class MathRandom {
      */
     public List&lt;RealComplexNumber&gt; nextInvertibleRealComplexNumbers(final long bound, final int scale,
         final int howMany) {
-<span class="fc bfc" id="L1033" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1034" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L1035" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1036">        final List&lt;RealComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1037" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1038">            complexNumbers.add(nextInvertibleRealComplexNumber(bound, scale));</span>
+<span class="fc bfc" id="L1034" title="All 2 branches covered.">        checkArgument(bound &gt; 1, &quot;expected bound &gt; 1 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1035" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L1036" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1037">        final List&lt;RealComplexNumber&gt; complexNumbers = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1038" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1039">            complexNumbers.add(nextInvertibleRealComplexNumber(bound, scale));</span>
         }
-<span class="fc" id="L1040">        return complexNumbers;</span>
+<span class="fc" id="L1041">        return complexNumbers;</span>
     }
 
     /**
@@ -1057,9 +1058,9 @@ public final class MathRandom {
      * @since 1
      */
     public PolarForm nextPolarForm(final long bound, final int scale) {
-<span class="fc bfc" id="L1060" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1061" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc" id="L1062">        return new PolarForm(nextDecimal(bound, scale), nextDecimal(bound, scale));</span>
+<span class="fc bfc" id="L1061" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1062" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc" id="L1063">        return new PolarForm(nextDecimal(bound, scale), nextDecimal(bound, scale));</span>
     }
 
     /**
@@ -1083,14 +1084,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;PolarForm&gt; nextPolarForms(final long bound, final int scale, final int howMany) {
-<span class="fc bfc" id="L1086" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1087" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L1088" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1089">        final List&lt;PolarForm&gt; polarForms = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1090" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1091">            polarForms.add(nextPolarForm(bound, scale));</span>
+<span class="fc bfc" id="L1087" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1088" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L1089" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1090">        final List&lt;PolarForm&gt; polarForms = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1091" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1092">            polarForms.add(nextPolarForm(bound, scale));</span>
         }
-<span class="fc" id="L1093">        return polarForms;</span>
+<span class="fc" id="L1094">        return polarForms;</span>
     }
 
     /**
@@ -1110,13 +1111,13 @@ public final class MathRandom {
      * @since 1
      */
     public BigIntVector nextBigIntVector(final long bound, final int size) {
-<span class="fc bfc" id="L1113" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1114" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1115">        final BigIntVectorBuilder builder = BigIntVector.builder(size);</span>
-<span class="fc bfc" id="L1116" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="fc" id="L1117">            builder.put(BigInteger.valueOf(nextLong(bound)));</span>
+<span class="fc bfc" id="L1114" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1115" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1116">        final BigIntVectorBuilder builder = BigIntVector.builder(size);</span>
+<span class="fc bfc" id="L1117" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L1118">            builder.put(BigInteger.valueOf(nextLong(bound)));</span>
         }
-<span class="fc" id="L1119">        return builder.build();</span>
+<span class="fc" id="L1120">        return builder.build();</span>
     }
 
     /**
@@ -1138,14 +1139,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigIntVector&gt; nextBigIntVectors(final long bound, final int size, final int howMany) {
-<span class="fc bfc" id="L1141" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1142" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1143" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1144">        final List&lt;BigIntVector&gt; vectors = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1145" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1146">            vectors.add(nextBigIntVector(bound, size));</span>
+<span class="fc bfc" id="L1142" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1143" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1144" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1145">        final List&lt;BigIntVector&gt; vectors = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1146" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1147">            vectors.add(nextBigIntVector(bound, size));</span>
         }
-<span class="fc" id="L1148">        return vectors;</span>
+<span class="fc" id="L1149">        return vectors;</span>
     }
 
     /**
@@ -1169,16 +1170,16 @@ public final class MathRandom {
      * @since 1
      */
     public BigIntMatrix nextBigIntMatrix(final long bound, final int rowSize, final int columnSize) {
-<span class="fc bfc" id="L1172" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1173" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="fc bfc" id="L1174" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="fc" id="L1175">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(rowSize, columnSize);</span>
-<span class="fc" id="L1176">        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1177">            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc" id="L1178">                builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));</span>
-<span class="fc" id="L1179">            });</span>
-<span class="fc" id="L1180">        });</span>
-<span class="fc" id="L1181">        return builder.build();</span>
+<span class="fc bfc" id="L1173" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1174" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L1175" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L1176">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(rowSize, columnSize);</span>
+<span class="fc" id="L1177">        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1178">            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc" id="L1179">                builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));</span>
+<span class="fc" id="L1180">            });</span>
+<span class="fc" id="L1181">        });</span>
+<span class="fc" id="L1182">        return builder.build();</span>
     }
 
     /**
@@ -1199,19 +1200,19 @@ public final class MathRandom {
      * @since 1
      */
     public BigIntMatrix nextUpperTriangularBigIntMatrix(final long bound, final int size) {
-<span class="fc bfc" id="L1202" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1203" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1204">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
-<span class="fc" id="L1205">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1206">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc bfc" id="L1207" title="All 2 branches covered.">                if (rowIndex &lt;= columnIndex) {</span>
-<span class="fc" id="L1208">                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));</span>
+<span class="fc bfc" id="L1203" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1204" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1205">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
+<span class="fc" id="L1206">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1207">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L1208" title="All 2 branches covered.">                if (rowIndex &lt;= columnIndex) {</span>
+<span class="fc" id="L1209">                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));</span>
                 } else {
-<span class="fc" id="L1210">                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);</span>
+<span class="fc" id="L1211">                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);</span>
                 }
-<span class="fc" id="L1212">            });</span>
-<span class="fc" id="L1213">        });</span>
-<span class="fc" id="L1214">        return builder.build();</span>
+<span class="fc" id="L1213">            });</span>
+<span class="fc" id="L1214">        });</span>
+<span class="fc" id="L1215">        return builder.build();</span>
     }
 
     /**
@@ -1232,19 +1233,19 @@ public final class MathRandom {
      * @since 1
      */
     public BigIntMatrix nextLowerTriangularBigIntMatrix(final long bound, final int size) {
-<span class="fc bfc" id="L1235" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1236" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1237">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
-<span class="fc" id="L1238">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1239">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc bfc" id="L1240" title="All 2 branches covered.">                if (rowIndex &gt;= columnIndex) {</span>
-<span class="fc" id="L1241">                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));</span>
+<span class="fc bfc" id="L1236" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1237" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1238">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
+<span class="fc" id="L1239">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1240">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L1241" title="All 2 branches covered.">                if (rowIndex &gt;= columnIndex) {</span>
+<span class="fc" id="L1242">                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));</span>
                 } else {
-<span class="fc" id="L1243">                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);</span>
+<span class="fc" id="L1244">                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);</span>
                 }
-<span class="fc" id="L1245">            });</span>
-<span class="fc" id="L1246">        });</span>
-<span class="fc" id="L1247">        return builder.build();</span>
+<span class="fc" id="L1246">            });</span>
+<span class="fc" id="L1247">        });</span>
+<span class="fc" id="L1248">        return builder.build();</span>
     }
 
     /**
@@ -1266,12 +1267,12 @@ public final class MathRandom {
      * @since 1
      */
     public BigIntMatrix nextTriangularBigIntMatrix(final long bound, final int size) {
-<span class="fc bfc" id="L1269" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1270" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1271" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
-<span class="fc" id="L1272">            return nextLowerTriangularBigIntMatrix(bound, size);</span>
+<span class="fc bfc" id="L1270" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1271" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1272" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L1273">            return nextLowerTriangularBigIntMatrix(bound, size);</span>
         }
-<span class="fc" id="L1274">        return nextUpperTriangularBigIntMatrix(bound, size);</span>
+<span class="fc" id="L1275">        return nextUpperTriangularBigIntMatrix(bound, size);</span>
     }
 
     /**
@@ -1291,19 +1292,19 @@ public final class MathRandom {
      * @since 1
      */
     public BigIntMatrix nextDiagonalBigIntMatrix(final long bound, final int size) {
-<span class="fc bfc" id="L1294" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1295" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1296">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
-<span class="fc" id="L1297">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1298">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc bfc" id="L1299" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="fc" id="L1300">                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));</span>
+<span class="fc bfc" id="L1295" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1296" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1297">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
+<span class="fc" id="L1298">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1299">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L1300" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L1301">                    builder.put(rowIndex, columnIndex, BigInteger.valueOf(nextLong(bound)));</span>
                 } else {
-<span class="fc" id="L1302">                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);</span>
+<span class="fc" id="L1303">                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);</span>
                 }
-<span class="fc" id="L1304">            });</span>
-<span class="fc" id="L1305">        });</span>
-<span class="fc" id="L1306">        return builder.build();</span>
+<span class="fc" id="L1305">            });</span>
+<span class="fc" id="L1306">        });</span>
+<span class="fc" id="L1307">        return builder.build();</span>
     }
 
     /**
@@ -1323,22 +1324,22 @@ public final class MathRandom {
      * @since 1
      */
     public BigIntMatrix nextSymmetricBigIntMatrix(final long bound, final int size) {
-<span class="fc bfc" id="L1326" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1327" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1328">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
-<span class="fc" id="L1329">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1330">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc" id="L1331">                final BigInteger element = BigInteger.valueOf(nextLong(bound));</span>
-<span class="fc bfc" id="L1332" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="fc" id="L1333">                    builder.put(rowIndex, columnIndex, element);</span>
-<span class="fc" id="L1334">                    builder.put(columnIndex, rowIndex, element);</span>
+<span class="fc bfc" id="L1327" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1328" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1329">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
+<span class="fc" id="L1330">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1331">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc" id="L1332">                final BigInteger element = BigInteger.valueOf(nextLong(bound));</span>
+<span class="fc bfc" id="L1333" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
+<span class="fc" id="L1334">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L1335">                    builder.put(columnIndex, rowIndex, element);</span>
                 }
-<span class="fc bfc" id="L1336" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="fc" id="L1337">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc bfc" id="L1337" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L1338">                    builder.put(rowIndex, columnIndex, element);</span>
                 }
-<span class="fc" id="L1339">            });</span>
-<span class="fc" id="L1340">        });</span>
-<span class="fc" id="L1341">        return builder.build();</span>
+<span class="fc" id="L1340">            });</span>
+<span class="fc" id="L1341">        });</span>
+<span class="fc" id="L1342">        return builder.build();</span>
     }
 
     /**
@@ -1358,22 +1359,22 @@ public final class MathRandom {
      * @since 1
      */
     public BigIntMatrix nextSkewSymmetricBigIntMatrix(final long bound, final int size) {
-<span class="fc bfc" id="L1361" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1362" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1363">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
-<span class="fc" id="L1364">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1365">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc bfc" id="L1366" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="fc" id="L1367">                    final BigInteger element = BigInteger.valueOf(nextLong(bound));</span>
-<span class="fc" id="L1368">                    builder.put(rowIndex, columnIndex, element);</span>
-<span class="fc" id="L1369">                    builder.put(columnIndex, rowIndex, element.negate());</span>
+<span class="fc bfc" id="L1362" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1363" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1364">        final BigIntMatrixBuilder builder = BigIntMatrix.builder(size, size);</span>
+<span class="fc" id="L1365">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1366">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L1367" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
+<span class="fc" id="L1368">                    final BigInteger element = BigInteger.valueOf(nextLong(bound));</span>
+<span class="fc" id="L1369">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L1370">                    builder.put(columnIndex, rowIndex, element.negate());</span>
                 }
-<span class="fc bfc" id="L1371" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="fc" id="L1372">                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);</span>
+<span class="fc bfc" id="L1372" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L1373">                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);</span>
                 }
-<span class="fc" id="L1374">            });</span>
-<span class="fc" id="L1375">        });</span>
-<span class="fc" id="L1376">        return builder.build();</span>
+<span class="fc" id="L1375">            });</span>
+<span class="fc" id="L1376">        });</span>
+<span class="fc" id="L1377">        return builder.build();</span>
     }
 
     /**
@@ -1402,15 +1403,15 @@ public final class MathRandom {
      */
     public List&lt;BigIntMatrix&gt; nextBigIntMatrices(final long bound, final int rowSize, final int columnSize,
         final int howMany) {
-<span class="fc bfc" id="L1405" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1406" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="fc bfc" id="L1407" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="fc bfc" id="L1408" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1409">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1410" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1411">            matrices.add(nextBigIntMatrix(bound, rowSize, columnSize));</span>
+<span class="fc bfc" id="L1406" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1407" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L1408" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc bfc" id="L1409" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1410">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1411" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1412">            matrices.add(nextBigIntMatrix(bound, rowSize, columnSize));</span>
         }
-<span class="fc" id="L1413">        return matrices;</span>
+<span class="fc" id="L1414">        return matrices;</span>
     }
 
     /**
@@ -1435,14 +1436,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigIntMatrix&gt; nextUpperTriangularBigIntMatrices(final long bound, final int size, final int howMany) {
-<span class="fc bfc" id="L1438" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1439" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1440" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1441">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1442" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1443">            matrices.add(nextUpperTriangularBigIntMatrix(bound, size));</span>
+<span class="fc bfc" id="L1439" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1440" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1441" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1442">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1443" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1444">            matrices.add(nextUpperTriangularBigIntMatrix(bound, size));</span>
         }
-<span class="fc" id="L1445">        return matrices;</span>
+<span class="fc" id="L1446">        return matrices;</span>
     }
 
     /**
@@ -1467,14 +1468,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigIntMatrix&gt; nextLowerTriangularBigIntMatrices(final long bound, final int size, final int howMany) {
-<span class="fc bfc" id="L1470" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1471" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1472" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1473">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1474" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1475">            matrices.add(nextLowerTriangularBigIntMatrix(bound, size));</span>
+<span class="fc bfc" id="L1471" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1472" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1473" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1474">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1475" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1476">            matrices.add(nextLowerTriangularBigIntMatrix(bound, size));</span>
         }
-<span class="fc" id="L1477">        return matrices;</span>
+<span class="fc" id="L1478">        return matrices;</span>
     }
 
     /**
@@ -1498,14 +1499,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigIntMatrix&gt; nextTriangularBigIntMatrices(final long bound, final int size, final int howMany) {
-<span class="fc bfc" id="L1501" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1502" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1503" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1504">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1505" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1506">            matrices.add(nextTriangularBigIntMatrix(bound, size));</span>
+<span class="fc bfc" id="L1502" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1503" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1504" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1505">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1506" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1507">            matrices.add(nextTriangularBigIntMatrix(bound, size));</span>
         }
-<span class="fc" id="L1508">        return matrices;</span>
+<span class="fc" id="L1509">        return matrices;</span>
     }
 
     /**
@@ -1529,14 +1530,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigIntMatrix&gt; nextDiagonalBigIntMatrices(final long bound, final int size, final int howMany) {
-<span class="fc bfc" id="L1532" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1533" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1534" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1535">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1536" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1537">            matrices.add(nextDiagonalBigIntMatrix(bound, size));</span>
+<span class="fc bfc" id="L1533" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1534" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1535" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1536">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1537" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1538">            matrices.add(nextDiagonalBigIntMatrix(bound, size));</span>
         }
-<span class="fc" id="L1539">        return matrices;</span>
+<span class="fc" id="L1540">        return matrices;</span>
     }
 
     /**
@@ -1560,14 +1561,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigIntMatrix&gt; nextSymmetricBigIntMatrices(final long bound, final int size, final int howMany) {
-<span class="fc bfc" id="L1563" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1564" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1565" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1566">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1567" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1568">            matrices.add(nextSymmetricBigIntMatrix(bound, size));</span>
+<span class="fc bfc" id="L1564" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1565" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1566" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1567">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1568" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1569">            matrices.add(nextSymmetricBigIntMatrix(bound, size));</span>
         }
-<span class="fc" id="L1570">        return matrices;</span>
+<span class="fc" id="L1571">        return matrices;</span>
     }
 
     /**
@@ -1592,14 +1593,14 @@ public final class MathRandom {
      * @since 1
      */
     public List&lt;BigIntMatrix&gt; nextSkewSymmetricBigIntMatrices(final long bound, final int size, final int howMany) {
-<span class="fc bfc" id="L1595" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1596" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1597" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1598">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1599" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1600">            matrices.add(nextSkewSymmetricBigIntMatrix(bound, size));</span>
+<span class="fc bfc" id="L1596" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1597" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1598" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1599">        final List&lt;BigIntMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1600" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1601">            matrices.add(nextSkewSymmetricBigIntMatrix(bound, size));</span>
         }
-<span class="fc" id="L1602">        return matrices;</span>
+<span class="fc" id="L1603">        return matrices;</span>
     }
 
     /**
@@ -1623,14 +1624,14 @@ public final class MathRandom {
      * @since 1
      */
     public DecimalVector nextDecimalVector(final long bound, final int scale, final int size) {
-<span class="fc bfc" id="L1626" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1627" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L1628" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1629">        final DecimalVectorBuilder builder = DecimalVector.builder(size);</span>
-<span class="fc bfc" id="L1630" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="fc" id="L1631">            builder.put(nextDecimal(bound, scale));</span>
+<span class="fc bfc" id="L1627" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1628" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L1629" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1630">        final DecimalVectorBuilder builder = DecimalVector.builder(size);</span>
+<span class="fc bfc" id="L1631" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L1632">            builder.put(nextDecimal(bound, scale));</span>
         }
-<span class="fc" id="L1633">        return builder.build();</span>
+<span class="fc" id="L1634">        return builder.build();</span>
     }
 
     /**
@@ -1661,15 +1662,15 @@ public final class MathRandom {
      */
     public List&lt;DecimalVector&gt; nextDecimalVectors(final long bound, final int scale, final int size,
         final int howMany) {
-<span class="fc bfc" id="L1664" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1665" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L1666" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1667" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1668">        final List&lt;DecimalVector&gt; vectors = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1669" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1670">            vectors.add(nextDecimalVector(bound, scale, size));</span>
+<span class="fc bfc" id="L1665" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1666" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L1667" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1668" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1669">        final List&lt;DecimalVector&gt; vectors = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1670" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1671">            vectors.add(nextDecimalVector(bound, scale, size));</span>
         }
-<span class="fc" id="L1672">        return vectors;</span>
+<span class="fc" id="L1673">        return vectors;</span>
     }
 
     /**
@@ -1697,17 +1698,17 @@ public final class MathRandom {
      * @since 1
      */
     public DecimalMatrix nextDecimalMatrix(final long bound, final int scale, final int rowSize, final int columnSize) {
-<span class="fc bfc" id="L1700" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1701" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L1702" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="fc bfc" id="L1703" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="fc" id="L1704">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(rowSize, columnSize);</span>
-<span class="fc" id="L1705">        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1706">            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc" id="L1707">                builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));</span>
-<span class="fc" id="L1708">            });</span>
-<span class="fc" id="L1709">        });</span>
-<span class="fc" id="L1710">        return builder.build();</span>
+<span class="fc bfc" id="L1701" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1702" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L1703" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L1704" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L1705">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(rowSize, columnSize);</span>
+<span class="fc" id="L1706">        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1707">            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc" id="L1708">                builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));</span>
+<span class="fc" id="L1709">            });</span>
+<span class="fc" id="L1710">        });</span>
+<span class="fc" id="L1711">        return builder.build();</span>
     }
 
     /**
@@ -1732,19 +1733,19 @@ public final class MathRandom {
      * @since 1
      */
     public DecimalMatrix nextUpperTriangularDecimalMatrix(final long bound, final int scale, final int size) {
-<span class="fc bfc" id="L1735" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1736" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1737">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
-<span class="fc" id="L1738">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1739">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc bfc" id="L1740" title="All 2 branches covered.">                if (rowIndex &lt;= columnIndex) {</span>
-<span class="fc" id="L1741">                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));</span>
+<span class="fc bfc" id="L1736" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1737" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1738">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
+<span class="fc" id="L1739">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1740">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L1741" title="All 2 branches covered.">                if (rowIndex &lt;= columnIndex) {</span>
+<span class="fc" id="L1742">                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));</span>
                 } else {
-<span class="fc" id="L1743">                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);</span>
+<span class="fc" id="L1744">                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);</span>
                 }
-<span class="fc" id="L1745">            });</span>
-<span class="fc" id="L1746">        });</span>
-<span class="fc" id="L1747">        return builder.build();</span>
+<span class="fc" id="L1746">            });</span>
+<span class="fc" id="L1747">        });</span>
+<span class="fc" id="L1748">        return builder.build();</span>
     }
 
     /**
@@ -1769,19 +1770,19 @@ public final class MathRandom {
      * @since 1
      */
     public DecimalMatrix nextLowerTriangularDecimalMatrix(final long bound, final int scale, final int size) {
-<span class="fc bfc" id="L1772" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1773" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1774">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
-<span class="fc" id="L1775">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1776">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc bfc" id="L1777" title="All 2 branches covered.">                if (rowIndex &gt;= columnIndex) {</span>
-<span class="fc" id="L1778">                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));</span>
+<span class="fc bfc" id="L1773" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1774" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1775">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
+<span class="fc" id="L1776">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1777">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L1778" title="All 2 branches covered.">                if (rowIndex &gt;= columnIndex) {</span>
+<span class="fc" id="L1779">                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));</span>
                 } else {
-<span class="fc" id="L1780">                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);</span>
+<span class="fc" id="L1781">                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);</span>
                 }
-<span class="fc" id="L1782">            });</span>
-<span class="fc" id="L1783">        });</span>
-<span class="fc" id="L1784">        return builder.build();</span>
+<span class="fc" id="L1783">            });</span>
+<span class="fc" id="L1784">        });</span>
+<span class="fc" id="L1785">        return builder.build();</span>
     }
 
     /**
@@ -1807,12 +1808,12 @@ public final class MathRandom {
      * @since 1
      */
     public DecimalMatrix nextTriangularDecimalMatrix(final long bound, final int scale, final int size) {
-<span class="fc bfc" id="L1810" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1811" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L1812" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
-<span class="fc" id="L1813">            return nextLowerTriangularDecimalMatrix(bound, scale, size);</span>
+<span class="fc bfc" id="L1811" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1812" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L1813" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L1814">            return nextLowerTriangularDecimalMatrix(bound, scale, size);</span>
         }
-<span class="fc" id="L1815">        return nextUpperTriangularDecimalMatrix(bound, scale, size);</span>
+<span class="fc" id="L1816">        return nextUpperTriangularDecimalMatrix(bound, scale, size);</span>
     }
 
     /**
@@ -1836,19 +1837,19 @@ public final class MathRandom {
      * @since 1
      */
     public DecimalMatrix nextDiagonalDecimalMatrix(final long bound, final int scale, final int size) {
-<span class="fc bfc" id="L1839" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1840" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1841">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
-<span class="fc" id="L1842">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1843">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc bfc" id="L1844" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="fc" id="L1845">                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));</span>
+<span class="fc bfc" id="L1840" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1841" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1842">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
+<span class="fc" id="L1843">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1844">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L1845" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L1846">                    builder.put(rowIndex, columnIndex, nextDecimal(bound, scale));</span>
                 } else {
-<span class="fc" id="L1847">                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);</span>
+<span class="fc" id="L1848">                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);</span>
                 }
-<span class="fc" id="L1849">            });</span>
-<span class="fc" id="L1850">        });</span>
-<span class="fc" id="L1851">        return builder.build();</span>
+<span class="fc" id="L1850">            });</span>
+<span class="fc" id="L1851">        });</span>
+<span class="fc" id="L1852">        return builder.build();</span>
     }
 
     /**
@@ -1872,22 +1873,22 @@ public final class MathRandom {
      * @since 1
      */
     public DecimalMatrix nextSymmetricDecimalMatrix(final long bound, final int scale, final int size) {
-<span class="fc bfc" id="L1875" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1876" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1877">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
-<span class="fc" id="L1878">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1879">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc" id="L1880">                final BigDecimal element = nextDecimal(bound, scale);</span>
-<span class="fc bfc" id="L1881" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="fc" id="L1882">                    builder.put(rowIndex, columnIndex, element);</span>
-<span class="fc" id="L1883">                    builder.put(columnIndex, rowIndex, element);</span>
+<span class="fc bfc" id="L1876" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1877" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1878">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
+<span class="fc" id="L1879">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1880">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc" id="L1881">                final BigDecimal element = nextDecimal(bound, scale);</span>
+<span class="fc bfc" id="L1882" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
+<span class="fc" id="L1883">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L1884">                    builder.put(columnIndex, rowIndex, element);</span>
                 }
-<span class="fc bfc" id="L1885" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="fc" id="L1886">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc bfc" id="L1886" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L1887">                    builder.put(rowIndex, columnIndex, element);</span>
                 }
-<span class="fc" id="L1888">            });</span>
-<span class="fc" id="L1889">        });</span>
-<span class="fc" id="L1890">        return builder.build();</span>
+<span class="fc" id="L1889">            });</span>
+<span class="fc" id="L1890">        });</span>
+<span class="fc" id="L1891">        return builder.build();</span>
     }
 
     /**
@@ -1911,23 +1912,23 @@ public final class MathRandom {
      * @since 1
      */
     public DecimalMatrix nextSkewSymmetricDecimalMatrix(final long bound, final int scale, final int size) {
-<span class="fc bfc" id="L1914" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1915" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L1916">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
-<span class="fc" id="L1917">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="fc" id="L1918">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="fc bfc" id="L1919" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="fc" id="L1920">                    final BigDecimal element = nextDecimal(bound, scale);</span>
-<span class="fc" id="L1921">                    builder.put(rowIndex, columnIndex, element);</span>
-<span class="fc" id="L1922">                    builder.put(columnIndex, rowIndex, element.negate());</span>
+<span class="fc bfc" id="L1915" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1916" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L1917">        final DecimalMatrixBuilder builder = DecimalMatrix.builder(size, size);</span>
+<span class="fc" id="L1918">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L1919">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L1920" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
+<span class="fc" id="L1921">                    final BigDecimal element = nextDecimal(bound, scale);</span>
+<span class="fc" id="L1922">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L1923">                    builder.put(columnIndex, rowIndex, element.negate());</span>
                 }
-<span class="fc bfc" id="L1924" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="fc" id="L1925">                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);</span>
+<span class="fc bfc" id="L1925" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L1926">                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);</span>
                 }
-<span class="fc" id="L1927">            });</span>
+<span class="fc" id="L1928">            });</span>
 
-<span class="fc" id="L1929">        });</span>
-<span class="fc" id="L1930">        return builder.build();</span>
+<span class="fc" id="L1930">        });</span>
+<span class="fc" id="L1931">        return builder.build();</span>
     }
 
     /**
@@ -1960,16 +1961,16 @@ public final class MathRandom {
      */
     public List&lt;DecimalMatrix&gt; nextDecimalMatrices(final long bound, final int scale, final int rowSize,
         final int columnSize, final int howMany) {
-<span class="fc bfc" id="L1963" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L1964" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L1965" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="fc bfc" id="L1966" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="fc bfc" id="L1967" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L1968">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L1969" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L1970">            matrices.add(nextDecimalMatrix(bound, scale, rowSize, columnSize));</span>
+<span class="fc bfc" id="L1964" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L1965" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L1966" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L1967" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc bfc" id="L1968" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L1969">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L1970" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L1971">            matrices.add(nextDecimalMatrix(bound, scale, rowSize, columnSize));</span>
         }
-<span class="fc" id="L1972">        return matrices;</span>
+<span class="fc" id="L1973">        return matrices;</span>
     }
 
     /**
@@ -1999,15 +2000,15 @@ public final class MathRandom {
      */
     public List&lt;DecimalMatrix&gt; nextUpperTriangularDecimalMatrices(final long bound, final int scale, final int size,
         final int howMany) {
-<span class="fc bfc" id="L2002" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L2003" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L2004" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L2005" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L2006">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L2007" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L2008">            matrices.add(nextUpperTriangularDecimalMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L2003" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2004" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2005" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2006" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2007">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2008" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2009">            matrices.add(nextUpperTriangularDecimalMatrix(bound, scale, size));</span>
         }
-<span class="fc" id="L2010">        return matrices;</span>
+<span class="fc" id="L2011">        return matrices;</span>
     }
 
     /**
@@ -2037,15 +2038,15 @@ public final class MathRandom {
      */
     public List&lt;DecimalMatrix&gt; nextLowerTriangularDecimalMatrices(final long bound, final int scale, final int size,
         final int howMany) {
-<span class="fc bfc" id="L2040" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L2041" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L2042" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L2043" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L2044">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L2045" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L2046">            matrices.add(nextLowerTriangularDecimalMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L2041" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2042" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2043" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2044" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2045">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2046" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2047">            matrices.add(nextLowerTriangularDecimalMatrix(bound, scale, size));</span>
         }
-<span class="fc" id="L2048">        return matrices;</span>
+<span class="fc" id="L2049">        return matrices;</span>
     }
 
     /**
@@ -2074,15 +2075,15 @@ public final class MathRandom {
      */
     public List&lt;DecimalMatrix&gt; nextTriangularDecimalMatrices(final long bound, final int scale, final int size,
         final int howMany) {
-<span class="fc bfc" id="L2077" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L2078" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L2079" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L2080" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L2081">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L2082" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L2083">            matrices.add(nextTriangularDecimalMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L2078" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2079" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2080" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2081" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2082">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2083" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2084">            matrices.add(nextTriangularDecimalMatrix(bound, scale, size));</span>
         }
-<span class="fc" id="L2085">        return matrices;</span>
+<span class="fc" id="L2086">        return matrices;</span>
     }
 
     /**
@@ -2111,15 +2112,15 @@ public final class MathRandom {
      */
     public List&lt;DecimalMatrix&gt; nextDiagonalDecimalMatrices(final long bound, final int scale, final int size,
         final int howMany) {
-<span class="fc bfc" id="L2114" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L2115" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L2116" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L2117" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L2118">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L2119" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L2120">            matrices.add(nextDiagonalDecimalMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L2115" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2116" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2117" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2118" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2119">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2120" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2121">            matrices.add(nextDiagonalDecimalMatrix(bound, scale, size));</span>
         }
-<span class="fc" id="L2122">        return matrices;</span>
+<span class="fc" id="L2123">        return matrices;</span>
     }
 
     /**
@@ -2148,15 +2149,15 @@ public final class MathRandom {
      */
     public List&lt;DecimalMatrix&gt; nextSymmetricDecimalMatrices(final long bound, final int scale, final int size,
         final int howMany) {
-<span class="fc bfc" id="L2151" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L2152" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L2153" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L2154" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L2155">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L2156" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L2157">            matrices.add(nextSymmetricDecimalMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L2152" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2153" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2154" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2155" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2156">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2157" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2158">            matrices.add(nextSymmetricDecimalMatrix(bound, scale, size));</span>
         }
-<span class="fc" id="L2159">        return matrices;</span>
+<span class="fc" id="L2160">        return matrices;</span>
     }
 
     /**
@@ -2186,25 +2187,25 @@ public final class MathRandom {
      */
     public List&lt;DecimalMatrix&gt; nextSkewSymmetricDecimalMatrices(final long bound, final int scale, final int size,
         final int howMany) {
-<span class="fc bfc" id="L2189" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="fc bfc" id="L2190" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="fc bfc" id="L2191" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc bfc" id="L2192" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="fc" id="L2193">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="fc bfc" id="L2194" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="fc" id="L2195">            matrices.add(nextSkewSymmetricDecimalMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L2190" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2191" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2192" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2193" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2194">        final List&lt;DecimalMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2195" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2196">            matrices.add(nextSkewSymmetricDecimalMatrix(bound, scale, size));</span>
         }
-<span class="fc" id="L2197">        return matrices;</span>
+<span class="fc" id="L2198">        return matrices;</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L2202">        return MoreObjects.toStringHelper(this).add(&quot;random&quot;, random).toString();</span>
+<span class="fc" id="L2203">        return MoreObjects.toStringHelper(this).add(&quot;random&quot;, random).toString();</span>
     }
 
     @VisibleForTesting
     Random getRandom() {
-<span class="fc" id="L2207">        return random;</span>
+<span class="fc" id="L2208">        return random;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

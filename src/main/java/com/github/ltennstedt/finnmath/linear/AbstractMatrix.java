@@ -39,12 +39,16 @@ import java.util.Set;
  *            The type of the related vector
  * @param <M>
  *            The type of the matrix
+ * @param <N>
+ *            The type of the maximum absolute column sum norm, maximum absolute row sum norm and the maximum norm
+ * @param <B>
+ *            The type of the square of the norms
  * @author Lars Tennstedt
  * @see ImmutableTable
  * @since 1
  */
 @Beta
-abstract class AbstractMatrix<E, V, M> {
+abstract class AbstractMatrix<E, V, M, N, B> {
     /**
      * The table holding the elements of this {@link AbstractMatrix}
      *
@@ -83,11 +87,11 @@ abstract class AbstractMatrix<E, V, M> {
 
     protected abstract M minor(Integer rowIndex, Integer columnIndex);
 
-    protected abstract E maxAbsColumnSumNorm();
+    protected abstract N maxAbsColumnSumNorm();
 
-    protected abstract E maxAbsRowSumNorm();
+    protected abstract N maxAbsRowSumNorm();
 
-    protected abstract E frobeniusNormPow2();
+    protected abstract B frobeniusNormPow2();
 
     protected abstract BigDecimal frobeniusNorm();
 
@@ -97,7 +101,7 @@ abstract class AbstractMatrix<E, V, M> {
 
     protected abstract BigDecimal frobeniusNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
 
-    protected abstract E maxNorm();
+    protected abstract N maxNorm();
 
     /**
      * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is a square one
