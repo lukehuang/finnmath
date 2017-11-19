@@ -43,8 +43,8 @@ import java.util.stream.IntStream;
 public final class SimpleComplexNumberVector
     extends AbstractVector&lt;SimpleComplexNumber, SimpleComplexNumberVector, BigDecimal, BigInteger&gt; {
     private SimpleComplexNumberVector(final ImmutableMap&lt;Integer, SimpleComplexNumber&gt; map) {
-<span class="nc" id="L46">        super(map);</span>
-<span class="nc" id="L47">    }</span>
+<span class="fc" id="L46">        super(map);</span>
+<span class="fc" id="L47">    }</span>
 
     /**
      * Returns the sum of this {@link SimpleComplexNumberVector} and the given one
@@ -61,14 +61,14 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public SimpleComplexNumberVector add(final SimpleComplexNumberVector summand) {
-<span class="nc" id="L64">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="nc" id="L66">            summand.size());</span>
-<span class="nc" id="L67">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="nc" id="L68">        map.forEach((index, element) -&gt; {</span>
-<span class="nc" id="L69">            builder.put(element.add(summand.element(index)));</span>
-<span class="nc" id="L70">        });</span>
-<span class="nc" id="L71">        return builder.build();</span>
+<span class="fc" id="L64">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L66">            summand.size());</span>
+<span class="fc" id="L67">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L68">        map.forEach((index, element) -&gt; {</span>
+<span class="fc" id="L69">            builder.put(element.add(summand.element(index)));</span>
+<span class="fc" id="L70">        });</span>
+<span class="fc" id="L71">        return builder.build();</span>
     }
 
     /**
@@ -86,14 +86,14 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public SimpleComplexNumberVector subtract(final SimpleComplexNumberVector subtrahend) {
-<span class="nc" id="L89">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="nc" id="L91">            subtrahend.size());</span>
-<span class="nc" id="L92">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="nc" id="L93">        map.forEach((index, element) -&gt; {</span>
-<span class="nc" id="L94">            builder.put(element.subtract(subtrahend.element(index)));</span>
-<span class="nc" id="L95">        });</span>
-<span class="nc" id="L96">        return builder.build();</span>
+<span class="fc" id="L89">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L91">            subtrahend.size());</span>
+<span class="fc" id="L92">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L93">        map.forEach((index, element) -&gt; {</span>
+<span class="fc" id="L94">            builder.put(element.subtract(subtrahend.element(index)));</span>
+<span class="fc" id="L95">        });</span>
+<span class="fc" id="L96">        return builder.build();</span>
     }
 
     /**
@@ -109,12 +109,12 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public SimpleComplexNumberVector scalarMultiply(final SimpleComplexNumber scalar) {
-<span class="nc" id="L112">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="nc" id="L113">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="nc" id="L114">        map.values().forEach(element -&gt; {</span>
-<span class="nc" id="L115">            builder.put(scalar.multiply(element));</span>
-<span class="nc" id="L116">        });</span>
-<span class="nc" id="L117">        return builder.build();</span>
+<span class="fc" id="L112">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L113">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L114">        map.values().forEach(element -&gt; {</span>
+<span class="fc" id="L115">            builder.put(scalar.multiply(element));</span>
+<span class="fc" id="L116">        });</span>
+<span class="fc" id="L117">        return builder.build();</span>
     }
 
     /**
@@ -127,7 +127,7 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public SimpleComplexNumberVector negate() {
-<span class="nc" id="L130">        return scalarMultiply(SimpleComplexNumber.ONE.negate());</span>
+<span class="fc" id="L130">        return scalarMultiply(SimpleComplexNumber.ONE.negate());</span>
     }
 
     /**
@@ -139,11 +139,11 @@ public final class SimpleComplexNumberVector
      */
     @Override
     protected BigDecimal taxicabNorm() {
-<span class="nc" id="L142">        BigDecimal norm = BigDecimal.ZERO;</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">        for (final SimpleComplexNumber element : map.values()) {</span>
-<span class="nc" id="L144">            norm = norm.add(element.abs());</span>
-<span class="nc" id="L145">        }</span>
-<span class="nc" id="L146">        return norm;</span>
+<span class="fc" id="L142">        BigDecimal norm = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        for (final SimpleComplexNumber element : map.values()) {</span>
+<span class="fc" id="L144">            norm = norm.add(element.abs());</span>
+<span class="fc" id="L145">        }</span>
+<span class="fc" id="L146">        return norm;</span>
     }
 
     /**
@@ -163,9 +163,9 @@ public final class SimpleComplexNumberVector
      */
     @Override
     protected BigDecimal taxicabDistance(final SimpleComplexNumberVector other) {
-<span class="nc" id="L166">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L168">        return subtract(other).taxicabNorm();</span>
+<span class="fc" id="L166">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L168">        return subtract(other).taxicabNorm();</span>
     }
 
     /**
@@ -177,11 +177,11 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigInteger euclideanNormPow2() {
-<span class="nc" id="L180">        BigInteger result = BigInteger.ZERO;</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">        for (final SimpleComplexNumber element : map.values()) {</span>
-<span class="nc" id="L182">            result = result.add(element.absPow2());</span>
-<span class="nc" id="L183">        }</span>
-<span class="nc" id="L184">        return result;</span>
+<span class="fc" id="L180">        BigInteger result = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        for (final SimpleComplexNumber element : map.values()) {</span>
+<span class="fc" id="L182">            result = result.add(element.absPow2());</span>
+<span class="fc" id="L183">        }</span>
+<span class="fc" id="L184">        return result;</span>
     }
 
     /**
@@ -195,7 +195,7 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigDecimal euclideanNorm() {
-<span class="nc" id="L198">        return new SquareRootCalculator().sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L198">        return new SquareRootCalculator().sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -215,10 +215,10 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision) {
-<span class="nc" id="L218">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="nc bnc" id="L219" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+<span class="fc" id="L218">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L219" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="nc" id="L221">        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L221">        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -238,8 +238,8 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigDecimal euclideanNorm(final int scale, final RoundingMode roundingMode) {
-<span class="nc bnc" id="L241" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="nc" id="L242">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L242">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -265,11 +265,11 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
-<span class="nc" id="L268">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="nc bnc" id="L269" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+<span class="fc" id="L268">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L269" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="nc bnc" id="L271" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="nc" id="L272">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L272">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -287,13 +287,13 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public SimpleComplexNumber dotProduct(final SimpleComplexNumberVector other) {
-<span class="nc" id="L290">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L291" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L292">        SimpleComplexNumber result = SimpleComplexNumber.ZERO;</span>
-<span class="nc bnc" id="L293" title="All 2 branches missed.">        for (final Integer index : map.keySet()) {</span>
-<span class="nc" id="L294">            result = result.add(map.get(index).multiply(other.element(index)));</span>
-<span class="nc" id="L295">        }</span>
-<span class="nc" id="L296">        return result;</span>
+<span class="fc" id="L290">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L292">        SimpleComplexNumber result = SimpleComplexNumber.ZERO;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">        for (final Integer index : map.keySet()) {</span>
+<span class="fc" id="L294">            result = result.add(map.get(index).multiply(other.element(index)));</span>
+<span class="fc" id="L295">        }</span>
+<span class="fc" id="L296">        return result;</span>
     }
 
     /**
@@ -313,9 +313,9 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigInteger euclideanDistancePow2(final SimpleComplexNumberVector other) {
-<span class="nc" id="L316">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L317" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L318">        return subtract(other).euclideanNormPow2();</span>
+<span class="fc" id="L316">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L318">        return subtract(other).euclideanNormPow2();</span>
     }
 
     /**
@@ -335,9 +335,9 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigDecimal euclideanDistance(final SimpleComplexNumberVector other) {
-<span class="nc" id="L338">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L339" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L340">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L338">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L340">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -363,12 +363,12 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigDecimal euclideanDistance(final SimpleComplexNumberVector other, final BigDecimal precision) {
-<span class="nc" id="L366">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L367" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L368">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="nc bnc" id="L369" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+<span class="fc" id="L366">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L368">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L369" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="nc" id="L371">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L371">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -395,10 +395,10 @@ public final class SimpleComplexNumberVector
     @Override
     public BigDecimal euclideanDistance(final SimpleComplexNumberVector other, final int scale,
         final RoundingMode roundingMode) {
-<span class="nc" id="L398">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L399" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc bnc" id="L400" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="nc" id="L401">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L398">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L401">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -431,13 +431,13 @@ public final class SimpleComplexNumberVector
     @Override
     public BigDecimal euclideanDistance(final SimpleComplexNumberVector other, final BigDecimal precision,
         final int scale, final RoundingMode roundingMode) {
-<span class="nc" id="L434">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L435" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L436">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="nc bnc" id="L437" title="All 4 branches missed.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+<span class="fc" id="L434">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L436">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L437" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="nc bnc" id="L439" title="All 2 branches missed.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="nc" id="L440">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc bfc" id="L439" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L440">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -449,11 +449,11 @@ public final class SimpleComplexNumberVector
      */
     @Override
     protected BigDecimal maxNorm() {
-<span class="nc" id="L452">        BigDecimal norm = BigDecimal.ZERO;</span>
-<span class="nc bnc" id="L453" title="All 2 branches missed.">        for (final SimpleComplexNumber element : map.values()) {</span>
-<span class="nc" id="L454">            norm = norm.max(element.abs());</span>
-<span class="nc" id="L455">        }</span>
-<span class="nc" id="L456">        return norm;</span>
+<span class="fc" id="L452">        BigDecimal norm = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">        for (final SimpleComplexNumber element : map.values()) {</span>
+<span class="fc" id="L454">            norm = norm.max(element.abs());</span>
+<span class="fc" id="L455">        }</span>
+<span class="fc" id="L456">        return norm;</span>
     }
 
     /**
@@ -473,9 +473,9 @@ public final class SimpleComplexNumberVector
      */
     @Override
     protected BigDecimal maxDistance(final SimpleComplexNumberVector other) {
-<span class="nc" id="L476">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L477" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L478">        return subtract(other).maxNorm();</span>
+<span class="fc" id="L476">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L477" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L478">        return subtract(other).maxNorm();</span>
     }
 
     /**
@@ -487,7 +487,7 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public int size() {
-<span class="nc" id="L490">        return map.size();</span>
+<span class="fc" id="L490">        return map.size();</span>
     }
 
     /**
@@ -500,25 +500,25 @@ public final class SimpleComplexNumberVector
      * @since 1
      */
     public static SimpleComplexNumberVectorBuilder builder(final int size) {
-<span class="nc bnc" id="L503" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L504">        return new SimpleComplexNumberVectorBuilder(size);</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L504">        return new SimpleComplexNumberVectorBuilder(size);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L509">        return Objects.hash(map);</span>
+<span class="fc" id="L509">        return Objects.hash(map);</span>
     }
 
     @Override
     public boolean equals(final Object object) {
-<span class="nc bnc" id="L514" title="All 2 branches missed.">        if (this == object) {</span>
-<span class="nc" id="L515">            return true;</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L515">            return true;</span>
         }
-<span class="nc bnc" id="L517" title="All 2 branches missed.">        if (!(object instanceof SimpleComplexNumberVector)) {</span>
-<span class="nc" id="L518">            return false;</span>
+<span class="fc bfc" id="L517" title="All 2 branches covered.">        if (!(object instanceof SimpleComplexNumberVector)) {</span>
+<span class="fc" id="L518">            return false;</span>
         }
-<span class="nc" id="L520">        final SimpleComplexNumberVector other = (SimpleComplexNumberVector) object;</span>
-<span class="nc" id="L521">        return Objects.deepEquals(map, other.getMap());</span>
+<span class="fc" id="L520">        final SimpleComplexNumberVector other = (SimpleComplexNumberVector) object;</span>
+<span class="fc" id="L521">        return Objects.deepEquals(map, other.getMap());</span>
     }
 
     /**
@@ -531,8 +531,8 @@ public final class SimpleComplexNumberVector
     public static final class SimpleComplexNumberVectorBuilder extends
         AbstractVectorBuilder&lt;SimpleComplexNumber, SimpleComplexNumberVector, SimpleComplexNumberVectorBuilder&gt; {
         private SimpleComplexNumberVectorBuilder(final Integer size) {
-<span class="nc" id="L534">            super(size);</span>
-<span class="nc" id="L535">        }</span>
+<span class="fc" id="L534">            super(size);</span>
+<span class="fc" id="L535">        }</span>
 
         /**
          * Puts the given element on the first free index and returns {@code this}
@@ -550,11 +550,11 @@ public final class SimpleComplexNumberVector
          * @since 1
          */
         public SimpleComplexNumberVectorBuilder put(final SimpleComplexNumber element) {
-<span class="nc" id="L553">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="nc" id="L554">            final int index = addExact(map.size(), 1);</span>
-<span class="nc bnc" id="L555" title="All 2 branches missed.">            checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="nc" id="L556">            map.put(index, element);</span>
-<span class="nc" id="L557">            return this;</span>
+<span class="fc" id="L553">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L554">            final int index = addExact(map.size(), 1);</span>
+<span class="pc bpc" id="L555" title="1 of 2 branches missed.">            checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L556">            map.put(index, element);</span>
+<span class="fc" id="L557">            return this;</span>
         }
 
         /**
@@ -594,11 +594,11 @@ public final class SimpleComplexNumberVector
          * @since 1
          */
         public SimpleComplexNumberVectorBuilder putAll(final SimpleComplexNumber element) {
-<span class="nc" id="L597">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="nc bnc" id="L598" title="All 2 branches missed.">            for (int index = 1; index &lt;= size; index++) {</span>
-<span class="nc" id="L599">                map.put(index, element);</span>
+<span class="fc" id="L597">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc bfc" id="L598" title="All 2 branches covered.">            for (int index = 1; index &lt;= size; index++) {</span>
+<span class="fc" id="L599">                map.put(index, element);</span>
             }
-<span class="nc" id="L601">            return this;</span>
+<span class="fc" id="L601">            return this;</span>
         }
 
         /**
@@ -613,10 +613,10 @@ public final class SimpleComplexNumberVector
          */
         @Override
         public SimpleComplexNumberVector build() {
-<span class="nc" id="L616">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(index -&gt; {</span>
-<span class="nc" id="L617">                requireNonNull(map.get(index), &quot;map.value&quot;);</span>
-<span class="nc" id="L618">            });</span>
-<span class="nc" id="L619">            return new SimpleComplexNumberVector(ImmutableMap.copyOf(map));</span>
+<span class="fc" id="L616">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(index -&gt; {</span>
+<span class="fc" id="L617">                requireNonNull(map.get(index), &quot;map.value&quot;);</span>
+<span class="fc" id="L618">            });</span>
+<span class="fc" id="L619">            return new SimpleComplexNumberVector(ImmutableMap.copyOf(map));</span>
         }
     }
 

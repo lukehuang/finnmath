@@ -26,6 +26,14 @@ import com.github.ltennstedt.finnmath.linear.DecimalMatrix;
 import com.github.ltennstedt.finnmath.linear.DecimalMatrix.DecimalMatrixBuilder;
 import com.github.ltennstedt.finnmath.linear.DecimalVector;
 import com.github.ltennstedt.finnmath.linear.DecimalVector.DecimalVectorBuilder;
+import com.github.ltennstedt.finnmath.linear.RealComplexNumberMatrix;
+import com.github.ltennstedt.finnmath.linear.RealComplexNumberMatrix.RealComplexNumberMatrixBuilder;
+import com.github.ltennstedt.finnmath.linear.RealComplexNumberVector;
+import com.github.ltennstedt.finnmath.linear.RealComplexNumberVector.RealComplexNumberVectorBuilder;
+import com.github.ltennstedt.finnmath.linear.SimpleComplexNumberMatrix;
+import com.github.ltennstedt.finnmath.linear.SimpleComplexNumberMatrix.SimpleComplexNumberMatrixBuilder;
+import com.github.ltennstedt.finnmath.linear.SimpleComplexNumberVector;
+import com.github.ltennstedt.finnmath.linear.SimpleComplexNumberVector.SimpleComplexNumberVectorBuilder;
 import com.github.ltennstedt.finnmath.number.Fraction;
 import com.github.ltennstedt.finnmath.number.PolarForm;
 import com.github.ltennstedt.finnmath.number.RealComplexNumber;
@@ -970,7 +978,7 @@ public final class MathRandom {
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         final BigDecimal nonZeroPart = nextInvertibleDecimal(bound, scale);
         final BigDecimal possibleZeroPart =
-            random.nextBoolean() ? nextInvertibleDecimal(bound, scale) : nextDecimal(bound, scale);
+                random.nextBoolean() ? nextInvertibleDecimal(bound, scale) : nextDecimal(bound, scale);
         if (random.nextBoolean()) {
             return new RealComplexNumber(possibleZeroPart, nonZeroPart);
         }
@@ -1030,7 +1038,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<RealComplexNumber> nextInvertibleRealComplexNumbers(final long bound, final int scale,
-        final int howMany) {
+            final int howMany) {
         checkArgument(bound > 1, "expected bound > 1 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
@@ -1402,7 +1410,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<BigIntMatrix> nextBigIntMatrices(final long bound, final int rowSize, final int columnSize,
-        final int howMany) {
+            final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
@@ -1661,7 +1669,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalVector> nextDecimalVectors(final long bound, final int scale, final int size,
-        final int howMany) {
+            final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -1960,7 +1968,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextDecimalMatrices(final long bound, final int scale, final int rowSize,
-        final int columnSize, final int howMany) {
+            final int columnSize, final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
@@ -1999,7 +2007,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextUpperTriangularDecimalMatrices(final long bound, final int scale, final int size,
-        final int howMany) {
+            final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2037,7 +2045,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextLowerTriangularDecimalMatrices(final long bound, final int scale, final int size,
-        final int howMany) {
+            final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2074,7 +2082,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextTriangularDecimalMatrices(final long bound, final int scale, final int size,
-        final int howMany) {
+            final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2111,7 +2119,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextDiagonalDecimalMatrices(final long bound, final int scale, final int size,
-        final int howMany) {
+            final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2148,7 +2156,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextSymmetricDecimalMatrices(final long bound, final int scale, final int size,
-        final int howMany) {
+            final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2186,7 +2194,7 @@ public final class MathRandom {
      * @since 1
      */
     public List<DecimalMatrix> nextSkewSymmetricDecimalMatrices(final long bound, final int scale, final int size,
-        final int howMany) {
+            final int howMany) {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
@@ -2194,6 +2202,1141 @@ public final class MathRandom {
         final List<DecimalMatrix> matrices = new ArrayList<>(howMany);
         for (int i = 0; i < howMany; i++) {
             matrices.add(nextSkewSymmetricDecimalMatrix(bound, scale, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link SimpleComplexNumberVector}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the size of the resulting {@link SimpleComplexNumberVector}
+     * @return A pseudo random {@link SimpleComplexNumberVector}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @since 1
+     */
+    public SimpleComplexNumberVector nextSimpleComplexNumberVector(final long bound, final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final SimpleComplexNumberVectorBuilder builder = SimpleComplexNumberVector.builder(size);
+        for (int i = 0; i < size; i++) {
+            builder.put(nextSimpleComplexNumber(bound));
+        }
+        return builder.build();
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing {@link SimpleComplexNumberVector
+     * SimpleComplexNumberVectors}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the sizes of the resulting {@link SimpleComplexNumberVector SimpleComplexNumberVectors}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link SimpleComplexNumberVector SimpleComplexNumberVectors}
+     * @throws IllegalArgumentException
+     *             if {@code  bound < 2}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 2}
+     * @author Lars Tennstedt
+     * @see #nextSimpleComplexNumberVector
+     * @since 1
+     */
+    public List<SimpleComplexNumberVector> nextSimpleComplexNumberVectors(final long bound, final int size,
+            final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<SimpleComplexNumberVector> vectors = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            vectors.add(nextSimpleComplexNumberVector(bound, size));
+        }
+        return vectors;
+    }
+
+    /**
+     * Returns a {@link SimpleComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param rowSize
+     *            the row size of the resulting {@link SimpleComplexNumberMatrix}
+     * @param columnSize
+     *            the column size of the resulting {@link SimpleComplexNumberMatrix}
+     * @return A pseudo random {@link SimpleComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize < 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize < 1}
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @since 1
+     */
+    public SimpleComplexNumberMatrix nextSimpleComplexNumberMatrix(final long bound, final int rowSize,
+            final int columnSize) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
+        checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(rowSize, columnSize);
+        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns an upper triangular {@link SimpleComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of resulting {@link SimpleComplexNumberMatrix}
+     * @return A pseudo random upper triangular {@link SimpleComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @see SimpleComplexNumberMatrix#upperTriangular
+     * @since 1
+     */
+    public SimpleComplexNumberMatrix nextUpperTriangularSimpleComplexNumberMatrix(final long bound, final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex <= columnIndex) {
+                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
+                } else {
+                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns an lower triangular {@link SimpleComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix}
+     * @return A pseudo random lower triangular {@link SimpleComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @see SimpleComplexNumberMatrix#lowerTriangular
+     * @since 1
+     */
+    public SimpleComplexNumberMatrix nextLowerTriangularSimpleComplexNumberMatrix(final long bound, final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex >= columnIndex) {
+                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
+                } else {
+                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns a triangular {@link SimpleComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix}
+     * @return A pseudo random triangular {@link SimpleComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see #nextUpperTriangularSimpleComplexNumberMatrix
+     * @see #nextLowerTriangularSimpleComplexNumberMatrix
+     * @see SimpleComplexNumberMatrix#triangular
+     * @since 1
+     */
+    public SimpleComplexNumberMatrix nextTriangularSimpleComplexNumberMatrix(final long bound, final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        if (random.nextBoolean()) {
+            return nextLowerTriangularSimpleComplexNumberMatrix(bound, size);
+        }
+        return nextUpperTriangularSimpleComplexNumberMatrix(bound, size);
+    }
+
+    /**
+     * Returns a diagonal {@link SimpleComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix}
+     * @return A pseudo random diagonal {@link SimpleComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see SimpleComplexNumberMatrix#diagonal
+     * @since 1
+     */
+    public SimpleComplexNumberMatrix nextDiagonalSimpleComplexNumberMatrix(final long bound, final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
+                } else {
+                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns a symmetric {@link SimpleComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix}
+     * @return A pseudo random symmetric {@link SimpleComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see SimpleComplexNumberMatrix#symmetric
+     * @since 1
+     */
+    public SimpleComplexNumberMatrix nextSymmetricSimpleComplexNumberMatrix(final long bound, final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                final SimpleComplexNumber element = nextSimpleComplexNumber(bound);
+                if (rowIndex < columnIndex) {
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element);
+                }
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, element);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns a skew-symmetric {@link SimpleComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix}
+     * @return A pseudo random skew-symmetric {@link SimpleComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see SimpleComplexNumberMatrix#skewSymmetric
+     * @since 1
+     */
+    public SimpleComplexNumberMatrix nextSkewSymmetricSimpleComplexNumberMatrix(final long bound, final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex < columnIndex) {
+                    final SimpleComplexNumber element = nextSimpleComplexNumber(bound);
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element.negate());
+                }
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing {@link SimpleComplexNumberMatrix
+     * SimpleComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param rowSize
+     *            the row size of the resulting {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @param columnSize
+     *            the column size of the resulting {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize < 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextSimpleComplexNumberMatrix
+     * @since 1
+     */
+    public List<SimpleComplexNumberMatrix> nextSimpleComplexNumberMatrices(final long bound, final int rowSize,
+            final int columnSize, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
+        checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<SimpleComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextSimpleComplexNumberMatrix(bound, rowSize, columnSize));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing upper triangular
+     * {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random upper triangular {@link SimpleComplexNumberMatrix
+     *         SimpleComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextUpperTriangularSimpleComplexNumberMatrix
+     * @since 1
+     */
+    public List<SimpleComplexNumberMatrix> nextUpperTriangularSimpleComplexNumberMatrices(final long bound,
+            final int size, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<SimpleComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextUpperTriangularSimpleComplexNumberMatrix(bound, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing lower triangular
+     * {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random lower triangular {@link SimpleComplexNumberMatrix
+     *         SimpleComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextLowerTriangularSimpleComplexNumberMatrix
+     * @since 1
+     */
+    public List<SimpleComplexNumberMatrix> nextLowerTriangularSimpleComplexNumberMatrices(final long bound,
+            final int size, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<SimpleComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextLowerTriangularSimpleComplexNumberMatrix(bound, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing triangular {@link SimpleComplexNumberMatrix
+     * SimpleComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random triangular {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextTriangularSimpleComplexNumberMatrix
+     * @since 1
+     */
+    public List<SimpleComplexNumberMatrix> nextTriangularSimpleComplexNumberMatrices(final long bound, final int size,
+            final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<SimpleComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextTriangularSimpleComplexNumberMatrix(bound, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing diagonal {@link SimpleComplexNumberMatrix
+     * SimpleComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random diagonal {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextDiagonalSimpleComplexNumberMatrix
+     * @since 1
+     */
+    public List<SimpleComplexNumberMatrix> nextDiagonalSimpleComplexNumberMatrices(final long bound, final int size,
+            final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<SimpleComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextDiagonalSimpleComplexNumberMatrix(bound, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing symmetric {@link SimpleComplexNumberMatrix
+     * SimpleComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random symmetric {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextSymmetricSimpleComplexNumberMatrix
+     * @since 1
+     */
+    public List<SimpleComplexNumberMatrix> nextSymmetricSimpleComplexNumberMatrices(final long bound, final int size,
+            final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<SimpleComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextSymmetricSimpleComplexNumberMatrix(bound, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing skew-symmetric {@link SimpleComplexNumberMatrix
+     * SimpleComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param size
+     *            the row and column size of the resulting {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random skew-symmetric {@link SimpleComplexNumberMatrix
+     *         SimpleComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextSkewSymmetricSimpleComplexNumberMatrix
+     * @since 1
+     */
+    public List<SimpleComplexNumberMatrix> nextSkewSymmetricSimpleComplexNumberMatrices(final long bound,
+            final int size, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<SimpleComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextSkewSymmetricSimpleComplexNumberMatrix(bound, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link RealComplexNumberVector}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the size of the resulting {@link RealComplexNumberVector}
+     * @return A pseudo random {@link RealComplexNumberVector}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @since 1
+     */
+    public RealComplexNumberVector nextRealComplexNumberVector(final long bound, final int scale, final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(size);
+        for (int i = 0; i < size; i++) {
+            builder.put(nextRealComplexNumber(bound, scale));
+        }
+        return builder.build();
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing {@link RealComplexNumberVector
+     * RealComplexNumberVectors}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the sizes of the resulting {@link RealComplexNumberVector RealComplexNumberVectors}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link RealComplexNumberVector RealComplexNumberVectors}
+     * @throws IllegalArgumentException
+     *             if {@code  bound < 2}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 2}
+     * @author Lars Tennstedt
+     * @see #nextRealComplexNumberVector
+     * @since 1
+     */
+    public List<RealComplexNumberVector> nextRealComplexNumberVectors(final long bound, final int scale, final int size,
+            final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<RealComplexNumberVector> vectors = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            vectors.add(nextRealComplexNumberVector(bound, scale, size));
+        }
+        return vectors;
+    }
+
+    /**
+     * Returns a {@link RealComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param rowSize
+     *            the row size of the resulting {@link RealComplexNumberMatrix}
+     * @param columnSize
+     *            the column size of the resulting {@link RealComplexNumberMatrix}
+     * @return A pseudo random {@link RealComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize < 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize < 1}
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @since 1
+     */
+    public RealComplexNumberMatrix nextRealComplexNumberMatrix(final long bound, final int scale, final int rowSize,
+            final int columnSize) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
+        checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
+        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(rowSize, columnSize);
+        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns an upper triangular {@link RealComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of resulting {@link RealComplexNumberMatrix}
+     * @return A pseudo random upper triangular {@link RealComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @see RealComplexNumberMatrix#upperTriangular
+     * @since 1
+     */
+    public RealComplexNumberMatrix nextUpperTriangularRealComplexNumberMatrix(final long bound, final int scale,
+            final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex <= columnIndex) {
+                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
+                } else {
+                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns an lower triangular {@link RealComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix}
+     * @return A pseudo random lower triangular {@link RealComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see #nextLong
+     * @see RealComplexNumberMatrix#lowerTriangular
+     * @since 1
+     */
+    public RealComplexNumberMatrix nextLowerTriangularRealComplexNumberMatrix(final long bound, final int scale,
+            final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex >= columnIndex) {
+                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
+                } else {
+                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns a triangular {@link RealComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix}
+     * @return A pseudo random triangular {@link RealComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see #nextUpperTriangularRealComplexNumberMatrix
+     * @see #nextLowerTriangularRealComplexNumberMatrix
+     * @see RealComplexNumberMatrix#triangular
+     * @since 1
+     */
+    public RealComplexNumberMatrix nextTriangularRealComplexNumberMatrix(final long bound, final int scale,
+            final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        if (random.nextBoolean()) {
+            return nextLowerTriangularRealComplexNumberMatrix(bound, scale, size);
+        }
+        return nextUpperTriangularRealComplexNumberMatrix(bound, scale, size);
+    }
+
+    /**
+     * Returns a diagonal {@link RealComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix}
+     * @return A pseudo random diagonal {@link RealComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see RealComplexNumberMatrix#diagonal
+     * @since 1
+     */
+    public RealComplexNumberMatrix nextDiagonalRealComplexNumberMatrix(final long bound, final int scale,
+            final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
+                } else {
+                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns a symmetric {@link RealComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix}
+     * @return A pseudo random symmetric {@link RealComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see RealComplexNumberMatrix#symmetric
+     * @since 1
+     */
+    public RealComplexNumberMatrix nextSymmetricRealComplexNumberMatrix(final long bound, final int scale,
+            final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                final RealComplexNumber element = nextRealComplexNumber(bound, scale);
+                if (rowIndex < columnIndex) {
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element);
+                }
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, element);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns a skew-symmetric {@link RealComplexNumberMatrix}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix}
+     * @return A pseudo random skew-symmetric {@link RealComplexNumberMatrix}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @author Lars Tennstedt
+     * @see RealComplexNumberMatrix#skewSymmetric
+     * @since 1
+     */
+    public RealComplexNumberMatrix nextSkewSymmetricRealComplexNumberMatrix(final long bound, final int scale,
+            final int size) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
+            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                if (rowIndex < columnIndex) {
+                    final RealComplexNumber element = nextRealComplexNumber(bound, scale);
+                    builder.put(rowIndex, columnIndex, element);
+                    builder.put(columnIndex, rowIndex, element.negate());
+                }
+                if (rowIndex.equals(columnIndex)) {
+                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
+                }
+            });
+        });
+        return builder.build();
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing {@link RealComplexNumberMatrix
+     * RealComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param rowSize
+     *            the row size of the resulting {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @param columnSize
+     *            the column size of the resulting {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize < 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextRealComplexNumberMatrix
+     * @since 1
+     */
+    public List<RealComplexNumberMatrix> nextRealComplexNumberMatrices(final long bound, final int scale,
+            final int rowSize, final int columnSize, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
+        checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<RealComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextRealComplexNumberMatrix(bound, scale, rowSize, columnSize));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing upper triangular {@link RealComplexNumberMatrix
+     * RealComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random upper triangular {@link RealComplexNumberMatrix
+     *         RealComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextUpperTriangularRealComplexNumberMatrix
+     * @since 1
+     */
+    public List<RealComplexNumberMatrix> nextUpperTriangularRealComplexNumberMatrices(final long bound, final int scale,
+            final int size, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<RealComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextUpperTriangularRealComplexNumberMatrix(bound, scale, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing lower triangular {@link RealComplexNumberMatrix
+     * RealComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random lower triangular {@link RealComplexNumberMatrix
+     *         RealComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextLowerTriangularRealComplexNumberMatrix
+     * @since 1
+     */
+    public List<RealComplexNumberMatrix> nextLowerTriangularRealComplexNumberMatrices(final long bound, final int scale,
+            final int size, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<RealComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextLowerTriangularRealComplexNumberMatrix(bound, scale, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing triangular {@link RealComplexNumberMatrix
+     * RealComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random triangular {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextTriangularRealComplexNumberMatrix
+     * @since 1
+     */
+    public List<RealComplexNumberMatrix> nextTriangularRealComplexNumberMatrices(final long bound, final int scale,
+            final int size, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<RealComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextTriangularRealComplexNumberMatrix(bound, scale, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing diagonal {@link RealComplexNumberMatrix
+     * RealComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random diagonal {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextDiagonalRealComplexNumberMatrix
+     * @since 1
+     */
+    public List<RealComplexNumberMatrix> nextDiagonalRealComplexNumberMatrices(final long bound, final int scale,
+            final int size, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<RealComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextDiagonalRealComplexNumberMatrix(bound, scale, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing symmetric {@link RealComplexNumberMatrix
+     * RealComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random symmetric {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextSymmetricRealComplexNumberMatrix
+     * @since 1
+     */
+    public List<RealComplexNumberMatrix> nextSymmetricRealComplexNumberMatrices(final long bound, final int scale,
+            final int size, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<RealComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextSymmetricRealComplexNumberMatrix(bound, scale, size));
+        }
+        return matrices;
+    }
+
+    /**
+     * Returns a {@link List} of the size of {@code howMany} containing skew-symmetric {@link RealComplexNumberMatrix
+     * RealComplexNumberMatrices}
+     *
+     * @param bound
+     *            the bound
+     * @param scale
+     *            the scale
+     * @param size
+     *            the row and column size of the resulting {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @param howMany
+     *            the size of the resulting {@link List}
+     * @return A {@link List} of pseudo random skew-symmetric {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * @throws IllegalArgumentException
+     *             if {@code bound < 1}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws IllegalArgumentException
+     *             if {@code size < 1}
+     * @throws IllegalArgumentException
+     *             if {@code howMany < 1}
+     * @author Lars Tennstedt
+     * @see #nextSkewSymmetricRealComplexNumberMatrix
+     * @since 1
+     */
+    public List<RealComplexNumberMatrix> nextSkewSymmetricRealComplexNumberMatrices(final long bound, final int scale,
+            final int size, final int howMany) {
+        checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        checkArgument(howMany > 0, "expected howMany > 0 but actual %s", howMany);
+        final List<RealComplexNumberMatrix> matrices = new ArrayList<>(howMany);
+        for (int i = 0; i < howMany; i++) {
+            matrices.add(nextSkewSymmetricRealComplexNumberMatrix(bound, scale, size));
         }
         return matrices;
     }

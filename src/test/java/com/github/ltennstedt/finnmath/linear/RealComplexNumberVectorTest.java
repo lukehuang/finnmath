@@ -19,12 +19,12 @@ package com.github.ltennstedt.finnmath.linear;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.github.ltennstedt.finnmath.linear.BigIntVector.BigIntVectorBuilder;
+import com.github.ltennstedt.finnmath.linear.RealComplexNumberVector.RealComplexNumberVectorBuilder;
+import com.github.ltennstedt.finnmath.number.RealComplexNumber;
 import com.github.ltennstedt.finnmath.util.MathRandom;
 import com.github.ltennstedt.finnmath.util.SquareRootCalculator;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +33,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomUtils;
+import org.assertj.core.api.Condition;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public final class BigIntVectorTest {
+public final class RealComplexNumberVectorTest {
     private static final int size = RandomUtils.nextInt(3, 10);
     private static final int howMany = 10;
     private static final long bound = 10;
@@ -44,25 +45,27 @@ public final class BigIntVectorTest {
     private static final BigDecimal precision = BigDecimal.valueOf(0.00001);
     private static final int scale = 7;
     private static final RoundingMode roundingMode = RoundingMode.HALF_DOWN;
-    private static final BigIntVector zeroVector = BigIntVector.builder(size).putAll(BigInteger.ZERO).build();
-    private static final BigIntVector vectorWithAnotherSize =
-            BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build();
-    private static final List<BigIntVector> vectors = new ArrayList<>(howMany);
-    private static final List<BigIntVector> others = new ArrayList<>(howMany);
-    private static final List<BigIntVector> additionalOthers = new ArrayList<>(howMany);
-    private static final List<BigInteger> scalars = new ArrayList<>(howMany);
-    private static final List<BigInteger> otherScalars = new ArrayList<>(howMany);
+    private static final RealComplexNumberVector zeroVector =
+            RealComplexNumberVector.builder(size).putAll(RealComplexNumber.ZERO).build();
+    private static final RealComplexNumberVector vectorWithAnotherSize =
+            RealComplexNumberVector.builder(differentSize).putAll(RealComplexNumber.ZERO).build();
+    private static final List<RealComplexNumberVector> vectors = new ArrayList<>(howMany);
+    private static final List<RealComplexNumberVector> others = new ArrayList<>(howMany);
+    private static final List<RealComplexNumberVector> additionalOthers = new ArrayList<>(howMany);
+    private static final List<RealComplexNumber> scalars = new ArrayList<>(howMany);
+    private static final List<RealComplexNumber> otherScalars = new ArrayList<>(howMany);
     private static final BigDecimal tolerance = BigDecimal.valueOf(0.001D);
+    private static final BigDecimal negatedTolerance = tolerance.negate();
 
     @BeforeClass
     public static void setUpClass() {
         final MathRandom mathRandom = new MathRandom(7);
         for (int i = 0; i < howMany; i++) {
-            vectors.add(mathRandom.nextBigIntVector(bound, size));
-            others.add(mathRandom.nextBigIntVector(bound, size));
-            additionalOthers.add(mathRandom.nextBigIntVector(bound, size));
-            scalars.add(BigInteger.valueOf(RandomUtils.nextLong(0, bound)));
-            otherScalars.add(BigInteger.valueOf(RandomUtils.nextLong(0, bound)));
+            vectors.add(mathRandom.nextRealComplexNumberVector(bound, scale, size));
+            others.add(mathRandom.nextRealComplexNumberVector(bound, scale, size));
+            additionalOthers.add(mathRandom.nextRealComplexNumberVector(bound, scale, size));
+            scalars.add(mathRandom.nextRealComplexNumber(bound, scale));
+            otherScalars.add(mathRandom.nextRealComplexNumber(bound, scale));
         }
     }
 
@@ -85,7 +88,7 @@ public final class BigIntVectorTest {
     public void addShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                final BigIntVectorBuilder builder = BigIntVector.builder(size);
+                final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(size);
                 vector.entries().forEach(element -> {
                     builder.put(element.getValue().add(other.element(element.getKey())));
                 });
@@ -141,7 +144,7 @@ public final class BigIntVectorTest {
     public void subtractShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                final BigIntVectorBuilder builder = BigIntVector.builder(size);
+                final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(size);
                 vector.entries().forEach(element -> {
                     builder.put(element.getValue().subtract(other.element(element.getKey())));
                 });
@@ -160,7 +163,8 @@ public final class BigIntVectorTest {
     @Test
     public void subtractSelfShouldBeEqualToZeroVector() {
         vectors.forEach(vector -> {
-            assertThat(vector.subtract(vector)).isEqualTo(zeroVector);
+            assertThat(vector.subtract(vector).elements()).are(new Condition<>(
+                    element -> element.isEqualToByComparingParts(RealComplexNumber.ZERO), "equal to 0"));
         });
     }
 
@@ -175,7 +179,7 @@ public final class BigIntVectorTest {
     public void scalarMultiplyShouldSucceed() {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
-                final BigIntVectorBuilder builder = BigIntVector.builder(size);
+                final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(size);
                 vector.entries().forEach(element -> {
                     builder.put(scalar.multiply(element.getValue()));
                 });
@@ -223,21 +227,22 @@ public final class BigIntVectorTest {
     @Test
     public void scalarMultiplyWithZeroShouldBeEqualToZeroVector() {
         vectors.forEach(vector -> {
-            assertThat(vector.scalarMultiply(BigInteger.ZERO)).isEqualTo(zeroVector);
+            assertThat(vector.scalarMultiply(RealComplexNumber.ZERO).elements()).are(new Condition<>(
+                    element -> element.isEqualToByComparingParts(RealComplexNumber.ZERO), "equal to 0"));
         });
     }
 
     @Test
     public void scalarMultiplyWithOneShouldBeEqualToSelf() {
         vectors.forEach(vector -> {
-            assertThat(vector.scalarMultiply(BigInteger.ONE)).isEqualTo(vector);
+            assertThat(vector.scalarMultiply(RealComplexNumber.ONE)).isEqualTo(vector);
         });
     }
 
     @Test
     public void negateShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.negate()).isEqualTo(vector.scalarMultiply(BigInteger.ONE.negate()));
+            assertThat(vector.negate()).isEqualTo(vector.scalarMultiply(RealComplexNumber.ONE.negate()));
         });
     }
 
@@ -256,24 +261,23 @@ public final class BigIntVectorTest {
     @Test
     public void addNegatedShouldBeEqualToZeroMatrix() {
         vectors.forEach(vector -> {
-            vector.add(vector.negate()).entries().forEach(element -> {
-                assertThat(element.getValue()).isEqualTo(BigInteger.ZERO);
-            });
+            assertThat(vector.add(vector.negate()).elements()).are(new Condition<>(
+                    element -> element.isEqualToByComparingParts(RealComplexNumber.ZERO), "equal to 0"));
         });
     }
 
     @Test
     public void scalarMultiplyWithMinusOneShouldBeEqualToNegated() {
         vectors.forEach(vector -> {
-            assertThat(vector.scalarMultiply(BigInteger.ONE.negate())).isEqualTo(vector.negate());
+            assertThat(vector.scalarMultiply(RealComplexNumber.ONE.negate())).isEqualTo(vector.negate());
         });
     }
 
     @Test
     public void taxicabNormShouldSucceed() {
         vectors.forEach(vector -> {
-            BigInteger expected = BigInteger.ZERO;
-            for (final BigInteger element : vector.elements()) {
+            BigDecimal expected = BigDecimal.ZERO;
+            for (final RealComplexNumber element : vector.elements()) {
                 expected = expected.add(element.abs());
             }
             assertThat(vector.taxicabNorm()).isEqualTo(expected);
@@ -282,13 +286,13 @@ public final class BigIntVectorTest {
 
     @Test
     public void taxicabNormZeroVectorShouldBeEqualToZero() {
-        assertThat(zeroVector.taxicabNorm()).isEqualTo(BigInteger.ZERO);
+        assertThat(zeroVector.taxicabNorm()).isBetween(negatedTolerance, tolerance);
     }
 
     @Test
     public void taxicabNormShouldBePositive() {
         vectors.forEach(vector -> {
-            assertThat(vector.taxicabNorm()).isGreaterThanOrEqualTo(BigInteger.ZERO);
+            assertThat(vector.taxicabNorm()).isGreaterThanOrEqualTo(BigDecimal.ZERO);
         });
     }
 
@@ -296,8 +300,9 @@ public final class BigIntVectorTest {
     public void taxicabNormShouldBeAbsolutelyHomogeneous() {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
-                assertThat(vector.scalarMultiply(scalar).taxicabNorm())
-                        .isEqualTo(scalar.abs().multiply(vector.taxicabNorm()));
+                final BigDecimal expected = scalar.abs().multiply(vector.taxicabNorm());
+                assertThat(vector.scalarMultiply(scalar).taxicabNorm()).isBetween(expected.subtract(tolerance),
+                        expected.add(tolerance));
             });
         });
     }
@@ -322,7 +327,8 @@ public final class BigIntVectorTest {
     @Test
     public void taxicabDistanceSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.taxicabDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector.taxicabDistance(
+                    RealComplexNumberVector.builder(differentSize).putAll(RealComplexNumber.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
                 size, differentSize);
     }
@@ -339,7 +345,7 @@ public final class BigIntVectorTest {
     @Test
     public void taxicabDistanceFromVectorToSelfShouldBeEqualToZero() {
         vectors.forEach(vector -> {
-            assertThat(vector.taxicabDistance(vector)).isEqualTo(BigInteger.ZERO);
+            assertThat(vector.taxicabDistance(vector)).isBetween(negatedTolerance, tolerance);
         });
     }
 
@@ -347,7 +353,7 @@ public final class BigIntVectorTest {
     public void taxicabDistanceShouldBePositive() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.taxicabDistance(other)).isGreaterThanOrEqualTo(BigInteger.ZERO);
+                assertThat(vector.taxicabDistance(other)).isGreaterThanOrEqualTo(BigDecimal.ZERO);
             });
         });
     }
@@ -376,13 +382,17 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanNormPow2ShouldSucceed() {
         vectors.forEach(vector -> {
-            assertThat(vector.euclideanNormPow2()).isEqualTo(vector.dotProduct(vector));
+            BigDecimal expected = BigDecimal.ZERO;
+            for (final RealComplexNumber element : vector.elements()) {
+                expected = expected.add(element.absPow2());
+            }
+            assertThat(vector.euclideanNormPow2()).isEqualTo(expected);
         });
     }
 
     @Test
     public void euclideanNormPow2ZeroVectorShouldBeEqualToZero() {
-        assertThat(zeroVector.euclideanNormPow2()).isEqualTo(BigInteger.ZERO);
+        assertThat(zeroVector.euclideanNormPow2()).isEqualTo(BigDecimal.ZERO);
     }
 
     @Test
@@ -390,7 +400,7 @@ public final class BigIntVectorTest {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
                 assertThat(vector.scalarMultiply(scalar).euclideanNormPow2())
-                        .isEqualTo(scalar.pow(2).multiply(vector.euclideanNormPow2()));
+                        .isEqualTo(scalar.absPow2().multiply(vector.euclideanNormPow2()));
             });
         });
     }
@@ -515,7 +525,8 @@ public final class BigIntVectorTest {
     @Test
     public void dotProductSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.dotProduct(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector
+                    .dotProduct(RealComplexNumberVector.builder(differentSize).putAll(RealComplexNumber.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
                 size, differentSize);
     }
@@ -524,8 +535,8 @@ public final class BigIntVectorTest {
     public void dotProductShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                BigInteger expected = BigInteger.ZERO;
-                for (final Entry<Integer, BigInteger> entry : vector.entries()) {
+                RealComplexNumber expected = RealComplexNumber.ZERO;
+                for (final Entry<Integer, RealComplexNumber> entry : vector.entries()) {
                     expected = expected.add(entry.getValue().multiply(other.element(entry.getKey())));
                 }
                 assertThat(vector.dotProduct(other)).isEqualTo(expected);
@@ -543,7 +554,8 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistancePow2SizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistancePow2(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector.euclideanDistancePow2(
+                    RealComplexNumberVector.builder(differentSize).putAll(RealComplexNumber.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
                 size, differentSize);
     }
@@ -552,7 +564,7 @@ public final class BigIntVectorTest {
     public void euclideanDistancePow2ShouldSucceed() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                final BigIntVectorBuilder builder = BigIntVector.builder(size);
+                final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(size);
                 vector.entries().forEach(entry -> {
                     builder.put(entry.getValue().subtract(other.element(entry.getKey())));
                 });
@@ -564,7 +576,7 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistancePow2FromVectorToSelfShouldBeEqualToZero() {
         vectors.forEach(vector -> {
-            assertThat(vector.euclideanDistancePow2(vector)).isEqualTo(BigInteger.ZERO);
+            assertThat(vector.euclideanDistancePow2(vector)).isEqualByComparingTo(BigDecimal.ZERO);
         });
     }
 
@@ -588,7 +600,8 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistanceSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector.euclideanDistance(
+                    RealComplexNumberVector.builder(differentSize).putAll(RealComplexNumber.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
                 size, differentSize);
     }
@@ -641,8 +654,8 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistanceSizesNotEqualWithPrecisionShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build(),
-                    precision);
+            zeroVector.euclideanDistance(
+                    RealComplexNumberVector.builder(differentSize).putAll(RealComplexNumber.ZERO).build(), precision);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
                 size, differentSize);
     }
@@ -681,7 +694,8 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistanceSizesNotEqualWithScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build(), scale,
+            zeroVector.euclideanDistance(
+                    RealComplexNumberVector.builder(differentSize).putAll(RealComplexNumber.ZERO).build(), scale,
                     roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
                 size, differentSize);
@@ -722,7 +736,8 @@ public final class BigIntVectorTest {
     @Test
     public void euclideanDistanceSizesNotEqualWithPrecisionAndScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.euclideanDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build(), precision,
+            zeroVector.euclideanDistance(
+                    RealComplexNumberVector.builder(differentSize).putAll(RealComplexNumber.ZERO).build(), precision,
                     scale, roundingMode);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
                 size, differentSize);
@@ -764,8 +779,8 @@ public final class BigIntVectorTest {
     @Test
     public void maxNormShouldSucceed() {
         vectors.forEach(vector -> {
-            BigInteger expected = BigInteger.ZERO;
-            for (final BigInteger element : vector.elements()) {
+            BigDecimal expected = BigDecimal.ZERO;
+            for (final RealComplexNumber element : vector.elements()) {
                 expected = expected.max(element.abs());
             }
             assertThat(vector.maxNorm()).isEqualTo(expected);
@@ -774,13 +789,13 @@ public final class BigIntVectorTest {
 
     @Test
     public void maxNormZeroVectorShouldBeEqualToZero() {
-        assertThat(zeroVector.maxNorm()).isEqualTo(BigInteger.ZERO);
+        assertThat(zeroVector.maxNorm()).isBetween(negatedTolerance, tolerance);
     }
 
     @Test
     public void maxNormShouldBePositive() {
         vectors.forEach(vector -> {
-            assertThat(vector.maxNorm()).isGreaterThanOrEqualTo(BigInteger.ZERO);
+            assertThat(vector.maxNorm()).isGreaterThanOrEqualTo(BigDecimal.ZERO);
         });
     }
 
@@ -788,7 +803,9 @@ public final class BigIntVectorTest {
     public void maxNormShouldBeAbsolutelyHomogeneous() {
         vectors.forEach(vector -> {
             scalars.forEach(scalar -> {
-                assertThat(vector.scalarMultiply(scalar).maxNorm()).isEqualTo(scalar.abs().multiply(vector.maxNorm()));
+                final BigDecimal expected = scalar.abs().multiply(vector.maxNorm());
+                assertThat(vector.scalarMultiply(scalar).maxNorm()).isBetween(expected.subtract(tolerance),
+                        expected.add(tolerance));
             });
         });
     }
@@ -797,7 +814,8 @@ public final class BigIntVectorTest {
     public void maxNormShouldBeSubadditive() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.add(other).maxNorm()).isLessThanOrEqualTo(vector.maxNorm().add(other.maxNorm()));
+                assertThat(vector.add(other).maxNorm())
+                        .isLessThanOrEqualTo(vector.maxNorm().add(other.maxNorm()).add(tolerance));
             });
         });
     }
@@ -812,7 +830,8 @@ public final class BigIntVectorTest {
     @Test
     public void maxDistanceSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            zeroVector.maxDistance(BigIntVector.builder(differentSize).putAll(BigInteger.ZERO).build());
+            zeroVector
+                    .maxDistance(RealComplexNumberVector.builder(differentSize).putAll(RealComplexNumber.ZERO).build());
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal sizes but actual %s != %s",
                 size, differentSize);
     }
@@ -829,7 +848,7 @@ public final class BigIntVectorTest {
     @Test
     public void maxDistanceFromVectorToSelfShouldBeEqualToZero() {
         vectors.forEach(vector -> {
-            assertThat(vector.maxDistance(vector)).isEqualTo(BigInteger.ZERO);
+            assertThat(vector.maxDistance(vector)).isBetween(negatedTolerance, tolerance);
         });
     }
 
@@ -837,7 +856,7 @@ public final class BigIntVectorTest {
     public void maxDistanceShouldBePositive() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.maxDistance(other)).isGreaterThanOrEqualTo(BigInteger.ZERO);
+                assertThat(vector.maxDistance(other)).isGreaterThanOrEqualTo(BigDecimal.ZERO);
             });
         });
     }
@@ -911,7 +930,7 @@ public final class BigIntVectorTest {
     @Test
     public void builderSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntVector.builder(0);
+            RealComplexNumberVector.builder(0);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
@@ -930,16 +949,16 @@ public final class BigIntVectorTest {
     }
 
     @Test
-    public void equalsNotBigIntVectorShouldReturnFalse() {
+    public void equalsNotRealComplexNumberVectorShouldReturnFalse() {
         assertThat(zeroVector.equals(new Object())).isFalse();
     }
 
     @Test
     public void equalsNotEqualShouldReturnFalse() {
         vectors.forEach(vector -> {
-            final BigIntVectorBuilder builder = BigIntVector.builder(size);
+            final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(size);
             for (int i = 0; i < size; i++) {
-                builder.put(BigInteger.ONE);
+                builder.put(RealComplexNumber.ONE);
             }
             assertThat(vector.equals(vector.add(builder.build()))).isFalse();
         });
@@ -948,7 +967,7 @@ public final class BigIntVectorTest {
     @Test
     public void equalsEqualShouldReturnTrue() {
         vectors.forEach(vector -> {
-            final BigIntVectorBuilder builder = BigIntVector.builder(size);
+            final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(size);
             vector.elements().forEach(element -> {
                 builder.put(element);
             });

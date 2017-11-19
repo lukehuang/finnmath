@@ -38,7 +38,7 @@ import java.util.Objects;
  */
 @Beta
 public final class RealComplexNumber
-    extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
+        extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
     /**
      * {@code 0} as {@link RealComplexNumber}
      */
@@ -84,7 +84,7 @@ public final class RealComplexNumber
      */
     public RealComplexNumber(final SimpleComplexNumber complexNumber) {
         super(new BigDecimal(requireNonNull(complexNumber, "complexNumber").getReal()),
-            new BigDecimal(complexNumber.getImaginary()));
+                new BigDecimal(complexNumber.getImaginary()));
     }
 
     /**
@@ -119,7 +119,7 @@ public final class RealComplexNumber
     public RealComplexNumber subtract(final RealComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new RealComplexNumber(real.subtract(subtrahend.getReal()),
-            imaginary.subtract(subtrahend.getImaginary()));
+                imaginary.subtract(subtrahend.getImaginary()));
     }
 
     /**
@@ -161,9 +161,9 @@ public final class RealComplexNumber
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
         final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));
         final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))
-            .divide(denominator, RoundingMode.HALF_UP);
+                .divide(denominator, RoundingMode.HALF_UP);
         final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())
-            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, RoundingMode.HALF_UP);
+                .subtract(real.multiply(divisor.getImaginary())).divide(denominator, RoundingMode.HALF_UP);
         return new RealComplexNumber(newReal, newImaginary);
     }
 
@@ -370,7 +370,7 @@ public final class RealComplexNumber
     @Override
     public BigDecimal argument(final MathContext mathContext) {
         checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0),
-            "expected this != 0 but actual %s", this);
+                "expected this != 0 but actual %s", this);
         requireNonNull(mathContext, "mathContext");
         final Context context = BigFloat.context(mathContext);
         if (real.compareTo(BigDecimal.ZERO) != 0) {
@@ -380,7 +380,7 @@ public final class RealComplexNumber
             }
             final BigFloat pi = context.pi();
             return imaginary.compareTo(BigDecimal.ZERO) > -1 ? arctan.add(pi).toBigDecimal()
-                : arctan.subtract(pi).toBigDecimal();
+                    : arctan.subtract(pi).toBigDecimal();
         }
         final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();
         return imaginary.compareTo(BigDecimal.ZERO) > 0 ? piDividedByTwo : piDividedByTwo.negate();
@@ -493,6 +493,24 @@ public final class RealComplexNumber
     }
 
     /**
+     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber} is equal to a given
+     * {@link RealComplexNumber} by comparing the real and imaginary part
+     *
+     * @param other
+     *            The other {@link RealComplexNumber}
+     * @return {@code true} if equaliyt holds, {@code false} otherwise
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @author Lars Tennstedt
+     * @since 1
+     * @see BigDecimal#compareTo(BigDecimal)
+     */
+    public boolean isEqualToByComparingParts(final RealComplexNumber other) {
+        requireNonNull(other, "other");
+        return (real.compareTo(other.getReal()) == 0) && (imaginary.compareTo(other.getImaginary()) == 0);
+    }
+
+    /**
      * Returns a matrix representation of this {@link RealComplexNumber}
      *
      * @return The matrix representation
@@ -503,7 +521,7 @@ public final class RealComplexNumber
     @Override
     public DecimalMatrix matrix() {
         return DecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-            .put(2, 2, real).build();
+                .put(2, 2, real).build();
     }
 
     @Override

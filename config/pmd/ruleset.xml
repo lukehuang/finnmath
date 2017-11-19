@@ -33,6 +33,11 @@
         <exclude name="LawOfDemeter" />
         <exclude name="LoosePackageCoupling" />
     </rule>
+    <rule ref="rulesets/java/coupling.xml/ExcessiveImports">
+        <properties>
+            <property name="minimum" value="34"></property>
+        </properties>
+    </rule>
     <rule ref="rulesets/java/design.xml">
         <exclude name="ConfusingTernary" />
         <exclude name="GodClass" />
