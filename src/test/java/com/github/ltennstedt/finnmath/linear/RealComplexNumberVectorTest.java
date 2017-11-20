@@ -32,18 +32,17 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.apache.commons.lang3.RandomUtils;
 import org.assertj.core.api.Condition;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class RealComplexNumberVectorTest {
-    private static final int size = RandomUtils.nextInt(3, 10);
+    private static final int size = 4;
     private static final int howMany = 10;
     private static final long bound = 10;
     private static final int differentSize = size + 1;
     private static final BigDecimal precision = BigDecimal.valueOf(0.00001);
-    private static final int scale = 7;
+    private static final int scale = 2;
     private static final RoundingMode roundingMode = RoundingMode.HALF_DOWN;
     private static final RealComplexNumberVector zeroVector =
             RealComplexNumberVector.builder(size).putAll(RealComplexNumber.ZERO).build();

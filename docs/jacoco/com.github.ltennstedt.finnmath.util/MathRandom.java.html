@@ -2223,8 +2223,8 @@ public final class MathRandom {
      * @since 1
      */
     public SimpleComplexNumberVector nextSimpleComplexNumberVector(final long bound, final int size) {
-<span class="pc bpc" id="L2226" title="1 of 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="pc bpc" id="L2227" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2226" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2227" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
 <span class="fc" id="L2228">        final SimpleComplexNumberVectorBuilder builder = SimpleComplexNumberVector.builder(size);</span>
 <span class="fc bfc" id="L2229" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
 <span class="fc" id="L2230">            builder.put(nextSimpleComplexNumber(bound));</span>
@@ -2253,14 +2253,14 @@ public final class MathRandom {
      */
     public List&lt;SimpleComplexNumberVector&gt; nextSimpleComplexNumberVectors(final long bound, final int size,
             final int howMany) {
-<span class="nc bnc" id="L2256" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2257" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2258" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L2259">        final List&lt;SimpleComplexNumberVector&gt; vectors = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L2260" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L2261">            vectors.add(nextSimpleComplexNumberVector(bound, size));</span>
+<span class="fc bfc" id="L2256" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2257" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2258" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2259">        final List&lt;SimpleComplexNumberVector&gt; vectors = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2260" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2261">            vectors.add(nextSimpleComplexNumberVector(bound, size));</span>
         }
-<span class="nc" id="L2263">        return vectors;</span>
+<span class="fc" id="L2263">        return vectors;</span>
     }
 
     /**
@@ -2285,16 +2285,16 @@ public final class MathRandom {
      */
     public SimpleComplexNumberMatrix nextSimpleComplexNumberMatrix(final long bound, final int rowSize,
             final int columnSize) {
-<span class="nc bnc" id="L2288" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2289" title="All 2 branches missed.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="nc bnc" id="L2290" title="All 2 branches missed.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="nc" id="L2291">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(rowSize, columnSize);</span>
-<span class="nc" id="L2292">        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2293">            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc" id="L2294">                builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));</span>
-<span class="nc" id="L2295">            });</span>
-<span class="nc" id="L2296">        });</span>
-<span class="nc" id="L2297">        return builder.build();</span>
+<span class="fc bfc" id="L2288" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2289" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L2290" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L2291">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(rowSize, columnSize);</span>
+<span class="fc" id="L2292">        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2293">            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc" id="L2294">                builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));</span>
+<span class="fc" id="L2295">            });</span>
+<span class="fc" id="L2296">        });</span>
+<span class="fc" id="L2297">        return builder.build();</span>
     }
 
     /**
@@ -2315,19 +2315,19 @@ public final class MathRandom {
      * @since 1
      */
     public SimpleComplexNumberMatrix nextUpperTriangularSimpleComplexNumberMatrix(final long bound, final int size) {
-<span class="nc bnc" id="L2318" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2319" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L2320">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L2321">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2322">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc bnc" id="L2323" title="All 2 branches missed.">                if (rowIndex &lt;= columnIndex) {</span>
-<span class="nc" id="L2324">                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));</span>
+<span class="fc bfc" id="L2318" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2319" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L2320">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L2321">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2322">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L2323" title="All 2 branches covered.">                if (rowIndex &lt;= columnIndex) {</span>
+<span class="fc" id="L2324">                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));</span>
                 } else {
-<span class="nc" id="L2326">                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);</span>
+<span class="fc" id="L2326">                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);</span>
                 }
-<span class="nc" id="L2328">            });</span>
-<span class="nc" id="L2329">        });</span>
-<span class="nc" id="L2330">        return builder.build();</span>
+<span class="fc" id="L2328">            });</span>
+<span class="fc" id="L2329">        });</span>
+<span class="fc" id="L2330">        return builder.build();</span>
     }
 
     /**
@@ -2348,19 +2348,19 @@ public final class MathRandom {
      * @since 1
      */
     public SimpleComplexNumberMatrix nextLowerTriangularSimpleComplexNumberMatrix(final long bound, final int size) {
-<span class="nc bnc" id="L2351" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2352" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L2353">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L2354">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2355">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc bnc" id="L2356" title="All 2 branches missed.">                if (rowIndex &gt;= columnIndex) {</span>
-<span class="nc" id="L2357">                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));</span>
+<span class="fc bfc" id="L2351" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2352" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L2353">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L2354">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2355">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L2356" title="All 2 branches covered.">                if (rowIndex &gt;= columnIndex) {</span>
+<span class="fc" id="L2357">                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));</span>
                 } else {
-<span class="nc" id="L2359">                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);</span>
+<span class="fc" id="L2359">                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);</span>
                 }
-<span class="nc" id="L2361">            });</span>
-<span class="nc" id="L2362">        });</span>
-<span class="nc" id="L2363">        return builder.build();</span>
+<span class="fc" id="L2361">            });</span>
+<span class="fc" id="L2362">        });</span>
+<span class="fc" id="L2363">        return builder.build();</span>
     }
 
     /**
@@ -2382,12 +2382,12 @@ public final class MathRandom {
      * @since 1
      */
     public SimpleComplexNumberMatrix nextTriangularSimpleComplexNumberMatrix(final long bound, final int size) {
-<span class="nc bnc" id="L2385" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2386" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2387" title="All 2 branches missed.">        if (random.nextBoolean()) {</span>
-<span class="nc" id="L2388">            return nextLowerTriangularSimpleComplexNumberMatrix(bound, size);</span>
+<span class="fc bfc" id="L2385" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2386" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2387" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L2388">            return nextLowerTriangularSimpleComplexNumberMatrix(bound, size);</span>
         }
-<span class="nc" id="L2390">        return nextUpperTriangularSimpleComplexNumberMatrix(bound, size);</span>
+<span class="fc" id="L2390">        return nextUpperTriangularSimpleComplexNumberMatrix(bound, size);</span>
     }
 
     /**
@@ -2407,19 +2407,19 @@ public final class MathRandom {
      * @since 1
      */
     public SimpleComplexNumberMatrix nextDiagonalSimpleComplexNumberMatrix(final long bound, final int size) {
-<span class="nc bnc" id="L2410" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2411" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L2412">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L2413">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2414">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc bnc" id="L2415" title="All 2 branches missed.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="nc" id="L2416">                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));</span>
+<span class="fc bfc" id="L2410" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2411" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L2412">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L2413">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2414">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L2415" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L2416">                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));</span>
                 } else {
-<span class="nc" id="L2418">                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);</span>
+<span class="fc" id="L2418">                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);</span>
                 }
-<span class="nc" id="L2420">            });</span>
-<span class="nc" id="L2421">        });</span>
-<span class="nc" id="L2422">        return builder.build();</span>
+<span class="fc" id="L2420">            });</span>
+<span class="fc" id="L2421">        });</span>
+<span class="fc" id="L2422">        return builder.build();</span>
     }
 
     /**
@@ -2439,22 +2439,22 @@ public final class MathRandom {
      * @since 1
      */
     public SimpleComplexNumberMatrix nextSymmetricSimpleComplexNumberMatrix(final long bound, final int size) {
-<span class="nc bnc" id="L2442" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2443" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L2444">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L2445">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2446">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc" id="L2447">                final SimpleComplexNumber element = nextSimpleComplexNumber(bound);</span>
-<span class="nc bnc" id="L2448" title="All 2 branches missed.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="nc" id="L2449">                    builder.put(rowIndex, columnIndex, element);</span>
-<span class="nc" id="L2450">                    builder.put(columnIndex, rowIndex, element);</span>
+<span class="fc bfc" id="L2442" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2443" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L2444">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L2445">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2446">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc" id="L2447">                final SimpleComplexNumber element = nextSimpleComplexNumber(bound);</span>
+<span class="fc bfc" id="L2448" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
+<span class="fc" id="L2449">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L2450">                    builder.put(columnIndex, rowIndex, element);</span>
                 }
-<span class="nc bnc" id="L2452" title="All 2 branches missed.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="nc" id="L2453">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc bfc" id="L2452" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L2453">                    builder.put(rowIndex, columnIndex, element);</span>
                 }
-<span class="nc" id="L2455">            });</span>
-<span class="nc" id="L2456">        });</span>
-<span class="nc" id="L2457">        return builder.build();</span>
+<span class="fc" id="L2455">            });</span>
+<span class="fc" id="L2456">        });</span>
+<span class="fc" id="L2457">        return builder.build();</span>
     }
 
     /**
@@ -2474,22 +2474,22 @@ public final class MathRandom {
      * @since 1
      */
     public SimpleComplexNumberMatrix nextSkewSymmetricSimpleComplexNumberMatrix(final long bound, final int size) {
-<span class="nc bnc" id="L2477" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2478" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L2479">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L2480">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2481">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc bnc" id="L2482" title="All 2 branches missed.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="nc" id="L2483">                    final SimpleComplexNumber element = nextSimpleComplexNumber(bound);</span>
-<span class="nc" id="L2484">                    builder.put(rowIndex, columnIndex, element);</span>
-<span class="nc" id="L2485">                    builder.put(columnIndex, rowIndex, element.negate());</span>
+<span class="fc bfc" id="L2477" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2478" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L2479">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L2480">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2481">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L2482" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
+<span class="fc" id="L2483">                    final SimpleComplexNumber element = nextSimpleComplexNumber(bound);</span>
+<span class="fc" id="L2484">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L2485">                    builder.put(columnIndex, rowIndex, element.negate());</span>
                 }
-<span class="nc bnc" id="L2487" title="All 2 branches missed.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="nc" id="L2488">                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);</span>
+<span class="fc bfc" id="L2487" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L2488">                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);</span>
                 }
-<span class="nc" id="L2490">            });</span>
-<span class="nc" id="L2491">        });</span>
-<span class="nc" id="L2492">        return builder.build();</span>
+<span class="fc" id="L2490">            });</span>
+<span class="fc" id="L2491">        });</span>
+<span class="fc" id="L2492">        return builder.build();</span>
     }
 
     /**
@@ -2519,15 +2519,15 @@ public final class MathRandom {
      */
     public List&lt;SimpleComplexNumberMatrix&gt; nextSimpleComplexNumberMatrices(final long bound, final int rowSize,
             final int columnSize, final int howMany) {
-<span class="nc bnc" id="L2522" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2523" title="All 2 branches missed.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="nc bnc" id="L2524" title="All 2 branches missed.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="nc bnc" id="L2525" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L2526">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L2527" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L2528">            matrices.add(nextSimpleComplexNumberMatrix(bound, rowSize, columnSize));</span>
+<span class="fc bfc" id="L2522" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2523" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L2524" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc bfc" id="L2525" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2526">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2527" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2528">            matrices.add(nextSimpleComplexNumberMatrix(bound, rowSize, columnSize));</span>
         }
-<span class="nc" id="L2530">        return matrices;</span>
+<span class="fc" id="L2530">        return matrices;</span>
     }
 
     /**
@@ -2554,14 +2554,14 @@ public final class MathRandom {
      */
     public List&lt;SimpleComplexNumberMatrix&gt; nextUpperTriangularSimpleComplexNumberMatrices(final long bound,
             final int size, final int howMany) {
-<span class="nc bnc" id="L2557" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2558" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2559" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L2560">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L2561" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L2562">            matrices.add(nextUpperTriangularSimpleComplexNumberMatrix(bound, size));</span>
+<span class="fc bfc" id="L2557" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2558" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2559" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2560">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2561" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2562">            matrices.add(nextUpperTriangularSimpleComplexNumberMatrix(bound, size));</span>
         }
-<span class="nc" id="L2564">        return matrices;</span>
+<span class="fc" id="L2564">        return matrices;</span>
     }
 
     /**
@@ -2588,14 +2588,14 @@ public final class MathRandom {
      */
     public List&lt;SimpleComplexNumberMatrix&gt; nextLowerTriangularSimpleComplexNumberMatrices(final long bound,
             final int size, final int howMany) {
-<span class="nc bnc" id="L2591" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2592" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2593" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L2594">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L2595" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L2596">            matrices.add(nextLowerTriangularSimpleComplexNumberMatrix(bound, size));</span>
+<span class="fc bfc" id="L2591" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2592" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2593" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2594">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2595" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2596">            matrices.add(nextLowerTriangularSimpleComplexNumberMatrix(bound, size));</span>
         }
-<span class="nc" id="L2598">        return matrices;</span>
+<span class="fc" id="L2598">        return matrices;</span>
     }
 
     /**
@@ -2621,14 +2621,14 @@ public final class MathRandom {
      */
     public List&lt;SimpleComplexNumberMatrix&gt; nextTriangularSimpleComplexNumberMatrices(final long bound, final int size,
             final int howMany) {
-<span class="nc bnc" id="L2624" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2625" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2626" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L2627">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L2628" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L2629">            matrices.add(nextTriangularSimpleComplexNumberMatrix(bound, size));</span>
+<span class="fc bfc" id="L2624" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2625" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2626" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2627">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2628" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2629">            matrices.add(nextTriangularSimpleComplexNumberMatrix(bound, size));</span>
         }
-<span class="nc" id="L2631">        return matrices;</span>
+<span class="fc" id="L2631">        return matrices;</span>
     }
 
     /**
@@ -2654,14 +2654,14 @@ public final class MathRandom {
      */
     public List&lt;SimpleComplexNumberMatrix&gt; nextDiagonalSimpleComplexNumberMatrices(final long bound, final int size,
             final int howMany) {
-<span class="nc bnc" id="L2657" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2658" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2659" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L2660">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L2661" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L2662">            matrices.add(nextDiagonalSimpleComplexNumberMatrix(bound, size));</span>
+<span class="fc bfc" id="L2657" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2658" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2659" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2660">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2661" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2662">            matrices.add(nextDiagonalSimpleComplexNumberMatrix(bound, size));</span>
         }
-<span class="nc" id="L2664">        return matrices;</span>
+<span class="fc" id="L2664">        return matrices;</span>
     }
 
     /**
@@ -2687,14 +2687,14 @@ public final class MathRandom {
      */
     public List&lt;SimpleComplexNumberMatrix&gt; nextSymmetricSimpleComplexNumberMatrices(final long bound, final int size,
             final int howMany) {
-<span class="nc bnc" id="L2690" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2691" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2692" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L2693">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L2694" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L2695">            matrices.add(nextSymmetricSimpleComplexNumberMatrix(bound, size));</span>
+<span class="fc bfc" id="L2690" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2691" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2692" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2693">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2694" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2695">            matrices.add(nextSymmetricSimpleComplexNumberMatrix(bound, size));</span>
         }
-<span class="nc" id="L2697">        return matrices;</span>
+<span class="fc" id="L2697">        return matrices;</span>
     }
 
     /**
@@ -2721,14 +2721,14 @@ public final class MathRandom {
      */
     public List&lt;SimpleComplexNumberMatrix&gt; nextSkewSymmetricSimpleComplexNumberMatrices(final long bound,
             final int size, final int howMany) {
-<span class="nc bnc" id="L2724" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2725" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2726" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L2727">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L2728" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L2729">            matrices.add(nextSkewSymmetricSimpleComplexNumberMatrix(bound, size));</span>
+<span class="fc bfc" id="L2724" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2725" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2726" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2727">        final List&lt;SimpleComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2728" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2729">            matrices.add(nextSkewSymmetricSimpleComplexNumberMatrix(bound, size));</span>
         }
-<span class="nc" id="L2731">        return matrices;</span>
+<span class="fc" id="L2731">        return matrices;</span>
     }
 
     /**
@@ -2752,9 +2752,9 @@ public final class MathRandom {
      * @since 1
      */
     public RealComplexNumberVector nextRealComplexNumberVector(final long bound, final int scale, final int size) {
-<span class="pc bpc" id="L2755" title="1 of 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="pc bpc" id="L2756" title="1 of 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="pc bpc" id="L2757" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2755" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2756" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2757" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
 <span class="fc" id="L2758">        final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(size);</span>
 <span class="fc bfc" id="L2759" title="All 2 branches covered.">        for (int i = 0; i &lt; size; i++) {</span>
 <span class="fc" id="L2760">            builder.put(nextRealComplexNumber(bound, scale));</span>
@@ -2787,15 +2787,15 @@ public final class MathRandom {
      */
     public List&lt;RealComplexNumberVector&gt; nextRealComplexNumberVectors(final long bound, final int scale, final int size,
             final int howMany) {
-<span class="nc bnc" id="L2790" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2791" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L2792" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2793" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L2794">        final List&lt;RealComplexNumberVector&gt; vectors = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L2795" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L2796">            vectors.add(nextRealComplexNumberVector(bound, scale, size));</span>
+<span class="fc bfc" id="L2790" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2791" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2792" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2793" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L2794">        final List&lt;RealComplexNumberVector&gt; vectors = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L2795" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L2796">            vectors.add(nextRealComplexNumberVector(bound, scale, size));</span>
         }
-<span class="nc" id="L2798">        return vectors;</span>
+<span class="fc" id="L2798">        return vectors;</span>
     }
 
     /**
@@ -2824,17 +2824,17 @@ public final class MathRandom {
      */
     public RealComplexNumberMatrix nextRealComplexNumberMatrix(final long bound, final int scale, final int rowSize,
             final int columnSize) {
-<span class="nc bnc" id="L2827" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2828" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L2829" title="All 2 branches missed.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="nc bnc" id="L2830" title="All 2 branches missed.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="nc" id="L2831">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(rowSize, columnSize);</span>
-<span class="nc" id="L2832">        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2833">            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc" id="L2834">                builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));</span>
-<span class="nc" id="L2835">            });</span>
-<span class="nc" id="L2836">        });</span>
-<span class="nc" id="L2837">        return builder.build();</span>
+<span class="fc bfc" id="L2827" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2828" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2829" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L2830" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L2831">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(rowSize, columnSize);</span>
+<span class="fc" id="L2832">        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2833">            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc" id="L2834">                builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));</span>
+<span class="fc" id="L2835">            });</span>
+<span class="fc" id="L2836">        });</span>
+<span class="fc" id="L2837">        return builder.build();</span>
     }
 
     /**
@@ -2860,20 +2860,20 @@ public final class MathRandom {
      */
     public RealComplexNumberMatrix nextUpperTriangularRealComplexNumberMatrix(final long bound, final int scale,
             final int size) {
-<span class="nc bnc" id="L2863" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2864" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L2865" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L2866">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L2867">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2868">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc bnc" id="L2869" title="All 2 branches missed.">                if (rowIndex &lt;= columnIndex) {</span>
-<span class="nc" id="L2870">                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));</span>
+<span class="fc bfc" id="L2863" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2864" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2865" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L2866">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L2867">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2868">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L2869" title="All 2 branches covered.">                if (rowIndex &lt;= columnIndex) {</span>
+<span class="fc" id="L2870">                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));</span>
                 } else {
-<span class="nc" id="L2872">                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);</span>
+<span class="fc" id="L2872">                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);</span>
                 }
-<span class="nc" id="L2874">            });</span>
-<span class="nc" id="L2875">        });</span>
-<span class="nc" id="L2876">        return builder.build();</span>
+<span class="fc" id="L2874">            });</span>
+<span class="fc" id="L2875">        });</span>
+<span class="fc" id="L2876">        return builder.build();</span>
     }
 
     /**
@@ -2899,20 +2899,20 @@ public final class MathRandom {
      */
     public RealComplexNumberMatrix nextLowerTriangularRealComplexNumberMatrix(final long bound, final int scale,
             final int size) {
-<span class="nc bnc" id="L2902" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2903" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L2904" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L2905">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L2906">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2907">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc bnc" id="L2908" title="All 2 branches missed.">                if (rowIndex &gt;= columnIndex) {</span>
-<span class="nc" id="L2909">                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));</span>
+<span class="fc bfc" id="L2902" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2903" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2904" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L2905">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L2906">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2907">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L2908" title="All 2 branches covered.">                if (rowIndex &gt;= columnIndex) {</span>
+<span class="fc" id="L2909">                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));</span>
                 } else {
-<span class="nc" id="L2911">                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);</span>
+<span class="fc" id="L2911">                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);</span>
                 }
-<span class="nc" id="L2913">            });</span>
-<span class="nc" id="L2914">        });</span>
-<span class="nc" id="L2915">        return builder.build();</span>
+<span class="fc" id="L2913">            });</span>
+<span class="fc" id="L2914">        });</span>
+<span class="fc" id="L2915">        return builder.build();</span>
     }
 
     /**
@@ -2939,13 +2939,13 @@ public final class MathRandom {
      */
     public RealComplexNumberMatrix nextTriangularRealComplexNumberMatrix(final long bound, final int scale,
             final int size) {
-<span class="nc bnc" id="L2942" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2943" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L2944" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L2945" title="All 2 branches missed.">        if (random.nextBoolean()) {</span>
-<span class="nc" id="L2946">            return nextLowerTriangularRealComplexNumberMatrix(bound, scale, size);</span>
+<span class="fc bfc" id="L2942" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2943" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2944" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L2945" title="All 2 branches covered.">        if (random.nextBoolean()) {</span>
+<span class="fc" id="L2946">            return nextLowerTriangularRealComplexNumberMatrix(bound, scale, size);</span>
         }
-<span class="nc" id="L2948">        return nextUpperTriangularRealComplexNumberMatrix(bound, scale, size);</span>
+<span class="fc" id="L2948">        return nextUpperTriangularRealComplexNumberMatrix(bound, scale, size);</span>
     }
 
     /**
@@ -2970,20 +2970,20 @@ public final class MathRandom {
      */
     public RealComplexNumberMatrix nextDiagonalRealComplexNumberMatrix(final long bound, final int scale,
             final int size) {
-<span class="nc bnc" id="L2973" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L2974" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L2975" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L2976">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L2977">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L2978">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc bnc" id="L2979" title="All 2 branches missed.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="nc" id="L2980">                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));</span>
+<span class="fc bfc" id="L2973" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L2974" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L2975" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L2976">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L2977">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L2978">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L2979" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L2980">                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));</span>
                 } else {
-<span class="nc" id="L2982">                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);</span>
+<span class="fc" id="L2982">                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);</span>
                 }
-<span class="nc" id="L2984">            });</span>
-<span class="nc" id="L2985">        });</span>
-<span class="nc" id="L2986">        return builder.build();</span>
+<span class="fc" id="L2984">            });</span>
+<span class="fc" id="L2985">        });</span>
+<span class="fc" id="L2986">        return builder.build();</span>
     }
 
     /**
@@ -3008,23 +3008,23 @@ public final class MathRandom {
      */
     public RealComplexNumberMatrix nextSymmetricRealComplexNumberMatrix(final long bound, final int scale,
             final int size) {
-<span class="nc bnc" id="L3011" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L3012" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L3013" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L3014">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L3015">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L3016">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc" id="L3017">                final RealComplexNumber element = nextRealComplexNumber(bound, scale);</span>
-<span class="nc bnc" id="L3018" title="All 2 branches missed.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="nc" id="L3019">                    builder.put(rowIndex, columnIndex, element);</span>
-<span class="nc" id="L3020">                    builder.put(columnIndex, rowIndex, element);</span>
+<span class="fc bfc" id="L3011" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L3012" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L3013" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L3014">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L3015">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L3016">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc" id="L3017">                final RealComplexNumber element = nextRealComplexNumber(bound, scale);</span>
+<span class="fc bfc" id="L3018" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
+<span class="fc" id="L3019">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L3020">                    builder.put(columnIndex, rowIndex, element);</span>
                 }
-<span class="nc bnc" id="L3022" title="All 2 branches missed.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="nc" id="L3023">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc bfc" id="L3022" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L3023">                    builder.put(rowIndex, columnIndex, element);</span>
                 }
-<span class="nc" id="L3025">            });</span>
-<span class="nc" id="L3026">        });</span>
-<span class="nc" id="L3027">        return builder.build();</span>
+<span class="fc" id="L3025">            });</span>
+<span class="fc" id="L3026">        });</span>
+<span class="fc" id="L3027">        return builder.build();</span>
     }
 
     /**
@@ -3049,23 +3049,23 @@ public final class MathRandom {
      */
     public RealComplexNumberMatrix nextSkewSymmetricRealComplexNumberMatrix(final long bound, final int scale,
             final int size) {
-<span class="nc bnc" id="L3052" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L3053" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L3054" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc" id="L3055">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
-<span class="nc" id="L3056">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
-<span class="nc" id="L3057">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
-<span class="nc bnc" id="L3058" title="All 2 branches missed.">                if (rowIndex &lt; columnIndex) {</span>
-<span class="nc" id="L3059">                    final RealComplexNumber element = nextRealComplexNumber(bound, scale);</span>
-<span class="nc" id="L3060">                    builder.put(rowIndex, columnIndex, element);</span>
-<span class="nc" id="L3061">                    builder.put(columnIndex, rowIndex, element.negate());</span>
+<span class="fc bfc" id="L3052" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L3053" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L3054" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L3055">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L3056">        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -&gt; {</span>
+<span class="fc" id="L3057">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -&gt; {</span>
+<span class="fc bfc" id="L3058" title="All 2 branches covered.">                if (rowIndex &lt; columnIndex) {</span>
+<span class="fc" id="L3059">                    final RealComplexNumber element = nextRealComplexNumber(bound, scale);</span>
+<span class="fc" id="L3060">                    builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L3061">                    builder.put(columnIndex, rowIndex, element.negate());</span>
                 }
-<span class="nc bnc" id="L3063" title="All 2 branches missed.">                if (rowIndex.equals(columnIndex)) {</span>
-<span class="nc" id="L3064">                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);</span>
+<span class="fc bfc" id="L3063" title="All 2 branches covered.">                if (rowIndex.equals(columnIndex)) {</span>
+<span class="fc" id="L3064">                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);</span>
                 }
-<span class="nc" id="L3066">            });</span>
-<span class="nc" id="L3067">        });</span>
-<span class="nc" id="L3068">        return builder.build();</span>
+<span class="fc" id="L3066">            });</span>
+<span class="fc" id="L3067">        });</span>
+<span class="fc" id="L3068">        return builder.build();</span>
     }
 
     /**
@@ -3099,16 +3099,16 @@ public final class MathRandom {
      */
     public List&lt;RealComplexNumberMatrix&gt; nextRealComplexNumberMatrices(final long bound, final int scale,
             final int rowSize, final int columnSize, final int howMany) {
-<span class="nc bnc" id="L3102" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L3103" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L3104" title="All 2 branches missed.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="nc bnc" id="L3105" title="All 2 branches missed.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="nc bnc" id="L3106" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L3107">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L3108" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L3109">            matrices.add(nextRealComplexNumberMatrix(bound, scale, rowSize, columnSize));</span>
+<span class="fc bfc" id="L3102" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L3103" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L3104" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L3105" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc bfc" id="L3106" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L3107">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L3108" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L3109">            matrices.add(nextRealComplexNumberMatrix(bound, scale, rowSize, columnSize));</span>
         }
-<span class="nc" id="L3111">        return matrices;</span>
+<span class="fc" id="L3111">        return matrices;</span>
     }
 
     /**
@@ -3139,15 +3139,15 @@ public final class MathRandom {
      */
     public List&lt;RealComplexNumberMatrix&gt; nextUpperTriangularRealComplexNumberMatrices(final long bound, final int scale,
             final int size, final int howMany) {
-<span class="nc bnc" id="L3142" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L3143" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L3144" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L3145" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L3146">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L3147" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L3148">            matrices.add(nextUpperTriangularRealComplexNumberMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L3142" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L3143" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L3144" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L3145" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L3146">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L3147" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L3148">            matrices.add(nextUpperTriangularRealComplexNumberMatrix(bound, scale, size));</span>
         }
-<span class="nc" id="L3150">        return matrices;</span>
+<span class="fc" id="L3150">        return matrices;</span>
     }
 
     /**
@@ -3178,15 +3178,15 @@ public final class MathRandom {
      */
     public List&lt;RealComplexNumberMatrix&gt; nextLowerTriangularRealComplexNumberMatrices(final long bound, final int scale,
             final int size, final int howMany) {
-<span class="nc bnc" id="L3181" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L3182" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L3183" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L3184" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L3185">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L3186" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L3187">            matrices.add(nextLowerTriangularRealComplexNumberMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L3181" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L3182" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L3183" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L3184" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L3185">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L3186" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L3187">            matrices.add(nextLowerTriangularRealComplexNumberMatrix(bound, scale, size));</span>
         }
-<span class="nc" id="L3189">        return matrices;</span>
+<span class="fc" id="L3189">        return matrices;</span>
     }
 
     /**
@@ -3216,15 +3216,15 @@ public final class MathRandom {
      */
     public List&lt;RealComplexNumberMatrix&gt; nextTriangularRealComplexNumberMatrices(final long bound, final int scale,
             final int size, final int howMany) {
-<span class="nc bnc" id="L3219" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L3220" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L3221" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L3222" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L3223">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L3224" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L3225">            matrices.add(nextTriangularRealComplexNumberMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L3219" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L3220" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L3221" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L3222" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L3223">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L3224" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L3225">            matrices.add(nextTriangularRealComplexNumberMatrix(bound, scale, size));</span>
         }
-<span class="nc" id="L3227">        return matrices;</span>
+<span class="fc" id="L3227">        return matrices;</span>
     }
 
     /**
@@ -3254,15 +3254,15 @@ public final class MathRandom {
      */
     public List&lt;RealComplexNumberMatrix&gt; nextDiagonalRealComplexNumberMatrices(final long bound, final int scale,
             final int size, final int howMany) {
-<span class="nc bnc" id="L3257" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L3258" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L3259" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L3260" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L3261">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L3262" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L3263">            matrices.add(nextDiagonalRealComplexNumberMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L3257" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L3258" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L3259" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L3260" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L3261">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L3262" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L3263">            matrices.add(nextDiagonalRealComplexNumberMatrix(bound, scale, size));</span>
         }
-<span class="nc" id="L3265">        return matrices;</span>
+<span class="fc" id="L3265">        return matrices;</span>
     }
 
     /**
@@ -3292,15 +3292,15 @@ public final class MathRandom {
      */
     public List&lt;RealComplexNumberMatrix&gt; nextSymmetricRealComplexNumberMatrices(final long bound, final int scale,
             final int size, final int howMany) {
-<span class="nc bnc" id="L3295" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L3296" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L3297" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L3298" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L3299">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L3300" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L3301">            matrices.add(nextSymmetricRealComplexNumberMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L3295" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L3296" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L3297" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L3298" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L3299">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L3300" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L3301">            matrices.add(nextSymmetricRealComplexNumberMatrix(bound, scale, size));</span>
         }
-<span class="nc" id="L3303">        return matrices;</span>
+<span class="fc" id="L3303">        return matrices;</span>
     }
 
     /**
@@ -3330,15 +3330,15 @@ public final class MathRandom {
      */
     public List&lt;RealComplexNumberMatrix&gt; nextSkewSymmetricRealComplexNumberMatrices(final long bound, final int scale,
             final int size, final int howMany) {
-<span class="nc bnc" id="L3333" title="All 2 branches missed.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
-<span class="nc bnc" id="L3334" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
-<span class="nc bnc" id="L3335" title="All 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="nc bnc" id="L3336" title="All 2 branches missed.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
-<span class="nc" id="L3337">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
-<span class="nc bnc" id="L3338" title="All 2 branches missed.">        for (int i = 0; i &lt; howMany; i++) {</span>
-<span class="nc" id="L3339">            matrices.add(nextSkewSymmetricRealComplexNumberMatrix(bound, scale, size));</span>
+<span class="fc bfc" id="L3333" title="All 2 branches covered.">        checkArgument(bound &gt; 0, &quot;expected bound &gt; 0 but actual %s&quot;, bound);</span>
+<span class="fc bfc" id="L3334" title="All 2 branches covered.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="fc bfc" id="L3335" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc bfc" id="L3336" title="All 2 branches covered.">        checkArgument(howMany &gt; 0, &quot;expected howMany &gt; 0 but actual %s&quot;, howMany);</span>
+<span class="fc" id="L3337">        final List&lt;RealComplexNumberMatrix&gt; matrices = new ArrayList&lt;&gt;(howMany);</span>
+<span class="fc bfc" id="L3338" title="All 2 branches covered.">        for (int i = 0; i &lt; howMany; i++) {</span>
+<span class="fc" id="L3339">            matrices.add(nextSkewSymmetricRealComplexNumberMatrix(bound, scale, size));</span>
         }
-<span class="nc" id="L3341">        return matrices;</span>
+<span class="fc" id="L3341">        return matrices;</span>
     }
 
     @Override

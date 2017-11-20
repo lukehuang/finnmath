@@ -1,8 +1,8 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-finnMath,com.github.ltennstedt.finnmath.linear,SimpleComplexNumberMatrix,1295,0,104,0,198,0,90,0,38,0
-finnMath,com.github.ltennstedt.finnmath.linear,RealComplexNumberMatrix.RealComplexNumberMatrixBuilder,100,0,0,0,22,0,7,0,7,0
+finnMath,com.github.ltennstedt.finnmath.linear,SimpleComplexNumberMatrix,1111,184,87,17,166,32,75,15,28,10
+finnMath,com.github.ltennstedt.finnmath.linear,RealComplexNumberMatrix.RealComplexNumberMatrixBuilder,30,70,0,0,7,15,3,4,3,4
 finnMath,com.github.ltennstedt.finnmath.linear,RealComplexNumberVector.RealComplexNumberVectorBuilder,34,86,5,3,5,15,4,6,1,5
-finnMath,com.github.ltennstedt.finnmath.linear,SimpleComplexNumberMatrix.SimpleComplexNumberMatrixBuilder,100,0,0,0,22,0,7,0,7,0
+finnMath,com.github.ltennstedt.finnmath.linear,SimpleComplexNumberMatrix.SimpleComplexNumberMatrixBuilder,30,70,0,0,7,15,3,4,3,4
 finnMath,com.github.ltennstedt.finnmath.linear,DecimalMatrix,51,1318,4,106,8,205,5,88,2,36
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractMatrixBuilder,0,35,0,0,0,7,0,3,0,3
 finnMath,com.github.ltennstedt.finnmath.linear,SimpleComplexNumberVector,0,617,0,58,0,94,0,56,0,27
@@ -10,7 +10,7 @@ finnMath,com.github.ltennstedt.finnmath.linear,RealComplexNumberVector,0,617,0,5
 finnMath,com.github.ltennstedt.finnmath.linear,BigIntMatrix.BigIntMatrixBuilder,0,100,0,0,0,22,0,7,0,7
 finnMath,com.github.ltennstedt.finnmath.linear,DecimalMatrix.DecimalMatrixBuilder,0,100,0,0,0,22,0,7,0,7
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractMatrix,0,205,1,17,0,34,1,28,0,20
-finnMath,com.github.ltennstedt.finnmath.linear,RealComplexNumberMatrix,1295,0,104,0,198,0,90,0,38,0
+finnMath,com.github.ltennstedt.finnmath.linear,RealComplexNumberMatrix,1109,186,86,18,165,33,74,16,28,10
 finnMath,com.github.ltennstedt.finnmath.linear,DecimalVector.DecimalVectorBuilder,16,103,2,6,2,18,2,8,0,6
 finnMath,com.github.ltennstedt.finnmath.linear,SimpleComplexNumberVector.SimpleComplexNumberVectorBuilder,34,86,5,3,5,15,4,6,1,5
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractVector,4,44,0,0,1,10,1,6,1,6
@@ -19,11 +19,11 @@ finnMath,com.github.ltennstedt.finnmath.linear,BigIntMatrix,1,1295,1,103,0,197,1
 finnMath,com.github.ltennstedt.finnmath.linear,BigIntVector.BigIntVectorBuilder,1,119,1,7,0,20,1,9,0,6
 finnMath,com.github.ltennstedt.finnmath.linear,BigIntVector,0,599,0,56,0,90,0,55,0,27
 finnMath,com.github.ltennstedt.finnmath.linear,AbstractVectorBuilder,2,61,3,3,0,11,3,5,0,5
-finnMath,com.github.ltennstedt.finnmath.number,RealComplexNumber,26,667,6,52,4,84,5,52,0,28
+finnMath,com.github.ltennstedt.finnmath.number,RealComplexNumber,26,685,6,52,4,88,5,53,0,29
 finnMath,com.github.ltennstedt.finnmath.number,ScientificNotation,0,132,0,16,0,24,0,15,0,7
 finnMath,com.github.ltennstedt.finnmath.number,Fraction,0,495,0,42,0,87,0,52,0,31
-finnMath,com.github.ltennstedt.finnmath.number,AbstractComplexNumber,0,31,0,0,0,7,0,4,0,4
+finnMath,com.github.ltennstedt.finnmath.number,AbstractComplexNumber,0,34,0,0,0,8,0,5,0,5
 finnMath,com.github.ltennstedt.finnmath.number,PolarForm,31,137,4,8,4,23,6,12,2,10
-finnMath,com.github.ltennstedt.finnmath.number,SimpleComplexNumber,0,532,0,44,0,69,0,48,0,26
-finnMath,com.github.ltennstedt.finnmath.util,MathRandom,1925,3484,265,483,284,528,192,339,54,103
+finnMath,com.github.ltennstedt.finnmath.number,SimpleComplexNumber,0,551,0,44,0,73,0,49,0,27
+finnMath,com.github.ltennstedt.finnmath.util,MathRandom,11,5398,6,742,3,809,6,525,0,157
 finnMath,com.github.ltennstedt.finnmath.util,SquareRootCalculator,4,436,4,26,0,88,4,28,0,17

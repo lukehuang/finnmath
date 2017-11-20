@@ -25,40 +25,42 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 public final class DecimalVectorBuilderTest {
+    private static final DecimalVectorBuilder builder = DecimalVector.builder(4);
+
     @Test
     public void putIndexNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            DecimalVector.builder(4).put(null, BigDecimal.ZERO);
+            builder.put(null, BigDecimal.ZERO);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("index");
     }
 
     @Test
     public void putElementNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            DecimalVector.builder(4).put(1, null);
+            builder.put(1, null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
     }
 
     @Test
     public void putIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            DecimalVector.builder(4).put(0, BigDecimal.ZERO);
+            builder.put(0, BigDecimal.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual %s", 4,
-            0);
+                0);
     }
 
     @Test
     public void putRowIndexTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
-            DecimalVector.builder(4).put(5, BigDecimal.ZERO);
+            builder.put(5, BigDecimal.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual %s", 4,
-            5);
+                5);
     }
 
     @Test
     public void putAllNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            DecimalVector.builder(4).putAll(null);
+            builder.putAll(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
     }
 
@@ -71,8 +73,8 @@ public final class DecimalVectorBuilderTest {
 
     @Test
     public void toStringShouldSucceed() {
-        final DecimalVectorBuilder builder = DecimalVector.builder(4).putAll(BigDecimal.ZERO);
-        assertThat(builder.toString()).isEqualTo(MoreObjects.toStringHelper(builder).add("map", builder.getMap())
-            .add("size", DecimalVector.builder(4).getSize()).toString());
+        final DecimalVectorBuilder actual = builder.putAll(BigDecimal.ZERO);
+        assertThat(actual.toString()).isEqualTo(MoreObjects.toStringHelper(builder).add("map", builder.getMap())
+                .add("size", builder.getSize()).toString());
     }
 }

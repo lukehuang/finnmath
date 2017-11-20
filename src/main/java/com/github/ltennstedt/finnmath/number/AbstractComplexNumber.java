@@ -29,15 +29,18 @@ import java.math.RoundingMode;
  *            The type of the real and imaginary part of the complex number
  * @param <S>
  *            The type of the complex number
- * @param <R>
- *            The type for quotients of the complex number
  * @param <M>
  *            The type of the related matrix
  * @author Lars Tennstedt
  * @since 1
  */
 @Beta
-abstract class AbstractComplexNumber<B, S, R, M> implements MathNumber<S, R, BigDecimal> {
+abstract class AbstractComplexNumber<B, S, M> implements MathNumber<S, RealComplexNumber, BigDecimal> {
+    /**
+     * Default rounding mode
+     */
+    public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;
+
     /**
      * {@code real} part of this {@link AbstractComplexNumber}
      */
@@ -52,6 +55,8 @@ abstract class AbstractComplexNumber<B, S, R, M> implements MathNumber<S, R, Big
         this.real = requireNonNull(real, "real");
         this.imaginary = requireNonNull(imaginary, "imaginary");
     }
+
+    protected abstract RealComplexNumber divide(S divisor, RoundingMode roundingMode);
 
     protected abstract B absPow2();
 

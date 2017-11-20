@@ -37,12 +37,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class BigIntVectorTest {
-    private static final int size = RandomUtils.nextInt(3, 10);
+    private static final int size = 4;
     private static final int howMany = 10;
     private static final long bound = 10;
     private static final int differentSize = size + 1;
     private static final BigDecimal precision = BigDecimal.valueOf(0.00001);
-    private static final int scale = 7;
+    private static final int scale = 2;
     private static final RoundingMode roundingMode = RoundingMode.HALF_DOWN;
     private static final BigIntVector zeroVector = BigIntVector.builder(size).putAll(BigInteger.ZERO).build();
     private static final BigIntVector vectorWithAnotherSize =

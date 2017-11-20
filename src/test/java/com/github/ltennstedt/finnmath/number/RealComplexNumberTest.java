@@ -39,6 +39,8 @@ public final class RealComplexNumberTest {
     private static final List<RealComplexNumber> complexNumbers = new ArrayList<>(howMany);
     private static final List<RealComplexNumber> others = new ArrayList<>(howMany);
     private static final List<RealComplexNumber> invertibles = new ArrayList<>(howMany);
+    private static final int precision = 10;
+    private static final RoundingMode roundingMode = RoundingMode.HALF_DOWN;
 
     @BeforeClass
     public static void setUpClass() {
@@ -244,10 +246,10 @@ public final class RealComplexNumberTest {
                 final BigDecimal denominator = invertible.getReal().pow(2).add(invertible.getImaginary().pow(2));
                 final BigDecimal expectedReal = complexNumber.getReal().multiply(invertible.getReal())
                         .add(complexNumber.getImaginary().multiply(invertible.getImaginary()))
-                        .divide(denominator, RoundingMode.HALF_UP);
+                        .divide(denominator, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
                 final BigDecimal expectedImaginary = complexNumber.getImaginary().multiply(invertible.getReal())
                         .subtract(complexNumber.getReal().multiply(invertible.getImaginary()))
-                        .divide(denominator, RoundingMode.HALF_UP);
+                        .divide(denominator, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
                 assertThat(complexNumber.divide(invertible)).isExactlyInstanceOf(RealComplexNumber.class)
                         .isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary));
             });
@@ -457,8 +459,8 @@ public final class RealComplexNumberTest {
     @Test
     public void argumentShouldSucceed() {
         invertibles.forEach(invertible -> {
-            assertThat(invertible.argument())
-                    .isEqualTo(invertible.argument(new MathContext(PolarForm.DEFAULT_PRECISION, RoundingMode.HALF_UP)));
+            assertThat(invertible.argument()).isEqualTo(invertible.argument(
+                    new MathContext(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE)));
         });
     }
 
@@ -480,15 +482,15 @@ public final class RealComplexNumberTest {
     @Test
     public void argumentWithPrecisionShouldSucceed() {
         invertibles.forEach(invertible -> {
-            assertThat(invertible.argument(99))
-                    .isEqualTo(invertible.argument(new MathContext(99, RoundingMode.HALF_UP)));
+            assertThat(invertible.argument(precision)).isEqualTo(
+                    invertible.argument(new MathContext(precision, AbstractComplexNumber.DEFAULT_ROUNDING_MODE)));
         });
     }
 
     @Test
     public void argumentZeroWithRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            RealComplexNumber.ZERO.argument(RoundingMode.HALF_UP);
+            RealComplexNumber.ZERO.argument(AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
                 RealComplexNumber.ZERO);
     }
@@ -503,15 +505,15 @@ public final class RealComplexNumberTest {
     @Test
     public void argumentWithRoundingModeShouldSucceed() {
         invertibles.forEach(invertible -> {
-            assertThat(invertible.argument(RoundingMode.HALF_DOWN)).isEqualTo(
-                    invertible.argument(new MathContext(PolarForm.DEFAULT_PRECISION, RoundingMode.HALF_DOWN)));
+            assertThat(invertible.argument(roundingMode))
+                    .isEqualTo(invertible.argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode)));
         });
     }
 
     @Test
     public void argumentZeroWithPrecisionAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            RealComplexNumber.ZERO.argument(PolarForm.DEFAULT_PRECISION, RoundingMode.HALF_UP);
+            RealComplexNumber.ZERO.argument(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
                 RealComplexNumber.ZERO);
     }
@@ -519,22 +521,22 @@ public final class RealComplexNumberTest {
     @Test
     public void argumentZeroWithPrecisionTooLowAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            RealComplexNumber.ONE.argument(-1, RoundingMode.HALF_UP);
+            RealComplexNumber.ONE.argument(-1, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
     }
 
     @Test
     public void argumentWithPrecisionAndRoundingModeNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            RealComplexNumber.ONE.argument(100, (RoundingMode) null);
+            RealComplexNumber.ONE.argument(PolarForm.DEFAULT_PRECISION, (RoundingMode) null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
     }
 
     @Test
     public void argumentWithPrecisionAndRoundingModeShouldSucceed() {
         invertibles.forEach(invertible -> {
-            assertThat(invertible.argument(99, RoundingMode.HALF_DOWN))
-                    .isEqualTo(invertible.argument(new MathContext(99, RoundingMode.HALF_DOWN)));
+            assertThat(invertible.argument(precision, roundingMode))
+                    .isEqualTo(invertible.argument(new MathContext(precision, roundingMode)));
         });
     }
 
@@ -556,7 +558,7 @@ public final class RealComplexNumberTest {
     @Test
     public void argumentWithMathContextShouldSucceed() {
         invertibles.forEach(invertible -> {
-            final MathContext mathContext = new MathContext(99, RoundingMode.HALF_DOWN);
+            final MathContext mathContext = new MathContext(precision, roundingMode);
             final Context context = BigFloat.context(mathContext);
             final BigDecimal real = invertible.getReal();
             final BigDecimal imaginary = invertible.getImaginary();
@@ -590,15 +592,15 @@ public final class RealComplexNumberTest {
     @Test
     public void polarFormShouldSucceed() {
         invertibles.forEach(invertible -> {
-            assertThat(invertible.polarForm()).isEqualTo(
-                    invertible.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, RoundingMode.HALF_UP)));
+            assertThat(invertible.polarForm()).isEqualTo(invertible.polarForm(
+                    new MathContext(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE)));
         });
     }
 
     @Test
     public void polarFormZeroWithPrecisionShouldThrowException() {
         assertThatThrownBy(() -> {
-            RealComplexNumber.ZERO.polarForm(PolarForm.DEFAULT_PRECISION);
+            RealComplexNumber.ZERO.polarForm(precision);
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
                 RealComplexNumber.ZERO);
     }
@@ -613,15 +615,15 @@ public final class RealComplexNumberTest {
     @Test
     public void polarFormWithPrecisionShouldSucceed() {
         invertibles.forEach(invertible -> {
-            assertThat(invertible.polarForm(99))
-                    .isEqualTo(invertible.polarForm(new MathContext(99, RoundingMode.HALF_UP)));
+            assertThat(invertible.polarForm(precision)).isEqualTo(
+                    invertible.polarForm(new MathContext(precision, AbstractComplexNumber.DEFAULT_ROUNDING_MODE)));
         });
     }
 
     @Test
     public void polarFormZeroWithRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            RealComplexNumber.ZERO.polarForm(RoundingMode.HALF_UP);
+            RealComplexNumber.ZERO.polarForm(AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
                 RealComplexNumber.ZERO);
     }
@@ -636,15 +638,15 @@ public final class RealComplexNumberTest {
     @Test
     public void polarFormWithRoundingModeShouldSucceed() {
         invertibles.forEach(invertible -> {
-            assertThat(invertible.polarForm(RoundingMode.HALF_DOWN)).isEqualTo(
-                    invertible.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, RoundingMode.HALF_DOWN)));
+            assertThat(invertible.polarForm(roundingMode))
+                    .isEqualTo(invertible.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode)));
         });
     }
 
     @Test
     public void polarFormZeroWithPrecisionAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            RealComplexNumber.ZERO.polarForm(PolarForm.DEFAULT_PRECISION, RoundingMode.HALF_UP);
+            RealComplexNumber.ZERO.polarForm(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
         }).isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected this != 0 but actual %s",
                 RealComplexNumber.ZERO);
     }
@@ -652,7 +654,7 @@ public final class RealComplexNumberTest {
     @Test
     public void polarFormZeroWithPrecisionTooLowAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> {
-            RealComplexNumber.ONE.polarForm(-1, RoundingMode.HALF_UP);
+            RealComplexNumber.ONE.polarForm(-1, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
     }
 
@@ -666,8 +668,8 @@ public final class RealComplexNumberTest {
     @Test
     public void polarFormWithPrecisionAndRoundingModeShouldSucceed() {
         invertibles.forEach(invertible -> {
-            assertThat(invertible.polarForm(99, RoundingMode.HALF_DOWN))
-                    .isEqualTo(invertible.polarForm(new MathContext(99, RoundingMode.HALF_DOWN)));
+            assertThat(invertible.polarForm(precision, roundingMode))
+                    .isEqualTo(invertible.polarForm(new MathContext(precision, roundingMode)));
         });
     }
 
@@ -689,7 +691,7 @@ public final class RealComplexNumberTest {
     @Test
     public void polarFormWithMathContextShouldSucceed() {
         invertibles.forEach(invertible -> {
-            final MathContext mathContext = new MathContext(99, RoundingMode.HALF_DOWN);
+            final MathContext mathContext = new MathContext(precision, roundingMode);
             assertThat(invertible.polarForm(mathContext))
                     .isEqualTo(new PolarForm(invertible.abs(), invertible.argument(mathContext)));
         });

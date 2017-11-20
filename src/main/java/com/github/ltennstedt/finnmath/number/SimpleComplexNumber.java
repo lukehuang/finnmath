@@ -36,8 +36,7 @@ import java.util.Objects;
  * @since 1
  */
 @Beta
-public final class SimpleComplexNumber
-    extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, RealComplexNumber, BigIntMatrix> {
+public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, BigIntMatrix> {
     /**
      * {@code 0} as {@link SimpleComplexNumber}
      */
@@ -103,7 +102,7 @@ public final class SimpleComplexNumber
     public SimpleComplexNumber subtract(final SimpleComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new SimpleComplexNumber(real.subtract(subtrahend.getReal()),
-            imaginary.subtract(subtrahend.getImaginary()));
+                imaginary.subtract(subtrahend.getImaginary()));
     }
 
     /**
@@ -126,7 +125,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the quotient as {@link RealComplexNumber} of this {@link SimpleComplexNumber} and the given one
+     * Returns the quotient of this {@link SimpleComplexNumber} and the given one
      *
      * @param divisor
      *            the divisor
@@ -134,17 +133,44 @@ public final class SimpleComplexNumber
      * @throws NullPointerException
      *             if {@code divisor == null}
      * @throws IllegalArgumentException
-     *             if {@code !divisor.invertble}
+     *             if {@code divisor == 0}
      * @author Lars Tennstedt
      * @see #invertible
-     * @see RealComplexNumber#divide
+     * @see #divide(SimpleComplexNumber, RoundingMode)
      * @since 1
      */
     @Override
     public RealComplexNumber divide(final SimpleComplexNumber divisor) {
         requireNonNull(divisor, "divisor");
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
-        return new RealComplexNumber(this).divide(new RealComplexNumber(divisor));
+        return divide(divisor, DEFAULT_ROUNDING_MODE);
+    }
+
+    /**
+     * Returns the quotient of this {@link SimpleComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @param roundingMode
+     *            the rounding mode
+     * @return The quotient
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws IllegalArgumentException
+     *             if {@code divisor == 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @see #invertible
+     * @see RealComplexNumber#divide(RealComplexNumber, RoundingMode)
+     * @since 1
+     */
+    @Override
+    public RealComplexNumber divide(final SimpleComplexNumber divisor, final RoundingMode roundingMode) {
+        requireNonNull(divisor, "divisor");
+        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
+        requireNonNull(roundingMode, "roundingMode");
+        return new RealComplexNumber(this).divide(new RealComplexNumber(divisor), roundingMode);
     }
 
     /**
@@ -470,7 +496,7 @@ public final class SimpleComplexNumber
     @Override
     public BigIntMatrix matrix() {
         return BigIntMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-            .put(2, 2, real).build();
+                .put(2, 2, real).build();
     }
 
     @Override

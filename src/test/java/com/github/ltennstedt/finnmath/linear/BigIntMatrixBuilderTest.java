@@ -25,77 +25,79 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 public final class BigIntMatrixBuilderTest {
+    private static final BigIntMatrixBuilder builder = BigIntMatrix.builder(4, 5);
+
     @Test
     public void putRowIndexNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 5).put(null, 1, BigInteger.ZERO);
+            builder.put(null, 1, BigInteger.ZERO);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("rowIndex");
     }
 
     @Test
     public void putColumnIndexNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 5).put(1, null, BigInteger.ZERO);
+            builder.put(1, null, BigInteger.ZERO);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("columnIndex");
     }
 
     @Test
     public void putElementNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 5).put(1, 1, null);
+            builder.put(1, 1, null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
     }
 
     @Test
     public void putRowIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 5).put(0, 1, BigInteger.ZERO);
+            builder.put(0, 1, BigInteger.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual %s",
-            4, 0);
+                4, 0);
     }
 
     @Test
     public void putRowIndexTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 5).put(5, 1, BigInteger.ZERO);
+            builder.put(5, 1, BigInteger.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowIndex in [1, %s] but actual %s",
-            4, 5);
+                4, 5);
     }
 
     @Test
     public void putColumnIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 5).put(1, 0, BigInteger.ZERO);
+            builder.put(1, 0, BigInteger.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 0);
+                .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 0);
     }
 
     @Test
     public void putColumnIndexTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 5).put(1, 6, BigInteger.ZERO);
+            builder.put(1, 6, BigInteger.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 6);
+                .hasMessage("expected columnIndex in [1, %s] but actual %s", 5, 6);
     }
 
     @Test
     public void putAllNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 5).putAll(null);
+            builder.putAll(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
     }
 
     @Test
     public void buildNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntMatrix.builder(4, 5).build();
+            BigIntMatrix.builder(4, 4).build();
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("cell.value");
     }
 
     @Test
     public void toStringShouldSucceed() {
-        final BigIntMatrixBuilder builder = BigIntMatrix.builder(4, 5).putAll(BigInteger.ZERO);
-        assertThat(builder.toString())
-            .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
+        final BigIntMatrixBuilder actual = builder.putAll(BigInteger.ZERO);
+        assertThat(actual.toString())
+                .isEqualTo(MoreObjects.toStringHelper(builder).add("table", builder.getTable()).toString());
     }
 }

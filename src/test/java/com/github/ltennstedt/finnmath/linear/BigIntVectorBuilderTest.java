@@ -25,40 +25,42 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 public final class BigIntVectorBuilderTest {
+    private static final BigIntVectorBuilder builder = BigIntVector.builder(4);
+
     @Test
     public void putIndexNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntVector.builder(4).put(null, BigInteger.ZERO);
+            builder.put(null, BigInteger.ZERO);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("index");
     }
 
     @Test
     public void putElementNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntVector.builder(4).put(1, null);
+            builder.put(1, null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
     }
 
     @Test
     public void putIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntVector.builder(4).put(0, BigInteger.ZERO);
+            builder.put(0, BigInteger.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual %s", 4,
-            0);
+                0);
     }
 
     @Test
     public void putRowIndexTooHighShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntVector.builder(4).put(5, BigInteger.ZERO);
+            builder.put(5, BigInteger.ZERO);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected index in [1, %s] but actual %s", 4,
-            5);
+                5);
     }
 
     @Test
     public void putAllNullShouldThrowException() {
         assertThatThrownBy(() -> {
-            BigIntVector.builder(4).putAll(null);
+            builder.putAll(null);
         }).isExactlyInstanceOf(NullPointerException.class).hasMessage("element");
     }
 
@@ -71,8 +73,8 @@ public final class BigIntVectorBuilderTest {
 
     @Test
     public void toStringShouldSucceed() {
-        final BigIntVectorBuilder builder = BigIntVector.builder(4).putAll(BigInteger.ZERO);
-        assertThat(builder.toString()).isEqualTo(
-            MoreObjects.toStringHelper(builder).add("map", builder.getMap()).add("size", builder.getSize()).toString());
+        final BigIntVectorBuilder actual = builder.putAll(BigInteger.ZERO);
+        assertThat(actual.toString()).isEqualTo(MoreObjects.toStringHelper(builder).add("map", builder.getMap())
+                .add("size", builder.getSize()).toString());
     }
 }

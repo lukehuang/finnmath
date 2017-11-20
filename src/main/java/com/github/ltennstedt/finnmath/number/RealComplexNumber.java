@@ -37,8 +37,7 @@ import java.util.Objects;
  * @since 1
  */
 @Beta
-public final class RealComplexNumber
-        extends AbstractComplexNumber<BigDecimal, RealComplexNumber, RealComplexNumber, DecimalMatrix> {
+public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, RealComplexNumber, DecimalMatrix> {
     /**
      * {@code 0} as {@link RealComplexNumber}
      */
@@ -153,17 +152,44 @@ public final class RealComplexNumber
      *             if {@code divisor == 0}
      * @author Lars Tennstedt
      * @see #invertible
+     * @see #divide(RealComplexNumber, RoundingMode)
      * @since 1
      */
     @Override
     public RealComplexNumber divide(final RealComplexNumber divisor) {
         requireNonNull(divisor, "divisor");
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
+        return divide(divisor, DEFAULT_ROUNDING_MODE);
+    }
+
+    /**
+     * Returns the quotient of this {@link RealComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @param roundingMode
+     *            the rounding mode
+     * @return The quotient
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws IllegalArgumentException
+     *             if {@code divisor == 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @author Lars Tennstedt
+     * @see #invertible
+     * @since 1
+     */
+    @Override
+    public RealComplexNumber divide(final RealComplexNumber divisor, final RoundingMode roundingMode) {
+        requireNonNull(divisor, "divisor");
+        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
+        requireNonNull(roundingMode, "roundingMode");
         final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));
         final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))
-                .divide(denominator, RoundingMode.HALF_UP);
+                .divide(denominator, roundingMode);
         final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())
-                .subtract(real.multiply(divisor.getImaginary())).divide(denominator, RoundingMode.HALF_UP);
+                .subtract(real.multiply(divisor.getImaginary())).divide(denominator, roundingMode);
         return new RealComplexNumber(newReal, newImaginary);
     }
 
