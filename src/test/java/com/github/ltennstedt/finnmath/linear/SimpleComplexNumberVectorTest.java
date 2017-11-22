@@ -813,7 +813,8 @@ public final class SimpleComplexNumberVectorTest {
     public void maxNormShouldBeSubadditive() {
         vectors.forEach(vector -> {
             others.forEach(other -> {
-                assertThat(vector.add(other).maxNorm()).isLessThanOrEqualTo(vector.maxNorm().add(other.maxNorm()));
+                assertThat(vector.add(other).maxNorm())
+                        .isLessThanOrEqualTo(vector.maxNorm().add(other.maxNorm()).add(tolerance));
             });
         });
     }
