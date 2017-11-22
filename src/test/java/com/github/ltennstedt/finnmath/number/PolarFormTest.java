@@ -22,11 +22,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import ch.obermuhlner.math.big.BigFloat;
 import ch.obermuhlner.math.big.BigFloat.Context;
 import com.github.ltennstedt.finnmath.util.MathRandom;
+import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -113,7 +115,7 @@ public final class PolarFormTest {
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
             assertThat(polarForm.complexNumber(RoundingMode.HALF_DOWN))
-                .isEqualTo(new RealComplexNumber(real, imaginary));
+                    .isEqualTo(new RealComplexNumber(real, imaginary));
         });
     }
 
@@ -140,7 +142,7 @@ public final class PolarFormTest {
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
             assertThat(polarForm.complexNumber(99, RoundingMode.HALF_DOWN))
-                .isEqualTo(new RealComplexNumber(real, imaginary));
+                    .isEqualTo(new RealComplexNumber(real, imaginary));
         });
     }
 
@@ -161,6 +163,56 @@ public final class PolarFormTest {
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
             assertThat(polarForm.complexNumber(mathContext)).isEqualTo(new RealComplexNumber(real, imaginary));
+        });
+    }
+
+    @Test
+    public void hashCodeShouldSucceed() {
+        polarForms.forEach(polarForm -> {
+            assertThat(polarForm.hashCode()).isEqualTo(Objects.hash(polarForm.getRadial(), polarForm.getAngular()));
+        });
+    }
+
+    @Test
+    public void equalsSelfShouldReturnTrue() {
+        polarForms.forEach(polarForm -> {
+            assertThat(polarForm.equals(polarForm)).isTrue();
+        });
+    }
+
+    @Test
+    public void equalsNotpolarFormShouldReturnFalse() {
+        assertThat(zeroPolarForm.equals(new Object())).isFalse();
+    }
+
+    @Test
+    public void equalsRadialNotEqualShouldReturnFalse() {
+        polarForms.forEach(polarForm -> {
+            final PolarForm other = new PolarForm(polarForm.getRadial().add(BigDecimal.ONE), polarForm.getAngular());
+            assertThat(polarForm.equals(other)).isFalse();
+        });
+    }
+
+    @Test
+    public void equalsAngularNotEqualShouldReturnFalse() {
+        polarForms.forEach(polarForm -> {
+            final PolarForm other = new PolarForm(polarForm.getRadial(), polarForm.getAngular().add(BigDecimal.ONE));
+            assertThat(polarForm.equals(other)).isFalse();
+        });
+    }
+
+    @Test
+    public void equalsEqualShouldReturnTrue() {
+        polarForms.forEach(polarForm -> {
+            assertThat(polarForm.equals(new PolarForm(polarForm.getRadial(), polarForm.getAngular()))).isTrue();
+        });
+    }
+
+    @Test
+    public void toStringShouldSucceed() {
+        polarForms.forEach(polarForm -> {
+            assertThat(polarForm.toString()).isEqualTo(MoreObjects.toStringHelper(polarForm)
+                    .add("radial", polarForm.getRadial()).add("angular", polarForm.getAngular()).toString());
         });
     }
 }

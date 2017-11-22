@@ -28,6 +28,7 @@ import com.google.common.annotations.Beta;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -52,6 +53,11 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * {@code i} as {@link RealComplexNumber}
      */
     public static final RealComplexNumber IMAGINARY = new RealComplexNumber(BigDecimal.ZERO, BigDecimal.ONE);
+
+    /**
+     * Comparator
+     */
+    public static final RealComplexNumberComparator REAL_COMPLEX_NUMBER_COMPARATOR = new RealComplexNumberComparator();
 
     /**
      * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part
@@ -565,5 +571,31 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
         }
         final RealComplexNumber other = (RealComplexNumber) object;
         return real.equals(other.getReal()) && imaginary.equals(other.getImaginary());
+    }
+
+    /**
+     * Comparator for {@link RealComplexNumber RealComplexNumbers}
+     *
+     * @author Lars Tennstedt
+     * @since 1
+     */
+    @Beta
+    public static final class RealComplexNumberComparator implements Comparator<RealComplexNumber> {
+        private RealComplexNumberComparator() {
+        }
+
+        @Override
+        public int compare(final RealComplexNumber first, final RealComplexNumber second) {
+            if (first == null) {
+                return -1;
+            }
+            if (second == null) {
+                return 1;
+            }
+            if (first.equals(second)) {
+                return 0;
+            }
+            return first.isEqualToByComparingParts(second) ? 0 : 1;
+        }
     }
 }

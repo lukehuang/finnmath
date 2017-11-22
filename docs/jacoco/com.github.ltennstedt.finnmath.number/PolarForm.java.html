@@ -160,24 +160,24 @@ public final class PolarForm {
 
     @Override
     public int hashCode() {
-<span class="nc" id="L163">        return Objects.hash(radial, angular);</span>
+<span class="fc" id="L163">        return Objects.hash(radial, angular);</span>
     }
 
     @Override
     public boolean equals(final Object object) {
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        if (this == object) {</span>
-<span class="nc" id="L169">            return true;</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L169">            return true;</span>
         }
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        if (!(object instanceof PolarForm)) {</span>
-<span class="nc" id="L172">            return false;</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (!(object instanceof PolarForm)) {</span>
+<span class="fc" id="L172">            return false;</span>
         }
 <span class="fc" id="L174">        final PolarForm other = (PolarForm) object;</span>
-<span class="pc bpc" id="L175" title="2 of 4 branches missed.">        return radial.equals(other.getRadial()) &amp;&amp; angular.equals(other.getAngular());</span>
+<span class="fc bfc" id="L175" title="All 4 branches covered.">        return radial.equals(other.getRadial()) &amp;&amp; angular.equals(other.getAngular());</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L180">        return MoreObjects.toStringHelper(this).add(&quot;radial&quot;, radial).add(&quot;angular&quot;, angular).toString();</span>
+<span class="fc" id="L180">        return MoreObjects.toStringHelper(this).add(&quot;radial&quot;, radial).add(&quot;angular&quot;, angular).toString();</span>
     }
 
     public BigDecimal getRadial() {

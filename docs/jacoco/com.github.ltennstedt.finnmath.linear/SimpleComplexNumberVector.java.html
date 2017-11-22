@@ -575,11 +575,11 @@ public final class SimpleComplexNumberVector
          * @since 1
          */
         public SimpleComplexNumberVectorBuilder put(final Integer index, final SimpleComplexNumber element) {
-<span class="nc" id="L578">            requireNonNull(index, &quot;index&quot;);</span>
-<span class="nc" id="L579">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="nc bnc" id="L580" title="All 4 branches missed.">            checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="nc" id="L581">            map.put(index, element);</span>
-<span class="nc" id="L582">            return this;</span>
+<span class="fc" id="L578">            requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L579">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="pc bpc" id="L580" title="2 of 4 branches missed.">            checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L581">            map.put(index, element);</span>
+<span class="fc" id="L582">            return this;</span>
         }
 
         /**
