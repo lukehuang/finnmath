@@ -586,16 +586,16 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
 
         @Override
         public int compare(final RealComplexNumber first, final RealComplexNumber second) {
-<span class="pc bpc" id="L589" title="1 of 2 branches missed.">            if (first == null) {</span>
-<span class="nc" id="L590">                return -1;</span>
+<span class="fc bfc" id="L589" title="All 2 branches covered.">            if (first == null) {</span>
+<span class="fc" id="L590">                return -1;</span>
             }
-<span class="pc bpc" id="L592" title="1 of 2 branches missed.">            if (second == null) {</span>
-<span class="nc" id="L593">                return 1;</span>
+<span class="fc bfc" id="L592" title="All 2 branches covered.">            if (second == null) {</span>
+<span class="fc" id="L593">                return 1;</span>
             }
-<span class="pc bpc" id="L595" title="1 of 2 branches missed.">            if (first.equals(second)) {</span>
-<span class="nc" id="L596">                return 0;</span>
+<span class="fc bfc" id="L595" title="All 2 branches covered.">            if (first.equals(second)) {</span>
+<span class="fc" id="L596">                return 0;</span>
             }
-<span class="pc bpc" id="L598" title="1 of 2 branches missed.">            return first.isEqualToByComparingParts(second) ? 0 : 1;</span>
+<span class="fc bfc" id="L598" title="All 2 branches covered.">            return first.isEqualToByComparingParts(second) ? 0 : 1;</span>
         }
     }
 }

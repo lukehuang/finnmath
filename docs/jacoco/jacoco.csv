@@ -24,7 +24,7 @@ finnMath,com.github.ltennstedt.finnmath.number,ScientificNotation,0,132,0,16,0,2
 finnMath,com.github.ltennstedt.finnmath.number,Fraction,0,495,0,42,0,87,0,52,0,31
 finnMath,com.github.ltennstedt.finnmath.number,AbstractComplexNumber,0,34,0,0,0,8,0,5,0,5
 finnMath,com.github.ltennstedt.finnmath.number,PolarForm,0,168,0,12,0,27,0,18,0,12
-finnMath,com.github.ltennstedt.finnmath.number,RealComplexNumber.RealComplexNumberComparator,7,18,4,4,3,6,4,2,0,2
+finnMath,com.github.ltennstedt.finnmath.number,RealComplexNumber.RealComplexNumberComparator,0,25,0,8,0,9,0,6,0,2
 finnMath,com.github.ltennstedt.finnmath.number,SimpleComplexNumber,0,551,0,44,0,73,0,49,0,27
-finnMath,com.github.ltennstedt.finnmath.util,MathRandom,11,5398,6,742,3,809,6,525,0,157
+finnMath,com.github.ltennstedt.finnmath.util,MathRandom,13,5396,7,741,4,808,7,524,0,157
 finnMath,com.github.ltennstedt.finnmath.util,SquareRootCalculator,4,436,4,26,0,88,4,28,0,17
