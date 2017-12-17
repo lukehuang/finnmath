@@ -401,11 +401,11 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
-<span class="pc bpc" id="L404" title="1 of 4 branches missed.">        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0),</span>
+<span class="fc bfc" id="L404" title="All 4 branches covered.">        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0),</span>
                 &quot;expected this != 0 but actual %s&quot;, this);
 <span class="fc" id="L406">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
 <span class="fc" id="L407">        final Context context = BigFloat.context(mathContext);</span>
-<span class="pc bpc" id="L408" title="1 of 2 branches missed.">        if (real.compareTo(BigDecimal.ZERO) != 0) {</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">        if (real.compareTo(BigDecimal.ZERO) != 0) {</span>
 <span class="fc" id="L409">            final BigFloat arctan = BigFloat.atan(context.valueOf(imaginary.divide(real, mathContext)));</span>
 <span class="fc bfc" id="L410" title="All 2 branches covered.">            if (real.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
 <span class="fc" id="L411">                return arctan.toBigDecimal();</span>
@@ -414,8 +414,8 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
 <span class="pc bpc" id="L414" title="1 of 2 branches missed.">            return imaginary.compareTo(BigDecimal.ZERO) &gt; -1 ? arctan.add(pi).toBigDecimal()</span>
 <span class="nc" id="L415">                    : arctan.subtract(pi).toBigDecimal();</span>
         }
-<span class="nc" id="L417">        final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();</span>
-<span class="nc bnc" id="L418" title="All 2 branches missed.">        return imaginary.compareTo(BigDecimal.ZERO) &gt; 0 ? piDividedByTwo : piDividedByTwo.negate();</span>
+<span class="fc" id="L417">        final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();</span>
+<span class="pc bpc" id="L418" title="1 of 2 branches missed.">        return imaginary.compareTo(BigDecimal.ZERO) &gt; 0 ? piDividedByTwo : piDividedByTwo.negate();</span>
     }
 
     /**
