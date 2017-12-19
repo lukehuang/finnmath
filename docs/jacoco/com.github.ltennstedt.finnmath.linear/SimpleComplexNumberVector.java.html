@@ -41,7 +41,7 @@ import java.util.stream.IntStream;
  */
 @Beta
 public final class SimpleComplexNumberVector
-    extends AbstractVector&lt;SimpleComplexNumber, SimpleComplexNumberVector, BigDecimal, BigInteger&gt; {
+        extends AbstractVector&lt;SimpleComplexNumber, SimpleComplexNumberVector, BigDecimal, BigInteger&gt; {
     private SimpleComplexNumberVector(final ImmutableMap&lt;Integer, SimpleComplexNumber&gt; map) {
 <span class="fc" id="L46">        super(map);</span>
 <span class="fc" id="L47">    }</span>
@@ -50,12 +50,12 @@ public final class SimpleComplexNumberVector
      * Returns the sum of this {@link SimpleComplexNumberVector} and the given one
      *
      * @param summand
-     *            the summand
+     *         the summand
      * @return The sum
      * @throws NullPointerException
-     *             if {@code summand == null}
+     *         if {@code summand == null}
      * @throws IllegalArgumentException
-     *             if {@code size != summand.size}
+     *         if {@code size != summand.size}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -63,7 +63,7 @@ public final class SimpleComplexNumberVector
     public SimpleComplexNumberVector add(final SimpleComplexNumberVector summand) {
 <span class="fc" id="L64">        requireNonNull(summand, &quot;summand&quot;);</span>
 <span class="fc bfc" id="L65" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L66">            summand.size());</span>
+<span class="fc" id="L66">                summand.size());</span>
 <span class="fc" id="L67">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
 <span class="fc" id="L68">        map.forEach((index, element) -&gt; {</span>
 <span class="fc" id="L69">            builder.put(element.add(summand.element(index)));</span>
@@ -75,12 +75,12 @@ public final class SimpleComplexNumberVector
      * Returns the difference of this {@link SimpleComplexNumberVector} and the given one
      *
      * @param subtrahend
-     *            the subtrahend
+     *         the subtrahend
      * @return The difference
      * @throws NullPointerException
-     *             if {@code subtrahend == null}
+     *         if {@code subtrahend == null}
      * @throws IllegalArgumentException
-     *             if {@code size != subtrahend.size}
+     *         if {@code size != subtrahend.size}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -88,7 +88,7 @@ public final class SimpleComplexNumberVector
     public SimpleComplexNumberVector subtract(final SimpleComplexNumberVector subtrahend) {
 <span class="fc" id="L89">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
 <span class="fc bfc" id="L90" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L91">            subtrahend.size());</span>
+<span class="fc" id="L91">                subtrahend.size());</span>
 <span class="fc" id="L92">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
 <span class="fc" id="L93">        map.forEach((index, element) -&gt; {</span>
 <span class="fc" id="L94">            builder.put(element.subtract(subtrahend.element(index)));</span>
@@ -100,10 +100,10 @@ public final class SimpleComplexNumberVector
      * Returns the scalar product of the given scalar and this {@link SimpleComplexNumberVector}
      *
      * @param scalar
-     *            the scalar
+     *         the scalar
      * @return The scalar product
      * @throws NullPointerException
-     *             if {@code summand == null}
+     *         if {@code summand == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -150,12 +150,12 @@ public final class SimpleComplexNumberVector
      * Returns the taxicab distance from this {@link SimpleComplexNumberVector} to the given one
      *
      * @param other
-     *            The other {@link SimpleComplexNumberVector}
+     *         The other {@link SimpleComplexNumberVector}
      * @return The taxicab distance
      * @throws NullPointerException
-     *             if {@code other == null}
+     *         if {@code other == null}
      * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *         if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #subtract
      * @see #taxicabNorm
@@ -202,12 +202,12 @@ public final class SimpleComplexNumberVector
      * Returns the euclidean norm of this {@link SimpleComplexNumberVector}
      *
      * @param precision
-     *            the precision for the termination condition
+     *         the precision for the termination condition
      * @return The euclidean norm
      * @throws NullPointerException
-     *             if {@code precision == null}
+     *         if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -217,7 +217,7 @@ public final class SimpleComplexNumberVector
     public BigDecimal euclideanNorm(final BigDecimal precision) {
 <span class="fc" id="L218">        requireNonNull(precision, &quot;precision&quot;);</span>
 <span class="fc bfc" id="L219" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
 <span class="fc" id="L221">        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());</span>
     }
 
@@ -225,12 +225,12 @@ public final class SimpleComplexNumberVector
      * Returns the euclidean norm of this {@link SimpleComplexNumberVector}
      *
      * @param scale
-     *            the scale to be set on the result
+     *         the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     *         the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean norm
      * @throws IllegalArgumentException
-     *             if {@code scale &lt; 0}
+     *         if {@code scale &lt; 0}
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -246,18 +246,18 @@ public final class SimpleComplexNumberVector
      * Returns the euclidean norm of this {@link SimpleComplexNumberVector}
      *
      * @param precision
-     *            the precision for the termination condition
+     *         the precision for the termination condition
      * @param scale
-     *            the scale to be set on the result
+     *         the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     *         the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean norm
      * @throws NullPointerException
-     *             if {@code precision == null}
+     *         if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @throws IllegalArgumentException
-     *             if {@code scale &lt; 0}
+     *         if {@code scale &lt; 0}
      * @author Lars Tennstedt
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -267,7 +267,7 @@ public final class SimpleComplexNumberVector
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
 <span class="fc" id="L268">        requireNonNull(precision, &quot;precision&quot;);</span>
 <span class="fc bfc" id="L269" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
 <span class="fc bfc" id="L271" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
 <span class="fc" id="L272">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
@@ -276,12 +276,12 @@ public final class SimpleComplexNumberVector
      * Returns the dot product of this {@link SimpleComplexNumberVector} and the given one
      *
      * @param other
-     *            The other {@link SimpleComplexNumberVector}
+     *         The other {@link SimpleComplexNumberVector}
      * @return The dot product
      * @throws NullPointerException
-     *             if {@code other == null}
+     *         if {@code other == null}
      * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *         if {@code size != other.size}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -300,12 +300,12 @@ public final class SimpleComplexNumberVector
      * Returns the square of the euclidean distance from this {@link SimpleComplexNumberVector} to the given one
      *
      * @param other
-     *            The other {@link SimpleComplexNumberVector}
+     *         The other {@link SimpleComplexNumberVector}
      * @return The square of the euclidean distance
      * @throws NullPointerException
-     *             if {@code other == null}
+     *         if {@code other == null}
      * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *         if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #subtract
      * @see #euclideanNormPow2
@@ -322,12 +322,12 @@ public final class SimpleComplexNumberVector
      * Returns the euclidean distance from this {@link SimpleComplexNumberVector} to the given one
      *
      * @param other
-     *            The other {@link SimpleComplexNumberVector}
+     *         The other {@link SimpleComplexNumberVector}
      * @return The euclidean distance
      * @throws NullPointerException
-     *             if {@code other == null}
+     *         if {@code other == null}
      * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *         if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -344,18 +344,18 @@ public final class SimpleComplexNumberVector
      * Returns the euclidean distance from this {@link SimpleComplexNumberVector} to the given one
      *
      * @param other
-     *            The other {@link SimpleComplexNumberVector}
+     *         The other {@link SimpleComplexNumberVector}
      * @param precision
-     *            the precision for the termination condition
+     *         the precision for the termination condition
      * @return The euclidean distance
      * @throws NullPointerException
-     *             if {@code other == null}
+     *         if {@code other == null}
      * @throws NullPointerException
-     *             if {@code precision == null}
+     *         if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *         if {@code size != other.size}
      * @throws IllegalArgumentException
-     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -367,7 +367,7 @@ public final class SimpleComplexNumberVector
 <span class="fc bfc" id="L367" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
 <span class="fc" id="L368">        requireNonNull(precision, &quot;precision&quot;);</span>
 <span class="fc bfc" id="L369" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
 <span class="fc" id="L371">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
     }
 
@@ -375,18 +375,18 @@ public final class SimpleComplexNumberVector
      * Returns the euclidean distance from this {@link SimpleComplexNumberVector} to the given one
      *
      * @param other
-     *            The other {@link SimpleComplexNumberVector}
+     *         The other {@link SimpleComplexNumberVector}
      * @param scale
-     *            the scale to be set on the result
+     *         the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     *         the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean distance
      * @throws NullPointerException
-     *             if {@code other == null}
+     *         if {@code other == null}
      * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *         if {@code size != other.size}
      * @throws IllegalArgumentException
-     *             if {@code scale &lt; 0}
+     *         if {@code scale &lt; 0}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -394,7 +394,7 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigDecimal euclideanDistance(final SimpleComplexNumberVector other, final int scale,
-        final RoundingMode roundingMode) {
+                                        final RoundingMode roundingMode) {
 <span class="fc" id="L398">        requireNonNull(other, &quot;other&quot;);</span>
 <span class="fc bfc" id="L399" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
 <span class="fc bfc" id="L400" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
@@ -405,24 +405,24 @@ public final class SimpleComplexNumberVector
      * Returns the euclidean distance from this {@link SimpleComplexNumberVector} to the given one
      *
      * @param other
-     *            The other {@link SimpleComplexNumberVector}
+     *         The other {@link SimpleComplexNumberVector}
      * @param precision
-     *            the precision for the termination condition
+     *         the precision for the termination condition
      * @param scale
-     *            the scale to be set on the result
+     *         the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     *         the rounding mode to be used during the setting of the scale of the result
      * @return The euclidean distance
      * @throws NullPointerException
-     *             if {@code other == null}
+     *         if {@code other == null}
      * @throws NullPointerException
-     *             if {@code precision == null}
+     *         if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *         if {@code size != other.size}
      * @throws IllegalArgumentException
-     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @throws IllegalArgumentException
-     *             if {@code scale &lt; 0}
+     *         if {@code scale &lt; 0}
      * @author Lars Tennstedt
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
@@ -430,12 +430,12 @@ public final class SimpleComplexNumberVector
      */
     @Override
     public BigDecimal euclideanDistance(final SimpleComplexNumberVector other, final BigDecimal precision,
-        final int scale, final RoundingMode roundingMode) {
+                                        final int scale, final RoundingMode roundingMode) {
 <span class="fc" id="L434">        requireNonNull(other, &quot;other&quot;);</span>
 <span class="fc bfc" id="L435" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
 <span class="fc" id="L436">        requireNonNull(precision, &quot;precision&quot;);</span>
 <span class="fc bfc" id="L437" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
 <span class="fc bfc" id="L439" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
 <span class="fc" id="L440">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
     }
@@ -460,12 +460,12 @@ public final class SimpleComplexNumberVector
      * Returns the max distance from this {@link SimpleComplexNumberVector} to the given one
      *
      * @param other
-     *            The other {@link SimpleComplexNumberVector}
+     *         The other {@link SimpleComplexNumberVector}
      * @return The max distance
      * @throws NullPointerException
-     *             if {@code vector == null}
+     *         if {@code vector == null}
      * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *         if {@code size != other.size}
      * @author Lars Tennstedt
      * @see #subtract
      * @see #maxNorm
@@ -494,7 +494,7 @@ public final class SimpleComplexNumberVector
      * Returns a {@link SimpleComplexNumberVectorBuilder}
      *
      * @param size
-     *            the size the resulting {@link SimpleComplexNumberVector}
+     *         the size the resulting {@link SimpleComplexNumberVector}
      * @return A {@link SimpleComplexNumberVectorBuilder}
      * @author Lars Tennstedt
      * @since 1
@@ -529,7 +529,7 @@ public final class SimpleComplexNumberVector
      */
     @Beta
     public static final class SimpleComplexNumberVectorBuilder extends
-        AbstractVectorBuilder&lt;SimpleComplexNumber, SimpleComplexNumberVector, SimpleComplexNumberVectorBuilder&gt; {
+            AbstractVectorBuilder&lt;SimpleComplexNumber, SimpleComplexNumberVector, SimpleComplexNumberVectorBuilder&gt; {
         private SimpleComplexNumberVectorBuilder(final Integer size) {
 <span class="fc" id="L534">            super(size);</span>
 <span class="fc" id="L535">        }</span>
@@ -538,14 +538,14 @@ public final class SimpleComplexNumberVector
          * Puts the given element on the first free index and returns {@code this}
          *
          * @param element
-         *            the element
+         *         the element
          * @return {@code this}
          * @throws NullPointerException
-         *             if {@code element == null}
+         *         if {@code element == null}
          * @throws ArithmeticException
-         *             if ({@code size + 1} overflows
+         *         if ({@code size + 1} overflows
          * @throws IllegalStateException
-         *             if {@code size == size}
+         *         if {@code size == size}
          * @author Lars Tennstedt
          * @since 1
          */
@@ -561,16 +561,16 @@ public final class SimpleComplexNumberVector
          * Puts the given element on the given index and returns {@code this}
          *
          * @param index
-         *            the index
+         *         the index
          * @param element
-         *            the element
+         *         the element
          * @return {@code this}
          * @throws NullPointerException
-         *             if {@code index == null}
+         *         if {@code index == null}
          * @throws NullPointerException
-         *             if {@code element == null}
+         *         if {@code element == null}
          * @throws IllegalArgumentException
-         *             if {@code index &lt;= 0 || size &lt; index}
+         *         if {@code index &lt;= 0 || size &lt; index}
          * @author Lars Tennstedt
          * @since 1
          */
@@ -586,10 +586,10 @@ public final class SimpleComplexNumberVector
          * Puts the given element on all indices and returns {@code this}
          *
          * @param element
-         *            the element
+         *         the element
          * @return {@code this}
          * @throws NullPointerException
-         *             if {@code element == null}
+         *         if {@code element == null}
          * @author Lars Tennstedt
          * @since 1
          */
@@ -606,7 +606,7 @@ public final class SimpleComplexNumberVector
          *
          * @return The {@link SimpleComplexNumberVector}
          * @throws NullPointerException
-         *             if one {@code element == null}
+         *         if one {@code element == null}
          * @author Lars Tennstedt
          * @see ImmutableMap#copyOf
          * @since 1

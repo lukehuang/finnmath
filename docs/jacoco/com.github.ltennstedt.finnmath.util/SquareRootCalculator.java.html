@@ -87,18 +87,18 @@ public final class SquareRootCalculator {
      * Constructs a {@link SquareRootCalculator} from a given precision
      *
      * @param precision
-     *            the precision for the termination condition
+     *         the precision for the termination condition
      * @throws NullPointerException
-     *             if {@code precision == null}
+     *         if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @author Lars Tennstedt
      * @since 1
      */
 <span class="fc" id="L98">    public SquareRootCalculator(final BigDecimal precision) {</span>
 <span class="fc" id="L99">        requireNonNull(precision, &quot;precision&quot;);</span>
 <span class="fc bfc" id="L100" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
 <span class="fc" id="L102">        this.precision = precision;</span>
 <span class="fc" id="L103">        scale = DEFAULT_SCALE;</span>
 <span class="fc" id="L104">        roundingMode = DEFAULT_ROUNDING_MODE;</span>
@@ -108,11 +108,11 @@ public final class SquareRootCalculator {
      * Constructs a {@link SquareRootCalculator} from a given scale and rounding mode
      *
      * @param scale
-     *            the scale to be set on the result
+     *         the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     *         the rounding mode to be used during the setting of the scale of the result
      * @throws IllegalArgumentException
-     *             if {@code scale &lt; 0}
+     *         if {@code scale &lt; 0}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -127,24 +127,24 @@ public final class SquareRootCalculator {
      * Constructs a {@link SquareRootCalculator} from a given precision, scale and rounding mode
      *
      * @param precision
-     *            the precision for the termination condition
+     *         the precision for the termination condition
      * @param scale
-     *            the scale to be set on the result
+     *         the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     *         the rounding mode to be used during the setting of the scale of the result
      * @throws NullPointerException
-     *             if {@code precision == null}
+     *         if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @throws IllegalArgumentException
-     *             if {@code scale &lt; 0}
+     *         if {@code scale &lt; 0}
      * @author Lars Tennstedt
      * @since 1
      */
 <span class="fc" id="L144">    public SquareRootCalculator(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {</span>
 <span class="fc" id="L145">        requireNonNull(precision, &quot;precision&quot;);</span>
 <span class="fc bfc" id="L146" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
 <span class="fc bfc" id="L148" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
 <span class="fc" id="L149">        this.precision = precision;</span>
 <span class="fc" id="L150">        this.scale = scale;</span>
@@ -155,12 +155,12 @@ public final class SquareRootCalculator {
      * Returns the square root of the given {@link BigInteger}
      *
      * @param integer
-     *            the integer whose square root is to be calculated
+     *         the integer whose square root is to be calculated
      * @return The square root of the given integer
      * @throws NullPointerException
-     *             if {@code integer == null}
+     *         if {@code integer == null}
      * @throws IllegalArgumentException
-     *             if {@code integer &lt; 0}
+     *         if {@code integer &lt; 0}
      * @author Lars Tennstedt
      * @see #sqrt(BigDecimal)
      * @since 1
@@ -175,12 +175,12 @@ public final class SquareRootCalculator {
      * Returns the square root of the given {@link BigDecimal}
      *
      * @param decimal
-     *            the decimal number whose square root is to be calculated
+     *         the decimal number whose square root is to be calculated
      * @return The square root of the given decimal
      * @throws NullPointerException
-     *             if {@code decimal == null}
+     *         if {@code decimal == null}
      * @throws IllegalArgumentException
-     *             if {@code decimal &lt; 0}
+     *         if {@code decimal &lt; 0}
      * @author Lars Tennstedt
      * @see #heronsMethod
      * @since 1
@@ -195,14 +195,14 @@ public final class SquareRootCalculator {
      * Returns the square root of the given {@link BigInteger} which has to be a perfect square
      *
      * @param integer
-     *            the perfect square whose square root is to be calculated
+     *         the perfect square whose square root is to be calculated
      * @return The square root of the given perfect square
      * @throws NullPointerException
-     *             if {@code integer == null}
+     *         if {@code integer == null}
      * @throws IllegalArgumentException
-     *             if {@code integer &lt; 0}
+     *         if {@code integer &lt; 0}
      * @throws IllegalArgumentException
-     *             if {@code !perfectSquare}
+     *         if {@code !perfectSquare}
      * @author Lars Tennstedt
      * @see #perfectSquare
      * @see BigIntegerMath#sqrt
@@ -219,12 +219,12 @@ public final class SquareRootCalculator {
      * Returns if the given {@link BigInteger} is a perfect square
      *
      * @param integer
-     *            the integer which should be checked
+     *         the integer which should be checked
      * @return {@code true} if the integer is a perfect square, {@code false} otherwise
      * @throws NullPointerException
-     *             if {@code integer == null}
+     *         if {@code integer == null}
      * @throws IllegalArgumentException
-     *             if {@code integer &lt; 0}
+     *         if {@code integer &lt; 0}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -240,7 +240,7 @@ public final class SquareRootCalculator {
 
     private BigDecimal heronsMethod(final BigDecimal decimal) {
 <span class="fc" id="L242">        log.debug(&quot;calculating square root for {} with precision = {}&quot;, decimal.toPlainString(),</span>
-<span class="fc" id="L243">            precision.toPlainString());</span>
+<span class="fc" id="L243">                precision.toPlainString());</span>
 <span class="fc" id="L244">        BigDecimal predecessor = seedValue(decimal);</span>
 <span class="fc" id="L245">        log.debug(&quot;seed value = {}&quot;, predecessor.toPlainString());</span>
 <span class="fc" id="L246">        BigDecimal successor = calculateSuccessor(predecessor, decimal);</span>
@@ -261,7 +261,7 @@ public final class SquareRootCalculator {
 <span class="fc" id="L261">        log.debug(&quot;predecessor = {}&quot;, predecessor.toPlainString());</span>
 <span class="fc" id="L262">        final BigDecimal divisor = BigDecimal.valueOf(2).multiply(predecessor);</span>
 <span class="pc bpc" id="L263" title="1 of 2 branches missed.">        final BigDecimal successor = divisor.compareTo(BigDecimal.ZERO) != 0</span>
-<span class="pc" id="L264">            ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode) : DEFAULT_PRECISION;</span>
+<span class="pc" id="L264">                ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode) : DEFAULT_PRECISION;</span>
 <span class="fc" id="L265">        log.debug(&quot;successor = {}&quot;, successor.toPlainString());</span>
 <span class="fc" id="L266">        return successor;</span>
     }
@@ -295,7 +295,7 @@ public final class SquareRootCalculator {
     @Override
     public String toString() {
 <span class="fc" id="L297">        return MoreObjects.toStringHelper(this).add(&quot;precision&quot;, precision).add(&quot;scale&quot;, scale)</span>
-<span class="fc" id="L298">            .add(&quot;roundingMode&quot;, roundingMode).toString();</span>
+<span class="fc" id="L298">                .add(&quot;roundingMode&quot;, roundingMode).toString();</span>
     }
 
     public BigDecimal getPrecision() {

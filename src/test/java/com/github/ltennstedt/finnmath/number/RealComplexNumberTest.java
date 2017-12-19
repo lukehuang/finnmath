@@ -784,7 +784,7 @@ public final class RealComplexNumberTest {
         complexNumbers.forEach(complexNumber -> {
             assertThat(
                     complexNumber.equals(new RealComplexNumber(complexNumber.getReal(), complexNumber.getImaginary())))
-                            .isTrue();
+                    .isTrue();
         });
     }
 

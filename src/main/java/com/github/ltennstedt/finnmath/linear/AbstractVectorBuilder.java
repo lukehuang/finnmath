@@ -27,11 +27,11 @@ import org.apache.commons.lang3.builder.Builder;
 
 /**
  * @param <E>
- *            The type of the elements of the vector
+ *         The type of the elements of the vector
  * @param <V>
- *            The type of the vector
+ *         The type of the vector
  * @param <B>
- *            The type of the builder
+ *         The type of the builder
  * @author Lars Tennstedt
  * @since 1
  */
@@ -56,12 +56,12 @@ abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
      * Returns the element dependent on the given index
      *
      * @param index
-     *            the index of the element
+     *         the index of the element
      * @return The element
      * @throws NullPointerException
-     *             if {@code index == null}
+     *         if {@code index == null}
      * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
+     *         if {@code !map.containsKey(index)}
      * @author Lars Tennstedt
      * @see Map#containsKey
      * @since 1

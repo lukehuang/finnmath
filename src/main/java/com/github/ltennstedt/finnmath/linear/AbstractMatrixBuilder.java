@@ -27,9 +27,9 @@ import org.apache.commons.lang3.builder.Builder;
 
 /**
  * @param <E>
- *            The type of the elements of the matrix
+ *         The type of the elements of the matrix
  * @param <M>
- *            The type of the matrix
+ *         The type of the matrix
  * @author Lars Tennstedt
  * @since 1
  */

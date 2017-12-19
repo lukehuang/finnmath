@@ -237,11 +237,11 @@ public final class SimpleComplexNumberTest {
                         new BigDecimal(invertible.getReal().pow(2).add(invertible.getImaginary().pow(2)));
                 final BigDecimal expectedReal = new BigDecimal(complexNumber.getReal().multiply(invertible.getReal())
                         .add(complexNumber.getImaginary().multiply(invertible.getImaginary()))).divide(denominator,
-                                AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
+                        AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
                 final BigDecimal expectedImaginary =
                         new BigDecimal(complexNumber.getImaginary().multiply(invertible.getReal())
                                 .subtract(complexNumber.getReal().multiply(invertible.getImaginary())))
-                                        .divide(denominator, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
+                                .divide(denominator, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
                 assertThat(complexNumber.divide(invertible)).isExactlyInstanceOf(RealComplexNumber.class)
                         .isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary));
             });
@@ -278,11 +278,11 @@ public final class SimpleComplexNumberTest {
                         new BigDecimal(invertible.getReal().pow(2).add(invertible.getImaginary().pow(2)));
                 final BigDecimal expectedReal = new BigDecimal(complexNumber.getReal().multiply(invertible.getReal())
                         .add(complexNumber.getImaginary().multiply(invertible.getImaginary()))).divide(denominator,
-                                roundingMode);
+                        roundingMode);
                 final BigDecimal expectedImaginary =
                         new BigDecimal(complexNumber.getImaginary().multiply(invertible.getReal())
                                 .subtract(complexNumber.getReal().multiply(invertible.getImaginary())))
-                                        .divide(denominator, roundingMode);
+                                .divide(denominator, roundingMode);
                 assertThat(complexNumber.divide(invertible, roundingMode)).isExactlyInstanceOf(RealComplexNumber.class)
                         .isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary));
             });

@@ -47,7 +47,8 @@ public final class SimpleComplexNumberMatrixTest {
     private static final int columnSize = 5;
     private static final int size = rowSize;
     private static SimpleComplexNumberMatrix zeroMatrixForAddition =
-            SimpleComplexNumberMatrix.builder(rowSize, columnSize).putAll(SimpleComplexNumber.ZERO).build();;
+            SimpleComplexNumberMatrix.builder(rowSize, columnSize).putAll(SimpleComplexNumber.ZERO).build();
+    ;
     private static SimpleComplexNumberMatrix zeroMatrixForMultiplication =
             SimpleComplexNumberMatrix.builder(columnSize, rowSize).putAll(SimpleComplexNumber.ZERO).build();
     private static SimpleComplexNumberMatrix zeroSquareMatrix =

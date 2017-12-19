@@ -48,11 +48,11 @@ public final class ScientificNotation {
      * Constructs a {@link ScientificNotation} from the given coefficient and exponent
      *
      * @param coefficient
-     *            the coefficient
+     *         the coefficient
      * @param exponent
-     *            the exponent
+     *         the exponent
      * @throws NullPointerException
-     *             if {@code coefficient == null}
+     *         if {@code coefficient == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -74,7 +74,7 @@ public final class ScientificNotation {
         }
 <span class="fc bfc" id="L75" title="All 2 branches covered.">        if (exponent &lt; 0) {</span>
 <span class="fc" id="L76">            return new StringBuilder(coefficient.toPlainString()).append(&quot; * 10**(&quot;).append(exponent).append(&quot;)&quot;)</span>
-<span class="fc" id="L77">                .toString();</span>
+<span class="fc" id="L77">                    .toString();</span>
         }
 <span class="fc bfc" id="L79" title="All 2 branches covered.">        if (exponent == 0) {</span>
 <span class="fc" id="L80">            return coefficient.toPlainString();</span>

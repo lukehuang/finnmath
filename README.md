@@ -101,7 +101,7 @@ not needed for a standard Java project like this one.
 
 ## Thanks to
 * Oracle for the JVM, Java and OpenJDK
-* the Eclipse Foundation for the Eclipse IDE
+* JetBrains for IntelliJ IDEA Community Edition
 * Eric Obermühlner for big-math
 * Google for Guava and Error Prone
 * the Apache Software Foundation for Maven, Commons Lang, Commons Math and the Apache License
@@ -112,10 +112,9 @@ not needed for a standard Java project like this one.
 * the developers of Checkstyle
 * the developers of SpotBugs
 * the developers of PMD
-* the developers of JaCoCo and EclEmma
+* the developers of JaCoCo
 * GitHub for GitHub
 * Travis CI for Travis CI
 * Codecov for Codecov
 * Stack Exchange for Stack Overflow
 * Shields.io for Shields.io
-* Judd Vinet and Aaron Griffin for Arch Linux

@@ -46,7 +46,8 @@ public final class RealComplexNumberMatrixTest {
     private static final int columnSize = 5;
     private static final int size = rowSize;
     private static RealComplexNumberMatrix zeroMatrixForAddition =
-            RealComplexNumberMatrix.builder(rowSize, columnSize).putAll(RealComplexNumber.ZERO).build();;
+            RealComplexNumberMatrix.builder(rowSize, columnSize).putAll(RealComplexNumber.ZERO).build();
+    ;
     private static RealComplexNumberMatrix zeroMatrixForMultiplication =
             RealComplexNumberMatrix.builder(columnSize, rowSize).putAll(RealComplexNumber.ZERO).build();
     private static RealComplexNumberMatrix zeroSquareMatrix =

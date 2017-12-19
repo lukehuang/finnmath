@@ -87,18 +87,18 @@ public final class SquareRootCalculator {
      * Constructs a {@link SquareRootCalculator} from a given precision
      *
      * @param precision
-     *            the precision for the termination condition
+     *         the precision for the termination condition
      * @throws NullPointerException
-     *             if {@code precision == null}
+     *         if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
+     *         if {@code precision <= 0 || 1 <= precision}
      * @author Lars Tennstedt
      * @since 1
      */
     public SquareRootCalculator(final BigDecimal precision) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-            "expected precision in (0, 1) but actual %s", precision);
+                "expected precision in (0, 1) but actual %s", precision);
         this.precision = precision;
         scale = DEFAULT_SCALE;
         roundingMode = DEFAULT_ROUNDING_MODE;
@@ -108,11 +108,11 @@ public final class SquareRootCalculator {
      * Constructs a {@link SquareRootCalculator} from a given scale and rounding mode
      *
      * @param scale
-     *            the scale to be set on the result
+     *         the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     *         the rounding mode to be used during the setting of the scale of the result
      * @throws IllegalArgumentException
-     *             if {@code scale < 0}
+     *         if {@code scale < 0}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -127,24 +127,24 @@ public final class SquareRootCalculator {
      * Constructs a {@link SquareRootCalculator} from a given precision, scale and rounding mode
      *
      * @param precision
-     *            the precision for the termination condition
+     *         the precision for the termination condition
      * @param scale
-     *            the scale to be set on the result
+     *         the scale to be set on the result
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of the result
+     *         the rounding mode to be used during the setting of the scale of the result
      * @throws NullPointerException
-     *             if {@code precision == null}
+     *         if {@code precision == null}
      * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
+     *         if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
-     *             if {@code scale < 0}
+     *         if {@code scale < 0}
      * @author Lars Tennstedt
      * @since 1
      */
     public SquareRootCalculator(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
         checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-            "expected precision in (0, 1) but actual %s", precision);
+                "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         this.precision = precision;
         this.scale = scale;
@@ -155,12 +155,12 @@ public final class SquareRootCalculator {
      * Returns the square root of the given {@link BigInteger}
      *
      * @param integer
-     *            the integer whose square root is to be calculated
+     *         the integer whose square root is to be calculated
      * @return The square root of the given integer
      * @throws NullPointerException
-     *             if {@code integer == null}
+     *         if {@code integer == null}
      * @throws IllegalArgumentException
-     *             if {@code integer < 0}
+     *         if {@code integer < 0}
      * @author Lars Tennstedt
      * @see #sqrt(BigDecimal)
      * @since 1
@@ -175,12 +175,12 @@ public final class SquareRootCalculator {
      * Returns the square root of the given {@link BigDecimal}
      *
      * @param decimal
-     *            the decimal number whose square root is to be calculated
+     *         the decimal number whose square root is to be calculated
      * @return The square root of the given decimal
      * @throws NullPointerException
-     *             if {@code decimal == null}
+     *         if {@code decimal == null}
      * @throws IllegalArgumentException
-     *             if {@code decimal < 0}
+     *         if {@code decimal < 0}
      * @author Lars Tennstedt
      * @see #heronsMethod
      * @since 1
@@ -195,14 +195,14 @@ public final class SquareRootCalculator {
      * Returns the square root of the given {@link BigInteger} which has to be a perfect square
      *
      * @param integer
-     *            the perfect square whose square root is to be calculated
+     *         the perfect square whose square root is to be calculated
      * @return The square root of the given perfect square
      * @throws NullPointerException
-     *             if {@code integer == null}
+     *         if {@code integer == null}
      * @throws IllegalArgumentException
-     *             if {@code integer < 0}
+     *         if {@code integer < 0}
      * @throws IllegalArgumentException
-     *             if {@code !perfectSquare}
+     *         if {@code !perfectSquare}
      * @author Lars Tennstedt
      * @see #perfectSquare
      * @see BigIntegerMath#sqrt
@@ -219,12 +219,12 @@ public final class SquareRootCalculator {
      * Returns if the given {@link BigInteger} is a perfect square
      *
      * @param integer
-     *            the integer which should be checked
+     *         the integer which should be checked
      * @return {@code true} if the integer is a perfect square, {@code false} otherwise
      * @throws NullPointerException
-     *             if {@code integer == null}
+     *         if {@code integer == null}
      * @throws IllegalArgumentException
-     *             if {@code integer < 0}
+     *         if {@code integer < 0}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -240,7 +240,7 @@ public final class SquareRootCalculator {
 
     private BigDecimal heronsMethod(final BigDecimal decimal) {
         log.debug("calculating square root for {} with precision = {}", decimal.toPlainString(),
-            precision.toPlainString());
+                precision.toPlainString());
         BigDecimal predecessor = seedValue(decimal);
         log.debug("seed value = {}", predecessor.toPlainString());
         BigDecimal successor = calculateSuccessor(predecessor, decimal);
@@ -261,7 +261,7 @@ public final class SquareRootCalculator {
         log.debug("predecessor = {}", predecessor.toPlainString());
         final BigDecimal divisor = BigDecimal.valueOf(2).multiply(predecessor);
         final BigDecimal successor = divisor.compareTo(BigDecimal.ZERO) != 0
-            ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode) : DEFAULT_PRECISION;
+                ? predecessor.pow(2).add(decimal).divide(divisor, scale, roundingMode) : DEFAULT_PRECISION;
         log.debug("successor = {}", successor.toPlainString());
         return successor;
     }
@@ -295,7 +295,7 @@ public final class SquareRootCalculator {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("precision", precision).add("scale", scale)
-            .add("roundingMode", roundingMode).toString();
+                .add("roundingMode", roundingMode).toString();
     }
 
     public BigDecimal getPrecision() {

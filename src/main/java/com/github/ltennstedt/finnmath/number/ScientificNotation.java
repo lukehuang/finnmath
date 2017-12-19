@@ -48,11 +48,11 @@ public final class ScientificNotation {
      * Constructs a {@link ScientificNotation} from the given coefficient and exponent
      *
      * @param coefficient
-     *            the coefficient
+     *         the coefficient
      * @param exponent
-     *            the exponent
+     *         the exponent
      * @throws NullPointerException
-     *             if {@code coefficient == null}
+     *         if {@code coefficient == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -74,7 +74,7 @@ public final class ScientificNotation {
         }
         if (exponent < 0) {
             return new StringBuilder(coefficient.toPlainString()).append(" * 10**(").append(exponent).append(")")
-                .toString();
+                    .toString();
         }
         if (exponent == 0) {
             return coefficient.toPlainString();

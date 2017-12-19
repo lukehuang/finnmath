@@ -34,15 +34,15 @@ import java.util.Set;
 
 /**
  * @param &lt;E&gt;
- *            The type of the elements of the matrix
+ *         The type of the elements of the matrix
  * @param &lt;V&gt;
- *            The type of the related vector
+ *         The type of the related vector
  * @param &lt;M&gt;
- *            The type of the matrix
+ *         The type of the matrix
  * @param &lt;N&gt;
- *            The type of the maximum absolute column sum norm, maximum absolute row sum norm and the maximum norm
+ *         The type of the maximum absolute column sum norm, maximum absolute row sum norm and the maximum norm
  * @param &lt;B&gt;
- *            The type of the square of the norms
+ *         The type of the square of the norms
  * @author Lars Tennstedt
  * @see ImmutableTable
  * @since 1
@@ -203,18 +203,18 @@ abstract class AbstractMatrix&lt;E, V, M, N, B&gt; {
      * Returns the matrix element dependent on the given row and column index
      *
      * @param rowIndex
-     *            the row index
+     *         the row index
      * @param columnIndex
-     *            the column index
+     *         the column index
      * @return The element
      * @throws NullPointerException
-     *             if {@code rowIndex == null}
+     *         if {@code rowIndex == null}
      * @throws NullPointerException
-     *             if {@code columnIndex == null}
+     *         if {@code columnIndex == null}
      * @throws IllegalArgumentException
-     *             if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
+     *         if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
      * @throws IllegalArgumentException
-     *             if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
+     *         if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
      * @author Lars Tennstedt
      * @see Table#get
      * @since 1
@@ -223,9 +223,9 @@ abstract class AbstractMatrix&lt;E, V, M, N, B&gt; {
 <span class="fc" id="L223">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
 <span class="fc" id="L224">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
 <span class="fc" id="L225">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L226">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L226">                table.rowKeySet().size(), rowIndex);</span>
 <span class="fc" id="L227">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L228">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L228">                table.columnKeySet().size(), columnIndex);</span>
 <span class="fc" id="L229">        return table.get(rowIndex, columnIndex);</span>
     }
 
@@ -245,12 +245,12 @@ abstract class AbstractMatrix&lt;E, V, M, N, B&gt; {
      * Returns the matrix row as {@link ImmutableMap} dependent on the given row index
      *
      * @param rowIndex
-     *            the row index
+     *         the row index
      * @return The row
      * @throws NullPointerException
-     *             if {@code rowIndex == null}
+     *         if {@code rowIndex == null}
      * @throws IllegalArgumentException
-     *             if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
+     *         if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
      * @author Lars Tennstedt
      * @see Table#row
      * @since 1
@@ -258,7 +258,7 @@ abstract class AbstractMatrix&lt;E, V, M, N, B&gt; {
     public ImmutableMap&lt;Integer, E&gt; row(final Integer rowIndex) {
 <span class="fc" id="L259">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
 <span class="fc" id="L260">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L261">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L261">                table.rowKeySet().size(), rowIndex);</span>
 <span class="fc" id="L262">        return table.row(rowIndex);</span>
     }
 
@@ -266,12 +266,12 @@ abstract class AbstractMatrix&lt;E, V, M, N, B&gt; {
      * Returns the matrix column as {@link ImmutableMap} dependent on the given column index
      *
      * @param columnIndex
-     *            the column index
+     *         the column index
      * @return The column
      * @throws NullPointerException
-     *             if {@code columnIndex == null}
+     *         if {@code columnIndex == null}
      * @throws IllegalArgumentException
-     *             if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
+     *         if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
      * @author Lars Tennstedt
      * @see Table#column
      * @since 1
@@ -279,7 +279,7 @@ abstract class AbstractMatrix&lt;E, V, M, N, B&gt; {
     public ImmutableMap&lt;Integer, E&gt; column(final Integer columnIndex) {
 <span class="fc" id="L280">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
 <span class="fc" id="L281">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L282">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L282">                table.columnKeySet().size(), columnIndex);</span>
 <span class="fc" id="L283">        return table.column(columnIndex);</span>
     }
 

@@ -31,13 +31,13 @@ import java.util.Map.Entry;
 
 /**
  * @param <E>
- *            The type of the elements of the vector
+ *         The type of the elements of the vector
  * @param <V>
- *            The type of the vector
+ *         The type of the vector
  * @param <N>
- *            The type of the taxicab and max norm of the vector
+ *         The type of the taxicab and max norm of the vector
  * @param <P>
- *            The type of the inner product
+ *         The type of the inner product
  * @author Lars Tennstedt
  * @see ImmutableMap
  * @since 1
@@ -60,12 +60,12 @@ abstract class AbstractVector<E, V, N, P> {
      * Returns the element dependent on the given index
      *
      * @param index
-     *            the index of the element
+     *         the index of the element
      * @return The element
      * @throws NullPointerException
-     *             if {@code index == null}
+     *         if {@code index == null}
      * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
+     *         if {@code !map.containsKey(index)}
      * @author Lars Tennstedt
      * @see Map#containsKey
      * @since 1
@@ -133,7 +133,7 @@ abstract class AbstractVector<E, V, N, P> {
     protected abstract BigDecimal euclideanDistance(V other, int scale, RoundingMode roundingMode);
 
     protected abstract BigDecimal euclideanDistance(V other, BigDecimal precision, int scale,
-        RoundingMode roundingMode);
+                                                    RoundingMode roundingMode);
 
     protected abstract N maxNorm();
 

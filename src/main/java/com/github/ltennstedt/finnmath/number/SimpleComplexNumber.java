@@ -30,7 +30,8 @@ import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
- * An immutable implementation of a complex number which uses {@link BigInteger} as type for its real and imaginary part
+ * An immutable implementation of a complex number which uses {@link BigInteger} as type for its real and imaginary
+ * part
  *
  * @author Lars Tennstedt
  * @since 1
@@ -56,13 +57,13 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part
      *
      * @param real
-     *            the real part
+     *         the real part
      * @param imaginary
-     *            the imaginary part
+     *         the imaginary part
      * @throws NullPointerException
-     *             if {@code real == null}
+     *         if {@code real == null}
      * @throws NullPointerException
-     *             if {@code imaginary == null}
+     *         if {@code imaginary == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -74,10 +75,10 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the sum of this {@link SimpleComplexNumber} and the given one
      *
      * @param summand
-     *            The summand
+     *         The summand
      * @return The sum
      * @throws NullPointerException
-     *             if {@code summand == null}
+     *         if {@code summand == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -91,10 +92,10 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the difference of this {@link SimpleComplexNumber} and the given one
      *
      * @param subtrahend
-     *            the subtrahend
+     *         the subtrahend
      * @return The difference
      * @throws NullPointerException
-     *             if {@code subtrahend == null}
+     *         if {@code subtrahend == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -109,10 +110,10 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the product of this {@link SimpleComplexNumber} and the given one
      *
      * @param factor
-     *            the factor
+     *         the factor
      * @return The product
      * @throws NullPointerException
-     *             if {@code factor == null}
+     *         if {@code factor == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -128,12 +129,12 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the quotient of this {@link SimpleComplexNumber} and the given one
      *
      * @param divisor
-     *            the divisor
+     *         the divisor
      * @return The quotient
      * @throws NullPointerException
-     *             if {@code divisor == null}
+     *         if {@code divisor == null}
      * @throws IllegalArgumentException
-     *             if {@code divisor == 0}
+     *         if {@code divisor == 0}
      * @author Lars Tennstedt
      * @see #invertible
      * @see #divide(SimpleComplexNumber, RoundingMode)
@@ -150,16 +151,16 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the quotient of this {@link SimpleComplexNumber} and the given one
      *
      * @param divisor
-     *            the divisor
+     *         the divisor
      * @param roundingMode
-     *            the rounding mode
+     *         the rounding mode
      * @return The quotient
      * @throws NullPointerException
-     *             if {@code divisor == null}
+     *         if {@code divisor == null}
      * @throws IllegalArgumentException
-     *             if {@code divisor == 0}
+     *         if {@code divisor == 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
      * @see #invertible
      * @see RealComplexNumber#divide(RealComplexNumber, RoundingMode)
@@ -177,10 +178,10 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the power of this {@link SimpleComplexNumber} raised by the given exponent
      *
      * @param exponent
-     *            the exponent
+     *         the exponent
      * @return The power
      * @throws IllegalArgumentException
-     *             if {@code exponent < 0}
+     *         if {@code exponent < 0}
      * @author Lars Tennstedt
      * @see #multiply
      * @since 1
@@ -213,7 +214,7 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      *
      * @return The inverted {@link SimpleComplexNumber} of this one
      * @throws IllegalStateException
-     *             if {@code numerator == 0}
+     *         if {@code numerator == 0}
      * @author Lars Tennstedt
      * @see #invertible
      * @see #divide
@@ -279,10 +280,10 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      *
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @author Lars Tennstedt
-     * @since 1
      * @see #argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument() {
@@ -294,15 +295,15 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the argument of this {@link SimpleComplexNumber} considering the given precision
      *
      * @param precision
-     *            The precision
+     *         The precision
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws IllegalArgumentException
-     *             if {@code precision < 0}
+     *         if {@code precision < 0}
      * @author Lars Tennstedt
-     * @since 1
      * @see #argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument(final int precision) {
@@ -315,15 +316,15 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the argument of this {@link SimpleComplexNumber} considering the given rounding mode
      *
      * @param roundingMode
-     *            The rounding mode
+     *         The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see #argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument(final RoundingMode roundingMode) {
@@ -336,19 +337,19 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the argument of this {@link SimpleComplexNumber} considering the given precision and rounding mode
      *
      * @param precision
-     *            The precision
+     *         The precision
      * @param roundingMode
-     *            The rounding mode
+     *         The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws IllegalArgumentException
-     *             if {@code precision < 0}
+     *         if {@code precision < 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see #argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
@@ -362,15 +363,15 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns the argument of this {@link SimpleComplexNumber} considering the given {@link MathContext}
      *
      * @param mathContext
-     *            The math context
+     *         The math context
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws NullPointerException
-     *             if {@code mathContext == null}
+     *         if {@code mathContext == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see RealComplexNumber#argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
@@ -384,10 +385,10 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      *
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @author Lars Tennstedt
-     * @since 1
      * @see #polarForm(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm() {
@@ -399,15 +400,15 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Return the corresponding polar form of the complex number considering the given precision
      *
      * @param precision
-     *            The precision
+     *         The precision
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws IllegalArgumentException
-     *             if {@code precision < 0}
+     *         if {@code precision < 0}
      * @author Lars Tennstedt
-     * @since 1
      * @see #polarForm(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm(final int precision) {
@@ -420,15 +421,15 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Return the corresponding polar form of the complex number considering the given rounding mode
      *
      * @param roundingMode
-     *            The rounding mode
+     *         The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see #polarForm(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm(final RoundingMode roundingMode) {
@@ -441,19 +442,19 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Return the corresponding polar form of the complex number considering the given precision and rounding mode
      *
      * @param precision
-     *            The precision
+     *         The precision
      * @param roundingMode
-     *            The rounding mode
+     *         The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws IllegalArgumentException
-     *             if {@code precision < 0}
+     *         if {@code precision < 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see #polarForm(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
@@ -467,15 +468,15 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Return the corresponding polar form of the complex number considering the given {@link MathContext}
      *
      * @param mathContext
-     *            The math context
+     *         The math context
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws NullPointerException
-     *             if {@code mathContext == null}
+     *         if {@code mathContext == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see RealComplexNumber#polarForm(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm(final MathContext mathContext) {
@@ -488,7 +489,6 @@ public final class SimpleComplexNumber extends AbstractComplexNumber<BigInteger,
      * Returns a matrix representation of this {@link SimpleComplexNumber}
      *
      * @return The matrix representation
-     *
      * @author Lars Tennstedt
      * @see BigIntMatrix#builder
      * @since 1

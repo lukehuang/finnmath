@@ -26,11 +26,11 @@ import java.math.RoundingMode;
 
 /**
  * @param <B>
- *            The type of the real and imaginary part of the complex number
+ *         The type of the real and imaginary part of the complex number
  * @param <S>
- *            The type of the complex number
+ *         The type of the complex number
  * @param <M>
- *            The type of the related matrix
+ *         The type of the related matrix
  * @author Lars Tennstedt
  * @since 1
  */

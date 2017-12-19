@@ -47,7 +47,8 @@ public final class BigIntMatrixTest {
     private static final int columnSize = 5;
     private static final int size = rowSize;
     private static BigIntMatrix zeroMatrixForAddition =
-            BigIntMatrix.builder(rowSize, columnSize).putAll(BigInteger.ZERO).build();;
+            BigIntMatrix.builder(rowSize, columnSize).putAll(BigInteger.ZERO).build();
+    ;
     private static BigIntMatrix zeroMatrixForMultiplication =
             BigIntMatrix.builder(columnSize, rowSize).putAll(BigInteger.ZERO).build();
     private static BigIntMatrix zeroSquareMatrix =

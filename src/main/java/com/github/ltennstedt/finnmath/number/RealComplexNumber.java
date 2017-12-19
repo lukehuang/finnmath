@@ -32,7 +32,8 @@ import java.util.Comparator;
 import java.util.Objects;
 
 /**
- * An immutable implementation of a complex number which uses {@link BigDecimal} as type for its real and imaginary part
+ * An immutable implementation of a complex number which uses {@link BigDecimal} as type for its real and imaginary
+ * part
  *
  * @author Lars Tennstedt
  * @since 1
@@ -63,13 +64,13 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part
      *
      * @param real
-     *            the real part
+     *         the real part
      * @param imaginary
-     *            the imaginary part
+     *         the imaginary part
      * @throws NullPointerException
-     *             if {@code real == null}
+     *         if {@code real == null}
      * @throws NullPointerException
-     *             if {@code imaginary == null}
+     *         if {@code imaginary == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -81,9 +82,9 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Constructs a {@link RealComplexNumber} by the given {@link SimpleComplexNumber}
      *
      * @param complexNumber
-     *            {@link SimpleComplexNumber}
+     *         {@link SimpleComplexNumber}
      * @throws NullPointerException
-     *             if {@code complexNumber == null}
+     *         if {@code complexNumber == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -96,10 +97,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the sum of this {@link RealComplexNumber} and the given one
      *
      * @param summand
-     *            the summand
+     *         the summand
      * @return The sum
      * @throws NullPointerException
-     *             if {@code summand == null}
+     *         if {@code summand == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -113,10 +114,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the difference of this {@link RealComplexNumber} and the given one
      *
      * @param subtrahend
-     *            the subtrahend
+     *         the subtrahend
      * @return The difference
      * @throws NullPointerException
-     *             if {@code subtrahend == null}
+     *         if {@code subtrahend == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -131,10 +132,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the product of this {@link RealComplexNumber} and the given one
      *
      * @param factor
-     *            the factor
+     *         the factor
      * @return The product
      * @throws NullPointerException
-     *             if {@code factor == null}
+     *         if {@code factor == null}
      * @author Lars Tennstedt
      * @since 1
      */
@@ -150,12 +151,12 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the quotient of this {@link RealComplexNumber} and the given one
      *
      * @param divisor
-     *            the divisor
+     *         the divisor
      * @return The quotient
      * @throws NullPointerException
-     *             if {@code divisor == null}
+     *         if {@code divisor == null}
      * @throws IllegalArgumentException
-     *             if {@code divisor == 0}
+     *         if {@code divisor == 0}
      * @author Lars Tennstedt
      * @see #invertible
      * @see #divide(RealComplexNumber, RoundingMode)
@@ -172,16 +173,16 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the quotient of this {@link RealComplexNumber} and the given one
      *
      * @param divisor
-     *            the divisor
+     *         the divisor
      * @param roundingMode
-     *            the rounding mode
+     *         the rounding mode
      * @return The quotient
      * @throws NullPointerException
-     *             if {@code divisor == null}
+     *         if {@code divisor == null}
      * @throws IllegalArgumentException
-     *             if {@code divisor == 0}
+     *         if {@code divisor == 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
      * @see #invertible
      * @since 1
@@ -203,10 +204,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns power of this {@link RealComplexNumber} by the given exponent
      *
      * @param exponent
-     *            the exponent
+     *         the exponent
      * @return The power
      * @throws IllegalArgumentException
-     *             if {@code exponent < 0}
+     *         if {@code exponent < 0}
      * @author Lars Tennstedt
      * @see #pow
      * @see #multiply
@@ -240,7 +241,7 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      *
      * @return The inverted
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @author Lars Tennstedt
      * @see #invertible
      * @see #divide
@@ -306,10 +307,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      *
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @author Lars Tennstedt
-     * @since 1
      * @see #argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument() {
@@ -321,15 +322,15 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the argument of this {@link RealComplexNumber} considering the given precision
      *
      * @param precision
-     *            The precision
+     *         The precision
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws IllegalArgumentException
-     *             if {@code precision < 0}
+     *         if {@code precision < 0}
      * @author Lars Tennstedt
-     * @since 1
      * @see #argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument(final int precision) {
@@ -342,15 +343,15 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the argument of this {@link RealComplexNumber} considering the given rounding mode
      *
      * @param roundingMode
-     *            The rounding mode
+     *         The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see #argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument(final RoundingMode roundingMode) {
@@ -363,19 +364,19 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the argument of this {@link RealComplexNumber} considering the given precision and rounding mode
      *
      * @param precision
-     *            The precision
+     *         The precision
      * @param roundingMode
-     *            The rounding mode
+     *         The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws IllegalArgumentException
-     *             if {@code precision < 0}
+     *         if {@code precision < 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see #argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
@@ -389,15 +390,15 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the argument of this {@link RealComplexNumber} considering the given {@link MathContext}
      *
      * @param mathContext
-     *            The math context
+     *         The math context
      * @return The argument
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws NullPointerException
-     *             if {@code mathContext == null}
+     *         if {@code mathContext == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see RealComplexNumber#argument(MathContext)
+     * @since 1
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
@@ -423,10 +424,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      *
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @author Lars Tennstedt
-     * @since 1
      * @see #polarForm(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm() {
@@ -438,15 +439,15 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Return the corresponding polar form of the complex number considering the given precision
      *
      * @param precision
-     *            The precision
+     *         The precision
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws IllegalArgumentException
-     *             if {@code precision < 0}
+     *         if {@code precision < 0}
      * @author Lars Tennstedt
-     * @since 1
      * @see #polarForm(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm(final int precision) {
@@ -459,15 +460,15 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Return the corresponding polar form of the complex number considering the given rounding mode
      *
      * @param roundingMode
-     *            The rounding mode
+     *         The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see #polarForm(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm(final RoundingMode roundingMode) {
@@ -480,19 +481,19 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Return the corresponding polar form of the complex number considering the given precision and rounding mode
      *
      * @param precision
-     *            The precision
+     *         The precision
      * @param roundingMode
-     *            The rounding mode
+     *         The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws IllegalArgumentException
-     *             if {@code precision < 0}
+     *         if {@code precision < 0}
      * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *         if {@code roundingMode == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see #polarForm(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
@@ -506,16 +507,16 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Return the corresponding polar form of the complex number considering the given {@link MathContext}
      *
      * @param mathContext
-     *            The math context
+     *         The math context
      * @return The polar form
      * @throws IllegalStateException
-     *             if {@code this == 0}
+     *         if {@code this == 0}
      * @throws NullPointerException
-     *             if {@code mathContext == null}
+     *         if {@code mathContext == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see #abs
      * @see #argument(MathContext)
+     * @since 1
      */
     @Override
     public PolarForm polarForm(final MathContext mathContext) {
@@ -525,17 +526,17 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber} is equal to a given
-     * {@link RealComplexNumber} by comparing the real and imaginary part
+     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber} is equal to a given {@link
+     * RealComplexNumber} by comparing the real and imaginary part
      *
      * @param other
-     *            The other {@link RealComplexNumber}
+     *         The other {@link RealComplexNumber}
      * @return {@code true} if equaliyt holds, {@code false} otherwise
      * @throws NullPointerException
-     *             if {@code other == null}
+     *         if {@code other == null}
      * @author Lars Tennstedt
-     * @since 1
      * @see BigDecimal#compareTo(BigDecimal)
+     * @since 1
      */
     public boolean isEqualToByComparingParts(final RealComplexNumber other) {
         requireNonNull(other, "other");

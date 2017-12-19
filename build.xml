@@ -15,15 +15,15 @@
     limitations under the License.
 -->
 <project name="finnMath" default="copyDocs" basedir=".">
-	<target name="deleteDocs">
-		<delete dir="docs" />
-	</target>
-	<target name="createDir" depends="deleteDocs">
-		<mkdir dir="docs" />
-	</target>
-	<target name="copyDocs" depends="createDir">
-		<copy toDir="docs/">
-			<fileset dir="target/site/" />
-		</copy>
-	</target>
+    <target name="deleteDocs">
+        <delete dir="docs"/>
+    </target>
+    <target name="createDir" depends="deleteDocs">
+        <mkdir dir="docs"/>
+    </target>
+    <target name="copyDocs" depends="createDir">
+        <copy toDir="docs/">
+            <fileset dir="target/site/"/>
+        </copy>
+    </target>
 </project>
