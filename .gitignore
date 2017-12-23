@@ -14,19 +14,7 @@
 # limitations under the License.
 #
 
-/bin/
-.classpath
-.project
-/.settings/
 *.iml
-*.ipr
-*.iws
 /.idea/
-/build/
-.README.md.html
-/out/
-/target/
-.checkstyle
-.eclipse-pmd
-/.gradle/
+**/target/
 
