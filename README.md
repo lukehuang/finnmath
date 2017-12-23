@@ -21,11 +21,12 @@ What finnMath will not provide:
 * Matrix decomposition, reduction or factorization
 * Polynomials
 
-finnMath is written in Java and uses Maven as its build automation tool so it should interoperate seamlessly with 
+finnMath is mainly written in Java and uses Maven as its build automation tool so it should interoperate seamlessly with 
 other JVM technologies. Dependencies are big-math, Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 ## Implementation details
 * Java 8 (finnmath-core) and Kotlin 1.1 (finnmath-kotlin)
+* Operator extensions for Kotlin (separate JAR) 
 * All types are immutable.
 * The matrices are based on ImmutableTable from Guava.
 * The vectors are based on ImmutableMap from Guava.
@@ -34,6 +35,7 @@ other JVM technologies. Dependencies are big-math, Guava, Commons Lang and SLF4J
 * Builders for vectors and matrices
 * Early failing with meaningful messages
 * Logging facade instead of a hard dependency on a specific logging framework
+* Complete Javadoc
 
 ## Information
 * Maven site: https://ltennstedt.github.io/finnmath/index.html
@@ -101,13 +103,14 @@ not needed for a standard Java project like this one.
 
 ## Thanks to
 * Oracle for the JVM, Java and OpenJDK
-* JetBrains for IntelliJ IDEA Community Edition
+* JetBrains for Kotlin and IntelliJ IDEA Community Edition
 * Eric Obermühlner for big-math
 * Google for Guava and Error Prone
 * the Apache Software Foundation for Maven, Commons Lang, Commons Math and the Apache License
 * QOS.ch for SLF4J 
 * Joel Costigliola for AssertJ
 * the JUnit team for JUnit
+* WillowTree for assertk
 * Linus Torvalds for Git
 * the developers of Checkstyle
 * the developers of SpotBugs
@@ -118,3 +121,4 @@ not needed for a standard Java project like this one.
 * Codecov for Codecov
 * Stack Exchange for Stack Overflow
 * Shields.io for Shields.io
+
