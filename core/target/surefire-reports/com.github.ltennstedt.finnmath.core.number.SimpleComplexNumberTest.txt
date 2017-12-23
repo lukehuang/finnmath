@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.github.ltennstedt.finnmath.core.number.SimpleComplexNumberTest
--------------------------------------------------------------------------------
-Tests run: 91, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.817 s - in com.github.ltennstedt.finnmath.core.number.SimpleComplexNumberTest
