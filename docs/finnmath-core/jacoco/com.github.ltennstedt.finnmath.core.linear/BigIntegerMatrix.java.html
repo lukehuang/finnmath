@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BigIntegerMatrix.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.linear</a> &gt; <span class="el_source">BigIntegerMatrix.java</span></div><h1>BigIntegerMatrix.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+import static java.util.Objects.requireNonNull;
+
+import com.github.ltennstedt.finnmath.core.linear.BigIntegerVector.BigIntegerVectorBuilder;
+import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.google.common.annotations.Beta;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
+import com.google.common.collect.Table.Cell;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+
+/**
+ * An immutable implementation of a matrix which uses {@link BigInteger} as type for its elements
+ *
+ * @author Lars Tennstedt
+ * @since 1
+ */
+@Beta
+public final class BigIntegerMatrix
+        extends AbstractMatrix&lt;BigInteger, BigIntegerVector, BigIntegerMatrix, BigInteger, BigInteger&gt; {
+    private BigIntegerMatrix(final ImmutableTable&lt;Integer, Integer, BigInteger&gt; table) {
+<span class="fc" id="L48">        super(table);</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * Returns the sum of this {@link BigIntegerMatrix} and the given one
+     *
+     * @param summand
+     *         The summand
+     * @return The sum
+     * @throws NullPointerException
+     *         if {@code summand == null}
+     * @throws IllegalArgumentException
+     *         if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *         if {@code columnSize != summand.columnSize}
+     * @see #builder
+     * @since 1
+     */
+    @Override
+    public BigIntegerMatrix add(final BigIntegerMatrix summand) {
+<span class="fc" id="L68">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == summand.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="fc" id="L70">                table.rowKeySet().size(), summand.rowSize());</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == summand.columnSize(),</span>
+<span class="fc" id="L72">                &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), summand.columnSize());</span>
+<span class="fc" id="L73">        final BigIntegerMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="fc" id="L74">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L75">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L76">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc" id="L77">            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey)));</span>
+<span class="fc" id="L78">        });</span>
+<span class="fc" id="L79">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the difference of this {@link BigIntegerMatrix} and the given one
+     *
+     * @param subtrahend
+     *         the subtrahend
+     * @return The difference
+     * @throws NullPointerException
+     *         if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *         if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *         if {@code columnSize != summand.columnSize}
+     * @see #builder
+     * @since 1
+     */
+    @Override
+    public BigIntegerMatrix subtract(final BigIntegerMatrix subtrahend) {
+<span class="fc" id="L99">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="fc" id="L101">                table.rowKeySet().size(), subtrahend.rowSize());</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),</span>
+<span class="fc" id="L103">                &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(),</span>
+<span class="fc" id="L104">                subtrahend.columnSize());</span>
+<span class="fc" id="L105">        final BigIntegerMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="fc" id="L106">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L107">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L108">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc" id="L109">            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.element(rowKey, columnKey)));</span>
+<span class="fc" id="L110">        });</span>
+<span class="fc" id="L111">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the product of this {@link BigIntegerMatrix} and the given one
+     *
+     * @param factor
+     *         the factor
+     * @return The product
+     * @throws NullPointerException
+     *         if {@code factor == null}
+     * @throws IllegalArgumentException
+     *         if {@code columnSize != factor.rowSize}
+     * @see #builder
+     * @since 1
+     */
+    @Override
+    public BigIntegerMatrix multiply(final BigIntegerMatrix factor) {
+<span class="fc" id="L129">        requireNonNull(factor, &quot;factor&quot;);</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == factor.rowSize(),</span>
+<span class="fc" id="L131">                &quot;expected columnSize == factor.rowSize but actual %s != %s&quot;, table.columnKeySet().size(),</span>
+<span class="fc" id="L132">                factor.rowSize());</span>
+<span class="fc" id="L133">        final BigIntegerMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());</span>
+<span class="fc" id="L134">        table.rowMap().forEach((rowIndex, row) -&gt; factor.columns().forEach((columnIndex, column) -&gt; {</span>
+<span class="fc" id="L135">            final BigInteger element = multiplyRowWithColumn(row, column);</span>
+<span class="fc" id="L136">            builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L137">        }));</span>
+<span class="fc" id="L138">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the product of this {@link BigIntegerMatrix} and the given {@link BigIntegerVector}
+     *
+     * @param vector
+     *         the vector
+     * @return The product
+     * @throws NullPointerException
+     *         if {@code vector == null}
+     * @throws IllegalArgumentException
+     *         if {@code columnSize != vector.size}
+     * @see BigIntegerVector#builder
+     * @since 1
+     */
+    @Override
+    public BigIntegerVector multiplyVector(final BigIntegerVector vector) {
+<span class="fc" id="L156">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == vector.size(),</span>
+<span class="fc" id="L158">                &quot;expected columnSize == vectorSize but actual %s != %s&quot;, table.columnKeySet().size(), vector.size());</span>
+<span class="fc" id="L159">        final BigIntegerVectorBuilder builder = BigIntegerVector.builder(table.rowKeySet().size());</span>
+<span class="fc" id="L160">        table.rowMap().forEach((rowIndex, row) -&gt; row.forEach((columnIndex, matrixEntry) -&gt; {</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">            final BigInteger oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex) : BigInteger.ZERO;</span>
+<span class="fc" id="L162">            builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));</span>
+<span class="fc" id="L163">        }));</span>
+<span class="fc" id="L164">        return builder.build();</span>
+    }
+
+    @Override
+    protected BigInteger multiplyRowWithColumn(final Map&lt;Integer, BigInteger&gt; row,
+            final Map&lt;Integer, BigInteger&gt; column) {
+<span class="fc" id="L170">        requireNonNull(row, &quot;row&quot;);</span>
+<span class="fc" id="L171">        requireNonNull(column, &quot;column&quot;);</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">        checkArgument(row.size() == column.size(), &quot;expected rowSize == columnSize but actual %s != %s&quot;, row.size(),</span>
+<span class="fc" id="L173">                column.size());</span>
+<span class="fc" id="L174">        BigInteger result = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        for (final Entry&lt;Integer, BigInteger&gt; rowEntry : row.entrySet()) {</span>
+<span class="fc" id="L176">            result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));</span>
+<span class="fc" id="L177">        }</span>
+<span class="fc" id="L178">        return result;</span>
+    }
+
+    /**
+     * Returns the scalar product of this {@link BigIntegerMatrix} and the given {@link BigInteger}
+     *
+     * @param scalar
+     *         the scalar
+     * @return The scalar product
+     * @throws NullPointerException
+     *         if {@code scalar == null}
+     * @see #builder
+     * @since 1
+     */
+    @Override
+    public BigIntegerMatrix scalarMultiply(final BigInteger scalar) {
+<span class="fc" id="L194">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L195">        final BigIntegerMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());</span>
+<span class="fc" id="L196">        table.cellSet()</span>
+<span class="fc" id="L197">                .forEach(cell -&gt; builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));</span>
+<span class="fc" id="L198">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the negated {@link BigIntegerMatrix} and this one
+     *
+     * @return The negated
+     * @see #scalarMultiply
+     * @since 1
+     */
+    @Override
+    public BigIntegerMatrix negate() {
+<span class="fc" id="L210">        return scalarMultiply(BigInteger.ONE.negate());</span>
+    }
+
+    /**
+     * Returns the trace of this {@link BigIntegerMatrix}
+     *
+     * @return The trace
+     * @since 1
+     */
+    @Override
+    public BigInteger trace() {
+<span class="fc" id="L221">        checkState(square(), &quot;expected square matrix but actual %s x %s&quot;, table.rowKeySet().size(),</span>
+<span class="fc" id="L222">                table.columnKeySet().size());</span>
+<span class="fc" id="L223">        BigInteger result = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        for (final Integer index : table.rowKeySet()) {</span>
+<span class="fc" id="L225">            result = result.add(table.get(index, index));</span>
+<span class="fc" id="L226">        }</span>
+<span class="fc" id="L227">        return result;</span>
+    }
+
+    /**
+     * Returns the determinant of this {@link BigIntegerMatrix}
+     *
+     * @return The determinant
+     * @throws IllegalStateException
+     *         if {@code !square}
+     * @see #square
+     * @see #minor
+     * @since 1
+     */
+    @Override
+    public BigInteger determinant() {
+<span class="fc" id="L242">        final int rowSize = table.rowKeySet().size();</span>
+<span class="fc" id="L243">        checkState(square(), &quot;expected square matrix but actual %s x %s&quot;, rowSize, table.columnKeySet().size());</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        if (triangular()) {</span>
+<span class="fc" id="L245">            BigInteger result = BigInteger.ONE;</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">            for (final Cell&lt;Integer, Integer, BigInteger&gt; cell : table.cellSet()) {</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">                if (cell.getRowKey().compareTo(cell.getColumnKey()) == 0) {</span>
+<span class="fc" id="L248">                    result = result.multiply(cell.getValue());</span>
+                }
+<span class="fc" id="L250">            }</span>
+<span class="fc" id="L251">            return result;</span>
+        }
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        if (rowSize &gt; 3) {</span>
+<span class="fc" id="L254">            return leibnizFormula();</span>
+        }
+<span class="fc bfc" id="L256" title="All 2 branches covered.">        if (rowSize == 3) {</span>
+<span class="fc" id="L257">            return ruleOfSarrus();</span>
+        }
+
+        // rowSize == 2
+<span class="fc" id="L261">        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));</span>
+    }
+
+    @Override
+    protected BigInteger leibnizFormula() {
+<span class="fc" id="L266">        BigInteger result = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        for (final List&lt;Integer&gt; permutation : Collections2.permutations(table.rowKeySet())) {</span>
+<span class="fc" id="L268">            BigInteger product = BigInteger.ONE;</span>
+<span class="fc" id="L269">            int inversions = 0;</span>
+<span class="fc" id="L270">            final int size = table.rowKeySet().size();</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">            for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L272">                final Integer sigma = permutation.get(i);</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">                for (int j = i + 1; j &lt; size; j++) {</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">                    if (sigma &gt; permutation.get(j)) {</span>
+<span class="fc" id="L275">                        inversions++;</span>
+                    }
+                }
+<span class="fc" id="L278">                product = product.multiply(table.get(sigma, i + 1));</span>
+            }
+<span class="fc" id="L280">            result = result.add(BigInteger.ONE.negate().pow(inversions).multiply(product));</span>
+<span class="fc" id="L281">        }</span>
+<span class="fc" id="L282">        return result;</span>
+    }
+
+    @Override
+    protected BigInteger ruleOfSarrus() {
+<span class="fc" id="L287">        final BigInteger first = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));</span>
+<span class="fc" id="L288">        final BigInteger second = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));</span>
+<span class="fc" id="L289">        final BigInteger third = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));</span>
+<span class="fc" id="L290">        final BigInteger fourth = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3));</span>
+<span class="fc" id="L291">        final BigInteger fifth = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1));</span>
+<span class="fc" id="L292">        final BigInteger sixth = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2));</span>
+<span class="fc" id="L293">        return first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);</span>
+    }
+
+    /**
+     * Returns the transpose of this {@link BigIntegerMatrix}
+     *
+     * @return The transpose
+     * @see #builder
+     * @since 1
+     */
+    @Override
+    public BigIntegerMatrix transpose() {
+<span class="fc" id="L305">        final BigIntegerMatrixBuilder builder = builder(table.columnKeySet().size(), table.rowKeySet().size());</span>
+<span class="fc" id="L306">        table.cellSet().forEach(cell -&gt; builder.put(cell.getColumnKey(), cell.getRowKey(), cell.getValue()));</span>
+<span class="fc" id="L307">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the minor of this {@link BigIntegerMatrix} dependent on the given row and column index
+     *
+     * @param rowIndex
+     *         the row index
+     * @param columnIndex
+     *         the column index
+     * @return The minor
+     * @throws NullPointerException
+     *         if {@code rowIndex == null}
+     * @throws NullPointerException
+     *         if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *         if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
+     * @throws IllegalArgumentException
+     *         if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
+     * @see #builder
+     * @since 1
+     */
+    @Override
+    public BigIntegerMatrix minor(final Integer rowIndex, final Integer columnIndex) {
+<span class="fc" id="L331">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L332">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L333">        checkArgument(table.containsRow(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L334">                table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L335">        checkArgument(table.containsColumn(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L336">                table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L337">        final BigIntegerMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);</span>
+<span class="fc" id="L338">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L339">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L340">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc bfc" id="L341" title="All 4 branches covered.">            if (rowKey.compareTo(rowIndex) != 0 &amp;&amp; columnKey.compareTo(columnIndex) != 0) {</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">                final Integer newRowIndex = rowKey.compareTo(rowIndex) &gt; 0 ? rowKey - 1 : rowKey;</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">                final Integer newColumnIndex = columnKey.compareTo(columnIndex) &gt; 0 ? columnKey - 1 : columnKey;</span>
+<span class="fc" id="L344">                builder.put(newRowIndex, newColumnIndex, cell.getValue());</span>
+            }
+<span class="fc" id="L346">        });</span>
+<span class="fc" id="L347">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the maximum absolute column sum norm of this {@link BigIntegerMatrix}
+     *
+     * @return The maximum absolute column sum norm
+     * @since 1
+     */
+    @Override
+    public BigInteger maxAbsColumnSumNorm() {
+<span class="fc" id="L358">        BigInteger norm = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">        for (final Map&lt;Integer, BigInteger&gt; column : table.columnMap().values().asList()) {</span>
+<span class="fc" id="L360">            BigInteger sum = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">            for (final BigInteger element : column.values()) {</span>
+<span class="fc" id="L362">                sum = sum.add(element.abs());</span>
+<span class="fc" id="L363">            }</span>
+<span class="fc" id="L364">            norm = norm.max(sum);</span>
+<span class="fc" id="L365">        }</span>
+<span class="fc" id="L366">        return norm;</span>
+    }
+
+    /**
+     * Returns the maximum absolute row sum norm of this {@link BigIntegerMatrix}
+     *
+     * @return The maximum absolute row sum norm
+     * @since 1
+     */
+    @Override
+    public BigInteger maxAbsRowSumNorm() {
+<span class="fc" id="L377">        BigInteger norm = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">        for (final Map&lt;Integer, BigInteger&gt; row : table.rowMap().values().asList()) {</span>
+<span class="fc" id="L379">            BigInteger sum = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L380" title="All 2 branches covered.">            for (final BigInteger element : row.values()) {</span>
+<span class="fc" id="L381">                sum = sum.add(element.abs());</span>
+<span class="fc" id="L382">            }</span>
+<span class="fc" id="L383">            norm = norm.max(sum);</span>
+<span class="fc" id="L384">        }</span>
+<span class="fc" id="L385">        return norm;</span>
+    }
+
+    /**
+     * Returns the square of the frobenius norm of this {@link BigIntegerMatrix}
+     *
+     * @return The square of the frobenius norm
+     * @since 1
+     */
+    @Override
+    public BigInteger frobeniusNormPow2() {
+<span class="fc" id="L396">        BigInteger normPow2 = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L397" title="All 2 branches covered.">        for (final BigInteger element : table.values()) {</span>
+<span class="fc" id="L398">            normPow2 = normPow2.add(element.pow(2));</span>
+<span class="fc" id="L399">        }</span>
+<span class="fc" id="L400">        return normPow2;</span>
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntegerMatrix}
+     *
+     * @return The frobenius norm
+     * @see #frobeniusNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     * @since 1
+     */
+    @Override
+    public BigDecimal frobeniusNorm() {
+<span class="fc" id="L413">        return new SquareRootCalculator().sqrt(frobeniusNormPow2());</span>
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntegerMatrix}
+     *
+     * @param precision
+     *         the precision for the termination condition
+     * @return The frobenius norm
+     * @throws NullPointerException
+     *         if {@code precision == null}
+     * @throws IllegalArgumentException
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @see #frobeniusNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     * @since 1
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final BigDecimal precision) {
+<span class="fc" id="L432">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L433" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc" id="L435">        return new SquareRootCalculator(precision).sqrt(frobeniusNormPow2());</span>
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntegerMatrix}
+     *
+     * @param scale
+     *         the scale to be set on the result
+     * @param roundingMode
+     *         the rounding mode to be used during the setting of the scale of the result
+     * @return The frobenius norm
+     * @throws IllegalArgumentException
+     *         if {@code scale &lt; 0}
+     * @see #frobeniusNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     * @since 1
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final int scale, final RoundingMode roundingMode) {
+<span class="fc bfc" id="L454" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L455">        return new SquareRootCalculator(scale, roundingMode).sqrt(frobeniusNormPow2());</span>
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigIntegerMatrix}
+     *
+     * @param precision
+     *         the precision for the termination condition
+     * @param scale
+     *         the scale to be set on the result
+     * @param roundingMode
+     *         the rounding mode to be used during the setting of the scale of the result
+     * @return The frobenius norm
+     * @throws NullPointerException
+     *         if {@code precision == null}
+     * @throws IllegalArgumentException
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @throws IllegalArgumentException
+     *         if {@code scale &lt; 0}
+     * @see #frobeniusNormPow2
+     * @see SquareRootCalculator#sqrt(BigInteger)
+     * @since 1
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
+<span class="fc" id="L480">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L481" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc bfc" id="L483" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L484">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(frobeniusNormPow2());</span>
+    }
+
+    /**
+     * Returns the maximum norm of this {@link BigIntegerMatrix}
+     *
+     * @return The maximum norm
+     * @since 1
+     */
+    @Override
+    public BigInteger maxNorm() {
+<span class="fc" id="L495">        BigInteger norm = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L496" title="All 2 branches covered.">        for (final BigInteger element : table.values()) {</span>
+<span class="fc" id="L497">            norm = norm.max(element.abs());</span>
+<span class="fc" id="L498">        }</span>
+<span class="fc" id="L499">        return norm;</span>
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is upper triangular
+     *
+     * @return {@code true} if {@code this} is upper triangular, {@code false} otherwise
+     * @since 1
+     */
+    @Override
+    public boolean upperTriangular() {
+<span class="fc bfc" id="L510" title="All 2 branches covered.">        if (square()) {</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">            for (final Cell&lt;Integer, Integer, BigInteger&gt; cell : table.cellSet()) {</span>
+<span class="fc bfc" id="L512" title="All 2 branches covered.">                if ((cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0) &amp;&amp;</span>
+<span class="fc bfc" id="L513" title="All 2 branches covered.">                        (cell.getValue().compareTo(BigInteger.ZERO) != 0)) {</span>
+<span class="fc" id="L514">                    return false;</span>
+                }
+<span class="fc" id="L516">            }</span>
+<span class="fc" id="L517">            return true;</span>
+        }
+<span class="fc" id="L519">        return false;</span>
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is lower triangular
+     *
+     * @return {@code true} if {@code this} is lower triangular, {@code false} otherwise
+     * @since 1
+     */
+    @Override
+    public boolean lowerTriangular() {
+<span class="fc bfc" id="L530" title="All 2 branches covered.">        if (square()) {</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">            for (final Cell&lt;Integer, Integer, BigInteger&gt; cell : table.cellSet()) {</span>
+<span class="fc bfc" id="L532" title="All 2 branches covered.">                if ((cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0) &amp;&amp;</span>
+<span class="fc bfc" id="L533" title="All 2 branches covered.">                        (cell.getValue().compareTo(BigInteger.ZERO) != 0)) {</span>
+<span class="fc" id="L534">                    return false;</span>
+                }
+<span class="fc" id="L536">            }</span>
+<span class="fc" id="L537">            return true;</span>
+        }
+<span class="fc" id="L539">        return false;</span>
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is the identity one
+     *
+     * @return {@code true} if {@code this} is the identity matrix, {@code false} otherwise
+     * @see #diagonal
+     * @since 1
+     */
+    @Override
+    public boolean identity() {
+<span class="fc bfc" id="L551" title="All 2 branches covered.">        if (diagonal()) {</span>
+<span class="fc bfc" id="L552" title="All 2 branches covered.">            for (final Integer index : table.rowKeySet()) {</span>
+<span class="fc bfc" id="L553" title="All 2 branches covered.">                if (table.get(index, index).compareTo(BigInteger.ONE) != 0) {</span>
+<span class="fc" id="L554">                    return false;</span>
+                }
+<span class="fc" id="L556">            }</span>
+<span class="fc" id="L557">            return true;</span>
+        }
+<span class="fc" id="L559">        return false;</span>
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is invertible
+     *
+     * @return {@code true} if {@code det == -1 || det == 1}, {@code false} otherwise
+     * @see #determinant
+     * @since 1
+     */
+    @Override
+    public boolean invertible() {
+<span class="fc bfc" id="L571" title="All 2 branches covered.">        return (determinant().compareTo(BigInteger.ONE.negate()) == 0) ||</span>
+<span class="fc bfc" id="L572" title="All 2 branches covered.">                (determinant().compareTo(BigInteger.ONE) == 0);</span>
+    }
+
+    /**
+     * Returns a {@link BigIntegerMatrixBuilder}
+     *
+     * @param rowSize
+     *         the row size the resulting {@link BigIntegerMatrix}
+     * @param columnSize
+     *         the column size the resulting {@link BigIntegerMatrix}
+     * @return A {@link BigIntegerMatrixBuilder}
+     * @since 1
+     */
+    public static BigIntegerMatrixBuilder builder(final int rowSize, final int columnSize) {
+<span class="fc bfc" id="L586" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L587" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L588">        return new BigIntegerMatrixBuilder(rowSize, columnSize);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L593">        return Objects.hash(table);</span>
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+<span class="fc bfc" id="L598" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L599">            return true;</span>
+        }
+<span class="fc bfc" id="L601" title="All 2 branches covered.">        if (!(object instanceof BigIntegerMatrix)) {</span>
+<span class="fc" id="L602">            return false;</span>
+        }
+<span class="fc" id="L604">        final BigIntegerMatrix other = (BigIntegerMatrix) object;</span>
+<span class="fc" id="L605">        return Objects.deepEquals(table, other.getTable());</span>
+    }
+
+    /**
+     * The builder for {@link BigIntegerMatrix BigIntegerMatrices}
+     *
+     * @since 1
+     */
+    @Beta
+    public static final class BigIntegerMatrixBuilder extends AbstractMatrixBuilder&lt;BigInteger, BigIntegerMatrix&gt; {
+        private BigIntegerMatrixBuilder(final int rowSize, final int columnSize) {
+<span class="fc" id="L616">            super(rowSize, columnSize);</span>
+<span class="fc" id="L617">        }</span>
+
+        /**
+         * Puts the given element on the {@link Table} dependent on the given row and column index
+         *
+         * @param rowIndex
+         *         thr row index
+         * @param columnIndex
+         *         the column index
+         * @param element
+         *         the element
+         * @return {@code this}
+         */
+        public BigIntegerMatrixBuilder put(final Integer rowIndex, final Integer columnIndex,
+                final BigInteger element) {
+<span class="fc" id="L632">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L633">            requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L634">            requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L635">            checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L636">                    table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L637">            checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L638">                    table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L639">            table.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L640">            return this;</span>
+        }
+
+        /**
+         * Puts the given element on all indices and returns {@code this}
+         *
+         * @param element
+         *         the element
+         * @return {@code this}
+         * @throws NullPointerException
+         *         if {@code element == null}
+         * @since 1
+         */
+        public BigIntegerMatrixBuilder putAll(final BigInteger element) {
+<span class="fc" id="L654">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L655">            table.rowKeySet().forEach(</span>
+<span class="fc" id="L656">                    rowKey -&gt; table.columnKeySet().forEach(columnKey -&gt; table.put(rowKey, columnKey, element)));</span>
+<span class="fc" id="L657">            return this;</span>
+        }
+
+        /**
+         * Returns the built {@link BigIntegerMatrix}
+         *
+         * @return The {@link BigIntegerMatrix}
+         * @throws NullPointerException
+         *         if one {@code element == null}
+         * @see ImmutableTable#copyOf
+         * @since 1
+         */
+        @Override
+        public BigIntegerMatrix build() {
+<span class="fc" id="L671">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
+<span class="fc" id="L672">            return new BigIntegerMatrix(ImmutableTable.copyOf(table));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

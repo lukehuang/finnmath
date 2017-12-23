@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.github.ltennstedt.finnmath.core.number.RealComplexNumberTest
+-------------------------------------------------------------------------------
+Tests run: 91, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.68 s - in com.github.ltennstedt.finnmath.core.number.RealComplexNumberTest

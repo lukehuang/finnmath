@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RealComplexNumberVector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.linear</a> &gt; <span class="el_source">RealComplexNumberVector.java</span></div><h1>RealComplexNumberVector.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+import static java.lang.Math.addExact;
+import static java.util.Objects.requireNonNull;
+
+import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
+import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.google.common.annotations.Beta;
+import com.google.common.collect.ImmutableMap;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+/**
+ * An immutable implementation of a vector which uses {@link RealComplexNumber} as type for its elements
+ *
+ * @author Lars Tennstedt
+ * @since 1
+ */
+@Beta
+public final class RealComplexNumberVector
+        extends AbstractVector&lt;RealComplexNumber, RealComplexNumberVector, BigDecimal, BigDecimal&gt; {
+    private RealComplexNumberVector(final ImmutableMap&lt;Integer, RealComplexNumber&gt; map) {
+<span class="fc" id="L45">        super(map);</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * Returns the sum of this {@link RealComplexNumberVector} and the given one
+     *
+     * @param summand
+     *         the summand
+     * @return The sum
+     * @throws NullPointerException
+     *         if {@code summand == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != summand.size}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumberVector add(final RealComplexNumberVector summand) {
+<span class="fc" id="L62">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L64">                summand.size());</span>
+<span class="fc" id="L65">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L66">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="fc" id="L67">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the difference of this {@link RealComplexNumberVector} and the given one
+     *
+     * @param subtrahend
+     *         the subtrahend
+     * @return The difference
+     * @throws NullPointerException
+     *         if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != subtrahend.size}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumberVector subtract(final RealComplexNumberVector subtrahend) {
+<span class="fc" id="L84">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L86">                subtrahend.size());</span>
+<span class="fc" id="L87">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L88">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
+<span class="fc" id="L89">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the scalar product of the given scalar and this {@link RealComplexNumberVector}
+     *
+     * @param scalar
+     *         the scalar
+     * @return The scalar product
+     * @throws NullPointerException
+     *         if {@code summand == null}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumberVector scalarMultiply(final RealComplexNumber scalar) {
+<span class="fc" id="L104">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L105">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L106">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="fc" id="L107">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the negated {@link RealComplexNumberVector} of this one
+     *
+     * @return The negated
+     * @see #scalarMultiply
+     * @since 1
+     */
+    @Override
+    public RealComplexNumberVector negate() {
+<span class="fc" id="L119">        return scalarMultiply(RealComplexNumber.ONE.negate());</span>
+    }
+
+    /**
+     * Returns the taxicab norm of this {@link RealComplexNumberVector}
+     *
+     * @return The taxicab norm
+     * @since 1
+     */
+    @Override
+    protected BigDecimal taxicabNorm() {
+<span class="fc" id="L130">        BigDecimal norm = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (final RealComplexNumber element : map.values()) {</span>
+<span class="fc" id="L132">            norm = norm.add(element.abs());</span>
+<span class="fc" id="L133">        }</span>
+<span class="fc" id="L134">        return norm;</span>
+    }
+
+    /**
+     * Returns the taxicab distance from this {@link RealComplexNumberVector} to the given one
+     *
+     * @param other
+     *         The other {@link RealComplexNumberVector}
+     * @return The taxicab distance
+     * @throws NullPointerException
+     *         if {@code other == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != other.size}
+     * @see #subtract
+     * @see #taxicabNorm
+     * @since 1
+     */
+    @Override
+    protected BigDecimal taxicabDistance(final RealComplexNumberVector other) {
+<span class="fc" id="L153">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L155">        return subtract(other).taxicabNorm();</span>
+    }
+
+    /**
+     * Returns the square of the euclidean norm of this {@link RealComplexNumberVector}
+     *
+     * @return The square of the euclidean norm
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanNormPow2() {
+<span class="fc" id="L166">        BigDecimal result = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        for (final RealComplexNumber element : map.values()) {</span>
+<span class="fc" id="L168">            result = result.add(element.absPow2());</span>
+<span class="fc" id="L169">        }</span>
+<span class="fc" id="L170">        return result;</span>
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link RealComplexNumberVector}
+     *
+     * @return The euclidean norm
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanNorm() {
+<span class="fc" id="L183">        return new SquareRootCalculator().sqrt(euclideanNormPow2());</span>
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link RealComplexNumberVector}
+     *
+     * @param precision
+     *         the precision for the termination condition
+     * @return The euclidean norm
+     * @throws NullPointerException
+     *         if {@code precision == null}
+     * @throws IllegalArgumentException
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanNorm(final BigDecimal precision) {
+<span class="fc" id="L202">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L203" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc" id="L205">        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());</span>
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link RealComplexNumberVector}
+     *
+     * @param scale
+     *         the scale to be set on the result
+     * @param roundingMode
+     *         the rounding mode to be used during the setting of the scale of the result
+     * @return The euclidean norm
+     * @throws IllegalArgumentException
+     *         if {@code scale &lt; 0}
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanNorm(final int scale, final RoundingMode roundingMode) {
+<span class="fc bfc" id="L224" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L225">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
+    }
+
+    /**
+     * Returns the euclidean norm of this {@link RealComplexNumberVector}
+     *
+     * @param precision
+     *         the precision for the termination condition
+     * @param scale
+     *         the scale to be set on the result
+     * @param roundingMode
+     *         the rounding mode to be used during the setting of the scale of the result
+     * @return The euclidean norm
+     * @throws NullPointerException
+     *         if {@code precision == null}
+     * @throws IllegalArgumentException
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @throws IllegalArgumentException
+     *         if {@code scale &lt; 0}
+     * @see #euclideanNormPow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
+<span class="fc" id="L250">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L251" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L254">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
+    }
+
+    /**
+     * Returns the dot product of this {@link RealComplexNumberVector} and the given one
+     *
+     * @param other
+     *         The other {@link RealComplexNumberVector}
+     * @return The dot product
+     * @throws NullPointerException
+     *         if {@code other == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumber dotProduct(final RealComplexNumberVector other) {
+<span class="fc" id="L271">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L273">        RealComplexNumber result = RealComplexNumber.ZERO;</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">        for (final Integer index : map.keySet()) {</span>
+<span class="fc" id="L275">            result = result.add(map.get(index).multiply(other.element(index)));</span>
+<span class="fc" id="L276">        }</span>
+<span class="fc" id="L277">        return result;</span>
+    }
+
+    /**
+     * Returns the square of the euclidean distance from this {@link RealComplexNumberVector} to the given one
+     *
+     * @param other
+     *         The other {@link RealComplexNumberVector}
+     * @return The square of the euclidean distance
+     * @throws NullPointerException
+     *         if {@code other == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != other.size}
+     * @see #subtract
+     * @see #euclideanNormPow2
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistancePow2(final RealComplexNumberVector other) {
+<span class="fc" id="L296">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L298">        return subtract(other).euclideanNormPow2();</span>
+    }
+
+    /**
+     * Returns the euclidean distance from this {@link RealComplexNumberVector} to the given one
+     *
+     * @param other
+     *         The other {@link RealComplexNumberVector}
+     * @return The euclidean distance
+     * @throws NullPointerException
+     *         if {@code other == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != other.size}
+     * @see #euclideanDistancePow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistance(final RealComplexNumberVector other) {
+<span class="fc" id="L317">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L319">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));</span>
+    }
+
+    /**
+     * Returns the euclidean distance from this {@link RealComplexNumberVector} to the given one
+     *
+     * @param other
+     *         The other {@link RealComplexNumberVector}
+     * @param precision
+     *         the precision for the termination condition
+     * @return The euclidean distance
+     * @throws NullPointerException
+     *         if {@code other == null}
+     * @throws NullPointerException
+     *         if {@code precision == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != other.size}
+     * @throws IllegalArgumentException
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @see #euclideanDistancePow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistance(final RealComplexNumberVector other, final BigDecimal precision) {
+<span class="fc" id="L344">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L346">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L347" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc" id="L349">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
+    }
+
+    /**
+     * Returns the euclidean distance from this {@link RealComplexNumberVector} to the given one
+     *
+     * @param other
+     *         The other {@link RealComplexNumberVector}
+     * @param scale
+     *         the scale to be set on the result
+     * @param roundingMode
+     *         the rounding mode to be used during the setting of the scale of the result
+     * @return The euclidean distance
+     * @throws NullPointerException
+     *         if {@code other == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != other.size}
+     * @throws IllegalArgumentException
+     *         if {@code scale &lt; 0}
+     * @see #euclideanDistancePow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistance(final RealComplexNumberVector other, final int scale,
+            final RoundingMode roundingMode) {
+<span class="fc" id="L375">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L376" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc bfc" id="L377" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L378">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+    }
+
+    /**
+     * Returns the euclidean distance from this {@link RealComplexNumberVector} to the given one
+     *
+     * @param other
+     *         The other {@link RealComplexNumberVector}
+     * @param precision
+     *         the precision for the termination condition
+     * @param scale
+     *         the scale to be set on the result
+     * @param roundingMode
+     *         the rounding mode to be used during the setting of the scale of the result
+     * @return The euclidean distance
+     * @throws NullPointerException
+     *         if {@code other == null}
+     * @throws NullPointerException
+     *         if {@code precision == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != other.size}
+     * @throws IllegalArgumentException
+     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     * @throws IllegalArgumentException
+     *         if {@code scale &lt; 0}
+     * @see #euclideanDistancePow2
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistance(final RealComplexNumberVector other, final BigDecimal precision,
+            final int scale, final RoundingMode roundingMode) {
+<span class="fc" id="L410">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L412">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L413" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
+                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc bfc" id="L415" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L416">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+    }
+
+    /**
+     * Returns the max norm of this {@link RealComplexNumberVector}
+     *
+     * @return The max norm
+     * @since 1
+     */
+    @Override
+    protected BigDecimal maxNorm() {
+<span class="fc" id="L427">        BigDecimal norm = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">        for (final RealComplexNumber element : map.values()) {</span>
+<span class="fc" id="L429">            norm = norm.max(element.abs());</span>
+<span class="fc" id="L430">        }</span>
+<span class="fc" id="L431">        return norm;</span>
+    }
+
+    /**
+     * Returns the max distance from this {@link RealComplexNumberVector} to the given one
+     *
+     * @param other
+     *         The other {@link RealComplexNumberVector}
+     * @return The max distance
+     * @throws NullPointerException
+     *         if {@code vector == null}
+     * @throws IllegalArgumentException
+     *         if {@code size != other.size}
+     * @see #subtract
+     * @see #maxNorm
+     * @since 1
+     */
+    @Override
+    protected BigDecimal maxDistance(final RealComplexNumberVector other) {
+<span class="fc" id="L450">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L451" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L452">        return subtract(other).maxNorm();</span>
+    }
+
+    /**
+     * Returns the size of the underlying {@link Map}
+     *
+     * @return size the size
+     * @since 1
+     */
+    @Override
+    public int size() {
+<span class="fc" id="L463">        return map.size();</span>
+    }
+
+    /**
+     * Returns a {@link RealComplexNumberVectorBuilder}
+     *
+     * @param size
+     *         the size the resulting {@link RealComplexNumberVector}
+     * @return A {@link RealComplexNumberVectorBuilder}
+     * @since 1
+     */
+    public static RealComplexNumberVectorBuilder builder(final int size) {
+<span class="fc bfc" id="L475" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L476">        return new RealComplexNumberVectorBuilder(size);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L481">        return Objects.hash(map);</span>
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+<span class="fc bfc" id="L486" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L487">            return true;</span>
+        }
+<span class="fc bfc" id="L489" title="All 2 branches covered.">        if (!(object instanceof RealComplexNumberVector)) {</span>
+<span class="fc" id="L490">            return false;</span>
+        }
+<span class="fc" id="L492">        final RealComplexNumberVector other = (RealComplexNumberVector) object;</span>
+<span class="fc" id="L493">        return Objects.deepEquals(map, other.getMap());</span>
+    }
+
+    /**
+     * The builder for {@link RealComplexNumberVector RealComplexNumberVectors}
+     *
+     * @since 1
+     */
+    @Beta
+    public static final class RealComplexNumberVectorBuilder
+            extends AbstractVectorBuilder&lt;RealComplexNumber, RealComplexNumberVector, RealComplexNumberVectorBuilder&gt; {
+        private RealComplexNumberVectorBuilder(final Integer size) {
+<span class="fc" id="L505">            super(size);</span>
+<span class="fc" id="L506">        }</span>
+
+        /**
+         * Puts the given element on the first free index and returns {@code this}
+         *
+         * @param element
+         *         the element
+         * @return {@code this}
+         * @throws NullPointerException
+         *         if {@code element == null}
+         * @throws ArithmeticException
+         *         if ({@code size + 1} overflows
+         * @throws IllegalStateException
+         *         if {@code size == size}
+         * @since 1
+         */
+        public RealComplexNumberVectorBuilder put(final RealComplexNumber element) {
+<span class="fc" id="L523">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L524">            final int index = addExact(map.size(), 1);</span>
+<span class="pc bpc" id="L525" title="1 of 2 branches missed.">            checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L526">            map.put(index, element);</span>
+<span class="fc" id="L527">            return this;</span>
+        }
+
+        /**
+         * Puts the given element on the given index and returns {@code this}
+         *
+         * @param index
+         *         the index
+         * @param element
+         *         the element
+         * @return {@code this}
+         * @throws NullPointerException
+         *         if {@code index == null}
+         * @throws NullPointerException
+         *         if {@code element == null}
+         * @throws IllegalArgumentException
+         *         if {@code index &lt;= 0 || size &lt; index}
+         * @since 1
+         */
+        public RealComplexNumberVectorBuilder put(final Integer index, final RealComplexNumber element) {
+<span class="fc" id="L547">            requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L548">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="pc bpc" id="L549" title="2 of 4 branches missed.">            checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L550">            map.put(index, element);</span>
+<span class="fc" id="L551">            return this;</span>
+        }
+
+        /**
+         * Puts the given element on all indices and returns {@code this}
+         *
+         * @param element
+         *         the element
+         * @return {@code this}
+         * @throws NullPointerException
+         *         if {@code element == null}
+         * @since 1
+         */
+        public RealComplexNumberVectorBuilder putAll(final RealComplexNumber element) {
+<span class="fc" id="L565">            requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc bfc" id="L566" title="All 2 branches covered.">            for (int index = 1; index &lt;= size; index++) {</span>
+<span class="fc" id="L567">                map.put(index, element);</span>
+            }
+<span class="fc" id="L569">            return this;</span>
+        }
+
+        /**
+         * Returns the built {@link RealComplexNumberVector}
+         *
+         * @return The {@link RealComplexNumberVector}
+         * @throws NullPointerException
+         *         if one {@code element == null}
+         * @see ImmutableMap#copyOf
+         * @since 1
+         */
+        @Override
+        public RealComplexNumberVector build() {
+<span class="fc" id="L583">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
+<span class="fc" id="L584">                    .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
+<span class="fc" id="L585">            return new RealComplexNumberVector(ImmutableMap.copyOf(map));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

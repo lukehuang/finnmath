@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.11.2">
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/util/MathRandom.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/util/SquareRootCalculator.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/BigDecimalVector.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/AbstractMatrixBuilder.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/AbstractMatrix.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/SimpleComplexNumberVector.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/RealComplexNumberMatrix.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/AbstractVectorBuilder.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/SimpleComplexNumberMatrix.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/BigIntegerVector.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/AbstractVector.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/BigIntegerMatrix.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/RealComplexNumberVector.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/linear/BigDecimalMatrix.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/number/AbstractComplexNumber.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/number/PolarForm.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/number/Fraction.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/number/ScientificNotation.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/number/SimpleComplexNumber.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/number/MathNumber.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/main/java/com/github/ltennstedt/finnmath/core/number/RealComplexNumber.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/util/SquareRootCalculatorTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/util/MathRandomTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/BigDecimalVectorBuilderTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/RealComplexNumberVectorTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/BigDecimalMatrixGuavaTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/BigIntegerMatrixTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/RealComplexNumberMatrixTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/SimpleComplexNumberMatrixTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/BigIntegerVectorBuilderTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/BigIntegerMatrixBuilderTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/BigDecimalVectorTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/BigIntegerVectorTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/BigDecimalMatrixBuilderTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/BigDecimalMatrixTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/linear/SimpleComplexNumberVectorTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/number/ScientificNotationTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/number/SimpleComplexNumberTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/number/PolarFormTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/number/FractionTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/number/RealComplexNumberTest.java">
+</file>
+<file name="/home/raimund/git/finnmath/core/src/test/java/com/github/ltennstedt/finnmath/core/number/RealComplexNumberComparatorTest.java">
+</file>
+</checkstyle>

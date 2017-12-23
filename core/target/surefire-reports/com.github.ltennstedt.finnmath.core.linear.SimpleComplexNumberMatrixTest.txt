@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberMatrixTest
+-------------------------------------------------------------------------------
+Tests run: 161, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.036 s - in com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberMatrixTest

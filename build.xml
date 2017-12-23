@@ -16,14 +16,22 @@
 -->
 <project name="finnMath" default="copyDocs" basedir=".">
     <target name="deleteDocs">
-        <delete dir="docs"/>
+        <delete dir="docs" />
     </target>
-    <target name="createDir" depends="deleteDocs">
-        <mkdir dir="docs"/>
+    <target name="createDirs" depends="deleteDocs">
+        <mkdir dir="docs" />
+        <mkdir dir="docs/finnmath-core" />
+        <mkdir dir="docs/finnmath-kotlin" />
     </target>
-    <target name="copyDocs" depends="createDir">
+    <target name="copyDocs" depends="createDirs">
         <copy toDir="docs/">
-            <fileset dir="target/site/"/>
+            <fileset dir="target/site/" />
+        </copy>
+        <copy toDir="docs/finnmath-core/">
+            <fileset dir="core/target/site/" />
+        </copy>
+        <copy toDir="docs/finnmath-kotlin/">
+            <fileset dir="kotlin/target/site/" />
         </copy>
     </target>
 </project>

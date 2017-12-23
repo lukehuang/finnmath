@@ -25,7 +25,7 @@ finnMath is written in Java and uses Maven as its build automation tool so it sh
 other JVM technologies. Dependencies are big-math, Guava, Commons Lang and SLF4J and for tests AssertJ and JUnit.
 
 ## Implementation details
-* Java 8
+* Java 8 (finnmath-core) and Kotlin 1.1 (finnmath-kotlin)
 * All types are immutable.
 * The matrices are based on ImmutableTable from Guava.
 * The vectors are based on ImmutableMap from Guava.
