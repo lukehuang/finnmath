@@ -18,17 +18,13 @@ package com.github.ltennstedt.finnmath.kotlin.number
 
 import com.github.ltennstedt.finnmath.core.number.Fraction
 
-<span class="fc" id="L21">operator fun Fraction.plus(fraction: Fraction) = add(fraction)</span>
+<span class="fc" id="L21">operator fun Fraction.plus(summand: Fraction) = add(summand)</span>
 
-<span class="nc" id="L23">operator fun Fraction.minus(fraction: Fraction) = subtract(fraction)</span>
+<span class="nc" id="L23">operator fun Fraction.minus(subtrahend: Fraction) = subtract(subtrahend)</span>
 
-<span class="nc" id="L25">operator fun Fraction.times(fraction: Fraction) = multiply(fraction)</span>
+<span class="nc" id="L25">operator fun Fraction.times(factor: Fraction) = multiply(factor)</span>
 
-<span class="nc" id="L27">operator fun Fraction.div(fraction: Fraction) = divide(fraction)</span>
+<span class="nc" id="L27">operator fun Fraction.div(divisor: Fraction) = divide(divisor)</span>
 
 <span class="nc" id="L29">operator fun Fraction.unaryMinus() = negate()</span>
-
-<span class="nc" id="L31">operator fun Fraction.inc() = add(Fraction.ONE)</span>
-
-<span class="nc" id="L33">operator fun Fraction.dec() = subtract(Fraction.ONE)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
