@@ -1,6 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 finnMath Core,com.github.ltennstedt.finnmath.core.util,SquareRootCalculator,4,436,4,26,0,88,4,28,0,17
-finnMath Core,com.github.ltennstedt.finnmath.core.util,MathRandom,13,5379,7,739,4,807,7,523,0,157
+finnMath Core,com.github.ltennstedt.finnmath.core.util,MathRandom,11,5381,6,740,3,808,6,524,0,157
 finnMath Core,com.github.ltennstedt.finnmath.core.linear,AbstractVector,4,44,0,0,1,10,1,6,1,6
 finnMath Core,com.github.ltennstedt.finnmath.core.linear,BigDecimalVector.BigDecimalVectorBuilder,16,104,2,6,2,17,2,8,0,6
 finnMath Core,com.github.ltennstedt.finnmath.core.linear,SimpleComplexNumberMatrix.SimpleComplexNumberMatrixBuilder,0,102,0,0,0,17,0,7,0,7
