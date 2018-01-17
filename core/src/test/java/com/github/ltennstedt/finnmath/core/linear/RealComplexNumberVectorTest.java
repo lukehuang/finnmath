@@ -763,7 +763,7 @@ public final class RealComplexNumberVectorTest {
     public void equalsEqualShouldReturnTrue() {
         vectors.forEach(vector -> {
             final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(size);
-            vector.elements().forEach(element -> builder.put(element));
+            vector.elements().forEach(builder::put);
             assertThat(vector.equals(builder.build())).isTrue();
         });
     }

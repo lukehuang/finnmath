@@ -756,7 +756,7 @@ public final class BigDecimalVectorTest {
     public void equalsEqualShouldReturnTrue() {
         vectors.forEach(vector -> {
             final BigDecimalVectorBuilder builder = BigDecimalVector.builder(size);
-            vector.elements().forEach(element -> builder.put(element));
+            vector.elements().forEach(builder::put);
             assertThat(vector.equals(builder.build())).isTrue();
         });
     }

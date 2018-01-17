@@ -915,7 +915,7 @@ public final class BigIntegerMatrixTest {
 
     @Test
     public void squareOfSquareMatricesShouldBeTrue() {
-        assertThat(squareMatrices).are(new Condition<>(matrix -> matrix.square(), "square"));
+        assertThat(squareMatrices).are(new Condition<>(BigIntegerMatrix::square, "square"));
     }
 
     @Test

@@ -23,7 +23,7 @@ under the License.
     <link>https://github.com/ltennstedt/finnmath</link>
     <description>finnMath Core - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2017</copyright>
+    <copyright>&#169;2017 - 2018</copyright>
     <item>
       <title>File: 42,
              Errors: 0,
@@ -130,7 +130,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.BigDecimalMatrixGuavaTest.java">com/github/ltennstedt/finnmath/core/linear/BigDecimalMatrixGuavaTest.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.number.FractionTest.java">com/github/ltennstedt/finnmath/core/number/FractionTest.java</a>
                 </td>
                 <td>
                   0
@@ -144,7 +144,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.number.FractionTest.java">com/github/ltennstedt/finnmath/core/number/FractionTest.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.BigDecimalMatrixGuavaTest.java">com/github/ltennstedt/finnmath/core/linear/BigDecimalMatrixGuavaTest.java</a>
                 </td>
                 <td>
                   0
@@ -256,7 +256,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.AbstractMatrixBuilder.java">com/github/ltennstedt/finnmath/core/linear/AbstractMatrixBuilder.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberVector.java">com/github/ltennstedt/finnmath/core/linear/SimpleComplexNumberVector.java</a>
                 </td>
                 <td>
                   0
@@ -270,7 +270,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberVector.java">com/github/ltennstedt/finnmath/core/linear/SimpleComplexNumberVector.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.AbstractMatrixBuilder.java">com/github/ltennstedt/finnmath/core/linear/AbstractMatrixBuilder.java</a>
                 </td>
                 <td>
                   0
@@ -326,7 +326,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.BigDecimalVectorTest.java">com/github/ltennstedt/finnmath/core/linear/BigDecimalVectorTest.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.BigDecimalMatrixTest.java">com/github/ltennstedt/finnmath/core/linear/BigDecimalMatrixTest.java</a>
                 </td>
                 <td>
                   0
@@ -340,7 +340,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.BigDecimalMatrixTest.java">com/github/ltennstedt/finnmath/core/linear/BigDecimalMatrixTest.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.BigDecimalVectorTest.java">com/github/ltennstedt/finnmath/core/linear/BigDecimalVectorTest.java</a>
                 </td>
                 <td>
                   0
@@ -410,7 +410,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.BigIntegerVectorTest.java">com/github/ltennstedt/finnmath/core/linear/BigIntegerVectorTest.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberVectorTest.java">com/github/ltennstedt/finnmath/core/linear/SimpleComplexNumberVectorTest.java</a>
                 </td>
                 <td>
                   0
@@ -424,7 +424,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberVectorTest.java">com/github/ltennstedt/finnmath/core/linear/SimpleComplexNumberVectorTest.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.BigIntegerVectorTest.java">com/github/ltennstedt/finnmath/core/linear/BigIntegerVectorTest.java</a>
                 </td>
                 <td>
                   0
@@ -508,7 +508,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.AbstractVector.java">com/github/ltennstedt/finnmath/core/linear/AbstractVector.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.number.MathNumber.java">com/github/ltennstedt/finnmath/core/number/MathNumber.java</a>
                 </td>
                 <td>
                   0
@@ -522,7 +522,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.number.MathNumber.java">com/github/ltennstedt/finnmath/core/number/MathNumber.java</a>
+                  <a href="https://github.com/ltennstedt/finnmath/checkstyle.html#com.github.ltennstedt.finnmath.core.linear.AbstractVector.java">com/github/ltennstedt/finnmath/core/linear/AbstractVector.java</a>
                 </td>
                 <td>
                   0

@@ -316,7 +316,7 @@ public final class SimpleComplexNumberTest {
 
     @Test
     public void invertZeroShouldReturnAnEmptyOptional() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.invert()).isExactlyInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(SimpleComplexNumber.ZERO::invert).isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("expected to be invertible but actual %s", SimpleComplexNumber.ZERO);
     }
 
@@ -399,7 +399,7 @@ public final class SimpleComplexNumberTest {
 
     @Test
     public void argumentZeroShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.argument()).isExactlyInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(SimpleComplexNumber.ZERO::argument).isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("expected this != 0 but actual %s", SimpleComplexNumber.ZERO);
     }
 
@@ -499,7 +499,7 @@ public final class SimpleComplexNumberTest {
 
     @Test
     public void polarFormZeroShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.polarForm()).isExactlyInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(SimpleComplexNumber.ZERO::polarForm).isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("expected this != 0 but actual %s", SimpleComplexNumber.ZERO);
     }
 
@@ -648,6 +648,15 @@ public final class SimpleComplexNumberTest {
         complexNumbers.forEach(complexNumber -> assertThat(
                 complexNumber.equals(new SimpleComplexNumber(complexNumber.getReal(), complexNumber.getImaginary())))
                 .isTrue());
+    }
+
+    @Test
+    public void hashCodeEqualSimpleComplexNumbersShouldHaveEqualHashCodes() {
+        complexNumbers.forEach(complexNumber -> {
+            final SimpleComplexNumber other =
+                    new SimpleComplexNumber(complexNumber.getReal(), complexNumber.getImaginary());
+            assertThat(complexNumber.hashCode()).isEqualTo(other.hashCode());
+        });
     }
 
     @Test

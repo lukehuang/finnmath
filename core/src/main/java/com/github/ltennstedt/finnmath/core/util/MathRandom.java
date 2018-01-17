@@ -1140,11 +1140,9 @@ public final class MathRandom {
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         final BigIntegerMatrix.BigIntegerMatrixBuilder builder = BigIntegerMatrix.builder(rowSize, columnSize);
-        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                builder.put(rowIndex, columnIndex, nextBigInteger(bound));
-            });
-        });
+        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList())
+                        .forEach(columnIndex -> builder.put(rowIndex, columnIndex, nextBigInteger(bound))));
         return builder.build();
     }
 
@@ -1168,15 +1166,14 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntegerMatrix.BigIntegerMatrixBuilder builder = BigIntegerMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex <= columnIndex) {
-                    builder.put(rowIndex, columnIndex, nextBigInteger(bound));
-                } else {
-                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex <= columnIndex) {
+                        builder.put(rowIndex, columnIndex, nextBigInteger(bound));
+                    } else {
+                        builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -1200,15 +1197,14 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntegerMatrix.BigIntegerMatrixBuilder builder = BigIntegerMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex >= columnIndex) {
-                    builder.put(rowIndex, columnIndex, nextBigInteger(bound));
-                } else {
-                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex >= columnIndex) {
+                        builder.put(rowIndex, columnIndex, nextBigInteger(bound));
+                    } else {
+                        builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -1257,15 +1253,14 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntegerMatrix.BigIntegerMatrixBuilder builder = BigIntegerMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, nextBigInteger(bound));
-                } else {
-                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, nextBigInteger(bound));
+                    } else {
+                        builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -1288,18 +1283,17 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntegerMatrix.BigIntegerMatrixBuilder builder = BigIntegerMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                final BigInteger element = nextBigInteger(bound);
-                if (rowIndex < columnIndex) {
-                    builder.put(rowIndex, columnIndex, element);
-                    builder.put(columnIndex, rowIndex, element);
-                }
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, element);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    final BigInteger element = nextBigInteger(bound);
+                    if (rowIndex < columnIndex) {
+                        builder.put(rowIndex, columnIndex, element);
+                        builder.put(columnIndex, rowIndex, element);
+                    }
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, element);
+                    }
+                }));
         return builder.build();
     }
 
@@ -1322,18 +1316,17 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigIntegerMatrix.BigIntegerMatrixBuilder builder = BigIntegerMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex < columnIndex) {
-                    final BigInteger element = nextBigInteger(bound);
-                    builder.put(rowIndex, columnIndex, element);
-                    builder.put(columnIndex, rowIndex, element.negate());
-                }
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, BigInteger.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex < columnIndex) {
+                        final BigInteger element = nextBigInteger(bound);
+                        builder.put(rowIndex, columnIndex, element);
+                        builder.put(columnIndex, rowIndex, element.negate());
+                    }
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, BigInteger.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -1661,11 +1654,9 @@ public final class MathRandom {
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         final BigDecimalMatrixBuilder builder = BigDecimalMatrix.builder(rowSize, columnSize);
-        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                builder.put(rowIndex, columnIndex, nextBigDecimal(bound, scale));
-            });
-        });
+        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList())
+                        .forEach(columnIndex -> builder.put(rowIndex, columnIndex, nextBigDecimal(bound, scale))));
         return builder.build();
     }
 
@@ -1693,15 +1684,14 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigDecimalMatrixBuilder builder = BigDecimalMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex <= columnIndex) {
-                    builder.put(rowIndex, columnIndex, nextBigDecimal(bound, scale));
-                } else {
-                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex <= columnIndex) {
+                        builder.put(rowIndex, columnIndex, nextBigDecimal(bound, scale));
+                    } else {
+                        builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -1729,15 +1719,14 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigDecimalMatrixBuilder builder = BigDecimalMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex >= columnIndex) {
-                    builder.put(rowIndex, columnIndex, nextBigDecimal(bound, scale));
-                } else {
-                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex >= columnIndex) {
+                        builder.put(rowIndex, columnIndex, nextBigDecimal(bound, scale));
+                    } else {
+                        builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -1794,15 +1783,14 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigDecimalMatrixBuilder builder = BigDecimalMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, nextBigDecimal(bound, scale));
-                } else {
-                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, nextBigDecimal(bound, scale));
+                    } else {
+                        builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -1829,18 +1817,17 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigDecimalMatrixBuilder builder = BigDecimalMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                final BigDecimal element = nextBigDecimal(bound, scale);
-                if (rowIndex < columnIndex) {
-                    builder.put(rowIndex, columnIndex, element);
-                    builder.put(columnIndex, rowIndex, element);
-                }
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, element);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    final BigDecimal element = nextBigDecimal(bound, scale);
+                    if (rowIndex < columnIndex) {
+                        builder.put(rowIndex, columnIndex, element);
+                        builder.put(columnIndex, rowIndex, element);
+                    }
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, element);
+                    }
+                }));
         return builder.build();
     }
 
@@ -1867,19 +1854,17 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final BigDecimalMatrixBuilder builder = BigDecimalMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex < columnIndex) {
-                    final BigDecimal element = nextBigDecimal(bound, scale);
-                    builder.put(rowIndex, columnIndex, element);
-                    builder.put(columnIndex, rowIndex, element.negate());
-                }
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
-                }
-            });
-
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex < columnIndex) {
+                        final BigDecimal element = nextBigDecimal(bound, scale);
+                        builder.put(rowIndex, columnIndex, element);
+                        builder.put(columnIndex, rowIndex, element.negate());
+                    }
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, BigDecimal.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2227,11 +2212,9 @@ public final class MathRandom {
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(rowSize, columnSize);
-        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
-            });
-        });
+        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList())
+                        .forEach(columnIndex -> builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound))));
         return builder.build();
     }
 
@@ -2254,15 +2237,14 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex <= columnIndex) {
-                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
-                } else {
-                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex <= columnIndex) {
+                        builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
+                    } else {
+                        builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2285,15 +2267,14 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex >= columnIndex) {
-                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
-                } else {
-                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex >= columnIndex) {
+                        builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
+                    } else {
+                        builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2342,15 +2323,14 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
-                } else {
-                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, nextSimpleComplexNumber(bound));
+                    } else {
+                        builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2373,18 +2353,17 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                final SimpleComplexNumber element = nextSimpleComplexNumber(bound);
-                if (rowIndex < columnIndex) {
-                    builder.put(rowIndex, columnIndex, element);
-                    builder.put(columnIndex, rowIndex, element);
-                }
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, element);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    final SimpleComplexNumber element = nextSimpleComplexNumber(bound);
+                    if (rowIndex < columnIndex) {
+                        builder.put(rowIndex, columnIndex, element);
+                        builder.put(columnIndex, rowIndex, element);
+                    }
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, element);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2407,18 +2386,17 @@ public final class MathRandom {
         checkArgument(bound > 0, "expected bound > 0 but actual %s", bound);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex < columnIndex) {
-                    final SimpleComplexNumber element = nextSimpleComplexNumber(bound);
-                    builder.put(rowIndex, columnIndex, element);
-                    builder.put(columnIndex, rowIndex, element.negate());
-                }
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex < columnIndex) {
+                        final SimpleComplexNumber element = nextSimpleComplexNumber(bound);
+                        builder.put(rowIndex, columnIndex, element);
+                        builder.put(columnIndex, rowIndex, element.negate());
+                    }
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2749,11 +2727,9 @@ public final class MathRandom {
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(rowSize, columnSize);
-        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
-            });
-        });
+        IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList()).forEach(
+                        columnIndex -> builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale))));
         return builder.build();
     }
 
@@ -2783,15 +2759,14 @@ public final class MathRandom {
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex <= columnIndex) {
-                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
-                } else {
-                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex <= columnIndex) {
+                        builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
+                    } else {
+                        builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2821,15 +2796,14 @@ public final class MathRandom {
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex >= columnIndex) {
-                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
-                } else {
-                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex >= columnIndex) {
+                        builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
+                    } else {
+                        builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2890,15 +2864,14 @@ public final class MathRandom {
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
-                } else {
-                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, nextRealComplexNumber(bound, scale));
+                    } else {
+                        builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2927,18 +2900,17 @@ public final class MathRandom {
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                final RealComplexNumber element = nextRealComplexNumber(bound, scale);
-                if (rowIndex < columnIndex) {
-                    builder.put(rowIndex, columnIndex, element);
-                    builder.put(columnIndex, rowIndex, element);
-                }
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, element);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    final RealComplexNumber element = nextRealComplexNumber(bound, scale);
+                    if (rowIndex < columnIndex) {
+                        builder.put(rowIndex, columnIndex, element);
+                        builder.put(columnIndex, rowIndex, element);
+                    }
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, element);
+                    }
+                }));
         return builder.build();
     }
 
@@ -2967,18 +2939,17 @@ public final class MathRandom {
         checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
         checkArgument(size > 0, "expected size > 0 but actual %s", size);
         final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);
-        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(rowIndex -> {
-            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
-                if (rowIndex < columnIndex) {
-                    final RealComplexNumber element = nextRealComplexNumber(bound, scale);
-                    builder.put(rowIndex, columnIndex, element);
-                    builder.put(columnIndex, rowIndex, element.negate());
-                }
-                if (rowIndex.equals(columnIndex)) {
-                    builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
-                }
-            });
-        });
+        IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(
+                rowIndex -> IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList()).forEach(columnIndex -> {
+                    if (rowIndex < columnIndex) {
+                        final RealComplexNumber element = nextRealComplexNumber(bound, scale);
+                        builder.put(rowIndex, columnIndex, element);
+                        builder.put(columnIndex, rowIndex, element.negate());
+                    }
+                    if (rowIndex.equals(columnIndex)) {
+                        builder.put(rowIndex, columnIndex, RealComplexNumber.ZERO);
+                    }
+                }));
         return builder.build();
     }
 

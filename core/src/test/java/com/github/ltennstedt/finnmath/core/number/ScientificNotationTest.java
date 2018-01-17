@@ -63,8 +63,7 @@ public final class ScientificNotationTest {
 
     @Test
     public void asStringExponentIsNegative() {
-        final String expected =
-                new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**(").append(-1).append(")").toString();
+        final String expected = BigDecimal.ONE.toPlainString() + " * 10**(" + -1 + ")";
         assertThat(new ScientificNotation(BigDecimal.ONE, -1).asString()).isEqualTo(expected);
     }
 
@@ -75,14 +74,13 @@ public final class ScientificNotationTest {
 
     @Test
     public void asStringExponentIsOne() {
-        final String expected = new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10").toString();
+        final String expected = BigDecimal.ONE.toPlainString() + " * 10";
         assertThat(new ScientificNotation(BigDecimal.ONE, 1).asString()).isEqualTo(expected);
     }
 
     @Test
     public void asStringExponentGreaterThanOne() {
-        final String expected =
-                new StringBuilder(BigDecimal.ONE.toPlainString()).append(" * 10**").append(2).toString();
+        final String expected = BigDecimal.ONE.toPlainString() + " * 10**" + 2;
         assertThat(new ScientificNotation(BigDecimal.ONE, 2).asString()).isEqualTo(expected);
     }
 
@@ -127,6 +125,15 @@ public final class ScientificNotationTest {
         scientificNotations.forEach(scientificNotation -> assertThat(scientificNotation
                 .equals(new ScientificNotation(scientificNotation.getCoefficient(), scientificNotation.getExponent())))
                 .isTrue());
+    }
+
+    @Test
+    public void hashCodeEqualScientificNotationsShouldHaveEqualHashCodes() {
+        scientificNotations.forEach(scientificNotation -> {
+            final ScientificNotation other =
+                    new ScientificNotation(scientificNotation.getCoefficient(), scientificNotation.getExponent());
+            assertThat(scientificNotation.hashCode()).isEqualTo(other.hashCode());
+        });
     }
 
     @Test

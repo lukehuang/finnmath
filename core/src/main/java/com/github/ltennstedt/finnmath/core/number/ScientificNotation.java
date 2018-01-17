@@ -75,16 +75,15 @@ public final class ScientificNotation {
             return "0";
         }
         if (exponent < 0) {
-            return new StringBuilder(coefficient.toPlainString()).append(" * 10**(").append(exponent).append(")")
-                    .toString();
+            return coefficient.toPlainString() + " * 10**(" + exponent + ")";
         }
         if (exponent == 0) {
             return coefficient.toPlainString();
         }
         if (exponent == 1) {
-            return new StringBuilder(coefficient.toPlainString()).append(" * 10").toString();
+            return coefficient.toPlainString() + " * 10";
         }
-        return new StringBuilder(coefficient.toPlainString()).append(" * 10**").append(exponent).toString();
+        return coefficient.toPlainString() + " * 10**" + exponent;
     }
 
     @Override

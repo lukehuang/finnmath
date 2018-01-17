@@ -666,7 +666,7 @@ public final class BigDecimalMatrixTest {
 
     @Test
     public void squareOfSquareMatricesShouldBeTrue() {
-        assertThat(squareMatrices).are(new Condition<>(matrix -> matrix.square(), "square"));
+        assertThat(squareMatrices).are(new Condition<>(BigDecimalMatrix::square, "square"));
     }
 
     @Test

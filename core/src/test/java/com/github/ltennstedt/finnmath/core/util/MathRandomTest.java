@@ -973,7 +973,6 @@ public final class MathRandomTest {
         final BigIntegerVector actual = mathRandom.nextBigIntegerVector(bound, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.getMap().values())
-                .are(new Condition<>(element -> element instanceof BigInteger, "type of the element"))
                 .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
                 .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
     }
@@ -1235,7 +1234,7 @@ public final class MathRandomTest {
                 mathRandom.nextUpperTriangularBigIntegerMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.upperTriangular(), "upper triangular"));
+                .are(new Condition<>(BigIntegerMatrix::upperTriangular, "upper triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
                 .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
                 .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
@@ -1265,7 +1264,7 @@ public final class MathRandomTest {
                 mathRandom.nextLowerTriangularBigIntegerMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.lowerTriangular(), "lower triangular"));
+                .are(new Condition<>(BigIntegerMatrix::lowerTriangular, "lower triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
                 .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
                 .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
@@ -1413,7 +1412,6 @@ public final class MathRandomTest {
         final BigDecimalVector actual = mathRandom.nextBigDecimalVector(bound, validScale, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.getMap().values())
-                .are(new Condition<>(element -> element instanceof BigDecimal, "type of the element"))
                 .are(new Condition<>(element -> element.compareTo(BigDecimal.ZERO) > -1, "lower bound of the element"))
                 .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
                 .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
@@ -1772,7 +1770,7 @@ public final class MathRandomTest {
                 mathRandom.nextUpperTriangularBigDecimalMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.upperTriangular(), "upper triangular"));
+                .are(new Condition<>(BigDecimalMatrix::upperTriangular, "upper triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
                 .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
                         "lower bound of the element"))
@@ -1809,7 +1807,7 @@ public final class MathRandomTest {
                 mathRandom.nextLowerTriangularBigDecimalMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.lowerTriangular(), "lower triangular"));
+                .are(new Condition<>(BigDecimalMatrix::lowerTriangular, "lower triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
                 .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
                         "lower bound of the element"))
@@ -1982,7 +1980,6 @@ public final class MathRandomTest {
         final SimpleComplexNumberVector actual = mathRandom.nextSimpleComplexNumberVector(bound, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.getMap().values())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
@@ -2020,7 +2017,6 @@ public final class MathRandomTest {
         assertThat(vectors).hasSize(howMany)
                 .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
         vectors.forEach(vector -> assertThat(vector.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
@@ -2052,10 +2048,8 @@ public final class MathRandomTest {
     public void nextSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix =
                 mathRandom.nextSimpleComplexNumberMatrix(bound, validRowSize, validColumnSize);
-        assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
+        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
+                "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
                 .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
                         "lower bound (imaginary part)"))
@@ -2081,10 +2075,8 @@ public final class MathRandomTest {
     public void nextUpperTriangularSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix =
                 mathRandom.nextUpperTriangularSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
+        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
+                "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
                 .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
                         "lower bound (imaginary part)"))
@@ -2111,10 +2103,8 @@ public final class MathRandomTest {
     public void nextLowerTriangularSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix =
                 mathRandom.nextLowerTriangularSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
+        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
+                "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
                 .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
                         "lower bound (imaginary part)"))
@@ -2140,10 +2130,8 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix = mathRandom.nextTriangularSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
+        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
+                "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
                 .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
                         "lower bound (imaginary part)"))
@@ -2169,10 +2157,8 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix = mathRandom.nextDiagonalSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
+        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
+                "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
                 .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
                         "lower bound (imaginary part)"))
@@ -2198,10 +2184,8 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix = mathRandom.nextSymmetricSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
+        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
+                "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
                 .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
                         "lower bound (imaginary part)"))
@@ -2228,10 +2212,8 @@ public final class MathRandomTest {
     public void nextSkewSymmetricSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix =
                 mathRandom.nextSkewSymmetricSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
+        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
+                "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
                 .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
                         "lower bound (imaginary part)"))
@@ -2274,7 +2256,6 @@ public final class MathRandomTest {
                 .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
                 .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
@@ -2308,9 +2289,8 @@ public final class MathRandomTest {
                 mathRandom.nextUpperTriangularSimpleComplexNumberMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.upperTriangular(), "upper triangular"));
+                .are(new Condition<>(SimpleComplexNumberMatrix::upperTriangular, "upper triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
@@ -2344,9 +2324,8 @@ public final class MathRandomTest {
                 mathRandom.nextLowerTriangularSimpleComplexNumberMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.lowerTriangular(), "lower triangular"));
+                .are(new Condition<>(SimpleComplexNumberMatrix::lowerTriangular, "lower triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
@@ -2382,7 +2361,6 @@ public final class MathRandomTest {
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
                 .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
@@ -2418,7 +2396,6 @@ public final class MathRandomTest {
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
                 .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
@@ -2454,7 +2431,6 @@ public final class MathRandomTest {
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
                 .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
@@ -2490,7 +2466,6 @@ public final class MathRandomTest {
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
                 .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof SimpleComplexNumber, "type of the element"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
@@ -2525,7 +2500,6 @@ public final class MathRandomTest {
         final RealComplexNumberVector actual = mathRandom.nextRealComplexNumberVector(bound, validScale, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.elements())
-                .are(new Condition<>(element -> element instanceof RealComplexNumber, "correctly typed"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
@@ -2573,7 +2547,6 @@ public final class MathRandomTest {
         assertThat(vectors).hasSize(howMany)
                 .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
         vectors.forEach(vector -> assertThat(vector.elements())
-                .are(new Condition<>(element -> element instanceof RealComplexNumber, "correctly typed"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
@@ -2615,7 +2588,6 @@ public final class MathRandomTest {
         final RealComplexNumberMatrix matrix =
                 mathRandom.nextRealComplexNumberMatrix(bound, validScale, validRowSize, validColumnSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof RealComplexNumber, "correctly typed"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
@@ -2653,7 +2625,6 @@ public final class MathRandomTest {
         final RealComplexNumberMatrix matrix =
                 mathRandom.nextUpperTriangularRealComplexNumberMatrix(bound, validScale, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element instanceof RealComplexNumber, "correctly typed"))
                 .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
                         "lower bound (real part)"))
                 .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
@@ -2969,7 +2940,7 @@ public final class MathRandomTest {
                 mathRandom.nextUpperTriangularRealComplexNumberMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.upperTriangular(), "upper triangular"));
+                .are(new Condition<>(RealComplexNumberMatrix::upperTriangular, "upper triangular"));
         matrices.forEach(matrix -> {
             assertThat(matrix.elements())
                     .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
@@ -3021,7 +2992,7 @@ public final class MathRandomTest {
                 mathRandom.nextLowerTriangularRealComplexNumberMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
                 .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.lowerTriangular(), "lower triangular"));
+                .are(new Condition<>(RealComplexNumberMatrix::lowerTriangular, "lower triangular"));
         matrices.forEach(matrix -> {
             assertThat(matrix.elements())
                     .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,

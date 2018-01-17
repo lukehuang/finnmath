@@ -738,7 +738,7 @@ public final class BigIntegerVectorTest {
     public void equalsEqualShouldReturnTrue() {
         vectors.forEach(vector -> {
             final BigIntegerVector.BigIntegerVectorBuilder builder = BigIntegerVector.builder(size);
-            vector.elements().forEach(element -> builder.put(element));
+            vector.elements().forEach(builder::put);
             assertThat(vector.equals(builder.build())).isTrue();
         });
     }

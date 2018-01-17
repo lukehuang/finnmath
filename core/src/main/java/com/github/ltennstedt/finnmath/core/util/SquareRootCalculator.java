@@ -60,7 +60,7 @@ public final class SquareRootCalculator {
      */
     public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;
 
-    private static Logger log = LoggerFactory.getLogger(SquareRootCalculator.class);
+    private static final Logger log = LoggerFactory.getLogger(SquareRootCalculator.class);
 
     /**
      * Precision

@@ -951,7 +951,7 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void squareOfSquareMatricesShouldBeTrue() {
-        assertThat(squareMatrices).are(new Condition<>(matrix -> matrix.square(), "square"));
+        assertThat(squareMatrices).are(new Condition<>(SimpleComplexNumberMatrix::square, "square"));
     }
 
     @Test

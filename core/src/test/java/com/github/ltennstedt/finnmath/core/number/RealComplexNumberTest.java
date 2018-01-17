@@ -117,8 +117,10 @@ public final class RealComplexNumberTest {
     public void subtractSelfShouldBeEqualToZero() {
         complexNumbers.forEach(complexNumber -> {
             final RealComplexNumber difference = complexNumber.subtract(complexNumber);
-            final BigDecimal scaledReal = BigDecimal.ZERO.setScale(difference.getReal().scale());
-            final BigDecimal scaledImaginary = BigDecimal.ZERO.setScale(difference.getImaginary().scale());
+            final BigDecimal scaledReal =
+                    BigDecimal.ZERO.setScale(difference.getReal().scale(), RoundingMode.UNNECESSARY);
+            final BigDecimal scaledImaginary =
+                    BigDecimal.ZERO.setScale(difference.getImaginary().scale(), RoundingMode.UNNECESSARY);
             assertThat(difference).isEqualTo(new RealComplexNumber(scaledReal, scaledImaginary));
         });
     }
@@ -153,8 +155,9 @@ public final class RealComplexNumberTest {
             final RealComplexNumber actual = complexNumber.multiply(RealComplexNumber.ZERO);
             final int realScale = actual.getReal().scale();
             final int imaginaryScale = actual.getImaginary().scale();
-            final RealComplexNumber scaledZero = new RealComplexNumber(BigDecimal.ZERO.setScale(realScale),
-                    BigDecimal.ZERO.setScale(imaginaryScale));
+            final RealComplexNumber scaledZero =
+                    new RealComplexNumber(BigDecimal.ZERO.setScale(realScale, RoundingMode.UNNECESSARY),
+                            BigDecimal.ZERO.setScale(imaginaryScale, RoundingMode.UNNECESSARY));
             assertThat(actual).isEqualTo(scaledZero);
         });
     }
@@ -272,8 +275,9 @@ public final class RealComplexNumberTest {
             final RealComplexNumber actual = complexNumber.add(complexNumber.negate());
             final int realScale = actual.getReal().scale();
             final int imaginaryScale = actual.getImaginary().scale();
-            final RealComplexNumber expected = new RealComplexNumber(BigDecimal.ZERO.setScale(realScale),
-                    BigDecimal.ZERO.setScale(imaginaryScale));
+            final RealComplexNumber expected =
+                    new RealComplexNumber(BigDecimal.ZERO.setScale(realScale, RoundingMode.UNNECESSARY),
+                            BigDecimal.ZERO.setScale(imaginaryScale, RoundingMode.UNNECESSARY));
             assertThat(actual).isEqualTo(expected);
         });
     }
@@ -297,7 +301,7 @@ public final class RealComplexNumberTest {
 
     @Test
     public void invertZeroShouldThrowException() {
-        assertThatThrownBy(() -> RealComplexNumber.ZERO.invert()).isExactlyInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(RealComplexNumber.ZERO::invert).isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("expected to be invertible but actual %s", RealComplexNumber.ZERO);
     }
 
@@ -381,7 +385,7 @@ public final class RealComplexNumberTest {
 
     @Test
     public void argumentZeroShouldThrowException() {
-        assertThatThrownBy(() -> RealComplexNumber.ZERO.argument()).isExactlyInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(RealComplexNumber.ZERO::argument).isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
@@ -497,7 +501,7 @@ public final class RealComplexNumberTest {
 
     @Test
     public void polarFormZeroShouldThrowException() {
-        assertThatThrownBy(() -> RealComplexNumber.ZERO.polarForm()).isExactlyInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(RealComplexNumber.ZERO::polarForm).isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
@@ -629,8 +633,8 @@ public final class RealComplexNumberTest {
     public void isEqualToByComparingPartsRealPartNotEqualShouldReturnFalse() {
         complexNumbers.forEach(complexNumber -> {
             final int otherScale = complexNumber.getReal().scale() + 1;
-            final BigDecimal otherReal = complexNumber.getReal().setScale(otherScale);
-            final BigDecimal otherImaginary = complexNumber.getImaginary().setScale(otherScale);
+            final BigDecimal otherReal = complexNumber.getReal().setScale(otherScale, RoundingMode.HALF_UP);
+            final BigDecimal otherImaginary = complexNumber.getImaginary().setScale(otherScale, RoundingMode.HALF_UP);
             assertThat(complexNumber.isEqualToByComparingParts(new RealComplexNumber(otherReal, otherImaginary)))
                     .isTrue();
         });
@@ -675,6 +679,15 @@ public final class RealComplexNumberTest {
         complexNumbers.forEach(complexNumber -> assertThat(
                 complexNumber.equals(new RealComplexNumber(complexNumber.getReal(), complexNumber.getImaginary())))
                 .isTrue());
+    }
+
+    @Test
+    public void hashCodeEqualRealComplexNumbersShouldHaveEqualHashCodes() {
+        complexNumbers.forEach(complexNumber -> {
+            final RealComplexNumber other =
+                    new RealComplexNumber(complexNumber.getReal(), complexNumber.getImaginary());
+            assertThat(complexNumber.hashCode()).isEqualTo(other.hashCode());
+        });
     }
 
     @Test

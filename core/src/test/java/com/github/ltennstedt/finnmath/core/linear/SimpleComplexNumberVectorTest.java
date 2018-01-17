@@ -762,7 +762,7 @@ public final class SimpleComplexNumberVectorTest {
         vectors.forEach(vector -> {
             final SimpleComplexNumberVector.SimpleComplexNumberVectorBuilder builder =
                     SimpleComplexNumberVector.builder(size);
-            vector.elements().forEach(element -> builder.put(element));
+            vector.elements().forEach(builder::put);
             assertThat(vector.equals(builder.build())).isTrue();
         });
     }

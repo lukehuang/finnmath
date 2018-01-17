@@ -191,6 +191,14 @@ public final class PolarFormTest {
     }
 
     @Test
+    public void hashCodeEqualPolarFormsShouldHaveEqualHashCodes() {
+        polarForms.forEach(polarForm -> {
+            final PolarForm other = new PolarForm(polarForm.getRadial(), polarForm.getAngular());
+            assertThat(polarForm.hashCode()).isEqualTo(other.hashCode());
+        });
+    }
+
+    @Test
     public void toStringShouldSucceed() {
         polarForms.forEach(polarForm -> assertThat(polarForm.toString()).isEqualTo(
                 MoreObjects.toStringHelper(polarForm).add("radial", polarForm.getRadial())

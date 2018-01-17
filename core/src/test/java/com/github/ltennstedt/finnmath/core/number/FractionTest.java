@@ -296,7 +296,7 @@ public final class FractionTest {
 
     @Test
     public void invertZeroShouldThrowException() {
-        assertThatThrownBy(() -> Fraction.ZERO.invert()).isExactlyInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(Fraction.ZERO::invert).isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("expected to be invertible but actual %s", Fraction.ZERO);
     }
 
@@ -638,6 +638,14 @@ public final class FractionTest {
     public void equalsEqualShouldReturnTrue() {
         fractions.forEach(fraction -> assertThat(
                 fraction.equals(new Fraction(fraction.getNumerator(), fraction.getDenominator()))).isTrue());
+    }
+
+    @Test
+    public void hashCodeEqualFractionsShouldHaveEqualHashCodes() {
+        fractions.forEach(fraction -> {
+            final Fraction other = new Fraction(fraction.getNumerator(), fraction.getDenominator());
+            assertThat(fraction.hashCode()).isEqualTo(other.hashCode());
+        });
     }
 
     @Test
