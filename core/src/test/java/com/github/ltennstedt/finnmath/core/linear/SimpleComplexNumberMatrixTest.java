@@ -24,99 +24,80 @@ import com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberVector.Simp
 import com.github.ltennstedt.finnmath.core.number.SimpleComplexNumber;
 import com.github.ltennstedt.finnmath.core.util.MathRandom;
 import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
-import com.google.common.base.MoreObjects;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomUtils;
 import org.assertj.core.api.Condition;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class SimpleComplexNumberMatrixTest {
-    private static final int size = 4;
-    private static SimpleComplexNumberMatrix identityMatrix;
-    private static final List<Integer> range = IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList());
     private final long bound = 10;
     private final int rowSize = 4;
     private final int columnSize = 5;
+    private final int size = rowSize;
     private final int howMany = 10;
     private final SimpleComplexNumberMatrix zeroMatrixForAddition =
-            SimpleComplexNumberMatrix.builder(rowSize, columnSize).putAll(SimpleComplexNumber.ZERO).build();
+        SimpleComplexNumberMatrix.builder(rowSize, columnSize).putAll(SimpleComplexNumber.ZERO).build();
     private final SimpleComplexNumberMatrix zeroMatrixForMultiplication =
-            SimpleComplexNumberMatrix.builder(columnSize, rowSize).putAll(SimpleComplexNumber.ZERO).build();
+        SimpleComplexNumberMatrix.builder(columnSize, rowSize).putAll(SimpleComplexNumber.ZERO).build();
     private final SimpleComplexNumberMatrix zeroSquareMatrix =
-            SimpleComplexNumberMatrix.builder(rowSize, rowSize).putAll(SimpleComplexNumber.ZERO).build();
+        SimpleComplexNumberMatrix.builder(rowSize, rowSize).putAll(SimpleComplexNumber.ZERO).build();
+    private final SimpleComplexNumberMatrix identityMatrix = Matrices.buildIdentitySimpleComplexNumberMatrix(size);
+    private final List<Integer> range = IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList());
     private final MathRandom mathRandom = new MathRandom(7);
     private final List<SimpleComplexNumberMatrix> matrices =
-            mathRandom.nextSimpleComplexNumberMatrices(bound, rowSize, columnSize, howMany);
+        mathRandom.nextSimpleComplexNumberMatrices(bound, rowSize, columnSize, howMany);
     private final List<SimpleComplexNumberMatrix> squareMatrices =
-            mathRandom.nextSimpleComplexNumberMatrices(bound, rowSize, rowSize, howMany);
+        mathRandom.nextSimpleComplexNumberMatrices(bound, rowSize, rowSize, howMany);
     private final List<SimpleComplexNumberMatrix> othersForAddition =
-            mathRandom.nextSimpleComplexNumberMatrices(bound, rowSize, columnSize, howMany);
+        mathRandom.nextSimpleComplexNumberMatrices(bound, rowSize, columnSize, howMany);
     private final List<SimpleComplexNumberMatrix> additionalOthersForAddition =
-            mathRandom.nextSimpleComplexNumberMatrices(bound, rowSize, columnSize, howMany);
+        mathRandom.nextSimpleComplexNumberMatrices(bound, rowSize, columnSize, howMany);
     private final List<SimpleComplexNumberMatrix> othersForMultiplication =
-            mathRandom.nextSimpleComplexNumberMatrices(bound, columnSize, columnSize, howMany);
+        mathRandom.nextSimpleComplexNumberMatrices(bound, columnSize, columnSize, howMany);
     private final List<SimpleComplexNumberMatrix> additionalOthersForMultiplication =
-            mathRandom.nextSimpleComplexNumberMatrices(bound, columnSize, columnSize, howMany);
+        mathRandom.nextSimpleComplexNumberMatrices(bound, columnSize, columnSize, howMany);
     private final List<SimpleComplexNumberMatrix> fourByFourMatrices =
-            mathRandom.nextSimpleComplexNumberMatrices(bound, 4, 4, howMany);
+        mathRandom.nextSimpleComplexNumberMatrices(bound, 4, 4, howMany);
     private final List<SimpleComplexNumberMatrix> threeByThreeMatrices =
-            mathRandom.nextSimpleComplexNumberMatrices(bound, 3, 3, howMany);
+        mathRandom.nextSimpleComplexNumberMatrices(bound, 3, 3, howMany);
     private final List<SimpleComplexNumberMatrix> twoByTwoMatrices =
-            mathRandom.nextSimpleComplexNumberMatrices(bound, 2, 2, howMany);
+        mathRandom.nextSimpleComplexNumberMatrices(bound, 2, 2, howMany);
     private final List<SimpleComplexNumberMatrix> upperTriangularMatrices =
-            mathRandom.nextUpperTriangularSimpleComplexNumberMatrices(bound, rowSize, howMany);
+        mathRandom.nextUpperTriangularSimpleComplexNumberMatrices(bound, rowSize, howMany);
     private final List<SimpleComplexNumberMatrix> lowerTriangularMatrices =
-            mathRandom.nextLowerTriangularSimpleComplexNumberMatrices(bound, rowSize, howMany);
+        mathRandom.nextLowerTriangularSimpleComplexNumberMatrices(bound, rowSize, howMany);
     private final List<SimpleComplexNumberMatrix> triangularMatrices =
-            mathRandom.nextTriangularSimpleComplexNumberMatrices(bound, rowSize, howMany);
+        mathRandom.nextTriangularSimpleComplexNumberMatrices(bound, rowSize, howMany);
     private final List<SimpleComplexNumberMatrix> diagonalMatrices =
-            mathRandom.nextDiagonalSimpleComplexNumberMatrices(bound, rowSize, howMany);
+        mathRandom.nextDiagonalSimpleComplexNumberMatrices(bound, rowSize, howMany);
     private final List<SimpleComplexNumberVector> vectors =
-            mathRandom.nextSimpleComplexNumberVectors(bound, columnSize, howMany);
+        mathRandom.nextSimpleComplexNumberVectors(bound, columnSize, howMany);
     private final List<SimpleComplexNumber> scalars = mathRandom.nextSimpleComplexNumbers(bound, howMany);
     private final List<SimpleComplexNumber> otherScalars = mathRandom.nextSimpleComplexNumbers(bound, howMany);
-    private final List<Integer> rowRange = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());
-    private final List<Integer> columnRange = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());
+    private final SimpleComplexNumberMatrix nonSquareMatrix = matrices.get(0);
     private final BigDecimal tolerance = BigDecimal.valueOf(0.001D);
-
-    @BeforeClass
-    public static void setUp() {
-        final SimpleComplexNumberMatrixBuilder identityMatrixBuilder = SimpleComplexNumberMatrix.builder(size, size);
-        range.forEach(rowIndex -> range.forEach(columnIndex -> {
-            if (rowIndex.equals(columnIndex)) {
-                identityMatrixBuilder.put(rowIndex, columnIndex, SimpleComplexNumber.ONE);
-            } else {
-                identityMatrixBuilder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
-            }
-        }));
-        identityMatrix = identityMatrixBuilder.build();
-    }
 
     @Test
     public void addNullShouldThrowException() {
         assertThatThrownBy(() -> zeroMatrixForAddition.add(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("summand");
+            .hasMessage("summand");
 
     }
 
     @Test
     public void addRowSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            final SimpleComplexNumberMatrix matrix =
-                    SimpleComplexNumberMatrix.builder(5, 5).putAll(SimpleComplexNumber.ZERO).build();
-            final SimpleComplexNumberMatrix summand =
-                    SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
+            final SimpleComplexNumberMatrix matrix = Matrices.buildZeroSimpleComplexNumberMatrix(5, 5);
+            final SimpleComplexNumberMatrix summand = Matrices.buildZeroSimpleComplexNumberMatrix(4, 5);
             matrix.add(summand);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal row sizes but actual 5 != 4");
 
@@ -125,13 +106,11 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void addColumnSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            final SimpleComplexNumberMatrix matrix =
-                    SimpleComplexNumberMatrix.builder(5, 5).putAll(SimpleComplexNumber.ZERO).build();
-            final SimpleComplexNumberMatrix summand =
-                    SimpleComplexNumberMatrix.builder(5, 4).putAll(SimpleComplexNumber.ZERO).build();
+            final SimpleComplexNumberMatrix matrix = Matrices.buildZeroSimpleComplexNumberMatrix(5, 5);
+            final SimpleComplexNumberMatrix summand = Matrices.buildZeroSimpleComplexNumberMatrix(5, 4);
             matrix.add(summand);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected equal column sizes but actual 5 != 4");
+            .hasMessage("expected equal column sizes but actual 5 != 4");
 
     }
 
@@ -151,15 +130,15 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void addShouldBeCommutative() {
-        matrices.forEach(matrix -> othersForAddition
-                .forEach(other -> assertThat(matrix.add(other)).isEqualTo(other.add(matrix))));
+        matrices.forEach(
+            matrix -> othersForAddition.forEach(other -> assertThat(matrix.add(other)).isEqualTo(other.add(matrix))));
     }
 
     @Test
     public void addShouldBeAssociative() {
-        matrices.forEach(matrix -> othersForAddition.forEach(other -> additionalOthersForAddition.forEach(
-                additionalOther -> assertThat(matrix.add(other).add(additionalOther))
-                        .isEqualTo(matrix.add(other.add(additionalOther))))));
+        matrices.forEach(matrix -> othersForAddition.forEach(other -> additionalOthersForAddition
+            .forEach(additionalOther -> assertThat(matrix.add(other).add(additionalOther))
+                .isEqualTo(matrix.add(other.add(additionalOther))))));
     }
 
     @Test
@@ -171,17 +150,15 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void subtractNullShouldThrowException() {
         assertThatThrownBy(() -> zeroMatrixForAddition.subtract(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("subtrahend");
+            .hasMessage("subtrahend");
 
     }
 
     @Test
     public void subtractRowSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            final SimpleComplexNumberMatrix minuend =
-                    SimpleComplexNumberMatrix.builder(5, 5).putAll(SimpleComplexNumber.ZERO).build();
-            final SimpleComplexNumberMatrix subtrahend =
-                    SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
+            final SimpleComplexNumberMatrix minuend = Matrices.buildZeroSimpleComplexNumberMatrix(5, 5);
+            final SimpleComplexNumberMatrix subtrahend = Matrices.buildZeroSimpleComplexNumberMatrix(4, 5);
             minuend.subtract(subtrahend);
         }).isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected equal row sizes but actual 5 != 4");
 
@@ -190,13 +167,11 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void subtractColumnSizesNotEqualShouldThrowException() {
         assertThatThrownBy(() -> {
-            final SimpleComplexNumberMatrix minuend =
-                    SimpleComplexNumberMatrix.builder(5, 5).putAll(SimpleComplexNumber.ZERO).build();
-            final SimpleComplexNumberMatrix subtrahend =
-                    SimpleComplexNumberMatrix.builder(5, 4).putAll(SimpleComplexNumber.ZERO).build();
+            final SimpleComplexNumberMatrix minuend = Matrices.buildZeroSimpleComplexNumberMatrix(5, 5);
+            final SimpleComplexNumberMatrix subtrahend = Matrices.buildZeroSimpleComplexNumberMatrix(5, 4);
             minuend.subtract(subtrahend);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected equal column sizes but actual 5 != 4");
+            .hasMessage("expected equal column sizes but actual 5 != 4");
 
     }
 
@@ -204,12 +179,12 @@ public final class SimpleComplexNumberMatrixTest {
     public void subtractShouldSucceed() {
         matrices.forEach(matrix -> othersForAddition.forEach(other -> {
             final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
+                SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowIndex = cell.getRowKey();
                 final Integer columnIndex = cell.getColumnKey();
                 final SimpleComplexNumber expectedEntry =
-                        cell.getValue().subtract(other.element(rowIndex, columnIndex));
+                    cell.getValue().subtract(other.element(rowIndex, columnIndex));
                 builder.put(rowIndex, columnIndex, expectedEntry);
             });
             assertThat(matrix.subtract(other)).isEqualTo(builder.build());
@@ -229,20 +204,18 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void multiplyNullShouldThrowException() {
         assertThatThrownBy(() -> zeroMatrixForMultiplication.multiply(null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("factor");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("factor");
 
     }
 
     @Test
     public void multiplyColumnSizeNotEqualToFactorRowSizeShouldThrowException() {
         assertThatThrownBy(() -> {
-            final SimpleComplexNumberMatrix matrix =
-                    SimpleComplexNumberMatrix.builder(5, 5).putAll(SimpleComplexNumber.ZERO).build();
-            final SimpleComplexNumberMatrix factor =
-                    SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
+            final SimpleComplexNumberMatrix matrix = Matrices.buildZeroSimpleComplexNumberMatrix(5, 5);
+            final SimpleComplexNumberMatrix factor = Matrices.buildZeroSimpleComplexNumberMatrix(4, 5);
             matrix.multiply(factor);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnSize == factor.rowSize but actual 5 != 4");
+            .hasMessage("expected columnSize == factor.rowSize but actual 5 != 4");
 
     }
 
@@ -264,7 +237,7 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void muliplyZeroMatrixShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> matrix.multiply(zeroMatrixForMultiplication).cells()
-                .forEach(cell -> assertThat(cell.getValue()).isEqualTo(SimpleComplexNumber.ZERO)));
+            .forEach(cell -> assertThat(cell.getValue()).isEqualTo(SimpleComplexNumber.ZERO)));
     }
 
     @Test
@@ -274,45 +247,42 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void multiplyShouldBeAssociative() {
-        matrices.forEach(matrix -> othersForMultiplication.forEach(other -> additionalOthersForMultiplication.forEach(
-                additionalOthers -> assertThat(matrix.multiply(other).multiply(additionalOthers))
-                        .isEqualTo(matrix.multiply(other.multiply(additionalOthers))))));
+        matrices.forEach(matrix -> othersForMultiplication.forEach(other -> additionalOthersForMultiplication
+            .forEach(additionalOthers -> assertThat(matrix.multiply(other).multiply(additionalOthers))
+                .isEqualTo(matrix.multiply(other.multiply(additionalOthers))))));
     }
 
     @Test
     public void addAndMultiplyShouldBeDistributive() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(other -> squareMatrices.forEach(
-                additionalOther -> assertThat(matrix.multiply(other.add(additionalOther)))
-                        .isEqualTo(matrix.multiply(other).add(matrix.multiply(additionalOther))))));
+        squareMatrices.forEach(matrix -> squareMatrices.forEach(
+            other -> squareMatrices.forEach(additionalOther -> assertThat(matrix.multiply(other.add(additionalOther)))
+                .isEqualTo(matrix.multiply(other).add(matrix.multiply(additionalOther))))));
     }
 
     @Test
     public void multiplyNullVectorShouldThrowException() {
         assertThatThrownBy(() -> zeroMatrixForAddition.multiplyVector(null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("vector");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("vector");
     }
 
     @Test
     public void multiplyVectorColumnSizeNotEqualToVectorSizeShouldThrowException() {
         assertThatThrownBy(() -> {
-            final SimpleComplexNumberMatrix matrix =
-                    SimpleComplexNumberMatrix.builder(5, 5).putAll(SimpleComplexNumber.ZERO).build();
-            final SimpleComplexNumberVector vector =
-                    SimpleComplexNumberVector.builder(4).putAll(SimpleComplexNumber.ZERO).build();
+            final SimpleComplexNumberMatrix matrix = Matrices.buildZeroSimpleComplexNumberMatrix(5, 5);
+            final SimpleComplexNumberVector vector = Vectors.buildZeroSimpleComplexNumberVector(4);
             matrix.multiplyVector(vector);
         }).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnSize == vectorSize but actual 5 != 4");
+            .hasMessage("expected columnSize == vectorSize but actual 5 != 4");
     }
 
     @Test
     public void multiplyVectorShouldSucceed() {
         matrices.forEach(matrix -> vectors.forEach(vector -> {
             final SimpleComplexNumberVectorBuilder builder = SimpleComplexNumberVector.builder(matrix.rowSize());
-            matrix.rows().forEach((rowIndex, row) -> {
-                SimpleComplexNumber element = SimpleComplexNumber.ZERO;
-                for (final Integer columnIndex : matrix.columnIndexes()) {
-                    element = element.add(row.get(columnIndex).multiply(vector.element(columnIndex)));
-                }
+            matrix.rows().values().forEach(row -> {
+                final SimpleComplexNumber element = matrix.columnIndexes().stream()
+                    .map(columnIndex -> row.get(columnIndex).multiply(vector.element(columnIndex)))
+                    .reduce(SimpleComplexNumber::add).get();
                 builder.put(element);
             });
             assertThat(matrix.multiplyVector(vector)).isEqualTo(builder.build());
@@ -322,10 +292,8 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void multiplyZeroVectorShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> {
-            final SimpleComplexNumberVector zeroVector =
-                    SimpleComplexNumberVector.builder(matrix.columnSize()).putAll(SimpleComplexNumber.ZERO).build();
-            final SimpleComplexNumberVector expected =
-                    SimpleComplexNumberVector.builder(matrix.rowSize()).putAll(SimpleComplexNumber.ZERO).build();
+            final SimpleComplexNumberVector zeroVector = Vectors.buildZeroSimpleComplexNumberVector(columnSize);
+            final SimpleComplexNumberVector expected = Vectors.buildZeroSimpleComplexNumberVector(rowSize);
             assertThat(matrix.multiplyVector(zeroVector)).isEqualTo(expected);
         });
 
@@ -334,51 +302,51 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void scalarMultiplyNullShouldThrowException() {
         assertThatThrownBy(() -> zeroMatrixForAddition.scalarMultiply(null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("scalar");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("scalar");
     }
 
     @Test
     public void scalarMultiplyShouldSucceed() {
         matrices.forEach(matrix -> scalars.forEach(scalar -> {
             final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(rowSize, columnSize);
-            matrix.cells().forEach(
-                    cell -> builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));
+            matrix.cells()
+                .forEach(cell -> builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));
             assertThat(matrix.scalarMultiply(scalar)).isEqualTo(builder.build());
         }));
     }
 
     @Test
     public void scalarMultiplyWithTwoScalarsShouldBeAssociative() {
-        matrices.forEach(matrix -> scalars.forEach(scalar -> otherScalars.forEach(
-                otherScalar -> assertThat(matrix.scalarMultiply(scalar.multiply(otherScalar)))
-                        .isEqualTo(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar)))));
+        matrices.forEach(matrix -> scalars.forEach(scalar -> otherScalars
+            .forEach(otherScalar -> assertThat(matrix.scalarMultiply(scalar.multiply(otherScalar)))
+                .isEqualTo(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar)))));
     }
 
     @Test
     public void scalarMultiplyWithTwoMatricesShouldBeAssociative() {
-        matrices.forEach(matrix -> othersForMultiplication.forEach(other -> scalars.forEach(
-                scalar -> assertThat(matrix.scalarMultiply(scalar).multiply(other))
-                        .isEqualTo(matrix.multiply(other).scalarMultiply(scalar)))));
+        matrices.forEach(matrix -> othersForMultiplication
+            .forEach(other -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).multiply(other))
+                .isEqualTo(matrix.multiply(other).scalarMultiply(scalar)))));
     }
 
     @Test
     public void addAndScalarMultiplyWithTwoScalarsShouldBeDistributive() {
-        matrices.forEach(matrix -> scalars.forEach(scalar -> otherScalars.forEach(
-                otherScalar -> assertThat(matrix.scalarMultiply(scalar.add(otherScalar)))
-                        .isEqualTo(matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar))))));
+        matrices.forEach(matrix -> scalars.forEach(
+            scalar -> otherScalars.forEach(otherScalar -> assertThat(matrix.scalarMultiply(scalar.add(otherScalar)))
+                .isEqualTo(matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar))))));
     }
 
     @Test
     public void addAndScalarMultiplyWithTwoMatricesShouldBeDistributive() {
-        matrices.forEach(matrix -> othersForAddition.forEach(other -> scalars.forEach(
-                scalar -> assertThat(matrix.add(other).scalarMultiply(scalar))
-                        .isEqualTo(matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar))))));
+        matrices.forEach(matrix -> othersForAddition
+            .forEach(other -> scalars.forEach(scalar -> assertThat(matrix.add(other).scalarMultiply(scalar))
+                .isEqualTo(matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar))))));
     }
 
     @Test
     public void scalarMultiplyWithZeroShouldBeEqualToZeroMatrix() {
         matrices.forEach(
-                matrix -> assertThat(matrix.scalarMultiply(SimpleComplexNumber.ZERO)).isEqualTo(zeroMatrixForAddition));
+            matrix -> assertThat(matrix.scalarMultiply(SimpleComplexNumber.ZERO)).isEqualTo(zeroMatrixForAddition));
     }
 
     @Test
@@ -388,15 +356,15 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void scalarMultiplyAndMultiplyVectorShouldBeCommutative() {
-        matrices.forEach(matrix -> vectors.forEach(vector -> scalars.forEach(
-                scalar -> assertThat(matrix.scalarMultiply(scalar).multiplyVector(vector))
-                        .isEqualTo(matrix.multiplyVector(vector).scalarMultiply(scalar)))));
+        matrices.forEach(matrix -> vectors.forEach(
+            vector -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).multiplyVector(vector))
+                .isEqualTo(matrix.multiplyVector(vector).scalarMultiply(scalar)))));
     }
 
     @Test
     public void negateShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.negate())
-                .isEqualTo(matrix.scalarMultiply(SimpleComplexNumber.ONE.negate())));
+        matrices.forEach(
+            matrix -> assertThat(matrix.negate()).isEqualTo(matrix.scalarMultiply(SimpleComplexNumber.ONE.negate())));
     }
 
     @Test
@@ -412,15 +380,14 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void addNegatedShouldBeEqualToZeroMatrix() {
         matrices.forEach(matrix -> matrix.add(matrix.negate()).cells()
-                .forEach(cell -> assertThat(cell.getValue()).isEqualTo(SimpleComplexNumber.ZERO)));
+            .forEach(cell -> assertThat(cell.getValue()).isEqualTo(SimpleComplexNumber.ZERO)));
     }
 
     @Test
     public void multiplyNegativeIdentityMatrixShouldBeEqualToNegated() {
         squareMatrices.forEach(matrix -> {
-            final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize())
-                            .putAll(SimpleComplexNumber.ZERO);
+            final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix
+                .builder(matrix.rowSize(), matrix.columnSize()).putAll(SimpleComplexNumber.ZERO);
             matrix.rowIndexes().forEach(index -> builder.put(index, index, SimpleComplexNumber.ONE.negate()));
             assertThat(matrix.multiply(builder.build())).isEqualTo(matrix.negate());
         });
@@ -428,24 +395,22 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void scalarMultiplyWithMinusOneShouldBeEqualToNegated() {
-        matrices.forEach(matrix -> assertThat(matrix.scalarMultiply(SimpleComplexNumber.ONE.negate()))
-                .isEqualTo(matrix.negate()));
+        matrices.forEach(
+            matrix -> assertThat(matrix.scalarMultiply(SimpleComplexNumber.ONE.negate())).isEqualTo(matrix.negate()));
     }
 
     @Test
     public void traceNotSquareShouldThrowException() {
-        assertThatThrownBy(
-                () -> SimpleComplexNumberMatrix.builder(2, 3).putAll(SimpleComplexNumber.ZERO).build().trace())
-                .isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected square matrix but actual 2 x 3");
+        assertThatThrownBy(() -> Matrices.buildZeroSimpleComplexNumberMatrix(2, 3).trace())
+            .isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected square matrix but actual 2 x 3");
     }
 
     @Test
     public void traceShouldSucceed() {
         squareMatrices.forEach(matrix -> {
-            SimpleComplexNumber expected = SimpleComplexNumber.ZERO;
-            for (final Integer index : matrix.rowIndexes()) {
-                expected = expected.add(matrix.element(index, index));
-            }
+            final SimpleComplexNumber expected =
+                matrix.cells().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+                    .map(Cell::getValue).reduce(SimpleComplexNumber::add).get();
             assertThat(matrix.trace()).isEqualTo(expected);
         });
     }
@@ -458,19 +423,19 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void traceShouldBeAdditive() {
         squareMatrices.forEach(matrix -> squareMatrices
-                .forEach(other -> assertThat(matrix.add(other).trace()).isEqualTo(matrix.trace().add(other.trace()))));
+            .forEach(other -> assertThat(matrix.add(other).trace()).isEqualTo(matrix.trace().add(other.trace()))));
     }
 
     @Test
     public void traceShouldBeLinear() {
-        squareMatrices.forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).trace())
-                .isEqualTo(scalar.multiply(matrix.trace()))));
+        squareMatrices.forEach(matrix -> scalars.forEach(
+            scalar -> assertThat(matrix.scalarMultiply(scalar).trace()).isEqualTo(scalar.multiply(matrix.trace()))));
     }
 
     @Test
     public void traceShouldBeIndependentOfTheOrderOfTheFactors() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(
-                other -> assertThat(matrix.multiply(other).trace()).isEqualTo(other.multiply(matrix).trace())));
+        squareMatrices.forEach(matrix -> squareMatrices
+            .forEach(other -> assertThat(matrix.multiply(other).trace()).isEqualTo(other.multiply(matrix).trace())));
     }
 
     @Test
@@ -481,7 +446,7 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void determinatNotSquareShouldThrowException() {
         assertThatThrownBy(
-                () -> SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build().determinant())
+            () -> SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build().determinant())
                 .isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected square matrix but actual 4 x 5");
     }
 
@@ -495,7 +460,7 @@ public final class SimpleComplexNumberMatrixTest {
                 for (int i = 0; i < 4; i++) {
                     final Integer sigma = permutation.get(i);
                     for (int j = i + 1; j < 4; j++) {
-                        if (sigma > permutation.get(j)) {
+                        if (sigma.compareTo(permutation.get(j)) > 0) {
                             inversions++;
                         }
                     }
@@ -511,19 +476,19 @@ public final class SimpleComplexNumberMatrixTest {
     public void determinatOfThreeByThreeMatricesShouldSucceed() {
         threeByThreeMatrices.forEach(matrix -> {
             final SimpleComplexNumber first =
-                    matrix.element(1, 1).multiply(matrix.element(2, 2)).multiply(matrix.element(3, 3));
+                matrix.element(1, 1).multiply(matrix.element(2, 2)).multiply(matrix.element(3, 3));
             final SimpleComplexNumber second =
-                    matrix.element(1, 2).multiply(matrix.element(2, 3)).multiply(matrix.element(3, 1));
+                matrix.element(1, 2).multiply(matrix.element(2, 3)).multiply(matrix.element(3, 1));
             final SimpleComplexNumber third =
-                    matrix.element(1, 3).multiply(matrix.element(2, 1)).multiply(matrix.element(3, 2));
+                matrix.element(1, 3).multiply(matrix.element(2, 1)).multiply(matrix.element(3, 2));
             final SimpleComplexNumber fourth =
-                    matrix.element(3, 1).multiply(matrix.element(2, 2)).multiply(matrix.element(1, 3));
+                matrix.element(3, 1).multiply(matrix.element(2, 2)).multiply(matrix.element(1, 3));
             final SimpleComplexNumber fifth =
-                    matrix.element(3, 2).multiply(matrix.element(2, 3)).multiply(matrix.element(1, 1));
+                matrix.element(3, 2).multiply(matrix.element(2, 3)).multiply(matrix.element(1, 1));
             final SimpleComplexNumber sixth =
-                    matrix.element(3, 3).multiply(matrix.element(2, 1)).multiply(matrix.element(1, 2));
+                matrix.element(3, 3).multiply(matrix.element(2, 1)).multiply(matrix.element(1, 2));
             final SimpleComplexNumber expected =
-                    first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);
+                first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);
             assertThat(matrix.determinant()).isEqualTo(expected);
         });
     }
@@ -532,7 +497,7 @@ public final class SimpleComplexNumberMatrixTest {
     public void determinatOfTwoByTwoMatricesShouldSucceed() {
         twoByTwoMatrices.forEach(matrix -> {
             final SimpleComplexNumber expected = matrix.element(1, 1).multiply(matrix.element(2, 2))
-                    .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
+                .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
             assertThat(matrix.determinant()).isEqualTo(expected);
         });
     }
@@ -550,48 +515,45 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void determinatOfTransposeShouldBeEqualToDeterminant() {
         fourByFourMatrices
-                .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant()));
+            .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant()));
         threeByThreeMatrices
-                .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant()));
+            .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant()));
         twoByTwoMatrices
-                .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant()));
+            .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant()));
     }
 
     @Test
     public void determinatShouldBeMultiplicative() {
-        fourByFourMatrices.forEach(matrix -> fourByFourMatrices.forEach(
-                other -> assertThat(matrix.multiply(other).determinant())
-                        .isEqualTo(matrix.determinant().multiply(other.determinant()))));
-        threeByThreeMatrices.forEach(matrix -> threeByThreeMatrices.forEach(
-                other -> assertThat(matrix.multiply(other).determinant())
-                        .isEqualTo(matrix.determinant().multiply(other.determinant()))));
-        twoByTwoMatrices.forEach(matrix -> twoByTwoMatrices.forEach(
-                other -> assertThat(matrix.multiply(other).determinant())
-                        .isEqualTo(matrix.determinant().multiply(other.determinant()))));
+        fourByFourMatrices
+            .forEach(matrix -> fourByFourMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant())
+                .isEqualTo(matrix.determinant().multiply(other.determinant()))));
+        threeByThreeMatrices
+            .forEach(matrix -> threeByThreeMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant())
+                .isEqualTo(matrix.determinant().multiply(other.determinant()))));
+        twoByTwoMatrices
+            .forEach(matrix -> twoByTwoMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant())
+                .isEqualTo(matrix.determinant().multiply(other.determinant()))));
     }
 
     @Test
     public void determinatWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet() {
-        fourByFourMatrices.forEach(matrix -> scalars.forEach(
-                scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
-                        .isEqualTo(scalar.pow(matrix.rowSize()).multiply(matrix.determinant()))));
-        threeByThreeMatrices.forEach(matrix -> scalars.forEach(
-                scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
-                        .isEqualTo(scalar.pow(3).multiply(matrix.determinant()))));
-        twoByTwoMatrices.forEach(matrix -> scalars.forEach(
-                scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
-                        .isEqualTo(scalar.pow(2).multiply(matrix.determinant()))));
+        fourByFourMatrices
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
+                .isEqualTo(scalar.pow(matrix.rowSize()).multiply(matrix.determinant()))));
+        threeByThreeMatrices
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
+                .isEqualTo(scalar.pow(3).multiply(matrix.determinant()))));
+        twoByTwoMatrices
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
+                .isEqualTo(scalar.pow(2).multiply(matrix.determinant()))));
     }
 
     @Test
     public void determinatOfTriangularMatricesShouldBeEqualToProductOfTheDiagonalEntries() {
         triangularMatrices.forEach(matrix -> {
-            SimpleComplexNumber expected = SimpleComplexNumber.ONE;
-            for (final Cell<Integer, Integer, SimpleComplexNumber> cell : matrix.cells()) {
-                if (cell.getRowKey().equals(cell.getColumnKey())) {
-                    expected = expected.multiply(cell.getValue());
-                }
-            }
+            final SimpleComplexNumber expected =
+                matrix.cells().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+                    .map(Cell::getValue).reduce(SimpleComplexNumber::multiply).get();
             assertThat(matrix.determinant()).isEqualTo(expected);
         });
     }
@@ -600,7 +562,7 @@ public final class SimpleComplexNumberMatrixTest {
     public void transposeShouldSucceed() {
         matrices.forEach(matrix -> {
             final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(matrix.columnSize(), matrix.rowSize());
+                SimpleComplexNumberMatrix.builder(matrix.columnSize(), matrix.rowSize());
             matrix.cells().forEach(cell -> builder.put(cell.getColumnKey(), cell.getRowKey(), cell.getValue()));
             assertThat(matrix.transpose()).isEqualTo(builder.build());
         });
@@ -613,62 +575,61 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void transposeShouldBeAdditive() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.add(other).transpose())
-                .isEqualTo(matrix.transpose().add(other.transpose()))));
+        squareMatrices.forEach(matrix -> squareMatrices.forEach(
+            other -> assertThat(matrix.add(other).transpose()).isEqualTo(matrix.transpose().add(other.transpose()))));
     }
 
     @Test
     public void transposeShouldBeLinear() {
         matrices.forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).transpose())
-                .isEqualTo(matrix.transpose().scalarMultiply(scalar))));
+            .isEqualTo(matrix.transpose().scalarMultiply(scalar))));
     }
 
     @Test
     public void transposeShouldBeMultiplicativeWithInversedOrder() {
         squareMatrices.forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.multiply(other).transpose())
-                .isEqualTo(other.transpose().multiply(matrix.transpose()))));
+            .isEqualTo(other.transpose().multiply(matrix.transpose()))));
     }
 
     @Test
     public void minorRowIndexNullShouldThrowException() {
         assertThatThrownBy(() -> zeroMatrixForAddition.minor(null, 1)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("rowIndex");
+            .hasMessage("rowIndex");
     }
 
     @Test
     public void minorColumnIndexNullShouldThrowException() {
         assertThatThrownBy(() -> zeroMatrixForAddition.minor(1, null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("columnIndex");
+            .hasMessage("columnIndex");
     }
 
     @Test
     public void minorRowIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> zeroMatrixForAddition.minor(0, 1)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected rowIndex in [1, %s] but actual 0", zeroMatrixForAddition.rowSize());
+            .hasMessage("expected rowIndex in [1, %s] but actual 0", zeroMatrixForAddition.rowSize());
     }
 
     @Test
     public void minorRowIndexTooHighShouldThrowException() {
         final Integer invalidRowIndex = zeroMatrixForAddition.rowSize() + 1;
         assertThatThrownBy(() -> zeroMatrixForAddition.minor(invalidRowIndex, 1))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected rowIndex in [1, %s] but actual %s", zeroMatrixForAddition.rowSize(),
-                        invalidRowIndex);
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("expected rowIndex in [1, %s] but actual %s", zeroMatrixForAddition.rowSize(), invalidRowIndex);
     }
 
     @Test
     public void minorColumnIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> zeroMatrixForAddition.minor(1, 0)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnIndex in [1, %s] but actual 0", zeroMatrixForAddition.columnSize());
+            .hasMessage("expected columnIndex in [1, %s] but actual 0", zeroMatrixForAddition.columnSize());
     }
 
     @Test
     public void minorColumnIndexTooHighShouldThrowException() {
         final Integer invalidColumnIndex = zeroMatrixForAddition.columnSize() + 1;
         assertThatThrownBy(() -> zeroMatrixForAddition.minor(1, invalidColumnIndex))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected columnIndex in [1, %s] but actual %s", zeroMatrixForAddition.columnSize(),
-                        invalidColumnIndex);
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("expected columnIndex in [1, %s] but actual %s", zeroMatrixForAddition.columnSize(),
+                invalidColumnIndex);
     }
 
     @Test
@@ -677,11 +638,11 @@ public final class SimpleComplexNumberMatrixTest {
             final Integer rowIndex = RandomUtils.nextInt(1, rowSize + 1);
             final Integer columnIndex = RandomUtils.nextInt(1, columnSize + 1);
             final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(rowSize - 1, columnSize - 1);
+                SimpleComplexNumberMatrix.builder(rowSize - 1, columnSize - 1);
             matrix.cells().forEach(cell -> {
                 final Integer rowKey = cell.getRowKey();
                 final Integer columnKey = cell.getColumnKey();
-                if (!rowKey.equals(rowIndex) && !columnKey.equals(columnIndex)) {
+                if (rowKey.compareTo(rowIndex) != 0 && columnKey.compareTo(columnIndex) != 0) {
                     final Integer newRowIndex = rowKey.compareTo(rowIndex) > 0 ? rowKey - 1 : rowKey;
                     final Integer newColumnIndex = columnKey.compareTo(columnIndex) > 0 ? columnKey - 1 : columnKey;
                     builder.put(newRowIndex, newColumnIndex, cell.getValue());
@@ -694,14 +655,9 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void maxAbsColumnSumNormShouldBeSucceed() {
         matrices.forEach(matrix -> {
-            BigDecimal expected = BigDecimal.ZERO;
-            for (final Map<Integer, SimpleComplexNumber> column : matrix.columns().values().asList()) {
-                BigDecimal sum = BigDecimal.ZERO;
-                for (final SimpleComplexNumber element : column.values()) {
-                    sum = sum.add(element.abs());
-                }
-                expected = expected.max(sum);
-            }
+            final BigDecimal expected = matrix.columns().values().asList().stream()
+                .map(column -> column.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add))
+                .map(Optional::get).reduce(BigDecimal::max).get();
             assertThat(matrix.maxAbsColumnSumNorm()).isEqualTo(expected);
         });
     }
@@ -720,36 +676,31 @@ public final class SimpleComplexNumberMatrixTest {
     public void maxAbsColumnSumNormShouldBeAbsolutelyHomogeneous() {
         matrices.forEach(matrix -> scalars.forEach(scalar -> {
             final BigDecimal expected = scalar.abs().multiply(matrix.maxAbsColumnSumNorm());
-            assertThat(matrix.scalarMultiply(scalar).maxAbsColumnSumNorm())
-                    .isBetween(expected.subtract(tolerance), expected.add(tolerance));
+            assertThat(matrix.scalarMultiply(scalar).maxAbsColumnSumNorm()).isBetween(expected.subtract(tolerance),
+                expected.add(tolerance));
         }));
     }
 
     @Test
     public void maxAbsColumnSumNormShouldBeSubadditive() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(
-                other -> assertThat(matrix.add(other).maxAbsColumnSumNorm()).isLessThanOrEqualTo(
-                        matrix.maxAbsColumnSumNorm().add(other.maxAbsColumnSumNorm()).add(tolerance))));
+        squareMatrices
+            .forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.add(other).maxAbsColumnSumNorm())
+                .isLessThanOrEqualTo(matrix.maxAbsColumnSumNorm().add(other.maxAbsColumnSumNorm()).add(tolerance))));
     }
 
     @Test
     public void maxAbsColumnSumNormShouldBeSubmultiplicative() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(
-                other -> assertThat(matrix.multiply(other).maxAbsColumnSumNorm())
-                        .isLessThanOrEqualTo(matrix.maxAbsColumnSumNorm().multiply(other.maxAbsColumnSumNorm()))));
+        squareMatrices
+            .forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.multiply(other).maxAbsColumnSumNorm())
+                .isLessThanOrEqualTo(matrix.maxAbsColumnSumNorm().multiply(other.maxAbsColumnSumNorm()))));
     }
 
     @Test
     public void maxAbsRowSumNormShouldBeSucceed() {
         matrices.forEach(matrix -> {
-            BigDecimal expected = BigDecimal.ZERO;
-            for (final Map<Integer, SimpleComplexNumber> row : matrix.rows().values().asList()) {
-                BigDecimal sum = BigDecimal.ZERO;
-                for (final SimpleComplexNumber element : row.values()) {
-                    sum = sum.add(element.abs());
-                }
-                expected = expected.max(sum);
-            }
+            final BigDecimal expected = matrix.rows().values().asList().stream()
+                .map(column -> column.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add))
+                .map(Optional::get).reduce(BigDecimal::max).get();
             assertThat(matrix.maxAbsRowSumNorm()).isEqualTo(expected);
         });
     }
@@ -768,32 +719,30 @@ public final class SimpleComplexNumberMatrixTest {
     public void maxAbsRowSumNormShouldBeAbsolutelyHomogeneous() {
         matrices.forEach(matrix -> scalars.forEach(scalar -> {
             final BigDecimal expected = scalar.abs().multiply(matrix.maxAbsRowSumNorm());
-            assertThat(matrix.scalarMultiply(scalar).maxAbsRowSumNorm())
-                    .isBetween(expected.subtract(tolerance), expected.add(tolerance));
+            assertThat(matrix.scalarMultiply(scalar).maxAbsRowSumNorm()).isBetween(expected.subtract(tolerance),
+                expected.add(tolerance));
         }));
     }
 
     @Test
     public void maxAbsRowSumNormShouldBeSubadditive() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(
-                other -> assertThat(matrix.add(other).maxAbsRowSumNorm())
-                        .isLessThanOrEqualTo(matrix.maxAbsRowSumNorm().add(other.maxAbsRowSumNorm()).add(tolerance))));
+        squareMatrices
+            .forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.add(other).maxAbsRowSumNorm())
+                .isLessThanOrEqualTo(matrix.maxAbsRowSumNorm().add(other.maxAbsRowSumNorm()).add(tolerance))));
     }
 
     @Test
     public void maxAbsRowSumNormShouldBeSubmultiplicative() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(
-                other -> assertThat(matrix.multiply(other).maxAbsRowSumNorm())
-                        .isLessThanOrEqualTo(matrix.maxAbsRowSumNorm().multiply(other.maxAbsRowSumNorm()))));
+        squareMatrices
+            .forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.multiply(other).maxAbsRowSumNorm())
+                .isLessThanOrEqualTo(matrix.maxAbsRowSumNorm().multiply(other.maxAbsRowSumNorm()))));
     }
 
     @Test
     public void frobeniusNormPow2ShouldBeSucceed() {
         matrices.forEach(matrix -> {
-            BigInteger expected = BigInteger.ZERO;
-            for (final SimpleComplexNumber element : matrix.elements()) {
-                expected = expected.add(element.absPow2());
-            }
+            final BigInteger expected =
+                matrix.elements().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();
             assertThat(matrix.frobeniusNormPow2()).isEqualTo(expected);
         });
     }
@@ -805,15 +754,15 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void frobeniusNormPow2ShouldBeHomogeneous() {
-        matrices.forEach(matrix -> scalars.forEach(
-                scalar -> assertThat(matrix.scalarMultiply(scalar).frobeniusNormPow2())
-                        .isEqualTo(scalar.absPow2().multiply(matrix.frobeniusNormPow2()))));
+        matrices
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).frobeniusNormPow2())
+                .isEqualTo(scalar.absPow2().multiply(matrix.frobeniusNormPow2()))));
     }
 
     @Test
     public void frobeniusNormShouldSucceed() {
         matrices.forEach(matrix -> assertThat(matrix.frobeniusNorm())
-                .isEqualByComparingTo(new SquareRootCalculator().sqrt(matrix.frobeniusNormPow2())));
+            .isEqualByComparingTo(new SquareRootCalculator().sqrt(matrix.frobeniusNormPow2())));
     }
 
     @Test
@@ -824,97 +773,95 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void frobeniusNormShouldBeSubadditive() {
         squareMatrices.forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.add(other).frobeniusNorm())
-                .isLessThanOrEqualTo(matrix.frobeniusNorm().add(other.frobeniusNorm()).add(tolerance))));
+            .isLessThanOrEqualTo(matrix.frobeniusNorm().add(other.frobeniusNorm()).add(tolerance))));
     }
 
     @Test
     public void frobeniusNormShouldBeSubmultiplicative() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(
-                other -> assertThat(matrix.multiply(other).frobeniusNorm())
-                        .isLessThanOrEqualTo(matrix.frobeniusNorm().multiply(other.frobeniusNorm()).add(tolerance))));
+        squareMatrices
+            .forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.multiply(other).frobeniusNorm())
+                .isLessThanOrEqualTo(matrix.frobeniusNorm().multiply(other.frobeniusNorm()).add(tolerance))));
     }
 
     @Test
     public void frobeniusNormWithPrecisionNullShouldThrowException() {
         assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("precision");
+            .hasMessage("precision");
     }
 
     @Test
     public void frobeniusNormWithPrecisionTooLowShouldThrowException() {
         assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ZERO))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ZERO);
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ZERO);
     }
 
     @Test
     public void frobeniusNormWithPrecisionTooHighShouldThrowException() {
         assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ONE))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ONE);
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ONE);
     }
 
     @Test
     public void frobeniusNormWithPrecisionShouldSucceed() {
         matrices.forEach(matrix -> assertThat(matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION))
-                .isLessThanOrEqualTo(new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION)
-                        .sqrt(matrix.frobeniusNormPow2()).add(tolerance)));
+            .isLessThanOrEqualTo(new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION)
+                .sqrt(matrix.frobeniusNormPow2()).add(tolerance)));
     }
 
     @Test
     public void frobeniusNormWithRoundingModeAndScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(-1, RoundingMode.HALF_EVEN))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
     }
 
     @Test
     public void frobeniusNormWithScaleAndRoundingModeShouldSucceed() {
         matrices.forEach(matrix -> assertThat(matrix.frobeniusNorm(2, RoundingMode.HALF_EVEN)).isEqualByComparingTo(
-                new SquareRootCalculator(2, RoundingMode.HALF_EVEN).sqrt(matrix.frobeniusNormPow2())));
+            new SquareRootCalculator(2, RoundingMode.HALF_EVEN).sqrt(matrix.frobeniusNormPow2())));
     }
 
     @Test
     public void frobeniusNormWithPrecisionNullAndScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(null, 2, RoundingMode.HALF_EVEN))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("precision");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("precision");
     }
 
     @Test
     public void frobeniusNormWithPrecisionTooLowAndScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ZERO, 2, RoundingMode.HALF_EVEN))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ZERO);
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ZERO);
     }
 
     @Test
     public void frobeniusNormWithPrecisionTooHighAndScaleAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ONE, 2, RoundingMode.HALF_EVEN))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ONE);
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ONE);
     }
 
     @Test
     public void frobeniusNormWithPrecisionAndScaleTooLowAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix
-                .frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION, -1, RoundingMode.HALF_EVEN))
+        assertThatThrownBy(
+            () -> zeroSquareMatrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION, -1, RoundingMode.HALF_EVEN))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
     }
 
     @Test
     public void frobeniusNormWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
         matrices.forEach(matrix -> assertThat(
-                matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN)).isEqualTo(
-                new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN)
-                        .sqrt(matrix.frobeniusNormPow2())));
+            matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN))
+                .isEqualTo(new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN)
+                    .sqrt(matrix.frobeniusNormPow2())));
     }
 
     @Test
     public void maxNormShouldBeSucceed() {
         matrices.forEach(matrix -> {
-            BigDecimal expected = BigDecimal.ZERO;
-            for (final SimpleComplexNumber element : matrix.elements()) {
-                expected = expected.max(element.abs());
-            }
+            final BigDecimal expected =
+                matrix.elements().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::max).get();
             assertThat(matrix.maxNorm()).isEqualTo(expected);
         });
     }
@@ -933,15 +880,15 @@ public final class SimpleComplexNumberMatrixTest {
     public void maxNormShouldBeAbsolutelyHomogeneous() {
         matrices.forEach(matrix -> scalars.forEach(scalar -> {
             final BigDecimal expected = scalar.abs().multiply(matrix.maxNorm());
-            assertThat(matrix.scalarMultiply(scalar).maxNorm())
-                    .isBetween(expected.subtract(tolerance), expected.add(tolerance));
+            assertThat(matrix.scalarMultiply(scalar).maxNorm()).isBetween(expected.subtract(tolerance),
+                expected.add(tolerance));
         }));
     }
 
     @Test
     public void maxNormShouldBeSubadditive() {
         squareMatrices.forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.add(other).maxNorm())
-                .isLessThanOrEqualTo(matrix.maxNorm().add(other.maxNorm()).add(tolerance))));
+            .isLessThanOrEqualTo(matrix.maxNorm().add(other.maxNorm()).add(tolerance))));
     }
 
     @Test
@@ -962,7 +909,7 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void triangularNotSquareShouldReturnFalse() {
         final SimpleComplexNumberMatrix matrix =
-                SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
+            SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
         assertThat(matrix.triangular()).isFalse();
     }
 
@@ -970,11 +917,11 @@ public final class SimpleComplexNumberMatrixTest {
     public void triangularNotUpperTriangularShouldReturnFalse() {
         upperTriangularMatrices.forEach(matrix -> {
             final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
+                SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowIndex = cell.getRowKey();
                 final Integer columnIndex = cell.getColumnKey();
-                if (rowIndex > columnIndex) {
+                if (rowIndex.compareTo(columnIndex) > 0) {
                     builder.put(rowIndex, columnIndex, mathRandom.nextInvertibleSimpleComplexNumber(bound));
                 } else {
                     builder.put(rowIndex, columnIndex, cell.getValue());
@@ -988,11 +935,11 @@ public final class SimpleComplexNumberMatrixTest {
     public void triangularNotLowerTriangularShouldReturnFalse() {
         lowerTriangularMatrices.forEach(matrix -> {
             final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
+                SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowIndex = cell.getRowKey();
                 final Integer columnIndex = cell.getColumnKey();
-                if (rowIndex < columnIndex) {
+                if (rowIndex.compareTo(columnIndex) < 0) {
                     builder.put(rowIndex, columnIndex, mathRandom.nextInvertibleSimpleComplexNumber(bound));
                 } else {
                     builder.put(rowIndex, columnIndex, cell.getValue());
@@ -1009,20 +956,18 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void upperTriangularNotSquareShouldReturnFalse() {
-        final SimpleComplexNumberMatrix matrix =
-                SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
-        assertThat(matrix.upperTriangular()).isFalse();
+        assertThat(nonSquareMatrix.upperTriangular()).isFalse();
     }
 
     @Test
     public void upperTriangularNotUpperTriangularShouldReturnFalse() {
         upperTriangularMatrices.forEach(matrix -> {
             final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
+                SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowIndex = cell.getRowKey();
                 final Integer columnIndex = cell.getColumnKey();
-                if (rowIndex > columnIndex) {
+                if (rowIndex.compareTo(columnIndex) > 0) {
                     builder.put(rowIndex, columnIndex, mathRandom.nextInvertibleSimpleComplexNumber(bound));
                 } else {
                     builder.put(rowIndex, columnIndex, cell.getValue());
@@ -1039,20 +984,18 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void lowerTriangularNotSquareShouldReturnFalse() {
-        final SimpleComplexNumberMatrix matrix =
-                SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
-        assertThat(matrix.lowerTriangular()).isFalse();
+        assertThat(nonSquareMatrix.lowerTriangular()).isFalse();
     }
 
     @Test
     public void lowerTriangularNotLowerTriangularShouldReturnFalse() {
         lowerTriangularMatrices.forEach(matrix -> {
             final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
+                SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowIndex = cell.getRowKey();
                 final Integer columnIndex = cell.getColumnKey();
-                if (rowIndex < columnIndex) {
+                if (rowIndex.compareTo(columnIndex) < 0) {
                     builder.put(rowIndex, columnIndex, mathRandom.nextInvertibleSimpleComplexNumber(bound));
                 } else {
                     builder.put(rowIndex, columnIndex, cell.getValue());
@@ -1069,9 +1012,7 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void diagonalNotSquareShouldReturnFalse() {
-        final SimpleComplexNumberMatrix matrix =
-                SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
-        assertThat(matrix.diagonal()).isFalse();
+        assertThat(nonSquareMatrix.diagonal()).isFalse();
     }
 
     @Test
@@ -1081,11 +1022,11 @@ public final class SimpleComplexNumberMatrixTest {
             final Integer columnIndex = RandomUtils.nextInt(1, rowIndex);
             final SimpleComplexNumber element = mathRandom.nextInvertibleSimpleComplexNumber(bound);
             final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(rowSize, matrix.columnSize());
+                SimpleComplexNumberMatrix.builder(rowSize, matrix.columnSize());
             matrix.cells().forEach(cell -> {
                 final Integer rowKey = cell.getRowKey();
                 final Integer columnKey = cell.getColumnKey();
-                if (rowKey.equals(rowIndex) && columnKey.equals(columnIndex)) {
+                if (rowKey.compareTo(rowIndex) == 0 && columnKey.compareTo(columnIndex) == 0) {
                     builder.put(rowKey, columnKey, element);
                 } else {
                     builder.put(rowKey, columnKey, cell.getValue());
@@ -1101,22 +1042,13 @@ public final class SimpleComplexNumberMatrixTest {
     }
 
     @Test
-    public void identityNotDiagonalhouldReturnFalse() {
-        final SimpleComplexNumberMatrix matrix =
-                SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
-        assertThat(matrix.identity()).isFalse();
-    }
-
-    @Test
-    public void identityNotDiagonalShouldReturnFalse() {
-        assertThat(SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build().identity())
-                .isFalse();
+    public void identityNotSquareShouldReturnFalse() {
+        assertThat(nonSquareMatrix.identity()).isFalse();
     }
 
     @Test
     public void identityNotIdentityMatrixShouldReturnFalse() {
-        assertThat(SimpleComplexNumberMatrix.builder(4, 4).putAll(SimpleComplexNumber.ZERO).build().identity())
-                .isFalse();
+        assertThat(zeroSquareMatrix.identity()).isFalse();
     }
 
     @Test
@@ -1126,23 +1058,21 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void invertibleNotSquareShouldReturnFalse() {
-        final SimpleComplexNumberMatrix matrix =
-                SimpleComplexNumberMatrix.builder(4, 4).putAll(SimpleComplexNumber.ZERO).build();
-        assertThat(matrix.invertible()).isFalse();
+        assertThat(nonSquareMatrix.invertible()).isFalse();
     }
 
     @Test
     public void invertibleZeroMatrixShouldReturnFalse() {
         final SimpleComplexNumberMatrix zeroMatrix =
-                SimpleComplexNumberMatrix.builder(4, 4).putAll(SimpleComplexNumber.ZERO).build();
+            SimpleComplexNumberMatrix.builder(size, size).putAll(SimpleComplexNumber.ZERO).build();
         assertThat(zeroMatrix.invertible()).isFalse();
     }
 
     @Test
     public void invertibleIdShouldSucceed() {
-        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(4, 4);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
         range.forEach(rowIndex -> range.forEach(columnIndex -> {
-            if (rowIndex.equals(columnIndex)) {
+            if (rowIndex.compareTo(columnIndex) == 0) {
                 builder.put(rowIndex, columnIndex, SimpleComplexNumber.ONE);
             } else {
                 builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
@@ -1153,12 +1083,12 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void invertibleMatrixWithDetEqualToMinusOneShouldSucceed() {
-        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(4, 4);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
         final Integer index = RandomUtils.nextInt(1, 5);
         range.forEach(rowIndex -> range.forEach(columnIndex -> {
-            if (rowIndex.equals(index) && columnIndex.equals(index)) {
+            if (rowIndex.compareTo(index) == 0 && columnIndex.compareTo(index) == 0) {
                 builder.put(rowIndex, columnIndex, SimpleComplexNumber.ONE.negate());
-            } else if (rowIndex.equals(columnIndex)) {
+            } else if (rowIndex.compareTo(columnIndex) == 0) {
                 builder.put(rowIndex, columnIndex, SimpleComplexNumber.ONE);
             } else {
                 builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
@@ -1169,21 +1099,18 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void symmetricNotquareShouldReturnFalse() {
-        final SimpleComplexNumberMatrix matrix =
-                SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
-        assertThat(matrix.symmetric()).isFalse();
+        assertThat(nonSquareMatrix.symmetric()).isFalse();
     }
 
     @Test
     public void symmetricNotSymmetricShouldReturnFalse() {
-        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(4, 4);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
         range.forEach(rowIndex -> range.forEach(columnIndex -> {
             final SimpleComplexNumber element = mathRandom.nextInvertibleSimpleComplexNumber(bound);
-            if (rowIndex < columnIndex) {
+            if (rowIndex.compareTo(columnIndex) < 0) {
                 builder.put(rowIndex, columnIndex, element);
                 builder.put(columnIndex, rowIndex, element.negate());
-            }
-            if (rowIndex.equals(columnIndex)) {
+            } else if (rowIndex.compareTo(columnIndex) == 0) {
                 builder.put(rowIndex, columnIndex, element);
             }
         }));
@@ -1192,14 +1119,13 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void symmetricShouldSucceed() {
-        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(4, 4);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
         range.forEach(rowIndex -> range.forEach(columnIndex -> {
             final SimpleComplexNumber element = mathRandom.nextSimpleComplexNumber(bound);
-            if (rowIndex < columnIndex) {
+            if (rowIndex.compareTo(columnIndex) < 0) {
                 builder.put(rowIndex, columnIndex, element);
                 builder.put(columnIndex, rowIndex, element);
-            }
-            if (rowIndex.equals(columnIndex)) {
+            } else if (rowIndex.compareTo(columnIndex) == 0) {
                 builder.put(rowIndex, columnIndex, element);
             }
         }));
@@ -1208,21 +1134,18 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void skewSymmetricNotquareShouldReturnFalse() {
-        final SimpleComplexNumberMatrix matrix =
-                SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build();
-        assertThat(matrix.skewSymmetric()).isFalse();
+        assertThat(nonSquareMatrix.skewSymmetric()).isFalse();
     }
 
     @Test
     public void skewSymmetricNotSymmetricShouldReturnFalse() {
-        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(4, 4);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
         range.forEach(rowIndex -> range.forEach(columnIndex -> {
-            if (rowIndex < columnIndex) {
+            if (rowIndex.compareTo(columnIndex) < 0) {
                 final SimpleComplexNumber element = mathRandom.nextInvertibleSimpleComplexNumber(bound);
                 builder.put(rowIndex, columnIndex, element);
                 builder.put(columnIndex, rowIndex, element);
-            }
-            if (rowIndex.equals(columnIndex)) {
+            } else if (rowIndex.compareTo(columnIndex) == 0) {
                 builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
             }
         }));
@@ -1231,14 +1154,13 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void skewSymmetricShouldSucceed() {
-        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(4, 4);
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);
         range.forEach(rowIndex -> range.forEach(columnIndex -> {
-            if (rowIndex < columnIndex) {
+            if (rowIndex.compareTo(columnIndex) < 0) {
                 final SimpleComplexNumber element = mathRandom.nextSimpleComplexNumber(bound);
                 builder.put(rowIndex, columnIndex, element);
                 builder.put(columnIndex, rowIndex, element.negate());
-            }
-            if (rowIndex.equals(columnIndex)) {
+            } else if (rowIndex.compareTo(columnIndex) == 0) {
                 builder.put(rowIndex, columnIndex, SimpleComplexNumber.ZERO);
             }
         }));
@@ -1246,164 +1168,14 @@ public final class SimpleComplexNumberMatrixTest {
     }
 
     @Test
-    public void rowIndexesShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.rowIndexes()).isEqualTo(matrix.getTable().rowKeySet()));
-    }
-
-    @Test
-    public void columnIndexesShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.columnIndexes()).isEqualTo(matrix.getTable().columnKeySet()));
-    }
-
-    @Test
-    public void elementRowIndexNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.element(null, 1)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("rowIndex");
-    }
-
-    @Test
-    public void elementRowIndexOutOfBoundShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.element(0, 1)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected row index in [1, %s] but actual 0", zeroSquareMatrix.rowSize());
-    }
-
-    @Test
-    public void elementColumnIndexNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.element(1, null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("columnIndex");
-    }
-
-    @Test
-    public void elementColumnIndexOutOfBoundShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.element(1, 0)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected column index in [1, %s] but actual 0", zeroSquareMatrix.columnSize());
-    }
-
-    @Test
-    public void elementShouldSucceed() {
-        matrices.forEach(matrix -> rowRange.forEach(rowIndex -> columnRange.forEach(
-                columnIndex -> assertThat(matrix.element(rowIndex, columnIndex))
-                        .isEqualTo(matrix.getTable().get(rowIndex, columnIndex)))));
-    }
-
-    @Test
-    public void cellsShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.cells()).isEqualTo(matrix.getTable().cellSet()));
-    }
-
-    @Test
-    public void rowRowIndexNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.row(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("rowIndex");
-    }
-
-    @Test
-    public void rowRowIndexOutOfBoundShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.row(0)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected row index in [1, %s] but actual 0", zeroSquareMatrix.rowSize());
-    }
-
-    @Test
-    public void rowShouldSucceed() {
-        matrices.forEach(matrix -> IntStream.rangeClosed(1, matrix.rowSize()).boxed().collect(Collectors.toList())
-                .forEach(rowIndex -> assertThat(matrix.row(rowIndex)).isEqualTo(matrix.getTable().row(rowIndex))));
-    }
-
-    @Test
-    public void columnColumnIndexNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.column(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("columnIndex");
-    }
-
-    @Test
-    public void columnColumnIndexOutOfBoundShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.column(0)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected column index in [1, %s] but actual 0", zeroSquareMatrix.columnSize());
-    }
-
-    @Test
-    public void columnShouldSucceed() {
-        matrices.forEach(matrix -> columnRange.forEach(columnIndex -> assertThat(matrix.column(columnIndex))
-                .isEqualTo(matrix.getTable().column(columnIndex))));
-    }
-
-    @Test
-    public void rowsShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.rows()).isEqualTo(matrix.getTable().rowMap()));
-    }
-
-    @Test
-    public void columnsShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.columns()).isEqualTo(matrix.getTable().columnMap()));
-    }
-
-    @Test
-    public void elementsShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.elements()).isEqualTo(matrix.getTable().values()));
-    }
-
-    @Test
-    public void sizeShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.size()).isEqualTo(
-                Long.valueOf(matrix.getTable().rowKeySet().size()) *
-                        Long.valueOf(matrix.getTable().columnKeySet().size())));
-    }
-
-    @Test
-    public void rowSizeShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.rowSize()).isEqualTo(matrix.getTable().rowKeySet().size()));
-    }
-
-    @Test
-    public void columnSizeShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.columnSize()).isEqualTo(matrix.getTable().columnKeySet().size()));
-    }
-
-    @Test
     public void builderRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> SimpleComplexNumberMatrix.builder(0, 1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void builderColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> SimpleComplexNumberMatrix.builder(1, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
-    }
-
-    @Test
-    public void hashCodeShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.hashCode()).isEqualTo(Objects.hash(matrix.getTable())));
-    }
-
-    @Test
-    public void equalsSelfShouldReturnTrue() {
-        matrices.forEach(matrix -> assertThat(matrix.equals(matrix)).isTrue());
-    }
-
-    @Test
-    public void equalsNotSimpleComplexNumberShouldReturnFalse() {
-        assertThat(zeroMatrixForAddition.equals(new Object())).isFalse();
-    }
-
-    @Test
-    public void equalsNotEqualShouldReturnFalse() {
-        squareMatrices.forEach(matrix -> assertThat(matrix.equals(matrix.add(identityMatrix))).isFalse());
-    }
-
-    @Test
-    public void equalsEqualShouldReturnTrue() {
-        matrices.forEach(matrix -> {
-            final SimpleComplexNumberMatrixBuilder builder =
-                    SimpleComplexNumberMatrix.builder(matrix.rowSize(), matrix.columnSize());
-            matrix.cells().forEach(cell -> builder.put(cell.getRowKey(), cell.getColumnKey(), cell.getValue()));
-            assertThat(matrix.equals(builder.build())).isTrue();
-        });
-    }
-
-    @Test
-    public void toStringShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.toString())
-                .isEqualTo(MoreObjects.toStringHelper(matrix).add("table", matrix.getTable()).toString()));
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 }

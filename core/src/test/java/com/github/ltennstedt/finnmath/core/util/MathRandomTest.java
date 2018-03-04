@@ -51,19 +51,19 @@ public final class MathRandomTest {
     private final BigInteger bigBound = BigInteger.valueOf(bound);
     private final BigInteger negatedBigBound = bigBound.negate();
     private final Condition<BigDecimal> positive =
-            new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) > -1, "positive");
+        new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) > -1, "positive");
     private final Condition<BigDecimal> negative =
-            new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) < 1, "negative");
+        new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) < 1, "negative");
     private final Condition<BigDecimal> upperBound =
-            new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound");
+        new Condition<>(decimal -> decimal.compareTo(decimalBound) < 0, "upper bound");
     private final Condition<BigDecimal> lowerBound =
-            new Condition<>(decimal -> decimal.compareTo(negatedBigDecimalBound) > 0, "lower bound");
+        new Condition<>(decimal -> decimal.compareTo(negatedBigDecimalBound) > 0, "lower bound");
     private final Condition<BigDecimal> scaled = new Condition<>(decimal -> decimal.scale() == validScale, "scaled");
 
     @Test
     public void nextPositiveBigIntegerBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveBigInteger(0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
@@ -75,7 +75,7 @@ public final class MathRandomTest {
     @Test
     public void nextNegativeBigIntegerBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeBigInteger(0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
@@ -88,7 +88,7 @@ public final class MathRandomTest {
     @Test
     public void nextBigIntegerBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigInteger(0)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected bound > 0 but actual 0");
+            .hasMessage("expected bound > 0 but actual 0");
 
     }
 
@@ -101,7 +101,7 @@ public final class MathRandomTest {
     @Test
     public void nextPositiveBigIntegersTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveBigIntegers(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -115,7 +115,7 @@ public final class MathRandomTest {
     @Test
     public void nextNegativeBigIntegersTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeBigIntegers(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -123,13 +123,13 @@ public final class MathRandomTest {
         final List<BigInteger> integers = mathRandom.nextNegativeBigIntegers(bound, howMany);
         assertThat(integers).hasSize(howMany);
         integers.forEach(
-                integer -> assertThat(integer).isGreaterThan(negatedBigBound).isLessThanOrEqualTo(BigInteger.ZERO));
+            integer -> assertThat(integer).isGreaterThan(negatedBigBound).isLessThanOrEqualTo(BigInteger.ZERO));
     }
 
     @Test
     public void nextBigIntegersTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegers(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -142,14 +142,14 @@ public final class MathRandomTest {
     @Test
     public void nextPositiveBigDecimalBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveBigDecimal(0, validScale))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextPositiveBigDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveBigDecimal(bound, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -163,14 +163,14 @@ public final class MathRandomTest {
     @Test
     public void nextNegativeBigDecimalBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeBigDecimal(0, validScale))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextNegativeBigDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeBigDecimal(bound, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -184,14 +184,14 @@ public final class MathRandomTest {
     @Test
     public void nextBigDecimalBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimal(0, validScale))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextBigDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimal(bound, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -205,14 +205,14 @@ public final class MathRandomTest {
     @Test
     public void nextInvertiblePositiveBigDecimalBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertiblePositiveBigDecimal(1, validScale))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
 
     }
 
     @Test
     public void nextInvertiblePositiveBigDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertiblePositiveBigDecimal(bound, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -226,13 +226,13 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleNegativeBigDecimalBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleNegativeBigDecimal(1, validScale))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
     public void nextInvertibleNegativeBigDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleNegativeBigDecimal(bound, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -246,20 +246,20 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleBigDecimalBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleBigDecimal(1, validScale))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
     public void nextInvertibleBigDecimalScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleBigDecimal(bound, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextInvertibleBigDecimalShouldSucceed() {
         final BigDecimal actual = mathRandom.nextInvertibleBigDecimal(bound, validScale);
         assertThat(actual).isStrictlyBetween(negatedBigDecimalBound, decimalBound)
-                .isNotEqualByComparingTo(BigDecimal.ZERO);
+            .isNotEqualByComparingTo(BigDecimal.ZERO);
         assertThat(actual.scale()).isEqualTo(validScale);
     }
 
@@ -292,20 +292,20 @@ public final class MathRandomTest {
     @Test
     public void nextPositiveBigDecimalsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveBigDecimals(0, validScale, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextPositiveBigDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveBigDecimals(bound, -1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextPositiveBigDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveBigDecimals(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -318,19 +318,19 @@ public final class MathRandomTest {
     @Test
     public void nextNegativeBigDecimalsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeBigDecimals(0, validScale, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextNegativeBigDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeBigDecimals(bound, -1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextNegativeBigDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeBigDecimals(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -342,19 +342,19 @@ public final class MathRandomTest {
     @Test
     public void nextBigDecimalsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimals(0, validScale, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextBigDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimals(bound, -1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextBigDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimals(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
@@ -366,21 +366,21 @@ public final class MathRandomTest {
     @Test
     public void nextInvertiblePositiveBigDecimalsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertiblePositiveBigDecimals(1, validScale, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
 
     }
 
     @Test
     public void nextInvertiblePositiveBigDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertiblePositiveBigDecimals(bound, -1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextInvertiblePositiveBigDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertiblePositiveBigDecimals(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -388,66 +388,66 @@ public final class MathRandomTest {
     public void nextInvertiblePositiveBigDecimalsShouldSucceed() {
         final List<BigDecimal> decimals = mathRandom.nextInvertiblePositiveBigDecimals(bound, validScale, howMany);
         assertThat(decimals).hasSize(howMany)
-                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) > 0, "lower bound")).are(upperBound)
-                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
+            .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) > 0, "lower bound")).are(upperBound)
+            .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
     }
 
     @Test
     public void nextInvertibleNegativeBigDecimalsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleNegativeBigDecimals(1, validScale, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
     public void nextInvertibleNegativeBigDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleNegativeBigDecimals(bound, -1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextInvertibleNegativeBigDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleNegativeBigDecimals(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextInvertibleNegativeBigDecimalsShouldSucceed() {
         final List<BigDecimal> decimals = mathRandom.nextInvertibleNegativeBigDecimals(bound, validScale, howMany);
         assertThat(decimals).hasSize(howMany).are(lowerBound)
-                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) < 0, "upper bound"))
-                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
+            .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) < 0, "upper bound"))
+            .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
     }
 
     @Test
     public void nextInvertibleBigDecimalsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleBigDecimals(1, validScale, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
     public void nextInvertibleBigDecimalsScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleBigDecimals(bound, -1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextInvertibleBigDecimalsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleBigDecimals(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextInvertibleBigDecimalsShouldSucceed() {
         final List<BigDecimal> decimals = mathRandom.nextInvertibleBigDecimals(bound, validScale, howMany);
         assertThat(decimals).hasSize(howMany).are(lowerBound).are(upperBound)
-                .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) != 0, "not zero"))
-                .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
+            .are(new Condition<>(decimal -> decimal.compareTo(BigDecimal.ZERO) != 0, "not zero"))
+            .are(new Condition<>(decimal -> decimal.scale() == validScale, "scaled"));
     }
 
     @Test
     public void nextPositiveFractionBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveFraction(1)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected bound > 1 but actual 1");
+            .hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
@@ -460,7 +460,7 @@ public final class MathRandomTest {
     @Test
     public void nextNegativeFractionBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeFraction(1)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected bound > 1 but actual 1");
+            .hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
@@ -473,7 +473,7 @@ public final class MathRandomTest {
     @Test
     public void nextFractionBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextFraction(1)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected bound > 1 but actual 1");
+            .hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
@@ -486,7 +486,7 @@ public final class MathRandomTest {
     @Test
     public void nextInvertiblePositiveFractionBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertiblePositiveFraction(1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
@@ -499,7 +499,7 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleNegativeFractionBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleNegativeFraction(1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
@@ -512,80 +512,80 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleFractionBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleFraction(1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
     public void nextInvertibleFractionShouldSucceed() {
         final Fraction fraction = mathRandom.nextInvertibleFraction(bound);
         assertThat(fraction.getNumerator()).isGreaterThan(negatedBigBound).isLessThan(bigBound)
-                .isNotEqualTo(BigInteger.ZERO);
+            .isNotEqualTo(BigInteger.ZERO);
         assertThat(fraction.getDenominator()).isGreaterThan(negatedBigBound).isLessThanOrEqualTo(bigBound);
     }
 
     @Test
     public void nextPositiveFractionsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveFractions(1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
     public void nextPositiveFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPositiveFractions(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextPositiveFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextPositiveFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+            .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
+                "lower bound (numerator)"))
+            .are(
+                new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0, "upper bound (numerator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                "lower bound (denominator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                "upper bound (denominator)"));
     }
 
     @Test
     public void nextNegativeFractionsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeFractions(1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
     public void nextNegativeFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextNegativeFractions(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextNegativeFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextNegativeFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(negatedBigBound) > 0,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+            .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(negatedBigBound) > 0,
+                "lower bound (numerator)"))
+            .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
+                "upper bound (numerator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                "lower bound (denominator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                "upper bound (denominator)"));
     }
 
     @Test
     public void nextFractionsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextFractions(1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
 
     }
 
     @Test
     public void nextFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextFractions(bound, 0)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected howMany > 0 but actual 0");
+            .hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -593,79 +593,79 @@ public final class MathRandomTest {
     public void nextFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(negatedBigBound) > 0,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(negatedBigBound) > 0,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+            .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(negatedBigBound) > 0,
+                "lower bound (numerator)"))
+            .are(
+                new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0, "upper bound (numerator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(negatedBigBound) > 0,
+                "lower bound (denominator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                "upper bound (denominator)"));
     }
 
     @Test
     public void nextInvertiblePositiveFractionsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertiblePositiveFractions(1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
     public void nextInvertiblePositiveFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertiblePositiveFractions(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextInvertiblePositiveFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextInvertiblePositiveFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+            .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) > -1,
+                "lower bound (numerator)"))
+            .are(
+                new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0, "upper bound (numerator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                "lower bound (denominator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                "upper bound (denominator)"));
     }
 
     @Test
     public void nextInvertibleNegativeFractionsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleNegativeFractions(1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
     }
 
     @Test
     public void nextInvertibleNegativeFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleNegativeFractions(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextInvertibleNegativeFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextInvertibleNegativeFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(negatedBigBound) > 0,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+            .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(negatedBigBound) > 0,
+                "lower bound (numerator)"))
+            .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(BigInteger.ZERO) < 1,
+                "upper bound (numerator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(BigInteger.ZERO) > -1,
+                "lower bound (denominator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                "upper bound (denominator)"));
     }
 
     @Test
     public void nextInvertibleFractionsBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleFractions(1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
 
     }
 
     @Test
     public void nextInvertibleFractionsTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleFractions(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -673,20 +673,20 @@ public final class MathRandomTest {
     public void nextInvertibleFractionsShouldSucceed() {
         final List<Fraction> fractions = mathRandom.nextInvertibleFractions(bound, howMany);
         assertThat(fractions).hasSize(howMany)
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(negatedBigBound) > 0,
-                        "lower bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0,
-                        "upper bound (numerator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(negatedBigBound) > 0,
-                        "lower bound (denominator)"))
-                .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
-                        "upper bound (denominator)"));
+            .are(new Condition<>(fraction -> fraction.getNumerator().compareTo(negatedBigBound) > 0,
+                "lower bound (numerator)"))
+            .are(
+                new Condition<>(fraction -> fraction.getNumerator().compareTo(bigBound) < 0, "upper bound (numerator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(negatedBigBound) > 0,
+                "lower bound (denominator)"))
+            .are(new Condition<>(fraction -> fraction.getDenominator().compareTo(bigBound) < 0,
+                "upper bound (denominator)"));
     }
 
     @Test
     public void nextSimpleComplexNumberBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumber(0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
@@ -700,7 +700,7 @@ public final class MathRandomTest {
     @Test
     public void nextInvertibleSimpleComplexNumberBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleSimpleComplexNumber(1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
 
     }
 
@@ -715,14 +715,14 @@ public final class MathRandomTest {
     @Test
     public void nextSimpleComplexNumbersBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumbers(0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextSimpleComplexNumbersTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumbers(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -730,27 +730,27 @@ public final class MathRandomTest {
     public void nextSimpleComplexNumbersShouldSucceed() {
         final List<SimpleComplexNumber> complexNumbers = mathRandom.nextSimpleComplexNumbers(bound, howMany);
         assertThat(complexNumbers).hasSize(howMany)
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(negatedBigBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
+                "upper bound (real part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"));
     }
 
     @Test
     public void nextInvertibleSimpleComplexNumbersBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleSimpleComplexNumbers(1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
 
     }
 
     @Test
     public void nextInvertibleSimpleComplexNumbersTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleSimpleComplexNumbers(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -758,28 +758,28 @@ public final class MathRandomTest {
     public void nextInvertibleSimpleComplexNumbersShouldSucceed() {
         final List<SimpleComplexNumber> complexNumbers = mathRandom.nextInvertibleSimpleComplexNumbers(bound, howMany);
         assertThat(complexNumbers).hasSize(howMany)
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> !complexNumber.equals(SimpleComplexNumber.ZERO), "invertible"));
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(negatedBigBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(bigBound) < 0,
+                "upper bound (real part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"))
+            .are(new Condition<>(complexNumber -> !complexNumber.equals(SimpleComplexNumber.ZERO), "invertible"));
     }
 
     @Test
     public void nextRealComplexNumberBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumber(0, validScale))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextRealComplexNumberScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumber(bound, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -787,22 +787,22 @@ public final class MathRandomTest {
     public void nextRealComplexNumberShouldSucceed() {
         final RealComplexNumber actual = mathRandom.nextRealComplexNumber(bound, validScale);
         assertThat(actual.getReal()).isGreaterThan(negatedBigDecimalBound).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
+            .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
         assertThat(actual.getImaginary()).isGreaterThan(negatedBigDecimalBound).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
+            .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
     }
 
     @Test
     public void nextInvertibleRealComplexNumberBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleRealComplexNumber(1, validScale))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
 
     }
 
     @Test
     public void nextInvertibleRealComplexNumberScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleRealComplexNumber(bound, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
@@ -810,31 +810,32 @@ public final class MathRandomTest {
     public void nextInvertibleRealComplexNumberShouldSucceed() {
         final RealComplexNumber actual = mathRandom.nextInvertibleRealComplexNumber(bound, validScale);
         assertThat(actual.getReal()).isGreaterThan(negatedBigDecimalBound).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
+            .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (real part)"));
         assertThat(actual.getImaginary()).isGreaterThan(negatedBigDecimalBound).isLessThan(decimalBound)
-                .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
-        assertThat((actual.getReal().compareTo(BigDecimal.ZERO) != 0) ||
-                (actual.getImaginary().compareTo(BigDecimal.ZERO) != 0)).isTrue();
+            .is(new Condition<>(decimal -> decimal.scale() == validScale, "scaled (imaginary part)"));
+        assertThat(
+            actual.getReal().compareTo(BigDecimal.ZERO) != 0 || actual.getImaginary().compareTo(BigDecimal.ZERO) != 0)
+                .isTrue();
     }
 
     @Test
     public void nextRealComplexNumbersBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumbers(0, validScale, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextRealComplexNumbersScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumbers(bound, -1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextRealComplexNumbersTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumbers(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -842,72 +843,71 @@ public final class MathRandomTest {
     public void nextRealComplexNumbersShouldSucceed() {
         final List<RealComplexNumber> complexNumbers = mathRandom.nextRealComplexNumbers(bound, validScale, howMany);
         assertThat(complexNumbers).hasSize(howMany)
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)")).are(new Condition<>(
-                complexNumber -> complexNumber.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
+                "upper bound (real part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(negatedBigDecimalBound) > 0,
                 "lower bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale,
-                        "scaled (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
-                        "scaled (imaginary part)"));
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (imaginary part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale, "scaled (real part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
+                "scaled (imaginary part)"));
     }
 
     @Test
     public void nextInvertibleRealComplexNumbersBoundTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleRealComplexNumbers(1, validScale, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 1 but actual 1");
 
     }
 
     @Test
     public void nextInvertibleRealComplexNumbersScaleTooLowShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleRealComplexNumbers(bound, -1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextInvertibleRealComplexNumbersTooLessShoudThrowException() {
         assertThatThrownBy(() -> mathRandom.nextInvertibleRealComplexNumbers(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
     @Test
     public void nextInvertibleRealComplexNumbersShouldSucceed() {
         final List<RealComplexNumber> complexNumbers =
-                mathRandom.nextInvertibleRealComplexNumbers(bound, validScale, howMany);
+            mathRandom.nextInvertibleRealComplexNumbers(bound, validScale, howMany);
         assertThat(complexNumbers).hasSize(howMany)
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)")).are(new Condition<>(
-                complexNumber -> complexNumber.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(decimalBound) < 0,
+                "upper bound (real part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(negatedBigDecimalBound) > 0,
                 "lower bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (imaginary part)"))
-                .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale,
-                        "scale of the real part"))
-                .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
-                        "scale of the imaginary part")).are(new Condition<>(
-                complexNumber -> (complexNumber.getReal().compareTo(BigDecimal.ZERO) != 0) ||
-                        (complexNumber.getImaginary().compareTo(BigDecimal.ZERO) != 0), "invertible"));
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (imaginary part)"))
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().scale() == validScale,
+                "scale of the real part"))
+            .are(new Condition<>(complexNumber -> complexNumber.getImaginary().scale() == validScale,
+                "scale of the imaginary part"))
+            .are(new Condition<>(complexNumber -> complexNumber.getReal().compareTo(BigDecimal.ZERO) != 0
+                || complexNumber.getImaginary().compareTo(BigDecimal.ZERO) != 0, "invertible"));
     }
 
     @Test
     public void nextPolarFormBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPolarForm(0, validScale))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextPolarFormScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPolarForm(bound, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
@@ -924,47 +924,46 @@ public final class MathRandomTest {
     @Test
     public void nextPolarFormsBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPolarForms(0, validScale, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextPolarFormsScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPolarForms(bound, -1, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextPolarFormsTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextPolarForms(bound, validScale, -1))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual -1");
     }
 
     @Test
     public void nextPolarFormsShouldSucceed() {
         assertThat(mathRandom.nextPolarForms(bound, validScale, howMany)).hasOnlyElementsOfType(PolarForm.class)
-                .hasSize(howMany)
-                .are(new Condition<>(polarForm -> polarForm.getRadial().compareTo(negatedBigDecimalBound) > 0,
-                        "radial lower bound"))
-                .are(new Condition<>(polarForm -> polarForm.getRadial().compareTo(decimalBound) < 0,
-                        "radial upper bound"))
-                .are(new Condition<>(polarForm -> polarForm.getRadial().scale() == validScale, "radial scaled"))
-                .are(new Condition<>(polarForm -> polarForm.getAngular().compareTo(negatedBigDecimalBound) > 0,
-                        "angular lower bound"))
-                .are(new Condition<>(polarForm -> polarForm.getAngular().compareTo(decimalBound) < 0,
-                        "angluar upper bound"))
-                .are(new Condition<>(polarForm -> polarForm.getAngular().scale() == validScale, "angular scaled"));
+            .hasSize(howMany)
+            .are(new Condition<>(polarForm -> polarForm.getRadial().compareTo(negatedBigDecimalBound) > 0,
+                "radial lower bound"))
+            .are(new Condition<>(polarForm -> polarForm.getRadial().compareTo(decimalBound) < 0, "radial upper bound"))
+            .are(new Condition<>(polarForm -> polarForm.getRadial().scale() == validScale, "radial scaled"))
+            .are(new Condition<>(polarForm -> polarForm.getAngular().compareTo(negatedBigDecimalBound) > 0,
+                "angular lower bound"))
+            .are(
+                new Condition<>(polarForm -> polarForm.getAngular().compareTo(decimalBound) < 0, "angluar upper bound"))
+            .are(new Condition<>(polarForm -> polarForm.getAngular().scale() == validScale, "angular scaled"));
     }
 
     @Test
     public void nextBigIntegerVectorBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerVector(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextBigIntegerVectorSizeTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerVector(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
 
     }
 
@@ -973,28 +972,28 @@ public final class MathRandomTest {
         final BigIntegerVector actual = mathRandom.nextBigIntegerVector(bound, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.getMap().values())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
     }
 
     @Test
     public void nextBigIntegerVectorsBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerVectors(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextBigIntegerVectorsSizeTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerVectors(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
 
     }
 
     @Test
     public void nextBigIntegerVectorsTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerVectors(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -1002,36 +1001,36 @@ public final class MathRandomTest {
     public void nextBigIntegerVectorsShouldSucceed() {
         final List<BigIntegerVector> vectors = mathRandom.nextBigIntegerVectors(bound, validSize, howMany);
         assertThat(vectors).hasSize(howMany)
-                .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
+            .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
         vectors.forEach(vector -> assertThat(vector.getMap().values())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextBigIntegerMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerMatrix(0, validRowSize, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextBigIntegerMatrixRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerMatrix(bound, 0, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void nextBigIntegerMatrixColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerMatrix(bound, validRowSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 
     @Test
     public void nextBigIntegerMatrixShouldSucceed() {
         final BigIntegerMatrix matrix = mathRandom.nextBigIntegerMatrix(bound, validRowSize, validColumnSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualByComparingTo(validRowSize);
         assertThat(matrix.columnSize()).isEqualTo(validColumnSize);
     }
@@ -1039,21 +1038,21 @@ public final class MathRandomTest {
     @Test
     public void nextUpperTriangularBigIntegerMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigIntegerMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigIntegerMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigIntegerMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigIntegerMatrixShouldSucceed() {
         final BigIntegerMatrix matrix = mathRandom.nextUpperTriangularBigIntegerMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.upperTriangular()).isTrue();
@@ -1062,21 +1061,21 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularBigIntegerMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigIntegerMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigIntegerMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigIntegerMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigIntegerMatrixShouldSucceed() {
         final BigIntegerMatrix matrix = mathRandom.nextLowerTriangularBigIntegerMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.lowerTriangular()).isTrue();
@@ -1085,21 +1084,21 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularBigIntegerMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigIntegerMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigIntegerMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigIntegerMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigIntegerMatrixShouldSucceed() {
         final BigIntegerMatrix matrix = mathRandom.nextTriangularBigIntegerMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.triangular()).isTrue();
@@ -1108,21 +1107,21 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalBigIntegerMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigIntegerMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigIntegerMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigIntegerMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigIntegerMatrixShouldSucceed() {
         final BigIntegerMatrix matrix = mathRandom.nextDiagonalBigIntegerMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.diagonal()).isTrue();
@@ -1131,21 +1130,21 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricBigIntegerMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigIntegerMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigIntegerMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigIntegerMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigIntegerMatrixShouldSucceed() {
         final BigIntegerMatrix matrix = mathRandom.nextSymmetricBigIntegerMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.symmetric()).isTrue();
@@ -1154,21 +1153,21 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricBigIntegerMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigIntegerMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigIntegerMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigIntegerMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigIntegerMatrixShouldSucceed() {
         final BigIntegerMatrix matrix = mathRandom.nextSkewSymmetricBigIntegerMatrix(bound, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.skewSymmetric()).isTrue();
@@ -1177,233 +1176,233 @@ public final class MathRandomTest {
     @Test
     public void nextBigIntegerMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerMatrices(0, validRowSize, validColumnSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextBigIntegerMatricesRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerMatrices(bound, 0, validColumnSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void nextBigIntegerMatricesColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerMatrices(bound, validRowSize, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 
     @Test
     public void nextBigIntegerMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigIntegerMatrices(bound, validRowSize, validColumnSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextBigIntegerMatricesShouldSucceed() {
         final List<BigIntegerMatrix> matrices =
-                mathRandom.nextBigIntegerMatrices(bound, validRowSize, validColumnSize, howMany);
+            mathRandom.nextBigIntegerMatrices(bound, validRowSize, validColumnSize, howMany);
         assertThat(matrices).hasSize(howMany)
-                .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
+            .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
+            .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextUpperTriangularBigIntegerMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigIntegerMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigIntegerMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigIntegerMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigIntegerMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigIntegerMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigIntegerMatricesShouldSucceed() {
         final List<BigIntegerMatrix> matrices =
-                mathRandom.nextUpperTriangularBigIntegerMatrices(bound, validSize, howMany);
+            mathRandom.nextUpperTriangularBigIntegerMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(BigIntegerMatrix::upperTriangular, "upper triangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(BigIntegerMatrix::upperTriangular, "upper triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextLowerTriangularBigIntegerMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigIntegerMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigIntegerMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigIntegerMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigIntegerMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigIntegerMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigIntegerMatricesShouldSucceed() {
         final List<BigIntegerMatrix> matrices =
-                mathRandom.nextLowerTriangularBigIntegerMatrices(bound, validSize, howMany);
+            mathRandom.nextLowerTriangularBigIntegerMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(BigIntegerMatrix::lowerTriangular, "lower triangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(BigIntegerMatrix::lowerTriangular, "lower triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextTriangularBigIntegerMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigIntegerMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigIntegerMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigIntegerMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigIntegerMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigIntegerMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigIntegerMatricesShouldSucceed() {
         final List<BigIntegerMatrix> matrices = mathRandom.nextTriangularBigIntegerMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextDiagonalBigIntegerMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigIntegerMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigIntegerMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigIntegerMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigIntegerMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigIntegerMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigIntegerMatricesShouldSucceed() {
         final List<BigIntegerMatrix> matrices = mathRandom.nextDiagonalBigIntegerMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextSymmetricBigIntegerMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigIntegerMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigIntegerMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigIntegerMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigIntegerMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigIntegerMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigIntegerMatricesShouldSucceed() {
         final List<BigIntegerMatrix> matrices = mathRandom.nextSymmetricBigIntegerMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextSkewSymmetricBigIntegerMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigIntegerMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigIntegerMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigIntegerMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigIntegerMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigIntegerMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigIntegerMatricesShouldSucceed() {
         final List<BigIntegerMatrix> matrices =
-                mathRandom.nextSkewSymmetricBigIntegerMatrices(bound, validSize, howMany);
+            mathRandom.nextSkewSymmetricBigIntegerMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
+            .are(new Condition<>(element -> element.compareTo(negatedBigBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(bigBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextBigDecimalVectorBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalVector(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextBigDecimalVectorScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalVector(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void nextBigDecimalVectorSizeTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalVector(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
 
     }
 
@@ -1412,36 +1411,36 @@ public final class MathRandomTest {
         final BigDecimalVector actual = mathRandom.nextBigDecimalVector(bound, validScale, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.getMap().values())
-                .are(new Condition<>(element -> element.compareTo(BigDecimal.ZERO) > -1, "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
-                .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
+            .are(new Condition<>(element -> element.compareTo(BigDecimal.ZERO) > -1, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
+            .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
     }
 
     @Test
     public void nextBigDecimalVectorsBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalVectors(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextBigDecimalVectorsScaleTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalVectors(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextBigDecimalVectorsSizeTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalVectors(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
 
     }
 
     @Test
     public void nextBigDecimalVectorsTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalVectors(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
@@ -1449,46 +1448,47 @@ public final class MathRandomTest {
     public void nextBigDecimalVectorsShouldSucceed() {
         final List<BigDecimalVector> vectors = mathRandom.nextBigDecimalVectors(bound, validScale, validSize, howMany);
         assertThat(vectors).hasSize(howMany)
-                .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
+            .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
         vectors.forEach(vector -> assertThat(vector.getMap().values())
-                .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
-                .are(new Condition<>(element -> element.scale() == validScale, "scale of the element")));
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
+            .are(new Condition<>(element -> element.scale() == validScale, "scale of the element")));
     }
 
     @Test
     public void nextBigDecimalMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalMatrix(0, validScale, validRowSize, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextBigDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalMatrix(bound, -1, validRowSize, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextBigDecimalMatrixRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalMatrix(bound, validScale, 0, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void nextBigDecimalMatrixColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalMatrix(bound, validScale, validRowSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 
     @Test
     public void nextBigDecimalMatrixShouldSucceed() {
         final BigDecimalMatrix matrix =
-                mathRandom.nextBigDecimalMatrix(bound, validScale, validRowSize, validColumnSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
-                .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
+            mathRandom.nextBigDecimalMatrix(bound, validScale, validRowSize, validColumnSize);
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"))
+            .are(new Condition<>(element -> element.scale() == validScale, "scale of the element"));
         assertThat(matrix.rowSize()).isEqualTo(validRowSize);
         assertThat(matrix.columnSize()).isEqualTo(validColumnSize);
     }
@@ -1496,27 +1496,28 @@ public final class MathRandomTest {
     @Test
     public void nextUpperTriangularBigDecimalMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigDecimalMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigDecimalMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextUpperTriangularBigDecimalMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigDecimalMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigDecimalMatrixShouldSucceed() {
         final BigDecimalMatrix matrix = mathRandom.nextUpperTriangularBigDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
         matrix.cells().forEach(cell -> {
             if (cell.getRowKey() <= cell.getColumnKey()) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
@@ -1530,27 +1531,28 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularBigDecimalMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigDecimalMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigDecimalMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextLowerTriangularBigDecimalMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigDecimalMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigDecimalMatrixShouldSucceed() {
         final BigDecimalMatrix matrix = mathRandom.nextLowerTriangularBigDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
         matrix.cells().forEach(cell -> {
             if (cell.getRowKey() >= cell.getColumnKey()) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
@@ -1564,32 +1566,33 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularBigDecimalMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigDecimalMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigDecimalMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextTriangularBigDecimalMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigDecimalMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigDecimalMatrixShouldSucceed() {
         final BigDecimalMatrix matrix = mathRandom.nextTriangularBigDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
         matrix.cells().forEach(cell -> {
-            if (matrix.upperTriangular() && (cell.getRowKey() <= cell.getColumnKey())) {
+            if (matrix.upperTriangular() && cell.getRowKey() <= cell.getColumnKey()) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
             }
-            if (matrix.lowerTriangular() && (cell.getRowKey() >= cell.getColumnKey())) {
+            if (matrix.lowerTriangular() && cell.getRowKey() >= cell.getColumnKey()) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
             }
         });
@@ -1601,27 +1604,28 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalBigDecimalMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigDecimalMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigDecimalMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextDiagonalBigDecimalMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigDecimalMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigDecimalMatrixShouldSucceed() {
         final BigDecimalMatrix matrix = mathRandom.nextDiagonalBigDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
         matrix.cells().forEach(cell -> {
             if (cell.getRowKey().equals(cell.getColumnKey())) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
@@ -1635,27 +1639,28 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricBigDecimalMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigDecimalMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigDecimalMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextSymmetricBigDecimalMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigDecimalMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigDecimalMatrixShouldSucceed() {
         final BigDecimalMatrix matrix = mathRandom.nextSymmetricBigDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
         matrix.elements().forEach(element -> assertThat(element.scale()).isEqualTo(validScale));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
@@ -1665,27 +1670,28 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricBigDecimalMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigDecimalMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigDecimalMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigDecimalMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextSkewSymmetricBigDecimalMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigDecimalMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigDecimalMatrixShouldSucceed() {
         final BigDecimalMatrix matrix = mathRandom.nextSkewSymmetricBigDecimalMatrix(bound, validScale, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element"));
         matrix.cells().forEach(cell -> {
             if (!cell.getRowKey().equals(cell.getColumnKey())) {
                 assertThat(cell.getValue().scale()).isEqualTo(validScale);
@@ -1699,279 +1705,279 @@ public final class MathRandomTest {
     @Test
     public void nextBigDecimalMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextBigDecimalMatrices(0, validScale, validRowSize, validColumnSize, howMany))
+            () -> mathRandom.nextBigDecimalMatrices(0, validScale, validRowSize, validColumnSize, howMany))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextBigDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalMatrices(bound, -1, validRowSize, validColumnSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextBigDecimalMatricesRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalMatrices(bound, validScale, 0, validColumnSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void nextBigDecimalMatricesColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalMatrices(bound, validScale, validRowSize, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 
     @Test
     public void nextBigDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextBigDecimalMatrices(bound, validScale, validRowSize, validColumnSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextBigDecimalMatricesShouldSucceed() {
         final List<BigDecimalMatrix> matrices =
-                mathRandom.nextBigDecimalMatrices(bound, validScale, validRowSize, validColumnSize, howMany);
+            mathRandom.nextBigDecimalMatrices(bound, validScale, validRowSize, validColumnSize, howMany);
         assertThat(matrices).hasSize(howMany)
-                .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
+            .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
+            .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextUpperTriangularBigDecimalMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigDecimalMatrices(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigDecimalMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextUpperTriangularBigDecimalMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigDecimalMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularBigDecimalMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularBigDecimalMatricesShouldSucceed() {
         final List<BigDecimalMatrix> matrices =
-                mathRandom.nextUpperTriangularBigDecimalMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextUpperTriangularBigDecimalMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(BigDecimalMatrix::upperTriangular, "upper triangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(BigDecimalMatrix::upperTriangular, "upper triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextLowerTriangularBigDecimalMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigDecimalMatrices(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigDecimalMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextLowerTriangularBigDecimalMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigDecimalMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularBigDecimalMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularBigDecimalMatricesShouldSucceed() {
         final List<BigDecimalMatrix> matrices =
-                mathRandom.nextLowerTriangularBigDecimalMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextLowerTriangularBigDecimalMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(BigDecimalMatrix::lowerTriangular, "lower triangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(BigDecimalMatrix::lowerTriangular, "lower triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextTriangularBigDecimalMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigDecimalMatrices(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigDecimalMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextTriangularBigDecimalMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigDecimalMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularBigDecimalMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularBigDecimalMatricesShouldSucceed() {
         final List<BigDecimalMatrix> matrices =
-                mathRandom.nextTriangularBigDecimalMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextTriangularBigDecimalMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextDiagonalBigDecimalMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigDecimalMatrices(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigDecimalMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextDiagonalBigDecimalMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigDecimalMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalBigDecimalMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalBigDecimalMatricesShouldSucceed() {
         final List<BigDecimalMatrix> matrices =
-                mathRandom.nextDiagonalBigDecimalMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextDiagonalBigDecimalMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextSymmetricBigDecimalMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigDecimalMatrices(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigDecimalMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextSymmetricBigDecimalMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigDecimalMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricBigDecimalMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricBigDecimalMatricesShouldSucceed() {
         final List<BigDecimalMatrix> matrices =
-                mathRandom.nextSymmetricBigDecimalMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextSymmetricBigDecimalMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextSkewSymmetricBigDecimalMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigDecimalMatrices(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigDecimalMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigDecimalMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextSkewSymmetricBigDecimalMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigDecimalMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigDecimalMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricBigDecimalMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricBigDecimalMatricesShouldSucceed() {
         final List<BigDecimalMatrix> matrices =
-                mathRandom.nextSkewSymmetricBigDecimalMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextSkewSymmetricBigDecimalMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound of the element"))
-                .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
+            .are(
+                new Condition<>(element -> element.compareTo(negatedBigDecimalBound) > 0, "lower bound of the element"))
+            .are(new Condition<>(element -> element.compareTo(decimalBound) < 0, "upper bound of the element")));
     }
 
     @Test
     public void nextSimpleComplexNumberVectorBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberVector(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSimpleComplexNumberVectorSizeTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberVector(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
 
     }
 
@@ -1980,81 +1986,82 @@ public final class MathRandomTest {
         final SimpleComplexNumberVector actual = mathRandom.nextSimpleComplexNumberVector(bound, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.getMap().values())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"));
     }
 
     @Test
     public void nextSimpleComplexNumberVectorsBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberVectors(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextSimpleComplexNumberVectorsSizeTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberVectors(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
 
     }
 
     @Test
     public void nextSimpleComplexNumberVectorsTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberVectors(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
     @Test
     public void nextSimpleComplexNumberVectorsShouldSucceed() {
         final List<SimpleComplexNumberVector> vectors =
-                mathRandom.nextSimpleComplexNumberVectors(bound, validSize, howMany);
+            mathRandom.nextSimpleComplexNumberVectors(bound, validSize, howMany);
         assertThat(vectors).hasSize(howMany)
-                .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
+            .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
         vectors.forEach(vector -> assertThat(vector.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)")));
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)")));
     }
 
     @Test
     public void nextSimpleComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberMatrix(0, validRowSize, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSimpleComplexNumberMatrixRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberMatrix(bound, 0, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void nextSimpleComplexNumberMatrixColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberMatrix(bound, validRowSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 
     @Test
     public void nextSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix =
-                mathRandom.nextSimpleComplexNumberMatrix(bound, validRowSize, validColumnSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+            mathRandom.nextSimpleComplexNumberMatrix(bound, validRowSize, validColumnSize);
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"));
         assertThat(matrix.rowSize()).isEqualByComparingTo(validRowSize);
         assertThat(matrix.columnSize()).isEqualTo(validColumnSize);
     }
@@ -2062,26 +2069,27 @@ public final class MathRandomTest {
     @Test
     public void nextUpperTriangularSimpleComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularSimpleComplexNumberMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularSimpleComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularSimpleComplexNumberMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix =
-                mathRandom.nextUpperTriangularSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+            mathRandom.nextUpperTriangularSimpleComplexNumberMatrix(bound, validSize);
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.upperTriangular()).isTrue();
@@ -2090,26 +2098,27 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularSimpleComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularSimpleComplexNumberMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularSimpleComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularSimpleComplexNumberMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix =
-                mathRandom.nextLowerTriangularSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+            mathRandom.nextLowerTriangularSimpleComplexNumberMatrix(bound, validSize);
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.lowerTriangular()).isTrue();
@@ -2118,25 +2127,26 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularSimpleComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularSimpleComplexNumberMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularSimpleComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularSimpleComplexNumberMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix = mathRandom.nextTriangularSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.triangular()).isTrue();
@@ -2145,25 +2155,26 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalSimpleComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalSimpleComplexNumberMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalSimpleComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalSimpleComplexNumberMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix = mathRandom.nextDiagonalSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.diagonal()).isTrue();
@@ -2172,25 +2183,26 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricSimpleComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricSimpleComplexNumberMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricSimpleComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricSimpleComplexNumberMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix = mathRandom.nextSymmetricSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.symmetric()).isTrue();
@@ -2199,26 +2211,27 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricSimpleComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricSimpleComplexNumberMatrix(0, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricSimpleComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricSimpleComplexNumberMatrix(bound, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricSimpleComplexNumberMatrixShouldSucceed() {
         final SimpleComplexNumberMatrix matrix =
-                mathRandom.nextSkewSymmetricSimpleComplexNumberMatrix(bound, validSize);
-        assertThat(matrix.elements()).are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)"));
+            mathRandom.nextSkewSymmetricSimpleComplexNumberMatrix(bound, validSize);
+        assertThat(matrix.elements())
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)"));
         assertThat(matrix.rowSize()).isEqualTo(validSize);
         assertThat(matrix.columnSize()).isEqualTo(validSize);
         assertThat(matrix.skewSymmetric()).isTrue();
@@ -2227,271 +2240,271 @@ public final class MathRandomTest {
     @Test
     public void nextSimpleComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberMatrices(0, validRowSize, validColumnSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSimpleComplexNumberMatricesRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberMatrices(bound, 0, validColumnSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void nextSimpleComplexNumberMatricesColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberMatrices(bound, validRowSize, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 
     @Test
     public void nextSimpleComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSimpleComplexNumberMatrices(bound, validRowSize, validColumnSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextSimpleComplexNumberMatricesShouldSucceed() {
         final List<SimpleComplexNumberMatrix> matrices =
-                mathRandom.nextSimpleComplexNumberMatrices(bound, validRowSize, validColumnSize, howMany);
+            mathRandom.nextSimpleComplexNumberMatrices(bound, validRowSize, validColumnSize, howMany);
         assertThat(matrices).hasSize(howMany)
-                .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
+            .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
+            .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)")));
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)")));
     }
 
     @Test
     public void nextUpperTriangularSimpleComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularSimpleComplexNumberMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularSimpleComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularSimpleComplexNumberMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularSimpleComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularSimpleComplexNumberMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularSimpleComplexNumberMatricesShouldSucceed() {
         final List<SimpleComplexNumberMatrix> matrices =
-                mathRandom.nextUpperTriangularSimpleComplexNumberMatrices(bound, validSize, howMany);
+            mathRandom.nextUpperTriangularSimpleComplexNumberMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(SimpleComplexNumberMatrix::upperTriangular, "upper triangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(SimpleComplexNumberMatrix::upperTriangular, "upper triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)")));
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)")));
     }
 
     @Test
     public void nextLowerTriangularSimpleComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularSimpleComplexNumberMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularSimpleComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularSimpleComplexNumberMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularSimpleComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularSimpleComplexNumberMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularSimpleComplexNumberMatricesShouldSucceed() {
         final List<SimpleComplexNumberMatrix> matrices =
-                mathRandom.nextLowerTriangularSimpleComplexNumberMatrices(bound, validSize, howMany);
+            mathRandom.nextLowerTriangularSimpleComplexNumberMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(SimpleComplexNumberMatrix::lowerTriangular, "lower triangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(SimpleComplexNumberMatrix::lowerTriangular, "lower triangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)")));
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)")));
     }
 
     @Test
     public void nextTriangularSimpleComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularSimpleComplexNumberMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularSimpleComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularSimpleComplexNumberMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularSimpleComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularSimpleComplexNumberMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularSimpleComplexNumberMatricesShouldSucceed() {
         final List<SimpleComplexNumberMatrix> matrices =
-                mathRandom.nextTriangularSimpleComplexNumberMatrices(bound, validSize, howMany);
+            mathRandom.nextTriangularSimpleComplexNumberMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)")));
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)")));
     }
 
     @Test
     public void nextDiagonalSimpleComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalSimpleComplexNumberMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalSimpleComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalSimpleComplexNumberMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalSimpleComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalSimpleComplexNumberMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalSimpleComplexNumberMatricesShouldSucceed() {
         final List<SimpleComplexNumberMatrix> matrices =
-                mathRandom.nextDiagonalSimpleComplexNumberMatrices(bound, validSize, howMany);
+            mathRandom.nextDiagonalSimpleComplexNumberMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)")));
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)")));
     }
 
     @Test
     public void nextSymmetricSimpleComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricSimpleComplexNumberMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricSimpleComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricSimpleComplexNumberMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricSimpleComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricSimpleComplexNumberMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricSimpleComplexNumberMatricesShouldSucceed() {
         final List<SimpleComplexNumberMatrix> matrices =
-                mathRandom.nextSymmetricSimpleComplexNumberMatrices(bound, validSize, howMany);
+            mathRandom.nextSymmetricSimpleComplexNumberMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)")));
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)")));
     }
 
     @Test
     public void nextSkewSymmetricSimpleComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricSimpleComplexNumberMatrices(0, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricSimpleComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricSimpleComplexNumberMatrices(bound, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricSimpleComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricSimpleComplexNumberMatrices(bound, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricSimpleComplexNumberMatricesShouldSucceed() {
         final List<SimpleComplexNumberMatrix> matrices =
-                mathRandom.nextSkewSymmetricSimpleComplexNumberMatrices(bound, validSize, howMany);
+            mathRandom.nextSkewSymmetricSimpleComplexNumberMatrices(bound, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
-                        "upper bound (imaginary part)")));
+            .are(
+                new Condition<>(element -> element.getReal().compareTo(negatedBigBound) > 0, "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(bigBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(bigBound) < 0,
+                "upper bound (imaginary part)")));
     }
 
     @Test
     public void nextRealComplexNumberVectorBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberVector(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextRealComplexNumberVectorScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberVector(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void nextRealComplexNumberVectorSizeTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberVector(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class);
+            .isExactlyInstanceOf(IllegalArgumentException.class);
 
     }
 
@@ -2500,104 +2513,101 @@ public final class MathRandomTest {
         final RealComplexNumberVector actual = mathRandom.nextRealComplexNumberVector(bound, validScale, validSize);
         assertThat(actual.size()).isEqualTo(validSize);
         assertThat(actual.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().scale() == validScale, "scaled (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().scale() == validScale, "scaled (real part)"));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().scale() == validScale, "scaled (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().scale() == validScale, "scaled (real part)"));
     }
 
     @Test
     public void nextRealComplexNumberVectorsBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberVectors(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
 
     }
 
     @Test
     public void nextRealComplexNumberVectorsScaleTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberVectors(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
 
     }
 
     @Test
     public void nextRealComplexNumberVectorsSizeTooLowhouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberVectors(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
 
     }
 
     @Test
     public void nextRealComplexNumberVectorsTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberVectors(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
 
     }
 
     @Test
     public void nextRealComplexNumberVectorsShouldSucceed() {
         final List<RealComplexNumberVector> vectors =
-                mathRandom.nextRealComplexNumberVectors(bound, validScale, validSize, howMany);
+            mathRandom.nextRealComplexNumberVectors(bound, validScale, validSize, howMany);
         assertThat(vectors).hasSize(howMany)
-                .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
+            .are(new Condition<>(vector -> vector.size() == validSize, "size of the vector"));
         vectors.forEach(vector -> assertThat(vector.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().scale() == validScale, "scaled (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().scale() == validScale, "scaled (real part)")));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().scale() == validScale, "scaled (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().scale() == validScale, "scaled (real part)")));
     }
 
     @Test
     public void nextRealComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberMatrix(0, validScale, validRowSize, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextRealComplexNumberMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberMatrix(bound, -1, validRowSize, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextRealComplexNumberMatrixRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberMatrix(bound, validScale, 0, validColumnSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void nextRealComplexNumberMatrixColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberMatrix(bound, validScale, validRowSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 
     @Test
     public void nextRealComplexNumberMatrixShouldSucceed() {
         final RealComplexNumberMatrix matrix =
-                mathRandom.nextRealComplexNumberMatrix(bound, validScale, validRowSize, validColumnSize);
+            mathRandom.nextRealComplexNumberMatrix(bound, validScale, validRowSize, validColumnSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().scale() == validScale, "scaled (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().scale() == validScale, "scaled (real part)"));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().scale() == validScale, "scaled (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().scale() == validScale, "scaled (real part)"));
         assertThat(matrix.rowSize()).isEqualTo(validRowSize);
         assertThat(matrix.columnSize()).isEqualTo(validColumnSize);
     }
@@ -2605,34 +2615,33 @@ public final class MathRandomTest {
     @Test
     public void nextUpperTriangularRealComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularRealComplexNumberMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularRealComplexNumberMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularRealComplexNumberMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextUpperTriangularRealComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularRealComplexNumberMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularRealComplexNumberMatrixShouldSucceed() {
         final RealComplexNumberMatrix matrix =
-                mathRandom.nextUpperTriangularRealComplexNumberMatrix(bound, validScale, validSize);
+            mathRandom.nextUpperTriangularRealComplexNumberMatrix(bound, validScale, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (real part)"));
         matrix.cells().forEach(cell -> {
             if (cell.getRowKey() <= cell.getColumnKey()) {
                 assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
@@ -2647,34 +2656,33 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularRealComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularRealComplexNumberMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularRealComplexNumberMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularRealComplexNumberMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextLowerTriangularRealComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularRealComplexNumberMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularRealComplexNumberMatrixShouldSucceed() {
         final RealComplexNumberMatrix matrix =
-                mathRandom.nextLowerTriangularRealComplexNumberMatrix(bound, validScale, validSize);
+            mathRandom.nextLowerTriangularRealComplexNumberMatrix(bound, validScale, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (real part)"));
         matrix.cells().forEach(cell -> {
             if (cell.getRowKey() >= cell.getColumnKey()) {
                 assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
@@ -2689,37 +2697,36 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularRealComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularRealComplexNumberMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularRealComplexNumberMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularRealComplexNumberMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextTriangularRealComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularRealComplexNumberMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularRealComplexNumberMatrixShouldSucceed() {
         final RealComplexNumberMatrix matrix =
-                mathRandom.nextTriangularRealComplexNumberMatrix(bound, validScale, validSize);
+            mathRandom.nextTriangularRealComplexNumberMatrix(bound, validScale, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (real part)"));
         matrix.cells().forEach(cell -> {
-            if ((matrix.upperTriangular() && (cell.getRowKey() <= cell.getColumnKey())) ||
-                    (matrix.lowerTriangular() && (cell.getRowKey() >= cell.getColumnKey()))) {
+            if (matrix.upperTriangular() && cell.getRowKey() <= cell.getColumnKey()
+                || matrix.lowerTriangular() && cell.getRowKey() >= cell.getColumnKey()) {
                 assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
                 assertThat(cell.getValue().getImaginary().scale()).isEqualTo(validScale);
             }
@@ -2732,34 +2739,33 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalRealComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalRealComplexNumberMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalRealComplexNumberMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalRealComplexNumberMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextDiagonalRealComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalRealComplexNumberMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalRealComplexNumberMatrixShouldSucceed() {
         final RealComplexNumberMatrix matrix =
-                mathRandom.nextDiagonalRealComplexNumberMatrix(bound, validScale, validSize);
+            mathRandom.nextDiagonalRealComplexNumberMatrix(bound, validScale, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (imaginary part)"));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (imaginary part)"));
         matrix.cells().forEach(cell -> {
             if (cell.getRowKey().equals(cell.getColumnKey())) {
                 assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
@@ -2774,34 +2780,33 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricRealComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricRealComplexNumberMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricRealComplexNumberMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricRealComplexNumberMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextSymmetricRealComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricRealComplexNumberMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricRealComplexNumberMatrixShouldSucceed() {
         final RealComplexNumberMatrix matrix =
-                mathRandom.nextSymmetricRealComplexNumberMatrix(bound, validScale, validSize);
+            mathRandom.nextSymmetricRealComplexNumberMatrix(bound, validScale, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (imaginary part)"));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (imaginary part)"));
         matrix.elements().forEach(element -> {
             assertThat(element.getReal().scale()).isEqualTo(validScale);
             assertThat(element.getImaginary().scale()).isEqualTo(validScale);
@@ -2814,34 +2819,33 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricRealComplexNumberMatrixBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricRealComplexNumberMatrix(0, validScale, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricRealComplexNumberMatrixScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricRealComplexNumberMatrix(bound, -1, validSize))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextSkewSymmetricRealComplexNumberMatrixSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricRealComplexNumberMatrix(bound, validScale, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricRealComplexNumberMatrixShouldSucceed() {
         final RealComplexNumberMatrix matrix =
-                mathRandom.nextSkewSymmetricRealComplexNumberMatrix(bound, validScale, validSize);
+            mathRandom.nextSkewSymmetricRealComplexNumberMatrix(bound, validScale, validSize);
         assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (imaginary part)"));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (imaginary part)"));
         matrix.cells().forEach(cell -> {
             if (!cell.getRowKey().equals(cell.getColumnKey())) {
                 assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
@@ -2856,101 +2860,99 @@ public final class MathRandomTest {
     @Test
     public void nextRealComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextRealComplexNumberMatrices(0, validScale, validRowSize, validColumnSize, howMany))
+            () -> mathRandom.nextRealComplexNumberMatrices(0, validScale, validRowSize, validColumnSize, howMany))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextRealComplexNumberMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextRealComplexNumberMatrices(bound, -1, validRowSize, validColumnSize, howMany))
+            () -> mathRandom.nextRealComplexNumberMatrices(bound, -1, validRowSize, validColumnSize, howMany))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextRealComplexNumberMatricesRowSizeTooLowShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextRealComplexNumberMatrices(bound, validScale, 0, validColumnSize, howMany))
+            () -> mathRandom.nextRealComplexNumberMatrices(bound, validScale, 0, validColumnSize, howMany))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected rowSize > 0 but actual 0");
     }
 
     @Test
     public void nextRealComplexNumberMatricesColumnSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextRealComplexNumberMatrices(bound, validScale, validRowSize, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected columnSize > 0 but actual 0");
     }
 
     @Test
     public void nextRealComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextRealComplexNumberMatrices(bound, validScale, validRowSize, validColumnSize, 0))
+            () -> mathRandom.nextRealComplexNumberMatrices(bound, validScale, validRowSize, validColumnSize, 0))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextRealComplexNumberMatricesShouldSucceed() {
         final List<RealComplexNumberMatrix> matrices =
-                mathRandom.nextRealComplexNumberMatrices(bound, validScale, validRowSize, validColumnSize, howMany);
+            mathRandom.nextRealComplexNumberMatrices(bound, validScale, validRowSize, validColumnSize, howMany);
         assertThat(matrices).hasSize(howMany)
-                .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
+            .are(new Condition<>(matrix -> matrix.rowSize() == validRowSize, "row size"))
+            .are(new Condition<>(matrix -> matrix.columnSize() == validColumnSize, "column size"));
         matrices.forEach(matrix -> assertThat(matrix.elements())
-                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                        "upper bound (real part)"))
-                .are(new Condition<>(element -> element.getReal().scale() == validScale, "scaled (real part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                        "lower bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                        "upper bound (imaginary part)"))
-                .are(new Condition<>(element -> element.getImaginary().scale() == validScale,
-                        "scaled (imaginary part)")));
+            .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0, "upper bound (real part)"))
+            .are(new Condition<>(element -> element.getReal().scale() == validScale, "scaled (real part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                "lower bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                "upper bound (imaginary part)"))
+            .are(new Condition<>(element -> element.getImaginary().scale() == validScale, "scaled (imaginary part)")));
     }
 
     @Test
     public void nextUpperTriangularRealComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextUpperTriangularRealComplexNumberMatrices(0, validScale, validSize, howMany))
+            () -> mathRandom.nextUpperTriangularRealComplexNumberMatrices(0, validScale, validSize, howMany))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularRealComplexNumberMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularRealComplexNumberMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextUpperTriangularRealComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextUpperTriangularRealComplexNumberMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularRealComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextUpperTriangularRealComplexNumberMatrices(bound, validScale, validSize, 0))
+            () -> mathRandom.nextUpperTriangularRealComplexNumberMatrices(bound, validScale, validSize, 0))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextUpperTriangularRealComplexNumberMatricesShouldSucceed() {
         final List<RealComplexNumberMatrix> matrices =
-                mathRandom.nextUpperTriangularRealComplexNumberMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextUpperTriangularRealComplexNumberMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(RealComplexNumberMatrix::upperTriangular, "upper triangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(RealComplexNumberMatrix::upperTriangular, "upper triangular"));
         matrices.forEach(matrix -> {
             assertThat(matrix.elements())
-                    .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (real part)"))
-                    .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                            "upper bound (real part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (imaginary part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                            "upper bound (imaginary part)"));
+                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (real part)"))
+                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
+                    "upper bound (real part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (imaginary part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                    "upper bound (imaginary part)"));
             matrix.cells().forEach(cell -> {
                 if (cell.getRowKey() <= cell.getColumnKey()) {
                     assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
@@ -2963,46 +2965,46 @@ public final class MathRandomTest {
     @Test
     public void nextLowerTriangularRealComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextLowerTriangularRealComplexNumberMatrices(0, validScale, validSize, howMany))
+            () -> mathRandom.nextLowerTriangularRealComplexNumberMatrices(0, validScale, validSize, howMany))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularRealComplexNumberMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularRealComplexNumberMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextLowerTriangularRealComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextLowerTriangularRealComplexNumberMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularRealComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextLowerTriangularRealComplexNumberMatrices(bound, validScale, validSize, 0))
+            () -> mathRandom.nextLowerTriangularRealComplexNumberMatrices(bound, validScale, validSize, 0))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextLowerTriangularRealComplexNumberMatricesShouldSucceed() {
         final List<RealComplexNumberMatrix> matrices =
-                mathRandom.nextLowerTriangularRealComplexNumberMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextLowerTriangularRealComplexNumberMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(RealComplexNumberMatrix::lowerTriangular, "lower triangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(RealComplexNumberMatrix::lowerTriangular, "lower triangular"));
         matrices.forEach(matrix -> {
             assertThat(matrix.elements())
-                    .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (real part)"))
-                    .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                            "upper bound (real part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (imaginary part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                            "upper bound (imaginary part)"));
+                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (real part)"))
+                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
+                    "upper bound (real part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (imaginary part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                    "upper bound (imaginary part)"));
             matrix.cells().forEach(cell -> {
                 if (cell.getRowKey() >= cell.getColumnKey()) {
                     assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
@@ -3015,47 +3017,47 @@ public final class MathRandomTest {
     @Test
     public void nextTriangularRealComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularRealComplexNumberMatrices(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularRealComplexNumberMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularRealComplexNumberMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextTriangularRealComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularRealComplexNumberMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularRealComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextTriangularRealComplexNumberMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextTriangularRealComplexNumberMatricesShouldSucceed() {
         final List<RealComplexNumberMatrix> matrices =
-                mathRandom.nextTriangularRealComplexNumberMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextTriangularRealComplexNumberMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.triangular(), "riangular"));
         matrices.forEach(matrix -> {
             assertThat(matrix.elements())
-                    .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (real part)"))
-                    .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                            "upper bound (real part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (imaginary part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                            "upper bound (imaginary part)"));
+                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (real part)"))
+                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
+                    "upper bound (real part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (imaginary part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                    "upper bound (imaginary part)"));
             matrix.cells().forEach(cell -> {
-                if ((matrix.upperTriangular() && (cell.getRowKey() <= cell.getColumnKey())) ||
-                        (matrix.lowerTriangular() && (cell.getRowKey() >= cell.getColumnKey()))) {
+                if (matrix.upperTriangular() && cell.getRowKey() <= cell.getColumnKey()
+                    || matrix.lowerTriangular() && cell.getRowKey() >= cell.getColumnKey()) {
                     assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
                     assertThat(cell.getValue().getImaginary().scale()).isEqualTo(validScale);
                 }
@@ -3066,44 +3068,44 @@ public final class MathRandomTest {
     @Test
     public void nextDiagonalRealComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalRealComplexNumberMatrices(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalRealComplexNumberMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalRealComplexNumberMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextDiagonalRealComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalRealComplexNumberMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalRealComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextDiagonalRealComplexNumberMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextDiagonalRealComplexNumberMatricesShouldSucceed() {
         final List<RealComplexNumberMatrix> matrices =
-                mathRandom.nextDiagonalRealComplexNumberMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextDiagonalRealComplexNumberMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.diagonal(), "diagonal"));
         matrices.forEach(matrix -> {
             assertThat(matrix.elements())
-                    .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (real part)"))
-                    .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                            "upper bound (real part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (imaginary part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                            "upper bound (imaginary part)"));
+                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (real part)"))
+                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
+                    "upper bound (real part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (imaginary part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                    "upper bound (imaginary part)"));
             matrix.cells().forEach(cell -> {
                 if (cell.getRowKey().equals(cell.getColumnKey())) {
                     assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
@@ -3116,44 +3118,44 @@ public final class MathRandomTest {
     @Test
     public void nextSymmetricRealComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricRealComplexNumberMatrices(0, validScale, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricRealComplexNumberMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricRealComplexNumberMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextSymmetricRealComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricRealComplexNumberMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricRealComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSymmetricRealComplexNumberMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextSymmetricRealComplexNumberMatricesShouldSucceed() {
         final List<RealComplexNumberMatrix> matrices =
-                mathRandom.nextSymmetricRealComplexNumberMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextSymmetricRealComplexNumberMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.symmetric(), "symmetric"));
         matrices.forEach(matrix -> {
             assertThat(matrix.elements())
-                    .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (real part)"))
-                    .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                            "upper bound (real part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (imaginary part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                            "upper bound (imaginary part)"));
+                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (real part)"))
+                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
+                    "upper bound (real part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (imaginary part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                    "upper bound (imaginary part)"));
             matrix.elements().forEach(element -> {
                 assertThat(element.getReal().scale()).isEqualTo(validScale);
                 assertThat(element.getImaginary().scale()).isEqualTo(validScale);
@@ -3164,45 +3166,45 @@ public final class MathRandomTest {
     @Test
     public void nextSkewSymmetricRealComplexNumberMatricesBoundTooLowShouldThrowException() {
         assertThatThrownBy(
-                () -> mathRandom.nextSkewSymmetricRealComplexNumberMatrices(0, validScale, validSize, howMany))
+            () -> mathRandom.nextSkewSymmetricRealComplexNumberMatrices(0, validScale, validSize, howMany))
                 .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected bound > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricRealComplexNumberMatricesScaleTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricRealComplexNumberMatrices(bound, -1, validSize, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale > -1 but actual -1");
     }
 
     @Test
     public void nextSkewSymmetricRealComplexNumberMatricesSizeTooLowShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricRealComplexNumberMatrices(bound, validScale, 0, howMany))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected size > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricRealComplexNumberMatricesTooLessShouldThrowException() {
         assertThatThrownBy(() -> mathRandom.nextSkewSymmetricRealComplexNumberMatrices(bound, validScale, validSize, 0))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected howMany > 0 but actual 0");
     }
 
     @Test
     public void nextSkewSymmetricRealComplexNumberMatricesShouldSucceed() {
         final List<RealComplexNumberMatrix> matrices =
-                mathRandom.nextSkewSymmetricRealComplexNumberMatrices(bound, validScale, validSize, howMany);
+            mathRandom.nextSkewSymmetricRealComplexNumberMatrices(bound, validScale, validSize, howMany);
         assertThat(matrices).hasSize(howMany).are(new Condition<>(matrix -> matrix.rowSize() == validSize, "row size"))
-                .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
-                .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
+            .are(new Condition<>(matrix -> matrix.columnSize() == validSize, "column size"))
+            .are(new Condition<>(matrix -> matrix.skewSymmetric(), "skew-symmetric"));
         matrices.forEach(matrix -> {
             assertThat(matrix.elements())
-                    .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (real part)"))
-                    .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
-                            "upper bound (real part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
-                            "lower bound (imaginary part)"))
-                    .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
-                            "upper bound (imaginary part)"));
+                .are(new Condition<>(element -> element.getReal().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (real part)"))
+                .are(new Condition<>(element -> element.getReal().compareTo(decimalBound) < 0,
+                    "upper bound (real part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(negatedBigDecimalBound) > 0,
+                    "lower bound (imaginary part)"))
+                .are(new Condition<>(element -> element.getImaginary().compareTo(decimalBound) < 0,
+                    "upper bound (imaginary part)"));
             matrix.cells().forEach(cell -> {
                 if (!cell.getRowKey().equals(cell.getColumnKey())) {
                     assertThat(cell.getValue().getReal().scale()).isEqualTo(validScale);
@@ -3215,6 +3217,6 @@ public final class MathRandomTest {
     @Test
     public void toStringShouldSucceed() {
         assertThat(mathRandom.toString())
-                .isEqualTo(MoreObjects.toStringHelper(mathRandom).add("random", mathRandom.getRandom()).toString());
+            .isEqualTo(MoreObjects.toStringHelper(mathRandom).add("random", mathRandom.getRandom()).toString());
     }
 }

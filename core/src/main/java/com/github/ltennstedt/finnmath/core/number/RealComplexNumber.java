@@ -26,14 +26,14 @@ import com.github.ltennstedt.finnmath.core.linear.BigDecimalMatrix;
 import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Comparator;
-import java.util.Objects;
 
 /**
- * An immutable implementation of a complex number which uses {@link BigDecimal} as type for its real and imaginary
- * part
+ * An immutable implementation of a complex number which uses {@link BigDecimal}
+ * as type for its real and imaginary part
  *
  * @author Lars Tennstedt
  * @since 1
@@ -68,45 +68,18 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      */
     public static final RealComplexNumberComparator REAL_COMPLEX_NUMBER_COMPARATOR = new RealComplexNumberComparator();
 
-    /**
-     * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part
-     *
-     * @param real
-     *         the real part
-     * @param imaginary
-     *         the imaginary part
-     * @throws NullPointerException
-     *         if {@code real == null}
-     * @throws NullPointerException
-     *         if {@code imaginary == null}
-     * @since 1
-     */
-    public RealComplexNumber(final BigDecimal real, final BigDecimal imaginary) {
+    private RealComplexNumber(final BigDecimal real, final BigDecimal imaginary) {
         super(real, imaginary);
-    }
-
-    /**
-     * Constructs a {@link RealComplexNumber} by the given {@link SimpleComplexNumber}
-     *
-     * @param complexNumber
-     *         {@link SimpleComplexNumber}
-     * @throws NullPointerException
-     *         if {@code complexNumber == null}
-     * @since 1
-     */
-    public RealComplexNumber(final SimpleComplexNumber complexNumber) {
-        super(new BigDecimal(requireNonNull(complexNumber, "complexNumber").getReal()),
-                new BigDecimal(complexNumber.getImaginary()));
     }
 
     /**
      * Returns the sum of this {@link RealComplexNumber} and the given one
      *
      * @param summand
-     *         the summand
+     *            the summand
      * @return The sum
      * @throws NullPointerException
-     *         if {@code summand == null}
+     *             if {@code summand == null}
      * @since 1
      */
     @Override
@@ -116,30 +89,72 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
+     * Returns the sum of this {@link RealComplexNumber} and the given one
+     *
+     * @param summand
+     *            the summand
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The sum
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    public RealComplexNumber add(final RealComplexNumber summand, final MathContext mathContext) {
+        requireNonNull(summand, "summand");
+        requireNonNull(mathContext, "mathContext");
+        return new RealComplexNumber(real.add(summand.getReal(), mathContext),
+            imaginary.add(summand.getImaginary(), mathContext));
+    }
+
+    /**
      * Returns the difference of this {@link RealComplexNumber} and the given one
      *
      * @param subtrahend
-     *         the subtrahend
+     *            the subtrahend
      * @return The difference
      * @throws NullPointerException
-     *         if {@code subtrahend == null}
+     *             if {@code subtrahend == null}
      * @since 1
      */
     @Override
     public RealComplexNumber subtract(final RealComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new RealComplexNumber(real.subtract(subtrahend.getReal()),
-                imaginary.subtract(subtrahend.getImaginary()));
+            imaginary.subtract(subtrahend.getImaginary()));
+    }
+
+    /**
+     * Returns the difference of this {@link RealComplexNumber} and the given one
+     *
+     * @param subtrahend
+     *            the subtrahend
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The difference
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    public RealComplexNumber subtract(final RealComplexNumber subtrahend, final MathContext mathContext) {
+        requireNonNull(subtrahend, "subtrahend");
+        requireNonNull(mathContext, "mathContext");
+        return new RealComplexNumber(real.subtract(subtrahend.getReal(), mathContext),
+            imaginary.subtract(subtrahend.getImaginary(), mathContext));
     }
 
     /**
      * Returns the product of this {@link RealComplexNumber} and the given one
      *
      * @param factor
-     *         the factor
+     *            the factor
      * @return The product
      * @throws NullPointerException
-     *         if {@code factor == null}
+     *             if {@code factor == null}
      * @since 1
      */
     @Override
@@ -151,40 +166,43 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Returns the quotient of this {@link RealComplexNumber} and the given one
+     * Returns the product of this {@link RealComplexNumber} and the given one
      *
-     * @param divisor
-     *         the divisor
-     * @return The quotient
+     * @param factor
+     *            the factor
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The product
      * @throws NullPointerException
-     *         if {@code divisor == null}
-     * @throws IllegalArgumentException
-     *         if {@code divisor == 0}
-     * @see #invertible
-     * @see #divide(RealComplexNumber, RoundingMode)
+     *             if {@code factor == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
      * @since 1
      */
-    @Override
-    public RealComplexNumber divide(final RealComplexNumber divisor) {
-        requireNonNull(divisor, "divisor");
-        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
-        return divide(divisor, DEFAULT_ROUNDING_MODE);
+    public RealComplexNumber multiply(final RealComplexNumber factor, final MathContext mathContext) {
+        requireNonNull(factor, "factor");
+        requireNonNull(mathContext, "mathContext");
+        final BigDecimal newReal = real.multiply(factor.getReal(), mathContext)
+            .subtract(imaginary.multiply(factor.getImaginary(), mathContext), mathContext);
+        final BigDecimal newImaginary = real.multiply(factor.getImaginary(), mathContext)
+            .add(imaginary.multiply(factor.getReal(), mathContext), mathContext);
+        return new RealComplexNumber(newReal, newImaginary);
     }
 
     /**
      * Returns the quotient of this {@link RealComplexNumber} and the given one
      *
      * @param divisor
-     *         the divisor
+     *            the divisor
      * @param roundingMode
-     *         the rounding mode
+     *            the rounding mode
      * @return The quotient
      * @throws NullPointerException
-     *         if {@code divisor == null}
+     *             if {@code divisor == null}
      * @throws IllegalArgumentException
-     *         if {@code divisor == 0}
+     *             if {@code divisor == 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #invertible
      * @since 1
      */
@@ -195,10 +213,73 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
         requireNonNull(roundingMode, "roundingMode");
         final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));
         final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))
-                .divide(denominator, roundingMode);
-        final BigDecimal newImaginary =
-                imaginary.multiply(divisor.getReal()).subtract(real.multiply(divisor.getImaginary()))
-                        .divide(denominator, roundingMode);
+            .divide(denominator, roundingMode);
+        final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())
+            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, roundingMode);
+        return new RealComplexNumber(newReal, newImaginary);
+    }
+
+    /**
+     * Returns the quotient of this {@link RealComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @param scale
+     *            scale
+     * @param roundingMode
+     *            the rounding mode
+     * @return The quotient
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws IllegalArgumentException
+     *             if {@code divisor == 0}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @see #invertible
+     * @since 1
+     */
+    public RealComplexNumber divide(final RealComplexNumber divisor, final int scale, final RoundingMode roundingMode) {
+        requireNonNull(divisor, "divisor");
+        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        requireNonNull(roundingMode, "roundingMode");
+        final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));
+        final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))
+            .divide(denominator, scale, roundingMode);
+        final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())
+            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, scale, roundingMode);
+        return new RealComplexNumber(newReal, newImaginary);
+    }
+
+    /**
+     * Returns the quotient of this {@link RealComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The quotient
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws IllegalArgumentException
+     *             if {@code divisor == 0}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @see #invertible
+     * @since 1
+     */
+    public RealComplexNumber divide(final RealComplexNumber divisor, final MathContext mathContext) {
+        requireNonNull(divisor, "divisor");
+        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
+        requireNonNull(mathContext, "mathContext");
+        final BigDecimal denominator =
+            divisor.getReal().pow(2, mathContext).add(divisor.getImaginary().pow(2, mathContext), mathContext);
+        final BigDecimal newReal = real.multiply(divisor.getReal(), mathContext)
+            .add(imaginary.multiply(divisor.getImaginary(), mathContext), mathContext).divide(denominator, mathContext);
+        final BigDecimal newImaginary = imaginary.multiply(divisor.getReal(), mathContext)
+            .subtract(real.multiply(divisor.getImaginary(), mathContext), mathContext).divide(denominator, mathContext);
         return new RealComplexNumber(newReal, newImaginary);
     }
 
@@ -206,10 +287,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns power of this {@link RealComplexNumber} by the given exponent
      *
      * @param exponent
-     *         the exponent
+     *            the exponent
      * @return The power
      * @throws IllegalArgumentException
-     *         if {@code exponent < 0}
+     *             if {@code exponent < 0}
      * @see #pow
      * @see #multiply
      * @since 1
@@ -219,6 +300,33 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
         checkArgument(exponent > -1, "expected exponent > -1 but actual %s", exponent);
         if (exponent > 1) {
             return multiply(pow(exponent - 1));
+        } else if (exponent == 1) {
+            return this;
+        }
+        return ONE;
+    }
+
+    /**
+     * Returns power of this {@link RealComplexNumber} by the given exponent
+     *
+     * @param exponent
+     *            the exponent
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The power
+     * @throws IllegalArgumentException
+     *             if {@code exponent < 0}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @see #pow
+     * @see #multiply
+     * @since 1
+     */
+    public RealComplexNumber pow(final int exponent, final MathContext mathContext) {
+        checkArgument(exponent > -1, "expected exponent > -1 but actual %s", exponent);
+        requireNonNull(mathContext, "mathContext");
+        if (exponent > 1) {
+            return multiply(pow(exponent - 1, mathContext), mathContext);
         } else if (exponent == 1) {
             return this;
         }
@@ -237,11 +345,26 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
+     * Returns the negated {@link RealComplexNumber} of this one
+     *
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The negated
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    public RealComplexNumber negate(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return new RealComplexNumber(real.negate(mathContext), imaginary.negate(mathContext));
+    }
+
+    /**
      * Returns the inverted {@link RealComplexNumber} of this one
      *
      * @return The inverted
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @see #invertible
      * @see #divide
      * @since 1
@@ -253,7 +376,53 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber} is invertible
+     * Returns the inverted {@link RealComplexNumber} of this one
+     *
+     * @return The inverted
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @see #invertible
+     * @see #divide
+     * @since 1
+     */
+    public RealComplexNumber invert(final RoundingMode roundingMode) {
+        checkState(invertible(), "expected to be invertible but actual %s", this);
+        return ONE.divide(this, roundingMode);
+    }
+
+    /**
+     * Returns the inverted {@link RealComplexNumber} of this one
+     *
+     * @return The inverted
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @see #invertible
+     * @see #divide
+     * @since 1
+     */
+    public RealComplexNumber invert(final int scale, final RoundingMode roundingMode) {
+        checkState(invertible(), "expected to be invertible but actual %s", this);
+        return ONE.divide(this, scale, roundingMode);
+    }
+
+    /**
+     * Returns the inverted {@link RealComplexNumber} of this one
+     *
+     * @return The inverted
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @see #invertible
+     * @see #divide
+     * @since 1
+     */
+    public RealComplexNumber invert(final MathContext mathContext) {
+        checkState(invertible(), "expected to be invertible but actual %s", this);
+        return ONE.divide(this, mathContext);
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber}
+     * is invertible
      *
      * @return {@code true} if {@code this != ZERO}, {@code false} otherwise
      * @since 1
@@ -298,11 +467,21 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
+     * Returns the conjugate of this {@link RealComplexNumber}
+     *
+     * @return The conjugated
+     * @since 1
+     */
+    public RealComplexNumber conjugate(final MathContext mathContext) {
+        return new RealComplexNumber(real, imaginary.negate(mathContext));
+    }
+
+    /**
      * Returns the argument of this {@link RealComplexNumber}
      *
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @see #argument(MathContext)
      * @since 1
      */
@@ -313,15 +492,16 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Returns the argument of this {@link RealComplexNumber} considering the given precision
+     * Returns the argument of this {@link RealComplexNumber} considering the given
+     * precision
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @see #argument(MathContext)
      * @since 1
      */
@@ -333,15 +513,16 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Returns the argument of this {@link RealComplexNumber} considering the given rounding mode
+     * Returns the argument of this {@link RealComplexNumber} considering the given
+     * rounding mode
      *
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #argument(MathContext)
      * @since 1
      */
@@ -353,19 +534,20 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Returns the argument of this {@link RealComplexNumber} considering the given precision and rounding mode
+     * Returns the argument of this {@link RealComplexNumber} considering the given
+     * precision and rounding mode
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #argument(MathContext)
      * @since 1
      */
@@ -378,22 +560,23 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Returns the argument of this {@link RealComplexNumber} considering the given {@link MathContext}
+     * Returns the argument of this {@link RealComplexNumber} considering the given
+     * {@link MathContext}
      *
      * @param mathContext
-     *         The math context
+     *            The math context
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code mathContext == null}
+     *             if {@code mathContext == null}
      * @see RealComplexNumber#argument(MathContext)
      * @since 1
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
-        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0),
-                "expected this != 0 but actual %s", this);
+        checkState(real.compareTo(BigDecimal.ZERO) != 0 || imaginary.compareTo(BigDecimal.ZERO) != 0,
+            "expected this != 0 but actual %s", this);
         requireNonNull(mathContext, "mathContext");
         final Context context = BigFloat.context(mathContext);
         if (real.compareTo(BigDecimal.ZERO) != 0) {
@@ -402,8 +585,8 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
                 return arctan.toBigDecimal();
             }
             final BigFloat pi = context.pi();
-            return imaginary.compareTo(BigDecimal.ZERO) > -1 ? arctan.add(pi).toBigDecimal() :
-                    arctan.subtract(pi).toBigDecimal();
+            return imaginary.compareTo(BigDecimal.ZERO) > -1 ? arctan.add(pi).toBigDecimal()
+                : arctan.subtract(pi).toBigDecimal();
         }
         final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();
         return imaginary.compareTo(BigDecimal.ZERO) > 0 ? piDividedByTwo : piDividedByTwo.negate();
@@ -414,7 +597,7 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      *
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @see #polarForm(MathContext)
      * @since 1
      */
@@ -425,15 +608,16 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given precision
+     * Return the corresponding polar form of the complex number considering the
+     * given precision
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @see #polarForm(MathContext)
      * @since 1
      */
@@ -445,15 +629,16 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given rounding mode
+     * Return the corresponding polar form of the complex number considering the
+     * given rounding mode
      *
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #polarForm(MathContext)
      * @since 1
      */
@@ -465,19 +650,20 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given precision and rounding mode
+     * Return the corresponding polar form of the complex number considering the
+     * given precision and rounding mode
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #polarForm(MathContext)
      * @since 1
      */
@@ -490,15 +676,16 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given {@link MathContext}
+     * Return the corresponding polar form of the complex number considering the
+     * given {@link MathContext}
      *
      * @param mathContext
-     *         The math context
+     *            The math context
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code mathContext == null}
+     *             if {@code mathContext == null}
      * @see #abs
      * @see #argument(MathContext)
      * @since 1
@@ -511,20 +698,21 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber} is equal to a given {@link
-     * RealComplexNumber} by comparing the real and imaginary part
+     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber}
+     * is equal to a given {@link RealComplexNumber} by comparing the real and
+     * imaginary part
      *
      * @param other
-     *         The other {@link RealComplexNumber}
+     *            The other {@link RealComplexNumber}
      * @return {@code true} if equaliyt holds, {@code false} otherwise
      * @throws NullPointerException
-     *         if {@code other == null}
+     *             if {@code other == null}
      * @see BigDecimal#compareTo(BigDecimal)
      * @since 1
      */
     public boolean isEqualToByComparingParts(final RealComplexNumber other) {
         requireNonNull(other, "other");
-        return (real.compareTo(other.getReal()) == 0) && (imaginary.compareTo(other.getImaginary()) == 0);
+        return real.compareTo(other.getReal()) == 0 && imaginary.compareTo(other.getImaginary()) == 0;
     }
 
     /**
@@ -537,24 +725,95 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     @Override
     public BigDecimalMatrix matrix() {
         return BigDecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-                .put(2, 2, real).build();
+            .put(2, 2, real).build();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(real, imaginary);
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link RealComplexNumber}
+     * @since 1
+     */
+    public static RealComplexNumber of(final long real, final long imaginary) {
+        return RealComplexNumber.of(BigInteger.valueOf(real), BigInteger.valueOf(imaginary));
     }
 
-    @Override
-    public boolean equals(final Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (!(object instanceof RealComplexNumber)) {
-            return false;
-        }
-        final RealComplexNumber other = (RealComplexNumber) object;
-        return real.equals(other.getReal()) && imaginary.equals(other.getImaginary());
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link RealComplexNumber}
+     * @since 1
+     */
+    public static RealComplexNumber of(final double real, final double imaginary) {
+        return RealComplexNumber.of(BigDecimal.valueOf(real), BigDecimal.valueOf(imaginary));
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link RealComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static RealComplexNumber of(final BigInteger real, final BigInteger imaginary) {
+        requireNonNull(real, "real");
+        requireNonNull(imaginary, "imaginary");
+        return RealComplexNumber.of(new BigDecimal(real), new BigDecimal(imaginary));
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link RealComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static RealComplexNumber of(final BigDecimal real, final BigDecimal imaginary) {
+        requireNonNull(real, "real");
+        requireNonNull(imaginary, "imaginary");
+        return new RealComplexNumber(real, imaginary);
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given
+     * {@link SimpleComplexNumber}
+     *
+     * @param simpleComplexNumber
+     *            {@link SimpleComplexNumber}
+     * @return {@link RealComplexNumber}
+     * @throws NullPointerException
+     *             if {@code simpleComplexNumber == null}
+     * @since 1
+     */
+    public static RealComplexNumber of(final SimpleComplexNumber simpleComplexNumber) {
+        requireNonNull(simpleComplexNumber, "simpleComplexNumber");
+        return of(simpleComplexNumber.getReal(), simpleComplexNumber.getImaginary());
     }
 
     /**

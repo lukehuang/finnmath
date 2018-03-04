@@ -27,18 +27,17 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.Objects;
 
 /**
- * An immutable implementation of a complex number which uses {@link BigInteger} as type for its real and imaginary
- * part
+ * An immutable implementation of a complex number which uses {@link BigInteger}
+ * as type for its real and imaginary part
  *
  * @author Lars Tennstedt
  * @since 1
  */
 @Beta
 public final class SimpleComplexNumber
-        extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, BigIntegerMatrix> {
+    extends AbstractComplexNumber<BigInteger, SimpleComplexNumber, BigIntegerMatrix> {
     /**
      * {@code 0} as {@link SimpleComplexNumber}
      *
@@ -60,20 +59,7 @@ public final class SimpleComplexNumber
      */
     public static final SimpleComplexNumber IMAGINARY = new SimpleComplexNumber(BigInteger.ZERO, BigInteger.ONE);
 
-    /**
-     * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part
-     *
-     * @param real
-     *         the real part
-     * @param imaginary
-     *         the imaginary part
-     * @throws NullPointerException
-     *         if {@code real == null}
-     * @throws NullPointerException
-     *         if {@code imaginary == null}
-     * @since 1
-     */
-    public SimpleComplexNumber(final BigInteger real, final BigInteger imaginary) {
+    private SimpleComplexNumber(final BigInteger real, final BigInteger imaginary) {
         super(real, imaginary);
     }
 
@@ -81,10 +67,10 @@ public final class SimpleComplexNumber
      * Returns the sum of this {@link SimpleComplexNumber} and the given one
      *
      * @param summand
-     *         The summand
+     *            The summand
      * @return The sum
      * @throws NullPointerException
-     *         if {@code summand == null}
+     *             if {@code summand == null}
      * @since 1
      */
     @Override
@@ -97,27 +83,27 @@ public final class SimpleComplexNumber
      * Returns the difference of this {@link SimpleComplexNumber} and the given one
      *
      * @param subtrahend
-     *         the subtrahend
+     *            the subtrahend
      * @return The difference
      * @throws NullPointerException
-     *         if {@code subtrahend == null}
+     *             if {@code subtrahend == null}
      * @since 1
      */
     @Override
     public SimpleComplexNumber subtract(final SimpleComplexNumber subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         return new SimpleComplexNumber(real.subtract(subtrahend.getReal()),
-                imaginary.subtract(subtrahend.getImaginary()));
+            imaginary.subtract(subtrahend.getImaginary()));
     }
 
     /**
      * Returns the product of this {@link SimpleComplexNumber} and the given one
      *
      * @param factor
-     *         the factor
+     *            the factor
      * @return The product
      * @throws NullPointerException
-     *         if {@code factor == null}
+     *             if {@code factor == null}
      * @since 1
      */
     @Override
@@ -132,37 +118,16 @@ public final class SimpleComplexNumber
      * Returns the quotient of this {@link SimpleComplexNumber} and the given one
      *
      * @param divisor
-     *         the divisor
-     * @return The quotient
-     * @throws NullPointerException
-     *         if {@code divisor == null}
-     * @throws IllegalArgumentException
-     *         if {@code divisor == 0}
-     * @see #invertible
-     * @see #divide(SimpleComplexNumber, RoundingMode)
-     * @since 1
-     */
-    @Override
-    public RealComplexNumber divide(final SimpleComplexNumber divisor) {
-        requireNonNull(divisor, "divisor");
-        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
-        return divide(divisor, DEFAULT_ROUNDING_MODE);
-    }
-
-    /**
-     * Returns the quotient of this {@link SimpleComplexNumber} and the given one
-     *
-     * @param divisor
-     *         the divisor
+     *            the divisor
      * @param roundingMode
-     *         the rounding mode
+     *            the rounding mode
      * @return The quotient
      * @throws NullPointerException
-     *         if {@code divisor == null}
+     *             if {@code divisor == null}
      * @throws IllegalArgumentException
-     *         if {@code divisor == 0}
+     *             if {@code divisor == 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #invertible
      * @see RealComplexNumber#divide(RealComplexNumber, RoundingMode)
      * @since 1
@@ -172,17 +137,18 @@ public final class SimpleComplexNumber
         requireNonNull(divisor, "divisor");
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
         requireNonNull(roundingMode, "roundingMode");
-        return new RealComplexNumber(this).divide(new RealComplexNumber(divisor), roundingMode);
+        return RealComplexNumber.of(this).divide(RealComplexNumber.of(divisor), roundingMode);
     }
 
     /**
-     * Returns the power of this {@link SimpleComplexNumber} raised by the given exponent
+     * Returns the power of this {@link SimpleComplexNumber} raised by the given
+     * exponent
      *
      * @param exponent
-     *         the exponent
+     *            the exponent
      * @return The power
      * @throws IllegalArgumentException
-     *         if {@code exponent < 0}
+     *             if {@code exponent < 0}
      * @see #multiply
      * @since 1
      */
@@ -213,7 +179,7 @@ public final class SimpleComplexNumber
      *
      * @return The inverted {@link SimpleComplexNumber} of this one
      * @throws IllegalStateException
-     *         if {@code numerator == 0}
+     *             if {@code numerator == 0}
      * @see #invertible
      * @see #divide
      * @since 1
@@ -225,7 +191,8 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumber} is invertible
+     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumber}
+     * is invertible
      *
      * @return {@code true} if {@code this != 0}, {@code false} otherwise
      * @since 1
@@ -236,7 +203,8 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the absolute as {@link RealComplexNumber} of this {@link SimpleComplexNumber}
+     * Returns the absolute as {@link RealComplexNumber} of this
+     * {@link SimpleComplexNumber}
      *
      * @return The absolute
      * @see SquareRootCalculator#sqrt(BigDecimal)
@@ -274,7 +242,7 @@ public final class SimpleComplexNumber
      *
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @see #argument(MathContext)
      * @since 1
      */
@@ -285,15 +253,16 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this {@link SimpleComplexNumber} considering the given precision
+     * Returns the argument of this {@link SimpleComplexNumber} considering the
+     * given precision
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @see #argument(MathContext)
      * @since 1
      */
@@ -305,15 +274,16 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this {@link SimpleComplexNumber} considering the given rounding mode
+     * Returns the argument of this {@link SimpleComplexNumber} considering the
+     * given rounding mode
      *
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #argument(MathContext)
      * @since 1
      */
@@ -325,19 +295,20 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this {@link SimpleComplexNumber} considering the given precision and rounding mode
+     * Returns the argument of this {@link SimpleComplexNumber} considering the
+     * given precision and rounding mode
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #argument(MathContext)
      * @since 1
      */
@@ -350,15 +321,16 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this {@link SimpleComplexNumber} considering the given {@link MathContext}
+     * Returns the argument of this {@link SimpleComplexNumber} considering the
+     * given {@link MathContext}
      *
      * @param mathContext
-     *         The math context
+     *            The math context
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code mathContext == null}
+     *             if {@code mathContext == null}
      * @see RealComplexNumber#argument(MathContext)
      * @since 1
      */
@@ -366,7 +338,7 @@ public final class SimpleComplexNumber
     public BigDecimal argument(final MathContext mathContext) {
         checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(mathContext, "mathContext");
-        return new RealComplexNumber(this).argument(mathContext);
+        return RealComplexNumber.of(this).argument(mathContext);
     }
 
     /**
@@ -374,7 +346,7 @@ public final class SimpleComplexNumber
      *
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @see #polarForm(MathContext)
      * @since 1
      */
@@ -385,15 +357,16 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given precision
+     * Return the corresponding polar form of the complex number considering the
+     * given precision
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @see #polarForm(MathContext)
      * @since 1
      */
@@ -405,15 +378,16 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given rounding mode
+     * Return the corresponding polar form of the complex number considering the
+     * given rounding mode
      *
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #polarForm(MathContext)
      * @since 1
      */
@@ -425,19 +399,20 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given precision and rounding mode
+     * Return the corresponding polar form of the complex number considering the
+     * given precision and rounding mode
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #polarForm(MathContext)
      * @since 1
      */
@@ -450,15 +425,16 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given {@link MathContext}
+     * Return the corresponding polar form of the complex number considering the
+     * given {@link MathContext}
      *
      * @param mathContext
-     *         The math context
+     *            The math context
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code mathContext == null}
+     *             if {@code mathContext == null}
      * @see RealComplexNumber#polarForm(MathContext)
      * @since 1
      */
@@ -466,7 +442,7 @@ public final class SimpleComplexNumber
     public PolarForm polarForm(final MathContext mathContext) {
         checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(mathContext, "mathContext");
-        return new RealComplexNumber(this).polarForm(mathContext);
+        return RealComplexNumber.of(this).polarForm(mathContext);
     }
 
     /**
@@ -479,23 +455,46 @@ public final class SimpleComplexNumber
     @Override
     public BigIntegerMatrix matrix() {
         return BigIntegerMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-                .put(2, 2, real).build();
+            .put(2, 2, real).build();
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(real, imaginary);
+    /**
+     * Returns a {@link SimpleComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link SimpleComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static SimpleComplexNumber of(final long real, final long imaginary) {
+        return SimpleComplexNumber.of(BigInteger.valueOf(real), BigInteger.valueOf(imaginary));
     }
 
-    @Override
-    public boolean equals(final Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (!(object instanceof SimpleComplexNumber)) {
-            return false;
-        }
-        final SimpleComplexNumber other = (SimpleComplexNumber) object;
-        return real.equals(other.getReal()) && imaginary.equals(other.getImaginary());
+    /**
+     * Returns a {@link SimpleComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link SimpleComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static SimpleComplexNumber of(final BigInteger real, final BigInteger imaginary) {
+        requireNonNull(real, "real");
+        requireNonNull(imaginary, "imaginary");
+        return new SimpleComplexNumber(real, imaginary);
     }
 }

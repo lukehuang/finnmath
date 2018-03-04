@@ -24,12 +24,11 @@ import ch.obermuhlner.math.big.BigFloat.Context;
 import com.github.ltennstedt.finnmath.core.linear.BigDecimalMatrix;
 import com.github.ltennstedt.finnmath.core.util.MathRandom;
 import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
-import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Objects;
 import org.junit.Test;
 
 public final class RealComplexNumberTest {
@@ -40,26 +39,26 @@ public final class RealComplexNumberTest {
     private final List<RealComplexNumber> complexNumbers = mathRandom.nextRealComplexNumbers(bound, scale, howMany);
     private final List<RealComplexNumber> others = mathRandom.nextRealComplexNumbers(bound, scale, howMany);
     private final List<RealComplexNumber> invertibles =
-            mathRandom.nextInvertibleRealComplexNumbers(bound, scale, howMany);
+        mathRandom.nextInvertibleRealComplexNumbers(bound, scale, howMany);
     private final int precision = 10;
     private final RoundingMode roundingMode = RoundingMode.HALF_DOWN;
 
     @Test
     public void newRealNullShouldThrowException() {
-        assertThatThrownBy(() -> new RealComplexNumber(null, BigDecimal.ZERO))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("real");
+        assertThatThrownBy(() -> RealComplexNumber.of(null, BigDecimal.ZERO))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("real");
     }
 
     @Test
     public void newImaginaryNullShouldThrowException() {
-        assertThatThrownBy(() -> new RealComplexNumber(BigDecimal.ZERO, null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("imaginary");
+        assertThatThrownBy(() -> RealComplexNumber.of(BigDecimal.ZERO, null))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("imaginary");
     }
 
     @Test
     public void addNullShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.add(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("summand");
+            .hasMessage("summand");
     }
 
     @Test
@@ -68,33 +67,33 @@ public final class RealComplexNumberTest {
             final BigDecimal expectedReal = complexNumber.getReal().add(other.getReal());
             final BigDecimal expectedImaginary = complexNumber.getImaginary().add(other.getImaginary());
             assertThat(complexNumber.add(other)).isExactlyInstanceOf(RealComplexNumber.class)
-                    .isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary));
+                .isEqualTo(RealComplexNumber.of(expectedReal, expectedImaginary));
         }));
     }
 
     @Test
     public void addZeroShouldBeEqualToZero() {
-        complexNumbers.forEach(
-                complexNumber -> assertThat(complexNumber.add(RealComplexNumber.ZERO)).isEqualTo(complexNumber));
+        complexNumbers
+            .forEach(complexNumber -> assertThat(complexNumber.add(RealComplexNumber.ZERO)).isEqualTo(complexNumber));
     }
 
     @Test
     public void addShouldBeCommutative() {
         complexNumbers.forEach(complexNumber -> others
-                .forEach(other -> assertThat(complexNumber.add(other)).isEqualTo(other.add(complexNumber))));
+            .forEach(other -> assertThat(complexNumber.add(other)).isEqualTo(other.add(complexNumber))));
     }
 
     @Test
     public void addShouldBeAssociative() {
-        complexNumbers.forEach(complexNumber -> others.forEach(other -> invertibles.forEach(
-                invertible -> assertThat(complexNumber.add(other).add(invertible))
-                        .isEqualTo(complexNumber.add(other.add(invertible))))));
+        complexNumbers.forEach(complexNumber -> others
+            .forEach(other -> invertibles.forEach(invertible -> assertThat(complexNumber.add(other).add(invertible))
+                .isEqualTo(complexNumber.add(other.add(invertible))))));
     }
 
     @Test
     public void subtractNullShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.subtract(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("subtrahend");
+            .hasMessage("subtrahend");
     }
 
     @Test
@@ -103,14 +102,14 @@ public final class RealComplexNumberTest {
             final BigDecimal expectedReal = complexNumber.getReal().subtract(other.getReal());
             final BigDecimal expectedImaginary = complexNumber.getImaginary().subtract(other.getImaginary());
             assertThat(complexNumber.subtract(other)).isExactlyInstanceOf(RealComplexNumber.class)
-                    .isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary));
+                .isEqualTo(RealComplexNumber.of(expectedReal, expectedImaginary));
         }));
     }
 
     @Test
     public void subtractZeroShouldBeEqualToSelf() {
         complexNumbers.forEach(
-                complexNumber -> assertThat(complexNumber.subtract(RealComplexNumber.ZERO)).isEqualTo(complexNumber));
+            complexNumber -> assertThat(complexNumber.subtract(RealComplexNumber.ZERO)).isEqualTo(complexNumber));
     }
 
     @Test
@@ -118,35 +117,35 @@ public final class RealComplexNumberTest {
         complexNumbers.forEach(complexNumber -> {
             final RealComplexNumber difference = complexNumber.subtract(complexNumber);
             final BigDecimal scaledReal =
-                    BigDecimal.ZERO.setScale(difference.getReal().scale(), RoundingMode.UNNECESSARY);
+                BigDecimal.ZERO.setScale(difference.getReal().scale(), RoundingMode.UNNECESSARY);
             final BigDecimal scaledImaginary =
-                    BigDecimal.ZERO.setScale(difference.getImaginary().scale(), RoundingMode.UNNECESSARY);
-            assertThat(difference).isEqualTo(new RealComplexNumber(scaledReal, scaledImaginary));
+                BigDecimal.ZERO.setScale(difference.getImaginary().scale(), RoundingMode.UNNECESSARY);
+            assertThat(difference).isEqualTo(RealComplexNumber.of(scaledReal, scaledImaginary));
         });
     }
 
     @Test
     public void multiplyNullShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.multiply(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("factor");
+            .hasMessage("factor");
     }
 
     @Test
     public void multiplyShouldSucceed() {
         complexNumbers.forEach(complexNumber -> others.forEach(other -> {
             final BigDecimal expectedReal = complexNumber.getReal().multiply(other.getReal())
-                    .subtract(complexNumber.getImaginary().multiply(other.getImaginary()));
+                .subtract(complexNumber.getImaginary().multiply(other.getImaginary()));
             final BigDecimal expectedImaginary = complexNumber.getImaginary().multiply(other.getReal())
-                    .add(complexNumber.getReal().multiply(other.getImaginary()));
+                .add(complexNumber.getReal().multiply(other.getImaginary()));
             assertThat(complexNumber.multiply(other)).isExactlyInstanceOf(RealComplexNumber.class)
-                    .isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary));
+                .isEqualTo(RealComplexNumber.of(expectedReal, expectedImaginary));
         }));
     }
 
     @Test
     public void multiplyOneShouldBeEqualToOne() {
         complexNumbers.forEach(
-                complexNumber -> assertThat(complexNumber.multiply(RealComplexNumber.ONE)).isEqualTo(complexNumber));
+            complexNumber -> assertThat(complexNumber.multiply(RealComplexNumber.ONE)).isEqualTo(complexNumber));
     }
 
     @Test
@@ -156,8 +155,8 @@ public final class RealComplexNumberTest {
             final int realScale = actual.getReal().scale();
             final int imaginaryScale = actual.getImaginary().scale();
             final RealComplexNumber scaledZero =
-                    new RealComplexNumber(BigDecimal.ZERO.setScale(realScale, RoundingMode.UNNECESSARY),
-                            BigDecimal.ZERO.setScale(imaginaryScale, RoundingMode.UNNECESSARY));
+                RealComplexNumber.of(BigDecimal.ZERO.setScale(realScale, RoundingMode.UNNECESSARY),
+                    BigDecimal.ZERO.setScale(imaginaryScale, RoundingMode.UNNECESSARY));
             assertThat(actual).isEqualTo(scaledZero);
         });
     }
@@ -165,68 +164,74 @@ public final class RealComplexNumberTest {
     @Test
     public void multiplyShouldBeCommutative() {
         complexNumbers.forEach(complexNumber -> others
-                .forEach(other -> assertThat(complexNumber.multiply(other)).isEqualTo(other.multiply(complexNumber))));
+            .forEach(other -> assertThat(complexNumber.multiply(other)).isEqualTo(other.multiply(complexNumber))));
     }
 
     @Test
     public void multiplyShouldBeAssociative() {
-        complexNumbers.forEach(complexNumber -> others.forEach(other -> invertibles.forEach(
-                invertible -> assertThat(complexNumber.multiply(other).multiply(invertible))
-                        .isEqualTo(complexNumber.multiply(other.multiply(invertible))))));
+        complexNumbers.forEach(complexNumber -> others.forEach(
+            other -> invertibles.forEach(invertible -> assertThat(complexNumber.multiply(other).multiply(invertible))
+                .isEqualTo(complexNumber.multiply(other.multiply(invertible))))));
     }
 
     @Test
     public void addAndMultiplyShouldBeDistributive() {
-        complexNumbers.forEach(complexNumber -> others.forEach(other -> invertibles.forEach(
-                invertible -> assertThat(complexNumber.multiply(other.add(invertible)))
-                        .isEqualTo(complexNumber.multiply(other).add(complexNumber.multiply(invertible))))));
+        complexNumbers.forEach(complexNumber -> others.forEach(
+            other -> invertibles.forEach(invertible -> assertThat(complexNumber.multiply(other.add(invertible)))
+                .isEqualTo(complexNumber.multiply(other).add(complexNumber.multiply(invertible))))));
     }
 
     @Test
-    public void divideNullShouldThrowException() {
-        assertThatThrownBy(() -> RealComplexNumber.ZERO.divide(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("divisor");
+    public void divideNullWithRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> RealComplexNumber.ZERO.divide(null, RoundingMode.HALF_EVEN))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("divisor");
     }
 
     @Test
-    public void divideZeroShouldThrowException() {
-        assertThatThrownBy(() -> RealComplexNumber.ONE.divide(RealComplexNumber.ZERO))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected divisor to be invertible but actual %s", RealComplexNumber.ZERO);
+    public void divideWithRoundingModeNullShouldThrowException() {
+        assertThatThrownBy(() -> RealComplexNumber.ZERO.divide(RealComplexNumber.ONE, (RoundingMode) null))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
     }
 
     @Test
-    public void divideShouldSucceed() {
+    public void divideZeroWithRoundingModeShouldThrowException() {
+        assertThatThrownBy(() -> RealComplexNumber.ONE.divide(RealComplexNumber.ZERO, roundingMode))
+            .isExactlyInstanceOf(IllegalArgumentException.class)
+            .hasMessage("expected divisor to be invertible but actual %s", RealComplexNumber.ZERO);
+    }
+
+    @Test
+    public void divideWithRoundingModeShouldSucceed() {
         complexNumbers.forEach(complexNumber -> invertibles.forEach(invertible -> {
             final BigDecimal denominator = invertible.getReal().pow(2).add(invertible.getImaginary().pow(2));
             final BigDecimal expectedReal = complexNumber.getReal().multiply(invertible.getReal())
-                    .add(complexNumber.getImaginary().multiply(invertible.getImaginary()))
-                    .divide(denominator, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
+                .add(complexNumber.getImaginary().multiply(invertible.getImaginary()))
+                .divide(denominator, roundingMode);
             final BigDecimal expectedImaginary = complexNumber.getImaginary().multiply(invertible.getReal())
-                    .subtract(complexNumber.getReal().multiply(invertible.getImaginary()))
-                    .divide(denominator, AbstractComplexNumber.DEFAULT_ROUNDING_MODE);
-            assertThat(complexNumber.divide(invertible)).isExactlyInstanceOf(RealComplexNumber.class)
-                    .isEqualTo(new RealComplexNumber(expectedReal, expectedImaginary));
+                .subtract(complexNumber.getReal().multiply(invertible.getImaginary()))
+                .divide(denominator, roundingMode);
+            assertThat(complexNumber.divide(invertible, roundingMode)).isExactlyInstanceOf(RealComplexNumber.class)
+                .isEqualTo(RealComplexNumber.of(expectedReal, expectedImaginary));
         }));
     }
 
     @Test
     public void divideOneShouldBeEqualToSelf() {
-        complexNumbers.forEach(
-                complexNumber -> assertThat(complexNumber.divide(RealComplexNumber.ONE)).isEqualTo(complexNumber));
+        complexNumbers
+            .forEach(complexNumber -> assertThat(complexNumber.divide(RealComplexNumber.ONE)).isEqualTo(complexNumber));
     }
 
     @Test
     public void powNegativeExponentShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.pow(-1)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected exponent > -1 but actual -1");
+            .hasMessage("expected exponent > -1 but actual -1");
     }
 
     @Test
     public void powShouldSucceed() {
         complexNumbers.forEach(complexNumber -> {
             assertThat(complexNumber.pow(3)).isExactlyInstanceOf(RealComplexNumber.class)
-                    .isEqualTo(complexNumber.multiply(complexNumber).multiply(complexNumber));
+                .isEqualTo(complexNumber.multiply(complexNumber).multiply(complexNumber));
             assertThat(complexNumber.pow(2)).isEqualTo(complexNumber.multiply(complexNumber));
         });
     }
@@ -259,9 +264,8 @@ public final class RealComplexNumberTest {
     @Test
     public void negateShouldSucceed() {
         complexNumbers.forEach(
-                complexNumber -> assertThat(complexNumber.negate()).isExactlyInstanceOf(RealComplexNumber.class)
-                        .isEqualTo(new RealComplexNumber(complexNumber.getReal().negate(),
-                                complexNumber.getImaginary().negate())));
+            complexNumber -> assertThat(complexNumber.negate()).isExactlyInstanceOf(RealComplexNumber.class).isEqualTo(
+                RealComplexNumber.of(complexNumber.getReal().negate(), complexNumber.getImaginary().negate())));
     }
 
     @Test
@@ -276,8 +280,8 @@ public final class RealComplexNumberTest {
             final int realScale = actual.getReal().scale();
             final int imaginaryScale = actual.getImaginary().scale();
             final RealComplexNumber expected =
-                    new RealComplexNumber(BigDecimal.ZERO.setScale(realScale, RoundingMode.UNNECESSARY),
-                            BigDecimal.ZERO.setScale(imaginaryScale, RoundingMode.UNNECESSARY));
+                RealComplexNumber.of(BigDecimal.ZERO.setScale(realScale, RoundingMode.UNNECESSARY),
+                    BigDecimal.ZERO.setScale(imaginaryScale, RoundingMode.UNNECESSARY));
             assertThat(actual).isEqualTo(expected);
         });
     }
@@ -290,26 +294,25 @@ public final class RealComplexNumberTest {
     @Test
     public void multiplyMinusOneShouldBeEqualToNegated() {
         complexNumbers.forEach(complexNumber -> assertThat(complexNumber.multiply(RealComplexNumber.ONE.negate()))
-                .isEqualTo(complexNumber.negate()));
+            .isEqualTo(complexNumber.negate()));
     }
 
     @Test
     public void divideMinusOneShouldBeEqualToNegated() {
         complexNumbers.forEach(complexNumber -> assertThat(complexNumber.divide(RealComplexNumber.ONE.negate()))
-                .isEqualTo(complexNumber.negate()));
+            .isEqualTo(complexNumber.negate()));
     }
 
     @Test
     public void invertZeroShouldThrowException() {
         assertThatThrownBy(RealComplexNumber.ZERO::invert).isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected to be invertible but actual %s", RealComplexNumber.ZERO);
+            .hasMessage("expected to be invertible but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void invertShouldSucceed() {
-        invertibles.forEach(
-                complexNumber -> assertThat(complexNumber.invert()).isExactlyInstanceOf(RealComplexNumber.class)
-                        .isEqualTo(RealComplexNumber.ONE.divide(complexNumber)));
+        invertibles.forEach(complexNumber -> assertThat(complexNumber.invert())
+            .isExactlyInstanceOf(RealComplexNumber.class).isEqualTo(RealComplexNumber.ONE.divide(complexNumber)));
     }
 
     @Test
@@ -319,8 +322,8 @@ public final class RealComplexNumberTest {
 
     @Test
     public void invertSelfShouldBeEqualToOneDividedBySelf() {
-        invertibles.forEach(
-                invertible -> assertThat(invertible.invert()).isEqualTo(RealComplexNumber.ONE.divide(invertible)));
+        invertibles
+            .forEach(invertible -> assertThat(invertible.invert()).isEqualTo(RealComplexNumber.ONE.divide(invertible)));
     }
 
     @Test
@@ -336,14 +339,14 @@ public final class RealComplexNumberTest {
     @Test
     public void invertibleShouldBePredictable() {
         complexNumbers.forEach(complexNumber -> assertThat(complexNumber.invertible())
-                .isEqualTo(!complexNumber.equals(RealComplexNumber.ZERO)));
+            .isEqualTo(!complexNumber.equals(RealComplexNumber.ZERO)));
     }
 
     @Test
     public void absPow2ShouldSucceed() {
-        complexNumbers.forEach(
-                complexNumber -> assertThat(complexNumber.absPow2()).isExactlyInstanceOf(BigDecimal.class)
-                        .isEqualTo(complexNumber.getReal().pow(2).add(complexNumber.getImaginary().pow(2))));
+        complexNumbers
+            .forEach(complexNumber -> assertThat(complexNumber.absPow2()).isExactlyInstanceOf(BigDecimal.class)
+                .isEqualTo(complexNumber.getReal().pow(2).add(complexNumber.getImaginary().pow(2))));
     }
 
     @Test
@@ -364,21 +367,20 @@ public final class RealComplexNumberTest {
     @Test
     public void absShouldSucceed() {
         complexNumbers.forEach(complexNumber -> assertThat(complexNumber.abs()).isExactlyInstanceOf(BigDecimal.class)
-                .isEqualTo(new SquareRootCalculator().sqrt(complexNumber.absPow2())));
+            .isEqualTo(new SquareRootCalculator().sqrt(complexNumber.absPow2())));
     }
 
     @Test
     public void conjugateShouldSucceed() {
-        complexNumbers.forEach(
-                complexNumber -> assertThat(complexNumber.conjugate()).isExactlyInstanceOf(RealComplexNumber.class)
-                        .isEqualTo(
-                                new RealComplexNumber(complexNumber.getReal(), complexNumber.getImaginary().negate())));
+        complexNumbers
+            .forEach(complexNumber -> assertThat(complexNumber.conjugate()).isExactlyInstanceOf(RealComplexNumber.class)
+                .isEqualTo(RealComplexNumber.of(complexNumber.getReal(), complexNumber.getImaginary().negate())));
     }
 
     @Test
     public void conjugateRealNumberShouldBeEqualToSelf() {
         complexNumbers.forEach(complexNumber -> {
-            final RealComplexNumber realNumber = new RealComplexNumber(complexNumber.getReal(), BigDecimal.ZERO);
+            final RealComplexNumber realNumber = RealComplexNumber.of(complexNumber.getReal(), BigDecimal.ZERO);
             assertThat(realNumber.conjugate()).isEqualTo(realNumber);
         });
     }
@@ -386,91 +388,89 @@ public final class RealComplexNumberTest {
     @Test
     public void argumentZeroShouldThrowException() {
         assertThatThrownBy(RealComplexNumber.ZERO::argument).isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
+            .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void argumentShouldSucceed() {
         invertibles.forEach(invertible -> assertThat(invertible.argument()).isEqualTo(invertible
-                .argument(new MathContext(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
+            .argument(new MathContext(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
     }
 
     @Test
     public void argumentZeroWithPrecisionShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.argument(PolarForm.DEFAULT_PRECISION))
-                .isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
+            .isExactlyInstanceOf(IllegalStateException.class)
+            .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void argumentZeroPrecisionTooLowShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.argument(-1)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision > -1 but actual -1");
+            .hasMessage("expected precision > -1 but actual -1");
     }
 
     @Test
     public void argumentWithPrecisionShouldSucceed() {
-        invertibles.forEach(invertible -> assertThat(invertible.argument(precision)).isEqualTo(
-                invertible.argument(new MathContext(precision, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
+        invertibles.forEach(invertible -> assertThat(invertible.argument(precision))
+            .isEqualTo(invertible.argument(new MathContext(precision, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
     }
 
     @Test
     public void argumentZeroWithRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.argument(AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-                .isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
+            .isExactlyInstanceOf(IllegalStateException.class)
+            .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void argumentRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.argument((RoundingMode) null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
     }
 
     @Test
     public void argumentWithRoundingModeShouldSucceed() {
         invertibles.forEach(invertible -> assertThat(invertible.argument(roundingMode))
-                .isEqualTo(invertible.argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode))));
+            .isEqualTo(invertible.argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode))));
     }
 
     @Test
     public void argumentZeroWithPrecisionAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> RealComplexNumber.ZERO
-                .argument(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-                .isExactlyInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(() -> RealComplexNumber.ZERO.argument(PolarForm.DEFAULT_PRECISION,
+            AbstractComplexNumber.DEFAULT_ROUNDING_MODE)).isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void argumentZeroWithPrecisionTooLowAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.argument(-1, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
     }
 
     @Test
     public void argumentWithPrecisionAndRoundingModeNullShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.argument(PolarForm.DEFAULT_PRECISION, (RoundingMode) null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
     }
 
     @Test
     public void argumentWithPrecisionAndRoundingModeShouldSucceed() {
         invertibles.forEach(invertible -> assertThat(invertible.argument(precision, roundingMode))
-                .isEqualTo(invertible.argument(new MathContext(precision, roundingMode))));
+            .isEqualTo(invertible.argument(new MathContext(precision, roundingMode))));
     }
 
     @Test
     public void argumentZeroWithMathContextShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.argument(new MathContext(PolarForm.DEFAULT_PRECISION)))
-                .isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
+            .isExactlyInstanceOf(IllegalStateException.class)
+            .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void argumentWithMathContextNullShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.argument((MathContext) null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("mathContext");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("mathContext");
     }
 
     @Test
@@ -487,12 +487,12 @@ public final class RealComplexNumberTest {
                     expected = arctan.toBigDecimal();
                 } else {
                     final BigFloat pi = context.pi();
-                    expected = imaginary.compareTo(BigDecimal.ZERO) > -1 ? arctan.add(pi).toBigDecimal() :
-                            arctan.subtract(pi).toBigDecimal();
+                    expected = imaginary.compareTo(BigDecimal.ZERO) > -1 ? arctan.add(pi).toBigDecimal()
+                        : arctan.subtract(pi).toBigDecimal();
                 }
             } else {
                 final BigDecimal piDividedByTwo =
-                        context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();
+                    context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();
                 expected = imaginary.compareTo(BigDecimal.ZERO) > 0 ? piDividedByTwo : piDividedByTwo.negate();
             }
             assertThat(invertible.argument(mathContext)).isEqualTo(expected);
@@ -502,92 +502,89 @@ public final class RealComplexNumberTest {
     @Test
     public void polarFormZeroShouldThrowException() {
         assertThatThrownBy(RealComplexNumber.ZERO::polarForm).isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
+            .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void polarFormShouldSucceed() {
         invertibles.forEach(invertible -> assertThat(invertible.polarForm()).isEqualTo(invertible
-                .polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
+            .polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
     }
 
     @Test
     public void polarFormZeroWithPrecisionShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.polarForm(precision))
-                .isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
+            .isExactlyInstanceOf(IllegalStateException.class)
+            .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void polarFormZeroPrecisionTooLowShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.polarForm(-1))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
     }
 
     @Test
     public void polarFormWithPrecisionShouldSucceed() {
-        invertibles.forEach(invertible -> assertThat(invertible.polarForm(precision)).isEqualTo(
-                invertible.polarForm(new MathContext(precision, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
+        invertibles.forEach(invertible -> assertThat(invertible.polarForm(precision))
+            .isEqualTo(invertible.polarForm(new MathContext(precision, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
     }
 
     @Test
     public void polarFormZeroWithRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.polarForm(AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-                .isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
+            .isExactlyInstanceOf(IllegalStateException.class)
+            .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void polarFormRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.polarForm((RoundingMode) null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
     }
 
     @Test
     public void polarFormWithRoundingModeShouldSucceed() {
         invertibles.forEach(invertible -> assertThat(invertible.polarForm(roundingMode))
-                .isEqualTo(invertible.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode))));
+            .isEqualTo(invertible.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode))));
     }
 
     @Test
     public void polarFormZeroWithPrecisionAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> RealComplexNumber.ZERO
-                .polarForm(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-                .isExactlyInstanceOf(IllegalStateException.class)
+        assertThatThrownBy(() -> RealComplexNumber.ZERO.polarForm(PolarForm.DEFAULT_PRECISION,
+            AbstractComplexNumber.DEFAULT_ROUNDING_MODE)).isExactlyInstanceOf(IllegalStateException.class)
                 .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void polarFormZeroWithPrecisionTooLowAndRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.polarForm(-1, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
     }
 
     @Test
     public void polarFormWithPrecisionAndRoundingModeNullShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.polarForm(PolarForm.DEFAULT_PRECISION, (RoundingMode) null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
     }
 
     @Test
     public void polarFormWithPrecisionAndRoundingModeShouldSucceed() {
         invertibles.forEach(invertible -> assertThat(invertible.polarForm(precision, roundingMode))
-                .isEqualTo(invertible.polarForm(new MathContext(precision, roundingMode))));
+            .isEqualTo(invertible.polarForm(new MathContext(precision, roundingMode))));
     }
 
     @Test
     public void polarFormZeroWithMathContextShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION)))
-                .isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
+            .isExactlyInstanceOf(IllegalStateException.class)
+            .hasMessage("expected this != 0 but actual %s", RealComplexNumber.ZERO);
     }
 
     @Test
     public void polarFormWithMathContextNullShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ONE.polarForm((MathContext) null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("mathContext");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("mathContext");
     }
 
     @Test
@@ -595,7 +592,7 @@ public final class RealComplexNumberTest {
         invertibles.forEach(invertible -> {
             final MathContext mathContext = new MathContext(precision, roundingMode);
             assertThat(invertible.polarForm(mathContext))
-                    .isEqualTo(new PolarForm(invertible.abs(), invertible.argument(mathContext)));
+                .isEqualTo(new PolarForm(invertible.abs(), invertible.argument(mathContext)));
         });
     }
 
@@ -604,9 +601,8 @@ public final class RealComplexNumberTest {
         complexNumbers.forEach(complexNumber -> {
             final BigDecimal real = complexNumber.getReal();
             final BigDecimal imaginary = complexNumber.getImaginary();
-            final BigDecimalMatrix expected =
-                    BigDecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
-                            .put(2, 2, real).build();
+            final BigDecimalMatrix expected = BigDecimalMatrix.builder(2, 2).put(1, 1, real)
+                .put(1, 2, imaginary.negate()).put(2, 1, imaginary).put(2, 2, real).build();
             assertThat(complexNumber.matrix()).isExactlyInstanceOf(BigDecimalMatrix.class).isEqualTo(expected);
         });
     }
@@ -614,19 +610,19 @@ public final class RealComplexNumberTest {
     @Test
     public void isEqualToByComparingPartsNullShouldThrowException() {
         assertThatThrownBy(() -> RealComplexNumber.ZERO.isEqualToByComparingParts(null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
     public void isEqualToByComparingPartsRealPartsNotEqualShouldReturnFalse() {
         complexNumbers.forEach(complexNumber -> assertThat(
-                complexNumber.isEqualToByComparingParts(complexNumber.add(RealComplexNumber.ONE))).isFalse());
+            complexNumber.isEqualToByComparingParts(complexNumber.add(RealComplexNumber.ONE))).isFalse());
     }
 
     @Test
     public void isEqualToByComparingPartsImaginaryPartsNotEqualShouldReturnFalse() {
         complexNumbers.forEach(complexNumber -> assertThat(
-                complexNumber.isEqualToByComparingParts(complexNumber.add(RealComplexNumber.IMAGINARY))).isFalse());
+            complexNumber.isEqualToByComparingParts(complexNumber.add(RealComplexNumber.IMAGINARY))).isFalse());
     }
 
     @Test
@@ -635,65 +631,76 @@ public final class RealComplexNumberTest {
             final int otherScale = complexNumber.getReal().scale() + 1;
             final BigDecimal otherReal = complexNumber.getReal().setScale(otherScale, RoundingMode.HALF_UP);
             final BigDecimal otherImaginary = complexNumber.getImaginary().setScale(otherScale, RoundingMode.HALF_UP);
-            assertThat(complexNumber.isEqualToByComparingParts(new RealComplexNumber(otherReal, otherImaginary)))
-                    .isTrue();
+            assertThat(complexNumber.isEqualToByComparingParts(RealComplexNumber.of(otherReal, otherImaginary)))
+                .isTrue();
         });
     }
 
     @Test
-    public void hashCodeShouldSucceed() {
-        complexNumbers.forEach(complexNumber -> assertThat(complexNumber.hashCode())
-                .isEqualTo(Objects.hash(complexNumber.getReal(), complexNumber.getImaginary())));
+    public void ofLongsShouldSucceed() {
+        final long[] longs = new long[howMany];
+        for (final long real : longs) {
+            for (final long imaginary : longs) {
+                final RealComplexNumber actual = RealComplexNumber.of(real, imaginary);
+                assertThat(actual.getReal()).isEqualByComparingTo(BigDecimal.valueOf(real));
+                assertThat(actual.getImaginary()).isEqualByComparingTo(BigDecimal.valueOf(imaginary));
+            }
+        }
     }
 
     @Test
-    public void equalsSelfShouldReturnTrue() {
-        complexNumbers.forEach(complexNumber -> assertThat(complexNumber.equals(complexNumber)).isTrue());
+    public void ofDoublesShouldSucceed() {
+        final double[] doubles = new double[howMany];
+        for (final double real : doubles) {
+            for (final double imaginary : doubles) {
+                final RealComplexNumber actual = RealComplexNumber.of(real, imaginary);
+                assertThat(actual.getReal()).isEqualByComparingTo(BigDecimal.valueOf(real));
+                assertThat(actual.getImaginary()).isEqualByComparingTo(BigDecimal.valueOf(imaginary));
+            }
+        }
     }
 
     @Test
-    public void equalsNotSimpleComplexNumberShouldReturnFalse() {
-        assertThat(SimpleComplexNumber.ZERO.equals(new Object())).isFalse();
+    public void ofBigIntegerRealNullShouldThrowException() {
+        assertThatThrownBy(() -> SimpleComplexNumber.of(null, BigInteger.ZERO))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("real");
     }
 
     @Test
-    public void equalsRealNotEqualShouldReturnFalse() {
-        complexNumbers.forEach(complexNumber -> {
-            final BigDecimal real = complexNumber.getReal().add(BigDecimal.ONE);
-            final RealComplexNumber other = new RealComplexNumber(real, complexNumber.getImaginary());
-            assertThat(complexNumber.equals(other)).isFalse();
-        });
+    public void ofBigIntegerImaginaryNullShouldThrowException() {
+        assertThatThrownBy(() -> SimpleComplexNumber.of(BigInteger.ZERO, null))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("imaginary");
     }
 
     @Test
-    public void equalsImaginaryNotEqualShouldReturnFalse() {
-        complexNumbers.forEach(complexNumber -> {
-            final BigDecimal imaginary = complexNumber.getImaginary().add(BigDecimal.ONE);
-            final RealComplexNumber other = new RealComplexNumber(complexNumber.getReal(), imaginary);
-            assertThat(complexNumber.equals(other)).isFalse();
-        });
+    public void ofBigIntegersShouldSucceed() {
+        final List<BigInteger> integers = mathRandom.nextBigIntegers(bound, howMany);
+        integers.forEach(real -> integers.forEach(imaginary -> {
+            final SimpleComplexNumber actual = SimpleComplexNumber.of(real, imaginary);
+            assertThat(actual.getReal()).isEqualByComparingTo(real);
+            assertThat(actual.getImaginary()).isEqualByComparingTo(imaginary);
+        }));
     }
 
     @Test
-    public void equalsEqualShouldReturnTrue() {
-        complexNumbers.forEach(complexNumber -> assertThat(
-                complexNumber.equals(new RealComplexNumber(complexNumber.getReal(), complexNumber.getImaginary())))
-                .isTrue());
+    public void ofBigDecimalRealNullShouldThrowException() {
+        assertThatThrownBy(() -> RealComplexNumber.of(null, BigDecimal.ZERO))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("real");
     }
 
     @Test
-    public void hashCodeEqualRealComplexNumbersShouldHaveEqualHashCodes() {
-        complexNumbers.forEach(complexNumber -> {
-            final RealComplexNumber other =
-                    new RealComplexNumber(complexNumber.getReal(), complexNumber.getImaginary());
-            assertThat(complexNumber.hashCode()).isEqualTo(other.hashCode());
-        });
+    public void ofBigDecimalImaginaryNullShouldThrowException() {
+        assertThatThrownBy(() -> RealComplexNumber.of(BigDecimal.ZERO, null))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("imaginary");
     }
 
     @Test
-    public void toStringShouldSucceed() {
-        complexNumbers.forEach(complexNumber -> assertThat(complexNumber.toString()).isEqualTo(
-                MoreObjects.toStringHelper(complexNumber).add("real", complexNumber.getReal())
-                        .add("imaginary", complexNumber.getImaginary()).toString()));
+    public void ofBigDecimalsShouldSucceed() {
+        final List<BigDecimal> decimals = mathRandom.nextBigDecimals(bound, scale, howMany);
+        decimals.forEach(real -> decimals.forEach(imaginary -> {
+            final RealComplexNumber actual = RealComplexNumber.of(real, imaginary);
+            assertThat(actual.getReal()).isEqualByComparingTo(real);
+            assertThat(actual.getImaginary()).isEqualByComparingTo(imaginary);
+        }));
     }
 }

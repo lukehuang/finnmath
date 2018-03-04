@@ -33,7 +33,7 @@ public final class RealComplexNumberComparatorTest {
     @Test
     public void compareFirstNullShouldReturnMinusOne() {
         assertThat(RealComplexNumber.REAL_COMPLEX_NUMBER_COMPARATOR.compare(null, RealComplexNumber.ZERO))
-                .isEqualTo(-1);
+            .isEqualTo(-1);
     }
 
     @Test
@@ -44,14 +44,14 @@ public final class RealComplexNumberComparatorTest {
     @Test
     public void compareEqualShouldReturnZero() {
         complexNumbers.forEach(complexNumber -> assertThat(
-                RealComplexNumber.REAL_COMPLEX_NUMBER_COMPARATOR.compare(complexNumber, complexNumber)).isEqualTo(0));
+            RealComplexNumber.REAL_COMPLEX_NUMBER_COMPARATOR.compare(complexNumber, complexNumber)).isEqualTo(0));
     }
 
     @Test
     public void compareEqualPartsShouldReturnZero() {
         complexNumbers.forEach(complexNumber -> {
             final RealComplexNumber second =
-                    new RealComplexNumber(complexNumber.getReal(), complexNumber.getImaginary());
+                RealComplexNumber.of(complexNumber.getReal(), complexNumber.getImaginary());
             assertThat(RealComplexNumber.REAL_COMPLEX_NUMBER_COMPARATOR.compare(complexNumber, second)).isEqualTo(0);
         });
     }
@@ -60,7 +60,7 @@ public final class RealComplexNumberComparatorTest {
     public void compareRealPartNotEqualShouldReturnOne() {
         complexNumbers.forEach(complexNumber -> {
             final RealComplexNumber second =
-                    new RealComplexNumber(complexNumber.getReal().add(BigDecimal.ONE), complexNumber.getImaginary());
+                RealComplexNumber.of(complexNumber.getReal().add(BigDecimal.ONE), complexNumber.getImaginary());
             assertThat(RealComplexNumber.REAL_COMPLEX_NUMBER_COMPARATOR.compare(complexNumber, second)).isEqualTo(1);
         });
     }
@@ -69,7 +69,7 @@ public final class RealComplexNumberComparatorTest {
     public void compareImaginaryPartNotEqualShouldReturnOne() {
         complexNumbers.forEach(complexNumber -> {
             final RealComplexNumber second =
-                    new RealComplexNumber(complexNumber.getReal(), complexNumber.getImaginary().add(BigDecimal.ONE));
+                RealComplexNumber.of(complexNumber.getReal(), complexNumber.getImaginary().add(BigDecimal.ONE));
             assertThat(RealComplexNumber.REAL_COMPLEX_NUMBER_COMPARATOR.compare(complexNumber, second)).isEqualTo(1);
         });
     }

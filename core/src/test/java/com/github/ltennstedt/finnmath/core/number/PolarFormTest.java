@@ -41,13 +41,13 @@ public final class PolarFormTest {
     @Test
     public void newRadialNullShouldThrowException() {
         assertThatThrownBy(() -> new PolarForm(null, BigDecimal.ZERO)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("radial");
+            .hasMessage("radial");
     }
 
     @Test
     public void newAngularNullShouldThrowException() {
         assertThatThrownBy(() -> new PolarForm(BigDecimal.ZERO, null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("angular");
+            .hasMessage("angular");
     }
 
     @Test
@@ -65,14 +65,14 @@ public final class PolarFormTest {
             final BigDecimal angular = polarForm.getAngular();
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
-            assertThat(polarForm.complexNumber()).isEqualTo(new RealComplexNumber(real, imaginary));
+            assertThat(polarForm.complexNumber()).isEqualTo(RealComplexNumber.of(real, imaginary));
         });
     }
 
     @Test
     public void complexNumberPrecisionTooLowShouldThrowException() {
         assertThatThrownBy(() -> zeroPolarForm.complexNumber(-1)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision > -1 but actual -1");
+            .hasMessage("expected precision > -1 but actual -1");
     }
 
     @Test
@@ -83,14 +83,14 @@ public final class PolarFormTest {
             final BigDecimal angular = polarForm.getAngular();
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
-            assertThat(polarForm.complexNumber(99)).isEqualTo(new RealComplexNumber(real, imaginary));
+            assertThat(polarForm.complexNumber(99)).isEqualTo(RealComplexNumber.of(real, imaginary));
         });
     }
 
     @Test
     public void complexNumberRoundingModeNullShouldThrowException() {
         assertThatThrownBy(() -> zeroPolarForm.complexNumber((RoundingMode) null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
     }
 
     @Test
@@ -102,21 +102,20 @@ public final class PolarFormTest {
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
             assertThat(polarForm.complexNumber(RoundingMode.HALF_DOWN))
-                    .isEqualTo(new RealComplexNumber(real, imaginary));
+                .isEqualTo(RealComplexNumber.of(real, imaginary));
         });
     }
 
     @Test
     public void complexNumberPrecisionTooLowAndWithRoundingModeShouldThrowException() {
         assertThatThrownBy(() -> zeroPolarForm.complexNumber(-1, RoundingMode.HALF_UP))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected precision > -1 but actual -1");
+            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
     }
 
     @Test
     public void complexNumberWithPrecisionButRoundingModeNullShouldThrowException() {
         assertThatThrownBy(() -> zeroPolarForm.complexNumber(0, null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("roundingMode");
+            .hasMessage("roundingMode");
     }
 
     @Test
@@ -128,14 +127,14 @@ public final class PolarFormTest {
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
             assertThat(polarForm.complexNumber(99, RoundingMode.HALF_DOWN))
-                    .isEqualTo(new RealComplexNumber(real, imaginary));
+                .isEqualTo(RealComplexNumber.of(real, imaginary));
         });
     }
 
     @Test
     public void complexNumberMathContextShouldThrowException() {
         assertThatThrownBy(() -> zeroPolarForm.complexNumber((MathContext) null))
-                .isExactlyInstanceOf(NullPointerException.class).hasMessage("mathContext");
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("mathContext");
     }
 
     @Test
@@ -147,14 +146,14 @@ public final class PolarFormTest {
             final BigDecimal angular = polarForm.getAngular();
             final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
             final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
-            assertThat(polarForm.complexNumber(mathContext)).isEqualTo(new RealComplexNumber(real, imaginary));
+            assertThat(polarForm.complexNumber(mathContext)).isEqualTo(RealComplexNumber.of(real, imaginary));
         });
     }
 
     @Test
     public void hashCodeShouldSucceed() {
         polarForms.forEach(polarForm -> assertThat(polarForm.hashCode())
-                .isEqualTo(Objects.hash(polarForm.getRadial(), polarForm.getAngular())));
+            .isEqualTo(Objects.hash(polarForm.getRadial(), polarForm.getAngular())));
     }
 
     @Test
@@ -186,8 +185,8 @@ public final class PolarFormTest {
     @Test
     public void equalsEqualShouldReturnTrue() {
         polarForms.forEach(
-                polarForm -> assertThat(polarForm.equals(new PolarForm(polarForm.getRadial(), polarForm.getAngular())))
-                        .isTrue());
+            polarForm -> assertThat(polarForm.equals(new PolarForm(polarForm.getRadial(), polarForm.getAngular())))
+                .isTrue());
     }
 
     @Test
@@ -200,8 +199,7 @@ public final class PolarFormTest {
 
     @Test
     public void toStringShouldSucceed() {
-        polarForms.forEach(polarForm -> assertThat(polarForm.toString()).isEqualTo(
-                MoreObjects.toStringHelper(polarForm).add("radial", polarForm.getRadial())
-                        .add("angular", polarForm.getAngular()).toString()));
+        polarForms.forEach(polarForm -> assertThat(polarForm.toString()).isEqualTo(MoreObjects.toStringHelper(polarForm)
+            .add("radial", polarForm.getRadial()).add("angular", polarForm.getAngular()).toString()));
     }
 }

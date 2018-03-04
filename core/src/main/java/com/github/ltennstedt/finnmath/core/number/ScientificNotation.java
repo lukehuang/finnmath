@@ -24,8 +24,9 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Represents the scientific notation for a decimal number which uses {@link BigDecimal} as type for its coefficient and
- * {@code int} as type for its exponent
+ * Represents the scientific notation for a decimal number which uses
+ * {@link BigDecimal} as type for its coefficient and {@code int} as type for
+ * its exponent
  * <p>
  * decimal = coefficient * 10^exponent
  *
@@ -49,14 +50,15 @@ public final class ScientificNotation {
     private final int exponent;
 
     /**
-     * Constructs a {@link ScientificNotation} from the given coefficient and exponent
+     * Constructs a {@link ScientificNotation} from the given coefficient and
+     * exponent
      *
      * @param coefficient
-     *         the coefficient
+     *            the coefficient
      * @param exponent
-     *         the exponent
+     *            the exponent
      * @throws NullPointerException
-     *         if {@code coefficient == null}
+     *             if {@code coefficient == null}
      * @since 1
      */
     public ScientificNotation(final BigDecimal coefficient, final int exponent) {
@@ -100,7 +102,7 @@ public final class ScientificNotation {
             return false;
         }
         final ScientificNotation other = (ScientificNotation) object;
-        return coefficient.equals(other.getCoefficient()) && (exponent == other.getExponent());
+        return coefficient.equals(other.getCoefficient()) && exponent == other.getExponent();
     }
 
     @Override

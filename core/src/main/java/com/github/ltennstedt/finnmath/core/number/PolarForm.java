@@ -29,7 +29,8 @@ import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
- * Represents the polar form of a complex number number which uses {@link BigDecimal} as type for its coordinates
+ * Represents the polar form of a complex number number which uses
+ * {@link BigDecimal} as type for its coordinates
  * <p>
  * complexNumber = r * (cos(phi) + i * sin(phi))
  *
@@ -63,13 +64,13 @@ public final class PolarForm {
      * Constructs a {@link PolarForm} from the given coordinates
      *
      * @param radial
-     *         the radial coordinate
+     *            the radial coordinate
      * @param angular
-     *         the angular coordinate
+     *            the angular coordinate
      * @throws NullPointerException
-     *         if {@code radial == null}
+     *             if {@code radial == null}
      * @throws NullPointerException
-     *         if {@code angular == null}
+     *             if {@code angular == null}
      * @since 1
      */
     public PolarForm(final BigDecimal radial, final BigDecimal angular) {
@@ -91,10 +92,10 @@ public final class PolarForm {
      * Returns the correspondig complex number of this polar form
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @return The complex number
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @since 1
      */
     public RealComplexNumber complexNumber(final int precision) {
@@ -106,10 +107,10 @@ public final class PolarForm {
      * Returns the correspondig complex number of this polar form
      *
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The complex number
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @since 1
      */
     public RealComplexNumber complexNumber(final RoundingMode roundingMode) {
@@ -121,14 +122,14 @@ public final class PolarForm {
      * Returns the correspondig complex number of this polar form
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The complex number
      * @throws IllegalArgumentException
-     *         if {@code precision < 0}
+     *             if {@code precision < 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @since 1
      */
     public RealComplexNumber complexNumber(final int precision, final RoundingMode roundingMode) {
@@ -138,13 +139,14 @@ public final class PolarForm {
     }
 
     /**
-     * Returns the correspondig complex number of this polar form considering the {@link MathContext}
+     * Returns the correspondig complex number of this polar form considering the
+     * {@link MathContext}
      *
      * @param mathContext
-     *         The math context
+     *            The math context
      * @return The complex number
      * @throws NullPointerException
-     *         if {@code mathContext == null}
+     *             if {@code mathContext == null}
      * @since 1
      */
     public RealComplexNumber complexNumber(final MathContext mathContext) {
@@ -155,7 +157,7 @@ public final class PolarForm {
     private RealComplexNumber complexNumer(final Context context) {
         final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());
         final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());
-        return new RealComplexNumber(real, imaginary);
+        return RealComplexNumber.of(real, imaginary);
     }
 
     @Override

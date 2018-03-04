@@ -29,44 +29,43 @@ public final class BigIntegerVectorBuilderTest {
     @Test
     public void putIndexNullShouldThrowException() {
         assertThatThrownBy(() -> builder.put(null, BigInteger.ZERO)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("index");
+            .hasMessage("index");
     }
 
     @Test
     public void putElementNullShouldThrowException() {
         assertThatThrownBy(() -> builder.put(1, null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("element");
+            .hasMessage("element");
     }
 
     @Test
     public void putIndexTooLowShouldThrowException() {
         assertThatThrownBy(() -> builder.put(0, BigInteger.ZERO)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected index in [1, %s] but actual %s", 4, 0);
+            .hasMessage("expected index in [1, %s] but actual %s", 4, 0);
     }
 
     @Test
     public void putRowIndexTooHighShouldThrowException() {
         assertThatThrownBy(() -> builder.put(5, BigInteger.ZERO)).isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected index in [1, %s] but actual %s", 4, 5);
+            .hasMessage("expected index in [1, %s] but actual %s", 4, 5);
     }
 
     @Test
     public void putAllNullShouldThrowException() {
         assertThatThrownBy(() -> builder.putAll(null)).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("element");
+            .hasMessage("element");
     }
 
     @Test
     public void buildNullShouldThrowException() {
         assertThatThrownBy(() -> BigIntegerVector.builder(4).build()).isExactlyInstanceOf(NullPointerException.class)
-                .hasMessage("map.value");
+            .hasMessage("map.value");
     }
 
     @Test
     public void toStringShouldSucceed() {
         final BigIntegerVector.BigIntegerVectorBuilder actual = builder.putAll(BigInteger.ZERO);
         assertThat(actual.toString()).isEqualTo(
-                MoreObjects.toStringHelper(builder).add("map", builder.getMap()).add("size", builder.getSize())
-                        .toString());
+            MoreObjects.toStringHelper(builder).add("map", builder.getMap()).add("size", builder.getSize()).toString());
     }
 }

@@ -23,51 +23,33 @@ import com.github.ltennstedt.finnmath.core.util.MathRandom;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomUtils;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public final class BigDecimalMatrixGuavaTest {
-    private static final int size = 4;
-    private static BigDecimalMatrix identityMatrix;
-    private static final List<Integer> range = IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList());
     private final long bound = 10;
     private final int scale = 2;
     private final int rowSize = 4;
     private final int columnSize = 5;
+    private final int size = rowSize;
     private final int howMany = 10;
-    private final BigDecimalMatrix zeroMatrixForAddition =
-            BigDecimalMatrix.builder(rowSize, columnSize).putAll(BigDecimal.ZERO).build();
+    private final BigDecimalMatrix zeroMatrixForAddition = Matrices.buildZeroBigDecimalMatrix(rowSize, columnSize);
+    private final BigDecimalMatrix identityMatrix = Matrices.buildIdentityBigDecimalMatrix(size);
     private final MathRandom mathRandom = new MathRandom(7);
     private final List<BigDecimalMatrix> matrices =
-            mathRandom.nextBigDecimalMatrices(bound, scale, rowSize, columnSize, howMany);
+        mathRandom.nextBigDecimalMatrices(bound, scale, rowSize, columnSize, howMany);
     private final List<BigDecimalMatrix> squareMatrices =
-            mathRandom.nextBigDecimalMatrices(bound, scale, rowSize, rowSize, howMany);
+        mathRandom.nextBigDecimalMatrices(bound, scale, rowSize, rowSize, howMany);
     private final List<BigDecimalMatrix> othersForAddition =
-            mathRandom.nextBigDecimalMatrices(bound, scale, rowSize, columnSize, howMany);
+        mathRandom.nextBigDecimalMatrices(bound, scale, rowSize, columnSize, howMany);
     private final List<BigDecimalMatrix> additionalOthersForAddition =
-            mathRandom.nextBigDecimalMatrices(bound, scale, rowSize, columnSize, howMany);
+        mathRandom.nextBigDecimalMatrices(bound, scale, rowSize, columnSize, howMany);
     private final List<BigDecimalMatrix> othersForMultiplication =
-            mathRandom.nextBigDecimalMatrices(bound, scale, columnSize, columnSize, howMany);
+        mathRandom.nextBigDecimalMatrices(bound, scale, columnSize, columnSize, howMany);
     private final List<BigDecimalMatrix> additionalOthersForMultiplication =
-            mathRandom.nextBigDecimalMatrices(bound, scale, columnSize, columnSize, howMany);
+        mathRandom.nextBigDecimalMatrices(bound, scale, columnSize, columnSize, howMany);
     private final List<BigDecimal> scalars = mathRandom.nextBigDecimals(bound, scale, howMany);
     private final List<BigDecimal> otherScalars = mathRandom.nextBigDecimals(bound, scale, howMany);
-
-    @BeforeClass
-    public static void setUp() {
-        final BigDecimalMatrixBuilder identityMatrixBuilder = BigDecimalMatrix.builder(size, size);
-        range.forEach(rowIndex -> range.forEach(columnIndex -> {
-            if (rowIndex.equals(columnIndex)) {
-                identityMatrixBuilder.put(rowIndex, columnIndex, BigDecimal.ONE);
-            } else {
-                identityMatrixBuilder.put(rowIndex, columnIndex, BigDecimal.ZERO);
-            }
-        }));
-        identityMatrix = identityMatrixBuilder.build();
-    }
 
     @Test
     public void addShouldSucceed() {
@@ -86,20 +68,20 @@ public final class BigDecimalMatrixGuavaTest {
     @Test
     public void addShouldBeCommutative() {
         matrices.forEach(matrix -> othersForAddition
-                .forEach(other -> assertThat(matrix.add(other).getTable()).isEqualTo(other.add(matrix).getTable())));
+            .forEach(other -> assertThat(matrix.add(other).getTable()).isEqualTo(other.add(matrix).getTable())));
     }
 
     @Test
     public void addShouldBeAssociative() {
-        matrices.forEach(matrix -> othersForAddition.forEach(other -> additionalOthersForAddition.forEach(
-                additionalOthers -> assertThat(matrix.add(other).add(additionalOthers).getTable())
-                        .isEqualTo(matrix.add(other.add(additionalOthers)).getTable()))));
+        matrices.forEach(matrix -> othersForAddition.forEach(other -> additionalOthersForAddition
+            .forEach(additionalOthers -> assertThat(matrix.add(other).add(additionalOthers).getTable())
+                .isEqualTo(matrix.add(other.add(additionalOthers)).getTable()))));
     }
 
     @Test
     public void addZeroMatrixShouldBeEqualToSelf() {
-        matrices.forEach(
-                matrix -> assertThat(matrix.add(zeroMatrixForAddition).getTable()).isEqualTo(matrix.getTable()));
+        matrices
+            .forEach(matrix -> assertThat(matrix.add(zeroMatrixForAddition).getTable()).isEqualTo(matrix.getTable()));
     }
 
     @Test
@@ -119,7 +101,7 @@ public final class BigDecimalMatrixGuavaTest {
     @Test
     public void subtractZeroMatrixShouldBeEqualToSelf() {
         matrices.forEach(
-                matrix -> assertThat(matrix.subtract(zeroMatrixForAddition).getTable()).isEqualTo(matrix.getTable()));
+            matrix -> assertThat(matrix.subtract(zeroMatrixForAddition).getTable()).isEqualTo(matrix.getTable()));
     }
 
     @Test
@@ -140,71 +122,71 @@ public final class BigDecimalMatrixGuavaTest {
     @Test
     public void multiplyIdentityMatrixShouldBeEqualToSelf() {
         squareMatrices
-                .forEach(matrix -> assertThat(matrix.multiply(identityMatrix).getTable()).isEqualTo(matrix.getTable()));
+            .forEach(matrix -> assertThat(matrix.multiply(identityMatrix).getTable()).isEqualTo(matrix.getTable()));
     }
 
     @Test
     public void multiplyShouldBeAssociative() {
-        matrices.forEach(matrix -> othersForMultiplication.forEach(other -> additionalOthersForMultiplication.forEach(
-                additionalOthers -> assertThat(matrix.multiply(other).multiply(additionalOthers).getTable())
-                        .isEqualTo(matrix.multiply(other.multiply(additionalOthers)).getTable()))));
+        matrices.forEach(matrix -> othersForMultiplication.forEach(other -> additionalOthersForMultiplication
+            .forEach(additionalOthers -> assertThat(matrix.multiply(other).multiply(additionalOthers).getTable())
+                .isEqualTo(matrix.multiply(other.multiply(additionalOthers)).getTable()))));
     }
 
     @Test
     public void addAndMultiplyShouldBeDistributive() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(other -> squareMatrices.forEach(
-                additionalOther -> assertThat(matrix.multiply(other.add(additionalOther)).getTable())
-                        .isEqualTo(matrix.multiply(other).add(matrix.multiply(additionalOther)).getTable()))));
+        squareMatrices.forEach(matrix -> squareMatrices.forEach(other -> squareMatrices
+            .forEach(additionalOther -> assertThat(matrix.multiply(other.add(additionalOther)).getTable())
+                .isEqualTo(matrix.multiply(other).add(matrix.multiply(additionalOther)).getTable()))));
     }
 
     @Test
     public void scalarMultiplyShouldSucceed() {
         matrices.forEach(matrix -> scalars.forEach(scalar -> {
             final BigDecimalMatrixBuilder builder = BigDecimalMatrix.builder(matrix.rowSize(), matrix.columnSize());
-            matrix.cells().forEach(
-                    cell -> builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));
+            matrix.cells()
+                .forEach(cell -> builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));
             assertThat(matrix.scalarMultiply(scalar).getTable()).isEqualTo(builder.build().getTable());
         }));
     }
 
     @Test
     public void scalarMultiplyWithTwoScalarsShouldBeAssociative() {
-        matrices.forEach(matrix -> scalars.forEach(scalar -> otherScalars.forEach(
-                otherScalar -> assertThat(matrix.scalarMultiply(scalar.multiply(otherScalar)).getTable())
-                        .isEqualTo(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar).getTable()))));
+        matrices.forEach(matrix -> scalars.forEach(scalar -> otherScalars
+            .forEach(otherScalar -> assertThat(matrix.scalarMultiply(scalar.multiply(otherScalar)).getTable())
+                .isEqualTo(matrix.scalarMultiply(otherScalar).scalarMultiply(scalar).getTable()))));
     }
 
     @Test
     public void scalarMultiplyWithTwoMatricesShouldBeAssociative() {
-        matrices.forEach(matrix -> othersForMultiplication.forEach(other -> scalars.forEach(
-                scalar -> assertThat(matrix.scalarMultiply(scalar).multiply(other).getTable())
-                        .isEqualTo(matrix.multiply(other).scalarMultiply(scalar).getTable()))));
+        matrices.forEach(matrix -> othersForMultiplication.forEach(
+            other -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).multiply(other).getTable())
+                .isEqualTo(matrix.multiply(other).scalarMultiply(scalar).getTable()))));
     }
 
     @Test
     public void addAndScalarMultiplyWithTwoScalarsShouldBeDistributive() {
-        matrices.forEach(matrix -> scalars.forEach(scalar -> otherScalars.forEach(
-                otherScalar -> assertThat(matrix.scalarMultiply(scalar.add(otherScalar)).getTable())
-                        .isEqualTo(matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar)).getTable()))));
+        matrices.forEach(matrix -> scalars.forEach(scalar -> otherScalars
+            .forEach(otherScalar -> assertThat(matrix.scalarMultiply(scalar.add(otherScalar)).getTable())
+                .isEqualTo(matrix.scalarMultiply(scalar).add(matrix.scalarMultiply(otherScalar)).getTable()))));
     }
 
     @Test
     public void addAndScalarMultiplyWithTwoMatricesShouldBeDistributive() {
-        matrices.forEach(matrix -> othersForAddition.forEach(other -> scalars.forEach(
-                scalar -> assertThat(matrix.add(other).scalarMultiply(scalar).getTable())
-                        .isEqualTo(matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)).getTable()))));
+        matrices.forEach(matrix -> othersForAddition
+            .forEach(other -> scalars.forEach(scalar -> assertThat(matrix.add(other).scalarMultiply(scalar).getTable())
+                .isEqualTo(matrix.scalarMultiply(scalar).add(other.scalarMultiply(scalar)).getTable()))));
     }
 
     @Test
     public void scalarMultiplyWithOneShouldBeEqualToSelf() {
         matrices.forEach(
-                matrix -> assertThat(matrix.scalarMultiply(BigDecimal.ONE).getTable()).isEqualTo(matrix.getTable()));
+            matrix -> assertThat(matrix.scalarMultiply(BigDecimal.ONE).getTable()).isEqualTo(matrix.getTable()));
     }
 
     @Test
     public void negateShouldSucceed() {
         matrices.forEach(matrix -> assertThat(matrix.negate().getTable())
-                .isEqualTo(matrix.scalarMultiply(BigDecimal.ONE.negate()).getTable()));
+            .isEqualTo(matrix.scalarMultiply(BigDecimal.ONE.negate()).getTable()));
     }
 
     @Test
@@ -220,17 +202,14 @@ public final class BigDecimalMatrixGuavaTest {
     @Test
     public void multiplyNegativeIdentityMatrixShouldBeEqualToNegated() {
         squareMatrices.forEach(matrix -> {
-            final BigDecimalMatrixBuilder builder =
-                    BigDecimalMatrix.builder(matrix.rowSize(), matrix.columnSize()).putAll(BigDecimal.ZERO);
-            matrix.rowIndexes().forEach(index -> builder.put(index, index, BigDecimal.ONE.negate()));
-            assertThat(matrix.multiply(builder.build()).getTable()).isEqualTo(matrix.negate().getTable());
+            assertThat(matrix.multiply(identityMatrix.negate()).getTable()).isEqualTo(matrix.negate().getTable());
         });
     }
 
     @Test
     public void scalarMultiplyWithMinusOneShouldBeEqualToNegated() {
         matrices.forEach(matrix -> assertThat(matrix.scalarMultiply(BigDecimal.ONE.negate()).getTable())
-                .isEqualTo(matrix.negate().getTable()));
+            .isEqualTo(matrix.negate().getTable()));
     }
 
     @Test
@@ -249,23 +228,23 @@ public final class BigDecimalMatrixGuavaTest {
 
     @Test
     public void transposeShouldBeAdditive() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(
-                other -> assertThat(matrix.add(other).transpose().getTable())
-                        .isEqualTo(matrix.transpose().add(other.transpose()).getTable())));
+        squareMatrices
+            .forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.add(other).transpose().getTable())
+                .isEqualTo(matrix.transpose().add(other.transpose()).getTable())));
     }
 
     @Test
     public void transposeShouldBeLinear() {
-        matrices.forEach(matrix -> scalars.forEach(
-                scalar -> assertThat(matrix.scalarMultiply(scalar).transpose().getTable())
-                        .isEqualTo(matrix.transpose().scalarMultiply(scalar).getTable())));
+        matrices.forEach(
+            matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).transpose().getTable())
+                .isEqualTo(matrix.transpose().scalarMultiply(scalar).getTable())));
     }
 
     @Test
     public void transposeShouldBeMultiplicativeWithInversedOrder() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(
-                other -> assertThat(matrix.multiply(other).transpose().getTable())
-                        .isEqualTo(other.transpose().multiply(matrix.transpose()).getTable())));
+        squareMatrices
+            .forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.multiply(other).transpose().getTable())
+                .isEqualTo(other.transpose().multiply(matrix.transpose()).getTable())));
     }
 
     @Test
@@ -277,7 +256,7 @@ public final class BigDecimalMatrixGuavaTest {
             matrix.cells().forEach(cell -> {
                 final Integer rowKey = cell.getRowKey();
                 final Integer columnKey = cell.getColumnKey();
-                if (!rowKey.equals(rowIndex) && !columnKey.equals(columnIndex)) {
+                if (rowKey.compareTo(rowIndex) != 0 && columnKey.compareTo(columnIndex) != 0) {
                     final Integer newRowIndex = rowKey.compareTo(rowIndex) > 0 ? rowKey - 1 : rowKey;
                     final Integer newColumnIndex = columnKey.compareTo(columnIndex) > 0 ? columnKey - 1 : columnKey;
                     builder.put(newRowIndex, newColumnIndex, cell.getValue());

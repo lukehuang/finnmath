@@ -22,19 +22,18 @@ import static java.util.Objects.requireNonNull;
 
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
- * An immutable implementation of a fraction which uses {@link BigInteger} as type for its numerator and denominator
+ * An immutable implementation of a fraction which uses {@link BigInteger} as
+ * type for its numerator and denominator
  *
  * @author Lars Tennstedt
  * @since 1
  */
 @Beta
-public final class Fraction extends Number implements MathNumber<Fraction, Fraction, Fraction>, Comparable<Fraction> {
+public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>, Comparable<Fraction> {
     /**
      * {@code 0} as {@link Fraction}
      *
@@ -48,8 +47,6 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * @since 1
      */
     public static final Fraction ONE = new Fraction(BigInteger.ONE, BigInteger.ONE);
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * {@code numerator} of this {@link Fraction}
@@ -65,79 +62,9 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      */
     private final BigInteger denominator;
 
-    /**
-     * Constructs a {@link Fraction} by the given numerator and denominator
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     *
-     * @param numerator
-     *         the numerator
-     * @param denominator
-     *         the denominator
-     * @throws NullPointerException
-     *         if {@code numerator == null}
-     * @throws NullPointerException
-     *         if {@code denominator == null}
-     * @throws IllegalArgumentException
-     *         if {@code denominator == 0}
-     * @see #normalize
-     * @see #reduce
-     * @since 1
-     */
-    public Fraction(final BigInteger numerator, final BigInteger denominator) {
-        super();
-        this.numerator = requireNonNull(numerator, "numerator");
-        this.denominator = requireNonNull(denominator, "denominator");
-        checkArgument(denominator.compareTo(BigInteger.ZERO) != 0, "expected denominator != 0 but actual %s",
-                denominator);
-    }
-
-    /**
-     * Returns an {@code int} representation of this {@link Fraction}
-     *
-     * @return The {@code int} value
-     * @see BigDecimal#intValue
-     * @since 1
-     */
-    @Override
-    public int intValue() {
-        return new BigDecimal(numerator).divide(new BigDecimal(denominator), RoundingMode.HALF_UP).intValue();
-    }
-
-    /**
-     * Returns a {@code long} representation of this {@link Fraction}
-     *
-     * @return The {@code long} value
-     * @see BigDecimal#intValue
-     * @since 1
-     */
-    @Override
-    public long longValue() {
-        return new BigDecimal(numerator).divide(new BigDecimal(denominator), RoundingMode.HALF_UP).longValue();
-    }
-
-    /**
-     * Returns a {@code float} representation of this {@link Fraction}
-     *
-     * @return The {@code float} value
-     * @see BigDecimal#intValue
-     * @since 1
-     */
-    @Override
-    public float floatValue() {
-        return new BigDecimal(numerator).divide(new BigDecimal(denominator), RoundingMode.HALF_UP).floatValue();
-    }
-
-    /**
-     * Returns a {@code double} representation of this {@link Fraction}
-     *
-     * @return The {@code double} value
-     * @see BigDecimal#intValue
-     * @since 1
-     */
-    @Override
-    public double doubleValue() {
-        return new BigDecimal(numerator).divide(new BigDecimal(denominator), RoundingMode.HALF_UP).doubleValue();
+    private Fraction(final BigInteger numerator, final BigInteger denominator) {
+        this.numerator = numerator;
+        this.denominator = denominator;
     }
 
     /**
@@ -146,10 +73,10 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @param summand
-     *         the summand
+     *            the summand
      * @return The sum
      * @throws NullPointerException
-     *         if {@code summand == null}
+     *             if {@code summand == null}
      * @see #normalize
      * @see #reduce
      * @since 1
@@ -158,7 +85,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     public Fraction add(final Fraction summand) {
         requireNonNull(summand, "summand");
         final BigInteger newNumerator =
-                summand.getDenominator().multiply(numerator).add(denominator.multiply(summand.getNumerator()));
+            summand.getDenominator().multiply(numerator).add(denominator.multiply(summand.getNumerator()));
         final BigInteger newDenominator = denominator.multiply(summand.getDenominator());
         return new Fraction(newNumerator, newDenominator);
     }
@@ -169,10 +96,10 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @param subtrahend
-     *         the subtrahend
+     *            the subtrahend
      * @return The difference
      * @throws NullPointerException
-     *         if {@code subtrahend == null}
+     *             if {@code subtrahend == null}
      * @see #normalize
      * @see #reduce
      * @since 1
@@ -180,8 +107,8 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     @Override
     public Fraction subtract(final Fraction subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
-        final BigInteger newNumerator = subtrahend.getDenominator().multiply(numerator)
-                .subtract(denominator.multiply(subtrahend.getNumerator()));
+        final BigInteger newNumerator =
+            subtrahend.getDenominator().multiply(numerator).subtract(denominator.multiply(subtrahend.getNumerator()));
         final BigInteger newDenominator = denominator.multiply(subtrahend.getDenominator());
         return new Fraction(newNumerator, newDenominator);
     }
@@ -192,10 +119,10 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @param factor
-     *         the factor
+     *            the factor
      * @return The product
      * @throws NullPointerException
-     *         if {@code factor == null}
+     *             if {@code factor == null}
      * @see #normalize
      * @see #reduce
      * @since 1
@@ -214,12 +141,12 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @param divisor
-     *         the divisor
+     *            the divisor
      * @return The quotient
      * @throws NullPointerException
-     *         if {@code divisor == null}
+     *             if {@code divisor == null}
      * @throws IllegalArgumentException
-     *         if {@code !divisor.invertible}
+     *             if {@code !divisor.invertible}
      * @see #invert
      * @see #multiply
      * @see #normalize
@@ -239,10 +166,10 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @param exponent
-     *         the exponent
+     *            the exponent
      * @return The power
      * @throws IllegalArgumentException
-     *         if {@code exponent < 0}
+     *             if {@code exponent < 0}
      * @see #normalize
      * @see #reduce
      * @since 1
@@ -280,7 +207,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      *
      * @return The inverted
      * @throws IllegalStateException
-     *         if {@code numerator == 0}
+     *             if {@code numerator == 0}
      * @see #normalize
      * @see #reduce
      * @since 1
@@ -319,11 +246,13 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns an int which indicates which one is less
+     * Compares this {@link Fraction} to the given one and returns an int which
+     * indicates which one is less
      *
      * @param other
-     *         another {@link Fraction}
-     * @return {@code -1} if {@code this < other}, {@code 1} if {@code this > other}, {@code 0} otherwise
+     *            another {@link Fraction}
+     * @return {@code -1} if {@code this < other}, {@code 1} if
+     *         {@code this > other}, {@code 0} otherwise
      * @see #lessThan
      * @see #greaterThan
      * @since 1
@@ -341,10 +270,11 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates which one is less
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates which one is less
      *
      * @param other
-     *         another {@link Fraction}
+     *            another {@link Fraction}
      * @return {@code true} if {@code this <= other}, {@code false} otherwise
      * @see #normalize
      * @since 1
@@ -359,11 +289,11 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates which one is
-     * greater
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates which one is greater
      *
      * @param other
-     *         another {@link Fraction}
+     *            another {@link Fraction}
      * @return {@code true} if {@code this >= other}, {@code false} otherwise
      * @see #lessThanOrEqualTo
      * @see #equivalent
@@ -375,10 +305,11 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates which one is less
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates which one is less
      *
      * @param other
-     *         another {@link Fraction}
+     *            another {@link Fraction}
      * @return {@code true} if {@code this < other}, {@code false} otherwise
      * @see #greaterThanOrEqualTo
      * @since 1
@@ -389,11 +320,11 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates which one is
-     * greater
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates which one is greater
      *
      * @param other
-     *         another {@link Fraction}
+     *            another {@link Fraction}
      * @return {@code true} if {@code this < other}, {@code false} otherwise
      * @see #lessThanOrEqualTo
      * @since 1
@@ -409,7 +340,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @param other
-     *         another {@link Fraction}
+     *            another {@link Fraction}
      * @return The minimum of this {@link Fraction} and the other one
      * @see #greaterThan
      * @see #normalize
@@ -427,7 +358,7 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * The returned {@link Fraction} is not reduced and not normalized.
      *
      * @param other
-     *         another {@link Fraction}
+     *            another {@link Fraction}
      * @return The maximum of this {@link Fraction} and the other one
      * @see #lessThan
      * @see #normalize
@@ -444,7 +375,8 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
      * <p>
      * The returned {@link Fraction} is not reduced.
      *
-     * @return {@code new Fraction(-numerator.abs, denominator.abs)} if the {@code signum < 0}, {@code ZERO} if {@code
+     * @return {@code new Fraction(-numerator.abs, denominator.abs)} if the
+     *         {@code signum < 0}, {@code ZERO} if {@code
      * signum == 0}, {@code this} otherwise
      * @see #signum
      * @see #abs
@@ -492,12 +424,13 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     }
 
     /**
-     * Compares this {@link Fraction} to the given one and returns a {@code boolean} which indicates if this {@link
-     * Fraction} is equivalent to the given one
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates if this {@link Fraction} is equivalent to the given one
      *
      * @param other
-     *         another {@link Fraction}
-     * @return {@code true} if the {@code this} is equivalent to {@code other}, {@code false} otherwise
+     *            another {@link Fraction}
+     * @return {@code true} if the {@code this} is equivalent to {@code other},
+     *         {@code false} otherwise
      * @see #normalize
      * @see #reduce
      * @since 1
@@ -505,6 +438,57 @@ public final class Fraction extends Number implements MathNumber<Fraction, Fract
     public boolean equivalent(final Fraction other) {
         requireNonNull(other, "other");
         return normalize().reduce().equals(other.normalize().reduce());
+    }
+
+    /**
+     * Returns a {@link Fraction} based on the given {@code numerator} and
+     * {@code denominator}
+     * <p>
+     * The returned {@link Fraction} is not reduced and not normalized.
+     *
+     * @param numerator
+     *            the numerator
+     * @param denominator
+     *            the denominator
+     * @return {@link Fraction}
+     * @throws IllegalArgumentException
+     *             if {@code denominator == 0}
+     * @see #normalize
+     * @see #reduce
+     * @since 1
+     */
+    public static Fraction of(final long numerator, final long denominator) {
+        checkArgument(denominator != 0L, "expected denominator != 0 but actual %s", denominator);
+        return of(BigInteger.valueOf(numerator), BigInteger.valueOf(denominator));
+    }
+
+    /**
+     * Returns a {@link Fraction} based on the given {@code numerator} and
+     * {@code denominator}
+     * <p>
+     * The returned {@link Fraction} is not reduced and not normalized.
+     *
+     * @param numerator
+     *            the numerator
+     * @param denominator
+     *            the denominator
+     * @return {@link Fraction}
+     * @throws NullPointerException
+     *             if {@code numerator == null}
+     * @throws NullPointerException
+     *             if {@code denominator == null}
+     * @throws IllegalArgumentException
+     *             if {@code denominator == 0}
+     * @see #normalize
+     * @see #reduce
+     * @since 1
+     */
+    public static Fraction of(final BigInteger numerator, final BigInteger denominator) {
+        requireNonNull(numerator, "numerator");
+        requireNonNull(denominator, "denominator");
+        checkArgument(denominator.compareTo(BigInteger.ZERO) != 0, "expected denominator != 0 but actual %s",
+            denominator);
+        return new Fraction(numerator, denominator);
     }
 
     @Override

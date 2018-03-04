@@ -28,22 +28,25 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
+ * Base class for vectors
+ *
  * @param <E>
- *         The type of the elements of the vector
+ *            The type of the elements of the vector
  * @param <V>
- *         The type of the vector
+ *            The type of the vector
  * @param <N>
- *         The type of the taxicab and max norm of the vector
+ *            The type of the taxicab and max norm of the vector
  * @param <P>
- *         The type of the inner product
+ *            The type of the inner product
  * @author Lars Tennstedt
  * @see ImmutableMap
  * @since 1
  */
 @Beta
-abstract class AbstractVector<E, V, N, P> {
+public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N, P> {
     /**
      * The map holding the elements of this {@link AbstractVector}
      *
@@ -59,29 +62,30 @@ abstract class AbstractVector<E, V, N, P> {
      * Returns the element dependent on the given index
      *
      * @param index
-     *         the index of the element
+     *            the index of the element
      * @return The element
      * @throws NullPointerException
-     *         if {@code index == null}
+     *             if {@code index == null}
      * @throws IllegalArgumentException
-     *         if {@code !map.containsKey(index)}
+     *             if {@code !map.containsKey(index)}
      * @see Map#containsKey
      * @since 1
      */
-    public E element(final Integer index) {
+    public final E element(final Integer index) {
         requireNonNull(index, "index");
         checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(), index);
         return map.get(index);
     }
 
     /**
-     * Returns all elements of the underlying {@link Map} of this {@link AbstractVector}
+     * Returns all elements of the underlying {@link Map} of this
+     * {@link AbstractVector}
      *
      * @return The elements
      * @see Map#entrySet
      * @since 1
      */
-    public ImmutableSet<Entry<Integer, E>> entries() {
+    public final ImmutableSet<Entry<Integer, E>> entries() {
         return map.entrySet();
     }
 
@@ -92,7 +96,7 @@ abstract class AbstractVector<E, V, N, P> {
      * @see Map#values
      * @since 1
      */
-    public ImmutableCollection<E> elements() {
+    public final ImmutableCollection<E> elements() {
         return map.values();
     }
 
@@ -108,7 +112,26 @@ abstract class AbstractVector<E, V, N, P> {
 
     protected abstract N taxicabNorm();
 
-    protected abstract N taxicabDistance(V other);
+    /**
+     * Returns the taxicab distance from this {@link AbstractVector} to the given
+     * one
+     *
+     * @param other
+     *            The other {@link AbstractVector}
+     * @return The taxicab distance
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @see #subtract
+     * @see #taxicabNorm
+     * @since 1
+     */
+    public final N taxicabDistance(final V other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return subtract(other).taxicabNorm();
+    }
 
     protected abstract P euclideanNormPow2();
 
@@ -120,7 +143,26 @@ abstract class AbstractVector<E, V, N, P> {
 
     protected abstract BigDecimal euclideanNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
 
-    protected abstract P euclideanDistancePow2(V other);
+    /**
+     * Returns the square of the euclidean distance from this
+     * {@link SimpleComplexNumberVector} to the given one
+     *
+     * @param other
+     *            The other {@link AbstractVector}
+     * @return The square of the euclidean distance
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @see #subtract
+     * @see #euclideanNormPow2
+     * @since 1
+     */
+    public final P euclideanDistancePow2(final V other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return subtract(other).euclideanNormPow2();
+    }
 
     protected abstract BigDecimal euclideanDistance(V other);
 
@@ -129,11 +171,29 @@ abstract class AbstractVector<E, V, N, P> {
     protected abstract BigDecimal euclideanDistance(V other, int scale, RoundingMode roundingMode);
 
     protected abstract BigDecimal euclideanDistance(V other, BigDecimal precision, int scale,
-            RoundingMode roundingMode);
+        RoundingMode roundingMode);
 
     protected abstract N maxNorm();
 
-    protected abstract N maxDistance(V other);
+    /**
+     * Returns the max distance from this {@link AbstractVector} to the given one
+     *
+     * @param other
+     *            The other {@link AbstractVector}
+     * @return The max distance
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @see #subtract
+     * @see #maxNorm
+     * @since 1
+     */
+    public final N maxDistance(final V other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return subtract(other).maxNorm();
+    }
 
     /**
      * Returns the size of the underlying {@link Map}
@@ -141,16 +201,33 @@ abstract class AbstractVector<E, V, N, P> {
      * @return size the size
      * @since 1
      */
-    public int size() {
+    public final int size() {
         return map.size();
     }
 
     @Override
-    public String toString() {
+    public final int hashCode() {
+        return Objects.hash(map);
+    }
+
+    @Override
+    public final boolean equals(final Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof AbstractVector)) {
+            return false;
+        }
+        final AbstractVector<?, ?, ?, ?> other = (AbstractVector<?, ?, ?, ?>) object;
+        return Objects.deepEquals(map, other.getMap());
+    }
+
+    @Override
+    public final String toString() {
         return MoreObjects.toStringHelper(this).add("map", map).toString();
     }
 
-    public ImmutableMap<Integer, E> getMap() {
+    public final ImmutableMap<Integer, E> getMap() {
         return map;
     }
 }

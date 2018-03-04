@@ -20,12 +20,12 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
+import com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberVector.SimpleComplexNumberVectorBuilder;
 import com.github.ltennstedt.finnmath.core.number.SimpleComplexNumber;
 import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
-import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -33,18 +33,18 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
+import java.util.Optional;
 
 /**
- * An immutable implementation of a matrix which uses {@link SimpleComplexNumber} as type for its elements
+ * An immutable implementation of a matrix which uses
+ * {@link SimpleComplexNumber} as type for its elements
  *
  * @author Lars Tennstedt
  * @since 1
  */
 @Beta
 public final class SimpleComplexNumberMatrix extends
-        AbstractMatrix<SimpleComplexNumber, SimpleComplexNumberVector, SimpleComplexNumberMatrix, BigDecimal,
-                BigInteger> {
+    AbstractMatrix<SimpleComplexNumber, SimpleComplexNumberVector, SimpleComplexNumberMatrix, BigDecimal, BigInteger> {
     private SimpleComplexNumberMatrix(final ImmutableTable<Integer, Integer, SimpleComplexNumber> table) {
         super(table);
     }
@@ -53,14 +53,14 @@ public final class SimpleComplexNumberMatrix extends
      * Returns the sum of this {@link SimpleComplexNumberMatrix} and the given one
      *
      * @param summand
-     *         The summand
+     *            The summand
      * @return The sum
      * @throws NullPointerException
-     *         if {@code summand == null}
+     *             if {@code summand == null}
      * @throws IllegalArgumentException
-     *         if {@code rowSize != summand.rowSize}
+     *             if {@code rowSize != summand.rowSize}
      * @throws IllegalArgumentException
-     *         if {@code columnSize != summand.columnSize}
+     *             if {@code columnSize != summand.columnSize}
      * @see #builder
      * @since 1
      */
@@ -68,9 +68,9 @@ public final class SimpleComplexNumberMatrix extends
     public SimpleComplexNumberMatrix add(final SimpleComplexNumberMatrix summand) {
         requireNonNull(summand, "summand");
         checkArgument(table.rowKeySet().size() == summand.rowSize(), "expected equal row sizes but actual %s != %s",
-                table.rowKeySet().size(), summand.rowSize());
+            table.rowKeySet().size(), summand.rowSize());
         checkArgument(table.columnKeySet().size() == summand.columnSize(),
-                "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), summand.columnSize());
+            "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), summand.columnSize());
         final SimpleComplexNumberMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -81,17 +81,18 @@ public final class SimpleComplexNumberMatrix extends
     }
 
     /**
-     * Returns the difference of this {@link SimpleComplexNumberMatrix} and the given one
+     * Returns the difference of this {@link SimpleComplexNumberMatrix} and the
+     * given one
      *
      * @param subtrahend
-     *         the subtrahend
+     *            the subtrahend
      * @return The difference
      * @throws NullPointerException
-     *         if {@code subtrahend == null}
+     *             if {@code subtrahend == null}
      * @throws IllegalArgumentException
-     *         if {@code rowSize != summand.rowSize}
+     *             if {@code rowSize != summand.rowSize}
      * @throws IllegalArgumentException
-     *         if {@code columnSize != summand.columnSize}
+     *             if {@code columnSize != summand.columnSize}
      * @see #builder
      * @since 1
      */
@@ -99,10 +100,9 @@ public final class SimpleComplexNumberMatrix extends
     public SimpleComplexNumberMatrix subtract(final SimpleComplexNumberMatrix subtrahend) {
         requireNonNull(subtrahend, "subtrahend");
         checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), "expected equal row sizes but actual %s != %s",
-                table.rowKeySet().size(), subtrahend.rowSize());
+            table.rowKeySet().size(), subtrahend.rowSize());
         checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),
-                "expected equal column sizes but actual %s != %s", table.columnKeySet().size(),
-                subtrahend.columnSize());
+            "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), subtrahend.columnSize());
         final SimpleComplexNumberMatrixBuilder builder = builder(rowSize(), columnSize());
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
@@ -113,15 +113,16 @@ public final class SimpleComplexNumberMatrix extends
     }
 
     /**
-     * Returns the product of this {@link SimpleComplexNumberMatrix} and the given one
+     * Returns the product of this {@link SimpleComplexNumberMatrix} and the given
+     * one
      *
      * @param factor
-     *         the factor
+     *            the factor
      * @return The product
      * @throws NullPointerException
-     *         if {@code factor == null}
+     *             if {@code factor == null}
      * @throws IllegalArgumentException
-     *         if {@code columnSize != factor.rowSize}
+     *             if {@code columnSize != factor.rowSize}
      * @see #builder
      * @since 1
      */
@@ -129,8 +130,7 @@ public final class SimpleComplexNumberMatrix extends
     public SimpleComplexNumberMatrix multiply(final SimpleComplexNumberMatrix factor) {
         requireNonNull(factor, "factor");
         checkArgument(table.columnKeySet().size() == factor.rowSize(),
-                "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(),
-                factor.rowSize());
+            "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(), factor.rowSize());
         final SimpleComplexNumberMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());
         table.rowMap().forEach((rowIndex, row) -> factor.columns().forEach((columnIndex, column) -> {
             final SimpleComplexNumber element = multiplyRowWithColumn(row, column);
@@ -140,15 +140,16 @@ public final class SimpleComplexNumberMatrix extends
     }
 
     /**
-     * Returns the product of this {@link SimpleComplexNumberMatrix} and the given {@link SimpleComplexNumberVector}
+     * Returns the product of this {@link SimpleComplexNumberMatrix} and the given
+     * {@link SimpleComplexNumberVector}
      *
      * @param vector
-     *         the vector
+     *            the vector
      * @return The product
      * @throws NullPointerException
-     *         if {@code vector == null}
+     *             if {@code vector == null}
      * @throws IllegalArgumentException
-     *         if {@code columnSize != vector.size}
+     *             if {@code columnSize != vector.size}
      * @see SimpleComplexNumberVector#builder
      * @since 1
      */
@@ -156,24 +157,24 @@ public final class SimpleComplexNumberMatrix extends
     public SimpleComplexNumberVector multiplyVector(final SimpleComplexNumberVector vector) {
         requireNonNull(vector, "vector");
         checkArgument(table.columnKeySet().size() == vector.size(),
-                "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(), vector.size());
-        final SimpleComplexNumberVector.SimpleComplexNumberVectorBuilder builder =
-                SimpleComplexNumberVector.builder(table.rowKeySet().size());
-        table.rowMap().forEach((rowIndex, row) -> row.forEach((columnIndex, matrixEntry) -> {
-            final SimpleComplexNumber oldEntry =
-                    builder.element(rowIndex) != null ? builder.element(rowIndex) : SimpleComplexNumber.ZERO;
-            builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));
-        }));
+            "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(), vector.size());
+        final SimpleComplexNumberVectorBuilder builder = SimpleComplexNumberVector.builder(table.rowKeySet().size());
+        table.rowMap().values().forEach(row -> {
+            final SimpleComplexNumber element = table.columnKeySet().stream()
+                .map(columnIndex -> row.get(columnIndex).multiply(vector.element(columnIndex)))
+                .reduce(SimpleComplexNumber::add).get();
+            builder.put(element);
+        });
         return builder.build();
     }
 
     @Override
     protected SimpleComplexNumber multiplyRowWithColumn(final Map<Integer, SimpleComplexNumber> row,
-            final Map<Integer, SimpleComplexNumber> column) {
+        final Map<Integer, SimpleComplexNumber> column) {
         requireNonNull(row, "row");
         requireNonNull(column, "column");
         checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
-                column.size());
+            column.size());
         SimpleComplexNumber result = SimpleComplexNumber.ZERO;
         for (final Entry<Integer, SimpleComplexNumber> rowEntry : row.entrySet()) {
             result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));
@@ -182,13 +183,14 @@ public final class SimpleComplexNumberMatrix extends
     }
 
     /**
-     * Returns the scalar product of this {@link SimpleComplexNumberMatrix} and the given {@link SimpleComplexNumber}
+     * Returns the scalar product of this {@link SimpleComplexNumberMatrix} and the
+     * given {@link SimpleComplexNumber}
      *
      * @param scalar
-     *         the scalar
+     *            the scalar
      * @return The scalar product
      * @throws NullPointerException
-     *         if {@code scalar == null}
+     *             if {@code scalar == null}
      * @see #builder
      * @since 1
      */
@@ -197,7 +199,7 @@ public final class SimpleComplexNumberMatrix extends
         requireNonNull(scalar, "scalar");
         final SimpleComplexNumberMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());
         table.cellSet()
-                .forEach(cell -> builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));
+            .forEach(cell -> builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));
         return builder.build();
     }
 
@@ -222,12 +224,9 @@ public final class SimpleComplexNumberMatrix extends
     @Override
     public SimpleComplexNumber trace() {
         checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
-                table.columnKeySet().size());
-        SimpleComplexNumber result = SimpleComplexNumber.ZERO;
-        for (final Integer index : table.rowKeySet()) {
-            result = result.add(table.get(index, index));
-        }
-        return result;
+            table.columnKeySet().size());
+        return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+            .map(Cell::getValue).reduce(SimpleComplexNumber::add).get();
     }
 
     /**
@@ -235,7 +234,7 @@ public final class SimpleComplexNumberMatrix extends
      *
      * @return The determinant
      * @throws IllegalStateException
-     *         if {@code !square}
+     *             if {@code !square}
      * @see #square
      * @see #minor
      * @since 1
@@ -245,13 +244,8 @@ public final class SimpleComplexNumberMatrix extends
         final int rowSize = table.rowKeySet().size();
         checkState(square(), "expected square matrix but actual %s x %s", rowSize, table.columnKeySet().size());
         if (triangular()) {
-            SimpleComplexNumber result = SimpleComplexNumber.ONE;
-            for (final Cell<Integer, Integer, SimpleComplexNumber> cell : table.cellSet()) {
-                if (cell.getRowKey().compareTo(cell.getColumnKey()) == 0) {
-                    result = result.multiply(cell.getValue());
-                }
-            }
-            return result;
+            return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+                .map(Cell::getValue).reduce(SimpleComplexNumber::multiply).get();
         }
         if (rowSize > 3) {
             return leibnizFormula();
@@ -311,21 +305,22 @@ public final class SimpleComplexNumberMatrix extends
     }
 
     /**
-     * Returns the minor of this {@link SimpleComplexNumberMatrix} dependent on the given row and column index
+     * Returns the minor of this {@link SimpleComplexNumberMatrix} dependent on the
+     * given row and column index
      *
      * @param rowIndex
-     *         the row index
+     *            the row index
      * @param columnIndex
-     *         the column index
+     *            the column index
      * @return The minor
      * @throws NullPointerException
-     *         if {@code rowIndex == null}
+     *             if {@code rowIndex == null}
      * @throws NullPointerException
-     *         if {@code columnIndex == null}
+     *             if {@code columnIndex == null}
      * @throws IllegalArgumentException
-     *         if {@code rowIndex < 1 || rowSize < rowIndex}
+     *             if {@code rowIndex < 1 || rowSize < rowIndex}
      * @throws IllegalArgumentException
-     *         if {@code columnIndex < 1 || columnSize < columnIndex}
+     *             if {@code columnIndex < 1 || columnSize < columnIndex}
      * @see #builder
      * @since 1
      */
@@ -334,15 +329,15 @@ public final class SimpleComplexNumberMatrix extends
         requireNonNull(rowIndex, "rowIndex");
         requireNonNull(columnIndex, "columnIndex");
         checkArgument(table.containsRow(rowIndex), "expected rowIndex in [1, %s] but actual %s",
-                table.rowKeySet().size(), rowIndex);
+            table.rowKeySet().size(), rowIndex);
         checkArgument(table.containsColumn(columnIndex), "expected columnIndex in [1, %s] but actual %s",
-                table.columnKeySet().size(), columnIndex);
+            table.columnKeySet().size(), columnIndex);
         final SimpleComplexNumberMatrixBuilder builder =
-                builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
+            builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);
         table.cellSet().forEach(cell -> {
             final Integer rowKey = cell.getRowKey();
             final Integer columnKey = cell.getColumnKey();
-            if ((rowKey.compareTo(rowIndex) != 0) && (columnKey.compareTo(columnIndex) != 0)) {
+            if (rowKey.compareTo(rowIndex) != 0 && columnKey.compareTo(columnIndex) != 0) {
                 final Integer newRowIndex = rowKey.compareTo(rowIndex) > 0 ? rowKey - 1 : rowKey;
                 final Integer newColumnIndex = columnKey.compareTo(columnIndex) > 0 ? columnKey - 1 : columnKey;
                 builder.put(newRowIndex, newColumnIndex, cell.getValue());
@@ -352,56 +347,43 @@ public final class SimpleComplexNumberMatrix extends
     }
 
     /**
-     * Returns the maximum absolute column sum norm of this {@link SimpleComplexNumberMatrix}
+     * Returns the maximum absolute column sum norm of this
+     * {@link SimpleComplexNumberMatrix}
      *
      * @return The maximum absolute column sum norm
      * @since 1
      */
     @Override
     public BigDecimal maxAbsColumnSumNorm() {
-        BigDecimal norm = BigDecimal.ZERO;
-        for (final Map<Integer, SimpleComplexNumber> column : table.columnMap().values().asList()) {
-            BigDecimal sum = BigDecimal.ZERO;
-            for (final SimpleComplexNumber element : column.values()) {
-                sum = sum.add(element.abs());
-            }
-            norm = norm.max(sum);
-        }
-        return norm;
+        return table.columnMap().values().asList().stream()
+            .map(column -> column.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add))
+            .map(Optional::get).reduce(BigDecimal::max).get();
     }
 
     /**
-     * Returns the maximum absolute row sum norm of this {@link SimpleComplexNumberMatrix}
+     * Returns the maximum absolute row sum norm of this
+     * {@link SimpleComplexNumberMatrix}
      *
      * @return The maximum absolute row sum norm
      * @since 1
      */
     @Override
     public BigDecimal maxAbsRowSumNorm() {
-        BigDecimal norm = BigDecimal.ZERO;
-        for (final Map<Integer, SimpleComplexNumber> row : table.rowMap().values().asList()) {
-            BigDecimal sum = BigDecimal.ZERO;
-            for (final SimpleComplexNumber element : row.values()) {
-                sum = sum.add(element.abs());
-            }
-            norm = norm.max(sum);
-        }
-        return norm;
+        return table.rowMap().values().asList().stream()
+            .map(column -> column.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add))
+            .map(Optional::get).reduce(BigDecimal::max).get();
     }
 
     /**
-     * Returns the square of the frobenius norm of this {@link SimpleComplexNumberMatrix}
+     * Returns the square of the frobenius norm of this
+     * {@link SimpleComplexNumberMatrix}
      *
      * @return The square of the frobenius norm
      * @since 1
      */
     @Override
     public BigInteger frobeniusNormPow2() {
-        BigInteger normPow2 = BigInteger.ZERO;
-        for (final SimpleComplexNumber element : table.values()) {
-            normPow2 = normPow2.add(element.absPow2());
-        }
-        return normPow2;
+        return table.values().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();
     }
 
     /**
@@ -421,12 +403,12 @@ public final class SimpleComplexNumberMatrix extends
      * Returns the frobenius norm of this {@link SimpleComplexNumberMatrix}
      *
      * @param precision
-     *         the precision for the termination condition
+     *            the precision for the termination condition
      * @return The frobenius norm
      * @throws NullPointerException
-     *         if {@code precision == null}
+     *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *         if {@code precision <= 0 || 1 <= precision}
+     *             if {@code precision <= 0 || 1 <= precision}
      * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
@@ -434,8 +416,8 @@ public final class SimpleComplexNumberMatrix extends
     @Override
     public BigDecimal frobeniusNorm(final BigDecimal precision) {
         requireNonNull(precision, "precision");
-        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+        checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
+            "expected precision in (0, 1) but actual %s", precision);
         return new SquareRootCalculator(precision).sqrt(frobeniusNormPow2());
     }
 
@@ -443,12 +425,13 @@ public final class SimpleComplexNumberMatrix extends
      * Returns the frobenius norm of this {@link SimpleComplexNumberMatrix}
      *
      * @param scale
-     *         the scale to be set on the result
+     *            the scale to be set on the result
      * @param roundingMode
-     *         the rounding mode to be used during the setting of the scale of the result
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The frobenius norm
      * @throws IllegalArgumentException
-     *         if {@code scale < 0}
+     *             if {@code scale < 0}
      * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
@@ -463,18 +446,19 @@ public final class SimpleComplexNumberMatrix extends
      * Returns the frobenius norm of this {@link SimpleComplexNumberMatrix}
      *
      * @param precision
-     *         the precision for the termination condition
+     *            the precision for the termination condition
      * @param scale
-     *         the scale to be set on the result
+     *            the scale to be set on the result
      * @param roundingMode
-     *         the rounding mode to be used during the setting of the scale of the result
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The frobenius norm
      * @throws NullPointerException
-     *         if {@code precision == null}
+     *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *         if {@code precision <= 0 || 1 <= precision}
+     *             if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
-     *         if {@code scale < 0}
+     *             if {@code scale < 0}
      * @see #frobeniusNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
@@ -482,8 +466,8 @@ public final class SimpleComplexNumberMatrix extends
     @Override
     public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
         requireNonNull(precision, "precision");
-        checkArgument((BigDecimal.ZERO.compareTo(precision) < 0) && (precision.compareTo(BigDecimal.ONE) < 0),
-                "expected precision in (0, 1) but actual %s", precision);
+        checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
+            "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(frobeniusNormPow2());
     }
@@ -496,93 +480,85 @@ public final class SimpleComplexNumberMatrix extends
      */
     @Override
     public BigDecimal maxNorm() {
-        BigDecimal norm = BigDecimal.ZERO;
-        for (final SimpleComplexNumber element : table.values()) {
-            norm = norm.max(element.abs());
-        }
-        return norm;
+        return table.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::max).get();
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumberMatrix} is upper triangular
+     * Returns a {@code boolean} which indicates if this
+     * {@link SimpleComplexNumberMatrix} is upper triangular
      *
-     * @return {@code true} if {@code this} is upper triangular, {@code false} otherwise
+     * @return {@code true} if {@code this} is upper triangular, {@code false}
+     *         otherwise
      * @since 1
      */
     @Override
     public boolean upperTriangular() {
-        if (square()) {
-            for (final Cell<Integer, Integer, SimpleComplexNumber> cell : table.cellSet()) {
-                if ((cell.getRowKey().compareTo(cell.getColumnKey()) > 0) &&
-                        !cell.getValue().equals(SimpleComplexNumber.ZERO)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
+        return square() && !table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) > 0)
+            .map(Cell::getValue).anyMatch(value -> !value.equals(SimpleComplexNumber.ZERO));
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumberMatrix} is lower triangular
+     * Returns a {@code boolean} which indicates if this
+     * {@link SimpleComplexNumberMatrix} is lower triangular
      *
-     * @return {@code true} if {@code this} is lower triangular, {@code false} otherwise
+     * @return {@code true} if {@code this} is lower triangular, {@code false}
+     *         otherwise
      * @since 1
      */
     @Override
     public boolean lowerTriangular() {
-        if (square()) {
-            for (final Cell<Integer, Integer, SimpleComplexNumber> cell : table.cellSet()) {
-                if ((cell.getRowKey().compareTo(cell.getColumnKey()) < 0) &&
-                        !cell.getValue().equals(SimpleComplexNumber.ZERO)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
+        return square() && !table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) < 0)
+            .map(Cell::getValue).anyMatch(value -> !value.equals(SimpleComplexNumber.ZERO));
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumberMatrix} is the identity one
+     * Returns a {@code boolean} which indicates if this
+     * {@link SimpleComplexNumberMatrix} is the identity one
      *
-     * @return {@code true} if {@code this} is the identity matrix, {@code false} otherwise
+     * @return {@code true} if {@code this} is the identity matrix, {@code false}
+     *         otherwise
      * @see #diagonal
      * @since 1
      */
     @Override
     public boolean identity() {
-        if (diagonal()) {
-            for (final Integer index : table.rowKeySet()) {
-                if (!table.get(index, index).equals(SimpleComplexNumber.ONE)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
+        return diagonal()
+            && !table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+                .map(Cell::getValue).anyMatch(value -> !value.equals(SimpleComplexNumber.ONE));
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumberMatrix} is invertible
+     * Returns a {@code boolean} which indicates if this
+     * {@link SimpleComplexNumberMatrix} is invertible
      *
-     * @return {@code true} if {@code det == -1 || det == 1}, {@code false} otherwise
+     * @return {@code true} if {@code det == -1 || det == 1}, {@code false}
+     *         otherwise
      * @see #determinant
      * @since 1
      */
     @Override
     public boolean invertible() {
-        return determinant().equals(SimpleComplexNumber.ONE.negate()) || determinant().equals(SimpleComplexNumber.ONE);
+        if (square()) {
+            final SimpleComplexNumber determinant = determinant();
+            return determinant.equals(SimpleComplexNumber.ONE) || determinant.equals(SimpleComplexNumber.ONE.negate())
+                || determinant.equals(SimpleComplexNumber.IMAGINARY)
+                || determinant.equals(SimpleComplexNumber.IMAGINARY.negate());
+        }
+        return false;
     }
 
     /**
      * Returns a {@link SimpleComplexNumberMatrixBuilder}
      *
      * @param rowSize
-     *         the row size the resulting {@link SimpleComplexNumberMatrix}
+     *            the row size the resulting {@link SimpleComplexNumberMatrix}
      * @param columnSize
-     *         the column size the resulting {@link SimpleComplexNumberMatrix}
+     *            the column size the resulting {@link SimpleComplexNumberMatrix}
      * @return A {@link SimpleComplexNumberMatrixBuilder}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex < 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex < 1}
      * @since 1
      */
     public static SimpleComplexNumberMatrixBuilder builder(final int rowSize, final int columnSize) {
@@ -591,74 +567,16 @@ public final class SimpleComplexNumberMatrix extends
         return new SimpleComplexNumberMatrixBuilder(rowSize, columnSize);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(table);
-    }
-
-    @Override
-    public boolean equals(final Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (!(object instanceof SimpleComplexNumberMatrix)) {
-            return false;
-        }
-        final SimpleComplexNumberMatrix other = (SimpleComplexNumberMatrix) object;
-        return Objects.deepEquals(table, other.getTable());
-    }
-
     /**
      * The builder for {@link SimpleComplexNumberMatrix BigIntegerMatrices}
      *
      * @since 1
      */
     @Beta
-    public static final class SimpleComplexNumberMatrixBuilder
-            extends AbstractMatrixBuilder<SimpleComplexNumber, SimpleComplexNumberMatrix> {
+    public static final class SimpleComplexNumberMatrixBuilder extends
+        AbstractMatrixBuilder<SimpleComplexNumber, SimpleComplexNumberMatrix, SimpleComplexNumberMatrixBuilder> {
         private SimpleComplexNumberMatrixBuilder(final int rowSize, final int columnSize) {
             super(rowSize, columnSize);
-        }
-
-        /**
-         * Puts the given element on the {@link Table} dependent on the given row and column index
-         *
-         * @param rowIndex
-         *         thr row index
-         * @param columnIndex
-         *         the column index
-         * @param element
-         *         the element
-         * @return {@code this}
-         */
-        public SimpleComplexNumberMatrixBuilder put(final Integer rowIndex, final Integer columnIndex,
-                final SimpleComplexNumber element) {
-            requireNonNull(element, "element");
-            requireNonNull(rowIndex, "rowIndex");
-            requireNonNull(columnIndex, "columnIndex");
-            checkArgument(table.rowKeySet().contains(rowIndex), "expected rowIndex in [1, %s] but actual %s",
-                    table.rowKeySet().size(), rowIndex);
-            checkArgument(table.columnKeySet().contains(columnIndex), "expected columnIndex in [1, %s] but actual %s",
-                    table.columnKeySet().size(), columnIndex);
-            table.put(rowIndex, columnIndex, element);
-            return this;
-        }
-
-        /**
-         * Puts the given element on all indices and returns {@code this}
-         *
-         * @param element
-         *         the element
-         * @return {@code this}
-         * @throws NullPointerException
-         *         if {@code element == null}
-         * @since 1
-         */
-        public SimpleComplexNumberMatrixBuilder putAll(final SimpleComplexNumber element) {
-            requireNonNull(element, "element");
-            table.rowKeySet().forEach(
-                    rowKey -> table.columnKeySet().forEach(columnKey -> table.put(rowKey, columnKey, element)));
-            return this;
         }
 
         /**
@@ -666,7 +584,7 @@ public final class SimpleComplexNumberMatrix extends
          *
          * @return The {@link SimpleComplexNumberMatrix}
          * @throws NullPointerException
-         *         if one {@code element == null}
+         *             if one {@code element == null}
          * @see ImmutableTable#copyOf
          * @since 1
          */
