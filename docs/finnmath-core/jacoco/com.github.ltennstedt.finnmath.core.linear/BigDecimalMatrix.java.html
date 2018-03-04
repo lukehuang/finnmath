@@ -419,13 +419,16 @@ public final class BigDecimalMatrix
      * @return The frobenius norm
      * @throws IllegalArgumentException
      *             if {@code scale &lt; 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
      */
     @Override
     public BigDecimal frobeniusNorm(final int scale, final RoundingMode roundingMode) {
-<span class="fc bfc" id="L427" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L428">        return new SquareRootCalculator(scale, roundingMode).sqrt(frobeniusNormPow2());</span>
+<span class="fc bfc" id="L429" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L430">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L431">        return new SquareRootCalculator(scale, roundingMode).sqrt(frobeniusNormPow2());</span>
     }
 
     /**
@@ -445,16 +448,19 @@ public final class BigDecimalMatrix
      *             if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @throws IllegalArgumentException
      *             if {@code scale &lt; 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
      */
     @Override
     public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
-<span class="fc" id="L453">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L454" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
+<span class="fc" id="L458">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L459" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc bfc" id="L456" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L457">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(frobeniusNormPow2());</span>
+<span class="fc bfc" id="L461" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L462">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L463">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(frobeniusNormPow2());</span>
     }
 
     /**
@@ -465,7 +471,7 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimal maxNorm() {
-<span class="fc" id="L468">        return table.values().stream().map(BigDecimal::abs).reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L474">        return table.values().stream().map(BigDecimal::abs).reduce(BigDecimal::max).get();</span>
     }
 
     /**
@@ -478,8 +484,8 @@ public final class BigDecimalMatrix
      */
     @Override
     public boolean upperTriangular() {
-<span class="fc bfc" id="L481" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0)</span>
-<span class="fc bfc" id="L482" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ZERO) != 0);</span>
+<span class="fc bfc" id="L487" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0)</span>
+<span class="fc bfc" id="L488" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ZERO) != 0);</span>
     }
 
     /**
@@ -492,8 +498,8 @@ public final class BigDecimalMatrix
      */
     @Override
     public boolean lowerTriangular() {
-<span class="fc bfc" id="L495" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0)</span>
-<span class="fc bfc" id="L496" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ZERO) != 0);</span>
+<span class="fc bfc" id="L501" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0)</span>
+<span class="fc bfc" id="L502" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ZERO) != 0);</span>
     }
 
     /**
@@ -507,9 +513,9 @@ public final class BigDecimalMatrix
      */
     @Override
     public boolean identity() {
-<span class="fc bfc" id="L510" title="All 2 branches covered.">        return diagonal()</span>
-<span class="fc bfc" id="L511" title="All 2 branches covered.">            &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="pc bpc" id="L512" title="2 of 4 branches missed.">                .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ONE) != 0);</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">        return diagonal()</span>
+<span class="fc bfc" id="L517" title="All 2 branches covered.">            &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="pc bpc" id="L518" title="2 of 4 branches missed.">                .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ONE) != 0);</span>
     }
 
     /**
@@ -522,7 +528,7 @@ public final class BigDecimalMatrix
      */
     @Override
     public boolean invertible() {
-<span class="fc bfc" id="L525" title="All 4 branches covered.">        return square() &amp;&amp; determinant().compareTo(BigDecimal.ZERO) != 0;</span>
+<span class="fc bfc" id="L531" title="All 4 branches covered.">        return square() &amp;&amp; determinant().compareTo(BigDecimal.ZERO) != 0;</span>
     }
 
     /**
@@ -540,9 +546,9 @@ public final class BigDecimalMatrix
      * @since 1
      */
     public static BigDecimalMatrixBuilder builder(final int rowSize, final int columnSize) {
-<span class="fc bfc" id="L543" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="fc bfc" id="L544" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="fc" id="L545">        return new BigDecimalMatrixBuilder(rowSize, columnSize);</span>
+<span class="fc bfc" id="L549" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L551">        return new BigDecimalMatrixBuilder(rowSize, columnSize);</span>
     }
 
     /**
@@ -554,8 +560,8 @@ public final class BigDecimalMatrix
     public static final class BigDecimalMatrixBuilder
         extends AbstractMatrixBuilder&lt;BigDecimal, BigDecimalMatrix, BigDecimalMatrixBuilder&gt; {
         private BigDecimalMatrixBuilder(final int rowSize, final int columnSize) {
-<span class="fc" id="L557">            super(rowSize, columnSize);</span>
-<span class="fc" id="L558">        }</span>
+<span class="fc" id="L563">            super(rowSize, columnSize);</span>
+<span class="fc" id="L564">        }</span>
 
         /**
          * Returns the built {@link BigDecimalMatrix}
@@ -568,8 +574,8 @@ public final class BigDecimalMatrix
          */
         @Override
         public BigDecimalMatrix build() {
-<span class="fc" id="L571">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
-<span class="fc" id="L572">            return new BigDecimalMatrix(ImmutableTable.copyOf(table));</span>
+<span class="fc" id="L577">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
+<span class="fc" id="L578">            return new BigDecimalMatrix(ImmutableTable.copyOf(table));</span>
         }
     }
 }

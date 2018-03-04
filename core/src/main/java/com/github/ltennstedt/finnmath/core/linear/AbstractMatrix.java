@@ -62,6 +62,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     protected final ImmutableTable<Integer, Integer, E> table;
 
     protected AbstractMatrix(final ImmutableTable<Integer, Integer, E> table) {
+        assert table != null;
         this.table = table;
     }
 

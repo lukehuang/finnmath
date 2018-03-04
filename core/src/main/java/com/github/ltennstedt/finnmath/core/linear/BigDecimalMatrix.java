@@ -419,12 +419,15 @@ public final class BigDecimalMatrix
      * @return The frobenius norm
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
      */
     @Override
     public BigDecimal frobeniusNorm(final int scale, final RoundingMode roundingMode) {
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        requireNonNull(roundingMode, "roundingMode");
         return new SquareRootCalculator(scale, roundingMode).sqrt(frobeniusNormPow2());
     }
 
@@ -445,6 +448,8 @@ public final class BigDecimalMatrix
      *             if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
      */
@@ -454,6 +459,7 @@ public final class BigDecimalMatrix
         checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
             "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        requireNonNull(roundingMode, "roundingMode");
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(frobeniusNormPow2());
     }
 

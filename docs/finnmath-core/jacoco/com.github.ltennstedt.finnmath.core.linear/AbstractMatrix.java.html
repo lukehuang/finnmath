@@ -51,7 +51,7 @@ import java.util.Set;
  * @see ImmutableTable
  * @since 1
  */
-@Beta
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">@Beta</span>
 public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, B&gt;, M extends AbstractMatrix&lt;E, V, M, N, B&gt;,
     N, B&gt; {
     /**
@@ -62,8 +62,9 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     protected final ImmutableTable&lt;Integer, Integer, E&gt; table;
 
 <span class="fc" id="L64">    protected AbstractMatrix(final ImmutableTable&lt;Integer, Integer, E&gt; table) {</span>
-<span class="fc" id="L65">        this.table = table;</span>
-<span class="fc" id="L66">    }</span>
+<span class="pc bpc" id="L65" title="2 of 4 branches missed.">        assert table != null;</span>
+<span class="fc" id="L66">        this.table = table;</span>
+<span class="fc" id="L67">    }</span>
 
     protected abstract M add(M summand);
 
@@ -116,7 +117,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final boolean square() {
-<span class="fc bfc" id="L119" title="All 2 branches covered.">        return table.rowKeySet().size() == table.columnKeySet().size();</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        return table.rowKeySet().size() == table.columnKeySet().size();</span>
     }
 
     /**
@@ -130,7 +131,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final boolean triangular() {
-<span class="fc bfc" id="L133" title="All 4 branches covered.">        return upperTriangular() || lowerTriangular();</span>
+<span class="fc bfc" id="L134" title="All 4 branches covered.">        return upperTriangular() || lowerTriangular();</span>
     }
 
     protected abstract boolean upperTriangular();
@@ -148,7 +149,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final boolean diagonal() {
-<span class="pc bpc" id="L151" title="1 of 4 branches missed.">        return upperTriangular() &amp;&amp; lowerTriangular();</span>
+<span class="pc bpc" id="L152" title="1 of 4 branches missed.">        return upperTriangular() &amp;&amp; lowerTriangular();</span>
     }
 
     protected abstract boolean identity();
@@ -166,7 +167,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final boolean symmetric() {
-<span class="fc bfc" id="L169" title="All 4 branches covered.">        return square() &amp;&amp; equals(transpose());</span>
+<span class="fc bfc" id="L170" title="All 4 branches covered.">        return square() &amp;&amp; equals(transpose());</span>
     }
 
     /**
@@ -181,7 +182,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final boolean skewSymmetric() {
-<span class="fc bfc" id="L184" title="All 4 branches covered.">        return square() &amp;&amp; transpose().equals(negate());</span>
+<span class="fc bfc" id="L185" title="All 4 branches covered.">        return square() &amp;&amp; transpose().equals(negate());</span>
     }
 
     /**
@@ -192,7 +193,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableSet&lt;Integer&gt; rowIndexes() {
-<span class="fc" id="L195">        return table.rowKeySet();</span>
+<span class="fc" id="L196">        return table.rowKeySet();</span>
     }
 
     /**
@@ -203,7 +204,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableSet&lt;Integer&gt; columnIndexes() {
-<span class="fc" id="L206">        return table.columnKeySet();</span>
+<span class="fc" id="L207">        return table.columnKeySet();</span>
     }
 
     /**
@@ -226,13 +227,13 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final E element(final Integer rowIndex, final Integer columnIndex) {
-<span class="fc" id="L229">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
-<span class="fc" id="L230">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
-<span class="fc" id="L231">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L232">            table.rowKeySet().size(), rowIndex);</span>
-<span class="fc" id="L233">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L234">            table.columnKeySet().size(), columnIndex);</span>
-<span class="fc" id="L235">        return table.get(rowIndex, columnIndex);</span>
+<span class="fc" id="L230">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L231">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L232">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L233">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L234">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L235">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L236">        return table.get(rowIndex, columnIndex);</span>
     }
 
     /**
@@ -243,7 +244,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableSet&lt;Cell&lt;Integer, Integer, E&gt;&gt; cells() {
-<span class="fc" id="L246">        return table.cellSet();</span>
+<span class="fc" id="L247">        return table.cellSet();</span>
     }
 
     /**
@@ -261,10 +262,10 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableMap&lt;Integer, E&gt; row(final Integer rowIndex) {
-<span class="fc" id="L264">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
-<span class="fc" id="L265">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L266">            table.rowKeySet().size(), rowIndex);</span>
-<span class="fc" id="L267">        return table.row(rowIndex);</span>
+<span class="fc" id="L265">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L266">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L267">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L268">        return table.row(rowIndex);</span>
     }
 
     /**
@@ -282,10 +283,10 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableMap&lt;Integer, E&gt; column(final Integer columnIndex) {
-<span class="fc" id="L285">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
-<span class="fc" id="L286">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L287">            table.columnKeySet().size(), columnIndex);</span>
-<span class="fc" id="L288">        return table.column(columnIndex);</span>
+<span class="fc" id="L286">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L287">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L288">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L289">        return table.column(columnIndex);</span>
     }
 
     /**
@@ -296,7 +297,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableMap&lt;Integer, Map&lt;Integer, E&gt;&gt; rows() {
-<span class="fc" id="L299">        return table.rowMap();</span>
+<span class="fc" id="L300">        return table.rowMap();</span>
     }
 
     /**
@@ -307,7 +308,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableMap&lt;Integer, Map&lt;Integer, E&gt;&gt; columns() {
-<span class="fc" id="L310">        return table.columnMap();</span>
+<span class="fc" id="L311">        return table.columnMap();</span>
     }
 
     /**
@@ -318,7 +319,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableCollection&lt;E&gt; elements() {
-<span class="fc" id="L321">        return table.values();</span>
+<span class="fc" id="L322">        return table.values();</span>
     }
 
     /**
@@ -328,7 +329,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final long size() {
-<span class="fc" id="L331">        return Long.valueOf(table.rowKeySet().size()) * Long.valueOf(table.columnKeySet().size());</span>
+<span class="fc" id="L332">        return Long.valueOf(table.rowKeySet().size()) * Long.valueOf(table.columnKeySet().size());</span>
     }
 
     /**
@@ -339,7 +340,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final int rowSize() {
-<span class="fc" id="L342">        return table.rowKeySet().size();</span>
+<span class="fc" id="L343">        return table.rowKeySet().size();</span>
     }
 
     /**
@@ -350,33 +351,33 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final int columnSize() {
-<span class="fc" id="L353">        return table.columnKeySet().size();</span>
+<span class="fc" id="L354">        return table.columnKeySet().size();</span>
     }
 
     @Override
     public final int hashCode() {
-<span class="fc" id="L358">        return Objects.hash(table);</span>
+<span class="fc" id="L359">        return Objects.hash(table);</span>
     }
 
     @Override
     public final boolean equals(final Object object) {
-<span class="fc bfc" id="L363" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L364">            return true;</span>
+<span class="fc bfc" id="L364" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L365">            return true;</span>
         }
-<span class="fc bfc" id="L366" title="All 2 branches covered.">        if (!(object instanceof AbstractMatrix)) {</span>
-<span class="fc" id="L367">            return false;</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">        if (!(object instanceof AbstractMatrix)) {</span>
+<span class="fc" id="L368">            return false;</span>
         }
-<span class="fc" id="L369">        final AbstractMatrix&lt;?, ?, ?, ?, ?&gt; other = (AbstractMatrix&lt;?, ?, ?, ?, ?&gt;) object;</span>
-<span class="fc" id="L370">        return Objects.deepEquals(table, other.getTable());</span>
+<span class="fc" id="L370">        final AbstractMatrix&lt;?, ?, ?, ?, ?&gt; other = (AbstractMatrix&lt;?, ?, ?, ?, ?&gt;) object;</span>
+<span class="fc" id="L371">        return Objects.deepEquals(table, other.getTable());</span>
     }
 
     @Override
     public final String toString() {
-<span class="fc" id="L375">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+<span class="fc" id="L376">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
     }
 
     public final ImmutableTable&lt;Integer, Integer, E&gt; getTable() {
-<span class="fc" id="L379">        return table;</span>
+<span class="fc" id="L380">        return table;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

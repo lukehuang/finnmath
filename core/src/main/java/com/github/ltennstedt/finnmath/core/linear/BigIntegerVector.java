@@ -93,7 +93,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
      *            the scalar
      * @return The scalar product
      * @throws NullPointerException
-     *             if {@code summand == null}
+     *             if {@code scalar == null}
      * @since 1
      */
     @Override
@@ -189,6 +189,8 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
      * @return The euclidean norm
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
@@ -196,6 +198,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     @Override
     public BigDecimal euclideanNorm(final int scale, final RoundingMode roundingMode) {
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        requireNonNull(roundingMode, "roundingMode");
         return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());
     }
 
@@ -216,6 +219,8 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
      *             if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
@@ -226,6 +231,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
         checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
             "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        requireNonNull(roundingMode, "roundingMode");
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());
     }
 
@@ -323,6 +329,8 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
      *             if {@code size != other.size}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
@@ -333,6 +341,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        requireNonNull(roundingMode, "roundingMode");
         return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));
     }
 
@@ -360,6 +369,8 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
      *             if {@code precision <= 0 || 1 <= precision}
      * @throws IllegalArgumentException
      *             if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
@@ -373,6 +384,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
         checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
             "expected precision in (0, 1) but actual %s", precision);
         checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+        requireNonNull(roundingMode, "roundingMode");
         return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));
     }
 

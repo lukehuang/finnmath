@@ -55,6 +55,7 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
     protected final ImmutableMap<Integer, E> map;
 
     protected AbstractVector(final ImmutableMap<Integer, E> map) {
+        requireNonNull(map, "map");
         this.map = map;
     }
 

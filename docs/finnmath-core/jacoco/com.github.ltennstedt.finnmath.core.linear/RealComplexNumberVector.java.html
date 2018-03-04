@@ -187,14 +187,17 @@ public final class RealComplexNumberVector
      * @return The euclidean norm
      * @throws IllegalArgumentException
      *             if {@code scale &lt; 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
      */
     @Override
     public BigDecimal euclideanNorm(final int scale, final RoundingMode roundingMode) {
-<span class="fc bfc" id="L196" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L197">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L199">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L200">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -214,17 +217,20 @@ public final class RealComplexNumberVector
      *             if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @throws IllegalArgumentException
      *             if {@code scale &lt; 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
-<span class="fc" id="L223">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L224" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
+<span class="fc" id="L228">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L229" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc bfc" id="L226" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L227">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L232">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L233">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -242,10 +248,10 @@ public final class RealComplexNumberVector
      */
     @Override
     public RealComplexNumber dotProduct(final RealComplexNumberVector other) {
-<span class="fc" id="L245">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L246" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L247">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
-<span class="fc" id="L248">            .reduce(RealComplexNumber::add).get();</span>
+<span class="fc" id="L251">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L253">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
+<span class="fc" id="L254">            .reduce(RealComplexNumber::add).get();</span>
     }
 
     /**
@@ -265,9 +271,9 @@ public final class RealComplexNumberVector
      */
     @Override
     public BigDecimal euclideanDistance(final RealComplexNumberVector other) {
-<span class="fc" id="L268">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L269" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L270">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L274">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L276">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -293,12 +299,12 @@ public final class RealComplexNumberVector
      */
     @Override
     public BigDecimal euclideanDistance(final RealComplexNumberVector other, final BigDecimal precision) {
-<span class="fc" id="L296">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L297" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L298">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L299" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
+<span class="fc" id="L302">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L304">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L305" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc" id="L301">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L307">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -319,6 +325,8 @@ public final class RealComplexNumberVector
      *             if {@code size != other.size}
      * @throws IllegalArgumentException
      *             if {@code scale &lt; 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
@@ -326,10 +334,11 @@ public final class RealComplexNumberVector
     @Override
     public BigDecimal euclideanDistance(final RealComplexNumberVector other, final int scale,
         final RoundingMode roundingMode) {
-<span class="fc" id="L329">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L330" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc bfc" id="L331" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L332">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L337">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L340">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L341">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -356,6 +365,8 @@ public final class RealComplexNumberVector
      *             if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @throws IllegalArgumentException
      *             if {@code scale &lt; 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
@@ -363,13 +374,14 @@ public final class RealComplexNumberVector
     @Override
     public BigDecimal euclideanDistance(final RealComplexNumberVector other, final BigDecimal precision,
         final int scale, final RoundingMode roundingMode) {
-<span class="fc" id="L366">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L367" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L368">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L369" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
+<span class="fc" id="L377">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L379">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L380" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
             &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc bfc" id="L371" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L372">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc bfc" id="L382" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L383">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L384">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -380,7 +392,7 @@ public final class RealComplexNumberVector
      */
     @Override
     protected BigDecimal maxNorm() {
-<span class="fc" id="L383">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L395">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();</span>
     }
 
     /**
@@ -392,8 +404,8 @@ public final class RealComplexNumberVector
      * @since 1
      */
     public static RealComplexNumberVectorBuilder builder(final int size) {
-<span class="fc bfc" id="L395" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L396">        return new RealComplexNumberVectorBuilder(size);</span>
+<span class="fc bfc" id="L407" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L408">        return new RealComplexNumberVectorBuilder(size);</span>
     }
 
     /**
@@ -405,8 +417,8 @@ public final class RealComplexNumberVector
     public static final class RealComplexNumberVectorBuilder
         extends AbstractVectorBuilder&lt;RealComplexNumber, RealComplexNumberVector, RealComplexNumberVectorBuilder&gt; {
         private RealComplexNumberVectorBuilder(final Integer size) {
-<span class="fc" id="L408">            super(size);</span>
-<span class="fc" id="L409">        }</span>
+<span class="fc" id="L420">            super(size);</span>
+<span class="fc" id="L421">        }</span>
 
         /**
          * Returns the built {@link RealComplexNumberVector}
@@ -419,9 +431,9 @@ public final class RealComplexNumberVector
          */
         @Override
         public RealComplexNumberVector build() {
-<span class="fc" id="L422">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
-<span class="fc" id="L423">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
-<span class="fc" id="L424">            return new RealComplexNumberVector(ImmutableMap.copyOf(map));</span>
+<span class="fc" id="L434">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
+<span class="fc" id="L435">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
+<span class="fc" id="L436">            return new RealComplexNumberVector(ImmutableMap.copyOf(map));</span>
         }
     }
 }

@@ -51,6 +51,8 @@ public abstract class AbstractMatrixBuilder<E, M extends AbstractMatrix<E, ?, M,
     protected final Table<Integer, Integer, E> table;
 
     protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {
+        checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
+        checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
         final List<Integer> rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());
         final List<Integer> columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());
         table = ArrayTable.create(rowIndexes, columnIndexes);

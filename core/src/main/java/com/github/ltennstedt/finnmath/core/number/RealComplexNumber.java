@@ -378,45 +378,65 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     /**
      * Returns the inverted {@link RealComplexNumber} of this one
      *
+     * @param roundingMode
+     *            rounding mode
      * @return The inverted
      * @throws IllegalStateException
      *             if {@code this == 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #invertible
      * @see #divide
      * @since 1
      */
     public RealComplexNumber invert(final RoundingMode roundingMode) {
         checkState(invertible(), "expected to be invertible but actual %s", this);
+        requireNonNull(roundingMode, "roundingMode");
         return ONE.divide(this, roundingMode);
     }
 
     /**
      * Returns the inverted {@link RealComplexNumber} of this one
      *
+     * @param scale
+     *            scale
+     * @param roundingMode
+     *            Rounding mode
      * @return The inverted
      * @throws IllegalStateException
      *             if {@code this == 0}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #invertible
      * @see #divide
      * @since 1
      */
     public RealComplexNumber invert(final int scale, final RoundingMode roundingMode) {
         checkState(invertible(), "expected to be invertible but actual %s", this);
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        requireNonNull(roundingMode, "roundingMode");
         return ONE.divide(this, scale, roundingMode);
     }
 
     /**
      * Returns the inverted {@link RealComplexNumber} of this one
      *
+     * @param mathContext
+     *            Math context
      * @return The inverted
      * @throws IllegalStateException
      *             if {@code this == 0}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
      * @see #invertible
      * @see #divide
      * @since 1
      */
     public RealComplexNumber invert(final MathContext mathContext) {
         checkState(invertible(), "expected to be invertible but actual %s", this);
+        requireNonNull(mathContext, "mathContext");
         return ONE.divide(this, mathContext);
     }
 
@@ -469,10 +489,15 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     /**
      * Returns the conjugate of this {@link RealComplexNumber}
      *
+     * @param mathContext
+     *            Math context
      * @return The conjugated
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
      * @since 1
      */
     public RealComplexNumber conjugate(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
         return new RealComplexNumber(real, imaginary.negate(mathContext));
     }
 
