@@ -17,8 +17,6 @@
 package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
-import static java.lang.Math.addExact;
 import static java.util.Objects.requireNonNull;
 
 import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
@@ -27,13 +25,12 @@ import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * An immutable implementation of a vector which uses {@link BigInteger} as type for its elements
+ * An immutable implementation of a vector which uses {@link BigInteger} as type
+ * for its elements
  *
  * @author Lars Tennstedt
  * @since 1
@@ -41,69 +38,70 @@ import java.util.stream.IntStream;
 @Beta
 public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigIntegerVector, BigInteger, BigInteger&gt; {
     private BigIntegerVector(final ImmutableMap&lt;Integer, BigInteger&gt; map) {
-<span class="fc" id="L44">        super(map);</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L41">        super(map);</span>
+<span class="fc" id="L42">    }</span>
 
     /**
      * Returns the sum of this {@link BigIntegerVector} and the given one
      *
      * @param summand
-     *         the summand
+     *            the summand
      * @return The sum
      * @throws NullPointerException
-     *         if {@code summand == null}
+     *             if {@code summand == null}
      * @throws IllegalArgumentException
-     *         if {@code size != summand.size}
+     *             if {@code size != summand.size}
      * @since 1
      */
     @Override
     public BigIntegerVector add(final BigIntegerVector summand) {
-<span class="fc" id="L61">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L63">                summand.size());</span>
-<span class="fc" id="L64">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L65">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
-<span class="fc" id="L66">        return builder.build();</span>
+<span class="fc" id="L58">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L60">            summand.size());</span>
+<span class="fc" id="L61">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L62">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="fc" id="L63">        return builder.build();</span>
     }
 
     /**
      * Returns the difference of this {@link BigIntegerVector} and the given one
      *
      * @param subtrahend
-     *         the subtrahend
+     *            the subtrahend
      * @return The difference
      * @throws NullPointerException
-     *         if {@code subtrahend == null}
+     *             if {@code subtrahend == null}
      * @throws IllegalArgumentException
-     *         if {@code size != subtrahend.size}
+     *             if {@code size != subtrahend.size}
      * @since 1
      */
     @Override
     public BigIntegerVector subtract(final BigIntegerVector subtrahend) {
-<span class="fc" id="L83">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L84" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L85">                subtrahend.size());</span>
-<span class="fc" id="L86">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L87">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
-<span class="fc" id="L88">        return builder.build();</span>
+<span class="fc" id="L80">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L82">            subtrahend.size());</span>
+<span class="fc" id="L83">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L84">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
+<span class="fc" id="L85">        return builder.build();</span>
     }
 
     /**
-     * Returns the scalar product of the given scalar and this {@link BigIntegerVector}
+     * Returns the scalar product of the given scalar and this
+     * {@link BigIntegerVector}
      *
      * @param scalar
-     *         the scalar
+     *            the scalar
      * @return The scalar product
      * @throws NullPointerException
-     *         if {@code summand == null}
+     *             if {@code summand == null}
      * @since 1
      */
     @Override
     public BigIntegerVector scalarMultiply(final BigInteger scalar) {
-<span class="fc" id="L103">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L104">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L105">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
-<span class="fc" id="L106">        return builder.build();</span>
+<span class="fc" id="L101">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L102">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L103">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="fc" id="L104">        return builder.build();</span>
     }
 
     /**
@@ -115,7 +113,7 @@ public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigInt
      */
     @Override
     public BigIntegerVector negate() {
-<span class="fc" id="L118">        return scalarMultiply(BigInteger.ONE.negate());</span>
+<span class="fc" id="L116">        return scalarMultiply(BigInteger.ONE.negate());</span>
     }
 
     /**
@@ -126,32 +124,11 @@ public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigInt
      */
     @Override
     protected BigInteger taxicabNorm() {
-<span class="fc" id="L129">        BigInteger norm = BigInteger.ZERO;</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">        for (final BigInteger element : map.values()) {</span>
-<span class="fc" id="L131">            norm = norm.add(element.abs());</span>
-<span class="fc" id="L132">        }</span>
-<span class="fc" id="L133">        return norm;</span>
-    }
-
-    /**
-     * Returns the taxicab distance from this {@link BigIntegerVector} to the given one
-     *
-     * @param other
-     *         The other {@link BigIntegerVector}
-     * @return The taxicab distance
-     * @throws NullPointerException
-     *         if {@code other == null}
-     * @throws IllegalArgumentException
-     *         if {@code size != other.size}
-     * @see #subtract
-     * @see #taxicabNorm
-     * @since 1
-     */
-    @Override
-    protected BigInteger taxicabDistance(final BigIntegerVector other) {
-<span class="fc" id="L152">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L153" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L154">        return subtract(other).taxicabNorm();</span>
+<span class="fc" id="L127">        BigInteger norm = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        for (final BigInteger element : map.values()) {</span>
+<span class="fc" id="L129">            norm = norm.add(element.abs());</span>
+<span class="fc" id="L130">        }</span>
+<span class="fc" id="L131">        return norm;</span>
     }
 
     /**
@@ -163,7 +140,7 @@ public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigInt
      */
     @Override
     public BigInteger euclideanNormPow2() {
-<span class="fc" id="L166">        return dotProduct(this);</span>
+<span class="fc" id="L143">        return dotProduct(this);</span>
     }
 
     /**
@@ -176,240 +153,227 @@ public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigInt
      */
     @Override
     public BigDecimal euclideanNorm() {
-<span class="fc" id="L179">        return new SquareRootCalculator().sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L156">        return new SquareRootCalculator().sqrt(euclideanNormPow2());</span>
     }
 
     /**
      * Returns the euclidean norm of this {@link BigIntegerVector}
      *
      * @param precision
-     *         the precision for the termination condition
+     *            the precision for the termination condition
      * @return The euclidean norm
      * @throws NullPointerException
-     *         if {@code precision == null}
+     *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision) {
-<span class="fc" id="L198">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L199" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc" id="L201">        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L175">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L176" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
+            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc" id="L178">        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());</span>
     }
 
     /**
      * Returns the euclidean norm of this {@link BigIntegerVector}
      *
      * @param scale
-     *         the scale to be set on the result
+     *            the scale to be set on the result
      * @param roundingMode
-     *         the rounding mode to be used during the setting of the scale of the result
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The euclidean norm
      * @throws IllegalArgumentException
-     *         if {@code scale &lt; 0}
+     *             if {@code scale &lt; 0}
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
      */
     @Override
     public BigDecimal euclideanNorm(final int scale, final RoundingMode roundingMode) {
-<span class="fc bfc" id="L220" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L221">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L199">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
      * Returns the euclidean norm of this {@link BigIntegerVector}
      *
      * @param precision
-     *         the precision for the termination condition
+     *            the precision for the termination condition
      * @param scale
-     *         the scale to be set on the result
+     *            the scale to be set on the result
      * @param roundingMode
-     *         the rounding mode to be used during the setting of the scale of the result
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The euclidean norm
      * @throws NullPointerException
-     *         if {@code precision == null}
+     *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @throws IllegalArgumentException
-     *         if {@code scale &lt; 0}
+     *             if {@code scale &lt; 0}
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
-<span class="fc" id="L246">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L247" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc bfc" id="L249" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L250">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L225">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L226" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
+            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L229">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());</span>
     }
 
     /**
      * Returns the dot product of this {@link BigIntegerVector} and the given one
      *
      * @param other
-     *         The other {@link BigIntegerVector}
+     *            The other {@link BigIntegerVector}
      * @return The dot product
      * @throws NullPointerException
-     *         if {@code other == null}
+     *             if {@code other == null}
      * @throws IllegalArgumentException
-     *         if {@code size != other.size}
+     *             if {@code size != other.size}
      * @since 1
      */
     @Override
     public BigInteger dotProduct(final BigIntegerVector other) {
-<span class="fc" id="L267">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L268" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L269">        BigInteger result = BigInteger.ZERO;</span>
-<span class="fc bfc" id="L270" title="All 2 branches covered.">        for (final Integer index : map.keySet()) {</span>
-<span class="fc" id="L271">            result = result.add(map.get(index).multiply(other.element(index)));</span>
-<span class="fc" id="L272">        }</span>
-<span class="fc" id="L273">        return result;</span>
+<span class="fc" id="L246">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L248">        BigInteger result = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        for (final Integer index : map.keySet()) {</span>
+<span class="fc" id="L250">            result = result.add(map.get(index).multiply(other.element(index)));</span>
+<span class="fc" id="L251">        }</span>
+<span class="fc" id="L252">        return result;</span>
     }
 
     /**
-     * Returns the square of the euclidean distance from this {@link BigIntegerVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntegerVector} to the
+     * given one
      *
      * @param other
-     *         The other {@link BigIntegerVector}
-     * @return The square of the euclidean distance
-     * @throws NullPointerException
-     *         if {@code other == null}
-     * @throws IllegalArgumentException
-     *         if {@code size != other.size}
-     * @see #subtract
-     * @see #euclideanNormPow2
-     * @since 1
-     */
-    @Override
-    public BigInteger euclideanDistancePow2(final BigIntegerVector other) {
-<span class="fc" id="L292">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L293" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L294">        return subtract(other).euclideanNormPow2();</span>
-    }
-
-    /**
-     * Returns the euclidean distance from this {@link BigIntegerVector} to the given one
-     *
-     * @param other
-     *         The other {@link BigIntegerVector}
+     *            The other {@link BigIntegerVector}
      * @return The euclidean distance
      * @throws NullPointerException
-     *         if {@code other == null}
+     *             if {@code other == null}
      * @throws IllegalArgumentException
-     *         if {@code size != other.size}
+     *             if {@code size != other.size}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntegerVector other) {
-<span class="fc" id="L313">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L314" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L315">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L272">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L274">        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntegerVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntegerVector} to the
+     * given one
      *
      * @param other
-     *         The other {@link BigIntegerVector}
+     *            The other {@link BigIntegerVector}
      * @param precision
-     *         the precision for the termination condition
+     *            the precision for the termination condition
      * @return The euclidean distance
      * @throws NullPointerException
-     *         if {@code other == null}
+     *             if {@code other == null}
      * @throws NullPointerException
-     *         if {@code precision == null}
+     *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *         if {@code size != other.size}
+     *             if {@code size != other.size}
      * @throws IllegalArgumentException
-     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntegerVector other, final BigDecimal precision) {
-<span class="fc" id="L340">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L341" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L342">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L343" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc" id="L345">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
+<span class="fc" id="L300">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L302">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L303" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
+            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc" id="L305">        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntegerVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntegerVector} to the
+     * given one
      *
      * @param other
-     *         The other {@link BigIntegerVector}
+     *            The other {@link BigIntegerVector}
      * @param scale
-     *         the scale to be set on the result
+     *            the scale to be set on the result
      * @param roundingMode
-     *         the rounding mode to be used during the setting of the scale of the result
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The euclidean distance
      * @throws NullPointerException
-     *         if {@code other == null}
+     *             if {@code other == null}
      * @throws IllegalArgumentException
-     *         if {@code size != other.size}
+     *             if {@code size != other.size}
      * @throws IllegalArgumentException
-     *         if {@code scale &lt; 0}
+     *             if {@code scale &lt; 0}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntegerVector other, final int scale,
-            final RoundingMode roundingMode) {
-<span class="fc" id="L371">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L372" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc bfc" id="L373" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L374">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+        final RoundingMode roundingMode) {
+<span class="fc" id="L333">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L336">        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
-     * Returns the euclidean distance from this {@link BigIntegerVector} to the given one
+     * Returns the euclidean distance from this {@link BigIntegerVector} to the
+     * given one
      *
      * @param other
-     *         The other {@link BigIntegerVector}
+     *            The other {@link BigIntegerVector}
      * @param precision
-     *         the precision for the termination condition
+     *            the precision for the termination condition
      * @param scale
-     *         the scale to be set on the result
+     *            the scale to be set on the result
      * @param roundingMode
-     *         the rounding mode to be used during the setting of the scale of the result
+     *            the rounding mode to be used during the setting of the scale of
+     *            the result
      * @return The euclidean distance
      * @throws NullPointerException
-     *         if {@code other == null}
+     *             if {@code other == null}
      * @throws NullPointerException
-     *         if {@code precision == null}
+     *             if {@code precision == null}
      * @throws IllegalArgumentException
-     *         if {@code size != other.size}
+     *             if {@code size != other.size}
      * @throws IllegalArgumentException
-     *         if {@code precision &lt;= 0 || 1 &lt;= precision}
+     *             if {@code precision &lt;= 0 || 1 &lt;= precision}
      * @throws IllegalArgumentException
-     *         if {@code scale &lt; 0}
+     *             if {@code scale &lt; 0}
      * @see #euclideanDistancePow2
      * @see SquareRootCalculator#sqrt(BigInteger)
      * @since 1
      */
     @Override
     public BigDecimal euclideanDistance(final BigIntegerVector other, final BigDecimal precision, final int scale,
-            final RoundingMode roundingMode) {
-<span class="fc" id="L406">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L407" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L408">        requireNonNull(precision, &quot;precision&quot;);</span>
-<span class="fc bfc" id="L409" title="All 4 branches covered.">        checkArgument((BigDecimal.ZERO.compareTo(precision) &lt; 0) &amp;&amp; (precision.compareTo(BigDecimal.ONE) &lt; 0),</span>
-                &quot;expected precision in (0, 1) but actual %s&quot;, precision);
-<span class="fc bfc" id="L411" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
-<span class="fc" id="L412">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
+        final RoundingMode roundingMode) {
+<span class="fc" id="L370">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L372">        requireNonNull(precision, &quot;precision&quot;);</span>
+<span class="fc bfc" id="L373" title="All 4 branches covered.">        checkArgument(BigDecimal.ZERO.compareTo(precision) &lt; 0 &amp;&amp; precision.compareTo(BigDecimal.ONE) &lt; 0,</span>
+            &quot;expected precision in (0, 1) but actual %s&quot;, precision);
+<span class="fc bfc" id="L375" title="All 2 branches covered.">        checkArgument(scale &gt;= 0, &quot;expected scale &gt;= 0 but actual %s&quot;, scale);</span>
+<span class="fc" id="L376">        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));</span>
     }
 
     /**
@@ -420,73 +384,20 @@ public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigInt
      */
     @Override
     protected BigInteger maxNorm() {
-<span class="fc" id="L423">        BigInteger norm = BigInteger.ZERO;</span>
-<span class="fc bfc" id="L424" title="All 2 branches covered.">        for (final BigInteger element : map.values()) {</span>
-<span class="fc" id="L425">            norm = norm.max(element.abs());</span>
-<span class="fc" id="L426">        }</span>
-<span class="fc" id="L427">        return norm;</span>
-    }
-
-    /**
-     * Returns the max distance from this {@link BigIntegerVector} to the given one
-     *
-     * @param other
-     *         The other {@link BigIntegerVector}
-     * @return The max distance
-     * @throws NullPointerException
-     *         if {@code vector == null}
-     * @throws IllegalArgumentException
-     *         if {@code size != other.size}
-     * @see #subtract
-     * @see #maxNorm
-     * @since 1
-     */
-    @Override
-    protected BigInteger maxDistance(final BigIntegerVector other) {
-<span class="fc" id="L446">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L447" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L448">        return subtract(other).maxNorm();</span>
-    }
-
-    /**
-     * Returns the size of the underlying {@link Map}
-     *
-     * @return size the size
-     * @since 1
-     */
-    @Override
-    public int size() {
-<span class="fc" id="L459">        return map.size();</span>
+<span class="fc" id="L387">        return map.values().stream().map(BigInteger::abs).reduce(BigInteger::max).get();</span>
     }
 
     /**
      * Returns a {@link BigIntegerVectorBuilder}
      *
      * @param size
-     *         the size the resulting {@link BigIntegerVector}
+     *            the size the resulting {@link BigIntegerVector}
      * @return A {@link BigIntegerVectorBuilder}
      * @since 1
      */
     public static BigIntegerVectorBuilder builder(final int size) {
-<span class="fc bfc" id="L471" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L472">        return new BigIntegerVectorBuilder(size);</span>
-    }
-
-    @Override
-    public int hashCode() {
-<span class="fc" id="L477">        return Objects.hash(map);</span>
-    }
-
-    @Override
-    public boolean equals(final Object object) {
-<span class="fc bfc" id="L482" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L483">            return true;</span>
-        }
-<span class="fc bfc" id="L485" title="All 2 branches covered.">        if (!(object instanceof BigIntegerVector)) {</span>
-<span class="fc" id="L486">            return false;</span>
-        }
-<span class="fc" id="L488">        final BigIntegerVector other = (BigIntegerVector) object;</span>
-<span class="fc" id="L489">        return Objects.deepEquals(map, other.getMap());</span>
+<span class="fc bfc" id="L399" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L400">        return new BigIntegerVectorBuilder(size);</span>
     }
 
     /**
@@ -496,90 +407,26 @@ public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigInt
      */
     @Beta
     public static final class BigIntegerVectorBuilder
-            extends AbstractVectorBuilder&lt;BigInteger, BigIntegerVector, BigIntegerVectorBuilder&gt; {
+        extends AbstractVectorBuilder&lt;BigInteger, BigIntegerVector, BigIntegerVectorBuilder&gt; {
         private BigIntegerVectorBuilder(final Integer size) {
-<span class="fc" id="L501">            super(size);</span>
-<span class="fc" id="L502">        }</span>
-
-        /**
-         * Puts the given element on the first free index and returns {@code this}
-         *
-         * @param element
-         *         the element
-         * @return {@code this}
-         * @throws NullPointerException
-         *         if {@code element == null}
-         * @throws ArithmeticException
-         *         if ({@code size + 1} overflows
-         * @throws IllegalStateException
-         *         if {@code size == size}
-         * @since 1
-         */
-        public BigIntegerVectorBuilder put(final BigInteger element) {
-<span class="fc" id="L519">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc" id="L520">            final int index = addExact(map.size(), 1);</span>
-<span class="pc bpc" id="L521" title="1 of 2 branches missed.">            checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="fc" id="L522">            map.put(index, element);</span>
-<span class="fc" id="L523">            return this;</span>
-        }
-
-        /**
-         * Puts the given element on the given index and returns {@code this}
-         *
-         * @param index
-         *         the index
-         * @param element
-         *         the element
-         * @return {@code this}
-         * @throws NullPointerException
-         *         if {@code index == null}
-         * @throws NullPointerException
-         *         if {@code element == null}
-         * @throws IllegalArgumentException
-         *         if {@code index &lt;= 0 || size &lt; index}
-         * @since 1
-         */
-        public BigIntegerVectorBuilder put(final Integer index, final BigInteger element) {
-<span class="fc" id="L543">            requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L544">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc bfc" id="L545" title="All 4 branches covered.">            checkArgument((0 &lt; index) &amp;&amp; (index &lt;= size), &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="fc" id="L546">            map.put(index, element);</span>
-<span class="fc" id="L547">            return this;</span>
-        }
-
-        /**
-         * Puts the given element on all indices and returns {@code this}
-         *
-         * @param element
-         *         the element
-         * @return {@code this}
-         * @throws NullPointerException
-         *         if {@code element == null}
-         * @since 1
-         */
-        public BigIntegerVectorBuilder putAll(final BigInteger element) {
-<span class="fc" id="L561">            requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc bfc" id="L562" title="All 2 branches covered.">            for (int index = 1; index &lt;= size; index++) {</span>
-<span class="fc" id="L563">                map.put(index, element);</span>
-            }
-<span class="fc" id="L565">            return this;</span>
-        }
+<span class="fc" id="L412">            super(size);</span>
+<span class="fc" id="L413">        }</span>
 
         /**
          * Returns the built {@link BigIntegerVector}
          *
          * @return The {@link BigIntegerVector}
          * @throws NullPointerException
-         *         if one {@code element == null}
+         *             if one {@code element == null}
          * @see ImmutableMap#copyOf
          * @since 1
          */
         @Override
         public BigIntegerVector build() {
-<span class="fc" id="L579">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
-<span class="fc" id="L580">                    .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
-<span class="fc" id="L581">            return new BigIntegerVector(ImmutableMap.copyOf(map));</span>
+<span class="fc" id="L426">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
+<span class="fc" id="L427">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
+<span class="fc" id="L428">            return new BigIntegerVector(ImmutableMap.copyOf(map));</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

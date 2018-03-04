@@ -16,6 +16,9 @@
 
 package com.github.ltennstedt.finnmath.core.linear;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ArrayTable;
@@ -26,15 +29,20 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.builder.Builder;
 
 /**
+ * Base class for matrix builders
+ *
  * @param &lt;E&gt;
- *         The type of the elements of the matrix
+ *            The type of the elements of the matrix
  * @param &lt;M&gt;
- *         The type of the matrix
+ *            The type of the matrix
+ * @param &lt;B&gt;
+ *            The type of the builder
  * @author Lars Tennstedt
  * @since 1
  */
 @Beta
-abstract class AbstractMatrixBuilder&lt;E, M&gt; implements Builder&lt;M&gt; {
+public abstract class AbstractMatrixBuilder&lt;E, M extends AbstractMatrix&lt;E, ?, M, ?, ?&gt;,
+    B extends AbstractMatrixBuilder&lt;E, M, B&gt;&gt; implements Builder&lt;M&gt; {
     /**
      * The table holding the elements of this {@link AbstractVectorBuilder}
      *
@@ -42,19 +50,104 @@ abstract class AbstractMatrixBuilder&lt;E, M&gt; implements Builder&lt;M&gt; {
      */
     protected final Table&lt;Integer, Integer, E&gt; table;
 
-<span class="fc" id="L45">    protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {</span>
-<span class="fc" id="L46">        final List&lt;Integer&gt; rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());</span>
-<span class="fc" id="L47">        final List&lt;Integer&gt; columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());</span>
-<span class="fc" id="L48">        table = ArrayTable.create(rowIndexes, columnIndexes);</span>
-<span class="fc" id="L49">    }</span>
+<span class="fc" id="L53">    protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {</span>
+<span class="fc" id="L54">        final List&lt;Integer&gt; rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());</span>
+<span class="fc" id="L55">        final List&lt;Integer&gt; columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());</span>
+<span class="fc" id="L56">        table = ArrayTable.create(rowIndexes, columnIndexes);</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Puts the given element on the {@link Table} dependent on the given row and
+     * column index
+     *
+     * @param rowIndex
+     *            thr row index
+     * @param columnIndex
+     *            the column index
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
+     * @since 1
+     */
+    public final B put(final Integer rowIndex, final Integer columnIndex, final E element) {
+<span class="fc" id="L83">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L84">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L85">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L86">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L87">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L88">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L89">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L90">        table.put(rowIndex, columnIndex, element);</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L93">        final B builder = (B) this;</span>
+
+<span class="fc" id="L95">        return builder;</span>
+    }
+
+    /**
+     * Puts the given element on the {@link Table} on all indexes which contains
+     * {@code null} values
+     *
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @since 1
+     */
+    public final B nullsToElement(final E element) {
+<span class="fc" id="L110">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L111">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">            if (cell.getValue() == null) {</span>
+<span class="fc" id="L113">                table.put(cell.getRowKey(), cell.getColumnKey(), element);</span>
+            }
+<span class="fc" id="L115">        });</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L118">        final B builder = (B) this;</span>
+
+<span class="fc" id="L120">        return builder;</span>
+    }
+
+    /**
+     * Puts the given element on all indices and returns {@code this}
+     *
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @since 1
+     */
+    public final B putAll(final E element) {
+<span class="fc" id="L134">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L135">        table.rowKeySet()</span>
+<span class="fc" id="L136">            .forEach(rowKey -&gt; table.columnKeySet().forEach(columnKey -&gt; table.put(rowKey, columnKey, element)));</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L139">        final B builder = (B) this;</span>
+
+<span class="fc" id="L141">        return builder;</span>
+    }
 
     @Override
-    public String toString() {
-<span class="fc" id="L53">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+    public final String toString() {
+<span class="fc" id="L146">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
     }
 
-    public Table&lt;Integer, Integer, E&gt; getTable() {
-<span class="fc" id="L57">        return table;</span>
+    public final Table&lt;Integer, Integer, E&gt; getTable() {
+<span class="fc" id="L150">        return table;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

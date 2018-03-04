@@ -26,14 +26,14 @@ import com.github.ltennstedt.finnmath.core.linear.BigDecimalMatrix;
 import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Comparator;
-import java.util.Objects;
 
 /**
- * An immutable implementation of a complex number which uses {@link BigDecimal} as type for its real and imaginary
- * part
+ * An immutable implementation of a complex number which uses {@link BigDecimal}
+ * as type for its real and imaginary part
  *
  * @author Lars Tennstedt
  * @since 1
@@ -68,161 +68,269 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      */
 <span class="fc" id="L69">    public static final RealComplexNumberComparator REAL_COMPLEX_NUMBER_COMPARATOR = new RealComplexNumberComparator();</span>
 
-    /**
-     * Constructs a {@link SimpleComplexNumber} by the given real and imaginary part
-     *
-     * @param real
-     *         the real part
-     * @param imaginary
-     *         the imaginary part
-     * @throws NullPointerException
-     *         if {@code real == null}
-     * @throws NullPointerException
-     *         if {@code imaginary == null}
-     * @since 1
-     */
-    public RealComplexNumber(final BigDecimal real, final BigDecimal imaginary) {
-<span class="fc" id="L85">        super(real, imaginary);</span>
-<span class="fc" id="L86">    }</span>
-
-    /**
-     * Constructs a {@link RealComplexNumber} by the given {@link SimpleComplexNumber}
-     *
-     * @param complexNumber
-     *         {@link SimpleComplexNumber}
-     * @throws NullPointerException
-     *         if {@code complexNumber == null}
-     * @since 1
-     */
-    public RealComplexNumber(final SimpleComplexNumber complexNumber) {
-<span class="fc" id="L98">        super(new BigDecimal(requireNonNull(complexNumber, &quot;complexNumber&quot;).getReal()),</span>
-<span class="fc" id="L99">                new BigDecimal(complexNumber.getImaginary()));</span>
-<span class="fc" id="L100">    }</span>
+    private RealComplexNumber(final BigDecimal real, final BigDecimal imaginary) {
+<span class="fc" id="L72">        super(real, imaginary);</span>
+<span class="fc" id="L73">    }</span>
 
     /**
      * Returns the sum of this {@link RealComplexNumber} and the given one
      *
      * @param summand
-     *         the summand
+     *            the summand
      * @return The sum
      * @throws NullPointerException
-     *         if {@code summand == null}
+     *             if {@code summand == null}
      * @since 1
      */
     @Override
     public RealComplexNumber add(final RealComplexNumber summand) {
-<span class="fc" id="L114">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc" id="L115">        return new RealComplexNumber(real.add(summand.getReal()), imaginary.add(summand.getImaginary()));</span>
+<span class="fc" id="L87">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc" id="L88">        return new RealComplexNumber(real.add(summand.getReal()), imaginary.add(summand.getImaginary()));</span>
+    }
+
+    /**
+     * Returns the sum of this {@link RealComplexNumber} and the given one
+     *
+     * @param summand
+     *            the summand
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The sum
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    public RealComplexNumber add(final RealComplexNumber summand, final MathContext mathContext) {
+<span class="nc" id="L106">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="nc" id="L107">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L108">        return new RealComplexNumber(real.add(summand.getReal(), mathContext),</span>
+<span class="nc" id="L109">            imaginary.add(summand.getImaginary(), mathContext));</span>
     }
 
     /**
      * Returns the difference of this {@link RealComplexNumber} and the given one
      *
      * @param subtrahend
-     *         the subtrahend
+     *            the subtrahend
      * @return The difference
      * @throws NullPointerException
-     *         if {@code subtrahend == null}
+     *             if {@code subtrahend == null}
      * @since 1
      */
     @Override
     public RealComplexNumber subtract(final RealComplexNumber subtrahend) {
-<span class="fc" id="L130">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc" id="L131">        return new RealComplexNumber(real.subtract(subtrahend.getReal()),</span>
-<span class="fc" id="L132">                imaginary.subtract(subtrahend.getImaginary()));</span>
+<span class="fc" id="L124">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc" id="L125">        return new RealComplexNumber(real.subtract(subtrahend.getReal()),</span>
+<span class="fc" id="L126">            imaginary.subtract(subtrahend.getImaginary()));</span>
+    }
+
+    /**
+     * Returns the difference of this {@link RealComplexNumber} and the given one
+     *
+     * @param subtrahend
+     *            the subtrahend
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The difference
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    public RealComplexNumber subtract(final RealComplexNumber subtrahend, final MathContext mathContext) {
+<span class="nc" id="L144">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="nc" id="L145">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L146">        return new RealComplexNumber(real.subtract(subtrahend.getReal(), mathContext),</span>
+<span class="nc" id="L147">            imaginary.subtract(subtrahend.getImaginary(), mathContext));</span>
     }
 
     /**
      * Returns the product of this {@link RealComplexNumber} and the given one
      *
      * @param factor
-     *         the factor
+     *            the factor
      * @return The product
      * @throws NullPointerException
-     *         if {@code factor == null}
+     *             if {@code factor == null}
      * @since 1
      */
     @Override
     public RealComplexNumber multiply(final RealComplexNumber factor) {
-<span class="fc" id="L147">        requireNonNull(factor, &quot;factor&quot;);</span>
-<span class="fc" id="L148">        final BigDecimal newReal = real.multiply(factor.getReal()).subtract(imaginary.multiply(factor.getImaginary()));</span>
-<span class="fc" id="L149">        final BigDecimal newImaginary = real.multiply(factor.getImaginary()).add(imaginary.multiply(factor.getReal()));</span>
-<span class="fc" id="L150">        return new RealComplexNumber(newReal, newImaginary);</span>
+<span class="fc" id="L162">        requireNonNull(factor, &quot;factor&quot;);</span>
+<span class="fc" id="L163">        final BigDecimal newReal = real.multiply(factor.getReal()).subtract(imaginary.multiply(factor.getImaginary()));</span>
+<span class="fc" id="L164">        final BigDecimal newImaginary = real.multiply(factor.getImaginary()).add(imaginary.multiply(factor.getReal()));</span>
+<span class="fc" id="L165">        return new RealComplexNumber(newReal, newImaginary);</span>
     }
 
     /**
-     * Returns the quotient of this {@link RealComplexNumber} and the given one
+     * Returns the product of this {@link RealComplexNumber} and the given one
      *
-     * @param divisor
-     *         the divisor
-     * @return The quotient
+     * @param factor
+     *            the factor
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The product
      * @throws NullPointerException
-     *         if {@code divisor == null}
-     * @throws IllegalArgumentException
-     *         if {@code divisor == 0}
-     * @see #invertible
-     * @see #divide(RealComplexNumber, RoundingMode)
+     *             if {@code factor == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
      * @since 1
      */
-    @Override
-    public RealComplexNumber divide(final RealComplexNumber divisor) {
-<span class="fc" id="L169">        requireNonNull(divisor, &quot;divisor&quot;);</span>
-<span class="fc" id="L170">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
-<span class="fc" id="L171">        return divide(divisor, DEFAULT_ROUNDING_MODE);</span>
+    public RealComplexNumber multiply(final RealComplexNumber factor, final MathContext mathContext) {
+<span class="nc" id="L183">        requireNonNull(factor, &quot;factor&quot;);</span>
+<span class="nc" id="L184">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L185">        final BigDecimal newReal = real.multiply(factor.getReal(), mathContext)</span>
+<span class="nc" id="L186">            .subtract(imaginary.multiply(factor.getImaginary(), mathContext), mathContext);</span>
+<span class="nc" id="L187">        final BigDecimal newImaginary = real.multiply(factor.getImaginary(), mathContext)</span>
+<span class="nc" id="L188">            .add(imaginary.multiply(factor.getReal(), mathContext), mathContext);</span>
+<span class="nc" id="L189">        return new RealComplexNumber(newReal, newImaginary);</span>
     }
 
     /**
      * Returns the quotient of this {@link RealComplexNumber} and the given one
      *
      * @param divisor
-     *         the divisor
+     *            the divisor
      * @param roundingMode
-     *         the rounding mode
+     *            the rounding mode
      * @return The quotient
      * @throws NullPointerException
-     *         if {@code divisor == null}
+     *             if {@code divisor == null}
      * @throws IllegalArgumentException
-     *         if {@code divisor == 0}
+     *             if {@code divisor == 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #invertible
      * @since 1
      */
     @Override
     public RealComplexNumber divide(final RealComplexNumber divisor, final RoundingMode roundingMode) {
-<span class="fc" id="L193">        requireNonNull(divisor, &quot;divisor&quot;);</span>
-<span class="fc" id="L194">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
-<span class="fc" id="L195">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="fc" id="L196">        final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));</span>
-<span class="fc" id="L197">        final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))</span>
-<span class="fc" id="L198">                .divide(denominator, roundingMode);</span>
-<span class="fc" id="L199">        final BigDecimal newImaginary =</span>
-<span class="fc" id="L200">                imaginary.multiply(divisor.getReal()).subtract(real.multiply(divisor.getImaginary()))</span>
-<span class="fc" id="L201">                        .divide(denominator, roundingMode);</span>
-<span class="fc" id="L202">        return new RealComplexNumber(newReal, newImaginary);</span>
+<span class="fc" id="L211">        requireNonNull(divisor, &quot;divisor&quot;);</span>
+<span class="fc" id="L212">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
+<span class="fc" id="L213">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L214">        final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));</span>
+<span class="fc" id="L215">        final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))</span>
+<span class="fc" id="L216">            .divide(denominator, roundingMode);</span>
+<span class="fc" id="L217">        final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())</span>
+<span class="fc" id="L218">            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, roundingMode);</span>
+<span class="fc" id="L219">        return new RealComplexNumber(newReal, newImaginary);</span>
+    }
+
+    /**
+     * Returns the quotient of this {@link RealComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @param scale
+     *            scale
+     * @param roundingMode
+     *            the rounding mode
+     * @return The quotient
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws IllegalArgumentException
+     *             if {@code divisor == 0}
+     * @throws IllegalArgumentException
+     *             if {@code scale &lt; 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @see #invertible
+     * @since 1
+     */
+    public RealComplexNumber divide(final RealComplexNumber divisor, final int scale, final RoundingMode roundingMode) {
+<span class="nc" id="L244">        requireNonNull(divisor, &quot;divisor&quot;);</span>
+<span class="nc" id="L245">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">        checkArgument(scale &gt; -1, &quot;expected scale &gt; -1 but actual %s&quot;, scale);</span>
+<span class="nc" id="L247">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="nc" id="L248">        final BigDecimal denominator = divisor.getReal().pow(2).add(divisor.getImaginary().pow(2));</span>
+<span class="nc" id="L249">        final BigDecimal newReal = real.multiply(divisor.getReal()).add(imaginary.multiply(divisor.getImaginary()))</span>
+<span class="nc" id="L250">            .divide(denominator, scale, roundingMode);</span>
+<span class="nc" id="L251">        final BigDecimal newImaginary = imaginary.multiply(divisor.getReal())</span>
+<span class="nc" id="L252">            .subtract(real.multiply(divisor.getImaginary())).divide(denominator, scale, roundingMode);</span>
+<span class="nc" id="L253">        return new RealComplexNumber(newReal, newImaginary);</span>
+    }
+
+    /**
+     * Returns the quotient of this {@link RealComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The quotient
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws IllegalArgumentException
+     *             if {@code divisor == 0}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @see #invertible
+     * @since 1
+     */
+    public RealComplexNumber divide(final RealComplexNumber divisor, final MathContext mathContext) {
+<span class="nc" id="L274">        requireNonNull(divisor, &quot;divisor&quot;);</span>
+<span class="nc" id="L275">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
+<span class="nc" id="L276">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L277">        final BigDecimal denominator =</span>
+<span class="nc" id="L278">            divisor.getReal().pow(2, mathContext).add(divisor.getImaginary().pow(2, mathContext), mathContext);</span>
+<span class="nc" id="L279">        final BigDecimal newReal = real.multiply(divisor.getReal(), mathContext)</span>
+<span class="nc" id="L280">            .add(imaginary.multiply(divisor.getImaginary(), mathContext), mathContext).divide(denominator, mathContext);</span>
+<span class="nc" id="L281">        final BigDecimal newImaginary = imaginary.multiply(divisor.getReal(), mathContext)</span>
+<span class="nc" id="L282">            .subtract(real.multiply(divisor.getImaginary(), mathContext), mathContext).divide(denominator, mathContext);</span>
+<span class="nc" id="L283">        return new RealComplexNumber(newReal, newImaginary);</span>
     }
 
     /**
      * Returns power of this {@link RealComplexNumber} by the given exponent
      *
      * @param exponent
-     *         the exponent
+     *            the exponent
      * @return The power
      * @throws IllegalArgumentException
-     *         if {@code exponent &lt; 0}
+     *             if {@code exponent &lt; 0}
      * @see #pow
      * @see #multiply
      * @since 1
      */
     @Override
     public RealComplexNumber pow(final int exponent) {
-<span class="fc bfc" id="L219" title="All 2 branches covered.">        checkArgument(exponent &gt; -1, &quot;expected exponent &gt; -1 but actual %s&quot;, exponent);</span>
-<span class="fc bfc" id="L220" title="All 2 branches covered.">        if (exponent &gt; 1) {</span>
-<span class="fc" id="L221">            return multiply(pow(exponent - 1));</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">        } else if (exponent == 1) {</span>
-<span class="fc" id="L223">            return this;</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">        checkArgument(exponent &gt; -1, &quot;expected exponent &gt; -1 but actual %s&quot;, exponent);</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">        if (exponent &gt; 1) {</span>
+<span class="fc" id="L302">            return multiply(pow(exponent - 1));</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">        } else if (exponent == 1) {</span>
+<span class="fc" id="L304">            return this;</span>
         }
-<span class="fc" id="L225">        return ONE;</span>
+<span class="fc" id="L306">        return ONE;</span>
+    }
+
+    /**
+     * Returns power of this {@link RealComplexNumber} by the given exponent
+     *
+     * @param exponent
+     *            the exponent
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The power
+     * @throws IllegalArgumentException
+     *             if {@code exponent &lt; 0}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @see #pow
+     * @see #multiply
+     * @since 1
+     */
+    public RealComplexNumber pow(final int exponent, final MathContext mathContext) {
+<span class="nc bnc" id="L326" title="All 2 branches missed.">        checkArgument(exponent &gt; -1, &quot;expected exponent &gt; -1 but actual %s&quot;, exponent);</span>
+<span class="nc" id="L327">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">        if (exponent &gt; 1) {</span>
+<span class="nc" id="L329">            return multiply(pow(exponent - 1, mathContext), mathContext);</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">        } else if (exponent == 1) {</span>
+<span class="nc" id="L331">            return this;</span>
+        }
+<span class="nc" id="L333">        return ONE;</span>
     }
 
     /**
@@ -233,7 +341,22 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      */
     @Override
     public RealComplexNumber negate() {
-<span class="fc" id="L236">        return new RealComplexNumber(real.negate(), imaginary.negate());</span>
+<span class="fc" id="L344">        return new RealComplexNumber(real.negate(), imaginary.negate());</span>
+    }
+
+    /**
+     * Returns the negated {@link RealComplexNumber} of this one
+     *
+     * @param mathContext
+     *            {@link MathContext}
+     * @return The negated
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    public RealComplexNumber negate(final MathContext mathContext) {
+<span class="nc" id="L358">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L359">        return new RealComplexNumber(real.negate(mathContext), imaginary.negate(mathContext));</span>
     }
 
     /**
@@ -241,26 +364,72 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      *
      * @return The inverted
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @see #invertible
      * @see #divide
      * @since 1
      */
     @Override
     public RealComplexNumber invert() {
-<span class="fc" id="L251">        checkState(invertible(), &quot;expected to be invertible but actual %s&quot;, this);</span>
-<span class="fc" id="L252">        return ONE.divide(this);</span>
+<span class="fc" id="L374">        checkState(invertible(), &quot;expected to be invertible but actual %s&quot;, this);</span>
+<span class="fc" id="L375">        return ONE.divide(this);</span>
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber} is invertible
+     * Returns the inverted {@link RealComplexNumber} of this one
+     *
+     * @return The inverted
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @see #invertible
+     * @see #divide
+     * @since 1
+     */
+    public RealComplexNumber invert(final RoundingMode roundingMode) {
+<span class="nc" id="L389">        checkState(invertible(), &quot;expected to be invertible but actual %s&quot;, this);</span>
+<span class="nc" id="L390">        return ONE.divide(this, roundingMode);</span>
+    }
+
+    /**
+     * Returns the inverted {@link RealComplexNumber} of this one
+     *
+     * @return The inverted
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @see #invertible
+     * @see #divide
+     * @since 1
+     */
+    public RealComplexNumber invert(final int scale, final RoundingMode roundingMode) {
+<span class="nc" id="L404">        checkState(invertible(), &quot;expected to be invertible but actual %s&quot;, this);</span>
+<span class="nc" id="L405">        return ONE.divide(this, scale, roundingMode);</span>
+    }
+
+    /**
+     * Returns the inverted {@link RealComplexNumber} of this one
+     *
+     * @return The inverted
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @see #invertible
+     * @see #divide
+     * @since 1
+     */
+    public RealComplexNumber invert(final MathContext mathContext) {
+<span class="nc" id="L419">        checkState(invertible(), &quot;expected to be invertible but actual %s&quot;, this);</span>
+<span class="nc" id="L420">        return ONE.divide(this, mathContext);</span>
+    }
+
+    /**
+     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber}
+     * is invertible
      *
      * @return {@code true} if {@code this != ZERO}, {@code false} otherwise
      * @since 1
      */
     @Override
     public boolean invertible() {
-<span class="fc bfc" id="L263" title="All 2 branches covered.">        return !equals(ZERO);</span>
+<span class="fc bfc" id="L432" title="All 2 branches covered.">        return !equals(ZERO);</span>
     }
 
     /**
@@ -272,7 +441,7 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      */
     @Override
     public BigDecimal abs() {
-<span class="fc" id="L275">        return new SquareRootCalculator().sqrt(absPow2());</span>
+<span class="fc" id="L444">        return new SquareRootCalculator().sqrt(absPow2());</span>
     }
 
     /**
@@ -283,7 +452,7 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      */
     @Override
     public BigDecimal absPow2() {
-<span class="fc" id="L286">        return real.pow(2).add(imaginary.pow(2));</span>
+<span class="fc" id="L455">        return real.pow(2).add(imaginary.pow(2));</span>
     }
 
     /**
@@ -294,7 +463,17 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      */
     @Override
     public RealComplexNumber conjugate() {
-<span class="fc" id="L297">        return new RealComplexNumber(real, imaginary.negate());</span>
+<span class="fc" id="L466">        return new RealComplexNumber(real, imaginary.negate());</span>
+    }
+
+    /**
+     * Returns the conjugate of this {@link RealComplexNumber}
+     *
+     * @return The conjugated
+     * @since 1
+     */
+    public RealComplexNumber conjugate(final MathContext mathContext) {
+<span class="nc" id="L476">        return new RealComplexNumber(real, imaginary.negate(mathContext));</span>
     }
 
     /**
@@ -302,111 +481,115 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      *
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @see #argument(MathContext)
      * @since 1
      */
     @Override
     public BigDecimal argument() {
-<span class="fc bfc" id="L311" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc" id="L312">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
+<span class="fc bfc" id="L490" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L491">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
     }
 
     /**
-     * Returns the argument of this {@link RealComplexNumber} considering the given precision
+     * Returns the argument of this {@link RealComplexNumber} considering the given
+     * precision
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision &lt; 0}
+     *             if {@code precision &lt; 0}
      * @see #argument(MathContext)
      * @since 1
      */
     @Override
     public BigDecimal argument(final int precision) {
-<span class="fc bfc" id="L330" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc bfc" id="L331" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
-<span class="fc" id="L332">        return argument(new MathContext(precision));</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc bfc" id="L511" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
+<span class="fc" id="L512">        return argument(new MathContext(precision));</span>
     }
 
     /**
-     * Returns the argument of this {@link RealComplexNumber} considering the given rounding mode
+     * Returns the argument of this {@link RealComplexNumber} considering the given
+     * rounding mode
      *
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #argument(MathContext)
      * @since 1
      */
     @Override
     public BigDecimal argument(final RoundingMode roundingMode) {
-<span class="fc bfc" id="L350" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc" id="L351">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="fc" id="L352">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));</span>
+<span class="fc bfc" id="L531" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L532">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L533">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));</span>
     }
 
     /**
-     * Returns the argument of this {@link RealComplexNumber} considering the given precision and rounding mode
+     * Returns the argument of this {@link RealComplexNumber} considering the given
+     * precision and rounding mode
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision &lt; 0}
+     *             if {@code precision &lt; 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #argument(MathContext)
      * @since 1
      */
     @Override
     public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
-<span class="fc bfc" id="L374" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc bfc" id="L375" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
-<span class="fc" id="L376">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="fc" id="L377">        return argument(new MathContext(precision, roundingMode));</span>
+<span class="fc bfc" id="L556" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc bfc" id="L557" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
+<span class="fc" id="L558">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L559">        return argument(new MathContext(precision, roundingMode));</span>
     }
 
     /**
-     * Returns the argument of this {@link RealComplexNumber} considering the given {@link MathContext}
+     * Returns the argument of this {@link RealComplexNumber} considering the given
+     * {@link MathContext}
      *
      * @param mathContext
-     *         The math context
+     *            The math context
      * @return The argument
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code mathContext == null}
+     *             if {@code mathContext == null}
      * @see RealComplexNumber#argument(MathContext)
      * @since 1
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
-<span class="fc bfc" id="L395" title="All 4 branches covered.">        checkState((real.compareTo(BigDecimal.ZERO) != 0) || (imaginary.compareTo(BigDecimal.ZERO) != 0),</span>
-                &quot;expected this != 0 but actual %s&quot;, this);
-<span class="fc" id="L397">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="fc" id="L398">        final Context context = BigFloat.context(mathContext);</span>
-<span class="fc bfc" id="L399" title="All 2 branches covered.">        if (real.compareTo(BigDecimal.ZERO) != 0) {</span>
-<span class="fc" id="L400">            final BigFloat arctan = BigFloat.atan(context.valueOf(imaginary.divide(real, mathContext)));</span>
-<span class="fc bfc" id="L401" title="All 2 branches covered.">            if (real.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
-<span class="fc" id="L402">                return arctan.toBigDecimal();</span>
+<span class="fc bfc" id="L578" title="All 4 branches covered.">        checkState(real.compareTo(BigDecimal.ZERO) != 0 || imaginary.compareTo(BigDecimal.ZERO) != 0,</span>
+            &quot;expected this != 0 but actual %s&quot;, this);
+<span class="fc" id="L580">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="fc" id="L581">        final Context context = BigFloat.context(mathContext);</span>
+<span class="fc bfc" id="L582" title="All 2 branches covered.">        if (real.compareTo(BigDecimal.ZERO) != 0) {</span>
+<span class="fc" id="L583">            final BigFloat arctan = BigFloat.atan(context.valueOf(imaginary.divide(real, mathContext)));</span>
+<span class="fc bfc" id="L584" title="All 2 branches covered.">            if (real.compareTo(BigDecimal.ZERO) &gt; 0) {</span>
+<span class="fc" id="L585">                return arctan.toBigDecimal();</span>
             }
-<span class="fc" id="L404">            final BigFloat pi = context.pi();</span>
-<span class="pc bpc" id="L405" title="1 of 2 branches missed.">            return imaginary.compareTo(BigDecimal.ZERO) &gt; -1 ? arctan.add(pi).toBigDecimal() :</span>
-<span class="nc" id="L406">                    arctan.subtract(pi).toBigDecimal();</span>
+<span class="fc" id="L587">            final BigFloat pi = context.pi();</span>
+<span class="pc bpc" id="L588" title="1 of 2 branches missed.">            return imaginary.compareTo(BigDecimal.ZERO) &gt; -1 ? arctan.add(pi).toBigDecimal()</span>
+<span class="nc" id="L589">                : arctan.subtract(pi).toBigDecimal();</span>
         }
-<span class="fc" id="L408">        final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();</span>
-<span class="pc bpc" id="L409" title="1 of 2 branches missed.">        return imaginary.compareTo(BigDecimal.ZERO) &gt; 0 ? piDividedByTwo : piDividedByTwo.negate();</span>
+<span class="fc" id="L591">        final BigDecimal piDividedByTwo = context.pi().divide(context.valueOf(BigDecimal.valueOf(2L))).toBigDecimal();</span>
+<span class="pc bpc" id="L592" title="1 of 2 branches missed.">        return imaginary.compareTo(BigDecimal.ZERO) &gt; 0 ? piDividedByTwo : piDividedByTwo.negate();</span>
     }
 
     /**
@@ -414,117 +597,122 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      *
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @see #polarForm(MathContext)
      * @since 1
      */
     @Override
     public PolarForm polarForm() {
-<span class="fc bfc" id="L423" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc" id="L424">        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
+<span class="fc bfc" id="L606" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L607">        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given precision
+     * Return the corresponding polar form of the complex number considering the
+     * given precision
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision &lt; 0}
+     *             if {@code precision &lt; 0}
      * @see #polarForm(MathContext)
      * @since 1
      */
     @Override
     public PolarForm polarForm(final int precision) {
-<span class="fc bfc" id="L442" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc bfc" id="L443" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
-<span class="fc" id="L444">        return polarForm(new MathContext(precision));</span>
+<span class="fc bfc" id="L626" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc bfc" id="L627" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
+<span class="fc" id="L628">        return polarForm(new MathContext(precision));</span>
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given rounding mode
+     * Return the corresponding polar form of the complex number considering the
+     * given rounding mode
      *
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #polarForm(MathContext)
      * @since 1
      */
     @Override
     public PolarForm polarForm(final RoundingMode roundingMode) {
-<span class="fc bfc" id="L462" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc" id="L463">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="fc" id="L464">        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));</span>
+<span class="fc bfc" id="L647" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L648">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L649">        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));</span>
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given precision and rounding mode
+     * Return the corresponding polar form of the complex number considering the
+     * given precision and rounding mode
      *
      * @param precision
-     *         The precision
+     *            The precision
      * @param roundingMode
-     *         The rounding mode
+     *            The rounding mode
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws IllegalArgumentException
-     *         if {@code precision &lt; 0}
+     *             if {@code precision &lt; 0}
      * @throws NullPointerException
-     *         if {@code roundingMode == null}
+     *             if {@code roundingMode == null}
      * @see #polarForm(MathContext)
      * @since 1
      */
     @Override
     public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
-<span class="fc bfc" id="L486" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc bfc" id="L487" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
-<span class="fc" id="L488">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="fc" id="L489">        return polarForm(new MathContext(precision, roundingMode));</span>
+<span class="fc bfc" id="L672" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">        checkArgument(precision &gt; -1, &quot;expected precision &gt; -1 but actual %s&quot;, precision);</span>
+<span class="fc" id="L674">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L675">        return polarForm(new MathContext(precision, roundingMode));</span>
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the given {@link MathContext}
+     * Return the corresponding polar form of the complex number considering the
+     * given {@link MathContext}
      *
      * @param mathContext
-     *         The math context
+     *            The math context
      * @return The polar form
      * @throws IllegalStateException
-     *         if {@code this == 0}
+     *             if {@code this == 0}
      * @throws NullPointerException
-     *         if {@code mathContext == null}
+     *             if {@code mathContext == null}
      * @see #abs
      * @see #argument(MathContext)
      * @since 1
      */
     @Override
     public PolarForm polarForm(final MathContext mathContext) {
-<span class="fc bfc" id="L508" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc" id="L509">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="fc" id="L510">        return new PolarForm(abs(), argument(mathContext));</span>
+<span class="fc bfc" id="L695" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L696">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="fc" id="L697">        return new PolarForm(abs(), argument(mathContext));</span>
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber} is equal to a given {@link
-     * RealComplexNumber} by comparing the real and imaginary part
+     * Returns a {@code boolean} which indicates if this {@link RealComplexNumber}
+     * is equal to a given {@link RealComplexNumber} by comparing the real and
+     * imaginary part
      *
      * @param other
-     *         The other {@link RealComplexNumber}
+     *            The other {@link RealComplexNumber}
      * @return {@code true} if equaliyt holds, {@code false} otherwise
      * @throws NullPointerException
-     *         if {@code other == null}
+     *             if {@code other == null}
      * @see BigDecimal#compareTo(BigDecimal)
      * @since 1
      */
     public boolean isEqualToByComparingParts(final RealComplexNumber other) {
-<span class="fc" id="L526">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L527" title="All 4 branches covered.">        return (real.compareTo(other.getReal()) == 0) &amp;&amp; (imaginary.compareTo(other.getImaginary()) == 0);</span>
+<span class="fc" id="L714">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L715" title="All 4 branches covered.">        return real.compareTo(other.getReal()) == 0 &amp;&amp; imaginary.compareTo(other.getImaginary()) == 0;</span>
     }
 
     /**
@@ -536,25 +724,96 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      */
     @Override
     public BigDecimalMatrix matrix() {
-<span class="fc" id="L539">        return BigDecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)</span>
-<span class="fc" id="L540">                .put(2, 2, real).build();</span>
+<span class="fc" id="L727">        return BigDecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)</span>
+<span class="fc" id="L728">            .put(2, 2, real).build();</span>
     }
 
-    @Override
-    public int hashCode() {
-<span class="fc" id="L545">        return Objects.hash(real, imaginary);</span>
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link RealComplexNumber}
+     * @since 1
+     */
+    public static RealComplexNumber of(final long real, final long imaginary) {
+<span class="fc" id="L743">        return RealComplexNumber.of(BigInteger.valueOf(real), BigInteger.valueOf(imaginary));</span>
     }
 
-    @Override
-    public boolean equals(final Object object) {
-<span class="fc bfc" id="L550" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L551">            return true;</span>
-        }
-<span class="pc bpc" id="L553" title="1 of 2 branches missed.">        if (!(object instanceof RealComplexNumber)) {</span>
-<span class="nc" id="L554">            return false;</span>
-        }
-<span class="fc" id="L556">        final RealComplexNumber other = (RealComplexNumber) object;</span>
-<span class="fc bfc" id="L557" title="All 4 branches covered.">        return real.equals(other.getReal()) &amp;&amp; imaginary.equals(other.getImaginary());</span>
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link RealComplexNumber}
+     * @since 1
+     */
+    public static RealComplexNumber of(final double real, final double imaginary) {
+<span class="fc" id="L758">        return RealComplexNumber.of(BigDecimal.valueOf(real), BigDecimal.valueOf(imaginary));</span>
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link RealComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static RealComplexNumber of(final BigInteger real, final BigInteger imaginary) {
+<span class="fc" id="L777">        requireNonNull(real, &quot;real&quot;);</span>
+<span class="fc" id="L778">        requireNonNull(imaginary, &quot;imaginary&quot;);</span>
+<span class="fc" id="L779">        return RealComplexNumber.of(new BigDecimal(real), new BigDecimal(imaginary));</span>
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            the real part
+     * @param imaginary
+     *            the imaginary part
+     * @return {@link RealComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static RealComplexNumber of(final BigDecimal real, final BigDecimal imaginary) {
+<span class="fc" id="L798">        requireNonNull(real, &quot;real&quot;);</span>
+<span class="fc" id="L799">        requireNonNull(imaginary, &quot;imaginary&quot;);</span>
+<span class="fc" id="L800">        return new RealComplexNumber(real, imaginary);</span>
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given
+     * {@link SimpleComplexNumber}
+     *
+     * @param simpleComplexNumber
+     *            {@link SimpleComplexNumber}
+     * @return {@link RealComplexNumber}
+     * @throws NullPointerException
+     *             if {@code simpleComplexNumber == null}
+     * @since 1
+     */
+    public static RealComplexNumber of(final SimpleComplexNumber simpleComplexNumber) {
+<span class="fc" id="L815">        requireNonNull(simpleComplexNumber, &quot;simpleComplexNumber&quot;);</span>
+<span class="fc" id="L816">        return of(simpleComplexNumber.getReal(), simpleComplexNumber.getImaginary());</span>
     }
 
     /**
@@ -564,22 +823,22 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      */
     @Beta
     public static final class RealComplexNumberComparator implements Comparator&lt;RealComplexNumber&gt; {
-<span class="fc" id="L567">        private RealComplexNumberComparator() {</span>
-<span class="fc" id="L568">        }</span>
+        private RealComplexNumberComparator() {
+        }
 
         @Override
         public int compare(final RealComplexNumber first, final RealComplexNumber second) {
-<span class="fc bfc" id="L572" title="All 2 branches covered.">            if (first == null) {</span>
-<span class="fc" id="L573">                return -1;</span>
+<span class="fc bfc" id="L831" title="All 2 branches covered.">            if (first == null) {</span>
+<span class="fc" id="L832">                return -1;</span>
             }
-<span class="fc bfc" id="L575" title="All 2 branches covered.">            if (second == null) {</span>
-<span class="fc" id="L576">                return 1;</span>
+<span class="fc bfc" id="L834" title="All 2 branches covered.">            if (second == null) {</span>
+<span class="fc" id="L835">                return 1;</span>
             }
-<span class="fc bfc" id="L578" title="All 2 branches covered.">            if (first.equals(second)) {</span>
-<span class="fc" id="L579">                return 0;</span>
+<span class="fc bfc" id="L837" title="All 2 branches covered.">            if (first.equals(second)) {</span>
+<span class="fc" id="L838">                return 0;</span>
             }
-<span class="fc bfc" id="L581" title="All 2 branches covered.">            return first.isEqualToByComparingParts(second) ? 0 : 1;</span>
+<span class="fc bfc" id="L840" title="All 2 branches covered.">            return first.isEqualToByComparingParts(second) ? 0 : 1;</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

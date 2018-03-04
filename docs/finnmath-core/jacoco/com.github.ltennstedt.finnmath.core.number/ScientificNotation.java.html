@@ -24,8 +24,9 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Represents the scientific notation for a decimal number which uses {@link BigDecimal} as type for its coefficient and
- * {@code int} as type for its exponent
+ * Represents the scientific notation for a decimal number which uses
+ * {@link BigDecimal} as type for its coefficient and {@code int} as type for
+ * its exponent
  * &lt;p&gt;
  * decimal = coefficient * 10^exponent
  *
@@ -49,20 +50,21 @@ public final class ScientificNotation {
     private final int exponent;
 
     /**
-     * Constructs a {@link ScientificNotation} from the given coefficient and exponent
+     * Constructs a {@link ScientificNotation} from the given coefficient and
+     * exponent
      *
      * @param coefficient
-     *         the coefficient
+     *            the coefficient
      * @param exponent
-     *         the exponent
+     *            the exponent
      * @throws NullPointerException
-     *         if {@code coefficient == null}
+     *             if {@code coefficient == null}
      * @since 1
      */
-<span class="fc" id="L62">    public ScientificNotation(final BigDecimal coefficient, final int exponent) {</span>
-<span class="fc" id="L63">        this.coefficient = requireNonNull(coefficient, &quot;coefficient&quot;);</span>
-<span class="fc" id="L64">        this.exponent = exponent;</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L64">    public ScientificNotation(final BigDecimal coefficient, final int exponent) {</span>
+<span class="fc" id="L65">        this.coefficient = requireNonNull(coefficient, &quot;coefficient&quot;);</span>
+<span class="fc" id="L66">        this.exponent = exponent;</span>
+<span class="fc" id="L67">    }</span>
 
     /**
      * Returns a string representation of this {@link ScientificNotation}
@@ -71,49 +73,49 @@ public final class ScientificNotation {
      * @since 1
      */
     public String asString() {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (coefficient.compareTo(BigDecimal.ZERO) == 0) {</span>
-<span class="fc" id="L75">            return &quot;0&quot;;</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (coefficient.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="fc" id="L77">            return &quot;0&quot;;</span>
         }
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (exponent &lt; 0) {</span>
-<span class="fc" id="L78">            return coefficient.toPlainString() + &quot; * 10**(&quot; + exponent + &quot;)&quot;;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (exponent &lt; 0) {</span>
+<span class="fc" id="L80">            return coefficient.toPlainString() + &quot; * 10**(&quot; + exponent + &quot;)&quot;;</span>
         }
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (exponent == 0) {</span>
-<span class="fc" id="L81">            return coefficient.toPlainString();</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (exponent == 0) {</span>
+<span class="fc" id="L83">            return coefficient.toPlainString();</span>
         }
-<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (exponent == 1) {</span>
-<span class="fc" id="L84">            return coefficient.toPlainString() + &quot; * 10&quot;;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (exponent == 1) {</span>
+<span class="fc" id="L86">            return coefficient.toPlainString() + &quot; * 10&quot;;</span>
         }
-<span class="fc" id="L86">        return coefficient.toPlainString() + &quot; * 10**&quot; + exponent;</span>
+<span class="fc" id="L88">        return coefficient.toPlainString() + &quot; * 10**&quot; + exponent;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L91">        return Objects.hash(coefficient, exponent);</span>
+<span class="fc" id="L93">        return Objects.hash(coefficient, exponent);</span>
     }
 
     @Override
     public boolean equals(final Object object) {
-<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L97">            return true;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L99">            return true;</span>
         }
-<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (!(object instanceof ScientificNotation)) {</span>
-<span class="fc" id="L100">            return false;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (!(object instanceof ScientificNotation)) {</span>
+<span class="fc" id="L102">            return false;</span>
         }
-<span class="fc" id="L102">        final ScientificNotation other = (ScientificNotation) object;</span>
-<span class="fc bfc" id="L103" title="All 4 branches covered.">        return coefficient.equals(other.getCoefficient()) &amp;&amp; (exponent == other.getExponent());</span>
+<span class="fc" id="L104">        final ScientificNotation other = (ScientificNotation) object;</span>
+<span class="fc bfc" id="L105" title="All 4 branches covered.">        return coefficient.equals(other.getCoefficient()) &amp;&amp; exponent == other.getExponent();</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L108">        return MoreObjects.toStringHelper(this).add(&quot;coefficient&quot;, coefficient).add(&quot;exponent&quot;, exponent).toString();</span>
+<span class="fc" id="L110">        return MoreObjects.toStringHelper(this).add(&quot;coefficient&quot;, coefficient).add(&quot;exponent&quot;, exponent).toString();</span>
     }
 
     public BigDecimal getCoefficient() {
-<span class="fc" id="L112">        return coefficient;</span>
+<span class="fc" id="L114">        return coefficient;</span>
     }
 
     public int getExponent() {
-<span class="fc" id="L116">        return exponent;</span>
+<span class="fc" id="L118">        return exponent;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

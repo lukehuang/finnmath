@@ -16,32 +16,38 @@
 
 package com.github.ltennstedt.finnmath.core.number;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import com.github.ltennstedt.finnmath.core.linear.AbstractMatrix;
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 /**
+ * Base class for complex numbers
+ *
  * @param &lt;B&gt;
- *         The type of the real and imaginary part of the complex number
+ *            The type of the real and imaginary part of the complex number
  * @param &lt;S&gt;
- *         The type of the complex number
+ *            The type of the complex number
  * @param &lt;M&gt;
- *         The type of the related matrix
+ *            The type of the related matrix
  * @author Lars Tennstedt
  * @since 1
  */
 @Beta
-abstract class AbstractComplexNumber&lt;B, S, M&gt; implements MathNumber&lt;S, RealComplexNumber, BigDecimal&gt; {
+public abstract class AbstractComplexNumber&lt;B, S extends AbstractComplexNumber&lt;B, S, M&gt;,
+    M extends AbstractMatrix&lt;B, ?, M, B, B&gt;&gt; implements MathNumber&lt;S, RealComplexNumber, BigDecimal&gt; {
     /**
      * Default rounding mode
      *
      * @since 1
      */
-<span class="fc" id="L44">    public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;</span>
+<span class="fc" id="L50">    public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;</span>
 
     /**
      * {@code real} part of this {@link AbstractComplexNumber}
@@ -57,10 +63,30 @@ abstract class AbstractComplexNumber&lt;B, S, M&gt; implements MathNumber&lt;S, 
      */
     protected final B imaginary;
 
-<span class="fc" id="L60">    protected AbstractComplexNumber(final B real, final B imaginary) {</span>
-<span class="fc" id="L61">        this.real = requireNonNull(real, &quot;real&quot;);</span>
-<span class="fc" id="L62">        this.imaginary = requireNonNull(imaginary, &quot;imaginary&quot;);</span>
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L66">    protected AbstractComplexNumber(final B real, final B imaginary) {</span>
+<span class="fc" id="L67">        this.real = requireNonNull(real, &quot;real&quot;);</span>
+<span class="fc" id="L68">        this.imaginary = requireNonNull(imaginary, &quot;imaginary&quot;);</span>
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * Returns the quotient of this {@link AbstractComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @return The quotient
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws IllegalArgumentException
+     *             if {@code divisor == 0}
+     * @see #invertible
+     * @since 1
+     */
+    @Override
+    public final RealComplexNumber divide(final S divisor) {
+<span class="fc" id="L86">        requireNonNull(divisor, &quot;divisor&quot;);</span>
+<span class="fc" id="L87">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
+<span class="fc" id="L88">        return divide(divisor, DEFAULT_ROUNDING_MODE);</span>
+    }
 
     protected abstract RealComplexNumber divide(S divisor, RoundingMode roundingMode);
 
@@ -91,16 +117,33 @@ abstract class AbstractComplexNumber&lt;B, S, M&gt; implements MathNumber&lt;S, 
     protected abstract M matrix();
 
     @Override
-    public String toString() {
-<span class="fc" id="L95">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary).toString();</span>
+    public final int hashCode() {
+<span class="fc" id="L121">        return Objects.hash(real, imaginary);</span>
     }
 
-    public B getReal() {
-<span class="fc" id="L99">        return real;</span>
+    @Override
+    public final boolean equals(final Object object) {
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L127">            return true;</span>
+        }
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (!(object instanceof AbstractComplexNumber)) {</span>
+<span class="fc" id="L130">            return false;</span>
+        }
+<span class="fc" id="L132">        final AbstractComplexNumber&lt;?, ?, ?&gt; other = (AbstractComplexNumber&lt;?, ?, ?&gt;) object;</span>
+<span class="fc bfc" id="L133" title="All 4 branches covered.">        return real.equals(other.getReal()) &amp;&amp; imaginary.equals(other.getImaginary());</span>
     }
 
-    public B getImaginary() {
-<span class="fc" id="L103">        return imaginary;</span>
+    @Override
+    public final String toString() {
+<span class="fc" id="L138">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary).toString();</span>
+    }
+
+    public final B getReal() {
+<span class="fc" id="L142">        return real;</span>
+    }
+
+    public final B getImaginary() {
+<span class="fc" id="L146">        return imaginary;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
