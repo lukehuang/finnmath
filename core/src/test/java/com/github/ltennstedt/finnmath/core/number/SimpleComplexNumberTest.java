@@ -363,7 +363,7 @@ public final class SimpleComplexNumberTest {
     @Test
     public void absShouldSucceed() {
         complexNumbers.forEach(complexNumber -> assertThat(complexNumber.abs()).isExactlyInstanceOf(BigDecimal.class)
-            .isEqualTo(new SquareRootCalculator().sqrt(complexNumber.absPow2())));
+            .isEqualTo(SquareRootCalculator.sqrt(complexNumber.absPow2())));
     }
 
     @Test

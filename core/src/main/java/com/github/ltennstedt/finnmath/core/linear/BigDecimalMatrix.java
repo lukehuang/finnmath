@@ -19,6 +19,7 @@ package com.github.ltennstedt.finnmath.core.linear;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
 import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
@@ -26,6 +27,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
@@ -378,69 +380,10 @@ public final class BigDecimalMatrix
     /**
      * Returns the frobenius norm of this {@link BigDecimalMatrix}
      *
-     * @return The frobenius norm
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    @Override
-    public BigDecimal frobeniusNorm() {
-        return new SquareRootCalculator().sqrt(frobeniusNormPow2());
-    }
-
-    /**
-     * Returns the frobenius norm of this {@link BigDecimalMatrix}
-     *
-     * @param precision
-     *            the precision for the termination condition
-     * @return The frobenius norm
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    @Override
-    public BigDecimal frobeniusNorm(final BigDecimal precision) {
-        requireNonNull(precision, "precision");
-        checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
-            "expected precision in (0, 1) but actual %s", precision);
-        return new SquareRootCalculator(precision).sqrt(frobeniusNormPow2());
-    }
-
-    /**
-     * Returns the frobenius norm of this {@link BigDecimalMatrix}
-     *
-     * @param scale
-     *            the scale to be set on the result
+     * @param abortCriterion
+     *            abort criterion
      * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
-     * @return The frobenius norm
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    @Override
-    public BigDecimal frobeniusNorm(final int scale, final RoundingMode roundingMode) {
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        requireNonNull(roundingMode, "roundingMode");
-        return new SquareRootCalculator(scale, roundingMode).sqrt(frobeniusNormPow2());
-    }
-
-    /**
-     * Returns the frobenius norm of this {@link BigDecimalMatrix}
-     *
-     * @param precision
-     *            the precision for the termination condition
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
+     *            rounding mode
      * @return The frobenius norm
      * @throws NullPointerException
      *             if {@code precision == null}
@@ -454,13 +397,36 @@ public final class BigDecimalMatrix
      * @since 1
      */
     @Override
-    public BigDecimal frobeniusNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
-        requireNonNull(precision, "precision");
-        checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
-            "expected precision in (0, 1) but actual %s", precision);
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
+    public BigDecimal frobeniusNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
+        requireNonNull(abortCriterion, "abortCriterion");
+        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
         requireNonNull(roundingMode, "roundingMode");
-        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(frobeniusNormPow2());
+        return SquareRootCalculator.sqrt(frobeniusNormPow2(), abortCriterion, roundingMode);
+    }
+
+    /**
+     * Returns the frobenius norm of this {@link BigDecimalMatrix}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @param mathContext
+     *            math context
+     * @return The frobenius norm
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
+        requireNonNull(abortCriterion, "abortCriterion");
+        requireNonNull(mathContext, "mathContext");
+        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
+        return SquareRootCalculator.sqrt(frobeniusNormPow2(), abortCriterion, mathContext);
     }
 
     /**

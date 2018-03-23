@@ -32,11 +32,11 @@ import org.apache.commons.lang3.builder.Builder;
  * Base class for matrix builders
  *
  * @param <E>
- *            The type of the elements of the matrix
+ *            type of the elements of the matrix
  * @param <M>
- *            The type of the matrix
+ *            type of the matrix
  * @param <B>
- *            The type of the builder
+ *            type of the builder
  * @author Lars Tennstedt
  * @since 1
  */
@@ -44,7 +44,7 @@ import org.apache.commons.lang3.builder.Builder;
 public abstract class AbstractMatrixBuilder<E, M extends AbstractMatrix<E, ?, M, ?, ?>,
     B extends AbstractMatrixBuilder<E, M, B>> implements Builder<M> {
     /**
-     * The table holding the elements of this {@link AbstractVectorBuilder}
+     * Table holding the elements of this {@link AbstractVectorBuilder}
      *
      * @since 1
      */

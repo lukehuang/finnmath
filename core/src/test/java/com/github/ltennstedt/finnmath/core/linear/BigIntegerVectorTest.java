@@ -25,7 +25,6 @@ import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -37,10 +36,8 @@ public final class BigIntegerVectorTest {
     private final int howMany = 10;
     private final long bound = 10;
     private final int differentSize = size + 1;
-    private final int scale = 2;
-    private final BigDecimal precision = BigDecimal.valueOf(0.00001);
+    private final BigDecimal abortCriterion = BigDecimal.valueOf(0.00001);
     private final MathRandom mathRandom = new MathRandom(7);
-    private final RoundingMode roundingMode = RoundingMode.HALF_DOWN;
     private final BigIntegerVector zeroVector = BigIntegerVector.builder(size).putAll(BigInteger.ZERO).build();
     private final BigIntegerVector vectorWithAnotherSize =
         BigIntegerVector.builder(differentSize).putAll(BigInteger.ZERO).build();
@@ -291,7 +288,7 @@ public final class BigIntegerVectorTest {
     @Test
     public void euclideanNormShouldSucceed() {
         vectors.forEach(vector -> assertThat(vector.euclideanNorm()).isExactlyInstanceOf(BigDecimal.class)
-            .isEqualTo(new SquareRootCalculator().sqrt(vector.euclideanNormPow2())));
+            .isEqualTo(SquareRootCalculator.sqrt(vector.euclideanNormPow2())));
     }
 
     @Test
@@ -306,75 +303,29 @@ public final class BigIntegerVectorTest {
     }
 
     @Test
-    public void euclideanNormPrecisionNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanNorm(null)).isExactlyInstanceOf(NullPointerException.class)
-            .hasMessage("precision");
+    public void euclideanNormAbortCriterionNullShouldThrowException() {
+        assertThatThrownBy(() -> zeroVector.euclideanNorm((BigDecimal) null))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("abortCriterion");
     }
 
     @Test
-    public void euclideanNormPrecisionTooLowShouldThrowException() {
+    public void euclideanNormAbortCriterionTooLowShouldThrowException() {
         assertThatThrownBy(() -> zeroVector.euclideanNorm(BigDecimal.ZERO))
             .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ZERO);
+            .hasMessage("The value 0 is not in the specified exclusive range of 0 to 1");
     }
 
     @Test
-    public void euclideanNormPrecisionTooHighShouldThrowException() {
+    public void euclideanNormAbortCriterionTooHighShouldThrowException() {
         assertThatThrownBy(() -> zeroVector.euclideanNorm(BigDecimal.ONE))
             .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ONE);
+            .hasMessage("The value 1 is not in the specified exclusive range of 0 to 1");
     }
 
     @Test
-    public void euclideanNormWithPrecisionShouldSucceed() {
-        vectors.forEach(vector -> assertThat(vector.euclideanNorm(precision)).isExactlyInstanceOf(BigDecimal.class)
-            .isEqualTo(new SquareRootCalculator(precision).sqrt(vector.euclideanNormPow2())));
-    }
-
-    @Test
-    public void euclideanNormScaleTooLowAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanNorm(-1, roundingMode))
-            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void euclideanNormWithScaleAndRoundingModeShouldSucceed() {
-        vectors.forEach(
-            vector -> assertThat(vector.euclideanNorm(scale, roundingMode)).isExactlyInstanceOf(BigDecimal.class)
-                .isEqualTo(new SquareRootCalculator(scale, roundingMode).sqrt(vector.euclideanNormPow2())));
-    }
-
-    @Test
-    public void euclideanNormPrecisionNullAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanNorm(null, scale, roundingMode))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("precision");
-    }
-
-    @Test
-    public void euclideanNormPrecisionTooLowAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanNorm(BigDecimal.ZERO, scale, roundingMode))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ZERO);
-    }
-
-    @Test
-    public void euclideanNormPrecisionTooHighAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanNorm(BigDecimal.ONE, scale, roundingMode))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ONE);
-    }
-
-    @Test
-    public void euclideanNormScaleTooLowAndPrecisionAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanNorm(precision, -1, roundingMode))
-            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void euclideanNormWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
-        vectors.forEach(vector -> assertThat(vector.euclideanNorm(precision, scale, roundingMode))
-            .isExactlyInstanceOf(BigDecimal.class)
-            .isEqualTo(new SquareRootCalculator(precision, scale, roundingMode).sqrt(vector.euclideanNormPow2())));
+    public void euclideanNormWithAbortCriterionShouldSucceed() {
+        vectors.forEach(vector -> assertThat(vector.euclideanNorm(abortCriterion)).isExactlyInstanceOf(BigDecimal.class)
+            .isEqualTo(SquareRootCalculator.sqrt(vector.euclideanNormPow2(), abortCriterion)));
     }
 
     @Test
@@ -452,7 +403,7 @@ public final class BigIntegerVectorTest {
     public void euclideanDistanceShouldSucceed() {
         vectors.forEach(vector -> others
             .forEach(other -> assertThat(vector.euclideanDistance(other)).isExactlyInstanceOf(BigDecimal.class)
-                .isEqualByComparingTo(new SquareRootCalculator().sqrt(vector.euclideanDistancePow2(other)))));
+                .isEqualByComparingTo(SquareRootCalculator.sqrt(vector.euclideanDistancePow2(other)))));
     }
 
     @Test
@@ -469,121 +420,44 @@ public final class BigIntegerVectorTest {
     }
 
     @Test
-    public void euclideanDistanceNullWithPrecisionShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(null, precision))
+    public void euclideanDistanceNullWithAbortCriterionShouldThrowException() {
+        assertThatThrownBy(() -> zeroVector.euclideanDistance(null, abortCriterion))
             .isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
-    public void euclideanDistancePrecisionNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, null))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("precision");
+    public void euclideanDistanceAbortCriterionNullShouldThrowException() {
+        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, (BigDecimal) null))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("abortCriterion");
     }
 
     @Test
-    public void euclideanDistanceSizesNotEqualWithPrecisionShouldThrowException() {
+    public void euclideanDistanceSizesNotEqualWithAbortCriterionShouldThrowException() {
         assertThatThrownBy(() -> zeroVector
-            .euclideanDistance(BigIntegerVector.builder(differentSize).putAll(BigInteger.ZERO).build(), precision))
+            .euclideanDistance(BigIntegerVector.builder(differentSize).putAll(BigInteger.ZERO).build(), abortCriterion))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
                 .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
     }
 
     @Test
-    public void euclideanDistancePrecisionTooLowShouldThrowException() {
+    public void euclideanDistanceAbortCriterionTooLowShouldThrowException() {
         assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, BigDecimal.ZERO))
             .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual 0");
+            .hasMessage("The value 0 is not in the specified exclusive range of 0 to 1");
     }
 
     @Test
-    public void euclideanDistancePrecisionTooHighShouldThrowException() {
+    public void euclideanDistanceAbortCriterionTooHighShouldThrowException() {
         assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, BigDecimal.ONE))
             .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual 1");
+            .hasMessage("The value 1 is not in the specified exclusive range of 0 to 1");
     }
 
     @Test
-    public void euclideanDistanceWithPrecisionShouldSucceed() {
+    public void euclideanDistanceWithAbortCriterionShouldSucceed() {
         vectors.forEach(vector -> others.forEach(
-            other -> assertThat(vector.euclideanDistance(other, precision)).isExactlyInstanceOf(BigDecimal.class)
-                .isEqualTo(new SquareRootCalculator(precision).sqrt(vector.euclideanDistancePow2(other)))));
-    }
-
-    @Test
-    public void euclideanDistanceNullWithScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(null, scale, roundingMode))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
-    }
-
-    @Test
-    public void euclideanDistanceSizesNotEqualWithScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(
-            () -> zeroVector.euclideanDistance(BigIntegerVector.builder(differentSize).putAll(BigInteger.ZERO).build(),
-                scale, roundingMode)).isExactlyInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
-    }
-
-    @Test
-    public void euclideanDistanceScaleToLowAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, -1, roundingMode))
-            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void euclideanDistanceWithScaleAndRoundingModeShouldSucceed() {
-        vectors
-            .forEach(vector -> others.forEach(other -> assertThat(vector.euclideanDistance(other, scale, roundingMode))
-                .isExactlyInstanceOf(BigDecimal.class)
-                .isEqualTo(new SquareRootCalculator(scale, roundingMode).sqrt(vector.euclideanDistancePow2(other)))));
-    }
-
-    @Test
-    public void euclideanDistanceNullWithPrecisionAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(null, precision, scale, roundingMode))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
-    }
-
-    @Test
-    public void euclideanDistanceWithPrecisionNullAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, null, scale, roundingMode))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("precision");
-    }
-
-    @Test
-    public void euclideanDistanceSizesNotEqualWithPrecisionAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(
-            () -> zeroVector.euclideanDistance(BigIntegerVector.builder(differentSize).putAll(BigInteger.ZERO).build(),
-                precision, scale, roundingMode)).isExactlyInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
-    }
-
-    @Test
-    public void euclideanDistanceWithPrecisionTooLowAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, BigDecimal.ZERO, scale, roundingMode))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual 0");
-    }
-
-    @Test
-    public void euclideanDistancePrecisionTooHighAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, BigDecimal.ONE, scale, roundingMode))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual 1");
-    }
-
-    @Test
-    public void euclideanDistanceWithPrecisionAndScaleToLowAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, precision, -1, roundingMode))
-            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void euclideanDistanceWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
-        vectors.forEach(vector -> others
-            .forEach(other -> assertThat(vector.euclideanDistance(other, precision, scale, roundingMode))
-                .isExactlyInstanceOf(BigDecimal.class)
-                .isEqualTo(new SquareRootCalculator(precision, scale, roundingMode)
-                    .sqrt(vector.euclideanDistancePow2(other)))));
+            other -> assertThat(vector.euclideanDistance(other, abortCriterion)).isExactlyInstanceOf(BigDecimal.class)
+                .isEqualTo(SquareRootCalculator.sqrt(vector.euclideanDistancePow2(other), abortCriterion))));
     }
 
     @Test

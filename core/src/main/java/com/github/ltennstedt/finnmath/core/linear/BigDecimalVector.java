@@ -18,11 +18,13 @@ package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
 import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -157,49 +159,41 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     /**
      * Returns the euclidean norm of this {@link BigDecimalVector}
      *
+     * @param abortCriterion
+     *            abort criterion
+     * @param roundingMode
+     *            rounding mode
      * @return The euclidean norm
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
      * @see #euclideanNormPow2
      * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
      */
     @Override
-    public BigDecimal euclideanNorm() {
-        return new SquareRootCalculator().sqrt(euclideanNormPow2());
+    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
+        requireNonNull(abortCriterion, "abortCriterion");
+        requireNonNull(roundingMode, "roundingMode");
+        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
+        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, roundingMode);
     }
 
     /**
      * Returns the euclidean norm of this {@link BigDecimalVector}
      *
-     * @param precision
-     *            the precision for the termination condition
+     * @param abortCriterion
+     *            abort criterion
+     * @param mathContext
+     *            {@link MathContext}
      * @return The euclidean norm
      * @throws NullPointerException
-     *             if {@code precision == null}
+     *             if {@code abortCriterion == null}
      * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    @Override
-    public BigDecimal euclideanNorm(final BigDecimal precision) {
-        requireNonNull(precision, "precision");
-        checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
-            "expected precision in (0, 1) but actual %s", precision);
-        return new SquareRootCalculator(precision).sqrt(euclideanNormPow2());
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
-     * @return The euclidean norm
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
      * @throws NullPointerException
      *             if {@code roundingMode == null}
      * @see #euclideanNormPow2
@@ -207,173 +201,11 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
      * @since 1
      */
     @Override
-    public BigDecimal euclideanNorm(final int scale, final RoundingMode roundingMode) {
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        requireNonNull(roundingMode, "roundingMode");
-        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanNormPow2());
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param precision
-     *            the precision for the termination condition
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
-     * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    @Override
-    public BigDecimal euclideanNorm(final BigDecimal precision, final int scale, final RoundingMode roundingMode) {
-        requireNonNull(precision, "precision");
-        checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
-            "expected precision in (0, 1) but actual %s", precision);
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        requireNonNull(roundingMode, "roundingMode");
-        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanNormPow2());
-    }
-
-    /**
-     * Returns the euclidean distance from this {@link BigDecimalVector} to the
-     * given one
-     *
-     * @param other
-     *            The other {@link BigDecimalVector}
-     * @return The euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    @Override
-    public BigDecimal euclideanDistance(final BigDecimalVector other) {
-        requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return new SquareRootCalculator().sqrt(euclideanDistancePow2(other));
-    }
-
-    /**
-     * Returns the euclidean distance from this {@link BigDecimalVector} to the
-     * given one
-     *
-     * @param other
-     *            The other {@link BigDecimalVector}
-     * @param precision
-     *            the precision for the termination condition
-     * @return The euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    @Override
-    public BigDecimal euclideanDistance(final BigDecimalVector other, final BigDecimal precision) {
-        requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        requireNonNull(precision, "precision");
-        checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
-            "expected precision in (0, 1) but actual %s", precision);
-        return new SquareRootCalculator(precision).sqrt(euclideanDistancePow2(other));
-    }
-
-    /**
-     * Returns the euclidean distance from this {@link BigDecimalVector} to the
-     * given one
-     *
-     * @param other
-     *            The other {@link BigDecimalVector}
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
-     * @return The deuclidean istance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    @Override
-    public BigDecimal euclideanDistance(final BigDecimalVector other, final int scale,
-        final RoundingMode roundingMode) {
-        requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        requireNonNull(roundingMode, "roundingMode");
-        return new SquareRootCalculator(scale, roundingMode).sqrt(euclideanDistancePow2(other));
-    }
-
-    /**
-     * Returns the euclidean distance from this {@link BigDecimalVector} to the
-     * given one
-     *
-     * @param other
-     *            The other {@link BigDecimalVector}
-     * @param precision
-     *            the precision for the termination condition
-     * @param scale
-     *            the scale to be set on the result
-     * @param roundingMode
-     *            the rounding mode to be used during the setting of the scale of
-     *            the result
-     * @return The euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code precision == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @throws IllegalArgumentException
-     *             if {@code scale < 0}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #euclideanDistancePow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    @Override
-    public BigDecimal euclideanDistance(final BigDecimalVector other, final BigDecimal precision, final int scale,
-        final RoundingMode roundingMode) {
-        requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        requireNonNull(precision, "precision");
-        checkArgument(BigDecimal.ZERO.compareTo(precision) < 0 && precision.compareTo(BigDecimal.ONE) < 0,
-            "expected precision in (0, 1) but actual %s", precision);
-        checkArgument(scale >= 0, "expected scale >= 0 but actual %s", scale);
-        requireNonNull(roundingMode, "roundingMode");
-        return new SquareRootCalculator(precision, scale, roundingMode).sqrt(euclideanDistancePow2(other));
+    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
+        requireNonNull(abortCriterion, "abortCriterion");
+        requireNonNull(mathContext, "mathContext");
+        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
+        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, mathContext);
     }
 
     /**

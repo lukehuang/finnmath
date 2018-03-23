@@ -340,6 +340,8 @@ public final class MathRandom {
 
     @VisibleForTesting
     BigDecimal keepBigDecimalInBound(final BigDecimal decimal, final long bound) {
+        assert decimal != null;
+        assert bound > 1;
         BigDecimal result = decimal;
         final BigDecimal decimalBound = BigDecimal.valueOf(bound);
         if (result.compareTo(BigDecimal.ZERO) > -1) {

@@ -19,6 +19,7 @@ package com.github.ltennstedt.finnmath.core.number;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
 import ch.obermuhlner.math.big.BigFloat;
 import ch.obermuhlner.math.big.BigFloat.Context;
@@ -453,15 +454,53 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Returns the absolute of this {@link RealComplexNumber}
+     * Returns the absolute value of the {@link RealComplexNumber}
      *
-     * @return The absolute
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
+     * @param abortCriterion
+     *            abort criterion
+     * @param roundingMode
+     *            rounding mode
+     * @return absolute value
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @throws IllegalArgumentException
+     *             if {@code decimal < 0}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
      */
     @Override
-    public BigDecimal abs() {
-        return new SquareRootCalculator().sqrt(absPow2());
+    public BigDecimal abs(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
+        requireNonNull(abortCriterion, "abortCriterion");
+        requireNonNull(roundingMode, "roundingMode");
+        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
+        return SquareRootCalculator.sqrt(absPow2(), abortCriterion, roundingMode);
+    }
+
+    /**
+     * Returns the absolute value of the {@link RealComplexNumber}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @param mathContext
+     *            math context
+     * @return absolute value
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code decimal < 0}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     */
+    @Override
+    public BigDecimal abs(final BigDecimal abortCriterion, final MathContext mathContext) {
+        requireNonNull(abortCriterion, "abortCriterion");
+        requireNonNull(mathContext, "mathContext");
+        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
+        return SquareRootCalculator.sqrt(absPow2(), abortCriterion, mathContext);
     }
 
     /**

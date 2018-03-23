@@ -18,6 +18,7 @@ package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
@@ -25,28 +26,27 @@ import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableTable;
-import com.google.common.collect.Table;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Base class for matrices
  *
  * @param <E>
- *            The type of the elements of the matrix
+ *            type of the elements of the matrix
  * @param <V>
- *            The type of the related vector
+ *            type of the related vector
  * @param <M>
- *            The type of the matrix
+ *            type of the matrix
  * @param <N>
- *            The type of the maximum absolute column sum norm, maximum absolute
- *            row sum norm and the maximum norm
+ *            type of the maximum absolute column sum norm, maximum absolute row
+ *            sum norm and the maximum norm
  * @param <B>
- *            The type of the square of the norms
+ *            type of the square of the norms
  * @author Lars Tennstedt
  * @see ImmutableTable
  * @since 1
@@ -55,15 +55,38 @@ import java.util.Set;
 public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M extends AbstractMatrix<E, V, M, N, B>,
     N, B> {
     /**
-     * The table holding the elements of this {@link AbstractMatrix}
+     * Default abort criterion
+     *
+     * @since 1
+     */
+    public static final BigDecimal DEFAULT_ABORT_CRITERION = BigDecimal.valueOf(0.0000000001);
+
+    /**
+     * Default rounding mode
+     *
+     * @since 1
+     */
+    public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;
+
+    /**
+     * {@link ImmutableTable} Table holding the elements of this
+     * {@link AbstractMatrix}
      *
      * @since 1
      */
     protected final ImmutableTable<Integer, Integer, E> table;
 
+    /**
+     * Required arguments constructor
+     *
+     * @param table
+     *            {@link ImmutableTable}
+     * @throws NullPointerException
+     *             if {@code table == null}
+     * @since 1
+     */
     protected AbstractMatrix(final ImmutableTable<Integer, Integer, E> table) {
-        assert table != null;
-        this.table = table;
+        this.table = requireNonNull(table, "table");
     }
 
     protected abstract M add(M summand);
@@ -98,13 +121,67 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
 
     protected abstract B frobeniusNormPow2();
 
-    protected abstract BigDecimal frobeniusNorm();
+    /**
+     * Returns the frobenius norm of this {@link BigDecimalMatrix}
+     *
+     * @return Frobenius norm
+     * @since 1
+     */
+    public final BigDecimal frobeniusNorm() {
+        return frobeniusNorm(DEFAULT_ABORT_CRITERION, DEFAULT_ROUNDING_MODE);
+    }
 
-    protected abstract BigDecimal frobeniusNorm(BigDecimal precision);
+    /**
+     * Returns the frobenius norm of this {@link BigDecimalMatrix}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @return Frobenius norm
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     * @since 1
+     */
+    public final BigDecimal frobeniusNorm(final BigDecimal abortCriterion) {
+        requireNonNull(abortCriterion, "abortCriterion");
+        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
+        return frobeniusNorm(abortCriterion, DEFAULT_ROUNDING_MODE);
+    }
 
-    protected abstract BigDecimal frobeniusNorm(int scale, RoundingMode roundingMode);
+    /**
+     * Returns the frobenius norm of this {@link BigDecimalMatrix}
+     *
+     * @param roundingMode
+     *            {@link RoundingMode}
+     * @return Frobenius norm
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @since 1
+     */
+    public final BigDecimal frobeniusNorm(final RoundingMode roundingMode) {
+        requireNonNull(roundingMode, "roundingMode");
+        return frobeniusNorm(DEFAULT_ABORT_CRITERION, roundingMode);
+    }
 
-    protected abstract BigDecimal frobeniusNorm(BigDecimal precision, int scale, RoundingMode roundingMode);
+    protected abstract BigDecimal frobeniusNorm(BigDecimal abortCriterion, RoundingMode roundingMode);
+
+    /**
+     * Returns the frobenius norm of this {@link BigDecimalMatrix}
+     *
+     * @param mathContext
+     *            {@link MathContext}
+     * @return Frobenius norm
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    public final BigDecimal frobeniusNorm(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return frobeniusNorm(DEFAULT_ABORT_CRITERION, mathContext);
+    }
+
+    protected abstract BigDecimal frobeniusNorm(BigDecimal abortCriterion, MathContext mathContext);
 
     protected abstract N maxNorm();
 
@@ -188,8 +265,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the row indices starting from {@code 1}
      *
-     * @return The row indices
-     * @see Table#rowKeySet
+     * @return Row indices
      * @since 1
      */
     public final ImmutableSet<Integer> rowIndexes() {
@@ -199,8 +275,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the column indices starting from {@code 1}
      *
-     * @return The column indices
-     * @see Table#columnKeySet
+     * @return Column indices
      * @since 1
      */
     public final ImmutableSet<Integer> columnIndexes() {
@@ -214,7 +289,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *            the row index
      * @param columnIndex
      *            the column index
-     * @return The element
+     * @return Element
      * @throws NullPointerException
      *             if {@code rowIndex == null}
      * @throws NullPointerException
@@ -223,7 +298,6 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *             if {@code rowIndex < 1 || rowSize < rowIndex}
      * @throws IllegalArgumentException
      *             if {@code columnIndex < 1 || columnSize < columnIndex}
-     * @see Table#get
      * @since 1
      */
     public final E element(final Integer rowIndex, final Integer columnIndex) {
@@ -239,8 +313,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns all matrix cells as {@link ImmutableSet}
      *
-     * @return The columns
-     * @see Table#cellSet
+     * @return {@link Cell Cells}
      * @since 1
      */
     public final ImmutableSet<Cell<Integer, Integer, E>> cells() {
@@ -253,12 +326,11 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @param rowIndex
      *            the row index
-     * @return The row
+     * @return Row
      * @throws NullPointerException
      *             if {@code rowIndex == null}
      * @throws IllegalArgumentException
      *             if {@code rowIndex < 1 || rowSize < rowIndex}
-     * @see Table#row
      * @since 1
      */
     public final ImmutableMap<Integer, E> row(final Integer rowIndex) {
@@ -274,12 +346,11 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @param columnIndex
      *            the column index
-     * @return The column
+     * @return Column
      * @throws NullPointerException
      *             if {@code columnIndex == null}
      * @throws IllegalArgumentException
      *             if {@code columnIndex < 1 || columnSize < columnIndex}
-     * @see Table#column
      * @since 1
      */
     public final ImmutableMap<Integer, E> column(final Integer columnIndex) {
@@ -292,8 +363,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns all matrix rows as {@link ImmutableMap}
      *
-     * @return The rows
-     * @see Table#rowMap
+     * @return Rows
      * @since 1
      */
     public final ImmutableMap<Integer, Map<Integer, E>> rows() {
@@ -303,8 +373,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns all matrix columns as {@link ImmutableMap}
      *
-     * @return The columns
-     * @see Table#columnMap
+     * @return Columns
      * @since 1
      */
     public final ImmutableMap<Integer, Map<Integer, E>> columns() {
@@ -314,8 +383,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns all matrix elements as {@link ImmutableCollection}
      *
-     * @return The columns
-     * @see Table#values
+     * @return Elements
      * @since 1
      */
     public final ImmutableCollection<E> elements() {
@@ -323,9 +391,9 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     }
 
     /**
-     * Returns the size of matrix
+     * Returns the size of this {@link AbstractMatrix}
      *
-     * @return The size
+     * @return Size
      * @since 1
      */
     public final long size() {
@@ -333,10 +401,9 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     }
 
     /**
-     * Returns the row size of matrix
+     * Returns the row size of this {@link AbstractMatrix}
      *
-     * @return The row size
-     * @see Set#size
+     * @return Row size
      * @since 1
      */
     public final int rowSize() {
@@ -344,10 +411,9 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     }
 
     /**
-     * Returns the column size of matrix
+     * Returns the column size of this {@link AbstractMatrix}
      *
-     * @return The column size
-     * @see Set#size
+     * @return Column size
      * @since 1
      */
     public final int columnSize() {
@@ -368,7 +434,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
             return false;
         }
         final AbstractMatrix<?, ?, ?, ?, ?> other = (AbstractMatrix<?, ?, ?, ?, ?>) object;
-        return Objects.deepEquals(table, other.getTable());
+        return Objects.equals(table, other.getTable());
     }
 
     @Override

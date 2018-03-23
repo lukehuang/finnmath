@@ -18,6 +18,7 @@ package com.github.ltennstedt.finnmath.core.number;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
 import com.github.ltennstedt.finnmath.core.linear.AbstractMatrix;
 import com.google.common.annotations.Beta;
@@ -42,6 +43,13 @@ import java.util.Objects;
 @Beta
 public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B, S, M>,
     M extends AbstractMatrix<B, ?, M, B, B>> implements MathNumber<S, RealComplexNumber, BigDecimal> {
+    /**
+     * Default abort criterion
+     *
+     * @since 1
+     */
+    public static final BigDecimal DEFAULT_ABORT_CRITERION = BigDecimal.valueOf(0.0000000001);
+
     /**
      * Default rounding mode
      *
@@ -89,6 +97,66 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
     }
 
     protected abstract RealComplexNumber divide(S divisor, RoundingMode roundingMode);
+
+    /**
+     * Returns the absolute of this {@link AbstractComplexNumber}
+     *
+     * @return absolute value
+     * @since 1
+     */
+    @Override
+    public final BigDecimal abs() {
+        return abs(DEFAULT_ABORT_CRITERION, DEFAULT_ROUNDING_MODE);
+    }
+
+    /**
+     * Returns the absolute value of the {@link AbstractComplexNumber}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @return absolute value
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     */
+    public final BigDecimal abs(final BigDecimal abortCriterion) {
+        requireNonNull(abortCriterion, "abortCriterion");
+        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
+        return abs(abortCriterion, DEFAULT_ROUNDING_MODE);
+    }
+
+    /**
+     * Returns the absolute value of the {@link AbstractComplexNumber}
+     *
+     * @param roundingMode
+     *            rounding mode
+     * @return absolute value
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     */
+    public final BigDecimal abs(final RoundingMode roundingMode) {
+        requireNonNull(roundingMode, "roundingMode");
+        return abs(DEFAULT_ABORT_CRITERION, roundingMode);
+    }
+
+    protected abstract BigDecimal abs(BigDecimal abortCriterion, RoundingMode roundingMode);
+
+    /**
+     * Returns the absolute value of the {@link AbstractComplexNumber}
+     *
+     * @param mathContext
+     *            math context
+     * @return absolute value
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     */
+    public final BigDecimal abs(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return abs(DEFAULT_ABORT_CRITERION, mathContext);
+    }
+
+    protected abstract BigDecimal abs(BigDecimal abortCriterion, MathContext mathContext);
 
     protected abstract B absPow2();
 

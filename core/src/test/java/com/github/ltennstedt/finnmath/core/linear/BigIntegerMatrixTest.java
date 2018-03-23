@@ -28,7 +28,6 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -747,7 +746,7 @@ public final class BigIntegerMatrixTest {
     @Test
     public void frobeniusNormShouldSucceed() {
         matrices.forEach(matrix -> assertThat(matrix.frobeniusNorm())
-            .isEqualByComparingTo(new SquareRootCalculator().sqrt(matrix.frobeniusNormPow2())));
+            .isEqualByComparingTo(SquareRootCalculator.sqrt(matrix.frobeniusNormPow2())));
     }
 
     @Test
@@ -769,77 +768,30 @@ public final class BigIntegerMatrixTest {
     }
 
     @Test
-    public void frobeniusNormWithPrecisionNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(null)).isExactlyInstanceOf(NullPointerException.class)
-            .hasMessage("precision");
+    public void frobeniusNormWithAbortCriterionNullShouldThrowException() {
+        assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm((BigDecimal) null))
+            .isExactlyInstanceOf(NullPointerException.class).hasMessage("abortCriterion");
     }
 
     @Test
-    public void frobeniusNormWithPrecisionTooLowShouldThrowException() {
+    public void frobeniusNormWithAbortCriterionTooLowShouldThrowException() {
         assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ZERO))
             .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ZERO);
+            .hasMessage("The value 0 is not in the specified exclusive range of 0 to 1");
     }
 
     @Test
-    public void frobeniusNormWithPrecisionTooHighShouldThrowException() {
+    public void frobeniusNormWithAbortCriterionTooHighShouldThrowException() {
         assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ONE))
             .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ONE);
+            .hasMessage("The value 1 is not in the specified exclusive range of 0 to 1");
     }
 
     @Test
-    public void frobeniusNormWithPrecisionShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION))
-            .isLessThanOrEqualTo(new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION)
-                .sqrt(matrix.frobeniusNormPow2()).add(tolerance)));
-    }
-
-    @Test
-    public void frobeniusNormWithRoundingModeAndScaleTooLowShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(-1, RoundingMode.HALF_EVEN))
-            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void frobeniusNormWithScaleAndRoundingModeShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.frobeniusNorm(2, RoundingMode.HALF_EVEN)).isEqualByComparingTo(
-            new SquareRootCalculator(2, RoundingMode.HALF_EVEN).sqrt(matrix.frobeniusNormPow2())));
-    }
-
-    @Test
-    public void frobeniusNormWithPrecisionNullAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(null, 2, RoundingMode.HALF_EVEN))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("precision");
-    }
-
-    @Test
-    public void frobeniusNormWithPrecisionTooLowAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ZERO, 2, RoundingMode.HALF_EVEN))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ZERO);
-    }
-
-    @Test
-    public void frobeniusNormWithPrecisionTooHighAndScaleAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ONE, 2, RoundingMode.HALF_EVEN))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("expected precision in (0, 1) but actual %s", BigDecimal.ONE);
-    }
-
-    @Test
-    public void frobeniusNormWithPrecisionAndScaleTooLowAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(
-            () -> zeroSquareMatrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION, -1, RoundingMode.HALF_EVEN))
-                .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected scale >= 0 but actual -1");
-    }
-
-    @Test
-    public void frobeniusNormWithPrecisionAndScaleAndRoundingModeShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(
-            matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN))
-                .isEqualTo(new SquareRootCalculator(SquareRootCalculator.DEFAULT_PRECISION, 2, RoundingMode.HALF_EVEN)
-                    .sqrt(matrix.frobeniusNormPow2())));
+    public void frobeniusNormWithAbortCriterionShouldSucceed() {
+        matrices.forEach(matrix -> assertThat(matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_ABORT_CRITERION))
+            .isLessThanOrEqualTo(SquareRootCalculator
+                .sqrt(matrix.frobeniusNormPow2(), SquareRootCalculator.DEFAULT_ABORT_CRITERION).add(tolerance)));
     }
 
     @Test
