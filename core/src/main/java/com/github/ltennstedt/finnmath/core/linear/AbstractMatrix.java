@@ -20,6 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
+import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableCollection;
@@ -69,8 +70,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;
 
     /**
-     * {@link ImmutableTable} Table holding the elements of this
-     * {@link AbstractMatrix}
+     * {@link ImmutableTable} holding the elements of this {@link AbstractMatrix}
      *
      * @since 1
      */
@@ -80,7 +80,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      * Required arguments constructor
      *
      * @param table
-     *            {@link ImmutableTable}
+     *            table
      * @throws NullPointerException
      *             if {@code table == null}
      * @since 1
@@ -89,36 +89,189 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
         this.table = requireNonNull(table, "table");
     }
 
-    protected abstract M add(M summand);
+    /**
+     * Returns the sum of this {@link AbstractMatrix} and the given one
+     *
+     * @param summand
+     *            summand
+     * @return Sum
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
+     * @since 1
+     */
+    public abstract M add(M summand);
 
-    protected abstract M subtract(M subtrahend);
+    /**
+     * Returns the difference of this {@link AbstractMatrix} and the given one
+     *
+     * @param subtrahend
+     *            subtrahend
+     * @return Difference
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
+     * @since 1
+     */
+    public abstract M subtract(M subtrahend);
 
-    protected abstract M multiply(M factor);
+    /**
+     * Returns the product of this {@link AbstractMatrix} and the given one
+     *
+     * @param factor
+     *            factor
+     * @return Product
+     * @throws NullPointerException
+     *             if {@code factor == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != factor.rowSize}
+     * @since 1
+     */
+    public abstract M multiply(M factor);
 
-    protected abstract V multiplyVector(V vector);
+    /**
+     * Returns the product of this {@link AbstractMatrix} and the given
+     * {@link AbstractVector}
+     *
+     * @param vector
+     *            vector
+     * @return product
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != vector.size}
+     * @since 1
+     */
+    public abstract V multiplyVector(V vector);
 
+    /**
+     * Returns the product of a matrix row and a matrix column
+     *
+     * @param row
+     *            row
+     * @param column
+     *            column
+     * @return The product
+     * @throws NullPointerException
+     *             if {@code row == null}
+     * @throws NullPointerException
+     *             if {@code column == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != columnSize}
+     * @since 1
+     */
     protected abstract E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column);
 
+    /**
+     * Returns the scalar product of this {@link AbstractMatrix} and the given
+     * scalar
+     *
+     * @param scalar
+     *            scalar
+     * @return Scalar product
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
+     */
     protected abstract M scalarMultiply(E scalar);
 
+    /**
+     * Returns the negated {@link AbstractMatrix} and this one
+     *
+     * @return Negated
+     * @since 1
+     */
     protected abstract M negate();
 
+    /**
+     * Returns the trace of this {@link AbstractMatrix}
+     *
+     * @return Trace
+     * @since 1
+     */
     protected abstract E trace();
 
+    /**
+     * Returns the determinant of this {@link AbstractMatrix}
+     *
+     * @return Determinant
+     * @throws IllegalStateException
+     *             if {@code !square}
+     * @since 1
+     */
     protected abstract E determinant();
 
+    /**
+     * Leibniz formula
+     *
+     * @return Determinant
+     */
     protected abstract E leibnizFormula();
 
+    /**
+     * Rule of Sarrus
+     *
+     * @return Determinant
+     */
     protected abstract E ruleOfSarrus();
 
+    /**
+     * Returns the transpose of this {@link AbstractMatrix}
+     *
+     * @return The transpose
+     * @since 1
+     */
     protected abstract M transpose();
 
+    /**
+     * Returns the minor of this {@link AbstractMatrix} dependent on the given row
+     * and column index
+     *
+     * @param rowIndex
+     *            row index
+     * @param columnIndex
+     *            column index
+     * @return Minor
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex < 1 || rowSize < rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex < 1 || columnSize < columnIndex}
+     * @since 1
+     */
     protected abstract M minor(Integer rowIndex, Integer columnIndex);
 
+    /**
+     * Returns the maximum absolute column sum norm of this {@link BigIntegerMatrix}
+     *
+     * @return Maximum absolute column sum norm
+     * @since 1
+     */
     protected abstract N maxAbsColumnSumNorm();
 
+    /**
+     * Returns the maximum absolute row sum norm of this {@link BigIntegerMatrix}
+     *
+     * @return Maximum absolute row sum norm
+     * @since 1
+     */
     protected abstract N maxAbsRowSumNorm();
 
+    /**
+     * Returns the square of the frobenius norm of this {@link BigIntegerMatrix}
+     *
+     * @return Square of the frobenius norm
+     * @since 1
+     */
     protected abstract B frobeniusNormPow2();
 
     /**
@@ -164,6 +317,23 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
         return frobeniusNorm(DEFAULT_ABORT_CRITERION, roundingMode);
     }
 
+    /**
+     * Returns the frobenius norm of this {@link BigDecimalMatrix}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @param roundingMode
+     *            rounding mode
+     * @return Frobenius norm
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
     protected abstract BigDecimal frobeniusNorm(BigDecimal abortCriterion, RoundingMode roundingMode);
 
     /**
@@ -181,8 +351,31 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
         return frobeniusNorm(DEFAULT_ABORT_CRITERION, mathContext);
     }
 
+    /**
+     * Returns the frobenius norm of this {@link BigDecimalMatrix}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @param mathContext
+     *            math context
+     * @return The frobenius norm
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code precision <= 0 || 1 <= precision}
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @since 1
+     */
     protected abstract BigDecimal frobeniusNorm(BigDecimal abortCriterion, MathContext mathContext);
 
+    /**
+     * Returns the maximum norm of this {@link BigIntegerMatrix}
+     *
+     * @return The maximum norm
+     * @since 1
+     */
     protected abstract N maxNorm();
 
     /**
@@ -211,8 +404,24 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
         return upperTriangular() || lowerTriangular();
     }
 
+    /**
+     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is
+     * upper triangular
+     *
+     * @return {@code true} if {@code this} is upper triangular, {@code false}
+     *         otherwise
+     * @since 1
+     */
     protected abstract boolean upperTriangular();
 
+    /**
+     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is
+     * lower triangular
+     *
+     * @return {@code true} if {@code this} is lower triangular, {@code false}
+     *         otherwise
+     * @since 1
+     */
     protected abstract boolean lowerTriangular();
 
     /**
@@ -229,8 +438,26 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
         return upperTriangular() && lowerTriangular();
     }
 
+    /**
+     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is
+     * the identity one
+     *
+     * @return {@code true} if {@code this} is the identity matrix, {@code false}
+     *         otherwise
+     * @see #diagonal
+     * @since 1
+     */
     protected abstract boolean identity();
 
+    /**
+     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is
+     * invertible
+     *
+     * @return {@code true} if {@code det == -1 || det == 1}, {@code false}
+     *         otherwise
+     * @see #determinant
+     * @since 1
+     */
     protected abstract boolean invertible();
 
     /**
@@ -420,11 +647,17 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
         return table.columnKeySet().size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final int hashCode() {
         return Objects.hash(table);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final boolean equals(final Object object) {
         if (this == object) {
@@ -437,6 +670,9 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
         return Objects.equals(table, other.getTable());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("table", table).toString();

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RealComplexNumberVector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.linear</a> &gt; <span class="el_source">RealComplexNumberVector.java</span></div><h1>RealComplexNumberVector.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.Validate.exclusiveBetween;
+
+import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
+import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.google.common.annotations.Beta;
+import com.google.common.collect.ImmutableMap;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+/**
+ * An immutable implementation of a vector which uses {@link RealComplexNumber}
+ * as type for its elements
+ *
+ * @author Lars Tennstedt
+ * @since 1
+ */
+@Beta
+public final class RealComplexNumberVector
+    extends AbstractVector&lt;RealComplexNumber, RealComplexNumberVector, BigDecimal, BigDecimal&gt; {
+    private RealComplexNumberVector(final ImmutableMap&lt;Integer, RealComplexNumber&gt; map) {
+<span class="fc" id="L44">        super(map);</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RealComplexNumberVector add(final RealComplexNumberVector summand) {
+<span class="fc" id="L52">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L54">            summand.size());</span>
+<span class="fc" id="L55">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L56">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="fc" id="L57">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RealComplexNumberVector subtract(final RealComplexNumberVector subtrahend) {
+<span class="fc" id="L65">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L67">            subtrahend.size());</span>
+<span class="fc" id="L68">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L69">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
+<span class="fc" id="L70">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RealComplexNumberVector scalarMultiply(final RealComplexNumber scalar) {
+<span class="fc" id="L78">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L79">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L80">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="fc" id="L81">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RealComplexNumberVector negate() {
+<span class="fc" id="L89">        return scalarMultiply(RealComplexNumber.ONE.negate());</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected BigDecimal taxicabNorm() {
+<span class="fc" id="L97">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigDecimal euclideanNormPow2() {
+<span class="fc" id="L105">        return map.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
+<span class="nc" id="L113">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
+<span class="nc" id="L114">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="nc" id="L115">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
+<span class="nc" id="L116">        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, roundingMode);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
+<span class="nc" id="L124">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
+<span class="nc" id="L125">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L126">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
+<span class="nc" id="L127">        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, mathContext);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RealComplexNumber dotProduct(final RealComplexNumberVector other) {
+<span class="fc" id="L135">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L137">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
+<span class="fc" id="L138">            .reduce(RealComplexNumber::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected BigDecimal maxNorm() {
+<span class="fc" id="L146">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();</span>
+    }
+
+    /**
+     * Returns a {@link RealComplexNumberVectorBuilder}
+     *
+     * @param size
+     *            the size the resulting {@link RealComplexNumberVector}
+     * @return A {@link RealComplexNumberVectorBuilder}
+     * @since 1
+     */
+    public static RealComplexNumberVectorBuilder builder(final int size) {
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L159">        return new RealComplexNumberVectorBuilder(size);</span>
+    }
+
+    /**
+     * The builder for {@link RealComplexNumberVector RealComplexNumberVectors}
+     *
+     * @since 1
+     */
+    @Beta
+    public static final class RealComplexNumberVectorBuilder
+        extends AbstractVectorBuilder&lt;RealComplexNumber, RealComplexNumberVector, RealComplexNumberVectorBuilder&gt; {
+        private RealComplexNumberVectorBuilder(final Integer size) {
+<span class="fc" id="L171">            super(size);</span>
+<span class="fc" id="L172">        }</span>
+
+        /**
+         * Returns the built {@link RealComplexNumberVector}
+         *
+         * @return The {@link RealComplexNumberVector}
+         * @throws NullPointerException
+         *             if one {@code element == null}
+         * @see ImmutableMap#copyOf
+         * @since 1
+         */
+        @Override
+        public RealComplexNumberVector build() {
+<span class="fc" id="L185">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
+<span class="fc" id="L186">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
+<span class="fc" id="L187">            return new RealComplexNumberVector(ImmutableMap.copyOf(map));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

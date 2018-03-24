@@ -50,6 +50,18 @@ public abstract class AbstractMatrixBuilder<E, M extends AbstractMatrix<E, ?, M,
      */
     protected final Table<Integer, Integer, E> table;
 
+    /**
+     * Constructor
+     *
+     * @param rowSize
+     *            row size
+     * @param columnSize
+     *            column size
+     * @throws IllegalArgumentException
+     *             if {@code rowSize < 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize < 1}
+     */
     protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {
         checkArgument(rowSize > 0, "expected rowSize > 0 but actual %s", rowSize);
         checkArgument(columnSize > 0, "expected columnSize > 0 but actual %s", columnSize);
@@ -143,6 +155,9 @@ public abstract class AbstractMatrixBuilder<E, M extends AbstractMatrix<E, ?, M,
         return builder;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("table", table).toString();

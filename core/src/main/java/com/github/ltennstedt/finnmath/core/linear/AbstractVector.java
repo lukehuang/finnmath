@@ -71,6 +71,14 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      */
     protected final ImmutableMap<Integer, E> map;
 
+    /**
+     * Required arguments constructor
+     *
+     * @param map
+     *            {@link ImmutableMap}
+     * @throws NullPointerException
+     *             if {@code map == null}
+     */
     protected AbstractVector(final ImmutableMap<Integer, E> map) {
         requireNonNull(map, "map");
         this.map = map;
@@ -118,16 +126,76 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
         return map.values();
     }
 
+    /**
+     * Returns the sum of this {@link AbstractVector} and the given one
+     *
+     * @param summand
+     *            summand
+     * @return Sum
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != summand.size}
+     * @since 1
+     */
     protected abstract V add(V summand);
 
+    /**
+     * Returns the difference of this {@link AbstractVector} and the given one
+     *
+     * @param subtrahend
+     *            the subtrahend
+     * @return The difference
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != subtrahend.size}
+     * @since 1
+     */
     protected abstract V subtract(V subtrahend);
 
+    /**
+     * Returns the dot product of this {@link AbstractVector} and the given one
+     *
+     * @param other
+     *            The other {@link AbstractVector}
+     * @return The dot product
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
     protected abstract E dotProduct(V other);
 
+    /**
+     * Returns the scalar product of the given scalar and this
+     * {@link AbstractVector}
+     *
+     * @param scalar
+     *            the scalar
+     * @return The scalar product
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
+     */
     protected abstract V scalarMultiply(E scalar);
 
+    /**
+     * Returns the negated {@link AbstractVector} of this one
+     *
+     * @return The negated
+     * @see #scalarMultiply
+     * @since 1
+     */
     protected abstract V negate();
 
+    /**
+     * Returns the taxicab norm of this {@link AbstractVector}
+     *
+     * @return The taxicab norm
+     * @since 1
+     */
     protected abstract N taxicabNorm();
 
     /**
@@ -151,6 +219,13 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
         return subtract(other).taxicabNorm();
     }
 
+    /**
+     * Returns the square of the euclidean norm of this {@link AbstractVector}
+     *
+     * @return The square of the euclidean norm
+     * @see #dotProduct
+     * @since 1
+     */
     protected abstract P euclideanNormPow2();
 
     /**
@@ -202,6 +277,22 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
         return euclideanNorm(DEFAULT_ABORT_CRITERION, roundingMode);
     }
 
+    /**
+     * Returns the euclidean norm of this {@link AbstractVector}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @param roundingMode
+     *            rounding mode
+     * @return Euclidean norm
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     * @since 1
+     */
     protected abstract BigDecimal euclideanNorm(BigDecimal abortCriterion, RoundingMode roundingMode);
 
     /**
@@ -221,6 +312,22 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
         return euclideanNorm(DEFAULT_ABORT_CRITERION, mathContext);
     }
 
+    /**
+     * Returns the euclidean norm of this {@link AbstractVector}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @param mathContext
+     *            math context
+     * @return Euclidean norm
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     * @since 1
+     */
     protected abstract BigDecimal euclideanNorm(BigDecimal abortCriterion, MathContext mathContext);
 
     /**
@@ -400,6 +507,12 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
         return subtract(other).euclideanNorm(abortCriterion, mathContext);
     }
 
+    /**
+     * Returns the max norm of this {@link AbstractVector}
+     *
+     * @return The max norm
+     * @since 1
+     */
     protected abstract N maxNorm();
 
     /**
@@ -432,11 +545,17 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
         return map.size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final int hashCode() {
         return Objects.hash(map);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final boolean equals(final Object object) {
         if (this == object) {
@@ -449,6 +568,9 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
         return Objects.deepEquals(map, other.getMap());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("map", map).toString();

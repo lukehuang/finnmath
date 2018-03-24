@@ -43,14 +43,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the sum of this {@link BigDecimalVector} and the given one
-     *
-     * @param summand
-     *            the summand
-     * @return The sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimalVector add(final BigDecimalVector summand) {
@@ -63,14 +56,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the difference of this {@link BigDecimalVector} and the given one
-     *
-     * @param subtrahend
-     *            the subtrahend
-     * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimalVector subtract(final BigDecimalVector subtrahend) {
@@ -83,16 +69,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the dot product of this {@link BigDecimalVector} and the given one
-     *
-     * @param other
-     *            The other {@link BigDecimalVector}
-     * @return The dot product
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code map.size != other.size}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal dotProduct(final BigDecimalVector other) {
@@ -103,15 +80,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the scalar product of the given scalar and this
-     * {@link BigDecimalVector}
-     *
-     * @param scalar
-     *            the scalar
-     * @return The scalar product
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimalVector scalarMultiply(final BigDecimal scalar) {
@@ -122,11 +91,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the negated {@link BigDecimalVector} of this one
-     *
-     * @return The negated
-     * @see #scalarMultiply
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimalVector negate() {
@@ -134,10 +99,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the taxicab norm of this {@link BigDecimalVector}
-     *
-     * @return The taxicab norm
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     protected BigDecimal taxicabNorm() {
@@ -145,11 +107,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the square of the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @return The square of the euclidean norm
-     * @see #dotProduct
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal euclideanNormPow2() {
@@ -157,22 +115,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param roundingMode
-     *            rounding mode
-     * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
@@ -183,22 +126,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param mathContext
-     *            {@link MathContext}
-     * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
@@ -209,10 +137,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns the max norm of this {@link BigDecimalVector}
-     *
-     * @return The max norm
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     protected BigDecimal maxNorm() {

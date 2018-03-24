@@ -45,16 +45,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the sum of this {@link RealComplexNumberVector} and the given one
-     *
-     * @param summand
-     *            the summand
-     * @return The sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != summand.size}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public RealComplexNumberVector add(final RealComplexNumberVector summand) {
@@ -67,17 +58,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the difference of this {@link RealComplexNumberVector} and the given
-     * one
-     *
-     * @param subtrahend
-     *            the subtrahend
-     * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != subtrahend.size}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public RealComplexNumberVector subtract(final RealComplexNumberVector subtrahend) {
@@ -90,15 +71,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the scalar product of the given scalar and this
-     * {@link RealComplexNumberVector}
-     *
-     * @param scalar
-     *            the scalar
-     * @return The scalar product
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public RealComplexNumberVector scalarMultiply(final RealComplexNumber scalar) {
@@ -109,11 +82,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the negated {@link RealComplexNumberVector} of this one
-     *
-     * @return The negated
-     * @see #scalarMultiply
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public RealComplexNumberVector negate() {
@@ -121,10 +90,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the taxicab norm of this {@link RealComplexNumberVector}
-     *
-     * @return The taxicab norm
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     protected BigDecimal taxicabNorm() {
@@ -132,11 +98,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the square of the euclidean norm of this
-     * {@link RealComplexNumberVector}
-     *
-     * @return The square of the euclidean norm
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal euclideanNormPow2() {
@@ -144,20 +106,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the euclidean norm of this {@link RealComplexNumberVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param roundingMode
-     *            rounding mode
-     * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
@@ -168,20 +117,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the euclidean norm of this {@link RealComplexNumberVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param mathContext
-     *            math context
-     * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
@@ -192,17 +128,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the dot product of this {@link RealComplexNumberVector} and the given
-     * one
-     *
-     * @param other
-     *            The other {@link RealComplexNumberVector}
-     * @return The dot product
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public RealComplexNumber dotProduct(final RealComplexNumberVector other) {
@@ -213,10 +139,7 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns the max norm of this {@link RealComplexNumberVector}
-     *
-     * @return The max norm
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     protected BigDecimal maxNorm() {

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractVectorBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.linear</a> &gt; <span class="el_source">AbstractVectorBuilder.java</span></div><h1>AbstractVectorBuilder.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+import static java.lang.Math.addExact;
+import static java.util.Objects.requireNonNull;
+
+import com.google.common.annotations.Beta;
+import com.google.common.base.MoreObjects;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.IntStream;
+import org.apache.commons.lang3.builder.Builder;
+
+/**
+ * Base class for vector builders
+ *
+ * @param &lt;E&gt;
+ *            The type of the elements of the vector
+ * @param &lt;V&gt;
+ *            The type of the vector
+ * @param &lt;B&gt;
+ *            The type of the builder
+ * @author Lars Tennstedt
+ * @since 1
+ */
+@Beta
+public abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt;V&gt; {
+    /**
+     * The map holding the elements of this {@link AbstractVectorBuilder}
+     */
+<span class="fc" id="L48">    protected final Map&lt;Integer, E&gt; map = new HashMap&lt;&gt;();</span>
+
+    /**
+     * The size of the map
+     */
+    protected final int size;
+
+    /**
+     * Required arguments constructor
+     *
+     * @param size
+     *            size
+     * @throws IllegalArgumentException
+     *             if {@code size &lt; 1}
+     */
+<span class="fc" id="L63">    protected AbstractVectorBuilder(final int size) {</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L65">        this.size = size;</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * Returns the element dependent on the given index
+     *
+     * @param index
+     *            the index of the element
+     * @return The element
+     * @throws NullPointerException
+     *             if {@code index == null}
+     * @throws IllegalArgumentException
+     *             if {@code !map.containsKey(index)}
+     * @see Map#containsKey
+     * @since 1
+     */
+    public final E element(final Integer index) {
+<span class="fc" id="L82">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="pc bpc" id="L83" title="2 of 4 branches missed.">        checkArgument(0 &lt; index &amp;&amp; index &lt;= size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L84">        return map.get(index);</span>
+    }
+
+    /**
+     * Puts the given element on the first free index and returns {@code this}
+     *
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @throws ArithmeticException
+     *             if ({@code size + 1} overflows
+     * @throws IllegalStateException
+     *             if {@code size == size}
+     * @since 1
+     */
+    public final B put(final E element) {
+<span class="fc" id="L102">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L103">        final int index = addExact(map.size(), 1);</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L105">        map.put(index, element);</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L108">        final B builder = (B) this;</span>
+
+<span class="fc" id="L110">        return builder;</span>
+    }
+
+    /**
+     * Puts the given element on the given index and returns {@code this}
+     *
+     * @param index
+     *            the index
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code index == null}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @throws IllegalArgumentException
+     *             if {@code index &lt;= 0 || size &lt; index}
+     * @since 1
+     */
+    public final B put(final Integer index, final E element) {
+<span class="fc" id="L130">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L131">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc bfc" id="L132" title="All 4 branches covered.">        checkArgument(0 &lt; index &amp;&amp; index &lt;= size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L133">        map.put(index, element);</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L136">        final B builder = (B) this;</span>
+
+<span class="fc" id="L138">        return builder;</span>
+    }
+
+    /**
+     * Puts the given element on all indices and returns {@code this}
+     *
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @since 1
+     */
+    public final B putAll(final E element) {
+<span class="fc" id="L152">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L153">        IntStream.rangeClosed(1, size).forEach(index -&gt; map.put(index, element));</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L156">        final B builder = (B) this;</span>
+
+<span class="fc" id="L158">        return builder;</span>
+    }
+
+    /**
+     * Puts the given element on all indices which are {@code null} and returns
+     * {@code this}
+     *
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @since 1
+     */
+    public final B nullsToElement(final E element) {
+<span class="nc" id="L173">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="nc" id="L174">        map.entrySet().forEach(entry -&gt; {</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">            if (entry.getValue() == null) {</span>
+<span class="nc" id="L176">                map.put(entry.getKey(), element);</span>
+            }
+<span class="nc" id="L178">        });</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="nc" id="L181">        final B builder = (B) this;</span>
+
+<span class="nc" id="L183">        return builder;</span>
+    }
+
+    @Override
+    public final String toString() {
+<span class="fc" id="L188">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).add(&quot;size&quot;, size).toString();</span>
+    }
+
+    public final Map&lt;Integer, E&gt; getMap() {
+<span class="fc" id="L192">        return map;</span>
+    }
+
+    public final int getSize() {
+<span class="fc" id="L196">        return size;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

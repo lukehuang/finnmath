@@ -44,16 +44,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the sum of this {@link BigIntegerVector} and the given one
-     *
-     * @param summand
-     *            the summand
-     * @return The sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != summand.size}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigIntegerVector add(final BigIntegerVector summand) {
@@ -66,16 +57,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the difference of this {@link BigIntegerVector} and the given one
-     *
-     * @param subtrahend
-     *            the subtrahend
-     * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != subtrahend.size}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigIntegerVector subtract(final BigIntegerVector subtrahend) {
@@ -88,15 +70,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the scalar product of the given scalar and this
-     * {@link BigIntegerVector}
-     *
-     * @param scalar
-     *            the scalar
-     * @return The scalar product
-     * @throws NullPointerException
-     *             if {@code scalar == null}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigIntegerVector scalarMultiply(final BigInteger scalar) {
@@ -107,11 +81,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the negated {@link BigIntegerVector} of this one
-     *
-     * @return The negated
-     * @see #scalarMultiply
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigIntegerVector negate() {
@@ -119,10 +89,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the taxicab norm of this {@link BigIntegerVector}
-     *
-     * @return The taxicab norm
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     protected BigInteger taxicabNorm() {
@@ -134,11 +101,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the square of the euclidean norm of this {@link BigIntegerVector}
-     *
-     * @return The square of the euclidean norm
-     * @see #dotProduct
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigInteger euclideanNormPow2() {
@@ -146,20 +109,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the euclidean norm of this {@link BigIntegerVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param roundingMode
-     *            rounding mode
-     * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
@@ -170,20 +120,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the euclidean norm of this {@link BigIntegerVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param mathContext
-     *            math context
-     * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
@@ -194,16 +131,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the dot product of this {@link BigIntegerVector} and the given one
-     *
-     * @param other
-     *            The other {@link BigIntegerVector}
-     * @return The dot product
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigInteger dotProduct(final BigIntegerVector other) {
@@ -217,10 +145,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns the max norm of this {@link BigIntegerVector}
-     *
-     * @return The max norm
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     protected BigInteger maxNorm() {

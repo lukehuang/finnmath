@@ -28,7 +28,12 @@ import java.util.Objects;
 /**
  * An immutable implementation of a fraction which uses {@link BigInteger} as
  * type for its numerator and denominator
+ * <p>
+ * The returned {@link Fraction Fractions} of most methods are neither
+ * normalized nor reduced
  *
+ * @see #normalize
+ * @see #reduce
  * @author Lars Tennstedt
  * @since 1
  */
@@ -68,18 +73,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
     }
 
     /**
-     * Returns the sum of this {@link Fraction} and the given one
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     *
-     * @param summand
-     *            the summand
-     * @return The sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @see #normalize
-     * @see #reduce
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public Fraction add(final Fraction summand) {
@@ -91,18 +85,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
     }
 
     /**
-     * Returns the difference of this {@link Fraction} and the given one
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     *
-     * @param subtrahend
-     *            the subtrahend
-     * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @see #normalize
-     * @see #reduce
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public Fraction subtract(final Fraction subtrahend) {
@@ -114,18 +97,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
     }
 
     /**
-     * Returns the product of this {@link Fraction} and the given one
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     *
-     * @param factor
-     *            the factor
-     * @return The product
-     * @throws NullPointerException
-     *             if {@code factor == null}
-     * @see #normalize
-     * @see #reduce
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public Fraction multiply(final Fraction factor) {
@@ -136,22 +108,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
     }
 
     /**
-     * Return the quotient of this {@link Fraction} and the given one
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     *
-     * @param divisor
-     *            the divisor
-     * @return The quotient
-     * @throws NullPointerException
-     *             if {@code divisor == null}
-     * @throws IllegalArgumentException
-     *             if {@code !divisor.invertible}
-     * @see #invert
-     * @see #multiply
-     * @see #normalize
-     * @see #reduce
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public Fraction divide(final Fraction divisor) {
@@ -161,18 +118,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
     }
 
     /**
-     * Returns the power of this {@link Fraction} raised by the given exponent
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     *
-     * @param exponent
-     *            the exponent
-     * @return The power
-     * @throws IllegalArgumentException
-     *             if {@code exponent < 0}
-     * @see #normalize
-     * @see #reduce
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public Fraction pow(final int exponent) {
@@ -186,14 +132,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
     }
 
     /**
-     * Returns the negated {@link Fraction} of this one
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     *
-     * @return The negated
-     * @see #normalize
-     * @see #reduce
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public Fraction negate() {
@@ -201,16 +140,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
     }
 
     /**
-     * Returns the inverted {@link Fraction} of this one
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     *
-     * @return The inverted
-     * @throws IllegalStateException
-     *             if {@code numerator == 0}
-     * @see #normalize
-     * @see #reduce
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public Fraction invert() {
@@ -219,10 +149,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
     }
 
     /**
-     * Returns if this {@link Fraction} is invertible
-     *
-     * @return {@code true} if {@code numerator != 0}, {@code false} otherwise
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public boolean invertible() {
@@ -230,15 +157,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
     }
 
     /**
-     * Returns the absolute {@link Fraction} of this one
-     * <p>
-     * The returned {@link Fraction} is not reduced and not normalized.
-     *
-     * @return The absolute
-     * @see #normalize
-     * @see #reduce
-     * @see BigInteger#abs
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public Fraction abs() {
@@ -491,11 +410,17 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
         return new Fraction(numerator, denominator);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(numerator, denominator);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object object) {
         if (this == object) {
@@ -508,6 +433,9 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
         return numerator.equals(other.getNumerator()) && denominator.equals(other.getDenominator());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("numerator", numerator).add("denominator", denominator).toString();

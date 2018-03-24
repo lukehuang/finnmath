@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BigIntegerVector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.linear</a> &gt; <span class="el_source">BigIntegerVector.java</span></div><h1>BigIntegerVector.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.Validate.exclusiveBetween;
+
+import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.google.common.annotations.Beta;
+import com.google.common.collect.ImmutableMap;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+/**
+ * An immutable implementation of a vector which uses {@link BigInteger} as type
+ * for its elements
+ *
+ * @author Lars Tennstedt
+ * @since 1
+ */
+@Beta
+public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigIntegerVector, BigInteger, BigInteger&gt; {
+    private BigIntegerVector(final ImmutableMap&lt;Integer, BigInteger&gt; map) {
+<span class="fc" id="L43">        super(map);</span>
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerVector add(final BigIntegerVector summand) {
+<span class="fc" id="L51">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L53">            summand.size());</span>
+<span class="fc" id="L54">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L55">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="fc" id="L56">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerVector subtract(final BigIntegerVector subtrahend) {
+<span class="fc" id="L64">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L66">            subtrahend.size());</span>
+<span class="fc" id="L67">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L68">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
+<span class="fc" id="L69">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerVector scalarMultiply(final BigInteger scalar) {
+<span class="fc" id="L77">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L78">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L79">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="fc" id="L80">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerVector negate() {
+<span class="fc" id="L88">        return scalarMultiply(BigInteger.ONE.negate());</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected BigInteger taxicabNorm() {
+<span class="fc" id="L96">        BigInteger norm = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        for (final BigInteger element : map.values()) {</span>
+<span class="fc" id="L98">            norm = norm.add(element.abs());</span>
+<span class="fc" id="L99">        }</span>
+<span class="fc" id="L100">        return norm;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigInteger euclideanNormPow2() {
+<span class="fc" id="L108">        return dotProduct(this);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
+<span class="fc" id="L116">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
+<span class="fc" id="L117">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L118">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
+<span class="fc" id="L119">        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, roundingMode);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
+<span class="nc" id="L127">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
+<span class="nc" id="L128">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L129">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
+<span class="nc" id="L130">        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, mathContext);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigInteger dotProduct(final BigIntegerVector other) {
+<span class="fc" id="L138">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L140">        BigInteger result = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        for (final Integer index : map.keySet()) {</span>
+<span class="fc" id="L142">            result = result.add(map.get(index).multiply(other.element(index)));</span>
+<span class="fc" id="L143">        }</span>
+<span class="fc" id="L144">        return result;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected BigInteger maxNorm() {
+<span class="fc" id="L152">        return map.values().stream().map(BigInteger::abs).reduce(BigInteger::max).get();</span>
+    }
+
+    /**
+     * Returns a {@link BigIntegerVectorBuilder}
+     *
+     * @param size
+     *            the size the resulting {@link BigIntegerVector}
+     * @return A {@link BigIntegerVectorBuilder}
+     * @since 1
+     */
+    public static BigIntegerVectorBuilder builder(final int size) {
+<span class="fc bfc" id="L164" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L165">        return new BigIntegerVectorBuilder(size);</span>
+    }
+
+    /**
+     * The builder for {@link BigIntegerVector BigIntegerVectors}
+     *
+     * @since 1
+     */
+    @Beta
+    public static final class BigIntegerVectorBuilder
+        extends AbstractVectorBuilder&lt;BigInteger, BigIntegerVector, BigIntegerVectorBuilder&gt; {
+        private BigIntegerVectorBuilder(final Integer size) {
+<span class="fc" id="L177">            super(size);</span>
+<span class="fc" id="L178">        }</span>
+
+        /**
+         * Returns the built {@link BigIntegerVector}
+         *
+         * @return The {@link BigIntegerVector}
+         * @throws NullPointerException
+         *             if one {@code element == null}
+         * @see ImmutableMap#copyOf
+         * @since 1
+         */
+        @Override
+        public BigIntegerVector build() {
+<span class="fc" id="L191">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
+<span class="fc" id="L192">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
+<span class="fc" id="L193">            return new BigIntegerVector(ImmutableMap.copyOf(map));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

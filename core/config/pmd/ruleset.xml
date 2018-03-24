@@ -4,7 +4,8 @@
     Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS 
     IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language 
     governing permissions and limitations under the License. -->
-<ruleset name="Custom ruleset" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<ruleset name="ruleset" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
     <description>ruleset</description>
     <rule ref="category/java/bestpractices.xml">
@@ -39,22 +40,7 @@
     </rule>
     <rule ref="category/java/documentation.xml">
         <exclude name="CommentSize" />
-    </rule>
-    <rule ref="category/java/documentation.xml/CommentRequired">
-        <properties>
-            <property name="protectedMethodCommentRequirement">
-                <value>Ignored</value>
-            </property>
-            <property name="publicMethodCommentRequirement">
-                <value>Ignored</value>
-            </property>
-            <property name="fieldCommentRequirement">
-                <value>Ignored</value>
-            </property>
-            <property name="headerCommentRequirement">
-                <value>Ignored</value>
-            </property>
-        </properties>
+        <exclude name="CommentRequired" />
     </rule>
     <rule ref="category/java/errorprone.xml">
         <exclude name="AvoidDuplicateLiterals" />

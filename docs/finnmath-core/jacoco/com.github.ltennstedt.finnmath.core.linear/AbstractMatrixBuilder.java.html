@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractMatrixBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.linear</a> &gt; <span class="el_source">AbstractMatrixBuilder.java</span></div><h1>AbstractMatrixBuilder.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+
+import com.google.common.annotations.Beta;
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.ArrayTable;
+import com.google.common.collect.Table;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import org.apache.commons.lang3.builder.Builder;
+
+/**
+ * Base class for matrix builders
+ *
+ * @param &lt;E&gt;
+ *            type of the elements of the matrix
+ * @param &lt;M&gt;
+ *            type of the matrix
+ * @param &lt;B&gt;
+ *            type of the builder
+ * @author Lars Tennstedt
+ * @since 1
+ */
+@Beta
+public abstract class AbstractMatrixBuilder&lt;E, M extends AbstractMatrix&lt;E, ?, M, ?, ?&gt;,
+    B extends AbstractMatrixBuilder&lt;E, M, B&gt;&gt; implements Builder&lt;M&gt; {
+    /**
+     * Table holding the elements of this {@link AbstractVectorBuilder}
+     *
+     * @since 1
+     */
+    protected final Table&lt;Integer, Integer, E&gt; table;
+
+    /**
+     * Constructor
+     *
+     * @param rowSize
+     *            row size
+     * @param columnSize
+     *            column size
+     * @throws IllegalArgumentException
+     *             if {@code rowSize &lt; 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize &lt; 1}
+     */
+<span class="fc" id="L65">    protected AbstractMatrixBuilder(final int rowSize, final int columnSize) {</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L68">        final List&lt;Integer&gt; rowIndexes = IntStream.rangeClosed(1, rowSize).boxed().collect(Collectors.toList());</span>
+<span class="fc" id="L69">        final List&lt;Integer&gt; columnIndexes = IntStream.rangeClosed(1, columnSize).boxed().collect(Collectors.toList());</span>
+<span class="fc" id="L70">        table = ArrayTable.create(rowIndexes, columnIndexes);</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * Puts the given element on the {@link Table} dependent on the given row and
+     * column index
+     *
+     * @param rowIndex
+     *            thr row index
+     * @param columnIndex
+     *            the column index
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
+     * @since 1
+     */
+    public final B put(final Integer rowIndex, final Integer columnIndex, final E element) {
+<span class="fc" id="L97">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L98">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L99">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L100">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L101">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L102">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L103">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L104">        table.put(rowIndex, columnIndex, element);</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L107">        final B builder = (B) this;</span>
+
+<span class="fc" id="L109">        return builder;</span>
+    }
+
+    /**
+     * Puts the given element on the {@link Table} on all indexes which contains
+     * {@code null} values
+     *
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @since 1
+     */
+    public final B nullsToElement(final E element) {
+<span class="fc" id="L124">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L125">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            if (cell.getValue() == null) {</span>
+<span class="fc" id="L127">                table.put(cell.getRowKey(), cell.getColumnKey(), element);</span>
+            }
+<span class="fc" id="L129">        });</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L132">        final B builder = (B) this;</span>
+
+<span class="fc" id="L134">        return builder;</span>
+    }
+
+    /**
+     * Puts the given element on all indices and returns {@code this}
+     *
+     * @param element
+     *            the element
+     * @return {@code this}
+     * @throws NullPointerException
+     *             if {@code element == null}
+     * @since 1
+     */
+    public final B putAll(final E element) {
+<span class="fc" id="L148">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L149">        table.rowKeySet()</span>
+<span class="fc" id="L150">            .forEach(rowKey -&gt; table.columnKeySet().forEach(columnKey -&gt; table.put(rowKey, columnKey, element)));</span>
+
+        @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L153">        final B builder = (B) this;</span>
+
+<span class="fc" id="L155">        return builder;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String toString() {
+<span class="fc" id="L163">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+    }
+
+    public final Table&lt;Integer, Integer, E&gt; getTable() {
+<span class="fc" id="L167">        return table;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

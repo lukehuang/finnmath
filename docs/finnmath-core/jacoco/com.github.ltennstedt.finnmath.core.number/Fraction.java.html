@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Fraction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.number</a> &gt; <span class="el_source">Fraction.java</span></div><h1>Fraction.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.number;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+import static java.util.Objects.requireNonNull;
+
+import com.google.common.annotations.Beta;
+import com.google.common.base.MoreObjects;
+import java.math.BigInteger;
+import java.util.Objects;
+
+/**
+ * An immutable implementation of a fraction which uses {@link BigInteger} as
+ * type for its numerator and denominator
+ * &lt;p&gt;
+ * The returned {@link Fraction Fractions} of most methods are neither
+ * normalized nor reduced
+ *
+ * @see #normalize
+ * @see #reduce
+ * @author Lars Tennstedt
+ * @since 1
+ */
+@Beta
+public final class Fraction implements MathNumber&lt;Fraction, Fraction, Fraction&gt;, Comparable&lt;Fraction&gt; {
+    /**
+     * {@code 0} as {@link Fraction}
+     *
+     * @since 1
+     */
+<span class="fc" id="L47">    public static final Fraction ZERO = new Fraction(BigInteger.ZERO, BigInteger.ONE);</span>
+
+    /**
+     * {@code 1} as {@link Fraction}
+     *
+     * @since 1
+     */
+<span class="fc" id="L54">    public static final Fraction ONE = new Fraction(BigInteger.ONE, BigInteger.ONE);</span>
+
+    /**
+     * {@code numerator} of this {@link Fraction}
+     *
+     * @since 1
+     */
+    private final BigInteger numerator;
+
+    /**
+     * {@code denominator} of this {@link Fraction}
+     *
+     * @since 1
+     */
+    private final BigInteger denominator;
+
+<span class="fc" id="L70">    private Fraction(final BigInteger numerator, final BigInteger denominator) {</span>
+<span class="fc" id="L71">        this.numerator = numerator;</span>
+<span class="fc" id="L72">        this.denominator = denominator;</span>
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Fraction add(final Fraction summand) {
+<span class="fc" id="L80">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc" id="L81">        final BigInteger newNumerator =</span>
+<span class="fc" id="L82">            summand.getDenominator().multiply(numerator).add(denominator.multiply(summand.getNumerator()));</span>
+<span class="fc" id="L83">        final BigInteger newDenominator = denominator.multiply(summand.getDenominator());</span>
+<span class="fc" id="L84">        return new Fraction(newNumerator, newDenominator);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Fraction subtract(final Fraction subtrahend) {
+<span class="fc" id="L92">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc" id="L93">        final BigInteger newNumerator =</span>
+<span class="fc" id="L94">            subtrahend.getDenominator().multiply(numerator).subtract(denominator.multiply(subtrahend.getNumerator()));</span>
+<span class="fc" id="L95">        final BigInteger newDenominator = denominator.multiply(subtrahend.getDenominator());</span>
+<span class="fc" id="L96">        return new Fraction(newNumerator, newDenominator);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Fraction multiply(final Fraction factor) {
+<span class="fc" id="L104">        requireNonNull(factor, &quot;factor&quot;);</span>
+<span class="fc" id="L105">        final BigInteger newNumerator = numerator.multiply(factor.getNumerator());</span>
+<span class="fc" id="L106">        final BigInteger newDenominator = denominator.multiply(factor.getDenominator());</span>
+<span class="fc" id="L107">        return new Fraction(newNumerator, newDenominator);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Fraction divide(final Fraction divisor) {
+<span class="fc" id="L115">        requireNonNull(divisor, &quot;divisor&quot;);</span>
+<span class="fc" id="L116">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
+<span class="fc" id="L117">        return multiply(divisor.invert());</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Fraction pow(final int exponent) {
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        checkArgument(exponent &gt; -1, &quot;expected exponent &gt; -1 but actual %s&quot;, exponent);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (exponent &gt; 1) {</span>
+<span class="fc" id="L127">            return multiply(pow(exponent - 1));</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        } else if (exponent == 1) {</span>
+<span class="fc" id="L129">            return this;</span>
+        }
+<span class="fc" id="L131">        return ONE;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Fraction negate() {
+<span class="fc" id="L139">        return new Fraction(numerator.negate(), denominator);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Fraction invert() {
+<span class="fc" id="L147">        checkState(invertible(), &quot;expected to be invertible but actual %s&quot;, this);</span>
+<span class="fc" id="L148">        return new Fraction(denominator, numerator);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean invertible() {
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        return numerator.compareTo(BigInteger.ZERO) != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Fraction abs() {
+<span class="fc" id="L164">        return new Fraction(numerator.abs(), denominator.abs());</span>
+    }
+
+    /**
+     * Compares this {@link Fraction} to the given one and returns an int which
+     * indicates which one is less
+     *
+     * @param other
+     *            another {@link Fraction}
+     * @return {@code -1} if {@code this &lt; other}, {@code 1} if
+     *         {@code this &gt; other}, {@code 0} otherwise
+     * @see #lessThan
+     * @see #greaterThan
+     * @since 1
+     */
+    @Override
+    public int compareTo(final Fraction other) {
+<span class="fc" id="L181">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (lessThan(other)) {</span>
+<span class="fc" id="L183">            return -1;</span>
+        }
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        if (greaterThan(other)) {</span>
+<span class="fc" id="L186">            return 1;</span>
+        }
+<span class="fc" id="L188">        return 0;</span>
+    }
+
+    /**
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates which one is less
+     *
+     * @param other
+     *            another {@link Fraction}
+     * @return {@code true} if {@code this &lt;= other}, {@code false} otherwise
+     * @see #normalize
+     * @since 1
+     */
+    public boolean lessThanOrEqualTo(final Fraction other) {
+<span class="fc" id="L202">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc" id="L203">        final Fraction normalized = normalize();</span>
+<span class="fc" id="L204">        final Fraction normalizedOther = other.normalize();</span>
+<span class="fc" id="L205">        final BigInteger left = normalizedOther.getDenominator().multiply(normalized.getNumerator());</span>
+<span class="fc" id="L206">        final BigInteger right = normalized.getDenominator().multiply(normalizedOther.getNumerator());</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">        return left.compareTo(right) &lt; 1;</span>
+    }
+
+    /**
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates which one is greater
+     *
+     * @param other
+     *            another {@link Fraction}
+     * @return {@code true} if {@code this &gt;= other}, {@code false} otherwise
+     * @see #lessThanOrEqualTo
+     * @see #equivalent
+     * @since 1
+     */
+    public boolean greaterThanOrEqualTo(final Fraction other) {
+<span class="fc" id="L222">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L223" title="All 4 branches covered.">        return !lessThanOrEqualTo(other) || equivalent(other);</span>
+    }
+
+    /**
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates which one is less
+     *
+     * @param other
+     *            another {@link Fraction}
+     * @return {@code true} if {@code this &lt; other}, {@code false} otherwise
+     * @see #greaterThanOrEqualTo
+     * @since 1
+     */
+    public boolean lessThan(final Fraction other) {
+<span class="fc" id="L237">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">        return !greaterThanOrEqualTo(other);</span>
+    }
+
+    /**
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates which one is greater
+     *
+     * @param other
+     *            another {@link Fraction}
+     * @return {@code true} if {@code this &lt; other}, {@code false} otherwise
+     * @see #lessThanOrEqualTo
+     * @since 1
+     */
+    public boolean greaterThan(final Fraction other) {
+<span class="fc" id="L252">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">        return !lessThanOrEqualTo(other);</span>
+    }
+
+    /**
+     * Compares this {@link Fraction} to the given one and returns the minimum
+     * &lt;p&gt;
+     * The returned {@link Fraction} is not reduced and not normalized.
+     *
+     * @param other
+     *            another {@link Fraction}
+     * @return The minimum of this {@link Fraction} and the other one
+     * @see #greaterThan
+     * @see #normalize
+     * @see #reduce
+     * @since 1
+     */
+    public Fraction min(final Fraction other) {
+<span class="fc" id="L270">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        return greaterThan(other) ? other : this;</span>
+    }
+
+    /**
+     * Compares this {@link Fraction} to the given one and returns the maximum
+     * &lt;p&gt;
+     * The returned {@link Fraction} is not reduced and not normalized.
+     *
+     * @param other
+     *            another {@link Fraction}
+     * @return The maximum of this {@link Fraction} and the other one
+     * @see #lessThan
+     * @see #normalize
+     * @see #reduce
+     * @since 1
+     */
+    public Fraction max(final Fraction other) {
+<span class="fc" id="L288">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        return lessThan(other) ? other : this;</span>
+    }
+
+    /**
+     * Returns the normalized {@link Fraction} of this one
+     * &lt;p&gt;
+     * The returned {@link Fraction} is not reduced.
+     *
+     * @return {@code new Fraction(-numerator.abs, denominator.abs)} if the
+     *         {@code signum &lt; 0}, {@code ZERO} if {@code
+     * signum == 0}, {@code this} otherwise
+     * @see #signum
+     * @see #abs
+     * @see BigInteger#abs
+     * @see #reduce
+     * @since 1
+     */
+    public Fraction normalize() {
+<span class="fc bfc" id="L307" title="All 2 branches covered.">        if (signum() &lt; 0) {</span>
+<span class="fc" id="L308">            return new Fraction(numerator.abs().negate(), denominator.abs());</span>
+        }
+<span class="fc bfc" id="L310" title="All 2 branches covered.">        if (signum() == 0) {</span>
+<span class="fc" id="L311">            return ZERO;</span>
+        }
+<span class="fc bfc" id="L313" title="All 2 branches covered.">        if (numerator.compareTo(BigInteger.ZERO) &lt; 0) {</span>
+<span class="fc" id="L314">            return abs();</span>
+        }
+<span class="fc" id="L316">        return this;</span>
+    }
+
+    /**
+     * Returns the reduced {@link Fraction} of this one
+     * &lt;p&gt;
+     * The returned {@link Fraction} is not normalized.
+     *
+     * @return The reduced
+     * @see #normalize
+     * @see BigInteger#gcd
+     * @since 1
+     */
+    public Fraction reduce() {
+<span class="fc" id="L330">        final BigInteger gcd = numerator.gcd(denominator);</span>
+<span class="fc" id="L331">        return new Fraction(numerator.divide(gcd), denominator.divide(gcd));</span>
+    }
+
+    /**
+     * Returns the signum of this {@link Fraction}
+     *
+     * @return The signum of this {@link Fraction}
+     * @see BigInteger#signum
+     * @since 1
+     */
+    public int signum() {
+<span class="fc" id="L342">        return numerator.signum() * denominator.signum();</span>
+    }
+
+    /**
+     * Compares this {@link Fraction} to the given one and returns a {@code boolean}
+     * which indicates if this {@link Fraction} is equivalent to the given one
+     *
+     * @param other
+     *            another {@link Fraction}
+     * @return {@code true} if the {@code this} is equivalent to {@code other},
+     *         {@code false} otherwise
+     * @see #normalize
+     * @see #reduce
+     * @since 1
+     */
+    public boolean equivalent(final Fraction other) {
+<span class="fc" id="L358">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc" id="L359">        return normalize().reduce().equals(other.normalize().reduce());</span>
+    }
+
+    /**
+     * Returns a {@link Fraction} based on the given {@code numerator} and
+     * {@code denominator}
+     * &lt;p&gt;
+     * The returned {@link Fraction} is not reduced and not normalized.
+     *
+     * @param numerator
+     *            the numerator
+     * @param denominator
+     *            the denominator
+     * @return {@link Fraction}
+     * @throws IllegalArgumentException
+     *             if {@code denominator == 0}
+     * @see #normalize
+     * @see #reduce
+     * @since 1
+     */
+    public static Fraction of(final long numerator, final long denominator) {
+<span class="fc bfc" id="L380" title="All 2 branches covered.">        checkArgument(denominator != 0L, &quot;expected denominator != 0 but actual %s&quot;, denominator);</span>
+<span class="fc" id="L381">        return of(BigInteger.valueOf(numerator), BigInteger.valueOf(denominator));</span>
+    }
+
+    /**
+     * Returns a {@link Fraction} based on the given {@code numerator} and
+     * {@code denominator}
+     * &lt;p&gt;
+     * The returned {@link Fraction} is not reduced and not normalized.
+     *
+     * @param numerator
+     *            the numerator
+     * @param denominator
+     *            the denominator
+     * @return {@link Fraction}
+     * @throws NullPointerException
+     *             if {@code numerator == null}
+     * @throws NullPointerException
+     *             if {@code denominator == null}
+     * @throws IllegalArgumentException
+     *             if {@code denominator == 0}
+     * @see #normalize
+     * @see #reduce
+     * @since 1
+     */
+    public static Fraction of(final BigInteger numerator, final BigInteger denominator) {
+<span class="fc" id="L406">        requireNonNull(numerator, &quot;numerator&quot;);</span>
+<span class="fc" id="L407">        requireNonNull(denominator, &quot;denominator&quot;);</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">        checkArgument(denominator.compareTo(BigInteger.ZERO) != 0, &quot;expected denominator != 0 but actual %s&quot;,</span>
+            denominator);
+<span class="fc" id="L410">        return new Fraction(numerator, denominator);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L418">        return Objects.hash(numerator, denominator);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(final Object object) {
+<span class="fc bfc" id="L426" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L427">            return true;</span>
+        }
+<span class="fc bfc" id="L429" title="All 2 branches covered.">        if (!(object instanceof Fraction)) {</span>
+<span class="fc" id="L430">            return false;</span>
+        }
+<span class="fc" id="L432">        final Fraction other = (Fraction) object;</span>
+<span class="fc bfc" id="L433" title="All 4 branches covered.">        return numerator.equals(other.getNumerator()) &amp;&amp; denominator.equals(other.getDenominator());</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L441">        return MoreObjects.toStringHelper(this).add(&quot;numerator&quot;, numerator).add(&quot;denominator&quot;, denominator).toString();</span>
+    }
+
+    public BigInteger getNumerator() {
+<span class="fc" id="L445">        return numerator;</span>
+    }
+
+    public BigInteger getDenominator() {
+<span class="fc" id="L449">        return denominator;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

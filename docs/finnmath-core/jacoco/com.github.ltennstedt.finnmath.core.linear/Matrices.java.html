@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Matrices.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.linear</a> &gt; <span class="el_source">Matrices.java</span></div><h1>Matrices.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+
+import com.github.ltennstedt.finnmath.core.linear.BigDecimalMatrix.BigDecimalMatrixBuilder;
+import com.github.ltennstedt.finnmath.core.linear.BigIntegerMatrix.BigIntegerMatrixBuilder;
+import com.github.ltennstedt.finnmath.core.linear.RealComplexNumberMatrix.RealComplexNumberMatrixBuilder;
+import com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberMatrix.SimpleComplexNumberMatrixBuilder;
+import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
+import com.github.ltennstedt.finnmath.core.number.SimpleComplexNumber;
+import com.google.common.annotations.Beta;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.stream.IntStream;
+
+/**
+ * Utility class for building zero and identity matrices
+ *
+ * @author Lars Tennstedt
+ * @since 1
+ */
+@Beta
+public final class Matrices {
+    private Matrices() {
+    }
+
+    /**
+     * Returns the zero matrix
+     *
+     * @param rowSize
+     *            row size
+     * @param columnSize
+     *            column size
+     * @return zero matrix
+     * @throws IllegalArgumentException
+     *             if {@code rowsize &lt; 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnsize &lt; 1}
+     * @since 1
+     */
+    public static BigIntegerMatrix buildZeroBigIntegerMatrix(final int rowSize, final int columnSize) {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L60">        return BigIntegerMatrix.builder(rowSize, columnSize).putAll(BigInteger.ZERO).build();</span>
+    }
+
+    /**
+     * Returns the identity matrix
+     *
+     * @param size
+     *            size
+     * @return identity matrix
+     * @throws IllegalArgumentException
+     *             if {@code size &lt; 1}
+     * @since 1
+     */
+    public static BigIntegerMatrix buildIdentityBigIntegerMatrix(final int size) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L75">        final BigIntegerMatrixBuilder builder = BigIntegerMatrix.builder(size, size);</span>
+<span class="fc" id="L76">        IntStream.rangeClosed(1, size).forEach(index -&gt; builder.put(index, index, BigInteger.ONE));</span>
+<span class="fc" id="L77">        return builder.nullsToElement(BigInteger.ZERO).build();</span>
+    }
+
+    /**
+     * Returns the zero matrix
+     *
+     * @param rowSize
+     *            row size
+     * @param columnSize
+     *            column size
+     * @return zero matrix
+     * @throws IllegalArgumentException
+     *             if {@code rowsize &lt; 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnsize &lt; 1}
+     * @since 1
+     */
+    public static BigDecimalMatrix buildZeroBigDecimalMatrix(final int rowSize, final int columnSize) {
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L97">        return BigDecimalMatrix.builder(rowSize, columnSize).putAll(BigDecimal.ZERO).build();</span>
+    }
+
+    /**
+     * Returns the identity matrix
+     *
+     * @param size
+     *            size
+     * @return identity matrix
+     * @throws IllegalArgumentException
+     *             if {@code size &lt; 1}
+     * @since 1
+     */
+    public static BigDecimalMatrix buildIdentityBigDecimalMatrix(final int size) {
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L112">        final BigDecimalMatrixBuilder builder = BigDecimalMatrix.builder(size, size);</span>
+<span class="fc" id="L113">        IntStream.rangeClosed(1, size).forEach(index -&gt; builder.put(index, index, BigDecimal.ONE));</span>
+<span class="fc" id="L114">        return builder.nullsToElement(BigDecimal.ZERO).build();</span>
+    }
+
+    /**
+     * Returns the zero matrix
+     *
+     * @param rowSize
+     *            row size
+     * @param columnSize
+     *            column size
+     * @return zero matrix
+     * @throws IllegalArgumentException
+     *             if {@code rowsize &lt; 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnsize &lt; 1}
+     * @since 1
+     */
+    public static SimpleComplexNumberMatrix buildZeroSimpleComplexNumberMatrix(final int rowSize,
+        final int columnSize) {
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L135">        return SimpleComplexNumberMatrix.builder(rowSize, columnSize).putAll(SimpleComplexNumber.ZERO).build();</span>
+    }
+
+    /**
+     * Returns the identity matrix
+     *
+     * @param size
+     *            size
+     * @return identity matrix
+     * @throws IllegalArgumentException
+     *             if {@code size &lt; 1}
+     * @since 1
+     */
+    public static SimpleComplexNumberMatrix buildIdentitySimpleComplexNumberMatrix(final int size) {
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L150">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L151">        IntStream.rangeClosed(1, size).forEach(index -&gt; builder.put(index, index, SimpleComplexNumber.ONE));</span>
+<span class="fc" id="L152">        return builder.nullsToElement(SimpleComplexNumber.ZERO).build();</span>
+    }
+
+    /**
+     * Returns the zero matrix
+     *
+     * @param rowSize
+     *            row size
+     * @param columnSize
+     *            column size
+     * @return zero matrix
+     * @throws IllegalArgumentException
+     *             if {@code rowsize &lt; 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnsize &lt; 1}
+     * @since 1
+     */
+    public static RealComplexNumberMatrix buildZeroRealComplexNumberMatrix(final int rowSize, final int columnSize) {
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L172">        return RealComplexNumberMatrix.builder(rowSize, columnSize).putAll(RealComplexNumber.ZERO).build();</span>
+    }
+
+    /**
+     * Returns the identity matrix
+     *
+     * @param size
+     *            size
+     * @return identity matrix
+     * @throws IllegalArgumentException
+     *             if {@code size &lt; 1}
+     * @since 1
+     */
+    public static RealComplexNumberMatrix buildIdentityRealComplexNumberMatrix(final int size) {
+<span class="fc bfc" id="L186" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L187">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(size, size);</span>
+<span class="fc" id="L188">        IntStream.rangeClosed(1, size).forEach(index -&gt; builder.put(index, index, RealComplexNumber.ONE));</span>
+<span class="fc" id="L189">        return builder.nullsToElement(RealComplexNumber.ZERO).build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

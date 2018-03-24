@@ -65,14 +65,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the sum of this {@link SimpleComplexNumber} and the given one
-     *
-     * @param summand
-     *            The summand
-     * @return The sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public SimpleComplexNumber add(final SimpleComplexNumber summand) {
@@ -81,14 +74,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the difference of this {@link SimpleComplexNumber} and the given one
-     *
-     * @param subtrahend
-     *            the subtrahend
-     * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public SimpleComplexNumber subtract(final SimpleComplexNumber subtrahend) {
@@ -98,14 +84,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the product of this {@link SimpleComplexNumber} and the given one
-     *
-     * @param factor
-     *            the factor
-     * @return The product
-     * @throws NullPointerException
-     *             if {@code factor == null}
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public SimpleComplexNumber multiply(final SimpleComplexNumber factor) {
@@ -116,22 +95,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the quotient of this {@link SimpleComplexNumber} and the given one
-     *
-     * @param divisor
-     *            the divisor
-     * @param roundingMode
-     *            the rounding mode
-     * @return The quotient
-     * @throws NullPointerException
-     *             if {@code divisor == null}
-     * @throws IllegalArgumentException
-     *             if {@code divisor == 0}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #invertible
-     * @see RealComplexNumber#divide(RealComplexNumber, RoundingMode)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public RealComplexNumber divide(final SimpleComplexNumber divisor, final RoundingMode roundingMode) {
@@ -142,16 +106,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the power of this {@link SimpleComplexNumber} raised by the given
-     * exponent
-     *
-     * @param exponent
-     *            the exponent
-     * @return The power
-     * @throws IllegalArgumentException
-     *             if {@code exponent < 0}
-     * @see #multiply
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public SimpleComplexNumber pow(final int exponent) {
@@ -165,10 +120,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the negated {@link SimpleComplexNumber} of this one
-     *
-     * @return The negated
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public SimpleComplexNumber negate() {
@@ -176,14 +128,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the inverted {@link SimpleComplexNumber} of this one
-     *
-     * @return The inverted {@link SimpleComplexNumber} of this one
-     * @throws IllegalStateException
-     *             if {@code numerator == 0}
-     * @see #invertible
-     * @see #divide
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public RealComplexNumber invert() {
@@ -192,11 +137,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link SimpleComplexNumber}
-     * is invertible
-     *
-     * @return {@code true} if {@code this != 0}, {@code false} otherwise
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public boolean invertible() {
@@ -204,21 +145,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the absolute value of the {@link RealComplexNumber}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param roundingMode
-     *            rounding mode
-     * @return absolute value
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @throws IllegalArgumentException
-     *             if {@code decimal < 0}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal abs(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
@@ -229,21 +156,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the absolute value of the {@link RealComplexNumber}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param mathContext
-     *            math context
-     * @return absolute value
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code decimal < 0}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal abs(final BigDecimal abortCriterion, final MathContext mathContext) {
@@ -254,10 +167,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the square of the absolute of this {@link SimpleComplexNumber}
-     *
-     * @return The square of the absolute
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigInteger absPow2() {
@@ -265,10 +175,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the conjugate of this {@link SimpleComplexNumber}
-     *
-     * @return The conjugated
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public SimpleComplexNumber conjugate() {
@@ -276,13 +183,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this {@link SimpleComplexNumber}
-     *
-     * @return The argument
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @see #argument(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal argument() {
@@ -291,18 +192,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this {@link SimpleComplexNumber} considering the
-     * given precision
-     *
-     * @param precision
-     *            The precision
-     * @return The argument
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws IllegalArgumentException
-     *             if {@code precision < 0}
-     * @see #argument(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal argument(final int precision) {
@@ -312,18 +202,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this {@link SimpleComplexNumber} considering the
-     * given rounding mode
-     *
-     * @param roundingMode
-     *            The rounding mode
-     * @return The argument
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #argument(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal argument(final RoundingMode roundingMode) {
@@ -333,22 +212,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this {@link SimpleComplexNumber} considering the
-     * given precision and rounding mode
-     *
-     * @param precision
-     *            The precision
-     * @param roundingMode
-     *            The rounding mode
-     * @return The argument
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws IllegalArgumentException
-     *             if {@code precision < 0}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #argument(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
@@ -359,18 +223,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns the argument of this {@link SimpleComplexNumber} considering the
-     * given {@link MathContext}
-     *
-     * @param mathContext
-     *            The math context
-     * @return The argument
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @see RealComplexNumber#argument(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
@@ -380,13 +233,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Return the corresponding polar form of the complex number
-     *
-     * @return The polar form
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @see #polarForm(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public PolarForm polarForm() {
@@ -395,18 +242,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the
-     * given precision
-     *
-     * @param precision
-     *            The precision
-     * @return The polar form
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws IllegalArgumentException
-     *             if {@code precision < 0}
-     * @see #polarForm(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public PolarForm polarForm(final int precision) {
@@ -416,18 +252,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the
-     * given rounding mode
-     *
-     * @param roundingMode
-     *            The rounding mode
-     * @return The polar form
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #polarForm(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public PolarForm polarForm(final RoundingMode roundingMode) {
@@ -437,22 +262,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the
-     * given precision and rounding mode
-     *
-     * @param precision
-     *            The precision
-     * @param roundingMode
-     *            The rounding mode
-     * @return The polar form
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws IllegalArgumentException
-     *             if {@code precision < 0}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #polarForm(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
@@ -463,18 +273,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Return the corresponding polar form of the complex number considering the
-     * given {@link MathContext}
-     *
-     * @param mathContext
-     *            The math context
-     * @return The polar form
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @see RealComplexNumber#polarForm(MathContext)
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public PolarForm polarForm(final MathContext mathContext) {
@@ -484,11 +283,7 @@ public final class SimpleComplexNumber
     }
 
     /**
-     * Returns a matrix representation of this {@link SimpleComplexNumber}
-     *
-     * @return The matrix representation
-     * @see BigIntegerMatrix#builder
-     * @since 1
+     * {@inheritDoc}
      */
     @Override
     public BigIntegerMatrix matrix() {

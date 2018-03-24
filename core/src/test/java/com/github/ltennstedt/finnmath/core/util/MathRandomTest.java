@@ -3219,4 +3219,5 @@ public final class MathRandomTest {
         assertThat(mathRandom.toString())
             .isEqualTo(MoreObjects.toStringHelper(mathRandom).add("random", mathRandom.getRandom()).toString());
     }
+
 }

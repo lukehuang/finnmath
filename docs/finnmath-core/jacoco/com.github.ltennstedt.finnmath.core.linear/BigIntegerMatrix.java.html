@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BigIntegerMatrix.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.linear</a> &gt; <span class="el_source">BigIntegerMatrix.java</span></div><h1>BigIntegerMatrix.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2017 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.Validate.exclusiveBetween;
+
+import com.github.ltennstedt.finnmath.core.linear.BigIntegerVector.BigIntegerVectorBuilder;
+import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.google.common.annotations.Beta;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table.Cell;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+
+/**
+ * An immutable implementation of a matrix which uses {@link BigInteger} as type
+ * for its elements
+ *
+ * @author Lars Tennstedt
+ * @since 1
+ */
+@Beta
+public final class BigIntegerMatrix
+    extends AbstractMatrix&lt;BigInteger, BigIntegerVector, BigIntegerMatrix, BigInteger, BigInteger&gt; {
+    private BigIntegerMatrix(final ImmutableTable&lt;Integer, Integer, BigInteger&gt; table) {
+<span class="fc" id="L50">        super(table);</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerMatrix add(final BigIntegerMatrix summand) {
+<span class="fc" id="L58">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == summand.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="fc" id="L60">            table.rowKeySet().size(), summand.rowSize());</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == summand.columnSize(),</span>
+<span class="fc" id="L62">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), summand.columnSize());</span>
+<span class="fc" id="L63">        final BigIntegerMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="fc" id="L64">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L65">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L66">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc" id="L67">            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey)));</span>
+<span class="fc" id="L68">        });</span>
+<span class="fc" id="L69">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerMatrix subtract(final BigIntegerMatrix subtrahend) {
+<span class="fc" id="L77">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="fc" id="L79">            table.rowKeySet().size(), subtrahend.rowSize());</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),</span>
+<span class="fc" id="L81">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), subtrahend.columnSize());</span>
+<span class="fc" id="L82">        final BigIntegerMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="fc" id="L83">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L84">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L85">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc" id="L86">            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.element(rowKey, columnKey)));</span>
+<span class="fc" id="L87">        });</span>
+<span class="fc" id="L88">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerMatrix multiply(final BigIntegerMatrix factor) {
+<span class="fc" id="L96">        requireNonNull(factor, &quot;factor&quot;);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == factor.rowSize(),</span>
+<span class="fc" id="L98">            &quot;expected columnSize == factor.rowSize but actual %s != %s&quot;, table.columnKeySet().size(), factor.rowSize());</span>
+<span class="fc" id="L99">        final BigIntegerMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());</span>
+<span class="fc" id="L100">        table.rowMap().forEach((rowIndex, row) -&gt; factor.columns().forEach((columnIndex, column) -&gt; {</span>
+<span class="fc" id="L101">            final BigInteger element = multiplyRowWithColumn(row, column);</span>
+<span class="fc" id="L102">            builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L103">        }));</span>
+<span class="fc" id="L104">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerVector multiplyVector(final BigIntegerVector vector) {
+<span class="fc" id="L112">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == vector.size(),</span>
+<span class="fc" id="L114">            &quot;expected columnSize == vectorSize but actual %s != %s&quot;, table.columnKeySet().size(), vector.size());</span>
+<span class="fc" id="L115">        final BigIntegerVectorBuilder builder = BigIntegerVector.builder(table.rowKeySet().size());</span>
+<span class="fc" id="L116">        table.rowMap().values().forEach(row -&gt; {</span>
+<span class="fc" id="L117">            final BigInteger element = table.columnKeySet().stream()</span>
+<span class="fc" id="L118">                .map(columnIndex -&gt; row.get(columnIndex).multiply(vector.element(columnIndex))).reduce(BigInteger::add)</span>
+<span class="fc" id="L119">                .get();</span>
+<span class="fc" id="L120">            builder.put(element);</span>
+<span class="fc" id="L121">        });</span>
+<span class="fc" id="L122">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected BigInteger multiplyRowWithColumn(final Map&lt;Integer, BigInteger&gt; row,
+        final Map&lt;Integer, BigInteger&gt; column) {
+<span class="fc" id="L131">        requireNonNull(row, &quot;row&quot;);</span>
+<span class="fc" id="L132">        requireNonNull(column, &quot;column&quot;);</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        checkArgument(row.size() == column.size(), &quot;expected rowSize == columnSize but actual %s != %s&quot;, row.size(),</span>
+<span class="fc" id="L134">            column.size());</span>
+<span class="fc" id="L135">        BigInteger result = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        for (final Entry&lt;Integer, BigInteger&gt; rowEntry : row.entrySet()) {</span>
+<span class="fc" id="L137">            result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));</span>
+<span class="fc" id="L138">        }</span>
+<span class="fc" id="L139">        return result;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerMatrix scalarMultiply(final BigInteger scalar) {
+<span class="fc" id="L147">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L148">        final BigIntegerMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());</span>
+<span class="fc" id="L149">        table.cellSet()</span>
+<span class="fc" id="L150">            .forEach(cell -&gt; builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));</span>
+<span class="fc" id="L151">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerMatrix negate() {
+<span class="fc" id="L159">        return scalarMultiply(BigInteger.ONE.negate());</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigInteger trace() {
+<span class="fc" id="L167">        checkState(square(), &quot;expected square matrix but actual %s x %s&quot;, table.rowKeySet().size(),</span>
+<span class="fc" id="L168">            table.columnKeySet().size());</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="fc" id="L170">            .map(Cell::getValue).reduce(BigInteger::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigInteger determinant() {
+<span class="fc" id="L178">        final int rowSize = table.rowKeySet().size();</span>
+<span class="fc" id="L179">        checkState(square(), &quot;expected square matrix but actual %s x %s&quot;, rowSize, table.columnKeySet().size());</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        if (triangular()) {</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">            return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="fc" id="L182">                .map(Cell::getValue).reduce(BigInteger::multiply).get();</span>
+        }
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (rowSize &gt; 3) {</span>
+<span class="fc" id="L185">            return leibnizFormula();</span>
+        }
+<span class="fc bfc" id="L187" title="All 2 branches covered.">        if (rowSize == 3) {</span>
+<span class="fc" id="L188">            return ruleOfSarrus();</span>
+        }
+
+        // rowSize == 2
+<span class="fc" id="L192">        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected BigInteger leibnizFormula() {
+<span class="fc" id="L200">        BigInteger result = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        for (final List&lt;Integer&gt; permutation : Collections2.permutations(table.rowKeySet())) {</span>
+<span class="fc" id="L202">            BigInteger product = BigInteger.ONE;</span>
+<span class="fc" id="L203">            int inversions = 0;</span>
+<span class="fc" id="L204">            final int size = table.rowKeySet().size();</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">            for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L206">                final Integer sigma = permutation.get(i);</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">                for (int j = i + 1; j &lt; size; j++) {</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">                    if (sigma.compareTo(permutation.get(j)) &gt; 0) {</span>
+<span class="fc" id="L209">                        inversions++;</span>
+                    }
+                }
+<span class="fc" id="L212">                product = product.multiply(table.get(sigma, i + 1));</span>
+            }
+<span class="fc" id="L214">            result = result.add(BigInteger.ONE.negate().pow(inversions).multiply(product));</span>
+<span class="fc" id="L215">        }</span>
+<span class="fc" id="L216">        return result;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected BigInteger ruleOfSarrus() {
+<span class="fc" id="L224">        final BigInteger first = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));</span>
+<span class="fc" id="L225">        final BigInteger second = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));</span>
+<span class="fc" id="L226">        final BigInteger third = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));</span>
+<span class="fc" id="L227">        final BigInteger fourth = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3));</span>
+<span class="fc" id="L228">        final BigInteger fifth = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1));</span>
+<span class="fc" id="L229">        final BigInteger sixth = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2));</span>
+<span class="fc" id="L230">        return first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerMatrix transpose() {
+<span class="fc" id="L238">        final BigIntegerMatrixBuilder builder = builder(table.columnKeySet().size(), table.rowKeySet().size());</span>
+<span class="fc" id="L239">        table.cellSet().forEach(cell -&gt; builder.put(cell.getColumnKey(), cell.getRowKey(), cell.getValue()));</span>
+<span class="fc" id="L240">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigIntegerMatrix minor(final Integer rowIndex, final Integer columnIndex) {
+<span class="fc" id="L248">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L249">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L250">        checkArgument(table.containsRow(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L251">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L252">        checkArgument(table.containsColumn(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L253">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L254">        final BigIntegerMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);</span>
+<span class="fc" id="L255">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L256">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L257">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc bfc" id="L258" title="All 4 branches covered.">            if (rowKey.compareTo(rowIndex) != 0 &amp;&amp; columnKey.compareTo(columnIndex) != 0) {</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">                final Integer newRowIndex = rowKey.compareTo(rowIndex) &gt; 0 ? rowKey - 1 : rowKey;</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">                final Integer newColumnIndex = columnKey.compareTo(columnIndex) &gt; 0 ? columnKey - 1 : columnKey;</span>
+<span class="fc" id="L261">                builder.put(newRowIndex, newColumnIndex, cell.getValue());</span>
+            }
+<span class="fc" id="L263">        });</span>
+<span class="fc" id="L264">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigInteger maxAbsColumnSumNorm() {
+<span class="fc" id="L272">        return table.columnMap().values().asList().stream()</span>
+<span class="fc" id="L273">            .map(column -&gt; column.values().stream().map(BigInteger::abs).reduce(BigInteger::add)).map(Optional::get)</span>
+<span class="fc" id="L274">            .reduce(BigInteger::max).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigInteger maxAbsRowSumNorm() {
+<span class="fc" id="L282">        return table.rowMap().values().asList().stream()</span>
+<span class="fc" id="L283">            .map(row -&gt; row.values().stream().map(BigInteger::abs).reduce(BigInteger::add)).map(Optional::get)</span>
+<span class="fc" id="L284">            .reduce(BigInteger::max).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigInteger frobeniusNormPow2() {
+<span class="fc" id="L292">        return table.values().stream().map(element -&gt; element.pow(2)).reduce(BigInteger::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
+<span class="fc" id="L300">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
+<span class="fc" id="L301">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
+<span class="fc" id="L302">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
+<span class="fc" id="L303">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), abortCriterion, roundingMode);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
+<span class="nc" id="L311">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
+<span class="nc" id="L312">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L313">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
+<span class="nc" id="L314">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), abortCriterion, mathContext);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BigInteger maxNorm() {
+<span class="fc" id="L322">        return table.values().stream().map(BigInteger::abs).reduce(BigInteger::max).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean upperTriangular() {
+<span class="fc bfc" id="L330" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0)</span>
+<span class="fc bfc" id="L331" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(it -&gt; it.compareTo(BigInteger.ZERO) != 0);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean lowerTriangular() {
+<span class="fc bfc" id="L339" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0)</span>
+<span class="fc bfc" id="L340" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigInteger.ZERO) != 0);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean identity() {
+<span class="fc bfc" id="L348" title="All 2 branches covered.">        return diagonal()</span>
+<span class="fc bfc" id="L349" title="All 2 branches covered.">            &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="fc bfc" id="L350" title="All 4 branches covered.">                .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigInteger.ONE) != 0);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean invertible() {
+<span class="fc bfc" id="L358" title="All 2 branches covered.">        if (square()) {</span>
+<span class="fc" id="L359">            final BigInteger determinant = determinant();</span>
+<span class="fc bfc" id="L360" title="All 4 branches covered.">            return determinant.compareTo(BigInteger.ONE.negate()) == 0 || determinant.compareTo(BigInteger.ONE) == 0;</span>
+        }
+<span class="fc" id="L362">        return false;</span>
+    }
+
+    /**
+     * Returns a {@link BigIntegerMatrixBuilder}
+     *
+     * @param rowSize
+     *            the row size the resulting {@link BigIntegerMatrix}
+     * @param columnSize
+     *            the column size the resulting {@link BigIntegerMatrix}
+     * @return A {@link BigIntegerMatrixBuilder}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex &lt; 1}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex &lt; 1}
+     * @since 1
+     */
+    public static BigIntegerMatrixBuilder builder(final int rowSize, final int columnSize) {
+<span class="fc bfc" id="L380" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L381" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L382">        return new BigIntegerMatrixBuilder(rowSize, columnSize);</span>
+    }
+
+    /**
+     * The builder for {@link BigIntegerMatrix BigIntegerMatrices}
+     *
+     * @since 1
+     */
+    @Beta
+    public static final class BigIntegerMatrixBuilder
+        extends AbstractMatrixBuilder&lt;BigInteger, BigIntegerMatrix, BigIntegerMatrixBuilder&gt; {
+        private BigIntegerMatrixBuilder(final int rowSize, final int columnSize) {
+<span class="fc" id="L394">            super(rowSize, columnSize);</span>
+<span class="fc" id="L395">        }</span>
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public BigIntegerMatrix build() {
+<span class="fc" id="L402">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
+<span class="fc" id="L403">            return new BigIntegerMatrix(ImmutableTable.copyOf(table));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

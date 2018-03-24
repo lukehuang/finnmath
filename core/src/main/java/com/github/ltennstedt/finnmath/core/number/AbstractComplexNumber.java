@@ -42,7 +42,7 @@ import java.util.Objects;
  */
 @Beta
 public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B, S, M>,
-    M extends AbstractMatrix<B, ?, M, B, B>> implements MathNumber<S, RealComplexNumber, BigDecimal> {
+    M extends AbstractMatrix<B, ?, M, B, B>> implements MathNumber<S, AbstractComplexNumber, BigDecimal> {
     /**
      * Default abort criterion
      *
@@ -71,6 +71,18 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
      */
     protected final B imaginary;
 
+    /**
+     * Required arguments constructor
+     *
+     * @param real
+     *            real
+     * @param imaginary
+     *            imaginary
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     */
     protected AbstractComplexNumber(final B real, final B imaginary) {
         this.real = requireNonNull(real, "real");
         this.imaginary = requireNonNull(imaginary, "imaginary");
@@ -140,6 +152,23 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
         return abs(DEFAULT_ABORT_CRITERION, roundingMode);
     }
 
+    /**
+     * Returns the absolute value of the {@link AbstractComplexNumber}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @param roundingMode
+     *            rounding mode
+     * @return absolute value
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @throws IllegalArgumentException
+     *             if {@code decimal < 0}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     */
     protected abstract BigDecimal abs(BigDecimal abortCriterion, RoundingMode roundingMode);
 
     /**
@@ -156,39 +185,218 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
         return abs(DEFAULT_ABORT_CRITERION, mathContext);
     }
 
+    /**
+     * Returns the absolute value of the {@link AbstractComplexNumber}
+     *
+     * @param abortCriterion
+     *            abort criterion
+     * @param mathContext
+     *            math context
+     * @return absolute value
+     * @throws NullPointerException
+     *             if {@code abortCriterion == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code decimal < 0}
+     * @throws IllegalArgumentException
+     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     */
     protected abstract BigDecimal abs(BigDecimal abortCriterion, MathContext mathContext);
 
+    /**
+     * Returns the square of the absolute of this {@link AbstractComplexNumber}
+     *
+     * @return The square of the absolute
+     * @since 1
+     */
     protected abstract B absPow2();
 
+    /**
+     * Returns the conjugate of this {@link AbstractComplexNumber}
+     *
+     * @return The conjugated
+     * @since 1
+     */
     protected abstract S conjugate();
 
+    /**
+     * Returns the argument of this {@link AbstractComplexNumber}
+     *
+     * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @see #argument(MathContext)
+     * @since 1
+     */
     protected abstract BigDecimal argument();
 
+    /**
+     * Returns the argument of this {@link AbstractComplexNumber} considering the
+     * given precision
+     *
+     * @param precision
+     *            The precision
+     * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @see #argument(MathContext)
+     * @since 1
+     */
     protected abstract BigDecimal argument(int precision);
 
+    /**
+     * Returns the argument of this {@link AbstractComplexNumber} considering the
+     * given rounding mode
+     *
+     * @param roundingMode
+     *            The rounding mode
+     * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @see #argument(MathContext)
+     * @since 1
+     */
     protected abstract BigDecimal argument(RoundingMode roundingMode);
 
+    /**
+     * Returns the argument of this {@link AbstractComplexNumber} considering the
+     * given precision and rounding mode
+     *
+     * @param precision
+     *            The precision
+     * @param roundingMode
+     *            The rounding mode
+     * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @see #argument(MathContext)
+     * @since 1
+     */
     protected abstract BigDecimal argument(int precision, RoundingMode roundingMode);
 
+    /**
+     * Returns the argument of this {@link AbstractComplexNumber} considering the
+     * given {@link MathContext}
+     *
+     * @param mathContext
+     *            The math context
+     * @return The argument
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @see AbstractComplexNumber#argument(MathContext)
+     * @since 1
+     */
     protected abstract BigDecimal argument(MathContext mathContext);
 
+    /**
+     * Return the corresponding polar form of the complex number
+     *
+     * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @see #polarForm(MathContext)
+     * @since 1
+     */
     protected abstract PolarForm polarForm();
 
+    /**
+     * Return the corresponding polar form of the complex number considering the
+     * given precision
+     *
+     * @param precision
+     *            The precision
+     * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @see #polarForm(MathContext)
+     * @since 1
+     */
     protected abstract PolarForm polarForm(int precision);
 
+    /**
+     * Return the corresponding polar form of the complex number considering the
+     * given rounding mode
+     *
+     * @param roundingMode
+     *            The rounding mode
+     * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @see #polarForm(MathContext)
+     * @since 1
+     */
     protected abstract PolarForm polarForm(RoundingMode roundingMode);
 
+    /**
+     * Return the corresponding polar form of the complex number considering the
+     * given precision and rounding mode
+     *
+     * @param precision
+     *            The precision
+     * @param roundingMode
+     *            The rounding mode
+     * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws IllegalArgumentException
+     *             if {@code precision < 0}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @see #polarForm(MathContext)
+     * @since 1
+     */
     protected abstract PolarForm polarForm(int precision, RoundingMode roundingMode);
 
+    /**
+     * Return the corresponding polar form of the complex number considering the
+     * given {@link MathContext}
+     *
+     * @param mathContext
+     *            The math context
+     * @return The polar form
+     * @throws IllegalStateException
+     *             if {@code this == 0}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @see AbstractComplexNumber#polarForm(MathContext)
+     * @since 1
+     */
     protected abstract PolarForm polarForm(MathContext mathContext);
 
+    /**
+     * Returns a matrix representation of this {@link AbstractComplexNumber}
+     *
+     * @return The matrix representation
+     * @since 1
+     */
     protected abstract M matrix();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final int hashCode() {
         return Objects.hash(real, imaginary);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final boolean equals(final Object object) {
         if (this == object) {
@@ -201,6 +409,9 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
         return real.equals(other.getReal()) && imaginary.equals(other.getImaginary());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("real", real).add("imaginary", imaginary).toString();
