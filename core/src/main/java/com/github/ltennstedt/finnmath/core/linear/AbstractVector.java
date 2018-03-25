@@ -18,17 +18,15 @@ package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -51,18 +49,12 @@ import java.util.Objects;
 @Beta
 public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N, P> {
     /**
-     * Default abort criterion
+     * Default {@link SquareRootCalculator}
      *
      * @since 1
      */
-    public static final BigDecimal DEFAULT_ABORT_CRITERION = BigDecimal.valueOf(0.0000000001);
-
-    /**
-     * Default rounding mode
-     *
-     * @since 1
-     */
-    public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;
+    public static final SquareRootContext DEFAULT_SQUARE_ROOT_CONTEXT =
+        SquareRootCalculator.DEFAULT_SQUARE_ROOT_CONTEXT;
 
     /**
      * The map holding the elements of this {@link AbstractVector}
@@ -229,110 +221,18 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
     protected abstract P euclideanNormPow2();
 
     /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @return The euclidean norm
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanNorm() {
-        return euclideanNorm(DEFAULT_ABORT_CRITERION, DEFAULT_ROUNDING_MODE);
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanNorm(final BigDecimal abortCriterion) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return euclideanNorm(abortCriterion, DEFAULT_ROUNDING_MODE);
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param roundingMode
-     *            rounding mode
-     * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanNorm(final RoundingMode roundingMode) {
-        requireNonNull(roundingMode, "roundingMode");
-        return euclideanNorm(DEFAULT_ABORT_CRITERION, roundingMode);
-    }
-
-    /**
      * Returns the euclidean norm of this {@link AbstractVector}
      *
-     * @param abortCriterion
-     *            abort criterion
-     * @param roundingMode
-     *            rounding mode
+     * @param squareRootContext
+     *            {@link SquareRootContext}
      * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
      * @since 1
      */
-    protected abstract BigDecimal euclideanNorm(BigDecimal abortCriterion, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanNorm(SquareRootContext squareRootContext);
 
     /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param mathContext
-     *            math context
-     * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanNorm(final MathContext mathContext) {
-        requireNonNull(mathContext, "mathContext");
-        return euclideanNorm(DEFAULT_ABORT_CRITERION, mathContext);
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link AbstractVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param mathContext
-     *            math context
-     * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @since 1
-     */
-    protected abstract BigDecimal euclideanNorm(BigDecimal abortCriterion, MathContext mathContext);
-
-    /**
-     * Returns the square of the euclidean distance from this
-     * {@link SimpleComplexNumberVector} to the given one
+     * Returns the square of the euclidean distance from this {@link AbstractVector}
+     * to the given one
      *
      * @param other
      *            The other {@link AbstractVector}
@@ -371,54 +271,7 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
     public final BigDecimal euclideanDistance(final V other) {
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return euclideanDistance(other, DEFAULT_ABORT_CRITERION, DEFAULT_ROUNDING_MODE);
-    }
-
-    /**
-     * Returns the euclidean distance of this {@link AbstractVector}
-     *
-     * @param other
-     *            other {@link AbstractVector}
-     * @param abortCriterion
-     *            abort criterion
-     * @return euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanDistance(final V other, final BigDecimal abortCriterion) {
-        requireNonNull(other, "other");
-        requireNonNull(abortCriterion, "abortCriterion");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return euclideanDistance(other, abortCriterion, DEFAULT_ROUNDING_MODE);
-    }
-
-    /**
-     * Returns the euclidean distance of this {@link AbstractVector}
-     *
-     * @param other
-     *            other {@link AbstractVector}
-     * @param roundingMode
-     *            rounding mode
-     * @return euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanDistance(final V other, final RoundingMode roundingMode) {
-        requireNonNull(other, "other");
-        requireNonNull(roundingMode, "roundingMode");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return euclideanDistance(other, DEFAULT_ABORT_CRITERION, roundingMode);
+        return euclideanDistance(other, DEFAULT_SQUARE_ROOT_CONTEXT);
     }
 
     /**
@@ -426,85 +279,24 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      *
      * @param other
      *            other {@link AbstractVector}
-     * @param abortCriterion
-     *            abort criterion
-     * @param roundingMode
-     *            rounding mode
+     * @param squareRootContext
+     *            {@link SquareRootContext}
      * @return Euclidean norm
      * @throws NullPointerException
      *             if {@code other == null}
      * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *             if {@code squareRootContext == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
      * @since 1
+     * @see #subtract
+     * @see #euclideanNorm(SquareRootContext)
      */
-    public final BigDecimal euclideanDistance(final V other, final BigDecimal abortCriterion,
-        final RoundingMode roundingMode) {
+    public final BigDecimal euclideanDistance(final V other, final SquareRootContext squareRootContext) {
         requireNonNull(other, "other");
-        requireNonNull(abortCriterion, "abortCriterion");
-        requireNonNull(roundingMode, "roundingMode");
+        requireNonNull(squareRootContext, "squareRootContext");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return subtract(other).euclideanNorm(abortCriterion, roundingMode);
-    }
-
-    /**
-     * Returns the euclidean distance of this {@link AbstractVector}
-     *
-     * @param other
-     *            other {@link AbstractVector}
-     * @param mathContext
-     *            math context
-     * @return euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanDistance(final V other, final MathContext mathContext) {
-        requireNonNull(other, "other");
-        requireNonNull(mathContext, "mathContext");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return euclideanDistance(other, DEFAULT_ABORT_CRITERION, mathContext);
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link AbstractVector}
-     *
-     * @param other
-     *            other {@link AbstractVector}
-     * @param abortCriterion
-     *            abort criterion
-     * @param mathContext
-     *            math context
-     * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @since 1
-     */
-    public final BigDecimal euclideanDistance(final V other, final BigDecimal abortCriterion,
-        final MathContext mathContext) {
-        requireNonNull(other, "other");
-        requireNonNull(abortCriterion, "abortCriterion");
-        requireNonNull(mathContext, "mathContext");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return subtract(other).euclideanNorm(abortCriterion, mathContext);
+        return subtract(other).euclideanNorm(squareRootContext);
     }
 
     /**

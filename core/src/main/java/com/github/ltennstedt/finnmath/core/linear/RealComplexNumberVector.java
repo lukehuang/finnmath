@@ -18,15 +18,13 @@ package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
 import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -99,32 +97,24 @@ public final class RealComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code squareRootContext == null}
+     * @since 1
+     * @see SquareRootCalculator#sqrt(BigDecimal, SquareRootContext)
+     */
+    @Override
+    public BigDecimal euclideanNorm(final SquareRootContext squareRootContext) {
+        requireNonNull(squareRootContext, "squareRootContext");
+        return SquareRootCalculator.sqrt(euclideanNormPow2(), squareRootContext);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal euclideanNormPow2() {
         return map.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        requireNonNull(roundingMode, "roundingMode");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, roundingMode);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        requireNonNull(mathContext, "mathContext");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, mathContext);
     }
 
     /**

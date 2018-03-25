@@ -36,8 +36,6 @@ public interface MathNumber<S, T, A> {
      * @param summand
      *            the summand
      * @return The sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
      * @since 1
      */
     S add(S summand);
@@ -48,8 +46,6 @@ public interface MathNumber<S, T, A> {
      * @param subtrahend
      *            the subtrahend
      * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
      * @since 1
      */
     S subtract(S subtrahend);
@@ -60,8 +56,6 @@ public interface MathNumber<S, T, A> {
      * @param factor
      *            the factor
      * @return The product
-     * @throws NullPointerException
-     *             if {@code factor == null}
      * @since 1
      */
     S multiply(S factor);

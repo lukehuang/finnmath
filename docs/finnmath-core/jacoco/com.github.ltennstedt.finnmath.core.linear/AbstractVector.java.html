@@ -18,17 +18,15 @@ package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -51,18 +49,12 @@ import java.util.Objects;
 @Beta
 public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, P&gt;, N, P&gt; {
     /**
-     * Default abort criterion
+     * Default {@link SquareRootCalculator}
      *
      * @since 1
      */
-<span class="fc" id="L58">    public static final BigDecimal DEFAULT_ABORT_CRITERION = BigDecimal.valueOf(0.0000000001);</span>
-
-    /**
-     * Default rounding mode
-     *
-     * @since 1
-     */
-<span class="fc" id="L65">    public static final RoundingMode DEFAULT_ROUNDING_MODE = RoundingMode.HALF_UP;</span>
+<span class="fc" id="L56">    public static final SquareRootContext DEFAULT_SQUARE_ROOT_CONTEXT =</span>
+        SquareRootCalculator.DEFAULT_SQUARE_ROOT_CONTEXT;
 
     /**
      * The map holding the elements of this {@link AbstractVector}
@@ -79,10 +71,10 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @throws NullPointerException
      *             if {@code map == null}
      */
-<span class="fc" id="L82">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
-<span class="fc" id="L83">        requireNonNull(map, &quot;map&quot;);</span>
-<span class="fc" id="L84">        this.map = map;</span>
-<span class="fc" id="L85">    }</span>
+<span class="fc" id="L74">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
+<span class="fc" id="L75">        requireNonNull(map, &quot;map&quot;);</span>
+<span class="fc" id="L76">        this.map = map;</span>
+<span class="fc" id="L77">    }</span>
 
     /**
      * Returns the element dependent on the given index
@@ -98,9 +90,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final E element(final Integer index) {
-<span class="fc" id="L101">        requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L102">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
-<span class="fc" id="L103">        return map.get(index);</span>
+<span class="fc" id="L93">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L94">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
+<span class="fc" id="L95">        return map.get(index);</span>
     }
 
     /**
@@ -112,7 +104,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableSet&lt;Entry&lt;Integer, E&gt;&gt; entries() {
-<span class="fc" id="L115">        return map.entrySet();</span>
+<span class="fc" id="L107">        return map.entrySet();</span>
     }
 
     /**
@@ -123,7 +115,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableCollection&lt;E&gt; elements() {
-<span class="fc" id="L126">        return map.values();</span>
+<span class="fc" id="L118">        return map.values();</span>
     }
 
     /**
@@ -214,9 +206,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final N taxicabDistance(final V other) {
-<span class="fc" id="L217">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L219">        return subtract(other).taxicabNorm();</span>
+<span class="fc" id="L209">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L211">        return subtract(other).taxicabNorm();</span>
     }
 
     /**
@@ -229,110 +221,18 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
     protected abstract P euclideanNormPow2();
 
     /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @return The euclidean norm
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanNorm() {
-<span class="fc" id="L240">        return euclideanNorm(DEFAULT_ABORT_CRITERION, DEFAULT_ROUNDING_MODE);</span>
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion &lt;= 0 || 1 &lt;= abortCriterion}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanNorm(final BigDecimal abortCriterion) {
-<span class="fc" id="L258">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
-<span class="fc" id="L259">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
-<span class="fc" id="L260">        return euclideanNorm(abortCriterion, DEFAULT_ROUNDING_MODE);</span>
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param roundingMode
-     *            rounding mode
-     * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanNorm(final RoundingMode roundingMode) {
-<span class="nc" id="L276">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="nc" id="L277">        return euclideanNorm(DEFAULT_ABORT_CRITERION, roundingMode);</span>
-    }
-
-    /**
      * Returns the euclidean norm of this {@link AbstractVector}
      *
-     * @param abortCriterion
-     *            abort criterion
-     * @param roundingMode
-     *            rounding mode
+     * @param squareRootContext
+     *            {@link SquareRootContext}
      * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion &lt;= 0 || 1 &lt;= abortCriterion}
      * @since 1
      */
-    protected abstract BigDecimal euclideanNorm(BigDecimal abortCriterion, RoundingMode roundingMode);
+    protected abstract BigDecimal euclideanNorm(SquareRootContext squareRootContext);
 
     /**
-     * Returns the euclidean norm of this {@link BigDecimalVector}
-     *
-     * @param mathContext
-     *            math context
-     * @return The euclidean norm
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @see #euclideanNormPow2
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanNorm(final MathContext mathContext) {
-<span class="nc" id="L311">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L312">        return euclideanNorm(DEFAULT_ABORT_CRITERION, mathContext);</span>
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link AbstractVector}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param mathContext
-     *            math context
-     * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion &lt;= 0 || 1 &lt;= abortCriterion}
-     * @since 1
-     */
-    protected abstract BigDecimal euclideanNorm(BigDecimal abortCriterion, MathContext mathContext);
-
-    /**
-     * Returns the square of the euclidean distance from this
-     * {@link SimpleComplexNumberVector} to the given one
+     * Returns the square of the euclidean distance from this {@link AbstractVector}
+     * to the given one
      *
      * @param other
      *            The other {@link AbstractVector}
@@ -346,9 +246,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final P euclideanDistancePow2(final V other) {
-<span class="fc" id="L349">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L350" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L351">        return subtract(other).euclideanNormPow2();</span>
+<span class="fc" id="L249">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L251">        return subtract(other).euclideanNormPow2();</span>
     }
 
     /**
@@ -369,56 +269,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final BigDecimal euclideanDistance(final V other) {
-<span class="fc" id="L372">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L373" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L374">        return euclideanDistance(other, DEFAULT_ABORT_CRITERION, DEFAULT_ROUNDING_MODE);</span>
-    }
-
-    /**
-     * Returns the euclidean distance of this {@link AbstractVector}
-     *
-     * @param other
-     *            other {@link AbstractVector}
-     * @param abortCriterion
-     *            abort criterion
-     * @return euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion &lt;= 0 || 1 &lt;= abortCriterion}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanDistance(final V other, final BigDecimal abortCriterion) {
-<span class="fc" id="L395">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc" id="L396">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
-<span class="fc bfc" id="L397" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L398">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
-<span class="fc" id="L399">        return euclideanDistance(other, abortCriterion, DEFAULT_ROUNDING_MODE);</span>
-    }
-
-    /**
-     * Returns the euclidean distance of this {@link AbstractVector}
-     *
-     * @param other
-     *            other {@link AbstractVector}
-     * @param roundingMode
-     *            rounding mode
-     * @return euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanDistance(final V other, final RoundingMode roundingMode) {
-<span class="nc" id="L418">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc" id="L419">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="nc bnc" id="L420" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L421">        return euclideanDistance(other, DEFAULT_ABORT_CRITERION, roundingMode);</span>
+<span class="fc" id="L272">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L274">        return euclideanDistance(other, DEFAULT_SQUARE_ROOT_CONTEXT);</span>
     }
 
     /**
@@ -426,85 +279,24 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @param other
      *            other {@link AbstractVector}
-     * @param abortCriterion
-     *            abort criterion
-     * @param roundingMode
-     *            rounding mode
+     * @param squareRootContext
+     *            {@link SquareRootContext}
      * @return Euclidean norm
      * @throws NullPointerException
      *             if {@code other == null}
      * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
+     *             if {@code squareRootContext == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion &lt;= 0 || 1 &lt;= abortCriterion}
      * @since 1
+     * @see #subtract
+     * @see #euclideanNorm(SquareRootContext)
      */
-    public final BigDecimal euclideanDistance(final V other, final BigDecimal abortCriterion,
-        final RoundingMode roundingMode) {
-<span class="fc" id="L448">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc" id="L449">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
-<span class="fc" id="L450">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="pc bpc" id="L451" title="1 of 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L452">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
-<span class="fc" id="L453">        return subtract(other).euclideanNorm(abortCriterion, roundingMode);</span>
-    }
-
-    /**
-     * Returns the euclidean distance of this {@link AbstractVector}
-     *
-     * @param other
-     *            other {@link AbstractVector}
-     * @param mathContext
-     *            math context
-     * @return euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    public final BigDecimal euclideanDistance(final V other, final MathContext mathContext) {
-<span class="nc" id="L472">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc" id="L473">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc bnc" id="L474" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L475">        return euclideanDistance(other, DEFAULT_ABORT_CRITERION, mathContext);</span>
-    }
-
-    /**
-     * Returns the euclidean norm of this {@link AbstractVector}
-     *
-     * @param other
-     *            other {@link AbstractVector}
-     * @param abortCriterion
-     *            abort criterion
-     * @param mathContext
-     *            math context
-     * @return Euclidean norm
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion &lt;= 0 || 1 &lt;= abortCriterion}
-     * @since 1
-     */
-    public final BigDecimal euclideanDistance(final V other, final BigDecimal abortCriterion,
-        final MathContext mathContext) {
-<span class="nc" id="L502">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc" id="L503">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
-<span class="nc" id="L504">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc bnc" id="L505" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L506">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
-<span class="nc" id="L507">        return subtract(other).euclideanNorm(abortCriterion, mathContext);</span>
+    public final BigDecimal euclideanDistance(final V other, final SquareRootContext squareRootContext) {
+<span class="fc" id="L296">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc" id="L297">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L299">        return subtract(other).euclideanNorm(squareRootContext);</span>
     }
 
     /**
@@ -530,9 +322,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final N maxDistance(final V other) {
-<span class="fc" id="L533">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L534" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L535">        return subtract(other).maxNorm();</span>
+<span class="fc" id="L325">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L327">        return subtract(other).maxNorm();</span>
     }
 
     /**
@@ -542,7 +334,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final int size() {
-<span class="fc" id="L545">        return map.size();</span>
+<span class="fc" id="L337">        return map.size();</span>
     }
 
     /**
@@ -550,7 +342,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      */
     @Override
     public final int hashCode() {
-<span class="fc" id="L553">        return Objects.hash(map);</span>
+<span class="fc" id="L345">        return Objects.hash(map);</span>
     }
 
     /**
@@ -558,14 +350,14 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      */
     @Override
     public final boolean equals(final Object object) {
-<span class="fc bfc" id="L561" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L562">            return true;</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L354">            return true;</span>
         }
-<span class="fc bfc" id="L564" title="All 2 branches covered.">        if (!(object instanceof AbstractVector)) {</span>
-<span class="fc" id="L565">            return false;</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">        if (!(object instanceof AbstractVector)) {</span>
+<span class="fc" id="L357">            return false;</span>
         }
-<span class="fc" id="L567">        final AbstractVector&lt;?, ?, ?, ?&gt; other = (AbstractVector&lt;?, ?, ?, ?&gt;) object;</span>
-<span class="fc" id="L568">        return Objects.deepEquals(map, other.getMap());</span>
+<span class="fc" id="L359">        final AbstractVector&lt;?, ?, ?, ?&gt; other = (AbstractVector&lt;?, ?, ?, ?&gt;) object;</span>
+<span class="fc" id="L360">        return Objects.deepEquals(map, other.getMap());</span>
     }
 
     /**
@@ -573,11 +365,11 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      */
     @Override
     public final String toString() {
-<span class="fc" id="L576">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
+<span class="fc" id="L368">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
     }
 
     public final ImmutableMap&lt;Integer, E&gt; getMap() {
-<span class="fc" id="L580">        return map;</span>
+<span class="fc" id="L372">        return map;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

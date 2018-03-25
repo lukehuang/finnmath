@@ -19,17 +19,15 @@ package com.github.ltennstedt.finnmath.core.linear;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
 import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -286,32 +284,22 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code squareRootContext == null}
+     * @since 1
+     */
+    @Override
+    public BigDecimal frobeniusNorm(final SquareRootContext squareRootContext) {
+        return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public BigDecimal frobeniusNormPow2() {
         return table.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal frobeniusNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        requireNonNull(roundingMode, "roundingMode");
-        return SquareRootCalculator.sqrt(frobeniusNormPow2(), abortCriterion, roundingMode);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal frobeniusNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        requireNonNull(mathContext, "mathContext");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return SquareRootCalculator.sqrt(frobeniusNormPow2(), abortCriterion, mathContext);
     }
 
     /**

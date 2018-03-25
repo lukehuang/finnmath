@@ -20,8 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ltennstedt.finnmath.core.linear.BigIntegerVector.BigIntegerVectorBuilder;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
 import com.github.ltennstedt.finnmath.core.util.MathRandom;
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -36,7 +36,6 @@ public final class BigIntegerVectorTest {
     private final int howMany = 10;
     private final long bound = 10;
     private final int differentSize = size + 1;
-    private final BigDecimal abortCriterion = BigDecimal.valueOf(0.00001);
     private final MathRandom mathRandom = new MathRandom(7);
     private final BigIntegerVector zeroVector = BigIntegerVector.builder(size).putAll(BigInteger.ZERO).build();
     private final BigIntegerVector vectorWithAnotherSize =
@@ -286,49 +285,6 @@ public final class BigIntegerVectorTest {
     }
 
     @Test
-    public void euclideanNormShouldSucceed() {
-        vectors.forEach(vector -> assertThat(vector.euclideanNorm()).isExactlyInstanceOf(BigDecimal.class)
-            .isEqualTo(SquareRootCalculator.sqrt(vector.euclideanNormPow2())));
-    }
-
-    @Test
-    public void euclideanNormShouldBePositive() {
-        vectors.forEach(vector -> assertThat(vector.euclideanNorm()).isGreaterThanOrEqualTo(BigDecimal.ZERO));
-    }
-
-    @Test
-    public void euclideanNormShouldBeSubadditive() {
-        vectors.forEach(vector -> others.forEach(other -> assertThat(vector.add(other).euclideanNorm())
-            .isLessThanOrEqualTo(vector.euclideanNorm().add(other.euclideanNorm()).add(tolerance))));
-    }
-
-    @Test
-    public void euclideanNormAbortCriterionNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanNorm((BigDecimal) null))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("abortCriterion");
-    }
-
-    @Test
-    public void euclideanNormAbortCriterionTooLowShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanNorm(BigDecimal.ZERO))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("The value 0 is not in the specified exclusive range of 0 to 1");
-    }
-
-    @Test
-    public void euclideanNormAbortCriterionTooHighShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanNorm(BigDecimal.ONE))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("The value 1 is not in the specified exclusive range of 0 to 1");
-    }
-
-    @Test
-    public void euclideanNormWithAbortCriterionShouldSucceed() {
-        vectors.forEach(vector -> assertThat(vector.euclideanNorm(abortCriterion)).isExactlyInstanceOf(BigDecimal.class)
-            .isEqualTo(SquareRootCalculator.sqrt(vector.euclideanNormPow2(), abortCriterion)));
-    }
-
-    @Test
     public void dotProductNullShouldThrowException() {
         assertThatThrownBy(() -> zeroVector.dotProduct(null)).isExactlyInstanceOf(NullPointerException.class)
             .hasMessage("other");
@@ -417,47 +373,6 @@ public final class BigIntegerVectorTest {
         vectors.forEach(vector -> others.forEach(other -> additionalOthers
             .forEach(additionalOther -> assertThat(vector.euclideanDistance(additionalOther)).isLessThanOrEqualTo(
                 vector.euclideanDistance(other).add(other.euclideanDistance(additionalOther)).add(tolerance)))));
-    }
-
-    @Test
-    public void euclideanDistanceNullWithAbortCriterionShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(null, abortCriterion))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
-    }
-
-    @Test
-    public void euclideanDistanceAbortCriterionNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, (BigDecimal) null))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("abortCriterion");
-    }
-
-    @Test
-    public void euclideanDistanceSizesNotEqualWithAbortCriterionShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector
-            .euclideanDistance(BigIntegerVector.builder(differentSize).putAll(BigInteger.ZERO).build(), abortCriterion))
-                .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("expected equal sizes but actual %s != %s", size, differentSize);
-    }
-
-    @Test
-    public void euclideanDistanceAbortCriterionTooLowShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, BigDecimal.ZERO))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("The value 0 is not in the specified exclusive range of 0 to 1");
-    }
-
-    @Test
-    public void euclideanDistanceAbortCriterionTooHighShouldThrowException() {
-        assertThatThrownBy(() -> zeroVector.euclideanDistance(zeroVector, BigDecimal.ONE))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("The value 1 is not in the specified exclusive range of 0 to 1");
-    }
-
-    @Test
-    public void euclideanDistanceWithAbortCriterionShouldSucceed() {
-        vectors.forEach(vector -> others.forEach(
-            other -> assertThat(vector.euclideanDistance(other, abortCriterion)).isExactlyInstanceOf(BigDecimal.class)
-                .isEqualTo(SquareRootCalculator.sqrt(vector.euclideanDistancePow2(other), abortCriterion))));
     }
 
     @Test

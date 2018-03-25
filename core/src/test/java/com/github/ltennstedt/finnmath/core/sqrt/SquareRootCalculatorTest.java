@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.github.ltennstedt.finnmath.core.util;
+package com.github.ltennstedt.finnmath.core.sqrt;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ltennstedt.finnmath.core.number.ScientificNotation;
+import com.github.ltennstedt.finnmath.core.util.MathRandom;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;

@@ -18,14 +18,12 @@ package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -39,20 +37,20 @@ import java.util.stream.IntStream;
 @Beta
 public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDecimalVector, BigDecimal, BigDecimal&gt; {
     private BigDecimalVector(final ImmutableMap&lt;Integer, BigDecimal&gt; map) {
-<span class="fc" id="L42">        super(map);</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L40">        super(map);</span>
+<span class="fc" id="L41">    }</span>
 
     /**
      * {@inheritDoc}
      */
     @Override
     public BigDecimalVector add(final BigDecimalVector summand) {
-<span class="fc" id="L50">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L51" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L52">            summand.size());</span>
-<span class="fc" id="L53">        final BigDecimalVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L54">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
-<span class="fc" id="L55">        return builder.build();</span>
+<span class="fc" id="L48">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L50">            summand.size());</span>
+<span class="fc" id="L51">        final BigDecimalVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L52">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="fc" id="L53">        return builder.build();</span>
     }
 
     /**
@@ -60,12 +58,12 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
      */
     @Override
     public BigDecimalVector subtract(final BigDecimalVector subtrahend) {
-<span class="fc" id="L63">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L65">            subtrahend.size());</span>
-<span class="fc" id="L66">        final BigDecimalVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L67">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
-<span class="fc" id="L68">        return builder.build();</span>
+<span class="fc" id="L61">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L63">            subtrahend.size());</span>
+<span class="fc" id="L64">        final BigDecimalVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L65">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
+<span class="fc" id="L66">        return builder.build();</span>
     }
 
     /**
@@ -73,10 +71,10 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
      */
     @Override
     public BigDecimal dotProduct(final BigDecimalVector other) {
-<span class="fc" id="L76">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L78">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
-<span class="fc" id="L79">            .reduce(BigDecimal::add).get();</span>
+<span class="fc" id="L74">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L76">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
+<span class="fc" id="L77">            .reduce(BigDecimal::add).get();</span>
     }
 
     /**
@@ -84,10 +82,10 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
      */
     @Override
     public BigDecimalVector scalarMultiply(final BigDecimal scalar) {
-<span class="fc" id="L87">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L88">        final BigDecimalVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L89">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
-<span class="fc" id="L90">        return builder.build();</span>
+<span class="fc" id="L85">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L86">        final BigDecimalVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L87">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="fc" id="L88">        return builder.build();</span>
     }
 
     /**
@@ -95,7 +93,7 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
      */
     @Override
     public BigDecimalVector negate() {
-<span class="fc" id="L98">        return scalarMultiply(BigDecimal.ONE.negate());</span>
+<span class="fc" id="L96">        return scalarMultiply(BigDecimal.ONE.negate());</span>
     }
 
     /**
@@ -103,7 +101,21 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
      */
     @Override
     protected BigDecimal taxicabNorm() {
-<span class="fc" id="L106">        return map.values().stream().map(BigDecimal::abs).reduce(BigDecimal::add).get();</span>
+<span class="fc" id="L104">        return map.values().stream().map(BigDecimal::abs).reduce(BigDecimal::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code squareRootContext == null}
+     * @since 1
+     * @see SquareRootCalculator#sqrt(BigDecimal, SquareRootContext)
+     */
+    @Override
+    public BigDecimal euclideanNorm(final SquareRootContext squareRootContext) {
+<span class="nc" id="L117">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="nc" id="L118">        return SquareRootCalculator.sqrt(euclideanNormPow2(), squareRootContext);</span>
     }
 
     /**
@@ -111,29 +123,7 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
      */
     @Override
     public BigDecimal euclideanNormPow2() {
-<span class="fc" id="L114">        return dotProduct(this);</span>
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
-<span class="nc" id="L122">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
-<span class="nc" id="L123">        requireNonNull(roundingMode, &quot;roundingMode&quot;);</span>
-<span class="nc" id="L124">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
-<span class="nc" id="L125">        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, roundingMode);</span>
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal euclideanNorm(final BigDecimal abortCriterion, final MathContext mathContext) {
-<span class="nc" id="L133">        requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
-<span class="nc" id="L134">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L135">        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
-<span class="nc" id="L136">        return SquareRootCalculator.sqrt(euclideanNormPow2(), abortCriterion, mathContext);</span>
+<span class="fc" id="L126">        return dotProduct(this);</span>
     }
 
     /**
@@ -141,7 +131,7 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
      */
     @Override
     protected BigDecimal maxNorm() {
-<span class="fc" id="L144">        return map.values().stream().map(BigDecimal::abs).reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L134">        return map.values().stream().map(BigDecimal::abs).reduce(BigDecimal::max).get();</span>
     }
 
     /**
@@ -154,8 +144,8 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
      * @return true if {@code compareTo == 0} for all elements, false otherwise
      */
     public boolean equalByComparingTo(final BigDecimalVector other) {
-<span class="nc" id="L157">        return !map.entrySet().stream()</span>
-<span class="nc bnc" id="L158" title="All 4 branches missed.">            .anyMatch(entry -&gt; entry.getValue().compareTo(other.element(entry.getKey())) != 0);</span>
+<span class="nc" id="L147">        return !map.entrySet().stream()</span>
+<span class="nc bnc" id="L148" title="All 4 branches missed.">            .anyMatch(entry -&gt; entry.getValue().compareTo(other.element(entry.getKey())) != 0);</span>
     }
 
     /**
@@ -167,8 +157,8 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
      * @since 1
      */
     public static BigDecimalVectorBuilder builder(final int size) {
-<span class="fc bfc" id="L170" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L171">        return new BigDecimalVectorBuilder(size);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L161">        return new BigDecimalVectorBuilder(size);</span>
     }
 
     /**
@@ -180,8 +170,8 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
     public static final class BigDecimalVectorBuilder
         extends AbstractVectorBuilder&lt;BigDecimal, BigDecimalVector, BigDecimalVectorBuilder&gt; {
         private BigDecimalVectorBuilder(final int size) {
-<span class="fc" id="L183">            super(size);</span>
-<span class="fc" id="L184">        }</span>
+<span class="fc" id="L173">            super(size);</span>
+<span class="fc" id="L174">        }</span>
 
         /**
          * Returns the built {@link BigDecimalVector}
@@ -194,9 +184,9 @@ public final class BigDecimalVector extends AbstractVector&lt;BigDecimal, BigDec
          */
         @Override
         public BigDecimalVector build() {
-<span class="fc" id="L197">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
-<span class="fc" id="L198">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
-<span class="fc" id="L199">            return new BigDecimalVector(ImmutableMap.copyOf(map));</span>
+<span class="fc" id="L187">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
+<span class="fc" id="L188">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
+<span class="fc" id="L189">            return new BigDecimalVector(ImmutableMap.copyOf(map));</span>
         }
     }
 }

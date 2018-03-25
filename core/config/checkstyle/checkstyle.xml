@@ -63,7 +63,6 @@
         </module>
         <module name="LocalFinalVariableName" />
         <module name="LocalVariableName" />
-        <module name="MemberName" />
         <module name="MethodName" />
         <module name="MethodTypeParameterName" />
         <module name="MissingDeprecated" />

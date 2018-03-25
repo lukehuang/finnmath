@@ -18,9 +18,9 @@ package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableCollection;
@@ -29,7 +29,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.util.Objects;
@@ -56,11 +55,11 @@ import java.util.Objects;
 public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M extends AbstractMatrix<E, V, M, N, B>,
     N, B> {
     /**
-     * Default abort criterion
+     * Default {@link SquareRootContext}
      *
-     * @since 1
      */
-    public static final BigDecimal DEFAULT_ABORT_CRITERION = BigDecimal.valueOf(0.0000000001);
+    public static final SquareRootContext DEFAULT_SQUARE_ROOT_CONTEXT =
+        SquareRootCalculator.DEFAULT_SQUARE_ROOT_CONTEXT;
 
     /**
      * Default rounding mode
@@ -251,7 +250,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     protected abstract M minor(Integer rowIndex, Integer columnIndex);
 
     /**
-     * Returns the maximum absolute column sum norm of this {@link BigIntegerMatrix}
+     * Returns the maximum absolute column sum norm of this {@link AbstractMatrix}
      *
      * @return Maximum absolute column sum norm
      * @since 1
@@ -259,7 +258,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     protected abstract N maxAbsColumnSumNorm();
 
     /**
-     * Returns the maximum absolute row sum norm of this {@link BigIntegerMatrix}
+     * Returns the maximum absolute row sum norm of this {@link AbstractMatrix}
      *
      * @return Maximum absolute row sum norm
      * @since 1
@@ -267,7 +266,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     protected abstract N maxAbsRowSumNorm();
 
     /**
-     * Returns the square of the frobenius norm of this {@link BigIntegerMatrix}
+     * Returns the square of the frobenius norm of this {@link AbstractMatrix}
      *
      * @return Square of the frobenius norm
      * @since 1
@@ -275,103 +274,27 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     protected abstract B frobeniusNormPow2();
 
     /**
-     * Returns the frobenius norm of this {@link BigDecimalMatrix}
+     * Returns the frobenius norm of this {@link AbstractMatrix}
      *
      * @return Frobenius norm
      * @since 1
      */
     public final BigDecimal frobeniusNorm() {
-        return frobeniusNorm(DEFAULT_ABORT_CRITERION, DEFAULT_ROUNDING_MODE);
+        return frobeniusNorm(DEFAULT_SQUARE_ROOT_CONTEXT);
     }
 
     /**
-     * Returns the frobenius norm of this {@link BigDecimalMatrix}
+     * Returns the frobenius norm of this {@link AbstractMatrix}
      *
-     * @param abortCriterion
-     *            abort criterion
+     * @param squareRootContext
+     *            {@link SquareRootContext}
      * @return Frobenius norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
      * @since 1
      */
-    public final BigDecimal frobeniusNorm(final BigDecimal abortCriterion) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return frobeniusNorm(abortCriterion, DEFAULT_ROUNDING_MODE);
-    }
+    protected abstract BigDecimal frobeniusNorm(final SquareRootContext squareRootContext);
 
     /**
-     * Returns the frobenius norm of this {@link BigDecimalMatrix}
-     *
-     * @param roundingMode
-     *            {@link RoundingMode}
-     * @return Frobenius norm
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @since 1
-     */
-    public final BigDecimal frobeniusNorm(final RoundingMode roundingMode) {
-        requireNonNull(roundingMode, "roundingMode");
-        return frobeniusNorm(DEFAULT_ABORT_CRITERION, roundingMode);
-    }
-
-    /**
-     * Returns the frobenius norm of this {@link BigDecimalMatrix}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param roundingMode
-     *            rounding mode
-     * @return Frobenius norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @throws NullPointerException
-     *             if {@code roundingMode == null}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    protected abstract BigDecimal frobeniusNorm(BigDecimal abortCriterion, RoundingMode roundingMode);
-
-    /**
-     * Returns the frobenius norm of this {@link BigDecimalMatrix}
-     *
-     * @param mathContext
-     *            {@link MathContext}
-     * @return Frobenius norm
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @since 1
-     */
-    public final BigDecimal frobeniusNorm(final MathContext mathContext) {
-        requireNonNull(mathContext, "mathContext");
-        return frobeniusNorm(DEFAULT_ABORT_CRITERION, mathContext);
-    }
-
-    /**
-     * Returns the frobenius norm of this {@link BigDecimalMatrix}
-     *
-     * @param abortCriterion
-     *            abort criterion
-     * @param mathContext
-     *            math context
-     * @return The frobenius norm
-     * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code precision <= 0 || 1 <= precision}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @since 1
-     */
-    protected abstract BigDecimal frobeniusNorm(BigDecimal abortCriterion, MathContext mathContext);
-
-    /**
-     * Returns the maximum norm of this {@link BigIntegerMatrix}
+     * Returns the maximum norm of this {@link AbstractMatrix}
      *
      * @return The maximum norm
      * @since 1
@@ -405,7 +328,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
      * upper triangular
      *
      * @return {@code true} if {@code this} is upper triangular, {@code false}
@@ -415,7 +338,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     protected abstract boolean upperTriangular();
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
      * lower triangular
      *
      * @return {@code true} if {@code this} is lower triangular, {@code false}
@@ -439,7 +362,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     }
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
      * the identity one
      *
      * @return {@code true} if {@code this} is the identity matrix, {@code false}
@@ -450,7 +373,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     protected abstract boolean identity();
 
     /**
-     * Returns a {@code boolean} which indicates if this {@link BigIntegerMatrix} is
+     * Returns a {@code boolean} which indicates if this {@link AbstractMatrix} is
      * invertible
      *
      * @return {@code true} if {@code det == -1 || det == 1}, {@code false}

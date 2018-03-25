@@ -21,8 +21,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ltennstedt.finnmath.core.linear.BigIntegerMatrix.BigIntegerMatrixBuilder;
 import com.github.ltennstedt.finnmath.core.linear.BigIntegerVector.BigIntegerVectorBuilder;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
 import com.github.ltennstedt.finnmath.core.util.MathRandom;
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Table.Cell;
@@ -765,33 +765,6 @@ public final class BigIntegerMatrixTest {
         squareMatrices
             .forEach(matrix -> squareMatrices.forEach(other -> assertThat(matrix.multiply(other).frobeniusNorm())
                 .isLessThanOrEqualTo(matrix.frobeniusNorm().multiply(other.frobeniusNorm()).add(tolerance))));
-    }
-
-    @Test
-    public void frobeniusNormWithAbortCriterionNullShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm((BigDecimal) null))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("abortCriterion");
-    }
-
-    @Test
-    public void frobeniusNormWithAbortCriterionTooLowShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ZERO))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("The value 0 is not in the specified exclusive range of 0 to 1");
-    }
-
-    @Test
-    public void frobeniusNormWithAbortCriterionTooHighShouldThrowException() {
-        assertThatThrownBy(() -> zeroSquareMatrix.frobeniusNorm(BigDecimal.ONE))
-            .isExactlyInstanceOf(IllegalArgumentException.class)
-            .hasMessage("The value 1 is not in the specified exclusive range of 0 to 1");
-    }
-
-    @Test
-    public void frobeniusNormWithAbortCriterionShouldSucceed() {
-        matrices.forEach(matrix -> assertThat(matrix.frobeniusNorm(SquareRootCalculator.DEFAULT_ABORT_CRITERION))
-            .isLessThanOrEqualTo(SquareRootCalculator
-                .sqrt(matrix.frobeniusNormPow2(), SquareRootCalculator.DEFAULT_ABORT_CRITERION).add(tolerance)));
     }
 
     @Test

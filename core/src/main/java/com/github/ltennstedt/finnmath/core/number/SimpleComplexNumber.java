@@ -19,10 +19,10 @@ package com.github.ltennstedt.finnmath.core.number;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
 import com.github.ltennstedt.finnmath.core.linear.BigIntegerMatrix;
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -66,6 +66,10 @@ public final class SimpleComplexNumber
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @since 1
      */
     @Override
     public SimpleComplexNumber add(final SimpleComplexNumber summand) {
@@ -75,6 +79,10 @@ public final class SimpleComplexNumber
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @since 1
      */
     @Override
     public SimpleComplexNumber subtract(final SimpleComplexNumber subtrahend) {
@@ -146,24 +154,17 @@ public final class SimpleComplexNumber
 
     /**
      * {@inheritDoc}
+     *
+     * @param squareRootContext
+     *            {@link SquareRootContext}
+     * @throws NullPointerException
+     *             if {@code squareRootContext == null}
+     * @since 1
      */
     @Override
-    public BigDecimal abs(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        requireNonNull(roundingMode, "roundingMode");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return SquareRootCalculator.sqrt(absPow2(), abortCriterion, roundingMode);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal abs(final BigDecimal abortCriterion, final MathContext mathContext) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        requireNonNull(mathContext, "mathContext");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return SquareRootCalculator.sqrt(absPow2(), abortCriterion, mathContext);
+    protected BigDecimal abs(final SquareRootContext squareRootContext) {
+        requireNonNull(squareRootContext, "squareRootContext");
+        return SquareRootCalculator.sqrt(absPow2(), squareRootContext);
     }
 
     /**
@@ -195,37 +196,6 @@ public final class SimpleComplexNumber
      * {@inheritDoc}
      */
     @Override
-    public BigDecimal argument(final int precision) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        return argument(new MathContext(precision));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal argument(final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        requireNonNull(roundingMode, "roundingMode");
-        return argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        requireNonNull(roundingMode, "roundingMode");
-        return argument(new MathContext(precision, roundingMode));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public BigDecimal argument(final MathContext mathContext) {
         checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         requireNonNull(mathContext, "mathContext");
@@ -239,37 +209,6 @@ public final class SimpleComplexNumber
     public PolarForm polarForm() {
         checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PolarForm polarForm(final int precision) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        return polarForm(new MathContext(precision));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PolarForm polarForm(final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        requireNonNull(roundingMode, "roundingMode");
-        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        requireNonNull(roundingMode, "roundingMode");
-        return polarForm(new MathContext(precision, roundingMode));
     }
 
     /**

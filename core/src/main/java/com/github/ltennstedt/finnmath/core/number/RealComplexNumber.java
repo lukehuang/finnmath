@@ -19,12 +19,12 @@ package com.github.ltennstedt.finnmath.core.number;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.Validate.exclusiveBetween;
 
 import ch.obermuhlner.math.big.BigFloat;
 import ch.obermuhlner.math.big.BigFloat.Context;
 import com.github.ltennstedt.finnmath.core.linear.BigDecimalMatrix;
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -75,6 +75,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @since 1
      */
     @Override
     public RealComplexNumber add(final RealComplexNumber summand) {
@@ -105,6 +109,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @since 1
      */
     @Override
     public RealComplexNumber subtract(final RealComplexNumber subtrahend) {
@@ -383,25 +391,16 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the absolute value of this {@link AbstractComplexNumber}
+     *
+     * @return Absolute value
+     * @since 1
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     * @see #absPow2
      */
     @Override
-    public BigDecimal abs(final BigDecimal abortCriterion, final RoundingMode roundingMode) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        requireNonNull(roundingMode, "roundingMode");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return SquareRootCalculator.sqrt(absPow2(), abortCriterion, roundingMode);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal abs(final BigDecimal abortCriterion, final MathContext mathContext) {
-        requireNonNull(abortCriterion, "abortCriterion");
-        requireNonNull(mathContext, "mathContext");
-        exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);
-        return SquareRootCalculator.sqrt(absPow2(), abortCriterion, mathContext);
+    public BigDecimal abs(final SquareRootContext squareRootContext) {
+        return SquareRootCalculator.sqrt(absPow2(), squareRootContext);
     }
 
     /**
@@ -448,37 +447,6 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * {@inheritDoc}
      */
     @Override
-    public BigDecimal argument(final int precision) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        return argument(new MathContext(precision));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal argument(final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        requireNonNull(roundingMode, "roundingMode");
-        return argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal argument(final int precision, final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        requireNonNull(roundingMode, "roundingMode");
-        return argument(new MathContext(precision, roundingMode));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public BigDecimal argument(final MathContext mathContext) {
         checkState(real.compareTo(BigDecimal.ZERO) != 0 || imaginary.compareTo(BigDecimal.ZERO) != 0,
             "expected this != 0 but actual %s", this);
@@ -504,37 +472,6 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     public PolarForm polarForm() {
         checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
         return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PolarForm polarForm(final int precision) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        return polarForm(new MathContext(precision));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PolarForm polarForm(final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        requireNonNull(roundingMode, "roundingMode");
-        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PolarForm polarForm(final int precision, final RoundingMode roundingMode) {
-        checkState(!equals(ZERO), "expected this != 0 but actual %s", this);
-        checkArgument(precision > -1, "expected precision > -1 but actual %s", precision);
-        requireNonNull(roundingMode, "roundingMode");
-        return polarForm(new MathContext(precision, roundingMode));
     }
 
     /**

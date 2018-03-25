@@ -20,8 +20,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ltennstedt.finnmath.core.linear.BigIntegerMatrix;
+import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
 import com.github.ltennstedt.finnmath.core.util.MathRandom;
-import com.github.ltennstedt.finnmath.core.util.SquareRootCalculator;
 import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -394,69 +394,6 @@ public final class SimpleComplexNumberTest {
     }
 
     @Test
-    public void argumentZeroWithPrecisionShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.argument(precision))
-            .isExactlyInstanceOf(IllegalStateException.class)
-            .hasMessage("expected this != 0 but actual %s", SimpleComplexNumber.ZERO);
-    }
-
-    @Test
-    public void argumentZeroPrecisionTooLowShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ONE.argument(-1))
-            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
-    }
-
-    @Test
-    public void argumentWithPrecisionShouldSucceed() {
-        invertibles.forEach(invertible -> assertThat(invertible.argument(precision))
-            .isEqualTo(invertible.argument(new MathContext(precision, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
-    }
-
-    @Test
-    public void argumentZeroWithRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.argument(AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-            .isExactlyInstanceOf(IllegalStateException.class)
-            .hasMessage("expected this != 0 but actual %s", SimpleComplexNumber.ZERO);
-    }
-
-    @Test
-    public void argumentRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ONE.argument((RoundingMode) null))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
-    }
-
-    @Test
-    public void argumentWithRoundingModeShouldSucceed() {
-        invertibles.forEach(invertible -> assertThat(invertible.argument(roundingMode))
-            .isEqualTo(invertible.argument(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode))));
-    }
-
-    @Test
-    public void argumentZeroWithPrecisionAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.argument(PolarForm.DEFAULT_PRECISION,
-            AbstractComplexNumber.DEFAULT_ROUNDING_MODE)).isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", SimpleComplexNumber.ZERO);
-    }
-
-    @Test
-    public void argumentZeroWithPrecisionTooLowAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ONE.argument(-1, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
-    }
-
-    @Test
-    public void argumentWithPrecisionAndRoundingModeNullShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ONE.argument(PolarForm.DEFAULT_PRECISION, (RoundingMode) null))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
-    }
-
-    @Test
-    public void argumentWithPrecisionAndRoundingModeShouldSucceed() {
-        invertibles.forEach(invertible -> assertThat(invertible.argument(precision, roundingMode))
-            .isEqualTo(invertible.argument(new MathContext(precision, roundingMode))));
-    }
-
-    @Test
     public void argumentZeroWithMathContextShouldThrowException() {
         assertThatThrownBy(() -> SimpleComplexNumber.ZERO.argument(new MathContext(PolarForm.DEFAULT_PRECISION)))
             .isExactlyInstanceOf(IllegalStateException.class)
@@ -488,69 +425,6 @@ public final class SimpleComplexNumberTest {
     public void polarFormShouldSucceed() {
         invertibles.forEach(invertible -> assertThat(invertible.polarForm()).isEqualTo(invertible
             .polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
-    }
-
-    @Test
-    public void polarFormZeroWithPrecisionShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.polarForm(PolarForm.DEFAULT_PRECISION))
-            .isExactlyInstanceOf(IllegalStateException.class)
-            .hasMessage("expected this != 0 but actual %s", SimpleComplexNumber.ZERO);
-    }
-
-    @Test
-    public void polarFormZeroPrecisionTooLowShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ONE.polarForm(-1))
-            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
-    }
-
-    @Test
-    public void polarFormWithPrecisionShouldSucceed() {
-        invertibles.forEach(invertible -> assertThat(invertible.polarForm(precision))
-            .isEqualTo(invertible.polarForm(new MathContext(precision, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))));
-    }
-
-    @Test
-    public void polarFormZeroWithRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.polarForm(AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-            .isExactlyInstanceOf(IllegalStateException.class)
-            .hasMessage("expected this != 0 but actual %s", SimpleComplexNumber.ZERO);
-    }
-
-    @Test
-    public void polarFormRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ONE.polarForm((RoundingMode) null))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
-    }
-
-    @Test
-    public void polarFormWithRoundingModeShouldSucceed() {
-        invertibles.forEach(invertible -> assertThat(invertible.polarForm(roundingMode))
-            .isEqualTo(invertible.polarForm(new MathContext(PolarForm.DEFAULT_PRECISION, roundingMode))));
-    }
-
-    @Test
-    public void polarFormZeroWithPrecisionAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.polarForm(PolarForm.DEFAULT_PRECISION,
-            AbstractComplexNumber.DEFAULT_ROUNDING_MODE)).isExactlyInstanceOf(IllegalStateException.class)
-                .hasMessage("expected this != 0 but actual %s", SimpleComplexNumber.ZERO);
-    }
-
-    @Test
-    public void polarFormZeroWithPrecisionTooLowAndRoundingModeShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ONE.polarForm(-1, AbstractComplexNumber.DEFAULT_ROUNDING_MODE))
-            .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected precision > -1 but actual -1");
-    }
-
-    @Test
-    public void polarFormWithPrecisionAndRoundingModeNullShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ONE.polarForm(PolarForm.DEFAULT_PRECISION, (RoundingMode) null))
-            .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
-    }
-
-    @Test
-    public void polarFormWithPrecisionAndRoundingModeShouldSucceed() {
-        invertibles.forEach(invertible -> assertThat(invertible.polarForm(precision, roundingMode))
-            .isEqualTo(invertible.polarForm(new MathContext(precision, roundingMode))));
     }
 
     @Test
