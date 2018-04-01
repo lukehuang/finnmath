@@ -49,6 +49,14 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix add(final RealComplexNumberMatrix summand) {
@@ -68,6 +76,14 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != subtrahend.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != subtrahend.columnSize}
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix subtract(final RealComplexNumberMatrix subtrahend) {
@@ -87,6 +103,12 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code factor == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != factor.rowSize}
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix multiply(final RealComplexNumberMatrix factor) {
@@ -103,6 +125,12 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != vector.size}
+     * @since 1
      */
     @Override
     public RealComplexNumberVector multiplyVector(final RealComplexNumberVector vector) {
@@ -121,6 +149,14 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code row == null}
+     * @throws NullPointerException
+     *             if {@code column == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != columnSize}
+     * @since 1
      */
     @Override
     protected RealComplexNumber multiplyRowWithColumn(final Map<Integer, RealComplexNumber> row,
@@ -138,6 +174,10 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix scalarMultiply(final RealComplexNumber scalar) {
@@ -150,6 +190,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix negate() {
@@ -158,6 +200,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public RealComplexNumber trace() {
@@ -169,6 +213,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public RealComplexNumber determinant() {
@@ -191,6 +237,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected RealComplexNumber leibnizFormula() {
@@ -215,6 +263,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected RealComplexNumber ruleOfSarrus() {
@@ -229,6 +279,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix transpose() {
@@ -239,6 +291,16 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex < 1 || rowSize < rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex < 1 || columnSize < columnIndex}
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix minor(final Integer rowIndex, final Integer columnIndex) {
@@ -264,6 +326,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsColumnSumNorm() {
@@ -274,6 +338,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsRowSumNorm() {
@@ -296,6 +362,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal frobeniusNormPow2() {
@@ -304,6 +372,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxNorm() {
@@ -312,6 +382,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean upperTriangular() {
@@ -321,6 +393,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean lowerTriangular() {
@@ -330,6 +404,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean identity() {
@@ -340,6 +416,8 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean invertible() {
@@ -351,9 +429,9 @@ public final class RealComplexNumberMatrix extends
      * Returns a {@link RealComplexNumberMatrixBuilder}
      *
      * @param rowSize
-     *            the row size the resulting {@link RealComplexNumberMatrix}
+     *            ow size the resulting {@link RealComplexNumberMatrix}
      * @param columnSize
-     *            the column size the resulting {@link RealComplexNumberMatrix}
+     *            column size the resulting {@link RealComplexNumberMatrix}
      * @return A {@link RealComplexNumberMatrixBuilder}
      * @throws IllegalArgumentException
      *             if {@code rowIndex < 1}
@@ -368,7 +446,8 @@ public final class RealComplexNumberMatrix extends
     }
 
     /**
-     * The builder for {@link RealComplexNumberMatrix BigIntegerMatrices}
+     * {@link AbstractMatrixBuilder} for {@link RealComplexNumberMatrix
+     * BigIntegerMatrices}
      *
      * @since 1
      */
@@ -381,6 +460,10 @@ public final class RealComplexNumberMatrix extends
 
         /**
          * {@inheritDoc}
+         *
+         * @throws NullPointerException
+         *             if one {@code cell.value == null}
+         * @since 1
          */
         @Override
         public RealComplexNumberMatrix build() {

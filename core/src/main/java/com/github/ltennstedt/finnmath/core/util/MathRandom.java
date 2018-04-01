@@ -1,17 +1,17 @@
 /*
  * Copyright 2017 Lars Tennstedt
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under Apache License, Version 2.0 ("License");
+ * you may not use this file except in compliance with License.
+ * You may obtain a copy of License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * See License for specific language governing permissions and
+ * limitations under License.
  */
 
 package com.github.ltennstedt.finnmath.core.util;
@@ -72,10 +72,10 @@ public final class MathRandom {
     }
 
     /**
-     * Constructor which has the seed value as parameter
+     * Constructor which has seed value as parameter
      *
      * @param seed
-     *            The seed
+     *            seed
      * @since 1
      */
     public MathRandom(final long seed) {
@@ -87,8 +87,8 @@ public final class MathRandom {
      * and above by {@code bound} (exclusive)
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link BigInteger}
+     *            bound
+     * @return pseudo random {@link BigInteger}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @since 1
@@ -103,8 +103,8 @@ public final class MathRandom {
      * (exclusive) and above by {@code 0} (inclusive)
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link BigInteger}
+     *            bound
+     * @return pseudo random {@link BigInteger}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @see #nextPositiveBigInteger(long)
@@ -120,8 +120,8 @@ public final class MathRandom {
      * above by {@code bound} (exclusive)
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link BigInteger}
+     *            bound
+     * @return pseudo random {@link BigInteger}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @see #nextPositiveBigInteger(long)
@@ -134,14 +134,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing positive
+     * Returns a {@link List} of size of {@code howMany} containing positive
      * {@link BigInteger BigIntegers}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigInteger BigIntegers}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigInteger BigIntegers}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -158,14 +158,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing negative
+     * Returns a {@link List} of size of {@code howMany} containing negative
      * {@link BigInteger BigIntegers}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigInteger BigIntegers}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigInteger BigIntegers}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -182,14 +182,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link BigInteger BigIntegers}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigInteger BigIntegers}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigInteger BigIntegers}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -210,10 +210,10 @@ public final class MathRandom {
      * by {@code 0} (inclusive) and above by {@code bound} (exclusive)
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @return A pseudo random {@link BigDecimal}
+     *            scale to be set on {@link BigDecimal BigDecimals}
+     * @return pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -232,10 +232,10 @@ public final class MathRandom {
      * by {@code -bound} (exclusive) and above by {@code 0} (inclusive)
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @return A pseudo random {@link BigDecimal}
+     *            scale to be set on {@link BigDecimal BigDecimals}
+     * @return pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -254,10 +254,10 @@ public final class MathRandom {
      * {@code -bound} (exclusive) and above by {@code bound} (exclusive)
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @return A pseudo random {@link BigDecimal}
+     *            scale to be set on {@link BigDecimal BigDecimals}
+     * @return pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -275,10 +275,10 @@ public final class MathRandom {
      * Returns a positive {@link BigDecimal} which is invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @return A pseudo random {@link BigDecimal}
+     *            scale to be set on {@link BigDecimal BigDecimals}
+     * @return pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @throws IllegalArgumentException
@@ -297,10 +297,10 @@ public final class MathRandom {
      * Returns a negative {@link BigDecimal} which is invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @return A pseudo random {@link BigDecimal}
+     *            scale to be set on {@link BigDecimal BigDecimals}
+     * @return pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @throws IllegalArgumentException
@@ -320,10 +320,10 @@ public final class MathRandom {
      * Returns a {@link BigDecimal} which is invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @return A pseudo random {@link BigDecimal}
+     *            scale to be set on {@link BigDecimal BigDecimals}
+     * @return pseudo random {@link BigDecimal}
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @throws IllegalArgumentException
@@ -357,16 +357,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing positive
+     * Returns a {@link List} of size of {@code howMany} containing positive
      * {@link BigDecimal BigDecimals}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -386,16 +386,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing negative
+     * Returns a {@link List} of size of {@code howMany} containing negative
      * {@link BigDecimal BigDecimals}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -415,16 +415,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link BigDecimal BigDecimals}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -444,16 +444,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing positive
+     * Returns a {@link List} of size of {@code howMany} containing positive
      * {@link BigDecimal BigDecimals} which are invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -473,16 +473,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing negative
+     * Returns a {@link List} of size of {@code howMany} containing negative
      * {@link BigDecimal BigDecimals} which are invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -502,16 +502,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@code List} of the size of {@code howMany} containing
+     * Returns a {@code List} of size of {@code howMany} containing
      * {@link BigDecimal BigDecimals} which are invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigDecimal BigDecimals}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigDecimal BigDecimals}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -537,8 +537,8 @@ public final class MathRandom {
      * (inclusive) and {@code bound} (exclusive)
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
+     *            bound
+     * @return pseudo random {@link Fraction}
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @since 1
@@ -557,8 +557,8 @@ public final class MathRandom {
      * (exclusive)
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
+     *            bound
+     * @return pseudo random {@link Fraction}
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @since 1
@@ -575,8 +575,8 @@ public final class MathRandom {
      * bound} (exclusive)
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
+     *            bound
+     * @return pseudo random {@link Fraction}
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @since 1
@@ -590,8 +590,8 @@ public final class MathRandom {
      * Returns a positive {@link Fraction} which is invertible
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
+     *            bound
+     * @return pseudo random {@link Fraction}
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @see #nextPositiveFraction
@@ -608,8 +608,8 @@ public final class MathRandom {
      * Returns a negative {@link Fraction} which is invertible
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
+     *            bound
+     * @return pseudo random {@link Fraction}
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @see #nextNegativeFraction
@@ -624,8 +624,8 @@ public final class MathRandom {
      * Returns a {@link Fraction} which is invertible
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link Fraction}
+     *            bound
+     * @return pseudo random {@link Fraction}
      * @throws IllegalArgumentException
      *             if {@code bound < 2}
      * @see #nextFraction
@@ -637,14 +637,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing positive
+     * Returns a {@link List} of size of {@code howMany} containing positive
      * {@link Fraction Fractions}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link Fraction Fractions}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
      * @throws IllegalArgumentException
@@ -661,14 +661,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing negative
+     * Returns a {@link List} of size of {@code howMany} containing negative
      * {@link Fraction Fractions}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link Fraction Fractions}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
      * @throws IllegalArgumentException
@@ -685,14 +685,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
-     * {@link Fraction Fractions}
+     * Returns a {@link List} of size of {@code howMany} containing {@link Fraction
+     * Fractions}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link Fraction Fractions}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
      * @throws IllegalArgumentException
@@ -709,14 +709,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing positive
+     * Returns a {@link List} of size of {@code howMany} containing positive
      * {@link Fraction Fractions} which are invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link Fraction Fractions}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
      * @throws IllegalArgumentException
@@ -733,14 +733,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing negative
+     * Returns a {@link List} of size of {@code howMany} containing negative
      * {@link Fraction Fractions} which are invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link Fraction Fractions}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
      * @throws IllegalArgumentException
@@ -757,14 +757,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
-     * {@link Fraction Fractions} which are invertible
+     * Returns a {@link List} of size of {@code howMany} containing {@link Fraction
+     * Fractions} which are invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link Fraction Fractions}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link Fraction Fractions}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
      * @throws IllegalArgumentException
@@ -786,8 +786,8 @@ public final class MathRandom {
      * -bound} (exclusive) and above by {@code bound} (exclusive)
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link SimpleComplexNumber}
+     *            bound
+     * @return pseudo random {@link SimpleComplexNumber}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @see #nextBigInteger(long)
@@ -802,8 +802,8 @@ public final class MathRandom {
      * Returns a {@link SimpleComplexNumber} which is invertible
      *
      * @param bound
-     *            the bound
-     * @return A pseudo random {@link SimpleComplexNumber}
+     *            bound
+     * @return pseudo random {@link SimpleComplexNumber}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @see #nextBigInteger(long)
@@ -818,14 +818,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link SimpleComplexNumber SimpleComplexNumbers}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A List {@link List} of pseudo random {@link SimpleComplexNumber
+     *            size of resulting {@link List}
+     * @return List {@link List} of pseudo random {@link SimpleComplexNumber
      *         SimpleComplexNumbers}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
@@ -843,14 +843,14 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link SimpleComplexNumber SimpleComplexNumbers} which are invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link SimpleComplexNumber
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link SimpleComplexNumber
      *         SimpleComplexNumbers}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
@@ -873,10 +873,10 @@ public final class MathRandom {
      * -bound} (exclusive) and above by {@code bound} (exclusive)
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @return A pseudo random {@link RealComplexNumber}
+     *            scale to be set on {@link BigDecimal BigDecimals}
+     * @return pseudo random {@link RealComplexNumber}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @since 1
@@ -893,10 +893,10 @@ public final class MathRandom {
      * Returns a {@link RealComplexNumber} which is invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @return A pseudo random {@link RealComplexNumber}
+     *            scale to be set on {@link BigDecimal BigDecimals}
+     * @return pseudo random {@link RealComplexNumber}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @see #nextRealComplexNumber
@@ -913,16 +913,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link RealComplexNumber RealComplexNumbers}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link RealComplexNumber
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link RealComplexNumber
      *         RealComplexNumbers}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
@@ -943,16 +943,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link RealComplexNumber RealComplexNumbers} which are invertible
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link RealComplexNumber
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link RealComplexNumber
      *         RealComplexNumbers}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
@@ -977,10 +977,10 @@ public final class MathRandom {
      * Returns a {@link PolarForm}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
-     * @return A {@link PolarForm}
+     *            scale to be set on {@link BigDecimal BigDecimals}
+     * @return {@link PolarForm}
      * @throws IllegalArgumentException
      *             if {@code  bound < 1}
      * @throws IllegalArgumentException
@@ -995,16 +995,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
-     * {@link PolarForm PolarForms}
+     * Returns a {@link List} of size of {@code howMany} containing {@link PolarForm
+     * PolarForms}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link RealComplexNumber
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link RealComplexNumber
      *         RealComplexNumbers}
      * @throws IllegalArgumentException
      *             if {@code  bound < 1}
@@ -1028,10 +1028,10 @@ public final class MathRandom {
      * Returns a {@link BigIntegerVector}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the size of the resulting {@link BigIntegerVector}
-     * @return A pseudo random {@link BigIntegerVector}
+     *            size of resulting {@link BigIntegerVector}
+     * @return pseudo random {@link BigIntegerVector}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1048,17 +1048,16 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link BigIntegerVector BigIntegerVectors}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the sizes of the resulting {@link BigIntegerVector
-     *            BigIntegerVectors}
+     *            sizes of resulting {@link BigIntegerVector BigIntegerVectors}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigIntegerVector
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigIntegerVector
      *         BigIntegerVectors}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
@@ -1080,12 +1079,12 @@ public final class MathRandom {
      * Returns a {@link BigIntegerMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param rowSize
-     *            the row size of the resulting {@link BigIntegerMatrix}
+     *            row size of resulting {@link BigIntegerMatrix}
      * @param columnSize
-     *            the column size of the resulting {@link BigIntegerMatrix}
-     * @return A pseudo random {@link BigIntegerMatrix}
+     *            column size of resulting {@link BigIntegerMatrix}
+     * @return pseudo random {@link BigIntegerMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1110,10 +1109,10 @@ public final class MathRandom {
      * Returns an upper triangular {@link BigIntegerMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of resulting {@link BigIntegerMatrix}
-     * @return A pseudo random upper triangular {@link BigIntegerMatrix}
+     *            row and column size of resulting {@link BigIntegerMatrix}
+     * @return pseudo random upper triangular {@link BigIntegerMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1141,10 +1140,10 @@ public final class MathRandom {
      * Returns an lower triangular {@link BigIntegerMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix}
-     * @return A pseudo random lower triangular {@link BigIntegerMatrix}
+     *            row and column size of resulting {@link BigIntegerMatrix}
+     * @return pseudo random lower triangular {@link BigIntegerMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1172,10 +1171,10 @@ public final class MathRandom {
      * Returns a triangular {@link BigIntegerMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix}
-     * @return A pseudo random triangular {@link BigIntegerMatrix}
+     *            row and column size of resulting {@link BigIntegerMatrix}
+     * @return pseudo random triangular {@link BigIntegerMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1196,10 +1195,10 @@ public final class MathRandom {
      * Returns a diagonal {@link BigIntegerMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix}
-     * @return A pseudo random diagonal {@link BigIntegerMatrix}
+     *            row and column size of resulting {@link BigIntegerMatrix}
+     * @return pseudo random diagonal {@link BigIntegerMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1226,10 +1225,10 @@ public final class MathRandom {
      * Returns a symmetric {@link BigIntegerMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix}
-     * @return A pseudo random symmetric {@link BigIntegerMatrix}
+     *            row and column size of resulting {@link BigIntegerMatrix}
+     * @return pseudo random symmetric {@link BigIntegerMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1258,10 +1257,10 @@ public final class MathRandom {
      * Returns a skew-symmetric {@link BigIntegerMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix}
-     * @return A pseudo random skew-symmetric {@link BigIntegerMatrix}
+     *            row and column size of resulting {@link BigIntegerMatrix}
+     * @return pseudo random skew-symmetric {@link BigIntegerMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1287,20 +1286,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link BigIntegerMatrix BigIntegerMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param rowSize
-     *            the row size of the resulting {@link BigIntegerMatrix
-     *            BigIntegerMatrices}
+     *            row size of resulting {@link BigIntegerMatrix BigIntegerMatrices}
      * @param columnSize
-     *            the column size of the resulting {@link BigIntegerMatrix
+     *            column size of resulting {@link BigIntegerMatrix
      *            BigIntegerMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigIntegerMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigIntegerMatrix
      *         BigIntegerMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1325,17 +1323,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing upper
-     * triangular {@link BigIntegerMatrix BigIntegerMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing upper triangular
+     * {@link BigIntegerMatrix BigIntegerMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix
+     *            row and column size of resulting {@link BigIntegerMatrix
      *            BigIntegerMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random upper triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random upper triangular
      *         {@link BigIntegerMatrix BigIntegerMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1357,17 +1355,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing lower
-     * triangular {@link BigIntegerMatrix BigIntegerMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing lower triangular
+     * {@link BigIntegerMatrix BigIntegerMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix
+     *            row and column size of resulting {@link BigIntegerMatrix
      *            BigIntegerMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random lower triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random lower triangular
      *         {@link BigIntegerMatrix BigIntegerMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1389,17 +1387,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing triangular
+     * Returns a {@link List} of size of {@code howMany} containing triangular
      * {@link BigIntegerMatrix BigIntegerMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix
+     *            row and column size of resulting {@link BigIntegerMatrix
      *            BigIntegerMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random triangular {@link BigIntegerMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random triangular {@link BigIntegerMatrix
      *         BigIntegerMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1421,17 +1419,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing diagonal
+     * Returns a {@link List} of size of {@code howMany} containing diagonal
      * {@link BigIntegerMatrix BigIntegerMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix
+     *            row and column size of resulting {@link BigIntegerMatrix
      *            BigIntegerMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random diagonal {@link BigIntegerMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random diagonal {@link BigIntegerMatrix
      *         BigIntegerMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1452,17 +1450,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing symmetric
+     * Returns a {@link List} of size of {@code howMany} containing symmetric
      * {@link BigIntegerMatrix BigIntegerMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix
+     *            row and column size of resulting {@link BigIntegerMatrix
      *            BigIntegerMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random symmetric {@link BigIntegerMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random symmetric {@link BigIntegerMatrix
      *         BigIntegerMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1483,18 +1481,18 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
-     * skew-symmetric {@link BigIntegerMatrix BigIntegerMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing skew-symmetric
+     * {@link BigIntegerMatrix BigIntegerMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting {@link BigIntegerMatrix
+     *            row and column size of resulting {@link BigIntegerMatrix
      *            BigIntegerMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random skew-symmetric
-     *         {@link BigIntegerMatrix BigIntegerMatrices}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random skew-symmetric {@link BigIntegerMatrix
+     *         BigIntegerMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1518,12 +1516,12 @@ public final class MathRandom {
      * Returns a {@link BigDecimalVector}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param size
-     *            the size of the resulting {@link BigDecimalVector}
-     * @return A speudo random {@link BigDecimalVector}
+     *            size of resulting {@link BigDecimalVector}
+     * @return speudo random {@link BigDecimalVector}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1543,19 +1541,18 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link BigDecimalVector BigDecimalVectors}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param size
-     *            the size of the resulting {@link BigDecimalVector
-     *            BigDecimalVectors}
+     *            size of resulting {@link BigDecimalVector BigDecimalVectors}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigDecimalVector
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigDecimalVector
      *         BigDecimalVectors}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1585,14 +1582,14 @@ public final class MathRandom {
      * Returns a {@link BigDecimalMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param rowSize
-     *            the row size of the resulting {@link BigDecimalMatrix}
+     *            row size of resulting {@link BigDecimalMatrix}
      * @param columnSize
-     *            the column size of the resulting {@link BigDecimalMatrix}
-     * @return A pseudo random {@link BigDecimalMatrix}
+     *            column size of resulting {@link BigDecimalMatrix}
+     * @return pseudo random {@link BigDecimalMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1621,12 +1618,12 @@ public final class MathRandom {
      * Returns an upper triangular {@link BigDecimalMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of resulting {@link BigDecimalMatrix}
-     * @return A pseudo random upper triangular {@link BigDecimalMatrix}
+     *            row and column size of resulting {@link BigDecimalMatrix}
+     * @return pseudo random upper triangular {@link BigDecimalMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1656,12 +1653,12 @@ public final class MathRandom {
      * Returns an lower triangular {@link BigDecimalMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix}
-     * @return A pseudo random lower triangular {@link BigDecimalMatrix}
+     *            row and column size of resulting {@link BigDecimalMatrix}
+     * @return pseudo random lower triangular {@link BigDecimalMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1691,12 +1688,12 @@ public final class MathRandom {
      * Returns a triangular {@link BigDecimalMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix}
-     * @return A pseudo random triangular {@link BigDecimalMatrix}
+     *            row and column size of resulting {@link BigDecimalMatrix}
+     * @return pseudo random triangular {@link BigDecimalMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1719,12 +1716,12 @@ public final class MathRandom {
      * Returns a diagonal {@link BigDecimalMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix}
-     * @return A pseudo random diagonal {@link BigDecimalMatrix}
+     *            row and column size of resulting {@link BigDecimalMatrix}
+     * @return pseudo random diagonal {@link BigDecimalMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1753,12 +1750,12 @@ public final class MathRandom {
      * Returns a symmetric {@link BigDecimalMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix}
-     * @return A pseudo random symmetric {@link BigDecimalMatrix}
+     *            row and column size of resulting {@link BigDecimalMatrix}
+     * @return pseudo random symmetric {@link BigDecimalMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1789,12 +1786,12 @@ public final class MathRandom {
      * Returns a skew-symmetric {@link BigDecimalMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix}
-     * @return A pseudo random skew-symmetric {@link BigDecimalMatrix}
+     *            row and column size of resulting {@link BigDecimalMatrix}
+     * @return pseudo random skew-symmetric {@link BigDecimalMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -1822,22 +1819,21 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link BigDecimalMatrix BigDecimalMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale to be set on the {@link BigDecimal BigDecimals}
+     *            scale to be set on {@link BigDecimal BigDecimals}
      * @param rowSize
-     *            the row size of the resulting {@link BigDecimalMatrix
-     *            BigDecimalMatrices}
+     *            row size of resulting {@link BigDecimalMatrix BigDecimalMatrices}
      * @param columnSize
-     *            the column size of the resulting {@link BigDecimalMatrix
+     *            column size of resulting {@link BigDecimalMatrix
      *            BigDecimalMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link BigDecimalMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link BigDecimalMatrix
      *         BigDecimalMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1865,19 +1861,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing upper
-     * triangular {@link BigDecimalMatrix BigDecimalMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing upper triangular
+     * {@link BigDecimalMatrix BigDecimalMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix
+     *            row and column size of resulting {@link BigDecimalMatrix
      *            BigDecimalMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random upper triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random upper triangular
      *         {@link BigDecimalMatrix BigDecimalMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1902,19 +1898,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing lower
-     * triangular {@link BigDecimalMatrix BigDecimalMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing lower triangular
+     * {@link BigDecimalMatrix BigDecimalMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix
+     *            row and column size of resulting {@link BigDecimalMatrix
      *            BigDecimalMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random lower triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random lower triangular
      *         {@link BigDecimalMatrix BigDecimalMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1939,19 +1935,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing triangular
+     * Returns a {@link List} of size of {@code howMany} containing triangular
      * {@link BigDecimalMatrix BigDecimalMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix
+     *            row and column size of resulting {@link BigDecimalMatrix
      *            BigDecimalMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random triangular {@link BigDecimalMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random triangular {@link BigDecimalMatrix
      *         BigDecimalMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -1976,19 +1972,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing diagonal
+     * Returns a {@link List} of size of {@code howMany} containing diagonal
      * {@link BigDecimalMatrix BigDecimalMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix
+     *            row and column size of resulting {@link BigDecimalMatrix
      *            BigDecimalMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random diagonal {@link BigDecimalMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random diagonal {@link BigDecimalMatrix
      *         BigDecimalMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2013,19 +2009,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing symmetric
+     * Returns a {@link List} of size of {@code howMany} containing symmetric
      * {@link BigDecimalMatrix BigDecimalMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix
+     *            row and column size of resulting {@link BigDecimalMatrix
      *            BigDecimalMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random symmetric {@link BigDecimalMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random symmetric {@link BigDecimalMatrix
      *         BigDecimalMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2050,20 +2046,20 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
-     * skew-symmetric {@link BigDecimalMatrix BigDecimalMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing skew-symmetric
+     * {@link BigDecimalMatrix BigDecimalMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting {@link BigDecimalMatrix
+     *            row and column size of resulting {@link BigDecimalMatrix
      *            BigDecimalMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random skew-symmetric
-     *         {@link BigDecimalMatrix BigDecimalMatrices}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random skew-symmetric {@link BigDecimalMatrix
+     *         BigDecimalMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2090,10 +2086,10 @@ public final class MathRandom {
      * Returns a {@link SimpleComplexNumberVector}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the size of the resulting {@link SimpleComplexNumberVector}
-     * @return A pseudo random {@link SimpleComplexNumberVector}
+     *            size of resulting {@link SimpleComplexNumberVector}
+     * @return pseudo random {@link SimpleComplexNumberVector}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2111,17 +2107,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link SimpleComplexNumberVector SimpleComplexNumberVectors}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the sizes of the resulting {@link SimpleComplexNumberVector
+     *            sizes of resulting {@link SimpleComplexNumberVector
      *            SimpleComplexNumberVectors}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link SimpleComplexNumberVector
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link SimpleComplexNumberVector
      *         SimpleComplexNumberVectors}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
@@ -2144,12 +2140,12 @@ public final class MathRandom {
      * Returns a {@link SimpleComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param rowSize
-     *            the row size of the resulting {@link SimpleComplexNumberMatrix}
+     *            row size of resulting {@link SimpleComplexNumberMatrix}
      * @param columnSize
-     *            the column size of the resulting {@link SimpleComplexNumberMatrix}
-     * @return A pseudo random {@link SimpleComplexNumberMatrix}
+     *            column size of resulting {@link SimpleComplexNumberMatrix}
+     * @return pseudo random {@link SimpleComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2175,11 +2171,10 @@ public final class MathRandom {
      * Returns an upper triangular {@link SimpleComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of resulting
-     *            {@link SimpleComplexNumberMatrix}
-     * @return A pseudo random upper triangular {@link SimpleComplexNumberMatrix}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix}
+     * @return pseudo random upper triangular {@link SimpleComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2206,11 +2201,10 @@ public final class MathRandom {
      * Returns an lower triangular {@link SimpleComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix}
-     * @return A pseudo random lower triangular {@link SimpleComplexNumberMatrix}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix}
+     * @return pseudo random lower triangular {@link SimpleComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2237,11 +2231,10 @@ public final class MathRandom {
      * Returns a triangular {@link SimpleComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix}
-     * @return A pseudo random triangular {@link SimpleComplexNumberMatrix}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix}
+     * @return pseudo random triangular {@link SimpleComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2262,11 +2255,10 @@ public final class MathRandom {
      * Returns a diagonal {@link SimpleComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix}
-     * @return A pseudo random diagonal {@link SimpleComplexNumberMatrix}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix}
+     * @return pseudo random diagonal {@link SimpleComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2293,11 +2285,10 @@ public final class MathRandom {
      * Returns a symmetric {@link SimpleComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix}
-     * @return A pseudo random symmetric {@link SimpleComplexNumberMatrix}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix}
+     * @return pseudo random symmetric {@link SimpleComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2326,11 +2317,10 @@ public final class MathRandom {
      * Returns a skew-symmetric {@link SimpleComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix}
-     * @return A pseudo random skew-symmetric {@link SimpleComplexNumberMatrix}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix}
+     * @return pseudo random skew-symmetric {@link SimpleComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2356,20 +2346,20 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param rowSize
-     *            the row size of the resulting {@link SimpleComplexNumberMatrix
+     *            row size of resulting {@link SimpleComplexNumberMatrix
      *            SimpleComplexNumberMatrices}
      * @param columnSize
-     *            the column size of the resulting {@link SimpleComplexNumberMatrix
+     *            column size of resulting {@link SimpleComplexNumberMatrix
      *            SimpleComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link SimpleComplexNumberMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link SimpleComplexNumberMatrix
      *         SimpleComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2395,17 +2385,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing upper
-     * triangular {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing upper triangular
+     * {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix
+     *            SimpleComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random upper triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random upper triangular
      *         {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2428,17 +2418,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing lower
-     * triangular {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing lower triangular
+     * {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix
+     *            SimpleComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random lower triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random lower triangular
      *         {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2461,17 +2451,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing triangular
+     * Returns a {@link List} of size of {@code howMany} containing triangular
      * {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix
+     *            SimpleComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random triangular
      *         {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2493,17 +2483,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing diagonal
+     * Returns a {@link List} of size of {@code howMany} containing diagonal
      * {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix
+     *            SimpleComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random diagonal
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random diagonal
      *         {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2525,17 +2515,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing symmetric
+     * Returns a {@link List} of size of {@code howMany} containing symmetric
      * {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix
+     *            SimpleComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random symmetric
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random symmetric
      *         {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2557,17 +2547,17 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
-     * skew-symmetric {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing skew-symmetric
+     * {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param size
-     *            the row and column size of the resulting
-     *            {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
+     *            row and column size of resulting {@link SimpleComplexNumberMatrix
+     *            SimpleComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random skew-symmetric
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random skew-symmetric
      *         {@link SimpleComplexNumberMatrix SimpleComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2592,12 +2582,12 @@ public final class MathRandom {
      * Returns a {@link RealComplexNumberVector}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the size of the resulting {@link RealComplexNumberVector}
-     * @return A pseudo random {@link RealComplexNumberVector}
+     *            size of resulting {@link RealComplexNumberVector}
+     * @return pseudo random {@link RealComplexNumberVector}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2617,19 +2607,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link RealComplexNumberVector RealComplexNumberVectors}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the sizes of the resulting {@link RealComplexNumberVector
+     *            sizes of resulting {@link RealComplexNumberVector
      *            RealComplexNumberVectors}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link RealComplexNumberVector
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link RealComplexNumberVector
      *         RealComplexNumberVectors}
      * @throws IllegalArgumentException
      *             if {@code  bound < 2}
@@ -2655,14 +2645,14 @@ public final class MathRandom {
      * Returns a {@link RealComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param rowSize
-     *            the row size of the resulting {@link RealComplexNumberMatrix}
+     *            row size of resulting {@link RealComplexNumberMatrix}
      * @param columnSize
-     *            the column size of the resulting {@link RealComplexNumberMatrix}
-     * @return A pseudo random {@link RealComplexNumberMatrix}
+     *            column size of resulting {@link RealComplexNumberMatrix}
+     * @return pseudo random {@link RealComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2691,13 +2681,12 @@ public final class MathRandom {
      * Returns an upper triangular {@link RealComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of resulting
-     *            {@link RealComplexNumberMatrix}
-     * @return A pseudo random upper triangular {@link RealComplexNumberMatrix}
+     *            row and column size of resulting {@link RealComplexNumberMatrix}
+     * @return pseudo random upper triangular {@link RealComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2729,13 +2718,12 @@ public final class MathRandom {
      * Returns an lower triangular {@link RealComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix}
-     * @return A pseudo random lower triangular {@link RealComplexNumberMatrix}
+     *            row and column size of resulting {@link RealComplexNumberMatrix}
+     * @return pseudo random lower triangular {@link RealComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2767,13 +2755,12 @@ public final class MathRandom {
      * Returns a triangular {@link RealComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix}
-     * @return A pseudo random triangular {@link RealComplexNumberMatrix}
+     *            row and column size of resulting {@link RealComplexNumberMatrix}
+     * @return pseudo random triangular {@link RealComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2798,13 +2785,12 @@ public final class MathRandom {
      * Returns a diagonal {@link RealComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix}
-     * @return A pseudo random diagonal {@link RealComplexNumberMatrix}
+     *            row and column size of resulting {@link RealComplexNumberMatrix}
+     * @return pseudo random diagonal {@link RealComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2835,13 +2821,12 @@ public final class MathRandom {
      * Returns a symmetric {@link RealComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix}
-     * @return A pseudo random symmetric {@link RealComplexNumberMatrix}
+     *            row and column size of resulting {@link RealComplexNumberMatrix}
+     * @return pseudo random symmetric {@link RealComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2874,13 +2859,12 @@ public final class MathRandom {
      * Returns a skew-symmetric {@link RealComplexNumberMatrix}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix}
-     * @return A pseudo random skew-symmetric {@link RealComplexNumberMatrix}
+     *            row and column size of resulting {@link RealComplexNumberMatrix}
+     * @return pseudo random skew-symmetric {@link RealComplexNumberMatrix}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -2910,22 +2894,22 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
+     * Returns a {@link List} of size of {@code howMany} containing
      * {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param rowSize
-     *            the row size of the resulting {@link RealComplexNumberMatrix
+     *            row size of resulting {@link RealComplexNumberMatrix
      *            RealComplexNumberMatrices}
      * @param columnSize
-     *            the column size of the resulting {@link RealComplexNumberMatrix
+     *            column size of resulting {@link RealComplexNumberMatrix
      *            RealComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random {@link RealComplexNumberMatrix
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random {@link RealComplexNumberMatrix
      *         RealComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2954,19 +2938,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing upper
-     * triangular {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing upper triangular
+     * {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     *            row and column size of resulting {@link RealComplexNumberMatrix
+     *            RealComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random upper triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random upper triangular
      *         {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -2992,19 +2976,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing lower
-     * triangular {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing lower triangular
+     * {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     *            row and column size of resulting {@link RealComplexNumberMatrix
+     *            RealComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random lower triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random lower triangular
      *         {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -3030,19 +3014,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing triangular
+     * Returns a {@link List} of size of {@code howMany} containing triangular
      * {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     *            row and column size of resulting {@link RealComplexNumberMatrix
+     *            RealComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random triangular
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random triangular
      *         {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -3068,20 +3052,20 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing diagonal
+     * Returns a {@link List} of size of {@code howMany} containing diagonal
      * {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     *            row and column size of resulting {@link RealComplexNumberMatrix
+     *            RealComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random diagonal
-     *         {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random diagonal {@link RealComplexNumberMatrix
+     *         RealComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
      * @throws IllegalArgumentException
@@ -3105,19 +3089,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing symmetric
+     * Returns a {@link List} of size of {@code howMany} containing symmetric
      * {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     *            row and column size of resulting {@link RealComplexNumberMatrix
+     *            RealComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random symmetric
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random symmetric
      *         {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}
@@ -3143,19 +3127,19 @@ public final class MathRandom {
     }
 
     /**
-     * Returns a {@link List} of the size of {@code howMany} containing
-     * skew-symmetric {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     * Returns a {@link List} of size of {@code howMany} containing skew-symmetric
+     * {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      *
      * @param bound
-     *            the bound
+     *            bound
      * @param scale
-     *            the scale
+     *            scale
      * @param size
-     *            the row and column size of the resulting
-     *            {@link RealComplexNumberMatrix RealComplexNumberMatrices}
+     *            row and column size of resulting {@link RealComplexNumberMatrix
+     *            RealComplexNumberMatrices}
      * @param howMany
-     *            the size of the resulting {@link List}
-     * @return A {@link List} of pseudo random skew-symmetric
+     *            size of resulting {@link List}
+     * @return {@link List} of pseudo random skew-symmetric
      *         {@link RealComplexNumberMatrix RealComplexNumberMatrices}
      * @throws IllegalArgumentException
      *             if {@code bound < 1}

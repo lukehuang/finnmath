@@ -35,13 +35,13 @@ import java.util.Objects;
  * Base class for vectors
  *
  * @param &lt;E&gt;
- *            The type of the elements of the vector
+ *            type of the elements of the vector
  * @param &lt;V&gt;
- *            The type of the vector
+ *            type of the vector
  * @param &lt;N&gt;
- *            The type of the taxicab and max norm of the vector
+ *            type of the taxicab and max norm of the vector
  * @param &lt;P&gt;
- *            The type of the inner product
+ *            type of the inner product
  * @author Lars Tennstedt
  * @see ImmutableMap
  * @since 1
@@ -57,7 +57,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
         SquareRootCalculator.DEFAULT_SQUARE_ROOT_CONTEXT;
 
     /**
-     * The map holding the elements of this {@link AbstractVector}
+     * {@link ImmutableMap} holding the elements of this {@link AbstractVector}
      *
      * @since 1
      */
@@ -70,64 +70,18 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      *            {@link ImmutableMap}
      * @throws NullPointerException
      *             if {@code map == null}
+     * @since 1
      */
-<span class="fc" id="L74">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
-<span class="fc" id="L75">        requireNonNull(map, &quot;map&quot;);</span>
-<span class="fc" id="L76">        this.map = map;</span>
+<span class="fc" id="L75">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
+<span class="fc" id="L76">        this.map = requireNonNull(map, &quot;map&quot;);</span>
 <span class="fc" id="L77">    }</span>
-
-    /**
-     * Returns the element dependent on the given index
-     *
-     * @param index
-     *            the index of the element
-     * @return The element
-     * @throws NullPointerException
-     *             if {@code index == null}
-     * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
-     * @see Map#containsKey
-     * @since 1
-     */
-    public final E element(final Integer index) {
-<span class="fc" id="L93">        requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L94">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
-<span class="fc" id="L95">        return map.get(index);</span>
-    }
-
-    /**
-     * Returns all elements of the underlying {@link Map} of this
-     * {@link AbstractVector}
-     *
-     * @return The elements
-     * @see Map#entrySet
-     * @since 1
-     */
-    public final ImmutableSet&lt;Entry&lt;Integer, E&gt;&gt; entries() {
-<span class="fc" id="L107">        return map.entrySet();</span>
-    }
-
-    /**
-     * Returns all elements of this {@link AbstractVector}
-     *
-     * @return The elements
-     * @see Map#values
-     * @since 1
-     */
-    public final ImmutableCollection&lt;E&gt; elements() {
-<span class="fc" id="L118">        return map.values();</span>
-    }
 
     /**
      * Returns the sum of this {@link AbstractVector} and the given one
      *
      * @param summand
      *            summand
-     * @return Sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != summand.size}
+     * @return sum
      * @since 1
      */
     protected abstract V add(V summand);
@@ -136,12 +90,8 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * Returns the difference of this {@link AbstractVector} and the given one
      *
      * @param subtrahend
-     *            the subtrahend
-     * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != subtrahend.size}
+     *            subtrahend
+     * @return difference
      * @since 1
      */
     protected abstract V subtract(V subtrahend);
@@ -150,12 +100,8 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * Returns the dot product of this {@link AbstractVector} and the given one
      *
      * @param other
-     *            The other {@link AbstractVector}
-     * @return The dot product
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *            other {@link AbstractVector}
+     * @return dot product
      * @since 1
      */
     protected abstract E dotProduct(V other);
@@ -165,10 +111,8 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * {@link AbstractVector}
      *
      * @param scalar
-     *            the scalar
-     * @return The scalar product
-     * @throws NullPointerException
-     *             if {@code scalar == null}
+     *            scalar
+     * @return scalar product
      * @since 1
      */
     protected abstract V scalarMultiply(E scalar);
@@ -176,8 +120,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the negated {@link AbstractVector} of this one
      *
-     * @return The negated
-     * @see #scalarMultiply
+     * @return negated {@link AbstractVector}
      * @since 1
      */
     protected abstract V negate();
@@ -185,37 +128,15 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the taxicab norm of this {@link AbstractVector}
      *
-     * @return The taxicab norm
+     * @return taxicab norm
      * @since 1
      */
     protected abstract N taxicabNorm();
 
     /**
-     * Returns the taxicab distance from this {@link AbstractVector} to the given
-     * one
-     *
-     * @param other
-     *            The other {@link AbstractVector}
-     * @return The taxicab distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @see #subtract
-     * @see #taxicabNorm
-     * @since 1
-     */
-    public final N taxicabDistance(final V other) {
-<span class="fc" id="L209">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L211">        return subtract(other).taxicabNorm();</span>
-    }
-
-    /**
      * Returns the square of the euclidean norm of this {@link AbstractVector}
      *
-     * @return The square of the euclidean norm
-     * @see #dotProduct
+     * @return square of the euclidean norm
      * @since 1
      */
     protected abstract P euclideanNormPow2();
@@ -223,32 +144,65 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the euclidean norm of this {@link AbstractVector}
      *
+     * @return euclidean norm
+     * @since 1
+     */
+    protected abstract BigDecimal euclideanNorm();
+
+    /**
+     * Returns the euclidean norm of this {@link AbstractVector}
+     *
      * @param squareRootContext
      *            {@link SquareRootContext}
-     * @return Euclidean norm
+     * @return euclidean norm
      * @since 1
      */
     protected abstract BigDecimal euclideanNorm(SquareRootContext squareRootContext);
+
+    /**
+     * Returns the maximum norm of this {@link AbstractVector}
+     *
+     * @return maximum norm
+     * @since 1
+     */
+    protected abstract N maxNorm();
+
+    /**
+     * Returns the taxicab distance from this {@link AbstractVector} to the given
+     * one
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @return taxicab distance
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    public final N taxicabDistance(final V other) {
+<span class="fc" id="L184">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L186">        return subtract(other).taxicabNorm();</span>
+    }
 
     /**
      * Returns the square of the euclidean distance from this {@link AbstractVector}
      * to the given one
      *
      * @param other
-     *            The other {@link AbstractVector}
-     * @return The square of the euclidean distance
+     *            other {@link AbstractVector}
+     * @return square of the euclidean distance
      * @throws NullPointerException
      *             if {@code other == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
-     * @see #subtract
-     * @see #euclideanNormPow2
      * @since 1
      */
     public final P euclideanDistancePow2(final V other) {
-<span class="fc" id="L249">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L250" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L251">        return subtract(other).euclideanNormPow2();</span>
+<span class="fc" id="L203">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L205">        return subtract(other).euclideanNormPow2();</span>
     }
 
     /**
@@ -265,13 +219,12 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      *             if {@code roundingMode == null}
      * @throws IllegalArgumentException
      *             if {@code abortCriterion &lt;= 0 || 1 &lt;= abortCriterion}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
      */
     public final BigDecimal euclideanDistance(final V other) {
-<span class="fc" id="L272">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L273" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L274">        return euclideanDistance(other, DEFAULT_SQUARE_ROOT_CONTEXT);</span>
+<span class="fc" id="L225">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L227">        return euclideanDistance(other, DEFAULT_SQUARE_ROOT_CONTEXT);</span>
     }
 
     /**
@@ -281,7 +234,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      *            other {@link AbstractVector}
      * @param squareRootContext
      *            {@link SquareRootContext}
-     * @return Euclidean norm
+     * @return euclidean norm
      * @throws NullPointerException
      *             if {@code other == null}
      * @throws NullPointerException
@@ -289,87 +242,121 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
      * @since 1
-     * @see #subtract
-     * @see #euclideanNorm(SquareRootContext)
      */
     public final BigDecimal euclideanDistance(final V other, final SquareRootContext squareRootContext) {
-<span class="fc" id="L296">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc" id="L297">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L299">        return subtract(other).euclideanNorm(squareRootContext);</span>
+<span class="fc" id="L247">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc" id="L248">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L250">        return subtract(other).euclideanNorm(squareRootContext);</span>
     }
 
     /**
-     * Returns the max norm of this {@link AbstractVector}
-     *
-     * @return The max norm
-     * @since 1
-     */
-    protected abstract N maxNorm();
-
-    /**
-     * Returns the max distance from this {@link AbstractVector} to the given one
+     * Returns the maximum distance from this {@link AbstractVector} to the given
+     * one
      *
      * @param other
-     *            The other {@link AbstractVector}
-     * @return The max distance
+     *            other {@link AbstractVector}
+     * @return maximum distance
      * @throws NullPointerException
      *             if {@code vector == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
-     * @see #subtract
-     * @see #maxNorm
      * @since 1
      */
     public final N maxDistance(final V other) {
-<span class="fc" id="L325">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L326" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L327">        return subtract(other).maxNorm();</span>
+<span class="fc" id="L267">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L269">        return subtract(other).maxNorm();</span>
     }
 
     /**
-     * Returns the size of the underlying {@link Map}
+     * Returns the element dependent on the given index
      *
-     * @return size the size
+     * @param index
+     *            index
+     * @return element
+     * @throws NullPointerException
+     *             if {@code index == null}
+     * @throws IllegalArgumentException
+     *             if {@code index &lt; 1 || size &lt; index}
+     * @since 1
+     */
+    public final E element(final Integer index) {
+<span class="fc" id="L285">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L286">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
+<span class="fc" id="L287">        return map.get(index);</span>
+    }
+
+    /**
+     * Returns all elements of the underlying {@link Map} of this
+     * {@link AbstractVector}
+     *
+     * @return {@link Entry Entries}
+     * @since 1
+     */
+    public final ImmutableSet&lt;Entry&lt;Integer, E&gt;&gt; entries() {
+<span class="fc" id="L298">        return map.entrySet();</span>
+    }
+
+    /**
+     * Returns all elements of this {@link AbstractVector}
+     *
+     * @return elements
+     * @since 1
+     */
+    public final ImmutableCollection&lt;E&gt; elements() {
+<span class="fc" id="L308">        return map.values();</span>
+    }
+
+    /**
+     * Returns the size of this {@link AbstractVector}
+     *
+     * @return size
      * @since 1
      */
     public final int size() {
-<span class="fc" id="L337">        return map.size();</span>
+<span class="fc" id="L318">        return map.size();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final int hashCode() {
-<span class="fc" id="L345">        return Objects.hash(map);</span>
+<span class="fc" id="L328">        return Objects.hash(map);</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final boolean equals(final Object object) {
-<span class="fc bfc" id="L353" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L354">            return true;</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L339">            return true;</span>
         }
-<span class="fc bfc" id="L356" title="All 2 branches covered.">        if (!(object instanceof AbstractVector)) {</span>
-<span class="fc" id="L357">            return false;</span>
+<span class="fc bfc" id="L341" title="All 2 branches covered.">        if (!(object instanceof AbstractVector)) {</span>
+<span class="fc" id="L342">            return false;</span>
         }
-<span class="fc" id="L359">        final AbstractVector&lt;?, ?, ?, ?&gt; other = (AbstractVector&lt;?, ?, ?, ?&gt;) object;</span>
-<span class="fc" id="L360">        return Objects.deepEquals(map, other.getMap());</span>
+<span class="fc" id="L344">        final AbstractVector&lt;?, ?, ?, ?&gt; other = (AbstractVector&lt;?, ?, ?, ?&gt;) object;</span>
+<span class="fc" id="L345">        return Objects.deepEquals(map, other.getMap());</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final String toString() {
-<span class="fc" id="L368">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
+<span class="fc" id="L355">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
     }
 
     public final ImmutableMap&lt;Integer, E&gt; getMap() {
-<span class="fc" id="L372">        return map;</span>
+<span class="fc" id="L359">        return map;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

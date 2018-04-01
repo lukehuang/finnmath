@@ -44,7 +44,7 @@ import org.apache.commons.lang3.builder.Builder;
 public abstract class AbstractMatrixBuilder<E, M extends AbstractMatrix<E, ?, M, ?, ?>,
     B extends AbstractMatrixBuilder<E, M, B>> implements Builder<M> {
     /**
-     * Table holding the elements of this {@link AbstractVectorBuilder}
+     * {@link Table} holding the elements of this {@link AbstractVectorBuilder}
      *
      * @since 1
      */
@@ -157,6 +157,8 @@ public abstract class AbstractMatrixBuilder<E, M extends AbstractMatrix<E, ?, M,
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final String toString() {

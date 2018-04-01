@@ -1,17 +1,17 @@
 /*
  * Copyright 2017 Lars Tennstedt
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under Apache License, Version 2.0 ("License");
+ * you may not use this file except in compliance with License.
+ * You may obtain a copy of License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * See License for specific language governing permissions and
+ * limitations under License.
  */
 
 package com.github.ltennstedt.finnmath.core.sqrt;
@@ -53,11 +53,11 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigInteger}
+     * Returns square root of given {@link BigInteger}
      *
      * @param integer
-     *            the integer whose square root is to be calculated
-     * @return The square root of the given integer
+     *            integer whose square root is to be calculated
+     * @return square root of given integer
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws IllegalArgumentException
@@ -72,13 +72,13 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigInteger}
+     * Returns square root of given {@link BigInteger}
      *
      * @param integer
-     *            the integer whose square root is to be calculated
+     *            integer whose square root is to be calculated
      * @param squareRootContext
      *            {@link SquareRootContext}
-     * @return Square root of the given integer
+     * @return Square root of given integer
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws NullPointerException
@@ -96,11 +96,11 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigDecimal}
+     * Returns square root of given {@link BigDecimal}
      *
      * @param decimal
-     *            the decimal number whose square root is to be calculated
-     * @return The square root of the given decimal
+     *            decimal number whose square root is to be calculated
+     * @return square root of given decimal
      * @throws NullPointerException
      *             if {@code decimal == null}
      * @throws IllegalArgumentException
@@ -115,13 +115,13 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigDecimal}
+     * Returns square root of given {@link BigDecimal}
      *
      * @param decimal
-     *            the decimal number whose square root is to be calculated
+     *            decimal number whose square root is to be calculated
      * @param squareRootContext
      *            {@link SquareRootContext}
-     * @return Square root of the given decimal
+     * @return Square root of given decimal
      * @throws NullPointerException
      *             if {@code decimal == null}
      * @throws NullPointerException
@@ -139,12 +139,12 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigInteger} which has to be a
-     * perfect square
+     * Returns square root of given {@link BigInteger} which has to be a perfect
+     * square
      *
      * @param integer
-     *            the perfect square whose square root is to be calculated
-     * @return The square root of the given perfect square
+     *            perfect square whose square root is to be calculated
+     * @return square root of given perfect square
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws IllegalArgumentException
@@ -152,7 +152,6 @@ public final class SquareRootCalculator {
      * @throws IllegalArgumentException
      *             if {@code !perfectSquare}
      * @see #perfectSquare
-     * @see BigIntegerMath#sqrt
      * @since 1
      */
     public static BigInteger sqrtOfPerfectSquare(final BigInteger integer) {
@@ -163,12 +162,11 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns if the given {@link BigInteger} is a perfect square
+     * Returns if given {@link BigInteger} is a perfect square
      *
      * @param integer
-     *            the integer which should be checked
-     * @return {@code true} if the integer is a perfect square, {@code false}
-     *         otherwise
+     *            integer which should be checked
+     * @return {@code true} if integer is a perfect square, {@code false} otherwise
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws IllegalArgumentException
@@ -182,7 +180,7 @@ public final class SquareRootCalculator {
         for (BigInteger odd = BigInteger.ONE; sum.compareTo(integer) < 0; odd = odd.add(BigInteger.valueOf(2))) {
             sum = sum.add(odd);
         }
-        return sum.equals(integer);
+        return sum.compareTo(integer) == 0;
     }
 
     private static BigDecimal heronsMethod(final BigDecimal decimal, final SquareRootContext squareRootContext) {

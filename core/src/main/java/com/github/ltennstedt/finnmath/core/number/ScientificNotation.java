@@ -24,9 +24,9 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Represents the scientific notation for a decimal number which uses
- * {@link BigDecimal} as type for its coefficient and {@code int} as type for
- * its exponent
+ * An immutable implementation of the scientific notation for a decimal number
+ * which uses {@link BigDecimal} as type for its coefficient and {@code int} as
+ * type for its exponent
  * <p>
  * decimal = coefficient * 10^exponent
  *
@@ -35,18 +35,7 @@ import java.util.Objects;
  */
 @Beta
 public final class ScientificNotation {
-    /**
-     * Coefficient of this scientific notation
-     *
-     * @since 1
-     */
     private final BigDecimal coefficient;
-
-    /**
-     * Exponent of this scientific notation
-     *
-     * @since 1
-     */
     private final int exponent;
 
     /**
@@ -54,9 +43,9 @@ public final class ScientificNotation {
      * exponent
      *
      * @param coefficient
-     *            the coefficient
+     *            coefficient
      * @param exponent
-     *            the exponent
+     *            exponent
      * @throws NullPointerException
      *             if {@code coefficient == null}
      * @since 1
@@ -69,7 +58,7 @@ public final class ScientificNotation {
     /**
      * Returns a string representation of this {@link ScientificNotation}
      *
-     * @return The string representation
+     * @return string representation
      * @since 1
      */
     public String asString() {
@@ -88,11 +77,21 @@ public final class ScientificNotation {
         return coefficient.toPlainString() + " * 10**" + exponent;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
     @Override
     public int hashCode() {
         return Objects.hash(coefficient, exponent);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
     @Override
     public boolean equals(final Object object) {
         if (this == object) {
@@ -105,6 +104,11 @@ public final class ScientificNotation {
         return coefficient.equals(other.getCoefficient()) && exponent == other.getExponent();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("coefficient", coefficient).add("exponent", exponent).toString();

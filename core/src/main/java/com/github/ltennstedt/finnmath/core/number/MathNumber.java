@@ -19,6 +19,8 @@ package com.github.ltennstedt.finnmath.core.number;
 import com.google.common.annotations.Beta;
 
 /**
+ * Interface for {@link MathNumber MathNumbers}
+ *
  * @param <S>
  *            The type of the number
  * @param <T>
@@ -34,8 +36,8 @@ public interface MathNumber<S, T, A> {
      * Returns the sum of this {@link MathNumber} and the given one
      *
      * @param summand
-     *            the summand
-     * @return The sum
+     *            summand
+     * @return sum
      * @since 1
      */
     S add(S summand);
@@ -44,8 +46,8 @@ public interface MathNumber<S, T, A> {
      * Returns the difference of this {@link MathNumber} and the given one
      *
      * @param subtrahend
-     *            the subtrahend
-     * @return The difference
+     *            subtrahend
+     * @return difference
      * @since 1
      */
     S subtract(S subtrahend);
@@ -54,8 +56,8 @@ public interface MathNumber<S, T, A> {
      * Returns the product of this {@link MathNumber} and the given one
      *
      * @param factor
-     *            the factor
-     * @return The product
+     *            factor
+     * @return product
      * @since 1
      */
     S multiply(S factor);
@@ -64,8 +66,8 @@ public interface MathNumber<S, T, A> {
      * Return the quotient of this {@link MathNumber} and the given one
      *
      * @param divisor
-     *            the divisor
-     * @return The quotient
+     *            divisor
+     * @return quotient
      * @throws NullPointerException
      *             if {@code divisor == null}
      * @throws IllegalArgumentException
@@ -78,8 +80,8 @@ public interface MathNumber<S, T, A> {
      * Returns the power of this {@link MathNumber} raised by the given exponent
      *
      * @param exponent
-     *            the exponent
-     * @return The power
+     *            exponent
+     * @return power
      * @throws IllegalArgumentException
      *             if {@code exponent < 0}
      * @since 1
@@ -97,7 +99,7 @@ public interface MathNumber<S, T, A> {
     /**
      * Returns the inverted {@link MathNumber} of this one
      *
-     * @return The inverted
+     * @return inverted {@link MathNumber}
      * @throws IllegalStateException
      *             if {@code numerator == 0}
      * @since 1
@@ -115,7 +117,7 @@ public interface MathNumber<S, T, A> {
     /**
      * Returns the absolute {@link MathNumber} of this one
      *
-     * @return The absolute
+     * @return absolute value
      * @since 1
      */
     A abs();

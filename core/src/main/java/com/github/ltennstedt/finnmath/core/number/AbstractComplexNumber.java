@@ -114,8 +114,7 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
      * {@inheritDoc}
      *
      * @since 1
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @see #absPow2
+     * @see #abs(SquareRootContext)
      */
     @Override
     public final BigDecimal abs() {
@@ -133,9 +132,10 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
     protected abstract BigDecimal abs(final SquareRootContext squareRootContext);
 
     /**
-     * Returns the square of the absolute of this {@link AbstractComplexNumber}
+     * Returns the square of the absolute value of this
+     * {@link AbstractComplexNumber}
      *
-     * @return The square of the absolute
+     * @return square of the absolute value
      * @since 1
      */
     protected abstract B absPow2();
@@ -143,7 +143,7 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
     /**
      * Returns the conjugate of this {@link AbstractComplexNumber}
      *
-     * @return The conjugated
+     * @return conjugate
      * @since 1
      */
     protected abstract S conjugate();
@@ -151,10 +151,7 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
     /**
      * Returns the argument of this {@link AbstractComplexNumber}
      *
-     * @return The argument
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @see #argument(MathContext)
+     * @return argument if {@code this == 0}
      * @since 1
      */
     protected abstract BigDecimal argument();
@@ -164,13 +161,8 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
      * given {@link MathContext}
      *
      * @param mathContext
-     *            The math context
-     * @return The argument
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @see AbstractComplexNumber#argument(MathContext)
+     *            {@link MathContext}
+     * @return argument
      * @since 1
      */
     protected abstract BigDecimal argument(MathContext mathContext);
@@ -178,10 +170,7 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
     /**
      * Return the corresponding polar form of the complex number
      *
-     * @return The polar form
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @see #polarForm(MathContext)
+     * @return polar form
      * @since 1
      */
     protected abstract PolarForm polarForm();
@@ -191,13 +180,8 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
      * given {@link MathContext}
      *
      * @param mathContext
-     *            The math context
-     * @return The polar form
-     * @throws IllegalStateException
-     *             if {@code this == 0}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @see AbstractComplexNumber#polarForm(MathContext)
+     *            {@link MathContext}
+     * @return polar form
      * @since 1
      */
     protected abstract PolarForm polarForm(MathContext mathContext);
@@ -205,13 +189,15 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
     /**
      * Returns a matrix representation of this {@link AbstractComplexNumber}
      *
-     * @return The matrix representation
+     * @return matrix representation
      * @since 1
      */
     protected abstract M matrix();
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public final int hashCode() {
@@ -220,6 +206,8 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public final boolean equals(final Object object) {
@@ -235,6 +223,8 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public final String toString() {

@@ -43,12 +43,12 @@ import org.apache.commons.lang3.builder.Builder;
 @Beta
 public abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
     /**
-     * The map holding the elements of this {@link AbstractVectorBuilder}
+     * {@link Map} holding the elements of this {@link AbstractVectorBuilder}
      */
     protected final Map<Integer, E> map = new HashMap<>();
 
     /**
-     * The size of the map
+     * Size
      */
     protected final int size;
 
@@ -69,13 +69,12 @@ public abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
      * Returns the element dependent on the given index
      *
      * @param index
-     *            the index of the element
-     * @return The element
+     *            index
+     * @return element
      * @throws NullPointerException
      *             if {@code index == null}
      * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
-     * @see Map#containsKey
+     *             if {@code index < 1 || size < index}
      * @since 1
      */
     public final E element(final Integer index) {
@@ -88,7 +87,7 @@ public abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
      * Puts the given element on the first free index and returns {@code this}
      *
      * @param element
-     *            the element
+     *            element
      * @return {@code this}
      * @throws NullPointerException
      *             if {@code element == null}
@@ -114,9 +113,9 @@ public abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
      * Puts the given element on the given index and returns {@code this}
      *
      * @param index
-     *            the index
+     *            index
      * @param element
-     *            the element
+     *            element
      * @return {@code this}
      * @throws NullPointerException
      *             if {@code index == null}
@@ -142,7 +141,7 @@ public abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
      * Puts the given element on all indices and returns {@code this}
      *
      * @param element
-     *            the element
+     *            element
      * @return {@code this}
      * @throws NullPointerException
      *             if {@code element == null}
@@ -163,7 +162,7 @@ public abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
      * {@code this}
      *
      * @param element
-     *            the element
+     *            element
      * @return {@code this}
      * @throws NullPointerException
      *             if {@code element == null}
@@ -183,6 +182,11 @@ public abstract class AbstractVectorBuilder<E, V, B> implements Builder<V> {
         return builder;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
     @Override
     public final String toString() {
         return MoreObjects.toStringHelper(this).add("map", map).add("size", size).toString();

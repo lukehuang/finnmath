@@ -31,7 +31,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 
 /**
@@ -50,6 +49,14 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
+     * @since 1
      */
     @Override
     public BigIntegerMatrix add(final BigIntegerMatrix summand) {
@@ -69,6 +76,14 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != subtrahend.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != subtrahend.columnSize}
+     * @since 1
      */
     @Override
     public BigIntegerMatrix subtract(final BigIntegerMatrix subtrahend) {
@@ -88,6 +103,12 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code factor == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != factor.rowSize}
+     * @since 1
      */
     @Override
     public BigIntegerMatrix multiply(final BigIntegerMatrix factor) {
@@ -104,6 +125,12 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != vector.size}
+     * @since 1
      */
     @Override
     public BigIntegerVector multiplyVector(final BigIntegerVector vector) {
@@ -122,6 +149,14 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code row == null}
+     * @throws NullPointerException
+     *             if {@code column == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != columnSize}
+     * @since 1
      */
     @Override
     protected BigInteger multiplyRowWithColumn(final Map<Integer, BigInteger> row,
@@ -130,15 +165,16 @@ public final class BigIntegerMatrix
         requireNonNull(column, "column");
         checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
             column.size());
-        BigInteger result = BigInteger.ZERO;
-        for (final Entry<Integer, BigInteger> rowEntry : row.entrySet()) {
-            result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));
-        }
-        return result;
+        return row.entrySet().stream().map(rowEntry -> rowEntry.getValue().multiply(column.get(rowEntry.getKey())))
+            .reduce(BigInteger::add).get();
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public BigIntegerMatrix scalarMultiply(final BigInteger scalar) {
@@ -151,6 +187,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigIntegerMatrix negate() {
@@ -159,6 +197,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigInteger trace() {
@@ -170,6 +210,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigInteger determinant() {
@@ -192,6 +234,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigInteger leibnizFormula() {
@@ -216,6 +260,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigInteger ruleOfSarrus() {
@@ -230,6 +276,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigIntegerMatrix transpose() {
@@ -240,6 +288,16 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex < 1 || rowSize < rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex < 1 || columnSize < columnIndex}
+     * @since 1
      */
     @Override
     public BigIntegerMatrix minor(final Integer rowIndex, final Integer columnIndex) {
@@ -264,6 +322,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigInteger maxAbsColumnSumNorm() {
@@ -274,6 +334,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigInteger maxAbsRowSumNorm() {
@@ -296,6 +358,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigInteger frobeniusNormPow2() {
@@ -304,6 +368,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigInteger maxNorm() {
@@ -312,6 +378,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean upperTriangular() {
@@ -321,6 +389,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean lowerTriangular() {
@@ -330,6 +400,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean identity() {
@@ -340,6 +412,8 @@ public final class BigIntegerMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean invertible() {
@@ -354,9 +428,9 @@ public final class BigIntegerMatrix
      * Returns a {@link BigIntegerMatrixBuilder}
      *
      * @param rowSize
-     *            the row size the resulting {@link BigIntegerMatrix}
+     *            row size the resulting {@link BigIntegerMatrix}
      * @param columnSize
-     *            the column size the resulting {@link BigIntegerMatrix}
+     *            column size the resulting {@link BigIntegerMatrix}
      * @return A {@link BigIntegerMatrixBuilder}
      * @throws IllegalArgumentException
      *             if {@code rowIndex < 1}
@@ -371,7 +445,7 @@ public final class BigIntegerMatrix
     }
 
     /**
-     * The builder for {@link BigIntegerMatrix BigIntegerMatrices}
+     * {@link AbstractMatrixBuilder} for {@link BigIntegerMatrix BigIntegerMatrices}
      *
      * @since 1
      */
@@ -384,10 +458,13 @@ public final class BigIntegerMatrix
 
         /**
          * {@inheritDoc}
+         *
+         * @throws NullPointerException
+         *             if one {@code element == null}
          */
         @Override
         public BigIntegerMatrix build() {
-            table.cellSet().forEach(cell -> requireNonNull(cell.getValue(), "cell.value"));
+            table.cellSet().forEach(cell -> requireNonNull(cell.getValue(), "element"));
             return new BigIntegerMatrix(ImmutableTable.copyOf(table));
         }
     }

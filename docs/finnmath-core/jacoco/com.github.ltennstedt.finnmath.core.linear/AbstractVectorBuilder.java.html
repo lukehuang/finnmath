@@ -43,12 +43,12 @@ import org.apache.commons.lang3.builder.Builder;
 @Beta
 public abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt;V&gt; {
     /**
-     * The map holding the elements of this {@link AbstractVectorBuilder}
+     * {@link Map} holding the elements of this {@link AbstractVectorBuilder}
      */
 <span class="fc" id="L48">    protected final Map&lt;Integer, E&gt; map = new HashMap&lt;&gt;();</span>
 
     /**
-     * The size of the map
+     * Size
      */
     protected final int size;
 
@@ -69,26 +69,25 @@ public abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt
      * Returns the element dependent on the given index
      *
      * @param index
-     *            the index of the element
-     * @return The element
+     *            index
+     * @return element
      * @throws NullPointerException
      *             if {@code index == null}
      * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
-     * @see Map#containsKey
+     *             if {@code index &lt; 1 || size &lt; index}
      * @since 1
      */
     public final E element(final Integer index) {
-<span class="fc" id="L82">        requireNonNull(index, &quot;index&quot;);</span>
-<span class="pc bpc" id="L83" title="2 of 4 branches missed.">        checkArgument(0 &lt; index &amp;&amp; index &lt;= size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="fc" id="L84">        return map.get(index);</span>
+<span class="fc" id="L81">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="pc bpc" id="L82" title="2 of 4 branches missed.">        checkArgument(0 &lt; index &amp;&amp; index &lt;= size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L83">        return map.get(index);</span>
     }
 
     /**
      * Puts the given element on the first free index and returns {@code this}
      *
      * @param element
-     *            the element
+     *            element
      * @return {@code this}
      * @throws NullPointerException
      *             if {@code element == null}
@@ -99,24 +98,24 @@ public abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt
      * @since 1
      */
     public final B put(final E element) {
-<span class="fc" id="L102">        requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc" id="L103">        final int index = addExact(map.size(), 1);</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">        checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="fc" id="L105">        map.put(index, element);</span>
+<span class="fc" id="L101">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L102">        final int index = addExact(map.size(), 1);</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        checkState(map.size() &lt; size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L104">        map.put(index, element);</span>
 
         @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L108">        final B builder = (B) this;</span>
+<span class="fc" id="L107">        final B builder = (B) this;</span>
 
-<span class="fc" id="L110">        return builder;</span>
+<span class="fc" id="L109">        return builder;</span>
     }
 
     /**
      * Puts the given element on the given index and returns {@code this}
      *
      * @param index
-     *            the index
+     *            index
      * @param element
-     *            the element
+     *            element
      * @return {@code this}
      * @throws NullPointerException
      *             if {@code index == null}
@@ -127,35 +126,35 @@ public abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt
      * @since 1
      */
     public final B put(final Integer index, final E element) {
-<span class="fc" id="L130">        requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L131">        requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc bfc" id="L132" title="All 4 branches covered.">        checkArgument(0 &lt; index &amp;&amp; index &lt;= size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
-<span class="fc" id="L133">        map.put(index, element);</span>
+<span class="fc" id="L129">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L130">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc bfc" id="L131" title="All 4 branches covered.">        checkArgument(0 &lt; index &amp;&amp; index &lt;= size, &quot;expected index in [1, %s] but actual %s&quot;, size, index);</span>
+<span class="fc" id="L132">        map.put(index, element);</span>
 
         @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L136">        final B builder = (B) this;</span>
+<span class="fc" id="L135">        final B builder = (B) this;</span>
 
-<span class="fc" id="L138">        return builder;</span>
+<span class="fc" id="L137">        return builder;</span>
     }
 
     /**
      * Puts the given element on all indices and returns {@code this}
      *
      * @param element
-     *            the element
+     *            element
      * @return {@code this}
      * @throws NullPointerException
      *             if {@code element == null}
      * @since 1
      */
     public final B putAll(final E element) {
-<span class="fc" id="L152">        requireNonNull(element, &quot;element&quot;);</span>
-<span class="fc" id="L153">        IntStream.rangeClosed(1, size).forEach(index -&gt; map.put(index, element));</span>
+<span class="fc" id="L151">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="fc" id="L152">        IntStream.rangeClosed(1, size).forEach(index -&gt; map.put(index, element));</span>
 
         @SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L156">        final B builder = (B) this;</span>
+<span class="fc" id="L155">        final B builder = (B) this;</span>
 
-<span class="fc" id="L158">        return builder;</span>
+<span class="fc" id="L157">        return builder;</span>
     }
 
     /**
@@ -163,37 +162,42 @@ public abstract class AbstractVectorBuilder&lt;E, V, B&gt; implements Builder&lt
      * {@code this}
      *
      * @param element
-     *            the element
+     *            element
      * @return {@code this}
      * @throws NullPointerException
      *             if {@code element == null}
      * @since 1
      */
     public final B nullsToElement(final E element) {
-<span class="nc" id="L173">        requireNonNull(element, &quot;element&quot;);</span>
-<span class="nc" id="L174">        map.entrySet().forEach(entry -&gt; {</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">            if (entry.getValue() == null) {</span>
-<span class="nc" id="L176">                map.put(entry.getKey(), element);</span>
+<span class="nc" id="L172">        requireNonNull(element, &quot;element&quot;);</span>
+<span class="nc" id="L173">        map.entrySet().forEach(entry -&gt; {</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if (entry.getValue() == null) {</span>
+<span class="nc" id="L175">                map.put(entry.getKey(), element);</span>
             }
-<span class="nc" id="L178">        });</span>
+<span class="nc" id="L177">        });</span>
 
         @SuppressWarnings(&quot;unchecked&quot;)
-<span class="nc" id="L181">        final B builder = (B) this;</span>
+<span class="nc" id="L180">        final B builder = (B) this;</span>
 
-<span class="nc" id="L183">        return builder;</span>
+<span class="nc" id="L182">        return builder;</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
     @Override
     public final String toString() {
-<span class="fc" id="L188">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).add(&quot;size&quot;, size).toString();</span>
+<span class="fc" id="L192">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).add(&quot;size&quot;, size).toString();</span>
     }
 
     public final Map&lt;Integer, E&gt; getMap() {
-<span class="fc" id="L192">        return map;</span>
+<span class="fc" id="L196">        return map;</span>
     }
 
     public final int getSize() {
-<span class="fc" id="L196">        return size;</span>
+<span class="fc" id="L200">        return size;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -79,7 +79,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * Required arguments constructor
      *
      * @param table
-     *            table
+     *            {@link ImmutableTable}
      * @throws NullPointerException
      *             if {@code table == null}
      * @since 1
@@ -93,46 +93,30 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @param summand
      *            summand
-     * @return Sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize != summand.rowSize}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize != summand.columnSize}
+     * @return sum
      * @since 1
      */
-    public abstract M add(M summand);
+    protected abstract M add(M summand);
 
     /**
      * Returns the difference of this {@link AbstractMatrix} and the given one
      *
      * @param subtrahend
      *            subtrahend
-     * @return Difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize != summand.rowSize}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize != summand.columnSize}
+     * @return difference
      * @since 1
      */
-    public abstract M subtract(M subtrahend);
+    protected abstract M subtract(M subtrahend);
 
     /**
      * Returns the product of this {@link AbstractMatrix} and the given one
      *
      * @param factor
      *            factor
-     * @return Product
-     * @throws NullPointerException
-     *             if {@code factor == null}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize != factor.rowSize}
+     * @return product
      * @since 1
      */
-    public abstract M multiply(M factor);
+    protected abstract M multiply(M factor);
 
     /**
      * Returns the product of this {@link AbstractMatrix} and the given
@@ -141,13 +125,9 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @param vector
      *            vector
      * @return product
-     * @throws NullPointerException
-     *             if {@code vector == null}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize != vector.size}
      * @since 1
      */
-    public abstract V multiplyVector(V vector);
+    protected abstract V multiplyVector(V vector);
 
     /**
      * Returns the product of a matrix row and a matrix column
@@ -156,13 +136,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *            row
      * @param column
      *            column
-     * @return The product
-     * @throws NullPointerException
-     *             if {@code row == null}
-     * @throws NullPointerException
-     *             if {@code column == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize != columnSize}
+     * @return product
      * @since 1
      */
     protected abstract E multiplyRowWithColumn(Map&lt;Integer, E&gt; row, Map&lt;Integer, E&gt; column);
@@ -173,9 +147,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @param scalar
      *            scalar
-     * @return Scalar product
-     * @throws NullPointerException
-     *             if {@code scalar == null}
+     * @return scalar product
      * @since 1
      */
     protected abstract M scalarMultiply(E scalar);
@@ -183,7 +155,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the negated {@link AbstractMatrix} and this one
      *
-     * @return Negated
+     * @return negated {@link AbstractMatrix}
      * @since 1
      */
     protected abstract M negate();
@@ -191,7 +163,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the trace of this {@link AbstractMatrix}
      *
-     * @return Trace
+     * @return trace
      * @since 1
      */
     protected abstract E trace();
@@ -199,9 +171,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the determinant of this {@link AbstractMatrix}
      *
-     * @return Determinant
-     * @throws IllegalStateException
-     *             if {@code !square}
+     * @return determinant
      * @since 1
      */
     protected abstract E determinant();
@@ -209,21 +179,23 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Leibniz formula
      *
-     * @return Determinant
+     * @return determinant
+     * @since 1
      */
     protected abstract E leibnizFormula();
 
     /**
      * Rule of Sarrus
      *
-     * @return Determinant
+     * @return determinant
+     * @since 1
      */
     protected abstract E ruleOfSarrus();
 
     /**
      * Returns the transpose of this {@link AbstractMatrix}
      *
-     * @return The transpose
+     * @return transpose
      * @since 1
      */
     protected abstract M transpose();
@@ -236,15 +208,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *            row index
      * @param columnIndex
      *            column index
-     * @return Minor
-     * @throws NullPointerException
-     *             if {@code rowIndex == null}
-     * @throws NullPointerException
-     *             if {@code columnIndex == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
-     * @throws IllegalArgumentException
-     *             if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
+     * @return minor
      * @since 1
      */
     protected abstract M minor(Integer rowIndex, Integer columnIndex);
@@ -252,7 +216,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the maximum absolute column sum norm of this {@link AbstractMatrix}
      *
-     * @return Maximum absolute column sum norm
+     * @return maximum absolute column sum norm
      * @since 1
      */
     protected abstract N maxAbsColumnSumNorm();
@@ -260,7 +224,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the maximum absolute row sum norm of this {@link AbstractMatrix}
      *
-     * @return Maximum absolute row sum norm
+     * @return maximum absolute row sum norm
      * @since 1
      */
     protected abstract N maxAbsRowSumNorm();
@@ -268,7 +232,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the square of the frobenius norm of this {@link AbstractMatrix}
      *
-     * @return Square of the frobenius norm
+     * @return square of the frobenius norm
      * @since 1
      */
     protected abstract B frobeniusNormPow2();
@@ -276,11 +240,11 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the frobenius norm of this {@link AbstractMatrix}
      *
-     * @return Frobenius norm
+     * @return frobenius norm
      * @since 1
      */
     public final BigDecimal frobeniusNorm() {
-<span class="fc" id="L283">        return frobeniusNorm(DEFAULT_SQUARE_ROOT_CONTEXT);</span>
+<span class="fc" id="L247">        return frobeniusNorm(DEFAULT_SQUARE_ROOT_CONTEXT);</span>
     }
 
     /**
@@ -288,7 +252,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @param squareRootContext
      *            {@link SquareRootContext}
-     * @return Frobenius norm
+     * @return frobenius norm
      * @since 1
      */
     protected abstract BigDecimal frobeniusNorm(final SquareRootContext squareRootContext);
@@ -296,7 +260,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     /**
      * Returns the maximum norm of this {@link AbstractMatrix}
      *
-     * @return The maximum norm
+     * @return maximum norm
      * @since 1
      */
     protected abstract N maxNorm();
@@ -310,7 +274,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final boolean square() {
-<span class="fc bfc" id="L313" title="All 2 branches covered.">        return table.rowKeySet().size() == table.columnKeySet().size();</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">        return table.rowKeySet().size() == table.columnKeySet().size();</span>
     }
 
     /**
@@ -319,12 +283,10 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @return {@code true} if {@code upperTriangular || lowerTriangular},
      *         {@code false} otherwise
-     * @see #upperTriangular
-     * @see #lowerTriangular
      * @since 1
      */
     public final boolean triangular() {
-<span class="fc bfc" id="L327" title="All 4 branches covered.">        return upperTriangular() || lowerTriangular();</span>
+<span class="fc bfc" id="L289" title="All 4 branches covered.">        return upperTriangular() || lowerTriangular();</span>
     }
 
     /**
@@ -353,12 +315,10 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @return {@code true} if {@code upperTriangular &amp;&amp; lowerTriangular},
      *         {@code false} otherwise
-     * @see #upperTriangular
-     * @see #lowerTriangular
      * @since 1
      */
     public final boolean diagonal() {
-<span class="pc bpc" id="L361" title="1 of 4 branches missed.">        return upperTriangular() &amp;&amp; lowerTriangular();</span>
+<span class="pc bpc" id="L321" title="1 of 4 branches missed.">        return upperTriangular() &amp;&amp; lowerTriangular();</span>
     }
 
     /**
@@ -367,7 +327,6 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @return {@code true} if {@code this} is the identity matrix, {@code false}
      *         otherwise
-     * @see #diagonal
      * @since 1
      */
     protected abstract boolean identity();
@@ -378,7 +337,6 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @return {@code true} if {@code det == -1 || det == 1}, {@code false}
      *         otherwise
-     * @see #determinant
      * @since 1
      */
     protected abstract boolean invertible();
@@ -389,12 +347,10 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @return {@code true} if {@code square &amp;&amp; equals(transpose)}, {@code false}
      *         otherwise
-     * @see #square
-     * @see #transpose
      * @since 1
      */
     public final boolean symmetric() {
-<span class="fc bfc" id="L397" title="All 4 branches covered.">        return square() &amp;&amp; equals(transpose());</span>
+<span class="fc bfc" id="L353" title="All 4 branches covered.">        return square() &amp;&amp; equals(transpose());</span>
     }
 
     /**
@@ -403,33 +359,30 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @return {@code true} if {@code square &amp;&amp; equals(transpose.negate)},
      *         {@code false} otherwise
-     * @see #square
-     * @see #transpose
-     * @see #negate
      * @since 1
      */
     public final boolean skewSymmetric() {
-<span class="fc bfc" id="L412" title="All 4 branches covered.">        return square() &amp;&amp; transpose().equals(negate());</span>
+<span class="fc bfc" id="L365" title="All 4 branches covered.">        return square() &amp;&amp; transpose().equals(negate());</span>
     }
 
     /**
      * Returns the row indices starting from {@code 1}
      *
-     * @return Row indices
+     * @return row indices
      * @since 1
      */
     public final ImmutableSet&lt;Integer&gt; rowIndexes() {
-<span class="fc" id="L422">        return table.rowKeySet();</span>
+<span class="fc" id="L375">        return table.rowKeySet();</span>
     }
 
     /**
      * Returns the column indices starting from {@code 1}
      *
-     * @return Column indices
+     * @return column indices
      * @since 1
      */
     public final ImmutableSet&lt;Integer&gt; columnIndexes() {
-<span class="fc" id="L432">        return table.columnKeySet();</span>
+<span class="fc" id="L385">        return table.columnKeySet();</span>
     }
 
     /**
@@ -451,23 +404,23 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final E element(final Integer rowIndex, final Integer columnIndex) {
-<span class="fc" id="L454">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
-<span class="fc" id="L455">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
-<span class="fc" id="L456">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L457">            table.rowKeySet().size(), rowIndex);</span>
-<span class="fc" id="L458">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L459">            table.columnKeySet().size(), columnIndex);</span>
-<span class="fc" id="L460">        return table.get(rowIndex, columnIndex);</span>
+<span class="fc" id="L407">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L408">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L409">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L410">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L411">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L412">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L413">        return table.get(rowIndex, columnIndex);</span>
     }
 
     /**
      * Returns all matrix cells as {@link ImmutableSet}
      *
-     * @return {@link Cell Cells}
+     * @return cells
      * @since 1
      */
     public final ImmutableSet&lt;Cell&lt;Integer, Integer, E&gt;&gt; cells() {
-<span class="fc" id="L470">        return table.cellSet();</span>
+<span class="fc" id="L423">        return table.cellSet();</span>
     }
 
     /**
@@ -476,7 +429,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @param rowIndex
      *            the row index
-     * @return Row
+     * @return row
      * @throws NullPointerException
      *             if {@code rowIndex == null}
      * @throws IllegalArgumentException
@@ -484,10 +437,10 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableMap&lt;Integer, E&gt; row(final Integer rowIndex) {
-<span class="fc" id="L487">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
-<span class="fc" id="L488">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L489">            table.rowKeySet().size(), rowIndex);</span>
-<span class="fc" id="L490">        return table.row(rowIndex);</span>
+<span class="fc" id="L440">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L441">        checkArgument(table.rowKeySet().contains(rowIndex), &quot;expected row index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L442">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L443">        return table.row(rowIndex);</span>
     }
 
     /**
@@ -496,7 +449,7 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      *
      * @param columnIndex
      *            the column index
-     * @return Column
+     * @return column
      * @throws NullPointerException
      *             if {@code columnIndex == null}
      * @throws IllegalArgumentException
@@ -504,105 +457,111 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableMap&lt;Integer, E&gt; column(final Integer columnIndex) {
-<span class="fc" id="L507">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
-<span class="fc" id="L508">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L509">            table.columnKeySet().size(), columnIndex);</span>
-<span class="fc" id="L510">        return table.column(columnIndex);</span>
+<span class="fc" id="L460">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L461">        checkArgument(table.columnKeySet().contains(columnIndex), &quot;expected column index in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L462">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L463">        return table.column(columnIndex);</span>
     }
 
     /**
      * Returns all matrix rows as {@link ImmutableMap}
      *
-     * @return Rows
+     * @return rows
      * @since 1
      */
     public final ImmutableMap&lt;Integer, Map&lt;Integer, E&gt;&gt; rows() {
-<span class="fc" id="L520">        return table.rowMap();</span>
+<span class="fc" id="L473">        return table.rowMap();</span>
     }
 
     /**
      * Returns all matrix columns as {@link ImmutableMap}
      *
-     * @return Columns
+     * @return columns
      * @since 1
      */
     public final ImmutableMap&lt;Integer, Map&lt;Integer, E&gt;&gt; columns() {
-<span class="fc" id="L530">        return table.columnMap();</span>
+<span class="fc" id="L483">        return table.columnMap();</span>
     }
 
     /**
      * Returns all matrix elements as {@link ImmutableCollection}
      *
-     * @return Elements
+     * @return elements
      * @since 1
      */
     public final ImmutableCollection&lt;E&gt; elements() {
-<span class="fc" id="L540">        return table.values();</span>
+<span class="fc" id="L493">        return table.values();</span>
     }
 
     /**
      * Returns the size of this {@link AbstractMatrix}
      *
-     * @return Size
+     * @return size
      * @since 1
      */
     public final long size() {
-<span class="fc" id="L550">        return Long.valueOf(table.rowKeySet().size()) * Long.valueOf(table.columnKeySet().size());</span>
+<span class="fc" id="L503">        return Long.valueOf(table.rowKeySet().size()) * Long.valueOf(table.columnKeySet().size());</span>
     }
 
     /**
      * Returns the row size of this {@link AbstractMatrix}
      *
-     * @return Row size
+     * @return row size
      * @since 1
      */
     public final int rowSize() {
-<span class="fc" id="L560">        return table.rowKeySet().size();</span>
+<span class="fc" id="L513">        return table.rowKeySet().size();</span>
     }
 
     /**
      * Returns the column size of this {@link AbstractMatrix}
      *
-     * @return Column size
+     * @return column size
      * @since 1
      */
     public final int columnSize() {
-<span class="fc" id="L570">        return table.columnKeySet().size();</span>
+<span class="fc" id="L523">        return table.columnKeySet().size();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final int hashCode() {
-<span class="fc" id="L578">        return Objects.hash(table);</span>
+<span class="fc" id="L533">        return Objects.hash(table);</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final boolean equals(final Object object) {
-<span class="fc bfc" id="L586" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L587">            return true;</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L544">            return true;</span>
         }
-<span class="fc bfc" id="L589" title="All 2 branches covered.">        if (!(object instanceof AbstractMatrix)) {</span>
-<span class="fc" id="L590">            return false;</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">        if (!(object instanceof AbstractMatrix)) {</span>
+<span class="fc" id="L547">            return false;</span>
         }
-<span class="fc" id="L592">        final AbstractMatrix&lt;?, ?, ?, ?, ?&gt; other = (AbstractMatrix&lt;?, ?, ?, ?, ?&gt;) object;</span>
-<span class="fc" id="L593">        return Objects.equals(table, other.getTable());</span>
+<span class="fc" id="L549">        final AbstractMatrix&lt;?, ?, ?, ?, ?&gt; other = (AbstractMatrix&lt;?, ?, ?, ?, ?&gt;) object;</span>
+<span class="fc" id="L550">        return Objects.equals(table, other.getTable());</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final String toString() {
-<span class="fc" id="L601">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+<span class="fc" id="L560">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
     }
 
     public final ImmutableTable&lt;Integer, Integer, E&gt; getTable() {
-<span class="fc" id="L605">        return table;</span>
+<span class="fc" id="L564">        return table;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

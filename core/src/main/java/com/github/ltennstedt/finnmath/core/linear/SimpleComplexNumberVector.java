@@ -43,7 +43,25 @@ public final class SimpleComplexNumberVector
     }
 
     /**
+     * Returns a {@link SimpleComplexNumberVectorBuilder}
+     *
+     * @param size
+     *            size
+     * @return {@link SimpleComplexNumberVectorBuilder}
+     * @since 1
+     */
+    public static SimpleComplexNumberVectorBuilder builder(final int size) {
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        return new SimpleComplexNumberVectorBuilder(size);
+    }
+
+    /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != summand.size}
      */
     @Override
     public SimpleComplexNumberVector add(final SimpleComplexNumberVector summand) {
@@ -57,6 +75,12 @@ public final class SimpleComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != subtrahend.size}
+     * @since 1
      */
     @Override
     public SimpleComplexNumberVector subtract(final SimpleComplexNumberVector subtrahend) {
@@ -70,6 +94,10 @@ public final class SimpleComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public SimpleComplexNumberVector scalarMultiply(final SimpleComplexNumber scalar) {
@@ -81,6 +109,8 @@ public final class SimpleComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public SimpleComplexNumberVector negate() {
@@ -89,10 +119,33 @@ public final class SimpleComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigDecimal taxicabNorm() {
         return map.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
+    @Override
+    public BigInteger euclideanNormPow2() {
+        return map.values().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
+    @Override
+    public BigDecimal euclideanNorm() {
+        return SquareRootCalculator.sqrt(euclideanNormPow2());
     }
 
     /**
@@ -111,14 +164,12 @@ public final class SimpleComplexNumberVector
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public BigInteger euclideanNormPow2() {
-        return map.values().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();
-    }
-
-    /**
-     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
      */
     @Override
     public SimpleComplexNumber dotProduct(final SimpleComplexNumberVector other) {
@@ -130,6 +181,8 @@ public final class SimpleComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigDecimal maxNorm() {
@@ -137,20 +190,8 @@ public final class SimpleComplexNumberVector
     }
 
     /**
-     * Returns a {@link SimpleComplexNumberVectorBuilder}
-     *
-     * @param size
-     *            the size the resulting {@link SimpleComplexNumberVector}
-     * @return A {@link SimpleComplexNumberVectorBuilder}
-     * @since 1
-     */
-    public static SimpleComplexNumberVectorBuilder builder(final int size) {
-        checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        return new SimpleComplexNumberVectorBuilder(size);
-    }
-
-    /**
-     * The builder for {@link SimpleComplexNumberVector SimpleComplexNumberVectors}
+     * {@link AbstractVectorBuilder} for {@link SimpleComplexNumberVector
+     * SimpleComplexNumberVectors}
      *
      * @since 1
      */
@@ -162,12 +203,10 @@ public final class SimpleComplexNumberVector
         }
 
         /**
-         * Returns the built {@link SimpleComplexNumberVector}
+         * {@inheritDoc}
          *
-         * @return The {@link SimpleComplexNumberVector}
          * @throws NullPointerException
          *             if one {@code element == null}
-         * @see ImmutableMap#copyOf
          * @since 1
          */
         @Override

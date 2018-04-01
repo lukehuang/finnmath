@@ -42,60 +42,108 @@ public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigInt
 <span class="fc" id="L42">    }</span>
 
     /**
+     * Returns a {@link BigIntegerVectorBuilder}
+     *
+     * @param size
+     *            size the resulting {@link BigIntegerVector}
+     * @return {@link BigIntegerVectorBuilder}
+     * @since 1
+     */
+    public static BigIntegerVectorBuilder builder(final int size) {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L54">        return new BigIntegerVectorBuilder(size);</span>
+    }
+
+    /**
      * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException
+     *             if {@code size != summand.size}
+     * @since 1
      */
     @Override
     public BigIntegerVector add(final BigIntegerVector summand) {
-<span class="fc" id="L49">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L50" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L51">            summand.size());</span>
-<span class="fc" id="L52">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L53">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
-<span class="fc" id="L54">        return builder.build();</span>
+<span class="fc" id="L66">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L68">            summand.size());</span>
+<span class="fc" id="L69">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L70">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="fc" id="L71">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != subtrahend.size}
+     * @since 1
      */
     @Override
     public BigIntegerVector subtract(final BigIntegerVector subtrahend) {
-<span class="fc" id="L62">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L64">            subtrahend.size());</span>
-<span class="fc" id="L65">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L66">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
-<span class="fc" id="L67">        return builder.build();</span>
+<span class="fc" id="L85">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L87">            subtrahend.size());</span>
+<span class="fc" id="L88">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L89">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
+<span class="fc" id="L90">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public BigIntegerVector scalarMultiply(final BigInteger scalar) {
-<span class="fc" id="L75">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L76">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L77">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
-<span class="fc" id="L78">        return builder.build();</span>
+<span class="fc" id="L102">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L103">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L104">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="fc" id="L105">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigIntegerVector negate() {
-<span class="fc" id="L86">        return scalarMultiply(BigInteger.ONE.negate());</span>
+<span class="fc" id="L115">        return scalarMultiply(BigInteger.ONE.negate());</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigInteger taxicabNorm() {
-<span class="fc" id="L94">        BigInteger norm = BigInteger.ZERO;</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        for (final BigInteger element : map.values()) {</span>
-<span class="fc" id="L96">            norm = norm.add(element.abs());</span>
-<span class="fc" id="L97">        }</span>
-<span class="fc" id="L98">        return norm;</span>
+<span class="fc" id="L125">        return map.values().stream().map(BigInteger::abs).reduce(BigInteger::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
+    @Override
+    public BigInteger euclideanNormPow2() {
+<span class="fc" id="L135">        return map.values().stream().map(value -&gt; value.pow(2)).reduce(BigInteger::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
+    @Override
+    public BigDecimal euclideanNorm() {
+<span class="nc" id="L146">        return SquareRootCalculator.sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -108,55 +156,39 @@ public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigInt
      */
     @Override
     public BigDecimal euclideanNorm(final SquareRootContext squareRootContext) {
-<span class="fc" id="L111">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
-<span class="fc" id="L112">        return SquareRootCalculator.sqrt(euclideanNormPow2(), squareRootContext);</span>
+<span class="fc" id="L159">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="fc" id="L160">        return SquareRootCalculator.sqrt(euclideanNormPow2(), squareRootContext);</span>
     }
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public BigInteger euclideanNormPow2() {
-<span class="fc" id="L120">        return dotProduct(this);</span>
-    }
-
-    /**
-     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
      */
     @Override
     public BigInteger dotProduct(final BigIntegerVector other) {
-<span class="fc" id="L128">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L130">        BigInteger result = BigInteger.ZERO;</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (final Integer index : map.keySet()) {</span>
-<span class="fc" id="L132">            result = result.add(map.get(index).multiply(other.element(index)));</span>
-<span class="fc" id="L133">        }</span>
-<span class="fc" id="L134">        return result;</span>
+<span class="fc" id="L174">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L176">        return map.keySet().stream().map(index -&gt; map.get(index).multiply(other.element(index))).reduce(BigInteger::add)</span>
+<span class="fc" id="L177">            .get();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigInteger maxNorm() {
-<span class="fc" id="L142">        return map.values().stream().map(BigInteger::abs).reduce(BigInteger::max).get();</span>
+<span class="fc" id="L187">        return map.values().stream().map(BigInteger::abs).reduce(BigInteger::max).get();</span>
     }
 
     /**
-     * Returns a {@link BigIntegerVectorBuilder}
-     *
-     * @param size
-     *            the size the resulting {@link BigIntegerVector}
-     * @return A {@link BigIntegerVectorBuilder}
-     * @since 1
-     */
-    public static BigIntegerVectorBuilder builder(final int size) {
-<span class="fc bfc" id="L154" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L155">        return new BigIntegerVectorBuilder(size);</span>
-    }
-
-    /**
-     * The builder for {@link BigIntegerVector BigIntegerVectors}
+     * {@link AbstractVectorBuilder} for {@link BigIntegerVector BigIntegerVectors}
      *
      * @since 1
      */
@@ -164,23 +196,21 @@ public final class BigIntegerVector extends AbstractVector&lt;BigInteger, BigInt
     public static final class BigIntegerVectorBuilder
         extends AbstractVectorBuilder&lt;BigInteger, BigIntegerVector, BigIntegerVectorBuilder&gt; {
         private BigIntegerVectorBuilder(final Integer size) {
-<span class="fc" id="L167">            super(size);</span>
-<span class="fc" id="L168">        }</span>
+<span class="fc" id="L199">            super(size);</span>
+<span class="fc" id="L200">        }</span>
 
         /**
-         * Returns the built {@link BigIntegerVector}
+         * {@inheritDoc}
          *
-         * @return The {@link BigIntegerVector}
          * @throws NullPointerException
          *             if one {@code element == null}
-         * @see ImmutableMap#copyOf
          * @since 1
          */
         @Override
         public BigIntegerVector build() {
-<span class="fc" id="L181">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
-<span class="fc" id="L182">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
-<span class="fc" id="L183">            return new BigIntegerVector(ImmutableMap.copyOf(map));</span>
+<span class="fc" id="L211">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
+<span class="fc" id="L212">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
+<span class="fc" id="L213">            return new BigIntegerVector(ImmutableMap.copyOf(map));</span>
         }
     }
 }

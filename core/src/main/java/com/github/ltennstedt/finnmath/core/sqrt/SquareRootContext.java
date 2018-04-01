@@ -20,37 +20,47 @@ import org.apache.commons.lang3.builder.Builder;
 @Beta
 public final class SquareRootContext {
     private final BigDecimal abortCriterion;
-    private final int maxIerations;
+    private final int maxIterations;
     private final int initalScale;
     private final MathContext mathContext;
 
-    private SquareRootContext(final BigDecimal abortCriterion, final int maxIerations, final int initalScale,
+    private SquareRootContext(final BigDecimal abortCriterion, final int maxIterations, final int initalScale,
         final MathContext mathContext) {
         assert abortCriterion != null;
         assert BigDecimal.ZERO.compareTo(abortCriterion) < 0 && abortCriterion.compareTo(BigDecimal.ONE) < 0;
-        assert maxIerations > 0;
+        assert maxIterations > 0;
         assert initalScale > -1;
         assert mathContext != null;
         this.abortCriterion = abortCriterion;
-        this.maxIerations = maxIerations;
+        this.maxIterations = maxIterations;
         this.initalScale = initalScale;
         this.mathContext = mathContext;
     }
 
+    /**
+     * Returns a {@link SquareRootContextBuilder}
+     *
+     * @return {@link SquareRootContextBuilder}
+     * @since 1
+     */
     public static SquareRootContextBuilder builder() {
         return new SquareRootContextBuilder();
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public int hashCode() {
-        return Objects.hash(abortCriterion, maxIerations, initalScale, mathContext);
+        return Objects.hash(abortCriterion, maxIterations, initalScale, mathContext);
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean equals(final Object object) {
@@ -61,25 +71,28 @@ public final class SquareRootContext {
             return false;
         }
         final SquareRootContext other = (SquareRootContext) object;
-        return abortCriterion.equals(other.getAbortCriterion()) && maxIerations == other.getMaxIerations()
+        return abortCriterion.equals(other.getAbortCriterion()) && maxIterations == other.getMaxIterations()
             && initalScale == other.getInitalScale() && mathContext.equals(other.getMathContext());
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).add("abortCriterion", abortCriterion).add("maxIerations", maxIerations)
-            .add("initalScale", initalScale).add("mathContext", mathContext).toString();
+        return MoreObjects.toStringHelper(this).add("abortCriterion", abortCriterion)
+            .add("maxIterations", maxIterations).add("initalScale", initalScale).add("mathContext", mathContext)
+            .toString();
     }
 
     public BigDecimal getAbortCriterion() {
         return abortCriterion;
     }
 
-    public int getMaxIerations() {
-        return maxIerations;
+    public int getMaxIterations() {
+        return maxIterations;
     }
 
     public int getInitalScale() {
@@ -99,7 +112,7 @@ public final class SquareRootContext {
     @Beta
     public static final class SquareRootContextBuilder implements Builder<SquareRootContext> {
         private BigDecimal _abortCriterion = new BigDecimal("0.0000000001");
-        private int _maxIerations = 10;
+        private int _maxIterations = 10;
         private int _initalScale = 10;
         private MathContext _mathContext = MathContext.DECIMAL128;
 
@@ -124,16 +137,16 @@ public final class SquareRootContext {
         /**
          * Sets the maximal number of iterations and returns {@code this}
          *
-         * @param maxIerations
+         * @param maxIterations
          *            maximal number of iterations
          * @return {@code this}
          * @throws IllegalArgumentException
          *             if {@code maxIterations < 1}
          * @since 1
          */
-        public SquareRootContextBuilder maxIerations(final int maxIerations) {
-            checkArgument(maxIerations > 0, "expected maxIterations > 0 but actual %s", maxIerations);
-            _maxIerations = maxIerations;
+        public SquareRootContextBuilder maxIterations(final int maxIterations) {
+            checkArgument(maxIterations > 0, "expected maxIterations > 0 but actual %s", maxIterations);
+            _maxIterations = maxIterations;
             return this;
         }
 
@@ -170,28 +183,32 @@ public final class SquareRootContext {
 
         /**
          * {@inheritDoc}
+         *
+         * @since 1
          */
         @Override
         public SquareRootContext build() {
-            return new SquareRootContext(_abortCriterion, _maxIerations, _initalScale, _mathContext);
+            return new SquareRootContext(_abortCriterion, _maxIterations, _initalScale, _mathContext);
         }
 
         /**
          * {@inheritDoc}
+         *
+         * @since 1
          */
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this).add("_abortCriterion", _abortCriterion)
-                .add("_maxIerations", _maxIerations).add("_initalScale", _initalScale).add("_mathContext", _mathContext)
-                .toString();
+                .add("_maxIterations", _maxIterations).add("_initalScale", _initalScale)
+                .add("_mathContext", _mathContext).toString();
         }
 
         public BigDecimal getAbortCriterion() {
             return _abortCriterion;
         }
 
-        public int getMaxIerations() {
-            return _maxIerations;
+        public int getMaxIterations() {
+            return _maxIterations;
         }
 
         public int getInitalScale() {

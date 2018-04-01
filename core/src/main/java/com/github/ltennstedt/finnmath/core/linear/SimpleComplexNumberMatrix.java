@@ -51,6 +51,14 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
+     * @since 1
      */
     @Override
     public SimpleComplexNumberMatrix add(final SimpleComplexNumberMatrix summand) {
@@ -70,6 +78,14 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * * @throws NullPointerException if {@code subtrahend == null}
+     * 
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != subtrahend.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != subtrahend.columnSize}
+     * @since 1
      */
     @Override
     public SimpleComplexNumberMatrix subtract(final SimpleComplexNumberMatrix subtrahend) {
@@ -89,6 +105,12 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code factor == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != factor.rowSize}
+     * @since 1
      */
     @Override
     public SimpleComplexNumberMatrix multiply(final SimpleComplexNumberMatrix factor) {
@@ -105,6 +127,12 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != vector.size}
+     * @since 1
      */
     @Override
     public SimpleComplexNumberVector multiplyVector(final SimpleComplexNumberVector vector) {
@@ -123,6 +151,14 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code row == null}
+     * @throws NullPointerException
+     *             if {@code column == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != columnSize}
+     * @since 1
      */
     @Override
     protected SimpleComplexNumber multiplyRowWithColumn(final Map<Integer, SimpleComplexNumber> row,
@@ -140,6 +176,10 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public SimpleComplexNumberMatrix scalarMultiply(final SimpleComplexNumber scalar) {
@@ -152,6 +192,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public SimpleComplexNumberMatrix negate() {
@@ -160,6 +202,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public SimpleComplexNumber trace() {
@@ -171,6 +215,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public SimpleComplexNumber determinant() {
@@ -193,6 +239,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     protected SimpleComplexNumber leibnizFormula() {
@@ -217,6 +265,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     protected SimpleComplexNumber ruleOfSarrus() {
@@ -231,6 +281,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public SimpleComplexNumberMatrix transpose() {

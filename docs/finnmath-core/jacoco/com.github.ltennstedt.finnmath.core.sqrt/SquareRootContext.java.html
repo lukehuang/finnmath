@@ -20,74 +20,87 @@ import org.apache.commons.lang3.builder.Builder;
 <span class="pc bpc" id="L20" title="1 of 2 branches missed.">@Beta</span>
 public final class SquareRootContext {
     private final BigDecimal abortCriterion;
-    private final int maxIerations;
+    private final int maxIterations;
     private final int initalScale;
     private final MathContext mathContext;
 
-    private SquareRootContext(final BigDecimal abortCriterion, final int maxIerations, final int initalScale,
+    private SquareRootContext(final BigDecimal abortCriterion, final int maxIterations, final int initalScale,
 <span class="fc" id="L28">        final MathContext mathContext) {</span>
 <span class="pc bpc" id="L29" title="2 of 4 branches missed.">        assert abortCriterion != null;</span>
 <span class="pc bpc" id="L30" title="3 of 6 branches missed.">        assert BigDecimal.ZERO.compareTo(abortCriterion) &lt; 0 &amp;&amp; abortCriterion.compareTo(BigDecimal.ONE) &lt; 0;</span>
-<span class="pc bpc" id="L31" title="2 of 4 branches missed.">        assert maxIerations &gt; 0;</span>
+<span class="pc bpc" id="L31" title="2 of 4 branches missed.">        assert maxIterations &gt; 0;</span>
 <span class="pc bpc" id="L32" title="2 of 4 branches missed.">        assert initalScale &gt; -1;</span>
 <span class="pc bpc" id="L33" title="2 of 4 branches missed.">        assert mathContext != null;</span>
 <span class="fc" id="L34">        this.abortCriterion = abortCriterion;</span>
-<span class="fc" id="L35">        this.maxIerations = maxIerations;</span>
+<span class="fc" id="L35">        this.maxIterations = maxIterations;</span>
 <span class="fc" id="L36">        this.initalScale = initalScale;</span>
 <span class="fc" id="L37">        this.mathContext = mathContext;</span>
 <span class="fc" id="L38">    }</span>
 
+    /**
+     * Returns a {@link SquareRootContextBuilder}
+     *
+     * @return {@link SquareRootContextBuilder}
+     * @since 1
+     */
     public static SquareRootContextBuilder builder() {
-<span class="fc" id="L41">        return new SquareRootContextBuilder();</span>
+<span class="fc" id="L47">        return new SquareRootContextBuilder();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L49">        return Objects.hash(abortCriterion, maxIerations, initalScale, mathContext);</span>
+<span class="nc" id="L57">        return Objects.hash(abortCriterion, maxIterations, initalScale, mathContext);</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean equals(final Object object) {
-<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (this == object) {</span>
-<span class="nc" id="L58">            return true;</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (this == object) {</span>
+<span class="nc" id="L68">            return true;</span>
         }
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (!(object instanceof SquareRootContext)) {</span>
-<span class="nc" id="L61">            return false;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (!(object instanceof SquareRootContext)) {</span>
+<span class="nc" id="L71">            return false;</span>
         }
-<span class="nc" id="L63">        final SquareRootContext other = (SquareRootContext) object;</span>
-<span class="nc bnc" id="L64" title="All 4 branches missed.">        return abortCriterion.equals(other.getAbortCriterion()) &amp;&amp; maxIerations == other.getMaxIerations()</span>
-<span class="nc bnc" id="L65" title="All 4 branches missed.">            &amp;&amp; initalScale == other.getInitalScale() &amp;&amp; mathContext.equals(other.getMathContext());</span>
+<span class="nc" id="L73">        final SquareRootContext other = (SquareRootContext) object;</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">        return abortCriterion.equals(other.getAbortCriterion()) &amp;&amp; maxIterations == other.getMaxIterations()</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">            &amp;&amp; initalScale == other.getInitalScale() &amp;&amp; mathContext.equals(other.getMathContext());</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public String toString() {
-<span class="nc" id="L73">        return MoreObjects.toStringHelper(this).add(&quot;abortCriterion&quot;, abortCriterion).add(&quot;maxIerations&quot;, maxIerations)</span>
-<span class="nc" id="L74">            .add(&quot;initalScale&quot;, initalScale).add(&quot;mathContext&quot;, mathContext).toString();</span>
+<span class="nc" id="L85">        return MoreObjects.toStringHelper(this).add(&quot;abortCriterion&quot;, abortCriterion)</span>
+<span class="nc" id="L86">            .add(&quot;maxIterations&quot;, maxIterations).add(&quot;initalScale&quot;, initalScale).add(&quot;mathContext&quot;, mathContext)</span>
+<span class="nc" id="L87">            .toString();</span>
     }
 
     public BigDecimal getAbortCriterion() {
-<span class="fc" id="L78">        return abortCriterion;</span>
+<span class="fc" id="L91">        return abortCriterion;</span>
     }
 
-    public int getMaxIerations() {
-<span class="nc" id="L82">        return maxIerations;</span>
+    public int getMaxIterations() {
+<span class="nc" id="L95">        return maxIterations;</span>
     }
 
     public int getInitalScale() {
-<span class="fc" id="L86">        return initalScale;</span>
+<span class="fc" id="L99">        return initalScale;</span>
     }
 
     public MathContext getMathContext() {
-<span class="fc" id="L90">        return mathContext;</span>
+<span class="fc" id="L103">        return mathContext;</span>
     }
 
     /**
@@ -97,11 +110,11 @@ public final class SquareRootContext {
      * @since 1
      */
     @Beta
-<span class="fc" id="L100">    public static final class SquareRootContextBuilder implements Builder&lt;SquareRootContext&gt; {</span>
-<span class="fc" id="L101">        private BigDecimal _abortCriterion = new BigDecimal(&quot;0.0000000001&quot;);</span>
-<span class="fc" id="L102">        private int _maxIerations = 10;</span>
-<span class="fc" id="L103">        private int _initalScale = 10;</span>
-<span class="fc" id="L104">        private MathContext _mathContext = MathContext.DECIMAL128;</span>
+<span class="fc" id="L113">    public static final class SquareRootContextBuilder implements Builder&lt;SquareRootContext&gt; {</span>
+<span class="fc" id="L114">        private BigDecimal _abortCriterion = new BigDecimal(&quot;0.0000000001&quot;);</span>
+<span class="fc" id="L115">        private int _maxIterations = 10;</span>
+<span class="fc" id="L116">        private int _initalScale = 10;</span>
+<span class="fc" id="L117">        private MathContext _mathContext = MathContext.DECIMAL128;</span>
 
         /**
          * Sets the abort criterion and returns {@code this}
@@ -116,25 +129,25 @@ public final class SquareRootContext {
          * @since 1
          */
         public SquareRootContextBuilder abortCriterion(final BigDecimal abortCriterion) {
-<span class="nc" id="L119">            _abortCriterion = requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
-<span class="nc" id="L120">            exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
-<span class="nc" id="L121">            return this;</span>
+<span class="nc" id="L132">            _abortCriterion = requireNonNull(abortCriterion, &quot;abortCriterion&quot;);</span>
+<span class="nc" id="L133">            exclusiveBetween(BigDecimal.ZERO, BigDecimal.ONE, abortCriterion);</span>
+<span class="nc" id="L134">            return this;</span>
         }
 
         /**
          * Sets the maximal number of iterations and returns {@code this}
          *
-         * @param maxIerations
+         * @param maxIterations
          *            maximal number of iterations
          * @return {@code this}
          * @throws IllegalArgumentException
          *             if {@code maxIterations &lt; 1}
          * @since 1
          */
-        public SquareRootContextBuilder maxIerations(final int maxIerations) {
-<span class="nc bnc" id="L135" title="All 2 branches missed.">            checkArgument(maxIerations &gt; 0, &quot;expected maxIterations &gt; 0 but actual %s&quot;, maxIerations);</span>
-<span class="nc" id="L136">            _maxIerations = maxIerations;</span>
-<span class="nc" id="L137">            return this;</span>
+        public SquareRootContextBuilder maxIterations(final int maxIterations) {
+<span class="nc bnc" id="L148" title="All 2 branches missed.">            checkArgument(maxIterations &gt; 0, &quot;expected maxIterations &gt; 0 but actual %s&quot;, maxIterations);</span>
+<span class="nc" id="L149">            _maxIterations = maxIterations;</span>
+<span class="nc" id="L150">            return this;</span>
         }
 
         /**
@@ -148,9 +161,9 @@ public final class SquareRootContext {
          * @since 1
          */
         public SquareRootContextBuilder initalScale(final int initalScale) {
-<span class="nc bnc" id="L151" title="All 2 branches missed.">            checkArgument(initalScale &gt; -1, &quot;expected initScale &gt; -1 but actual %s&quot;, initalScale);</span>
-<span class="nc" id="L152">            _initalScale = initalScale;</span>
-<span class="nc" id="L153">            return this;</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">            checkArgument(initalScale &gt; -1, &quot;expected initScale &gt; -1 but actual %s&quot;, initalScale);</span>
+<span class="nc" id="L165">            _initalScale = initalScale;</span>
+<span class="nc" id="L166">            return this;</span>
         }
 
         /**
@@ -164,42 +177,46 @@ public final class SquareRootContext {
          * @since 1
          */
         public SquareRootContextBuilder mathContext(final MathContext mathContext) {
-<span class="nc" id="L167">            _mathContext = requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L168">            return this;</span>
+<span class="nc" id="L180">            _mathContext = requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L181">            return this;</span>
         }
 
         /**
          * {@inheritDoc}
+         *
+         * @since 1
          */
         @Override
         public SquareRootContext build() {
-<span class="fc" id="L176">            return new SquareRootContext(_abortCriterion, _maxIerations, _initalScale, _mathContext);</span>
+<span class="fc" id="L191">            return new SquareRootContext(_abortCriterion, _maxIterations, _initalScale, _mathContext);</span>
         }
 
         /**
          * {@inheritDoc}
+         *
+         * @since 1
          */
         @Override
         public String toString() {
-<span class="nc" id="L184">            return MoreObjects.toStringHelper(this).add(&quot;_abortCriterion&quot;, _abortCriterion)</span>
-<span class="nc" id="L185">                .add(&quot;_maxIerations&quot;, _maxIerations).add(&quot;_initalScale&quot;, _initalScale).add(&quot;_mathContext&quot;, _mathContext)</span>
-<span class="nc" id="L186">                .toString();</span>
+<span class="nc" id="L201">            return MoreObjects.toStringHelper(this).add(&quot;_abortCriterion&quot;, _abortCriterion)</span>
+<span class="nc" id="L202">                .add(&quot;_maxIterations&quot;, _maxIterations).add(&quot;_initalScale&quot;, _initalScale)</span>
+<span class="nc" id="L203">                .add(&quot;_mathContext&quot;, _mathContext).toString();</span>
         }
 
         public BigDecimal getAbortCriterion() {
-<span class="nc" id="L190">            return _abortCriterion;</span>
+<span class="nc" id="L207">            return _abortCriterion;</span>
         }
 
-        public int getMaxIerations() {
-<span class="nc" id="L194">            return _maxIerations;</span>
+        public int getMaxIterations() {
+<span class="nc" id="L211">            return _maxIterations;</span>
         }
 
         public int getInitalScale() {
-<span class="nc" id="L198">            return _initalScale;</span>
+<span class="nc" id="L215">            return _initalScale;</span>
         }
 
         public MathContext getMathContext() {
-<span class="nc" id="L202">            return _mathContext;</span>
+<span class="nc" id="L219">            return _mathContext;</span>
         }
     }
 }

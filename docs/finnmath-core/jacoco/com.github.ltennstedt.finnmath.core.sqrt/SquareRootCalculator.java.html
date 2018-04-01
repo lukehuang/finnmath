@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SquareRootCalculator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.sqrt</a> &gt; <span class="el_source">SquareRootCalculator.java</span></div><h1>SquareRootCalculator.java</h1><pre class="source lang-java linenums">/*
  * Copyright 2017 Lars Tennstedt
  *
- * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under Apache License, Version 2.0 (&quot;License&quot;);
+ * you may not use this file except in compliance with License.
+ * You may obtain a copy of License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * distributed under License is distributed on an &quot;AS IS&quot; BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * See License for specific language governing permissions and
+ * limitations under License.
  */
 
 package com.github.ltennstedt.finnmath.core.sqrt;
@@ -53,11 +53,11 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigInteger}
+     * Returns square root of given {@link BigInteger}
      *
      * @param integer
-     *            the integer whose square root is to be calculated
-     * @return The square root of the given integer
+     *            integer whose square root is to be calculated
+     * @return square root of given integer
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws IllegalArgumentException
@@ -72,13 +72,13 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigInteger}
+     * Returns square root of given {@link BigInteger}
      *
      * @param integer
-     *            the integer whose square root is to be calculated
+     *            integer whose square root is to be calculated
      * @param squareRootContext
      *            {@link SquareRootContext}
-     * @return Square root of the given integer
+     * @return Square root of given integer
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws NullPointerException
@@ -96,11 +96,11 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigDecimal}
+     * Returns square root of given {@link BigDecimal}
      *
      * @param decimal
-     *            the decimal number whose square root is to be calculated
-     * @return The square root of the given decimal
+     *            decimal number whose square root is to be calculated
+     * @return square root of given decimal
      * @throws NullPointerException
      *             if {@code decimal == null}
      * @throws IllegalArgumentException
@@ -115,13 +115,13 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigDecimal}
+     * Returns square root of given {@link BigDecimal}
      *
      * @param decimal
-     *            the decimal number whose square root is to be calculated
+     *            decimal number whose square root is to be calculated
      * @param squareRootContext
      *            {@link SquareRootContext}
-     * @return Square root of the given decimal
+     * @return Square root of given decimal
      * @throws NullPointerException
      *             if {@code decimal == null}
      * @throws NullPointerException
@@ -139,12 +139,12 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns the square root of the given {@link BigInteger} which has to be a
-     * perfect square
+     * Returns square root of given {@link BigInteger} which has to be a perfect
+     * square
      *
      * @param integer
-     *            the perfect square whose square root is to be calculated
-     * @return The square root of the given perfect square
+     *            perfect square whose square root is to be calculated
+     * @return square root of given perfect square
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws IllegalArgumentException
@@ -152,23 +152,21 @@ public final class SquareRootCalculator {
      * @throws IllegalArgumentException
      *             if {@code !perfectSquare}
      * @see #perfectSquare
-     * @see BigIntegerMath#sqrt
      * @since 1
      */
     public static BigInteger sqrtOfPerfectSquare(final BigInteger integer) {
-<span class="fc" id="L159">        requireNonNull(integer, &quot;integer&quot;);</span>
-<span class="pc bpc" id="L160" title="1 of 2 branches missed.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
-<span class="fc" id="L161">        checkArgument(perfectSquare(integer), &quot;expected perfect square but actual %s&quot;, integer);</span>
-<span class="fc" id="L162">        return BigIntegerMath.sqrt(integer, RoundingMode.UNNECESSARY);</span>
+<span class="fc" id="L158">        requireNonNull(integer, &quot;integer&quot;);</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
+<span class="fc" id="L160">        checkArgument(perfectSquare(integer), &quot;expected perfect square but actual %s&quot;, integer);</span>
+<span class="fc" id="L161">        return BigIntegerMath.sqrt(integer, RoundingMode.UNNECESSARY);</span>
     }
 
     /**
-     * Returns if the given {@link BigInteger} is a perfect square
+     * Returns if given {@link BigInteger} is a perfect square
      *
      * @param integer
-     *            the integer which should be checked
-     * @return {@code true} if the integer is a perfect square, {@code false}
-     *         otherwise
+     *            integer which should be checked
+     * @return {@code true} if integer is a perfect square, {@code false} otherwise
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws IllegalArgumentException
@@ -176,91 +174,91 @@ public final class SquareRootCalculator {
      * @since 1
      */
     public static boolean perfectSquare(final BigInteger integer) {
-<span class="fc" id="L179">        requireNonNull(integer, &quot;integer&quot;);</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
-<span class="fc" id="L181">        BigInteger sum = BigInteger.ZERO;</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">        for (BigInteger odd = BigInteger.ONE; sum.compareTo(integer) &lt; 0; odd = odd.add(BigInteger.valueOf(2))) {</span>
-<span class="fc" id="L183">            sum = sum.add(odd);</span>
+<span class="fc" id="L177">        requireNonNull(integer, &quot;integer&quot;);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">        checkArgument(integer.compareTo(BigInteger.ZERO) &gt; -1, &quot;expected integer &gt;= 0 but actual %s&quot;, integer);</span>
+<span class="fc" id="L179">        BigInteger sum = BigInteger.ZERO;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        for (BigInteger odd = BigInteger.ONE; sum.compareTo(integer) &lt; 0; odd = odd.add(BigInteger.valueOf(2))) {</span>
+<span class="fc" id="L181">            sum = sum.add(odd);</span>
         }
-<span class="fc" id="L185">        return sum.equals(integer);</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        return sum.compareTo(integer) == 0;</span>
     }
 
     private static BigDecimal heronsMethod(final BigDecimal decimal, final SquareRootContext squareRootContext) {
-<span class="pc bpc" id="L189" title="2 of 4 branches missed.">        assert decimal != null;</span>
-<span class="pc bpc" id="L190" title="2 of 4 branches missed.">        assert squareRootContext != null;</span>
-<span class="fc" id="L191">        final BigDecimal abortCriterion = squareRootContext.getAbortCriterion();</span>
-<span class="fc" id="L192">        log.debug(&quot;calculating square root for {} with precision = {}&quot;, decimal.toPlainString(),</span>
-<span class="fc" id="L193">            abortCriterion.toPlainString());</span>
-<span class="fc" id="L194">        final MathContext mathContext = squareRootContext.getMathContext();</span>
-<span class="fc" id="L195">        final RoundingMode roundingMode = mathContext.getRoundingMode();</span>
-<span class="fc" id="L196">        final BigDecimal scaled = decimal.setScale(squareRootContext.getInitalScale(), roundingMode);</span>
-<span class="fc" id="L197">        BigDecimal predecessor = scaled.add(BigDecimal.ONE, mathContext).divide(BigDecimal.valueOf(2), mathContext);</span>
-<span class="fc" id="L198">        log.debug(&quot;seed value = {}&quot;, predecessor.toPlainString());</span>
-<span class="fc" id="L199">        BigDecimal successor = calculateSuccessor(predecessor, scaled, squareRootContext);</span>
-<span class="fc" id="L200">        long iterations = 1;</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">        while (successor.subtract(predecessor).abs().compareTo(abortCriterion) &gt; 0) {</span>
-<span class="fc" id="L202">            log.debug(&quot;|successor - predecessor| = {}&quot;, successor.subtract(predecessor).abs().toPlainString());</span>
-<span class="fc" id="L203">            predecessor = successor;</span>
-<span class="fc" id="L204">            successor = calculateSuccessor(successor, scaled, squareRootContext);</span>
-<span class="fc" id="L205">            iterations++;</span>
+<span class="pc bpc" id="L187" title="2 of 4 branches missed.">        assert decimal != null;</span>
+<span class="pc bpc" id="L188" title="2 of 4 branches missed.">        assert squareRootContext != null;</span>
+<span class="fc" id="L189">        final BigDecimal abortCriterion = squareRootContext.getAbortCriterion();</span>
+<span class="fc" id="L190">        log.debug(&quot;calculating square root for {} with precision = {}&quot;, decimal.toPlainString(),</span>
+<span class="fc" id="L191">            abortCriterion.toPlainString());</span>
+<span class="fc" id="L192">        final MathContext mathContext = squareRootContext.getMathContext();</span>
+<span class="fc" id="L193">        final RoundingMode roundingMode = mathContext.getRoundingMode();</span>
+<span class="fc" id="L194">        final BigDecimal scaled = decimal.setScale(squareRootContext.getInitalScale(), roundingMode);</span>
+<span class="fc" id="L195">        BigDecimal predecessor = scaled.add(BigDecimal.ONE, mathContext).divide(BigDecimal.valueOf(2), mathContext);</span>
+<span class="fc" id="L196">        log.debug(&quot;seed value = {}&quot;, predecessor.toPlainString());</span>
+<span class="fc" id="L197">        BigDecimal successor = calculateSuccessor(predecessor, scaled, squareRootContext);</span>
+<span class="fc" id="L198">        long iterations = 1;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        while (successor.subtract(predecessor).abs().compareTo(abortCriterion) &gt; 0) {</span>
+<span class="fc" id="L200">            log.debug(&quot;|successor - predecessor| = {}&quot;, successor.subtract(predecessor).abs().toPlainString());</span>
+<span class="fc" id="L201">            predecessor = successor;</span>
+<span class="fc" id="L202">            successor = calculateSuccessor(successor, scaled, squareRootContext);</span>
+<span class="fc" id="L203">            iterations++;</span>
         }
-<span class="fc" id="L207">        log.debug(&quot;terminated after {} iterations&quot;, iterations);</span>
-<span class="fc" id="L208">        log.debug(&quot;sqrt({}) = {}&quot;, decimal.toPlainString(), successor.toPlainString());</span>
-<span class="fc" id="L209">        return successor;</span>
+<span class="fc" id="L205">        log.debug(&quot;terminated after {} iterations&quot;, iterations);</span>
+<span class="fc" id="L206">        log.debug(&quot;sqrt({}) = {}&quot;, decimal.toPlainString(), successor.toPlainString());</span>
+<span class="fc" id="L207">        return successor;</span>
     }
 
     private static BigDecimal calculateSuccessor(final BigDecimal predecessor, final BigDecimal decimal,
         final SquareRootContext squareRootContext) {
-<span class="pc bpc" id="L214" title="2 of 4 branches missed.">        assert predecessor != null;</span>
-<span class="pc bpc" id="L215" title="2 of 4 branches missed.">        assert decimal != null;</span>
-<span class="pc bpc" id="L216" title="2 of 4 branches missed.">        assert squareRootContext != null;</span>
-<span class="fc" id="L217">        log.debug(&quot;iteration&quot;);</span>
-<span class="fc" id="L218">        log.debug(&quot;predecessor = {}&quot;, predecessor.toPlainString());</span>
-<span class="fc" id="L219">        final MathContext mathContext = squareRootContext.getMathContext();</span>
-<span class="fc" id="L220">        final BigDecimal divisor = BigDecimal.valueOf(2).multiply(predecessor, mathContext);</span>
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">        final BigDecimal successor = divisor.compareTo(BigDecimal.ZERO) != 0</span>
-<span class="fc" id="L222">            ? predecessor.pow(2, mathContext).add(decimal, mathContext).divide(divisor, mathContext)</span>
-<span class="pc" id="L223">            : squareRootContext.getAbortCriterion();</span>
-<span class="fc" id="L224">        log.debug(&quot;successor = {}&quot;, successor.toPlainString());</span>
-<span class="fc" id="L225">        return successor;</span>
+<span class="pc bpc" id="L212" title="2 of 4 branches missed.">        assert predecessor != null;</span>
+<span class="pc bpc" id="L213" title="2 of 4 branches missed.">        assert decimal != null;</span>
+<span class="pc bpc" id="L214" title="2 of 4 branches missed.">        assert squareRootContext != null;</span>
+<span class="fc" id="L215">        log.debug(&quot;iteration&quot;);</span>
+<span class="fc" id="L216">        log.debug(&quot;predecessor = {}&quot;, predecessor.toPlainString());</span>
+<span class="fc" id="L217">        final MathContext mathContext = squareRootContext.getMathContext();</span>
+<span class="fc" id="L218">        final BigDecimal divisor = BigDecimal.valueOf(2).multiply(predecessor, mathContext);</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">        final BigDecimal successor = divisor.compareTo(BigDecimal.ZERO) != 0</span>
+<span class="fc" id="L220">            ? predecessor.pow(2, mathContext).add(decimal, mathContext).divide(divisor, mathContext)</span>
+<span class="pc" id="L221">            : squareRootContext.getAbortCriterion();</span>
+<span class="fc" id="L222">        log.debug(&quot;successor = {}&quot;, successor.toPlainString());</span>
+<span class="fc" id="L223">        return successor;</span>
     }
 
     @VisibleForTesting
     static ScientificNotation scientificNotationForSqrt(final BigDecimal decimal, final RoundingMode roundingMode) {
-<span class="pc bpc" id="L230" title="2 of 4 branches missed.">        assert decimal != null;</span>
-<span class="pc bpc" id="L231" title="2 of 4 branches missed.">        assert roundingMode != null;</span>
-<span class="fc" id="L232">        log.debug(&quot;calculating scientific notification for {}&quot;, decimal.toPlainString());</span>
-<span class="fc" id="L233">        BigDecimal coefficient = decimal;</span>
-<span class="fc" id="L234">        int exponent = 0;</span>
-<span class="fc" id="L235">        log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
-<span class="fc" id="L236">        log.debug(&quot;exponent = {}&quot;, exponent);</span>
-<span class="fc bfc" id="L237" title="All 2 branches covered.">        while (coefficient.compareTo(BigDecimal.valueOf(100)) &gt; -1) {</span>
-<span class="fc" id="L238">            log.debug(&quot;iteration for scientific notification&quot;);</span>
-<span class="fc" id="L239">            coefficient = coefficient.divide(BigDecimal.valueOf(100), roundingMode);</span>
-<span class="fc" id="L240">            exponent = addExact(exponent, 2);</span>
-<span class="fc" id="L241">            log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
-<span class="fc" id="L242">            log.debug(&quot;exponent = {}&quot;, exponent);</span>
+<span class="pc bpc" id="L228" title="2 of 4 branches missed.">        assert decimal != null;</span>
+<span class="pc bpc" id="L229" title="2 of 4 branches missed.">        assert roundingMode != null;</span>
+<span class="fc" id="L230">        log.debug(&quot;calculating scientific notification for {}&quot;, decimal.toPlainString());</span>
+<span class="fc" id="L231">        BigDecimal coefficient = decimal;</span>
+<span class="fc" id="L232">        int exponent = 0;</span>
+<span class="fc" id="L233">        log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
+<span class="fc" id="L234">        log.debug(&quot;exponent = {}&quot;, exponent);</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        while (coefficient.compareTo(BigDecimal.valueOf(100)) &gt; -1) {</span>
+<span class="fc" id="L236">            log.debug(&quot;iteration for scientific notification&quot;);</span>
+<span class="fc" id="L237">            coefficient = coefficient.divide(BigDecimal.valueOf(100), roundingMode);</span>
+<span class="fc" id="L238">            exponent = addExact(exponent, 2);</span>
+<span class="fc" id="L239">            log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
+<span class="fc" id="L240">            log.debug(&quot;exponent = {}&quot;, exponent);</span>
         }
-<span class="fc" id="L244">        return new ScientificNotation(coefficient, exponent);</span>
+<span class="fc" id="L242">        return new ScientificNotation(coefficient, exponent);</span>
     }
 
     @VisibleForTesting
     static ScientificNotation scientificNotationForSqrt(final BigDecimal decimal, final MathContext mathContext) {
-<span class="nc bnc" id="L249" title="All 4 branches missed.">        assert decimal != null;</span>
-<span class="nc bnc" id="L250" title="All 4 branches missed.">        assert mathContext != null;</span>
-<span class="nc" id="L251">        log.debug(&quot;calculating scientific notification for {}&quot;, decimal.toPlainString());</span>
-<span class="nc" id="L252">        BigDecimal coefficient = decimal;</span>
-<span class="nc" id="L253">        int exponent = 0;</span>
-<span class="nc" id="L254">        log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
-<span class="nc" id="L255">        log.debug(&quot;exponent = {}&quot;, exponent);</span>
-<span class="nc bnc" id="L256" title="All 2 branches missed.">        while (coefficient.compareTo(BigDecimal.valueOf(100)) &gt; -1) {</span>
-<span class="nc" id="L257">            log.debug(&quot;iteration for scientific notification&quot;);</span>
-<span class="nc" id="L258">            coefficient = coefficient.divide(BigDecimal.valueOf(100), mathContext);</span>
-<span class="nc" id="L259">            exponent = addExact(exponent, 2);</span>
-<span class="nc" id="L260">            log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
-<span class="nc" id="L261">            log.debug(&quot;exponent = {}&quot;, exponent);</span>
+<span class="nc bnc" id="L247" title="All 4 branches missed.">        assert decimal != null;</span>
+<span class="nc bnc" id="L248" title="All 4 branches missed.">        assert mathContext != null;</span>
+<span class="nc" id="L249">        log.debug(&quot;calculating scientific notification for {}&quot;, decimal.toPlainString());</span>
+<span class="nc" id="L250">        BigDecimal coefficient = decimal;</span>
+<span class="nc" id="L251">        int exponent = 0;</span>
+<span class="nc" id="L252">        log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
+<span class="nc" id="L253">        log.debug(&quot;exponent = {}&quot;, exponent);</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">        while (coefficient.compareTo(BigDecimal.valueOf(100)) &gt; -1) {</span>
+<span class="nc" id="L255">            log.debug(&quot;iteration for scientific notification&quot;);</span>
+<span class="nc" id="L256">            coefficient = coefficient.divide(BigDecimal.valueOf(100), mathContext);</span>
+<span class="nc" id="L257">            exponent = addExact(exponent, 2);</span>
+<span class="nc" id="L258">            log.debug(&quot;coefficient = {}&quot;, coefficient.toPlainString());</span>
+<span class="nc" id="L259">            log.debug(&quot;exponent = {}&quot;, exponent);</span>
         }
-<span class="nc" id="L263">        return new ScientificNotation(coefficient, exponent);</span>
+<span class="nc" id="L261">        return new ScientificNotation(coefficient, exponent);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

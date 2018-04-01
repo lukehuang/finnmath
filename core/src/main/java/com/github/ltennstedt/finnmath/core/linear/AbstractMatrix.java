@@ -79,7 +79,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      * Required arguments constructor
      *
      * @param table
-     *            table
+     *            {@link ImmutableTable}
      * @throws NullPointerException
      *             if {@code table == null}
      * @since 1
@@ -93,46 +93,30 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @param summand
      *            summand
-     * @return Sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize != summand.rowSize}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize != summand.columnSize}
+     * @return sum
      * @since 1
      */
-    public abstract M add(M summand);
+    protected abstract M add(M summand);
 
     /**
      * Returns the difference of this {@link AbstractMatrix} and the given one
      *
      * @param subtrahend
      *            subtrahend
-     * @return Difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize != summand.rowSize}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize != summand.columnSize}
+     * @return difference
      * @since 1
      */
-    public abstract M subtract(M subtrahend);
+    protected abstract M subtract(M subtrahend);
 
     /**
      * Returns the product of this {@link AbstractMatrix} and the given one
      *
      * @param factor
      *            factor
-     * @return Product
-     * @throws NullPointerException
-     *             if {@code factor == null}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize != factor.rowSize}
+     * @return product
      * @since 1
      */
-    public abstract M multiply(M factor);
+    protected abstract M multiply(M factor);
 
     /**
      * Returns the product of this {@link AbstractMatrix} and the given
@@ -141,13 +125,9 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      * @param vector
      *            vector
      * @return product
-     * @throws NullPointerException
-     *             if {@code vector == null}
-     * @throws IllegalArgumentException
-     *             if {@code columnSize != vector.size}
      * @since 1
      */
-    public abstract V multiplyVector(V vector);
+    protected abstract V multiplyVector(V vector);
 
     /**
      * Returns the product of a matrix row and a matrix column
@@ -156,13 +136,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *            row
      * @param column
      *            column
-     * @return The product
-     * @throws NullPointerException
-     *             if {@code row == null}
-     * @throws NullPointerException
-     *             if {@code column == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowSize != columnSize}
+     * @return product
      * @since 1
      */
     protected abstract E multiplyRowWithColumn(Map<Integer, E> row, Map<Integer, E> column);
@@ -173,9 +147,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @param scalar
      *            scalar
-     * @return Scalar product
-     * @throws NullPointerException
-     *             if {@code scalar == null}
+     * @return scalar product
      * @since 1
      */
     protected abstract M scalarMultiply(E scalar);
@@ -183,7 +155,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the negated {@link AbstractMatrix} and this one
      *
-     * @return Negated
+     * @return negated {@link AbstractMatrix}
      * @since 1
      */
     protected abstract M negate();
@@ -191,7 +163,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the trace of this {@link AbstractMatrix}
      *
-     * @return Trace
+     * @return trace
      * @since 1
      */
     protected abstract E trace();
@@ -199,9 +171,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the determinant of this {@link AbstractMatrix}
      *
-     * @return Determinant
-     * @throws IllegalStateException
-     *             if {@code !square}
+     * @return determinant
      * @since 1
      */
     protected abstract E determinant();
@@ -209,21 +179,23 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Leibniz formula
      *
-     * @return Determinant
+     * @return determinant
+     * @since 1
      */
     protected abstract E leibnizFormula();
 
     /**
      * Rule of Sarrus
      *
-     * @return Determinant
+     * @return determinant
+     * @since 1
      */
     protected abstract E ruleOfSarrus();
 
     /**
      * Returns the transpose of this {@link AbstractMatrix}
      *
-     * @return The transpose
+     * @return transpose
      * @since 1
      */
     protected abstract M transpose();
@@ -236,15 +208,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *            row index
      * @param columnIndex
      *            column index
-     * @return Minor
-     * @throws NullPointerException
-     *             if {@code rowIndex == null}
-     * @throws NullPointerException
-     *             if {@code columnIndex == null}
-     * @throws IllegalArgumentException
-     *             if {@code rowIndex < 1 || rowSize < rowIndex}
-     * @throws IllegalArgumentException
-     *             if {@code columnIndex < 1 || columnSize < columnIndex}
+     * @return minor
      * @since 1
      */
     protected abstract M minor(Integer rowIndex, Integer columnIndex);
@@ -252,7 +216,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the maximum absolute column sum norm of this {@link AbstractMatrix}
      *
-     * @return Maximum absolute column sum norm
+     * @return maximum absolute column sum norm
      * @since 1
      */
     protected abstract N maxAbsColumnSumNorm();
@@ -260,7 +224,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the maximum absolute row sum norm of this {@link AbstractMatrix}
      *
-     * @return Maximum absolute row sum norm
+     * @return maximum absolute row sum norm
      * @since 1
      */
     protected abstract N maxAbsRowSumNorm();
@@ -268,7 +232,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the square of the frobenius norm of this {@link AbstractMatrix}
      *
-     * @return Square of the frobenius norm
+     * @return square of the frobenius norm
      * @since 1
      */
     protected abstract B frobeniusNormPow2();
@@ -276,7 +240,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the frobenius norm of this {@link AbstractMatrix}
      *
-     * @return Frobenius norm
+     * @return frobenius norm
      * @since 1
      */
     public final BigDecimal frobeniusNorm() {
@@ -288,7 +252,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @param squareRootContext
      *            {@link SquareRootContext}
-     * @return Frobenius norm
+     * @return frobenius norm
      * @since 1
      */
     protected abstract BigDecimal frobeniusNorm(final SquareRootContext squareRootContext);
@@ -296,7 +260,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the maximum norm of this {@link AbstractMatrix}
      *
-     * @return The maximum norm
+     * @return maximum norm
      * @since 1
      */
     protected abstract N maxNorm();
@@ -319,8 +283,6 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @return {@code true} if {@code upperTriangular || lowerTriangular},
      *         {@code false} otherwise
-     * @see #upperTriangular
-     * @see #lowerTriangular
      * @since 1
      */
     public final boolean triangular() {
@@ -353,8 +315,6 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @return {@code true} if {@code upperTriangular && lowerTriangular},
      *         {@code false} otherwise
-     * @see #upperTriangular
-     * @see #lowerTriangular
      * @since 1
      */
     public final boolean diagonal() {
@@ -367,7 +327,6 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @return {@code true} if {@code this} is the identity matrix, {@code false}
      *         otherwise
-     * @see #diagonal
      * @since 1
      */
     protected abstract boolean identity();
@@ -378,7 +337,6 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @return {@code true} if {@code det == -1 || det == 1}, {@code false}
      *         otherwise
-     * @see #determinant
      * @since 1
      */
     protected abstract boolean invertible();
@@ -389,8 +347,6 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @return {@code true} if {@code square && equals(transpose)}, {@code false}
      *         otherwise
-     * @see #square
-     * @see #transpose
      * @since 1
      */
     public final boolean symmetric() {
@@ -403,9 +359,6 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @return {@code true} if {@code square && equals(transpose.negate)},
      *         {@code false} otherwise
-     * @see #square
-     * @see #transpose
-     * @see #negate
      * @since 1
      */
     public final boolean skewSymmetric() {
@@ -415,7 +368,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the row indices starting from {@code 1}
      *
-     * @return Row indices
+     * @return row indices
      * @since 1
      */
     public final ImmutableSet<Integer> rowIndexes() {
@@ -425,7 +378,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the column indices starting from {@code 1}
      *
-     * @return Column indices
+     * @return column indices
      * @since 1
      */
     public final ImmutableSet<Integer> columnIndexes() {
@@ -463,7 +416,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns all matrix cells as {@link ImmutableSet}
      *
-     * @return {@link Cell Cells}
+     * @return cells
      * @since 1
      */
     public final ImmutableSet<Cell<Integer, Integer, E>> cells() {
@@ -476,7 +429,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @param rowIndex
      *            the row index
-     * @return Row
+     * @return row
      * @throws NullPointerException
      *             if {@code rowIndex == null}
      * @throws IllegalArgumentException
@@ -496,7 +449,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      *
      * @param columnIndex
      *            the column index
-     * @return Column
+     * @return column
      * @throws NullPointerException
      *             if {@code columnIndex == null}
      * @throws IllegalArgumentException
@@ -513,7 +466,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns all matrix rows as {@link ImmutableMap}
      *
-     * @return Rows
+     * @return rows
      * @since 1
      */
     public final ImmutableMap<Integer, Map<Integer, E>> rows() {
@@ -523,7 +476,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns all matrix columns as {@link ImmutableMap}
      *
-     * @return Columns
+     * @return columns
      * @since 1
      */
     public final ImmutableMap<Integer, Map<Integer, E>> columns() {
@@ -533,7 +486,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns all matrix elements as {@link ImmutableCollection}
      *
-     * @return Elements
+     * @return elements
      * @since 1
      */
     public final ImmutableCollection<E> elements() {
@@ -543,7 +496,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the size of this {@link AbstractMatrix}
      *
-     * @return Size
+     * @return size
      * @since 1
      */
     public final long size() {
@@ -553,7 +506,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the row size of this {@link AbstractMatrix}
      *
-     * @return Row size
+     * @return row size
      * @since 1
      */
     public final int rowSize() {
@@ -563,7 +516,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Returns the column size of this {@link AbstractMatrix}
      *
-     * @return Column size
+     * @return column size
      * @since 1
      */
     public final int columnSize() {
@@ -572,6 +525,8 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final int hashCode() {
@@ -580,6 +535,8 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final boolean equals(final Object object) {
@@ -595,6 +552,8 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final String toString() {

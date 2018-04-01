@@ -77,7 +77,7 @@ public final class BigIntegerMatrixBuilderTest {
     @Test
     public void buildNullShouldThrowException() {
         assertThatThrownBy(() -> BigIntegerMatrix.builder(4, 4).build()).isExactlyInstanceOf(NullPointerException.class)
-            .hasMessage("cell.value");
+            .hasMessage("element");
     }
 
     @Test

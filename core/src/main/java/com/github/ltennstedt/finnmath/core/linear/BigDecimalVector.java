@@ -41,7 +41,26 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
+     * Returns a {@link BigDecimalVectorBuilder}
+     *
+     * @param size
+     *            the size the resulting {@link BigDecimalVector}
+     * @return A {@link BigDecimalVectorBuilder}
+     * @since 1
+     */
+    public static BigDecimalVectorBuilder builder(final int size) {
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        return new BigDecimalVectorBuilder(size);
+    }
+
+    /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != summand.size}
+     * @since 1
      */
     @Override
     public BigDecimalVector add(final BigDecimalVector summand) {
@@ -55,6 +74,12 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != subtrahend.size}
+     * @since 1
      */
     @Override
     public BigDecimalVector subtract(final BigDecimalVector subtrahend) {
@@ -68,6 +93,12 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
      */
     @Override
     public BigDecimal dotProduct(final BigDecimalVector other) {
@@ -79,6 +110,10 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public BigDecimalVector scalarMultiply(final BigDecimal scalar) {
@@ -90,6 +125,8 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimalVector negate() {
@@ -98,10 +135,33 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigDecimal taxicabNorm() {
         return map.values().stream().map(BigDecimal::abs).reduce(BigDecimal::add).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanNormPow2() {
+        return dotProduct(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
+    @Override
+    public BigDecimal euclideanNorm() {
+        return SquareRootCalculator.sqrt(euclideanNormPow2());
     }
 
     /**
@@ -120,14 +180,8 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal euclideanNormPow2() {
-        return dotProduct(this);
-    }
-
-    /**
-     * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigDecimal maxNorm() {
@@ -142,6 +196,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
      * @param other
      *            The other vector
      * @return true if {@code compareTo == 0} for all elements, false otherwise
+     * @since 1
      */
     public boolean equalByComparingTo(final BigDecimalVector other) {
         return !map.entrySet().stream()
@@ -149,20 +204,7 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
     }
 
     /**
-     * Returns a {@link BigDecimalVectorBuilder}
-     *
-     * @param size
-     *            the size the resulting {@link BigDecimalVector}
-     * @return A {@link BigDecimalVectorBuilder}
-     * @since 1
-     */
-    public static BigDecimalVectorBuilder builder(final int size) {
-        checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        return new BigDecimalVectorBuilder(size);
-    }
-
-    /**
-     * The builder for {@link BigDecimalVector BigDecimalVectors}
+     * {@link AbstractVectorBuilder} for {@link BigDecimalVector BigDecimalVectors}
      *
      * @since 1
      */
@@ -179,7 +221,6 @@ public final class BigDecimalVector extends AbstractVector<BigDecimal, BigDecima
          * @return The {@link BigDecimalVector}
          * @throws NullPointerException
          *             if one {@code element == null}
-         * @see ImmutableMap#copyOf
          * @since 1
          */
         @Override

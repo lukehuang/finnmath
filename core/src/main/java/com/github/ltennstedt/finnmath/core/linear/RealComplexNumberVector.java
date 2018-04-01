@@ -43,7 +43,25 @@ public final class RealComplexNumberVector
     }
 
     /**
+     * Returns a {@link RealComplexNumberVectorBuilder}
+     *
+     * @param size
+     *            the size the resulting {@link RealComplexNumberVector}
+     * @return A {@link RealComplexNumberVectorBuilder}
+     * @since 1
+     */
+    public static RealComplexNumberVectorBuilder builder(final int size) {
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        return new RealComplexNumberVectorBuilder(size);
+    }
+
+    /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != summand.size}
      */
     @Override
     public RealComplexNumberVector add(final RealComplexNumberVector summand) {
@@ -57,6 +75,12 @@ public final class RealComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != subtrahend.size}
+     * @since 1
      */
     @Override
     public RealComplexNumberVector subtract(final RealComplexNumberVector subtrahend) {
@@ -70,6 +94,10 @@ public final class RealComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public RealComplexNumberVector scalarMultiply(final RealComplexNumber scalar) {
@@ -81,6 +109,8 @@ public final class RealComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public RealComplexNumberVector negate() {
@@ -89,10 +119,33 @@ public final class RealComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigDecimal taxicabNorm() {
         return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanNormPow2() {
+        return map.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
+    @Override
+    public BigDecimal euclideanNorm() {
+        return SquareRootCalculator.sqrt(euclideanNormPow2());
     }
 
     /**
@@ -111,14 +164,12 @@ public final class RealComplexNumberVector
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public BigDecimal euclideanNormPow2() {
-        return map.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();
-    }
-
-    /**
-     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
      */
     @Override
     public RealComplexNumber dotProduct(final RealComplexNumberVector other) {
@@ -130,6 +181,8 @@ public final class RealComplexNumberVector
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigDecimal maxNorm() {
@@ -137,20 +190,8 @@ public final class RealComplexNumberVector
     }
 
     /**
-     * Returns a {@link RealComplexNumberVectorBuilder}
-     *
-     * @param size
-     *            the size the resulting {@link RealComplexNumberVector}
-     * @return A {@link RealComplexNumberVectorBuilder}
-     * @since 1
-     */
-    public static RealComplexNumberVectorBuilder builder(final int size) {
-        checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        return new RealComplexNumberVectorBuilder(size);
-    }
-
-    /**
-     * The builder for {@link RealComplexNumberVector RealComplexNumberVectors}
+     * {@link AbstractVectorBuilder} for {@link RealComplexNumberVector
+     * RealComplexNumberVectors}
      *
      * @since 1
      */
@@ -162,12 +203,10 @@ public final class RealComplexNumberVector
         }
 
         /**
-         * Returns the built {@link RealComplexNumberVector}
+         * {@inheritDoc}
          *
-         * @return The {@link RealComplexNumberVector}
          * @throws NullPointerException
          *             if one {@code element == null}
-         * @see ImmutableMap#copyOf
          * @since 1
          */
         @Override

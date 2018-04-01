@@ -27,9 +27,11 @@ other JVM technologies. Dependencies are big-math, Guava, Commons Lang and SLF4J
 ## Implementation details
 * Java 8 (finnmath-core) and Kotlin 1.1 (finnmath-kotlin)
 * Operator extensions for Kotlin (separate JAR) 
-* All types are immutable.
 * The matrices are based on ImmutableTable from Guava.
 * The vectors are based on ImmutableMap from Guava.
+* All types are immutable.
+* Absolutely no null values
+* Lambdas
 * All leaf classes are final.
 * Useful hashCode, equals and toString methods
 * Builders for vectors and matrices
@@ -103,6 +105,7 @@ not needed for a standard Java project like this one.
 
 ## Thanks to
 * Oracle for the JVM, Java and OpenJDK
+* the Eclipse Foundation for Eclipse IDE
 * JetBrains for Kotlin and IntelliJ IDEA Community Edition
 * Eric Obermühlner for big-math
 * Google for Guava and Error Prone

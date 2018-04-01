@@ -65,6 +65,46 @@ public final class SimpleComplexNumber
     }
 
     /**
+     * Returns a {@link SimpleComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            real part
+     * @param imaginary
+     *            imaginary part
+     * @return {@link SimpleComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static SimpleComplexNumber of(final long real, final long imaginary) {
+        return SimpleComplexNumber.of(BigInteger.valueOf(real), BigInteger.valueOf(imaginary));
+    }
+
+    /**
+     * Returns a {@link SimpleComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            real part
+     * @param imaginary
+     *            imaginary part
+     * @return {@link SimpleComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static SimpleComplexNumber of(final BigInteger real, final BigInteger imaginary) {
+        requireNonNull(real, "real");
+        requireNonNull(imaginary, "imaginary");
+        return new SimpleComplexNumber(real, imaginary);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @throws NullPointerException
@@ -93,6 +133,9 @@ public final class SimpleComplexNumber
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code factor == null}
      */
     @Override
     public SimpleComplexNumber multiply(final SimpleComplexNumber factor) {
@@ -194,6 +237,9 @@ public final class SimpleComplexNumber
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
@@ -213,6 +259,9 @@ public final class SimpleComplexNumber
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
      */
     @Override
     public PolarForm polarForm(final MathContext mathContext) {
@@ -228,45 +277,5 @@ public final class SimpleComplexNumber
     public BigIntegerMatrix matrix() {
         return BigIntegerMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
             .put(2, 2, real).build();
-    }
-
-    /**
-     * Returns a {@link SimpleComplexNumber} based on the given real and imaginary
-     * part
-     *
-     * @param real
-     *            the real part
-     * @param imaginary
-     *            the imaginary part
-     * @return {@link SimpleComplexNumber}
-     * @throws NullPointerException
-     *             if {@code real == null}
-     * @throws NullPointerException
-     *             if {@code imaginary == null}
-     * @since 1
-     */
-    public static SimpleComplexNumber of(final long real, final long imaginary) {
-        return SimpleComplexNumber.of(BigInteger.valueOf(real), BigInteger.valueOf(imaginary));
-    }
-
-    /**
-     * Returns a {@link SimpleComplexNumber} based on the given real and imaginary
-     * part
-     *
-     * @param real
-     *            the real part
-     * @param imaginary
-     *            the imaginary part
-     * @return {@link SimpleComplexNumber}
-     * @throws NullPointerException
-     *             if {@code real == null}
-     * @throws NullPointerException
-     *             if {@code imaginary == null}
-     * @since 1
-     */
-    public static SimpleComplexNumber of(final BigInteger real, final BigInteger imaginary) {
-        requireNonNull(real, "real");
-        requireNonNull(imaginary, "imaginary");
-        return new SimpleComplexNumber(real, imaginary);
     }
 }

@@ -44,7 +44,7 @@ import org.apache.commons.lang3.builder.Builder;
 public abstract class AbstractMatrixBuilder&lt;E, M extends AbstractMatrix&lt;E, ?, M, ?, ?&gt;,
     B extends AbstractMatrixBuilder&lt;E, M, B&gt;&gt; implements Builder&lt;M&gt; {
     /**
-     * Table holding the elements of this {@link AbstractVectorBuilder}
+     * {@link Table} holding the elements of this {@link AbstractVectorBuilder}
      *
      * @since 1
      */
@@ -157,14 +157,16 @@ public abstract class AbstractMatrixBuilder&lt;E, M extends AbstractMatrix&lt;E,
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final String toString() {
-<span class="fc" id="L163">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+<span class="fc" id="L165">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
     }
 
     public final Table&lt;Integer, Integer, E&gt; getTable() {
-<span class="fc" id="L167">        return table;</span>
+<span class="fc" id="L169">        return table;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

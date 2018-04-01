@@ -74,6 +74,94 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            real part
+     * @param imaginary
+     *            imaginary part
+     * @return {@link RealComplexNumber}
+     * @since 1
+     */
+    public static RealComplexNumber of(final long real, final long imaginary) {
+        return RealComplexNumber.of(BigInteger.valueOf(real), BigInteger.valueOf(imaginary));
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            real part
+     * @param imaginary
+     *            imaginary part
+     * @return {@link RealComplexNumber}
+     * @since 1
+     */
+    public static RealComplexNumber of(final double real, final double imaginary) {
+        return RealComplexNumber.of(BigDecimal.valueOf(real), BigDecimal.valueOf(imaginary));
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            real part
+     * @param imaginary
+     *            imaginary part
+     * @return {@link RealComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static RealComplexNumber of(final BigInteger real, final BigInteger imaginary) {
+        requireNonNull(real, "real");
+        requireNonNull(imaginary, "imaginary");
+        return RealComplexNumber.of(new BigDecimal(real), new BigDecimal(imaginary));
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given real and imaginary
+     * part
+     *
+     * @param real
+     *            real part
+     * @param imaginary
+     *            imaginary part
+     * @return {@link RealComplexNumber}
+     * @throws NullPointerException
+     *             if {@code real == null}
+     * @throws NullPointerException
+     *             if {@code imaginary == null}
+     * @since 1
+     */
+    public static RealComplexNumber of(final BigDecimal real, final BigDecimal imaginary) {
+        requireNonNull(real, "real");
+        requireNonNull(imaginary, "imaginary");
+        return new RealComplexNumber(real, imaginary);
+    }
+
+    /**
+     * Returns a {@link RealComplexNumber} based on the given
+     * {@link SimpleComplexNumber}
+     *
+     * @param simpleComplexNumber
+     *            {@link SimpleComplexNumber}
+     * @return {@link RealComplexNumber}
+     * @throws NullPointerException
+     *             if {@code simpleComplexNumber == null}
+     * @since 1
+     */
+    public static RealComplexNumber of(final SimpleComplexNumber simpleComplexNumber) {
+        requireNonNull(simpleComplexNumber, "simpleComplexNumber");
+        return of(simpleComplexNumber.getReal(), simpleComplexNumber.getImaginary());
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @throws NullPointerException
@@ -90,10 +178,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the sum of this {@link RealComplexNumber} and the given one
      *
      * @param summand
-     *            the summand
+     *            summand
      * @param mathContext
-     *            math context
-     * @return The sum
+     *            {@link MathContext}
+     * @return sum
      * @throws NullPointerException
      *             if {@code summand == null}
      * @throws NullPointerException
@@ -127,8 +215,8 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * @param subtrahend
      *            subtrahend
      * @param mathContext
-     *            math context
-     * @return Difference
+     *            {@link MathContext}
+     * @return difference
      * @throws NullPointerException
      *             if {@code subtrahend == null}
      * @throws NullPointerException
@@ -144,6 +232,9 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code factor == null}
      */
     @Override
     public RealComplexNumber multiply(final RealComplexNumber factor) {
@@ -159,7 +250,7 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * @param factor
      *            factor
      * @param mathContext
-     *            math context
+     *            {@link MathContext}
      * @return Product
      * @throws NullPointerException
      *             if {@code factor == null}
@@ -270,10 +361,10 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * exponent
      *
      * @param exponent
-     *            the exponent
+     *            exponent
      * @param mathContext
-     *            math context
-     * @return The power
+     *            {@link MathContext}
+     * @return power
      * @throws IllegalArgumentException
      *             if {@code exponent < 0}
      * @throws NullPointerException
@@ -303,8 +394,8 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the negated {@link RealComplexNumber} of this one
      *
      * @param mathContext
-     *            math context
-     * @return The negated
+     *            {@link MathContext}
+     * @return negated {@link RealComplexNumber}
      * @throws NullPointerException
      *             if {@code mathContext == null}
      * @since 1
@@ -368,8 +459,8 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the inverted {@link MathNumber} of this one
      *
      * @param mathContext
-     *            math context
-     * @return The inverted
+     *            {@link MathContext}
+     * @return inverted {@link RealComplexNumber}
      * @throws IllegalStateException
      *             if {@code numerator == 0}
      * @throws NullPointerException
@@ -393,10 +484,8 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     /**
      * Returns the absolute value of this {@link AbstractComplexNumber}
      *
-     * @return Absolute value
+     * @return absolute value
      * @since 1
-     * @see SquareRootCalculator#sqrt(BigDecimal)
-     * @see #absPow2
      */
     @Override
     public BigDecimal abs(final SquareRootContext squareRootContext) {
@@ -423,7 +512,7 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
      * Returns the conjugate of this {@link RealComplexNumber}
      *
      * @param mathContext
-     *            math context
+     *            {@link MathContext}
      * @return The conjugated
      * @throws NullPointerException
      *             if {@code mathContext == null}
@@ -507,94 +596,6 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     public BigDecimalMatrix matrix() {
         return BigDecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)
             .put(2, 2, real).build();
-    }
-
-    /**
-     * Returns a {@link RealComplexNumber} based on the given real and imaginary
-     * part
-     *
-     * @param real
-     *            the real part
-     * @param imaginary
-     *            the imaginary part
-     * @return {@link RealComplexNumber}
-     * @since 1
-     */
-    public static RealComplexNumber of(final long real, final long imaginary) {
-        return RealComplexNumber.of(BigInteger.valueOf(real), BigInteger.valueOf(imaginary));
-    }
-
-    /**
-     * Returns a {@link RealComplexNumber} based on the given real and imaginary
-     * part
-     *
-     * @param real
-     *            the real part
-     * @param imaginary
-     *            the imaginary part
-     * @return {@link RealComplexNumber}
-     * @since 1
-     */
-    public static RealComplexNumber of(final double real, final double imaginary) {
-        return RealComplexNumber.of(BigDecimal.valueOf(real), BigDecimal.valueOf(imaginary));
-    }
-
-    /**
-     * Returns a {@link RealComplexNumber} based on the given real and imaginary
-     * part
-     *
-     * @param real
-     *            the real part
-     * @param imaginary
-     *            the imaginary part
-     * @return {@link RealComplexNumber}
-     * @throws NullPointerException
-     *             if {@code real == null}
-     * @throws NullPointerException
-     *             if {@code imaginary == null}
-     * @since 1
-     */
-    public static RealComplexNumber of(final BigInteger real, final BigInteger imaginary) {
-        requireNonNull(real, "real");
-        requireNonNull(imaginary, "imaginary");
-        return RealComplexNumber.of(new BigDecimal(real), new BigDecimal(imaginary));
-    }
-
-    /**
-     * Returns a {@link RealComplexNumber} based on the given real and imaginary
-     * part
-     *
-     * @param real
-     *            the real part
-     * @param imaginary
-     *            the imaginary part
-     * @return {@link RealComplexNumber}
-     * @throws NullPointerException
-     *             if {@code real == null}
-     * @throws NullPointerException
-     *             if {@code imaginary == null}
-     * @since 1
-     */
-    public static RealComplexNumber of(final BigDecimal real, final BigDecimal imaginary) {
-        requireNonNull(real, "real");
-        requireNonNull(imaginary, "imaginary");
-        return new RealComplexNumber(real, imaginary);
-    }
-
-    /**
-     * Returns a {@link RealComplexNumber} based on the given
-     * {@link SimpleComplexNumber}
-     *
-     * @param simpleComplexNumber
-     *            {@link SimpleComplexNumber}
-     * @return {@link RealComplexNumber}
-     * @throws NullPointerException
-     *             if {@code simpleComplexNumber == null}
-     * @since 1
-     */
-    public static RealComplexNumber of(final SimpleComplexNumber simpleComplexNumber) {
-        requireNonNull(simpleComplexNumber, "simpleComplexNumber");
-        return of(simpleComplexNumber.getReal(), simpleComplexNumber.getImaginary());
     }
 
     /**

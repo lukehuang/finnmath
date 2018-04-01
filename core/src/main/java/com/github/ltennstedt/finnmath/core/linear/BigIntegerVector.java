@@ -42,7 +42,24 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
+     * Returns a {@link BigIntegerVectorBuilder}
+     *
+     * @param size
+     *            size the resulting {@link BigIntegerVector}
+     * @return {@link BigIntegerVectorBuilder}
+     * @since 1
+     */
+    public static BigIntegerVectorBuilder builder(final int size) {
+        checkArgument(size > 0, "expected size > 0 but actual %s", size);
+        return new BigIntegerVectorBuilder(size);
+    }
+
+    /**
      * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException
+     *             if {@code size != summand.size}
+     * @since 1
      */
     @Override
     public BigIntegerVector add(final BigIntegerVector summand) {
@@ -56,6 +73,12 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != subtrahend.size}
+     * @since 1
      */
     @Override
     public BigIntegerVector subtract(final BigIntegerVector subtrahend) {
@@ -69,6 +92,10 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public BigIntegerVector scalarMultiply(final BigInteger scalar) {
@@ -80,6 +107,8 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigIntegerVector negate() {
@@ -88,14 +117,33 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigInteger taxicabNorm() {
-        BigInteger norm = BigInteger.ZERO;
-        for (final BigInteger element : map.values()) {
-            norm = norm.add(element.abs());
-        }
-        return norm;
+        return map.values().stream().map(BigInteger::abs).reduce(BigInteger::add).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
+    @Override
+    public BigInteger euclideanNormPow2() {
+        return map.values().stream().map(value -> value.pow(2)).reduce(BigInteger::add).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     * @see SquareRootCalculator#sqrt(BigDecimal)
+     */
+    @Override
+    public BigDecimal euclideanNorm() {
+        return SquareRootCalculator.sqrt(euclideanNormPow2());
     }
 
     /**
@@ -114,28 +162,25 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public BigInteger euclideanNormPow2() {
-        return dotProduct(this);
-    }
-
-    /**
-     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
      */
     @Override
     public BigInteger dotProduct(final BigIntegerVector other) {
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        BigInteger result = BigInteger.ZERO;
-        for (final Integer index : map.keySet()) {
-            result = result.add(map.get(index).multiply(other.element(index)));
-        }
-        return result;
+        return map.keySet().stream().map(index -> map.get(index).multiply(other.element(index))).reduce(BigInteger::add)
+            .get();
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigInteger maxNorm() {
@@ -143,20 +188,7 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     }
 
     /**
-     * Returns a {@link BigIntegerVectorBuilder}
-     *
-     * @param size
-     *            the size the resulting {@link BigIntegerVector}
-     * @return A {@link BigIntegerVectorBuilder}
-     * @since 1
-     */
-    public static BigIntegerVectorBuilder builder(final int size) {
-        checkArgument(size > 0, "expected size > 0 but actual %s", size);
-        return new BigIntegerVectorBuilder(size);
-    }
-
-    /**
-     * The builder for {@link BigIntegerVector BigIntegerVectors}
+     * {@link AbstractVectorBuilder} for {@link BigIntegerVector BigIntegerVectors}
      *
      * @since 1
      */
@@ -168,12 +200,10 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
         }
 
         /**
-         * Returns the built {@link BigIntegerVector}
+         * {@inheritDoc}
          *
-         * @return The {@link BigIntegerVector}
          * @throws NullPointerException
          *             if one {@code element == null}
-         * @see ImmutableMap#copyOf
          * @since 1
          */
         @Override

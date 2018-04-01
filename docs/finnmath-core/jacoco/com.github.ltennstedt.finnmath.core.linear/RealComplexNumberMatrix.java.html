@@ -49,237 +49,303 @@ public final class RealComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix add(final RealComplexNumberMatrix summand) {
-<span class="fc" id="L55">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == summand.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
-<span class="fc" id="L57">            table.rowKeySet().size(), summand.rowSize());</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == summand.columnSize(),</span>
-<span class="fc" id="L59">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), summand.columnSize());</span>
-<span class="fc" id="L60">        final RealComplexNumberMatrixBuilder builder = builder(rowSize(), columnSize());</span>
-<span class="fc" id="L61">        table.cellSet().forEach(cell -&gt; {</span>
-<span class="fc" id="L62">            final Integer rowKey = cell.getRowKey();</span>
-<span class="fc" id="L63">            final Integer columnKey = cell.getColumnKey();</span>
-<span class="fc" id="L64">            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey)));</span>
-<span class="fc" id="L65">        });</span>
-<span class="fc" id="L66">        return builder.build();</span>
+<span class="fc" id="L63">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == summand.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="fc" id="L65">            table.rowKeySet().size(), summand.rowSize());</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == summand.columnSize(),</span>
+<span class="fc" id="L67">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), summand.columnSize());</span>
+<span class="fc" id="L68">        final RealComplexNumberMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="fc" id="L69">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L70">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L71">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc" id="L72">            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey)));</span>
+<span class="fc" id="L73">        });</span>
+<span class="fc" id="L74">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != subtrahend.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != subtrahend.columnSize}
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix subtract(final RealComplexNumberMatrix subtrahend) {
-<span class="fc" id="L74">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
-<span class="fc" id="L76">            table.rowKeySet().size(), subtrahend.rowSize());</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),</span>
-<span class="fc" id="L78">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), subtrahend.columnSize());</span>
-<span class="fc" id="L79">        final RealComplexNumberMatrixBuilder builder = builder(rowSize(), columnSize());</span>
-<span class="fc" id="L80">        table.cellSet().forEach(cell -&gt; {</span>
-<span class="fc" id="L81">            final Integer rowKey = cell.getRowKey();</span>
-<span class="fc" id="L82">            final Integer columnKey = cell.getColumnKey();</span>
-<span class="fc" id="L83">            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.element(rowKey, columnKey)));</span>
-<span class="fc" id="L84">        });</span>
-<span class="fc" id="L85">        return builder.build();</span>
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public RealComplexNumberMatrix multiply(final RealComplexNumberMatrix factor) {
-<span class="fc" id="L93">        requireNonNull(factor, &quot;factor&quot;);</span>
-<span class="fc bfc" id="L94" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == factor.rowSize(),</span>
-<span class="fc" id="L95">            &quot;expected columnSize == factor.rowSize but actual %s != %s&quot;, table.columnKeySet().size(), factor.rowSize());</span>
-<span class="fc" id="L96">        final RealComplexNumberMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());</span>
-<span class="fc" id="L97">        table.rowMap().forEach((rowIndex, row) -&gt; factor.columns().forEach((columnIndex, column) -&gt; {</span>
-<span class="fc" id="L98">            final RealComplexNumber element = multiplyRowWithColumn(row, column);</span>
-<span class="fc" id="L99">            builder.put(rowIndex, columnIndex, element);</span>
-<span class="fc" id="L100">        }));</span>
+<span class="fc" id="L90">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="fc" id="L92">            table.rowKeySet().size(), subtrahend.rowSize());</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),</span>
+<span class="fc" id="L94">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), subtrahend.columnSize());</span>
+<span class="fc" id="L95">        final RealComplexNumberMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="fc" id="L96">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L97">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L98">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc" id="L99">            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.element(rowKey, columnKey)));</span>
+<span class="fc" id="L100">        });</span>
 <span class="fc" id="L101">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code factor == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != factor.rowSize}
+     * @since 1
      */
     @Override
-    public RealComplexNumberVector multiplyVector(final RealComplexNumberVector vector) {
-<span class="fc" id="L109">        requireNonNull(vector, &quot;vector&quot;);</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == vector.size(),</span>
-<span class="fc" id="L111">            &quot;expected columnSize == vectorSize but actual %s != %s&quot;, table.columnKeySet().size(), vector.size());</span>
-<span class="fc" id="L112">        final RealComplexNumberVector.RealComplexNumberVectorBuilder builder =</span>
-<span class="fc" id="L113">            RealComplexNumberVector.builder(table.rowKeySet().size());</span>
-<span class="fc" id="L114">        table.rowMap().forEach((rowIndex, row) -&gt; row.forEach((columnIndex, matrixEntry) -&gt; {</span>
-            final RealComplexNumber oldEntry =
-<span class="fc bfc" id="L116" title="All 2 branches covered.">                builder.element(rowIndex) != null ? builder.element(rowIndex) : RealComplexNumber.ZERO;</span>
-<span class="fc" id="L117">            builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));</span>
-<span class="fc" id="L118">        }));</span>
-<span class="fc" id="L119">        return builder.build();</span>
+    public RealComplexNumberMatrix multiply(final RealComplexNumberMatrix factor) {
+<span class="fc" id="L115">        requireNonNull(factor, &quot;factor&quot;);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == factor.rowSize(),</span>
+<span class="fc" id="L117">            &quot;expected columnSize == factor.rowSize but actual %s != %s&quot;, table.columnKeySet().size(), factor.rowSize());</span>
+<span class="fc" id="L118">        final RealComplexNumberMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());</span>
+<span class="fc" id="L119">        table.rowMap().forEach((rowIndex, row) -&gt; factor.columns().forEach((columnIndex, column) -&gt; {</span>
+<span class="fc" id="L120">            final RealComplexNumber element = multiplyRowWithColumn(row, column);</span>
+<span class="fc" id="L121">            builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L122">        }));</span>
+<span class="fc" id="L123">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != vector.size}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumberVector multiplyVector(final RealComplexNumberVector vector) {
+<span class="fc" id="L137">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == vector.size(),</span>
+<span class="fc" id="L139">            &quot;expected columnSize == vectorSize but actual %s != %s&quot;, table.columnKeySet().size(), vector.size());</span>
+<span class="fc" id="L140">        final RealComplexNumberVector.RealComplexNumberVectorBuilder builder =</span>
+<span class="fc" id="L141">            RealComplexNumberVector.builder(table.rowKeySet().size());</span>
+<span class="fc" id="L142">        table.rowMap().forEach((rowIndex, row) -&gt; row.forEach((columnIndex, matrixEntry) -&gt; {</span>
+            final RealComplexNumber oldEntry =
+<span class="fc bfc" id="L144" title="All 2 branches covered.">                builder.element(rowIndex) != null ? builder.element(rowIndex) : RealComplexNumber.ZERO;</span>
+<span class="fc" id="L145">            builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));</span>
+<span class="fc" id="L146">        }));</span>
+<span class="fc" id="L147">        return builder.build();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code row == null}
+     * @throws NullPointerException
+     *             if {@code column == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != columnSize}
+     * @since 1
      */
     @Override
     protected RealComplexNumber multiplyRowWithColumn(final Map&lt;Integer, RealComplexNumber&gt; row,
         final Map&lt;Integer, RealComplexNumber&gt; column) {
-<span class="fc" id="L128">        requireNonNull(row, &quot;row&quot;);</span>
-<span class="fc" id="L129">        requireNonNull(column, &quot;column&quot;);</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        checkArgument(row.size() == column.size(), &quot;expected rowSize == columnSize but actual %s != %s&quot;, row.size(),</span>
-<span class="fc" id="L131">            column.size());</span>
-<span class="fc" id="L132">        RealComplexNumber result = RealComplexNumber.ZERO;</span>
-<span class="fc bfc" id="L133" title="All 2 branches covered.">        for (final Entry&lt;Integer, RealComplexNumber&gt; rowEntry : row.entrySet()) {</span>
-<span class="fc" id="L134">            result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));</span>
-<span class="fc" id="L135">        }</span>
-<span class="fc" id="L136">        return result;</span>
+<span class="fc" id="L164">        requireNonNull(row, &quot;row&quot;);</span>
+<span class="fc" id="L165">        requireNonNull(column, &quot;column&quot;);</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">        checkArgument(row.size() == column.size(), &quot;expected rowSize == columnSize but actual %s != %s&quot;, row.size(),</span>
+<span class="fc" id="L167">            column.size());</span>
+<span class="fc" id="L168">        RealComplexNumber result = RealComplexNumber.ZERO;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        for (final Entry&lt;Integer, RealComplexNumber&gt; rowEntry : row.entrySet()) {</span>
+<span class="fc" id="L170">            result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));</span>
+<span class="fc" id="L171">        }</span>
+<span class="fc" id="L172">        return result;</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix scalarMultiply(final RealComplexNumber scalar) {
-<span class="fc" id="L144">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L145">        final RealComplexNumberMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());</span>
-<span class="fc" id="L146">        table.cellSet()</span>
-<span class="fc" id="L147">            .forEach(cell -&gt; builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));</span>
-<span class="fc" id="L148">        return builder.build();</span>
+<span class="fc" id="L184">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L185">        final RealComplexNumberMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());</span>
+<span class="fc" id="L186">        table.cellSet()</span>
+<span class="fc" id="L187">            .forEach(cell -&gt; builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));</span>
+<span class="fc" id="L188">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix negate() {
-<span class="fc" id="L156">        return scalarMultiply(RealComplexNumber.ONE.negate());</span>
+<span class="fc" id="L198">        return scalarMultiply(RealComplexNumber.ONE.negate());</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public RealComplexNumber trace() {
-<span class="fc" id="L164">        checkState(square(), &quot;expected square matrix but actual %s x %s&quot;, table.rowKeySet().size(),</span>
-<span class="fc" id="L165">            table.columnKeySet().size());</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">        return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="fc" id="L167">            .map(Cell::getValue).reduce(RealComplexNumber::add).get();</span>
+<span class="fc" id="L208">        checkState(square(), &quot;expected square matrix but actual %s x %s&quot;, table.rowKeySet().size(),</span>
+<span class="fc" id="L209">            table.columnKeySet().size());</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="fc" id="L211">            .map(Cell::getValue).reduce(RealComplexNumber::add).get();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public RealComplexNumber determinant() {
-<span class="fc" id="L175">        final int rowSize = table.rowKeySet().size();</span>
-<span class="fc" id="L176">        checkState(square(), &quot;expected square matrix but actual %s x %s&quot;, rowSize, table.columnKeySet().size());</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (triangular()) {</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">            return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="fc" id="L179">                .map(Cell::getValue).reduce(RealComplexNumber::multiply).get();</span>
+<span class="fc" id="L221">        final int rowSize = table.rowKeySet().size();</span>
+<span class="fc" id="L222">        checkState(square(), &quot;expected square matrix but actual %s x %s&quot;, rowSize, table.columnKeySet().size());</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">        if (triangular()) {</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">            return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="fc" id="L225">                .map(Cell::getValue).reduce(RealComplexNumber::multiply).get();</span>
         }
-<span class="fc bfc" id="L181" title="All 2 branches covered.">        if (rowSize &gt; 3) {</span>
-<span class="fc" id="L182">            return leibnizFormula();</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (rowSize &gt; 3) {</span>
+<span class="fc" id="L228">            return leibnizFormula();</span>
         }
-<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (rowSize == 3) {</span>
-<span class="fc" id="L185">            return ruleOfSarrus();</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">        if (rowSize == 3) {</span>
+<span class="fc" id="L231">            return ruleOfSarrus();</span>
         }
 
         // rowSize == 2
-<span class="fc" id="L189">        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));</span>
+<span class="fc" id="L235">        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected RealComplexNumber leibnizFormula() {
-<span class="fc" id="L197">        RealComplexNumber result = RealComplexNumber.ZERO;</span>
-<span class="fc bfc" id="L198" title="All 2 branches covered.">        for (final List&lt;Integer&gt; permutation : Collections2.permutations(table.rowKeySet())) {</span>
-<span class="fc" id="L199">            RealComplexNumber product = RealComplexNumber.ONE;</span>
-<span class="fc" id="L200">            int inversions = 0;</span>
-<span class="fc" id="L201">            final int size = table.rowKeySet().size();</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">            for (int i = 0; i &lt; size; i++) {</span>
-<span class="fc" id="L203">                final Integer sigma = permutation.get(i);</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">                for (int j = i + 1; j &lt; size; j++) {</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">                    if (sigma &gt; permutation.get(j)) {</span>
-<span class="fc" id="L206">                        inversions++;</span>
+<span class="fc" id="L245">        RealComplexNumber result = RealComplexNumber.ZERO;</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        for (final List&lt;Integer&gt; permutation : Collections2.permutations(table.rowKeySet())) {</span>
+<span class="fc" id="L247">            RealComplexNumber product = RealComplexNumber.ONE;</span>
+<span class="fc" id="L248">            int inversions = 0;</span>
+<span class="fc" id="L249">            final int size = table.rowKeySet().size();</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">            for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L251">                final Integer sigma = permutation.get(i);</span>
+<span class="fc bfc" id="L252" title="All 2 branches covered.">                for (int j = i + 1; j &lt; size; j++) {</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">                    if (sigma &gt; permutation.get(j)) {</span>
+<span class="fc" id="L254">                        inversions++;</span>
                     }
                 }
-<span class="fc" id="L209">                product = product.multiply(table.get(sigma, i + 1));</span>
+<span class="fc" id="L257">                product = product.multiply(table.get(sigma, i + 1));</span>
             }
-<span class="fc" id="L211">            result = result.add(RealComplexNumber.ONE.negate().pow(inversions).multiply(product));</span>
-<span class="fc" id="L212">        }</span>
-<span class="fc" id="L213">        return result;</span>
+<span class="fc" id="L259">            result = result.add(RealComplexNumber.ONE.negate().pow(inversions).multiply(product));</span>
+<span class="fc" id="L260">        }</span>
+<span class="fc" id="L261">        return result;</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected RealComplexNumber ruleOfSarrus() {
-<span class="fc" id="L221">        final RealComplexNumber first = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));</span>
-<span class="fc" id="L222">        final RealComplexNumber second = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));</span>
-<span class="fc" id="L223">        final RealComplexNumber third = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));</span>
-<span class="fc" id="L224">        final RealComplexNumber fourth = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3));</span>
-<span class="fc" id="L225">        final RealComplexNumber fifth = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1));</span>
-<span class="fc" id="L226">        final RealComplexNumber sixth = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2));</span>
-<span class="fc" id="L227">        return first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);</span>
+<span class="fc" id="L271">        final RealComplexNumber first = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));</span>
+<span class="fc" id="L272">        final RealComplexNumber second = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));</span>
+<span class="fc" id="L273">        final RealComplexNumber third = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));</span>
+<span class="fc" id="L274">        final RealComplexNumber fourth = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3));</span>
+<span class="fc" id="L275">        final RealComplexNumber fifth = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1));</span>
+<span class="fc" id="L276">        final RealComplexNumber sixth = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2));</span>
+<span class="fc" id="L277">        return first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix transpose() {
-<span class="fc" id="L235">        final RealComplexNumberMatrixBuilder builder = builder(table.columnKeySet().size(), table.rowKeySet().size());</span>
-<span class="fc" id="L236">        table.cellSet().forEach(cell -&gt; builder.put(cell.getColumnKey(), cell.getRowKey(), cell.getValue()));</span>
-<span class="fc" id="L237">        return builder.build();</span>
+<span class="fc" id="L287">        final RealComplexNumberMatrixBuilder builder = builder(table.columnKeySet().size(), table.rowKeySet().size());</span>
+<span class="fc" id="L288">        table.cellSet().forEach(cell -&gt; builder.put(cell.getColumnKey(), cell.getRowKey(), cell.getValue()));</span>
+<span class="fc" id="L289">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex &lt; 1 || rowSize &lt; rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex &lt; 1 || columnSize &lt; columnIndex}
+     * @since 1
      */
     @Override
     public RealComplexNumberMatrix minor(final Integer rowIndex, final Integer columnIndex) {
-<span class="fc" id="L245">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
-<span class="fc" id="L246">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
-<span class="fc" id="L247">        checkArgument(table.containsRow(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L248">            table.rowKeySet().size(), rowIndex);</span>
-<span class="fc" id="L249">        checkArgument(table.containsColumn(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L250">            table.columnKeySet().size(), columnIndex);</span>
-<span class="fc" id="L251">        final RealComplexNumberMatrixBuilder builder =</span>
-<span class="fc" id="L252">            builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);</span>
-<span class="fc" id="L253">        table.cellSet().forEach(cell -&gt; {</span>
-<span class="fc" id="L254">            final Integer rowKey = cell.getRowKey();</span>
-<span class="fc" id="L255">            final Integer columnKey = cell.getColumnKey();</span>
-<span class="fc bfc" id="L256" title="All 4 branches covered.">            if (rowKey.compareTo(rowIndex) != 0 &amp;&amp; columnKey.compareTo(columnIndex) != 0) {</span>
-<span class="fc bfc" id="L257" title="All 2 branches covered.">                final Integer newRowIndex = rowKey.compareTo(rowIndex) &gt; 0 ? rowKey - 1 : rowKey;</span>
-<span class="fc bfc" id="L258" title="All 2 branches covered.">                final Integer newColumnIndex = columnKey.compareTo(columnIndex) &gt; 0 ? columnKey - 1 : columnKey;</span>
-<span class="fc" id="L259">                builder.put(newRowIndex, newColumnIndex, cell.getValue());</span>
+<span class="fc" id="L307">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L308">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L309">        checkArgument(table.containsRow(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L310">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L311">        checkArgument(table.containsColumn(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L312">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L313">        final RealComplexNumberMatrixBuilder builder =</span>
+<span class="fc" id="L314">            builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);</span>
+<span class="fc" id="L315">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L316">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L317">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc bfc" id="L318" title="All 4 branches covered.">            if (rowKey.compareTo(rowIndex) != 0 &amp;&amp; columnKey.compareTo(columnIndex) != 0) {</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">                final Integer newRowIndex = rowKey.compareTo(rowIndex) &gt; 0 ? rowKey - 1 : rowKey;</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">                final Integer newColumnIndex = columnKey.compareTo(columnIndex) &gt; 0 ? columnKey - 1 : columnKey;</span>
+<span class="fc" id="L321">                builder.put(newRowIndex, newColumnIndex, cell.getValue());</span>
             }
-<span class="fc" id="L261">        });</span>
-<span class="fc" id="L262">        return builder.build();</span>
+<span class="fc" id="L323">        });</span>
+<span class="fc" id="L324">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsColumnSumNorm() {
-<span class="fc" id="L270">        return table.columnMap().values().asList().stream()</span>
-<span class="fc" id="L271">            .map(column -&gt; column.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add))</span>
-<span class="fc" id="L272">            .map(Optional::get).reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L334">        return table.columnMap().values().asList().stream()</span>
+<span class="fc" id="L335">            .map(column -&gt; column.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add))</span>
+<span class="fc" id="L336">            .map(Optional::get).reduce(BigDecimal::max).get();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsRowSumNorm() {
-<span class="fc" id="L280">        return table.rowMap().values().asList().stream()</span>
-<span class="fc" id="L281">            .map(row -&gt; row.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add)).map(Optional::get)</span>
-<span class="fc" id="L282">            .reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L346">        return table.rowMap().values().asList().stream()</span>
+<span class="fc" id="L347">            .map(row -&gt; row.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add)).map(Optional::get)</span>
+<span class="fc" id="L348">            .reduce(BigDecimal::max).get();</span>
     }
 
     /**
@@ -291,69 +357,81 @@ public final class RealComplexNumberMatrix extends
      */
     @Override
     public BigDecimal frobeniusNorm(final SquareRootContext squareRootContext) {
-<span class="nc" id="L294">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);</span>
+<span class="nc" id="L360">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal frobeniusNormPow2() {
-<span class="fc" id="L302">        return table.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();</span>
+<span class="fc" id="L370">        return table.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxNorm() {
-<span class="fc" id="L310">        return table.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L380">        return table.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean upperTriangular() {
-<span class="fc bfc" id="L318" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0)</span>
-<span class="fc bfc" id="L319" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; !value.equals(RealComplexNumber.ZERO));</span>
+<span class="fc bfc" id="L390" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0)</span>
+<span class="fc bfc" id="L391" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; !value.equals(RealComplexNumber.ZERO));</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean lowerTriangular() {
-<span class="fc bfc" id="L327" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0)</span>
-<span class="fc bfc" id="L328" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; !value.equals(RealComplexNumber.ZERO));</span>
+<span class="fc bfc" id="L401" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0)</span>
+<span class="fc bfc" id="L402" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; !value.equals(RealComplexNumber.ZERO));</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean identity() {
-<span class="fc bfc" id="L336" title="All 2 branches covered.">        return diagonal()</span>
-<span class="fc bfc" id="L337" title="All 2 branches covered.">            &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="fc bfc" id="L338" title="All 4 branches covered.">                .map(Cell::getValue).anyMatch(value -&gt; !value.equals(RealComplexNumber.ONE));</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">        return diagonal()</span>
+<span class="fc bfc" id="L413" title="All 2 branches covered.">            &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="fc bfc" id="L414" title="All 4 branches covered.">                .map(Cell::getValue).anyMatch(value -&gt; !value.equals(RealComplexNumber.ONE));</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean invertible() {
-<span class="fc bfc" id="L346" title="All 2 branches covered.">        return square()</span>
-<span class="fc bfc" id="L347" title="All 4 branches covered.">            &amp;&amp; (determinant().equals(RealComplexNumber.ONE.negate()) || determinant().equals(RealComplexNumber.ONE));</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">        return square()</span>
+<span class="fc bfc" id="L425" title="All 4 branches covered.">            &amp;&amp; (determinant().equals(RealComplexNumber.ONE.negate()) || determinant().equals(RealComplexNumber.ONE));</span>
     }
 
     /**
      * Returns a {@link RealComplexNumberMatrixBuilder}
      *
      * @param rowSize
-     *            the row size the resulting {@link RealComplexNumberMatrix}
+     *            ow size the resulting {@link RealComplexNumberMatrix}
      * @param columnSize
-     *            the column size the resulting {@link RealComplexNumberMatrix}
+     *            column size the resulting {@link RealComplexNumberMatrix}
      * @return A {@link RealComplexNumberMatrixBuilder}
      * @throws IllegalArgumentException
      *             if {@code rowIndex &lt; 1}
@@ -362,13 +440,14 @@ public final class RealComplexNumberMatrix extends
      * @since 1
      */
     public static RealComplexNumberMatrixBuilder builder(final int rowSize, final int columnSize) {
-<span class="fc bfc" id="L365" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="fc bfc" id="L366" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="fc" id="L367">        return new RealComplexNumberMatrixBuilder(rowSize, columnSize);</span>
+<span class="fc bfc" id="L443" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L445">        return new RealComplexNumberMatrixBuilder(rowSize, columnSize);</span>
     }
 
     /**
-     * The builder for {@link RealComplexNumberMatrix BigIntegerMatrices}
+     * {@link AbstractMatrixBuilder} for {@link RealComplexNumberMatrix
+     * BigIntegerMatrices}
      *
      * @since 1
      */
@@ -376,16 +455,20 @@ public final class RealComplexNumberMatrix extends
     public static final class RealComplexNumberMatrixBuilder
         extends AbstractMatrixBuilder&lt;RealComplexNumber, RealComplexNumberMatrix, RealComplexNumberMatrixBuilder&gt; {
         private RealComplexNumberMatrixBuilder(final int rowSize, final int columnSize) {
-<span class="fc" id="L379">            super(rowSize, columnSize);</span>
-<span class="fc" id="L380">        }</span>
+<span class="fc" id="L458">            super(rowSize, columnSize);</span>
+<span class="fc" id="L459">        }</span>
 
         /**
          * {@inheritDoc}
+         *
+         * @throws NullPointerException
+         *             if one {@code cell.value == null}
+         * @since 1
          */
         @Override
         public RealComplexNumberMatrix build() {
-<span class="fc" id="L387">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
-<span class="fc" id="L388">            return new RealComplexNumberMatrix(ImmutableTable.copyOf(table));</span>
+<span class="fc" id="L470">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
+<span class="fc" id="L471">            return new RealComplexNumberMatrix(ImmutableTable.copyOf(table));</span>
         }
     }
 }

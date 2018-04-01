@@ -35,13 +35,13 @@ import java.util.Objects;
  * Base class for vectors
  *
  * @param <E>
- *            The type of the elements of the vector
+ *            type of the elements of the vector
  * @param <V>
- *            The type of the vector
+ *            type of the vector
  * @param <N>
- *            The type of the taxicab and max norm of the vector
+ *            type of the taxicab and max norm of the vector
  * @param <P>
- *            The type of the inner product
+ *            type of the inner product
  * @author Lars Tennstedt
  * @see ImmutableMap
  * @since 1
@@ -57,7 +57,7 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
         SquareRootCalculator.DEFAULT_SQUARE_ROOT_CONTEXT;
 
     /**
-     * The map holding the elements of this {@link AbstractVector}
+     * {@link ImmutableMap} holding the elements of this {@link AbstractVector}
      *
      * @since 1
      */
@@ -70,52 +70,10 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      *            {@link ImmutableMap}
      * @throws NullPointerException
      *             if {@code map == null}
+     * @since 1
      */
     protected AbstractVector(final ImmutableMap<Integer, E> map) {
-        requireNonNull(map, "map");
-        this.map = map;
-    }
-
-    /**
-     * Returns the element dependent on the given index
-     *
-     * @param index
-     *            the index of the element
-     * @return The element
-     * @throws NullPointerException
-     *             if {@code index == null}
-     * @throws IllegalArgumentException
-     *             if {@code !map.containsKey(index)}
-     * @see Map#containsKey
-     * @since 1
-     */
-    public final E element(final Integer index) {
-        requireNonNull(index, "index");
-        checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(), index);
-        return map.get(index);
-    }
-
-    /**
-     * Returns all elements of the underlying {@link Map} of this
-     * {@link AbstractVector}
-     *
-     * @return The elements
-     * @see Map#entrySet
-     * @since 1
-     */
-    public final ImmutableSet<Entry<Integer, E>> entries() {
-        return map.entrySet();
-    }
-
-    /**
-     * Returns all elements of this {@link AbstractVector}
-     *
-     * @return The elements
-     * @see Map#values
-     * @since 1
-     */
-    public final ImmutableCollection<E> elements() {
-        return map.values();
+        this.map = requireNonNull(map, "map");
     }
 
     /**
@@ -123,11 +81,7 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      *
      * @param summand
      *            summand
-     * @return Sum
-     * @throws NullPointerException
-     *             if {@code summand == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != summand.size}
+     * @return sum
      * @since 1
      */
     protected abstract V add(V summand);
@@ -136,12 +90,8 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      * Returns the difference of this {@link AbstractVector} and the given one
      *
      * @param subtrahend
-     *            the subtrahend
-     * @return The difference
-     * @throws NullPointerException
-     *             if {@code subtrahend == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != subtrahend.size}
+     *            subtrahend
+     * @return difference
      * @since 1
      */
     protected abstract V subtract(V subtrahend);
@@ -150,12 +100,8 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      * Returns the dot product of this {@link AbstractVector} and the given one
      *
      * @param other
-     *            The other {@link AbstractVector}
-     * @return The dot product
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
+     *            other {@link AbstractVector}
+     * @return dot product
      * @since 1
      */
     protected abstract E dotProduct(V other);
@@ -165,10 +111,8 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      * {@link AbstractVector}
      *
      * @param scalar
-     *            the scalar
-     * @return The scalar product
-     * @throws NullPointerException
-     *             if {@code scalar == null}
+     *            scalar
+     * @return scalar product
      * @since 1
      */
     protected abstract V scalarMultiply(E scalar);
@@ -176,8 +120,7 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
     /**
      * Returns the negated {@link AbstractVector} of this one
      *
-     * @return The negated
-     * @see #scalarMultiply
+     * @return negated {@link AbstractVector}
      * @since 1
      */
     protected abstract V negate();
@@ -185,24 +128,56 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
     /**
      * Returns the taxicab norm of this {@link AbstractVector}
      *
-     * @return The taxicab norm
+     * @return taxicab norm
      * @since 1
      */
     protected abstract N taxicabNorm();
+
+    /**
+     * Returns the square of the euclidean norm of this {@link AbstractVector}
+     *
+     * @return square of the euclidean norm
+     * @since 1
+     */
+    protected abstract P euclideanNormPow2();
+
+    /**
+     * Returns the euclidean norm of this {@link AbstractVector}
+     *
+     * @return euclidean norm
+     * @since 1
+     */
+    protected abstract BigDecimal euclideanNorm();
+
+    /**
+     * Returns the euclidean norm of this {@link AbstractVector}
+     *
+     * @param squareRootContext
+     *            {@link SquareRootContext}
+     * @return euclidean norm
+     * @since 1
+     */
+    protected abstract BigDecimal euclideanNorm(SquareRootContext squareRootContext);
+
+    /**
+     * Returns the maximum norm of this {@link AbstractVector}
+     *
+     * @return maximum norm
+     * @since 1
+     */
+    protected abstract N maxNorm();
 
     /**
      * Returns the taxicab distance from this {@link AbstractVector} to the given
      * one
      *
      * @param other
-     *            The other {@link AbstractVector}
-     * @return The taxicab distance
+     *            other {@link AbstractVector}
+     * @return taxicab distance
      * @throws NullPointerException
      *             if {@code other == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
-     * @see #subtract
-     * @see #taxicabNorm
      * @since 1
      */
     public final N taxicabDistance(final V other) {
@@ -212,37 +187,16 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
     }
 
     /**
-     * Returns the square of the euclidean norm of this {@link AbstractVector}
-     *
-     * @return The square of the euclidean norm
-     * @see #dotProduct
-     * @since 1
-     */
-    protected abstract P euclideanNormPow2();
-
-    /**
-     * Returns the euclidean norm of this {@link AbstractVector}
-     *
-     * @param squareRootContext
-     *            {@link SquareRootContext}
-     * @return Euclidean norm
-     * @since 1
-     */
-    protected abstract BigDecimal euclideanNorm(SquareRootContext squareRootContext);
-
-    /**
      * Returns the square of the euclidean distance from this {@link AbstractVector}
      * to the given one
      *
      * @param other
-     *            The other {@link AbstractVector}
-     * @return The square of the euclidean distance
+     *            other {@link AbstractVector}
+     * @return square of the euclidean distance
      * @throws NullPointerException
      *             if {@code other == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
-     * @see #subtract
-     * @see #euclideanNormPow2
      * @since 1
      */
     public final P euclideanDistancePow2(final V other) {
@@ -265,7 +219,6 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      *             if {@code roundingMode == null}
      * @throws IllegalArgumentException
      *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
-     * @see SquareRootCalculator#sqrt(BigDecimal)
      * @since 1
      */
     public final BigDecimal euclideanDistance(final V other) {
@@ -281,7 +234,7 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      *            other {@link AbstractVector}
      * @param squareRootContext
      *            {@link SquareRootContext}
-     * @return Euclidean norm
+     * @return euclidean norm
      * @throws NullPointerException
      *             if {@code other == null}
      * @throws NullPointerException
@@ -289,8 +242,6 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
      * @since 1
-     * @see #subtract
-     * @see #euclideanNorm(SquareRootContext)
      */
     public final BigDecimal euclideanDistance(final V other, final SquareRootContext squareRootContext) {
         requireNonNull(other, "other");
@@ -300,25 +251,16 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
     }
 
     /**
-     * Returns the max norm of this {@link AbstractVector}
-     *
-     * @return The max norm
-     * @since 1
-     */
-    protected abstract N maxNorm();
-
-    /**
-     * Returns the max distance from this {@link AbstractVector} to the given one
+     * Returns the maximum distance from this {@link AbstractVector} to the given
+     * one
      *
      * @param other
-     *            The other {@link AbstractVector}
-     * @return The max distance
+     *            other {@link AbstractVector}
+     * @return maximum distance
      * @throws NullPointerException
      *             if {@code vector == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
-     * @see #subtract
-     * @see #maxNorm
      * @since 1
      */
     public final N maxDistance(final V other) {
@@ -328,9 +270,48 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
     }
 
     /**
-     * Returns the size of the underlying {@link Map}
+     * Returns the element dependent on the given index
      *
-     * @return size the size
+     * @param index
+     *            index
+     * @return element
+     * @throws NullPointerException
+     *             if {@code index == null}
+     * @throws IllegalArgumentException
+     *             if {@code index < 1 || size < index}
+     * @since 1
+     */
+    public final E element(final Integer index) {
+        requireNonNull(index, "index");
+        checkArgument(map.containsKey(index), "expected index in [1, %s] but actual %s", map.size(), index);
+        return map.get(index);
+    }
+
+    /**
+     * Returns all elements of the underlying {@link Map} of this
+     * {@link AbstractVector}
+     *
+     * @return {@link Entry Entries}
+     * @since 1
+     */
+    public final ImmutableSet<Entry<Integer, E>> entries() {
+        return map.entrySet();
+    }
+
+    /**
+     * Returns all elements of this {@link AbstractVector}
+     *
+     * @return elements
+     * @since 1
+     */
+    public final ImmutableCollection<E> elements() {
+        return map.values();
+    }
+
+    /**
+     * Returns the size of this {@link AbstractVector}
+     *
+     * @return size
      * @since 1
      */
     public final int size() {
@@ -339,6 +320,8 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final int hashCode() {
@@ -347,6 +330,8 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final boolean equals(final Object object) {
@@ -362,6 +347,8 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public final String toString() {

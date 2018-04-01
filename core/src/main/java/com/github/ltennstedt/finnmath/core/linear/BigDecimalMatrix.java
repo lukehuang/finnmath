@@ -29,7 +29,6 @@ import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 
 /**
@@ -48,6 +47,14 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
+     * @since 1
      */
     @Override
     public BigDecimalMatrix add(final BigDecimalMatrix summand) {
@@ -67,6 +74,14 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != subtrahend.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != subtrahend.columnSize}
+     * @since 1
      */
     @Override
     public BigDecimalMatrix subtract(final BigDecimalMatrix subtrahend) {
@@ -86,6 +101,12 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code factor == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != factor.rowSize}
+     * @since 1
      */
     @Override
     public BigDecimalMatrix multiply(final BigDecimalMatrix factor) {
@@ -102,6 +123,12 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != vector.size}
+     * @since 1
      */
     @Override
     public BigDecimalVector multiplyVector(final BigDecimalVector vector) {
@@ -118,6 +145,14 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code row == null}
+     * @throws NullPointerException
+     *             if {@code column == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != columnSize}
+     * @since 1
      */
     @Override
     protected BigDecimal multiplyRowWithColumn(final Map<Integer, BigDecimal> row,
@@ -126,15 +161,16 @@ public final class BigDecimalMatrix
         requireNonNull(column, "column");
         checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
             column.size());
-        BigDecimal result = BigDecimal.ZERO;
-        for (final Entry<Integer, BigDecimal> rowEntry : row.entrySet()) {
-            result = result.add(rowEntry.getValue().multiply(column.get(rowEntry.getKey())));
-        }
-        return result;
+        return row.entrySet().stream().map(rowEntry -> rowEntry.getValue().multiply(column.get(rowEntry.getKey())))
+            .reduce(BigDecimal::add).get();
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @since 1
      */
     @Override
     public BigDecimalMatrix scalarMultiply(final BigDecimal scalar) {
@@ -147,6 +183,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimalMatrix negate() {
@@ -155,6 +193,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal trace() {
@@ -166,6 +206,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal determinant() {
@@ -188,6 +230,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigDecimal leibnizFormula() {
@@ -212,6 +256,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     protected BigDecimal ruleOfSarrus() {
@@ -236,6 +282,16 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code rowIndex == null}
+     * @throws NullPointerException
+     *             if {@code columnIndex == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowIndex < 1 || rowSize < rowIndex}
+     * @throws IllegalArgumentException
+     *             if {@code columnIndex < 1 || columnSize < columnIndex}
+     * @since 1
      */
     @Override
     public BigDecimalMatrix minor(final Integer rowIndex, final Integer columnIndex) {
@@ -260,6 +316,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsColumnSumNorm() {
@@ -270,6 +328,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsRowSumNorm() {
@@ -282,9 +342,7 @@ public final class BigDecimalMatrix
      * {@inheritDoc}
      *
      * @throws NullPointerException
-     *             if {@code abortCriterion == null}
-     * @throws IllegalArgumentException
-     *             if {@code abortCriterion <= 0 || 1 <= abortCriterion}
+     *             if {@code squareRootContext == null}
      * @since 1
      */
     @Override
@@ -294,9 +352,8 @@ public final class BigDecimalMatrix
     }
 
     /**
-     * Returns the square of the frobenius norm of this {@link BigIntegerMatrix}
+     * {@inheritDoc}
      *
-     * @return The square of the frobenius norm
      * @since 1
      */
     @Override
@@ -306,6 +363,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxNorm() {
@@ -314,6 +373,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean upperTriangular() {
@@ -323,6 +384,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean lowerTriangular() {
@@ -332,6 +395,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean identity() {
@@ -342,6 +407,8 @@ public final class BigDecimalMatrix
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean invertible() {
@@ -369,7 +436,7 @@ public final class BigDecimalMatrix
     }
 
     /**
-     * The builder for {@link BigDecimalMatrix BigDecimalMatrices}
+     * {@link AbstractMatrixBuilder} for {@link BigDecimalMatrix BigDecimalMatrices}
      *
      * @since 1
      */
@@ -382,6 +449,10 @@ public final class BigDecimalMatrix
 
         /**
          * {@inheritDoc}
+         *
+         * @throws NullPointerException
+         *             if one {@code cell.value == null}
+         * @since 1
          */
         @Override
         public BigDecimalMatrix build() {
