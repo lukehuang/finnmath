@@ -27,6 +27,7 @@ import com.google.common.annotations.Beta;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table.Cell;
+import com.lambdista.util.Try;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -217,22 +218,24 @@ public final class RealComplexNumberMatrix extends
      * @since 1
      */
     @Override
-    public RealComplexNumber determinant() {
-        final int rowSize = table.rowKeySet().size();
-        checkState(square(), "expected square matrix but actual %s x %s", rowSize, table.columnKeySet().size());
-        if (triangular()) {
-            return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
-                .map(Cell::getValue).reduce(RealComplexNumber::multiply).get();
-        }
-        if (rowSize > 3) {
-            return leibnizFormula();
-        }
-        if (rowSize == 3) {
-            return ruleOfSarrus();
-        }
+    public Try<RealComplexNumber> determinant() {
+        return Try.apply(() -> {
+            checkIfSquare();
+            if (triangular()) {
+                return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+                    .map(Cell::getValue).reduce(RealComplexNumber::multiply).get();
+            }
+            final int rowSize = table.rowKeySet().size();
+            if (rowSize > 3) {
+                return leibnizFormula();
+            }
+            if (rowSize == 3) {
+                return ruleOfSarrus();
+            }
 
-        // rowSize == 2
-        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+            // rowSize == 2
+            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+        });
     }
 
     /**
@@ -421,8 +424,12 @@ public final class RealComplexNumberMatrix extends
      */
     @Override
     public boolean invertible() {
-        return square()
-            && (determinant().equals(RealComplexNumber.ONE.negate()) || determinant().equals(RealComplexNumber.ONE));
+        if (square()) {
+            final RealComplexNumber determinant = determinant().get();
+            return square()
+                && (determinant.equals(RealComplexNumber.ONE.negate()) || determinant.equals(RealComplexNumber.ONE));
+        }
+        return false;
     }
 
     /**

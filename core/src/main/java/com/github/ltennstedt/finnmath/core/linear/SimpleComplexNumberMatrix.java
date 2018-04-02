@@ -28,6 +28,7 @@ import com.google.common.annotations.Beta;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table.Cell;
+import com.lambdista.util.Try;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
@@ -51,7 +52,7 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws NullPointerException
      *             if {@code summand == null}
      * @throws IllegalArgumentException
@@ -80,7 +81,7 @@ public final class SimpleComplexNumberMatrix extends
      * {@inheritDoc}
      *
      * * @throws NullPointerException if {@code subtrahend == null}
-     * 
+     *
      * @throws IllegalArgumentException
      *             if {@code rowSize != subtrahend.rowSize}
      * @throws IllegalArgumentException
@@ -192,7 +193,7 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @since 1
      */
     @Override
@@ -202,7 +203,7 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @since 1
      */
     @Override
@@ -215,31 +216,33 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @since 1
      */
     @Override
-    public SimpleComplexNumber determinant() {
-        final int rowSize = table.rowKeySet().size();
-        checkState(square(), "expected square matrix but actual %s x %s", rowSize, table.columnKeySet().size());
-        if (triangular()) {
-            return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
-                .map(Cell::getValue).reduce(SimpleComplexNumber::multiply).get();
-        }
-        if (rowSize > 3) {
-            return leibnizFormula();
-        }
-        if (rowSize == 3) {
-            return ruleOfSarrus();
-        }
+    public Try<SimpleComplexNumber> determinant() {
+        return Try.apply(() -> {
+            checkIfSquare();
+            if (triangular()) {
+                return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+                    .map(Cell::getValue).reduce(SimpleComplexNumber::multiply).get();
+            }
+            final int rowSize = table.rowKeySet().size();
+            if (rowSize > 3) {
+                return leibnizFormula();
+            }
+            if (rowSize == 3) {
+                return ruleOfSarrus();
+            }
 
-        // rowSize == 2
-        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+            // rowSize == 2
+            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
+        });
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @since 1
      */
     @Override
@@ -265,7 +268,7 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @since 1
      */
     @Override
@@ -281,7 +284,7 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @since 1
      */
     @Override
@@ -398,7 +401,7 @@ public final class SimpleComplexNumberMatrix extends
     @Override
     public boolean invertible() {
         if (square()) {
-            final SimpleComplexNumber determinant = determinant();
+            final SimpleComplexNumber determinant = determinant().get();
             return determinant.equals(SimpleComplexNumber.ONE) || determinant.equals(SimpleComplexNumber.ONE.negate())
                 || determinant.equals(SimpleComplexNumber.IMAGINARY)
                 || determinant.equals(SimpleComplexNumber.IMAGINARY.negate());

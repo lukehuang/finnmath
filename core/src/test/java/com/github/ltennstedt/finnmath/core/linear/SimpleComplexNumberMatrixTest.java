@@ -443,9 +443,9 @@ public final class SimpleComplexNumberMatrixTest {
 
     @Test
     public void determinatNotSquareShouldThrowException() {
-        assertThatThrownBy(
-            () -> SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build().determinant())
-                .isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected square matrix but actual 4 x 5");
+        assertThatThrownBy(() -> SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build()
+            .determinant().checkedGet()).isExactlyInstanceOf(MatrixNotSquareException.class)
+                .hasMessage("expected square matrix but actual 4 x 5");
     }
 
     @Test
@@ -466,7 +466,7 @@ public final class SimpleComplexNumberMatrixTest {
                 }
                 expected = expected.add(SimpleComplexNumber.ONE.negate().pow(inversions).multiply(product));
             }
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().get()).isEqualTo(expected);
         });
     }
 
@@ -487,7 +487,7 @@ public final class SimpleComplexNumberMatrixTest {
                 matrix.element(3, 3).multiply(matrix.element(2, 1)).multiply(matrix.element(1, 2));
             final SimpleComplexNumber expected =
                 first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().get()).isEqualTo(expected);
         });
     }
 
@@ -496,54 +496,54 @@ public final class SimpleComplexNumberMatrixTest {
         twoByTwoMatrices.forEach(matrix -> {
             final SimpleComplexNumber expected = matrix.element(1, 1).multiply(matrix.element(2, 2))
                 .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().get()).isEqualTo(expected);
         });
     }
 
     @Test
     public void determinatOfZeroMatrixShouldBeEqualToZero() {
-        assertThat(zeroSquareMatrix.determinant()).isEqualTo(SimpleComplexNumber.ZERO);
+        assertThat(zeroSquareMatrix.determinant().get()).isEqualTo(SimpleComplexNumber.ZERO);
     }
 
     @Test
     public void determinatOfIdentityMatrixShouldBeEqualToOne() {
-        assertThat(identityMatrix.determinant()).isEqualTo(SimpleComplexNumber.ONE);
+        assertThat(identityMatrix.determinant().get()).isEqualTo(SimpleComplexNumber.ONE);
     }
 
     @Test
     public void determinatOfTransposeShouldBeEqualToDeterminant() {
-        fourByFourMatrices
-            .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant()));
-        threeByThreeMatrices
-            .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant()));
-        twoByTwoMatrices
-            .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualTo(matrix.determinant()));
+        fourByFourMatrices.forEach(
+            matrix -> assertThat(matrix.transpose().determinant().get()).isEqualTo(matrix.determinant().get()));
+        threeByThreeMatrices.forEach(
+            matrix -> assertThat(matrix.transpose().determinant().get()).isEqualTo(matrix.determinant().get()));
+        twoByTwoMatrices.forEach(
+            matrix -> assertThat(matrix.transpose().determinant().get()).isEqualTo(matrix.determinant().get()));
     }
 
     @Test
     public void determinatShouldBeMultiplicative() {
-        fourByFourMatrices
-            .forEach(matrix -> fourByFourMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant())
-                .isEqualTo(matrix.determinant().multiply(other.determinant()))));
-        threeByThreeMatrices
-            .forEach(matrix -> threeByThreeMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant())
-                .isEqualTo(matrix.determinant().multiply(other.determinant()))));
+        fourByFourMatrices.forEach(
+            matrix -> fourByFourMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant().get())
+                .isEqualTo(matrix.determinant().get().multiply(other.determinant().get()))));
+        threeByThreeMatrices.forEach(
+            matrix -> threeByThreeMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant().get())
+                .isEqualTo(matrix.determinant().get().multiply(other.determinant().get()))));
         twoByTwoMatrices
-            .forEach(matrix -> twoByTwoMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant())
-                .isEqualTo(matrix.determinant().multiply(other.determinant()))));
+            .forEach(matrix -> twoByTwoMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant().get())
+                .isEqualTo(matrix.determinant().get().multiply(other.determinant().get()))));
     }
 
     @Test
     public void determinatWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet() {
         fourByFourMatrices
-            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
-                .isEqualTo(scalar.pow(matrix.rowSize()).multiply(matrix.determinant()))));
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant().get())
+                .isEqualTo(scalar.pow(matrix.rowSize()).multiply(matrix.determinant().get()))));
         threeByThreeMatrices
-            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
-                .isEqualTo(scalar.pow(3).multiply(matrix.determinant()))));
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant().get())
+                .isEqualTo(scalar.pow(3).multiply(matrix.determinant().get()))));
         twoByTwoMatrices
-            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
-                .isEqualTo(scalar.pow(2).multiply(matrix.determinant()))));
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant().get())
+                .isEqualTo(scalar.pow(2).multiply(matrix.determinant().get()))));
     }
 
     @Test
@@ -552,7 +552,7 @@ public final class SimpleComplexNumberMatrixTest {
             final SimpleComplexNumber expected =
                 matrix.cells().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
                     .map(Cell::getValue).reduce(SimpleComplexNumber::multiply).get();
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().get()).isEqualTo(expected);
         });
     }
 

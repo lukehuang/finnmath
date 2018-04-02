@@ -240,8 +240,8 @@ public final class BigDecimalMatrixTest {
 
     @Test
     public void determinatNotSquareShouldThrowException() {
-        assertThatThrownBy(() -> nonSquareMatrix.determinant()).isExactlyInstanceOf(IllegalStateException.class)
-            .hasMessage("expected square matrix but actual 4 x 5");
+        assertThatThrownBy(() -> nonSquareMatrix.determinant().checkedGet())
+            .isExactlyInstanceOf(MatrixNotSquareException.class).hasMessage("expected square matrix but actual 4 x 5");
     }
 
     @Test
@@ -262,7 +262,7 @@ public final class BigDecimalMatrixTest {
                 }
                 expected = expected.add(BigDecimal.ONE.negate().pow(inversions).multiply(product));
             }
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().get()).isEqualTo(expected);
         });
     }
 
@@ -278,7 +278,7 @@ public final class BigDecimalMatrixTest {
             final BigDecimal fifth = matrix.element(3, 2).multiply(matrix.element(2, 3)).multiply(matrix.element(1, 1));
             final BigDecimal sixth = matrix.element(3, 3).multiply(matrix.element(2, 1)).multiply(matrix.element(1, 2));
             final BigDecimal expected = first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().get()).isEqualTo(expected);
         });
     }
 
@@ -287,54 +287,54 @@ public final class BigDecimalMatrixTest {
         twoByTwoMatrices.forEach(matrix -> {
             final BigDecimal expected = matrix.element(1, 1).multiply(matrix.element(2, 2))
                 .subtract(matrix.element(1, 2).multiply(matrix.element(2, 1)));
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().get()).isEqualTo(expected);
         });
     }
 
     @Test
     public void determinatOfZeroMatrixShouldBeEqualToZero() {
-        assertThat(zeroSquareMatrix.determinant()).isEqualTo(BigDecimal.ZERO);
+        assertThat(zeroSquareMatrix.determinant().get()).isEqualTo(BigDecimal.ZERO);
     }
 
     @Test
     public void determinatOfIdentityMatrixShouldBeEqualToOne() {
-        assertThat(identityMatrix.determinant()).isEqualTo(BigDecimal.ONE);
+        assertThat(identityMatrix.determinant().get()).isEqualTo(BigDecimal.ONE);
     }
 
     @Test
     public void determinatOfTransposeShouldBeEqualToDeterminant() {
-        fourByFourMatrices
-            .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualByComparingTo(matrix.determinant()));
-        threeByThreeMatrices
-            .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualByComparingTo(matrix.determinant()));
-        twoByTwoMatrices
-            .forEach(matrix -> assertThat(matrix.transpose().determinant()).isEqualByComparingTo(matrix.determinant()));
+        fourByFourMatrices.forEach(matrix -> assertThat(matrix.transpose().determinant().get())
+            .isEqualByComparingTo(matrix.determinant().get()));
+        threeByThreeMatrices.forEach(matrix -> assertThat(matrix.transpose().determinant().get())
+            .isEqualByComparingTo(matrix.determinant().get()));
+        twoByTwoMatrices.forEach(matrix -> assertThat(matrix.transpose().determinant().get())
+            .isEqualByComparingTo(matrix.determinant().get()));
     }
 
     @Test
     public void determinatShouldBeMultiplicative() {
-        fourByFourMatrices
-            .forEach(matrix -> fourByFourMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant())
-                .isEqualByComparingTo(matrix.determinant().multiply(other.determinant()))));
-        threeByThreeMatrices
-            .forEach(matrix -> threeByThreeMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant())
-                .isEqualByComparingTo(matrix.determinant().multiply(other.determinant()))));
+        fourByFourMatrices.forEach(
+            matrix -> fourByFourMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant().get())
+                .isEqualByComparingTo(matrix.determinant().get().multiply(other.determinant().get()))));
+        threeByThreeMatrices.forEach(
+            matrix -> threeByThreeMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant().get())
+                .isEqualByComparingTo(matrix.determinant().get().multiply(other.determinant().get()))));
         twoByTwoMatrices
-            .forEach(matrix -> twoByTwoMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant())
-                .isEqualByComparingTo(matrix.determinant().multiply(other.determinant()))));
+            .forEach(matrix -> twoByTwoMatrices.forEach(other -> assertThat(matrix.multiply(other).determinant().get())
+                .isEqualByComparingTo(matrix.determinant().get().multiply(other.determinant().get()))));
     }
 
     @Test
     public void determinatWithScalarShouldBeEqualToPowOfScalarMultipliedWithDet() {
         fourByFourMatrices
-            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
-                .isEqualByComparingTo(scalar.pow(matrix.rowSize()).multiply(matrix.determinant()))));
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant().get())
+                .isEqualByComparingTo(scalar.pow(matrix.rowSize()).multiply(matrix.determinant().get()))));
         threeByThreeMatrices
-            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
-                .isEqualByComparingTo(scalar.pow(3).multiply(matrix.determinant()))));
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant().get())
+                .isEqualByComparingTo(scalar.pow(3).multiply(matrix.determinant().get()))));
         twoByTwoMatrices
-            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant())
-                .isEqualByComparingTo(scalar.pow(2).multiply(matrix.determinant()))));
+            .forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).determinant().get())
+                .isEqualByComparingTo(scalar.pow(2).multiply(matrix.determinant().get()))));
     }
 
     @Test
@@ -343,7 +343,7 @@ public final class BigDecimalMatrixTest {
             final BigDecimal expected =
                 matrix.cells().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
                     .map(Cell::getValue).reduce(BigDecimal::multiply).get();
-            assertThat(matrix.determinant()).isEqualTo(expected);
+            assertThat(matrix.determinant().get()).isEqualTo(expected);
         });
     }
 

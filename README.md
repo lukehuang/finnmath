@@ -36,6 +36,7 @@ other JVM technologies. Dependencies are big-math, Guava, Commons Lang and SLF4J
 * Useful hashCode, equals and toString methods
 * Builders for vectors and matrices
 * Early failing with meaningful messages
+* Try-Success-Failure instead of checked exceptions
 * Logging facade instead of a hard dependency on a specific logging framework
 * Complete Javadoc
 
@@ -110,6 +111,7 @@ not needed for a standard Java project like this one.
 * Eric Obermühlner for big-math
 * Google for Guava and Error Prone
 * the Apache Software Foundation for Maven, Commons Lang, Commons Math and the Apache License
+* Alessandro Lacava for try
 * QOS.ch for SLF4J 
 * Joel Costigliola for AssertJ
 * the JUnit team for JUnit
