@@ -28,7 +28,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table.Cell;
-import com.lambdista.util.Try;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Map;
@@ -167,16 +166,15 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      * @return trace
      * @since 1
      */
-    protected abstract Try<E> trace();
+    protected abstract E trace();
 
     /**
-     * Returns a {@link Try} that contains the determinant of this
-     * {@link AbstractMatrix} or a {@link MatrixNotSquareException}
+     * Returns the determinant of this {@link AbstractMatrix}
      *
      * @return determinant
      * @since 1
      */
-    protected abstract Try<E> determinant();
+    protected abstract E determinant();
 
     /**
      * Leibniz formula
@@ -528,15 +526,15 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
     /**
      * Checks if the {@link AbstractMatrix} is square
      *
-     * @throws MatrixNotSquareException
+     * @throws IndexOutOfBoundsException
      *             if the {@link AbstractMatrix} is not square
      * @since 1
      */
-    protected final void checkIfSquare() throws MatrixNotSquareException {
+    protected final void checkIfSquare() throws IndexOutOfBoundsException {
         if (!square()) {
             final String message =
                 "expected square matrix but actual " + table.rowKeySet().size() + " x " + table.columnKeySet().size();
-            throw new MatrixNotSquareException(message);
+            throw new IndexOutOfBoundsException(message);
         }
     }
 

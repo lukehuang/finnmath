@@ -25,7 +25,6 @@ import com.google.common.annotations.Beta;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table.Cell;
-import com.lambdista.util.Try;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -194,41 +193,41 @@ public final class BigDecimalMatrix
     /**
      * {@inheritDoc}
      *
+     * @throws IndexOutOfBoundsException
+     *             if this {@link BigDecimalMatrix} is not square
      * @since 1
      */
     @Override
-    public Try<BigDecimal> trace() {
-        return Try.apply(() -> {
-            checkIfSquare();
-            return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
-                .map(Cell::getValue).reduce(BigDecimal::add).get();
-        });
+    public BigDecimal trace() {
+        checkIfSquare();
+        return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+            .map(Cell::getValue).reduce(BigDecimal::add).get();
     }
 
     /**
      * {@inheritDoc}
      *
+     * @throws IndexOutOfBoundsException
+     *             if this {@link BigDecimalMatrix} is not square
      * @since 1
      */
     @Override
-    public Try<BigDecimal> determinant() {
-        return Try.apply(() -> {
-            checkIfSquare();
-            if (triangular()) {
-                return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
-                    .map(Cell::getValue).reduce(BigDecimal::multiply).get();
-            }
-            final int rowSize = table.rowKeySet().size();
-            if (rowSize > 3) {
-                return leibnizFormula();
-            }
-            if (rowSize == 3) {
-                return ruleOfSarrus();
-            }
+    public BigDecimal determinant() {
+        checkIfSquare();
+        if (triangular()) {
+            return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+                .map(Cell::getValue).reduce(BigDecimal::multiply).get();
+        }
+        final int rowSize = table.rowKeySet().size();
+        if (rowSize > 3) {
+            return leibnizFormula();
+        }
+        if (rowSize == 3) {
+            return ruleOfSarrus();
+        }
 
-            // rowSize == 2
-            return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
-        });
+        // rowSize == 2
+        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
     }
 
     /**
@@ -415,7 +414,7 @@ public final class BigDecimalMatrix
      */
     @Override
     public boolean invertible() {
-        return square() && determinant().get().compareTo(BigDecimal.ZERO) != 0;
+        return square() && determinant().compareTo(BigDecimal.ZERO) != 0;
     }
 
     /**
