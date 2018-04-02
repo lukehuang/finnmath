@@ -194,8 +194,8 @@ public final class BigDecimalMatrixTest {
 
     @Test
     public void traceNotSquareShouldThrowException() {
-        assertThatThrownBy(() -> nonSquareMatrix.trace()).isExactlyInstanceOf(IllegalStateException.class)
-            .hasMessage("expected square matrix but actual 4 x 5");
+        assertThatThrownBy(() -> nonSquareMatrix.trace().checkedGet())
+            .isExactlyInstanceOf(MatrixNotSquareException.class).hasMessage("expected square matrix but actual 4 x 5");
     }
 
     @Test
@@ -204,38 +204,39 @@ public final class BigDecimalMatrixTest {
             final BigDecimal expected =
                 matrix.cells().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
                     .map(Cell::getValue).reduce(BigDecimal::add).get();
-            assertThat(matrix.trace().compareTo(expected)).isEqualTo(0);
+            assertThat(matrix.trace().get().compareTo(expected)).isEqualTo(0);
         });
     }
 
     @Test
     public void traceOfZeroMatrixShouldBeEqualToZero() {
-        assertThat(zeroSquareMatrix.trace().compareTo(BigDecimal.ZERO)).isEqualTo(0);
+        assertThat(zeroSquareMatrix.trace().get().compareTo(BigDecimal.ZERO)).isEqualTo(0);
     }
 
     @Test
     public void traceShouldBeAdditive() {
-        squareMatrices.forEach(matrix -> squareMatrices.forEach(
-            other -> assertThat(matrix.add(other).trace().compareTo(matrix.trace().add(other.trace()))).isEqualTo(0)));
+        squareMatrices.forEach(matrix -> squareMatrices.forEach(other -> assertThat(
+            matrix.add(other).trace().get().compareTo(matrix.trace().get().add(other.trace().get()))).isEqualTo(0)));
     }
 
     @Test
     public void traceShouldBeLinear() {
-        squareMatrices.forEach(matrix -> scalars.forEach(
-            scalar -> assertThat(matrix.scalarMultiply(scalar).trace().compareTo(scalar.multiply(matrix.trace())))
+        squareMatrices.forEach(matrix -> scalars.forEach(scalar -> assertThat(
+            matrix.scalarMultiply(scalar).trace().get().compareTo(scalar.multiply(matrix.trace().get())))
                 .isEqualTo(0)));
     }
 
     @Test
     public void traceShouldBeIndependentOfTheOrderOfTheFactors() {
-        squareMatrices.forEach(matrix -> squareMatrices
-            .forEach(other -> assertThat(matrix.multiply(other).trace().compareTo(other.multiply(matrix).trace()))
+        squareMatrices.forEach(matrix -> squareMatrices.forEach(
+            other -> assertThat(matrix.multiply(other).trace().get().compareTo(other.multiply(matrix).trace().get()))
                 .isEqualTo(0)));
     }
 
     @Test
     public void traceShouldBeEqualToTheTraceOfTheTranspose() {
-        squareMatrices.forEach(matrix -> assertThat(matrix.trace().compareTo(matrix.transpose().trace())).isEqualTo(0));
+        squareMatrices.forEach(
+            matrix -> assertThat(matrix.trace().get().compareTo(matrix.transpose().trace().get())).isEqualTo(0));
     }
 
     @Test

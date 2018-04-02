@@ -167,7 +167,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      * @return trace
      * @since 1
      */
-    protected abstract E trace();
+    protected abstract Try<E> trace();
 
     /**
      * Returns a {@link Try} that contains the determinant of this

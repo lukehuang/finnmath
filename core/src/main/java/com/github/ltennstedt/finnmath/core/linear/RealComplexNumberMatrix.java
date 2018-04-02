@@ -17,7 +17,6 @@
 package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
 import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
@@ -205,11 +204,12 @@ public final class RealComplexNumberMatrix extends
      * @since 1
      */
     @Override
-    public RealComplexNumber trace() {
-        checkState(square(), "expected square matrix but actual %s x %s", table.rowKeySet().size(),
-            table.columnKeySet().size());
-        return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
-            .map(Cell::getValue).reduce(RealComplexNumber::add).get();
+    public Try<RealComplexNumber> trace() {
+        return Try.apply(() -> {
+            checkIfSquare();
+            return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+                .map(Cell::getValue).reduce(RealComplexNumber::add).get();
+        });
     }
 
     /**
