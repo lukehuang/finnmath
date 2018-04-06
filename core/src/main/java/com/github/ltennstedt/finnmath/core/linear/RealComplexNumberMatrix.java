@@ -17,6 +17,7 @@
 package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
 import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
@@ -200,13 +201,14 @@ public final class RealComplexNumberMatrix extends
     /**
      * {@inheritDoc}
      *
-     * @throws IndexOutOfBoundsException
+     * @throws IllegalStateException
      *             if this {@link RealComplexNumberMatrix} is not square
      * @since 1
      */
     @Override
     public RealComplexNumber trace() {
-        checkIfSquare();
+        checkState(square(), "expected square matrix but was a %sx%s matrix", table.rowKeySet().size(),
+            table.columnKeySet().size());
         return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
             .map(Cell::getValue).reduce(RealComplexNumber::add).get();
     }
@@ -214,13 +216,14 @@ public final class RealComplexNumberMatrix extends
     /**
      * {@inheritDoc}
      *
-     * @throws IndexOutOfBoundsException
+     * @throws IllegalStateException
      *             if this {@link RealComplexNumberMatrix} is not square
      * @since 1
      */
     @Override
     public RealComplexNumber determinant() {
-        checkIfSquare();
+        checkState(square(), "expected square matrix but was a %sx%s matrix", table.rowKeySet().size(),
+            table.columnKeySet().size());
         if (triangular()) {
             return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
                 .map(Cell::getValue).reduce(RealComplexNumber::multiply).get();

@@ -38,6 +38,8 @@ import java.util.Objects;
  *            type of the elements of the vector
  * @param <V>
  *            type of the vector
+ * @param <M>
+ *            type of the related matrix
  * @param <N>
  *            type of the taxicab and max norm of the vector
  * @param <P>
@@ -47,7 +49,8 @@ import java.util.Objects;
  * @since 1
  */
 @Beta
-public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N, P> {
+public abstract class AbstractVector<E, V extends AbstractVector<E, V, M, N, P>,
+    M extends AbstractMatrix<E, V, M, N, P>, N, P> {
     /**
      * Default {@link SquareRootCalculator}
      *
@@ -124,6 +127,17 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
      * @since 1
      */
     protected abstract V negate();
+
+    /**
+     * Returns if {@code this} is orthogonal to the other {@link AbstractVector}
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @return {@code true} if {@code this} is orthogonal to the other
+     *         {@link AbstractVector}, {@code false} otherwise
+     * @since 1
+     */
+    protected abstract boolean orthogonalTo(V other);
 
     /**
      * Returns the taxicab norm of this {@link AbstractVector}
@@ -270,6 +284,17 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
     }
 
     /**
+     * Returns the dyadic product of {@code this} {@link AbstractVector} and the
+     * other one
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @return dyadic product
+     * @since 1
+     */
+    protected abstract M dyadicProduct(V other);
+
+    /**
      * Returns the element dependent on the given index
      *
      * @param index
@@ -341,7 +366,7 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, N, P>, N,
         if (!(object instanceof AbstractVector)) {
             return false;
         }
-        final AbstractVector<?, ?, ?, ?> other = (AbstractVector<?, ?, ?, ?>) object;
+        final AbstractVector<?, ?, ?, ?, ?> other = (AbstractVector<?, ?, ?, ?, ?>) object;
         return Objects.deepEquals(map, other.getMap());
     }
 

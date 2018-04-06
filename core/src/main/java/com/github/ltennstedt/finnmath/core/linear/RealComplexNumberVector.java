@@ -19,12 +19,14 @@ package com.github.ltennstedt.finnmath.core.linear;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import com.github.ltennstedt.finnmath.core.linear.RealComplexNumberMatrix.RealComplexNumberMatrixBuilder;
 import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
 import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
 import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -36,8 +38,8 @@ import java.util.stream.IntStream;
  * @since 1
  */
 @Beta
-public final class RealComplexNumberVector
-    extends AbstractVector<RealComplexNumber, RealComplexNumberVector, BigDecimal, BigDecimal> {
+public final class RealComplexNumberVector extends
+    AbstractVector<RealComplexNumber, RealComplexNumberVector, RealComplexNumberMatrix, BigDecimal, BigDecimal> {
     private RealComplexNumberVector(final ImmutableMap<Integer, RealComplexNumber> map) {
         super(map);
     }
@@ -120,6 +122,22 @@ public final class RealComplexNumberVector
     /**
      * {@inheritDoc}
      *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public boolean orthogonalTo(final RealComplexNumberVector other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return dotProduct(other).isEqualToByComparingParts(RealComplexNumber.ZERO);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @since 1
      */
     @Override
@@ -185,8 +203,54 @@ public final class RealComplexNumberVector
      * @since 1
      */
     @Override
-    protected BigDecimal maxNorm() {
+    public BigDecimal maxNorm() {
         return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumberMatrix dyadicProduct(final RealComplexNumberVector other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(map.size(), other.size());
+        map.entrySet().forEach(entry -> other.entries().forEach(otherEntry -> builder.put(entry.getKey(),
+            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue()))));
+        return builder.build();
+    }
+
+    /**
+     * Returns the dyadic product of {@code this} {@link RealComplexNumberVector}
+     * and the other one
+     *
+     * @param other
+     *            other {@link RealComplexNumberVector}
+     * @param mathContext
+     *            {@link MathContext}
+     * @return dyadic product
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    public RealComplexNumberMatrix dyadicProduct(final RealComplexNumberVector other, final MathContext mathContext) {
+        requireNonNull(other, "other");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(map.size(), other.size());
+        map.entrySet().forEach(entry -> other.entries().forEach(otherEntry -> builder.put(entry.getKey(),
+            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue(), mathContext))));
+        return builder.build();
     }
 
     /**

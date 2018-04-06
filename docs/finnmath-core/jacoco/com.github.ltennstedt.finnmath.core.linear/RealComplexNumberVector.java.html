@@ -19,12 +19,14 @@ package com.github.ltennstedt.finnmath.core.linear;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import com.github.ltennstedt.finnmath.core.linear.RealComplexNumberMatrix.RealComplexNumberMatrixBuilder;
 import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
 import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
 import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
 import com.google.common.collect.ImmutableMap;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -36,11 +38,11 @@ import java.util.stream.IntStream;
  * @since 1
  */
 @Beta
-public final class RealComplexNumberVector
-    extends AbstractVector&lt;RealComplexNumber, RealComplexNumberVector, BigDecimal, BigDecimal&gt; {
+public final class RealComplexNumberVector extends
+    AbstractVector&lt;RealComplexNumber, RealComplexNumberVector, RealComplexNumberMatrix, BigDecimal, BigDecimal&gt; {
     private RealComplexNumberVector(final ImmutableMap&lt;Integer, RealComplexNumber&gt; map) {
-<span class="fc" id="L42">        super(map);</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L44">        super(map);</span>
+<span class="fc" id="L45">    }</span>
 
     /**
      * Returns a {@link RealComplexNumberVectorBuilder}
@@ -51,8 +53,8 @@ public final class RealComplexNumberVector
      * @since 1
      */
     public static RealComplexNumberVectorBuilder builder(final int size) {
-<span class="fc bfc" id="L54" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L55">        return new RealComplexNumberVectorBuilder(size);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L57">        return new RealComplexNumberVectorBuilder(size);</span>
     }
 
     /**
@@ -65,12 +67,12 @@ public final class RealComplexNumberVector
      */
     @Override
     public RealComplexNumberVector add(final RealComplexNumberVector summand) {
-<span class="fc" id="L68">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L70">            summand.size());</span>
-<span class="fc" id="L71">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L72">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
-<span class="fc" id="L73">        return builder.build();</span>
+<span class="fc" id="L70">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L72">            summand.size());</span>
+<span class="fc" id="L73">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L74">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="fc" id="L75">        return builder.build();</span>
     }
 
     /**
@@ -84,12 +86,12 @@ public final class RealComplexNumberVector
      */
     @Override
     public RealComplexNumberVector subtract(final RealComplexNumberVector subtrahend) {
-<span class="fc" id="L87">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L89">            subtrahend.size());</span>
-<span class="fc" id="L90">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L91">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
-<span class="fc" id="L92">        return builder.build();</span>
+<span class="fc" id="L89">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="fc" id="L91">            subtrahend.size());</span>
+<span class="fc" id="L92">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L93">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
+<span class="fc" id="L94">        return builder.build();</span>
     }
 
     /**
@@ -101,10 +103,10 @@ public final class RealComplexNumberVector
      */
     @Override
     public RealComplexNumberVector scalarMultiply(final RealComplexNumber scalar) {
-<span class="fc" id="L104">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L105">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L106">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
-<span class="fc" id="L107">        return builder.build();</span>
+<span class="fc" id="L106">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L107">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="fc" id="L108">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="fc" id="L109">        return builder.build();</span>
     }
 
     /**
@@ -114,7 +116,23 @@ public final class RealComplexNumberVector
      */
     @Override
     public RealComplexNumberVector negate() {
-<span class="fc" id="L117">        return scalarMultiply(RealComplexNumber.ONE.negate());</span>
+<span class="fc" id="L119">        return scalarMultiply(RealComplexNumber.ONE.negate());</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public boolean orthogonalTo(final RealComplexNumberVector other) {
+<span class="nc" id="L133">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L135">        return dotProduct(other).isEqualToByComparingParts(RealComplexNumber.ZERO);</span>
     }
 
     /**
@@ -124,7 +142,7 @@ public final class RealComplexNumberVector
      */
     @Override
     protected BigDecimal taxicabNorm() {
-<span class="fc" id="L127">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add).get();</span>
+<span class="fc" id="L145">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add).get();</span>
     }
 
     /**
@@ -134,7 +152,7 @@ public final class RealComplexNumberVector
      */
     @Override
     public BigDecimal euclideanNormPow2() {
-<span class="fc" id="L137">        return map.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();</span>
+<span class="fc" id="L155">        return map.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();</span>
     }
 
     /**
@@ -145,7 +163,7 @@ public final class RealComplexNumberVector
      */
     @Override
     public BigDecimal euclideanNorm() {
-<span class="nc" id="L148">        return SquareRootCalculator.sqrt(euclideanNormPow2());</span>
+<span class="nc" id="L166">        return SquareRootCalculator.sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -158,8 +176,8 @@ public final class RealComplexNumberVector
      */
     @Override
     public BigDecimal euclideanNorm(final SquareRootContext squareRootContext) {
-<span class="nc" id="L161">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
-<span class="nc" id="L162">        return SquareRootCalculator.sqrt(euclideanNormPow2(), squareRootContext);</span>
+<span class="nc" id="L179">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="nc" id="L180">        return SquareRootCalculator.sqrt(euclideanNormPow2(), squareRootContext);</span>
     }
 
     /**
@@ -173,10 +191,10 @@ public final class RealComplexNumberVector
      */
     @Override
     public RealComplexNumber dotProduct(final RealComplexNumberVector other) {
-<span class="fc" id="L176">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L178">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
-<span class="fc" id="L179">            .reduce(RealComplexNumber::add).get();</span>
+<span class="fc" id="L194">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L196">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
+<span class="fc" id="L197">            .reduce(RealComplexNumber::add).get();</span>
     }
 
     /**
@@ -185,8 +203,54 @@ public final class RealComplexNumberVector
      * @since 1
      */
     @Override
-    protected BigDecimal maxNorm() {
-<span class="fc" id="L189">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();</span>
+    public BigDecimal maxNorm() {
+<span class="fc" id="L207">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumberMatrix dyadicProduct(final RealComplexNumberVector other) {
+<span class="nc" id="L221">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L223">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(map.size(), other.size());</span>
+<span class="nc" id="L224">        map.entrySet().forEach(entry -&gt; other.entries().forEach(otherEntry -&gt; builder.put(entry.getKey(),</span>
+<span class="nc" id="L225">            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue()))));</span>
+<span class="nc" id="L226">        return builder.build();</span>
+    }
+
+    /**
+     * Returns the dyadic product of {@code this} {@link RealComplexNumberVector}
+     * and the other one
+     *
+     * @param other
+     *            other {@link RealComplexNumberVector}
+     * @param mathContext
+     *            {@link MathContext}
+     * @return dyadic product
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    public RealComplexNumberMatrix dyadicProduct(final RealComplexNumberVector other, final MathContext mathContext) {
+<span class="nc" id="L247">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc" id="L248">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L250">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(map.size(), other.size());</span>
+<span class="nc" id="L251">        map.entrySet().forEach(entry -&gt; other.entries().forEach(otherEntry -&gt; builder.put(entry.getKey(),</span>
+<span class="nc" id="L252">            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue(), mathContext))));</span>
+<span class="nc" id="L253">        return builder.build();</span>
     }
 
     /**
@@ -199,8 +263,8 @@ public final class RealComplexNumberVector
     public static final class RealComplexNumberVectorBuilder
         extends AbstractVectorBuilder&lt;RealComplexNumber, RealComplexNumberVector, RealComplexNumberVectorBuilder&gt; {
         private RealComplexNumberVectorBuilder(final Integer size) {
-<span class="fc" id="L202">            super(size);</span>
-<span class="fc" id="L203">        }</span>
+<span class="fc" id="L266">            super(size);</span>
+<span class="fc" id="L267">        }</span>
 
         /**
          * {@inheritDoc}
@@ -211,9 +275,9 @@ public final class RealComplexNumberVector
          */
         @Override
         public RealComplexNumberVector build() {
-<span class="fc" id="L214">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
-<span class="fc" id="L215">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
-<span class="fc" id="L216">            return new RealComplexNumberVector(ImmutableMap.copyOf(map));</span>
+<span class="fc" id="L278">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
+<span class="fc" id="L279">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
+<span class="fc" id="L280">            return new RealComplexNumberVector(ImmutableMap.copyOf(map));</span>
         }
     }
 }

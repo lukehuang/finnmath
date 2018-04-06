@@ -400,7 +400,7 @@ public final class SimpleComplexNumberMatrixTest {
     @Test
     public void traceNotSquareShouldThrowException() {
         assertThatThrownBy(() -> Matrices.buildZeroSimpleComplexNumberMatrix(2, 3).trace())
-            .isExactlyInstanceOf(IndexOutOfBoundsException.class).hasMessage("expected square matrix but actual 2 x 3");
+            .isExactlyInstanceOf(IllegalStateException.class).hasMessage("expected square matrix but was a 2x3 matrix");
     }
 
     @Test
@@ -445,8 +445,8 @@ public final class SimpleComplexNumberMatrixTest {
     public void determinatNotSquareShouldThrowException() {
         assertThatThrownBy(
             () -> SimpleComplexNumberMatrix.builder(4, 5).putAll(SimpleComplexNumber.ZERO).build().determinant())
-                .isExactlyInstanceOf(IndexOutOfBoundsException.class)
-                .hasMessage("expected square matrix but actual 4 x 5");
+                .isExactlyInstanceOf(IllegalStateException.class)
+                .hasMessage("expected square matrix but was a 4x5 matrix");
     }
 
     @Test

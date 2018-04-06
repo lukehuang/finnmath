@@ -419,8 +419,8 @@ public final class RealComplexNumberMatrixTest {
 
     @Test
     public void traceNotSquareShouldThrowException() {
-        assertThatThrownBy(() -> nonSquareMatrix.trace()).isExactlyInstanceOf(IndexOutOfBoundsException.class)
-            .hasMessage("expected square matrix but actual 4 x 5");
+        assertThatThrownBy(() -> nonSquareMatrix.trace()).isExactlyInstanceOf(IllegalStateException.class)
+            .hasMessage("expected square matrix but was a 4x5 matrix");
     }
 
     @Test
@@ -463,8 +463,8 @@ public final class RealComplexNumberMatrixTest {
 
     @Test
     public void determinatNotSquareShouldThrowException() {
-        assertThatThrownBy(() -> nonSquareMatrix.determinant()).isExactlyInstanceOf(IndexOutOfBoundsException.class)
-            .hasMessage("expected square matrix but actual 4 x 5");
+        assertThatThrownBy(() -> nonSquareMatrix.determinant()).isExactlyInstanceOf(IllegalStateException.class)
+            .hasMessage("expected square matrix but was a 4x5 matrix");
     }
 
     @Test

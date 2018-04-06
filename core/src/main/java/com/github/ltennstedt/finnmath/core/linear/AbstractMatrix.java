@@ -52,8 +52,8 @@ import java.util.Objects;
  * @since 1
  */
 @Beta
-public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M extends AbstractMatrix<E, V, M, N, B>,
-    N, B> {
+public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, M, N, B>,
+    M extends AbstractMatrix<E, V, M, N, B>, N, B> {
     /**
      * Default {@link SquareRootContext}
      *
@@ -521,21 +521,6 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, N, B>, M 
      */
     public final int columnSize() {
         return table.columnKeySet().size();
-    }
-
-    /**
-     * Checks if the {@link AbstractMatrix} is square
-     *
-     * @throws IndexOutOfBoundsException
-     *             if the {@link AbstractMatrix} is not square
-     * @since 1
-     */
-    protected final void checkIfSquare() throws IndexOutOfBoundsException {
-        if (!square()) {
-            final String message =
-                "expected square matrix but actual " + table.rowKeySet().size() + " x " + table.columnKeySet().size();
-            throw new IndexOutOfBoundsException(message);
-        }
     }
 
     /**

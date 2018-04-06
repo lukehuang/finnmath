@@ -45,7 +45,7 @@ public final class RealComplexNumberVectorTest {
         mathRandom.nextRealComplexNumberVectors(bound, scale, size, howMany);
     private final List<RealComplexNumber> scalars = mathRandom.nextRealComplexNumbers(bound, scale, howMany);
     private final List<RealComplexNumber> otherScalars = mathRandom.nextRealComplexNumbers(bound, scale, howMany);
-    private final BigDecimal tolerance = BigDecimal.valueOf(0.001D);
+    private final BigDecimal tolerance = BigDecimal.valueOf(0.01D);
     private final BigDecimal negatedTolerance = tolerance.negate();
 
     @Test

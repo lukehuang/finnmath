@@ -19,6 +19,7 @@ package com.github.ltennstedt.finnmath.core.linear;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberMatrix.SimpleComplexNumberMatrixBuilder;
 import com.github.ltennstedt.finnmath.core.number.SimpleComplexNumber;
 import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
 import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
@@ -36,8 +37,8 @@ import java.util.Objects;
  * @since 1
  */
 @Beta
-public final class SimpleComplexNumberVector
-    extends AbstractVector<SimpleComplexNumber, SimpleComplexNumberVector, BigDecimal, BigInteger> {
+public final class SimpleComplexNumberVector extends
+    AbstractVector<SimpleComplexNumber, SimpleComplexNumberVector, SimpleComplexNumberMatrix, BigDecimal, BigInteger> {
     private SimpleComplexNumberVector(final ImmutableMap<Integer, SimpleComplexNumber> map) {
         super(map);
     }
@@ -120,6 +121,22 @@ public final class SimpleComplexNumberVector
     /**
      * {@inheritDoc}
      *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public boolean orthogonalTo(final SimpleComplexNumberVector other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return dotProduct(other).equals(SimpleComplexNumber.ZERO);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @since 1
      */
     @Override
@@ -187,6 +204,25 @@ public final class SimpleComplexNumberVector
     @Override
     protected BigDecimal maxNorm() {
         return map.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::max).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public SimpleComplexNumberMatrix dyadicProduct(final SimpleComplexNumberVector other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(map.size(), other.size());
+        map.entrySet().forEach(entry -> other.entries().forEach(otherEntry -> builder.put(entry.getKey(),
+            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue()))));
+        return builder.build();
     }
 
     /**

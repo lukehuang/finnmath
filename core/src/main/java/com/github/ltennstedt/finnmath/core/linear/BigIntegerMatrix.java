@@ -17,6 +17,7 @@
 package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 import static java.util.Objects.requireNonNull;
 
 import com.github.ltennstedt.finnmath.core.linear.BigIntegerVector.BigIntegerVectorBuilder;
@@ -197,13 +198,14 @@ public final class BigIntegerMatrix
     /**
      * {@inheritDoc}
      *
-     * @throws IndexOutOfBoundsException
+     * @throws IllegalStateException
      *             if this {@link BigIntegerMatrix} is not square
      * @since 1
      */
     @Override
     public BigInteger trace() {
-        checkIfSquare();
+        checkState(square(), "expected square matrix but was a %sx%s matrix", table.rowKeySet().size(),
+            table.columnKeySet().size());
         return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
             .map(Cell::getValue).reduce(BigInteger::add).get();
     }
@@ -211,13 +213,14 @@ public final class BigIntegerMatrix
     /**
      * {@inheritDoc}
      *
-     * @throws IndexOutOfBoundsException
+     * @throws IllegalStateException
      *             if this {@link BigIntegerMatrix} is not square
      * @since 1
      */
     @Override
     public BigInteger determinant() {
-        checkIfSquare();
+        checkState(square(), "expected square matrix but was a %sx%s matrix", table.rowKeySet().size(),
+            table.columnKeySet().size());
         if (triangular()) {
             return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
                 .map(Cell::getValue).reduce(BigInteger::multiply).get();

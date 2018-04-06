@@ -19,11 +19,8 @@ package com.github.ltennstedt.finnmath.core.sqrt;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.github.ltennstedt.finnmath.core.number.ScientificNotation;
-import com.github.ltennstedt.finnmath.core.util.MathRandom;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.RoundingMode;
 import org.junit.After;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -31,9 +28,6 @@ import org.slf4j.LoggerFactory;
 
 public final class SquareRootCalculatorTest {
     private static final Logger log = LoggerFactory.getLogger(SquareRootCalculatorTest.class);
-    private final int validScale = 8;
-    private final RoundingMode roundingMode = RoundingMode.HALF_EVEN;
-    private final MathRandom mathRandom = new MathRandom(7);
 
     @After
     public void after() {
@@ -339,37 +333,5 @@ public final class SquareRootCalculatorTest {
     @Test
     public void sqrtOfPerfectSquareOneHundred() {
         assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(100))).isEqualTo(BigInteger.TEN);
-    }
-
-    @Test
-    public void scientificNotationForSqrtForZero() {
-        final ScientificNotation actual =
-            SquareRootCalculator.scientificNotationForSqrt(BigDecimal.ZERO, RoundingMode.HALF_UP);
-        assertThat(actual).isEqualTo(new ScientificNotation(BigDecimal.ZERO, 0));
-    }
-
-    @Test
-    public void scientificNotationForSqrtInbetweenZeroAndOneHundred() {
-        final BigDecimal decimal = mathRandom.nextInvertiblePositiveBigDecimal(100, validScale);
-        final ScientificNotation actual = SquareRootCalculator.scientificNotationForSqrt(decimal, RoundingMode.HALF_UP);
-        assertThat(actual).isEqualTo(new ScientificNotation(decimal, 0));
-    }
-
-    @Test
-    public void scientificNotationForSqrtGreaterThanOneHundred() {
-        final BigDecimal decimal =
-            mathRandom.nextInvertiblePositiveBigDecimal(100, validScale).add(BigDecimal.valueOf(100));
-        final ScientificNotation actual = SquareRootCalculator.scientificNotationForSqrt(decimal, RoundingMode.HALF_UP);
-        final ScientificNotation expected =
-            new ScientificNotation(decimal.divide(BigDecimal.valueOf(100), roundingMode), 2);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    @Test
-    public void scientificNotationForSqrtExponentShouldBePowerOfTwo() {
-        mathRandom.nextBigDecimals(10, 2, 10)
-            .forEach(decimal -> assertThat(
-                SquareRootCalculator.scientificNotationForSqrt(decimal, RoundingMode.HALF_UP).getExponent() % 2)
-                    .isEqualTo(0));
     }
 }

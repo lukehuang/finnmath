@@ -38,6 +38,8 @@ import java.util.Objects;
  *            type of the elements of the vector
  * @param &lt;V&gt;
  *            type of the vector
+ * @param &lt;M&gt;
+ *            type of the related matrix
  * @param &lt;N&gt;
  *            type of the taxicab and max norm of the vector
  * @param &lt;P&gt;
@@ -47,13 +49,14 @@ import java.util.Objects;
  * @since 1
  */
 @Beta
-public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, P&gt;, N, P&gt; {
+public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, M, N, P&gt;,
+    M extends AbstractMatrix&lt;E, V, M, N, P&gt;, N, P&gt; {
     /**
      * Default {@link SquareRootCalculator}
      *
      * @since 1
      */
-<span class="fc" id="L56">    public static final SquareRootContext DEFAULT_SQUARE_ROOT_CONTEXT =</span>
+<span class="fc" id="L59">    public static final SquareRootContext DEFAULT_SQUARE_ROOT_CONTEXT =</span>
         SquareRootCalculator.DEFAULT_SQUARE_ROOT_CONTEXT;
 
     /**
@@ -72,9 +75,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      *             if {@code map == null}
      * @since 1
      */
-<span class="fc" id="L75">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
-<span class="fc" id="L76">        this.map = requireNonNull(map, &quot;map&quot;);</span>
-<span class="fc" id="L77">    }</span>
+<span class="fc" id="L78">    protected AbstractVector(final ImmutableMap&lt;Integer, E&gt; map) {</span>
+<span class="fc" id="L79">        this.map = requireNonNull(map, &quot;map&quot;);</span>
+<span class="fc" id="L80">    }</span>
 
     /**
      * Returns the sum of this {@link AbstractVector} and the given one
@@ -124,6 +127,17 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     protected abstract V negate();
+
+    /**
+     * Returns if {@code this} is orthogonal to the other {@link AbstractVector}
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @return {@code true} if {@code this} is orthogonal to the other
+     *         {@link AbstractVector}, {@code false} otherwise
+     * @since 1
+     */
+    protected abstract boolean orthogonalTo(V other);
 
     /**
      * Returns the taxicab norm of this {@link AbstractVector}
@@ -181,9 +195,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final N taxicabDistance(final V other) {
-<span class="fc" id="L184">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L185" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L186">        return subtract(other).taxicabNorm();</span>
+<span class="fc" id="L198">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L200">        return subtract(other).taxicabNorm();</span>
     }
 
     /**
@@ -200,9 +214,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final P euclideanDistancePow2(final V other) {
-<span class="fc" id="L203">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L205">        return subtract(other).euclideanNormPow2();</span>
+<span class="fc" id="L217">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L219">        return subtract(other).euclideanNormPow2();</span>
     }
 
     /**
@@ -222,9 +236,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final BigDecimal euclideanDistance(final V other) {
-<span class="fc" id="L225">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L226" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L227">        return euclideanDistance(other, DEFAULT_SQUARE_ROOT_CONTEXT);</span>
+<span class="fc" id="L239">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L241">        return euclideanDistance(other, DEFAULT_SQUARE_ROOT_CONTEXT);</span>
     }
 
     /**
@@ -244,10 +258,10 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final BigDecimal euclideanDistance(final V other, final SquareRootContext squareRootContext) {
-<span class="fc" id="L247">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc" id="L248">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L250">        return subtract(other).euclideanNorm(squareRootContext);</span>
+<span class="fc" id="L261">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc" id="L262">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L264">        return subtract(other).euclideanNorm(squareRootContext);</span>
     }
 
     /**
@@ -264,10 +278,21 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final N maxDistance(final V other) {
-<span class="fc" id="L267">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L268" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L269">        return subtract(other).maxNorm();</span>
+<span class="fc" id="L281">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc" id="L283">        return subtract(other).maxNorm();</span>
     }
+
+    /**
+     * Returns the dyadic product of {@code this} {@link AbstractVector} and the
+     * other one
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @return dyadic product
+     * @since 1
+     */
+    protected abstract M dyadicProduct(V other);
 
     /**
      * Returns the element dependent on the given index
@@ -282,9 +307,9 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final E element(final Integer index) {
-<span class="fc" id="L285">        requireNonNull(index, &quot;index&quot;);</span>
-<span class="fc" id="L286">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
-<span class="fc" id="L287">        return map.get(index);</span>
+<span class="fc" id="L310">        requireNonNull(index, &quot;index&quot;);</span>
+<span class="fc" id="L311">        checkArgument(map.containsKey(index), &quot;expected index in [1, %s] but actual %s&quot;, map.size(), index);</span>
+<span class="fc" id="L312">        return map.get(index);</span>
     }
 
     /**
@@ -295,7 +320,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableSet&lt;Entry&lt;Integer, E&gt;&gt; entries() {
-<span class="fc" id="L298">        return map.entrySet();</span>
+<span class="fc" id="L323">        return map.entrySet();</span>
     }
 
     /**
@@ -305,7 +330,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final ImmutableCollection&lt;E&gt; elements() {
-<span class="fc" id="L308">        return map.values();</span>
+<span class="fc" id="L333">        return map.values();</span>
     }
 
     /**
@@ -315,7 +340,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      * @since 1
      */
     public final int size() {
-<span class="fc" id="L318">        return map.size();</span>
+<span class="fc" id="L343">        return map.size();</span>
     }
 
     /**
@@ -325,7 +350,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      */
     @Override
     public final int hashCode() {
-<span class="fc" id="L328">        return Objects.hash(map);</span>
+<span class="fc" id="L353">        return Objects.hash(map);</span>
     }
 
     /**
@@ -335,14 +360,14 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      */
     @Override
     public final boolean equals(final Object object) {
-<span class="fc bfc" id="L338" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L339">            return true;</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L364">            return true;</span>
         }
-<span class="fc bfc" id="L341" title="All 2 branches covered.">        if (!(object instanceof AbstractVector)) {</span>
-<span class="fc" id="L342">            return false;</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">        if (!(object instanceof AbstractVector)) {</span>
+<span class="fc" id="L367">            return false;</span>
         }
-<span class="fc" id="L344">        final AbstractVector&lt;?, ?, ?, ?&gt; other = (AbstractVector&lt;?, ?, ?, ?&gt;) object;</span>
-<span class="fc" id="L345">        return Objects.deepEquals(map, other.getMap());</span>
+<span class="fc" id="L369">        final AbstractVector&lt;?, ?, ?, ?, ?&gt; other = (AbstractVector&lt;?, ?, ?, ?, ?&gt;) object;</span>
+<span class="fc" id="L370">        return Objects.deepEquals(map, other.getMap());</span>
     }
 
     /**
@@ -352,11 +377,11 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, N, 
      */
     @Override
     public final String toString() {
-<span class="fc" id="L355">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
+<span class="fc" id="L380">        return MoreObjects.toStringHelper(this).add(&quot;map&quot;, map).toString();</span>
     }
 
     public final ImmutableMap&lt;Integer, E&gt; getMap() {
-<span class="fc" id="L359">        return map;</span>
+<span class="fc" id="L384">        return map;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

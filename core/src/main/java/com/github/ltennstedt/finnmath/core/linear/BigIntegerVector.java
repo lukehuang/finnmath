@@ -19,6 +19,7 @@ package com.github.ltennstedt.finnmath.core.linear;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
+import com.github.ltennstedt.finnmath.core.linear.BigIntegerMatrix.BigIntegerMatrixBuilder;
 import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
 import com.github.ltennstedt.finnmath.core.sqrt.SquareRootContext;
 import com.google.common.annotations.Beta;
@@ -36,7 +37,8 @@ import java.util.stream.IntStream;
  * @since 1
  */
 @Beta
-public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntegerVector, BigInteger, BigInteger> {
+public final class BigIntegerVector
+    extends AbstractVector<BigInteger, BigIntegerVector, BigIntegerMatrix, BigInteger, BigInteger> {
     private BigIntegerVector(final ImmutableMap<Integer, BigInteger> map) {
         super(map);
     }
@@ -118,6 +120,22 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
     /**
      * {@inheritDoc}
      *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public boolean orthogonalTo(final BigIntegerVector other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return dotProduct(other).compareTo(BigInteger.ZERO) == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @since 1
      */
     @Override
@@ -183,8 +201,27 @@ public final class BigIntegerVector extends AbstractVector<BigInteger, BigIntege
      * @since 1
      */
     @Override
-    protected BigInteger maxNorm() {
+    public BigInteger maxNorm() {
         return map.values().stream().map(BigInteger::abs).reduce(BigInteger::max).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public BigIntegerMatrix dyadicProduct(final BigIntegerVector other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        final BigIntegerMatrixBuilder builder = BigIntegerMatrix.builder(map.size(), other.size());
+        map.entrySet().forEach(entry -> other.entries().forEach(otherEntry -> builder.put(entry.getKey(),
+            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue()))));
+        return builder.build();
     }
 
     /**

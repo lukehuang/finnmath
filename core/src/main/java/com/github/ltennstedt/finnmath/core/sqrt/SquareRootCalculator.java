@@ -17,12 +17,9 @@
 package com.github.ltennstedt.finnmath.core.sqrt;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static java.lang.Math.addExact;
 import static java.util.Objects.requireNonNull;
 
-import com.github.ltennstedt.finnmath.core.number.ScientificNotation;
 import com.google.common.annotations.Beta;
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.math.BigIntegerMath;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -196,7 +193,8 @@ public final class SquareRootCalculator {
         log.debug("seed value = {}", predecessor.toPlainString());
         BigDecimal successor = calculateSuccessor(predecessor, scaled, squareRootContext);
         long iterations = 1;
-        while (successor.subtract(predecessor).abs().compareTo(abortCriterion) > 0) {
+        while (successor.subtract(predecessor).abs().compareTo(abortCriterion) > 0
+            && iterations <= squareRootContext.getMaxIterations()) {
             log.debug("|successor - predecessor| = {}", successor.subtract(predecessor).abs().toPlainString());
             predecessor = successor;
             successor = calculateSuccessor(successor, scaled, squareRootContext);
@@ -221,43 +219,5 @@ public final class SquareRootCalculator {
             : squareRootContext.getAbortCriterion();
         log.debug("successor = {}", successor.toPlainString());
         return successor;
-    }
-
-    @VisibleForTesting
-    static ScientificNotation scientificNotationForSqrt(final BigDecimal decimal, final RoundingMode roundingMode) {
-        assert decimal != null;
-        assert roundingMode != null;
-        log.debug("calculating scientific notification for {}", decimal.toPlainString());
-        BigDecimal coefficient = decimal;
-        int exponent = 0;
-        log.debug("coefficient = {}", coefficient.toPlainString());
-        log.debug("exponent = {}", exponent);
-        while (coefficient.compareTo(BigDecimal.valueOf(100)) > -1) {
-            log.debug("iteration for scientific notification");
-            coefficient = coefficient.divide(BigDecimal.valueOf(100), roundingMode);
-            exponent = addExact(exponent, 2);
-            log.debug("coefficient = {}", coefficient.toPlainString());
-            log.debug("exponent = {}", exponent);
-        }
-        return new ScientificNotation(coefficient, exponent);
-    }
-
-    @VisibleForTesting
-    static ScientificNotation scientificNotationForSqrt(final BigDecimal decimal, final MathContext mathContext) {
-        assert decimal != null;
-        assert mathContext != null;
-        log.debug("calculating scientific notification for {}", decimal.toPlainString());
-        BigDecimal coefficient = decimal;
-        int exponent = 0;
-        log.debug("coefficient = {}", coefficient.toPlainString());
-        log.debug("exponent = {}", exponent);
-        while (coefficient.compareTo(BigDecimal.valueOf(100)) > -1) {
-            log.debug("iteration for scientific notification");
-            coefficient = coefficient.divide(BigDecimal.valueOf(100), mathContext);
-            exponent = addExact(exponent, 2);
-            log.debug("coefficient = {}", coefficient.toPlainString());
-            log.debug("exponent = {}", exponent);
-        }
-        return new ScientificNotation(coefficient, exponent);
     }
 }

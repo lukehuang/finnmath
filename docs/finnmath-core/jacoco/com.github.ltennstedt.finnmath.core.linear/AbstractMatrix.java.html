@@ -52,8 +52,8 @@ import java.util.Objects;
  * @since 1
  */
 @Beta
-public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, B&gt;, M extends AbstractMatrix&lt;E, V, M, N, B&gt;,
-    N, B&gt; {
+public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, M, N, B&gt;,
+    M extends AbstractMatrix&lt;E, V, M, N, B&gt;, N, B&gt; {
     /**
      * Default {@link SquareRootContext}
      *
@@ -524,28 +524,13 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
     }
 
     /**
-     * Checks if the {@link AbstractMatrix} is square
-     *
-     * @throws IndexOutOfBoundsException
-     *             if the {@link AbstractMatrix} is not square
-     * @since 1
-     */
-    protected final void checkIfSquare() throws IndexOutOfBoundsException {
-<span class="fc bfc" id="L534" title="All 2 branches covered.">        if (!square()) {</span>
-<span class="fc" id="L535">            final String message =</span>
-<span class="fc" id="L536">                &quot;expected square matrix but actual &quot; + table.rowKeySet().size() + &quot; x &quot; + table.columnKeySet().size();</span>
-<span class="fc" id="L537">            throw new IndexOutOfBoundsException(message);</span>
-        }
-<span class="fc" id="L539">    }</span>
-
-    /**
      * {@inheritDoc}
      *
      * @since 1
      */
     @Override
     public final int hashCode() {
-<span class="fc" id="L548">        return Objects.hash(table);</span>
+<span class="fc" id="L533">        return Objects.hash(table);</span>
     }
 
     /**
@@ -555,14 +540,14 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      */
     @Override
     public final boolean equals(final Object object) {
-<span class="fc bfc" id="L558" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L559">            return true;</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L544">            return true;</span>
         }
-<span class="fc bfc" id="L561" title="All 2 branches covered.">        if (!(object instanceof AbstractMatrix)) {</span>
-<span class="fc" id="L562">            return false;</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">        if (!(object instanceof AbstractMatrix)) {</span>
+<span class="fc" id="L547">            return false;</span>
         }
-<span class="fc" id="L564">        final AbstractMatrix&lt;?, ?, ?, ?, ?&gt; other = (AbstractMatrix&lt;?, ?, ?, ?, ?&gt;) object;</span>
-<span class="fc" id="L565">        return Objects.equals(table, other.getTable());</span>
+<span class="fc" id="L549">        final AbstractMatrix&lt;?, ?, ?, ?, ?&gt; other = (AbstractMatrix&lt;?, ?, ?, ?, ?&gt;) object;</span>
+<span class="fc" id="L550">        return Objects.equals(table, other.getTable());</span>
     }
 
     /**
@@ -572,11 +557,11 @@ public abstract class AbstractMatrix&lt;E, V extends AbstractVector&lt;E, V, N, 
      */
     @Override
     public final String toString() {
-<span class="fc" id="L575">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
+<span class="fc" id="L560">        return MoreObjects.toStringHelper(this).add(&quot;table&quot;, table).toString();</span>
     }
 
     public final ImmutableTable&lt;Integer, Integer, E&gt; getTable() {
-<span class="fc" id="L579">        return table;</span>
+<span class="fc" id="L564">        return table;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
