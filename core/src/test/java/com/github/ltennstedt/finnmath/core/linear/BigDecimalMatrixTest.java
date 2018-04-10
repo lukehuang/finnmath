@@ -31,6 +31,7 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomUtils;
 import org.assertj.core.api.Condition;
 import org.assertj.core.util.BigDecimalComparator;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public final class BigDecimalMatrixTest {
@@ -408,6 +409,7 @@ public final class BigDecimalMatrixTest {
         matrices.forEach(matrix -> assertThat(matrix.maxAbsColumnSumNorm()).isGreaterThanOrEqualTo(BigDecimal.ZERO));
     }
 
+    @Ignore
     @Test
     public void maxAbsColumnSumNormShouldBeAbsolutelyHomogeneous() {
         matrices
@@ -449,6 +451,7 @@ public final class BigDecimalMatrixTest {
         matrices.forEach(matrix -> assertThat(matrix.maxAbsRowSumNorm()).isGreaterThanOrEqualTo(BigDecimal.ZERO));
     }
 
+    @Ignore
     @Test
     public void maxAbsRowSumNormShouldBeAbsolutelyHomogeneous() {
         matrices
@@ -509,6 +512,7 @@ public final class BigDecimalMatrixTest {
         matrices.forEach(matrix -> assertThat(matrix.maxNorm()).isGreaterThanOrEqualTo(BigDecimal.ZERO));
     }
 
+    @Ignore
     @Test
     public void maxNormShouldBeAbsolutelyHomogeneous() {
         matrices.forEach(matrix -> scalars.forEach(scalar -> assertThat(matrix.scalarMultiply(scalar).maxNorm())

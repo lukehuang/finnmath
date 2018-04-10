@@ -198,6 +198,19 @@ public final class SimpleComplexNumber
     /**
      * {@inheritDoc}
      *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @since 1
+     */
+    @Override
+    public boolean equalsByComparingFields(final SimpleComplexNumber other) {
+        requireNonNull(other, "other");
+        return real.compareTo(other.getReal()) == 0 && imaginary.compareTo(other.getImaginary()) == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param squareRootContext
      *            {@link SquareRootContext}
      * @throws NullPointerException

@@ -121,4 +121,17 @@ public interface MathNumber<S, T, A> {
      * @since 1
      */
     A abs();
+
+    /**
+     * Returns if {@code this} {@link MathNumber} is equal to the other one by
+     * comparing the fields
+     * <p>
+     * Uses {@link Comparable#compareTo(Object)}
+     *
+     * @param other
+     *            other {@link MathNumber}
+     * @return {@code true} if equality holds, {@code false} otherwise
+     * @since 1
+     */
+    boolean equalsByComparingFields(S other);
 }

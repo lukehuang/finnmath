@@ -27,6 +27,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table.Cell;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -40,7 +41,8 @@ import java.util.Optional;
  */
 @Beta
 public final class BigDecimalMatrix
-    extends AbstractMatrix<BigDecimal, BigDecimalVector, BigDecimalMatrix, BigDecimal, BigDecimal> {
+    extends AbstractMatrix<BigDecimal, BigDecimalVector, BigDecimalMatrix, BigDecimal, BigDecimal>
+    implements MathContextMatrix<BigDecimal, BigDecimalVector, BigDecimalMatrix, BigDecimal, BigDecimal> {
     private BigDecimalMatrix(final ImmutableTable<Integer, Integer, BigDecimal> table) {
         super(table);
     }
@@ -72,6 +74,23 @@ public final class BigDecimalMatrix
         return builder.build();
     }
 
+    @Override
+    public BigDecimalMatrix add(final BigDecimalMatrix summand, final MathContext mathContext) {
+        requireNonNull(summand, "summand");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(table.rowKeySet().size() == summand.rowSize(), "expected equal row sizes but actual %s != %s",
+            table.rowKeySet().size(), summand.rowSize());
+        checkArgument(table.columnKeySet().size() == summand.columnSize(),
+            "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), summand.columnSize());
+        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());
+        table.cellSet().forEach(cell -> {
+            final Integer rowKey = cell.getRowKey();
+            final Integer columnKey = cell.getColumnKey();
+            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey), mathContext));
+        });
+        return builder.build();
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -99,6 +118,24 @@ public final class BigDecimalMatrix
         return builder.build();
     }
 
+    @Override
+    public BigDecimalMatrix subtract(final BigDecimalMatrix subtrahend, final MathContext mathContext) {
+        requireNonNull(subtrahend, "subtrahend");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), "expected equal row sizes but actual %s != %s",
+            table.rowKeySet().size(), subtrahend.rowSize());
+        checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),
+            "expected equal column sizes but actual %s != %s", table.columnKeySet().size(), subtrahend.columnSize());
+        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());
+        table.cellSet().forEach(cell -> {
+            final Integer rowKey = cell.getRowKey();
+            final Integer columnKey = cell.getColumnKey();
+            builder.put(rowKey, columnKey,
+                cell.getValue().subtract(subtrahend.element(rowKey, columnKey), mathContext));
+        });
+        return builder.build();
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -116,6 +153,20 @@ public final class BigDecimalMatrix
         final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());
         table.rowMap().forEach((rowIndex, row) -> factor.columns().forEach((columnIndex, column) -> {
             final BigDecimal element = multiplyRowWithColumn(row, column);
+            builder.put(rowIndex, columnIndex, element);
+        }));
+        return builder.build();
+    }
+
+    @Override
+    public BigDecimalMatrix multiply(final BigDecimalMatrix factor, final MathContext mathContext) {
+        requireNonNull(factor, "factor");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(table.columnKeySet().size() == factor.rowSize(),
+            "expected columnSize == factor.rowSize but actual %s != %s", table.columnKeySet().size(), factor.rowSize());
+        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());
+        table.rowMap().forEach((rowIndex, row) -> factor.columns().forEach((columnIndex, column) -> {
+            final BigDecimal element = multiplyRowWithColumn(row, column, mathContext);
             builder.put(rowIndex, columnIndex, element);
         }));
         return builder.build();
@@ -143,6 +194,21 @@ public final class BigDecimalMatrix
         return builder.build();
     }
 
+    @Override
+    public BigDecimalVector multiplyVector(final BigDecimalVector vector, final MathContext mathContext) {
+        requireNonNull(vector, "vector");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(table.columnKeySet().size() == vector.size(),
+            "expected columnSize == vectorSize but actual %s != %s", table.columnKeySet().size(), vector.size());
+        final BigDecimalVector.BigDecimalVectorBuilder builder = BigDecimalVector.builder(table.rowKeySet().size());
+        table.rowMap().forEach((rowIndex, row) -> row.forEach((columnIndex, matrixEntry) -> {
+            final BigDecimal oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex) : BigDecimal.ZERO;
+            builder.put(rowIndex,
+                oldEntry.add(matrixEntry.multiply(vector.element(columnIndex), mathContext), mathContext));
+        }));
+        return builder.build();
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -165,6 +231,18 @@ public final class BigDecimalMatrix
             .reduce(BigDecimal::add).get();
     }
 
+    protected BigDecimal multiplyRowWithColumn(final Map<Integer, BigDecimal> row,
+        final Map<Integer, BigDecimal> column, final MathContext mathContext) {
+        requireNonNull(row, "row");
+        requireNonNull(column, "column");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(row.size() == column.size(), "expected rowSize == columnSize but actual %s != %s", row.size(),
+            column.size());
+        return row.entrySet().stream()
+            .map(rowEntry -> rowEntry.getValue().multiply(column.get(rowEntry.getKey()), mathContext))
+            .reduce(BigDecimal::add).get();
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -181,6 +259,16 @@ public final class BigDecimalMatrix
         return builder.build();
     }
 
+    @Override
+    public BigDecimalMatrix scalarMultiply(final BigDecimal scalar, final MathContext mathContext) {
+        requireNonNull(scalar, "scalar");
+        requireNonNull(mathContext, "mathContext");
+        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());
+        table.cellSet().forEach(
+            cell -> builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue(), mathContext)));
+        return builder.build();
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -189,6 +277,12 @@ public final class BigDecimalMatrix
     @Override
     public BigDecimalMatrix negate() {
         return scalarMultiply(BigDecimal.ONE.negate());
+    }
+
+    @Override
+    public BigDecimalMatrix negate(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return scalarMultiply(BigDecimal.ONE.negate(mathContext), mathContext);
     }
 
     /**
@@ -204,6 +298,15 @@ public final class BigDecimalMatrix
             table.columnKeySet().size());
         return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
             .map(Cell::getValue).reduce(BigDecimal::add).get();
+    }
+
+    @Override
+    public BigDecimal trace(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        checkState(square(), "expected square matrix but was a %sx%s matrix", table.rowKeySet().size(),
+            table.columnKeySet().size());
+        return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+            .map(Cell::getValue).reduce((element, other) -> element.add(other, mathContext)).get();
     }
 
     /**
@@ -233,6 +336,28 @@ public final class BigDecimalMatrix
         return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));
     }
 
+    @Override
+    public BigDecimal determinant(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        checkState(square(), "expected square matrix but was a %sx%s matrix", table.rowKeySet().size(),
+            table.columnKeySet().size());
+        if (triangular()) {
+            return table.cellSet().stream().filter(cell -> cell.getRowKey().compareTo(cell.getColumnKey()) == 0)
+                .map(Cell::getValue).reduce((element, other) -> element.multiply(other, mathContext)).get();
+        }
+        final int rowSize = table.rowKeySet().size();
+        if (rowSize > 3) {
+            return leibnizFormula(mathContext);
+        }
+        if (rowSize == 3) {
+            return ruleOfSarrus(mathContext);
+        }
+
+        // rowSize == 2
+        return table.get(1, 1).multiply(table.get(2, 2), mathContext)
+            .subtract(table.get(1, 2).multiply(table.get(2, 1), mathContext), mathContext);
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -259,6 +384,29 @@ public final class BigDecimalMatrix
         return result;
     }
 
+    protected BigDecimal leibnizFormula(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        BigDecimal result = BigDecimal.ZERO;
+        for (final List<Integer> permutation : Collections2.permutations(table.rowKeySet())) {
+            BigDecimal product = BigDecimal.ONE;
+            int inversions = 0;
+            final int size = table.rowKeySet().size();
+            for (int i = 0; i < size; i++) {
+                final Integer sigma = permutation.get(i);
+                for (int j = i + 1; j < size; j++) {
+                    if (sigma > permutation.get(j)) {
+                        inversions++;
+                    }
+                }
+                product = product.multiply(table.get(sigma, i + 1), mathContext);
+            }
+            result = result.add(
+                BigDecimal.ONE.negate(mathContext).pow(inversions, mathContext).multiply(product, mathContext),
+                mathContext);
+        }
+        return result;
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -273,6 +421,24 @@ public final class BigDecimalMatrix
         final BigDecimal fifth = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1));
         final BigDecimal sixth = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2));
         return first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);
+    }
+
+    protected BigDecimal ruleOfSarrus(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        final BigDecimal first =
+            table.get(1, 1).multiply(table.get(2, 2), mathContext).multiply(table.get(3, 3), mathContext);
+        final BigDecimal second =
+            table.get(1, 2).multiply(table.get(2, 3), mathContext).multiply(table.get(3, 1), mathContext);
+        final BigDecimal third =
+            table.get(1, 3).multiply(table.get(2, 1), mathContext).multiply(table.get(3, 2), mathContext);
+        final BigDecimal fourth =
+            table.get(3, 1).multiply(table.get(2, 2), mathContext).multiply(table.get(1, 3), mathContext);
+        final BigDecimal fifth =
+            table.get(3, 2).multiply(table.get(2, 3), mathContext).multiply(table.get(1, 1), mathContext);
+        final BigDecimal sixth =
+            table.get(3, 3).multiply(table.get(2, 1), mathContext).multiply(table.get(1, 2), mathContext);
+        return first.add(second, mathContext).add(third, mathContext).subtract(fourth, mathContext)
+            .subtract(fifth, mathContext).subtract(sixth, mathContext);
     }
 
     /**
@@ -331,6 +497,15 @@ public final class BigDecimalMatrix
             .reduce(BigDecimal::max).get();
     }
 
+    @Override
+    public BigDecimal maxAbsColumnSumNorm(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return table.columnMap().values().asList().stream()
+            .map(column -> column.values().stream().map(element -> element.abs(mathContext))
+                .reduce((element, other) -> element.add(other, mathContext)))
+            .map(Optional::get).reduce(BigDecimal::max).get();
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -341,6 +516,15 @@ public final class BigDecimalMatrix
         return table.rowMap().values().asList().stream()
             .map(column -> column.values().stream().map(BigDecimal::abs).reduce(BigDecimal::add)).map(Optional::get)
             .reduce(BigDecimal::max).get();
+    }
+
+    @Override
+    public BigDecimal maxAbsRowSumNorm(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return table.rowMap().values().asList().stream()
+            .map(column -> column.values().stream().map(element -> element.abs(mathContext))
+                .reduce((element, other) -> element.add(other, mathContext)))
+            .map(Optional::get).reduce(BigDecimal::max).get();
     }
 
     /**
@@ -366,6 +550,13 @@ public final class BigDecimalMatrix
         return table.values().stream().map(element -> element.pow(2)).reduce(BigDecimal::add).get();
     }
 
+    @Override
+    public BigDecimal frobeniusNormPow2(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return table.values().stream().map(element -> element.pow(2, mathContext))
+            .reduce((element, other) -> element.add(other, mathContext)).get();
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -374,6 +565,12 @@ public final class BigDecimalMatrix
     @Override
     public BigDecimal maxNorm() {
         return table.values().stream().map(BigDecimal::abs).reduce(BigDecimal::max).get();
+    }
+
+    @Override
+    public BigDecimal maxNorm(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return table.values().stream().map(element -> element.abs(mathContext)).reduce(BigDecimal::max).get();
     }
 
     /**

@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public final class BigIntegerVectorTest {
@@ -211,6 +212,7 @@ public final class BigIntegerVectorTest {
         vectors.forEach(vector -> assertThat(vector.taxicabNorm()).isGreaterThanOrEqualTo(BigInteger.ZERO));
     }
 
+    @Ignore
     @Test
     public void taxicabNormShouldBeAbsolutelyHomogeneous() {
         vectors.forEach(vector -> scalars.forEach(scalar -> assertThat(vector.scalarMultiply(scalar).taxicabNorm())
@@ -393,6 +395,7 @@ public final class BigIntegerVectorTest {
         vectors.forEach(vector -> assertThat(vector.maxNorm()).isGreaterThanOrEqualTo(BigInteger.ZERO));
     }
 
+    @Ignore
     @Test
     public void maxNormShouldBeAbsolutelyHomogeneous() {
         vectors.forEach(vector -> scalars.forEach(scalar -> assertThat(vector.scalarMultiply(scalar).maxNorm())

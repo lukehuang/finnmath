@@ -14,9 +14,8 @@ finnMath Core,com.github.ltennstedt.finnmath.core.linear,SimpleComplexNumberMatr
 finnMath Core,com.github.ltennstedt.finnmath.core.linear,BigIntegerMatrix,1,1134,1,73,0,136,1,81,0,45
 finnMath Core,com.github.ltennstedt.finnmath.core.linear,BigDecimalMatrix.BigDecimalMatrixBuilder,0,26,0,0,0,4,0,3,0,3
 finnMath Core,com.github.ltennstedt.finnmath.core.linear,BigIntegerVector,96,231,6,8,10,30,8,20,5,16
-finnMath Core,com.github.ltennstedt.finnmath.core.linear,RealComplexNumberVector,170,217,6,8,19,28,12,18,9,14
-finnMath Core,com.github.ltennstedt.finnmath.core.linear,BigDecimalMatrix,62,1070,6,68,8,124,8,74,3,42
-finnMath Core,com.github.ltennstedt.finnmath.core.linear,MatrixNotSquareException,16,0,0,0,8,0,4,0,4,0
+finnMath Core,com.github.ltennstedt.finnmath.core.linear,RealComplexNumberVector,444,217,12,8,54,28,33,18,27,14
+finnMath Core,com.github.ltennstedt.finnmath.core.linear,BigDecimalMatrix,1046,1070,40,68,136,124,61,74,39,42
 finnMath Core,com.github.ltennstedt.finnmath.core.linear,Vectors,0,60,0,8,0,8,0,8,0,4
 finnMath Core,com.github.ltennstedt.finnmath.core.linear,BigIntegerVector.BigIntegerVectorBuilder,0,34,0,0,0,5,0,3,0,3
 finnMath Core,com.github.ltennstedt.finnmath.core.linear,SimpleComplexNumberVector,101,217,4,8,12,28,8,18,6,14
@@ -28,7 +27,7 @@ finnMath Core,com.github.ltennstedt.finnmath.core.sqrt,SquareRootContext,107,64,
 finnMath Core,com.github.ltennstedt.finnmath.core.sqrt,SquareRootContext.SquareRootContextBuilder,79,31,4,0,18,6,11,2,9,2
 finnMath Core,com.github.ltennstedt.finnmath.core.number,RealComplexNumber.RealComplexNumberComparator,0,22,0,8,0,7,0,5,0,1
 finnMath Core,com.github.ltennstedt.finnmath.core.number,PolarForm,6,124,3,11,0,22,3,14,0,10
-finnMath Core,com.github.ltennstedt.finnmath.core.number,RealComplexNumber,391,533,12,28,57,69,18,37,11,24
-finnMath Core,com.github.ltennstedt.finnmath.core.number,Fraction,10,476,5,49,0,87,5,51,0,29
-finnMath Core,com.github.ltennstedt.finnmath.core.number,SimpleComplexNumber,0,352,0,16,0,48,0,28,0,20
+finnMath Core,com.github.ltennstedt.finnmath.core.number,RealComplexNumber,430,533,16,28,60,69,22,37,13,24
+finnMath Core,com.github.ltennstedt.finnmath.core.number,Fraction,30,476,9,49,2,87,8,51,1,29
+finnMath Core,com.github.ltennstedt.finnmath.core.number,SimpleComplexNumber,24,352,4,16,2,48,3,28,1,20
 finnMath Core,com.github.ltennstedt.finnmath.core.number,AbstractComplexNumber,0,97,0,8,0,20,0,13,0,9

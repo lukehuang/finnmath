@@ -221,6 +221,19 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
      *
      * @throws NullPointerException
      *             if {@code other == null}
+     * @since 1
+     */
+    @Override
+    public boolean equalsByComparingFields(final Fraction other) {
+        requireNonNull(other, "other");
+        return numerator.compareTo(other.getNumerator()) == 0 && denominator.compareTo(other.getDenominator()) == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
      */
     @Override
     public int compareTo(final Fraction other) {

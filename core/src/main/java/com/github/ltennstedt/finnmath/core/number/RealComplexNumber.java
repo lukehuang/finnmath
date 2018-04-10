@@ -482,6 +482,19 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @since 1
+     */
+    @Override
+    public boolean equalsByComparingFields(final RealComplexNumber other) {
+        requireNonNull(other, "other");
+        return real.compareTo(other.getReal()) == 0 && imaginary.compareTo(other.getImaginary()) == 0;
+    }
+
+    /**
      * Returns the absolute value of this {@link AbstractComplexNumber}
      *
      * @return absolute value
@@ -498,6 +511,21 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     @Override
     public BigDecimal absPow2() {
         return real.pow(2).add(imaginary.pow(2));
+    }
+
+    /**
+     * Returns the square of the absolute value of this
+     * {@link AbstractComplexNumber}
+     *
+     * @param mathContext
+     *            {@link MathContext}
+     * @return square of the absolute value
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    public BigDecimal absPow2(final MathContext mathContext) {
+        return real.pow(2, mathContext).add(imaginary.pow(2, mathContext), mathContext);
     }
 
     /**

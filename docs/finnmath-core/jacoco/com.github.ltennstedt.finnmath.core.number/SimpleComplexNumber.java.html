@@ -198,6 +198,19 @@ public final class SimpleComplexNumber
     /**
      * {@inheritDoc}
      *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @since 1
+     */
+    @Override
+    public boolean equalsByComparingFields(final SimpleComplexNumber other) {
+<span class="nc" id="L207">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc bnc" id="L208" title="All 4 branches missed.">        return real.compareTo(other.getReal()) == 0 &amp;&amp; imaginary.compareTo(other.getImaginary()) == 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param squareRootContext
      *            {@link SquareRootContext}
      * @throws NullPointerException
@@ -206,8 +219,8 @@ public final class SimpleComplexNumber
      */
     @Override
     protected BigDecimal abs(final SquareRootContext squareRootContext) {
-<span class="fc" id="L209">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
-<span class="fc" id="L210">        return SquareRootCalculator.sqrt(absPow2(), squareRootContext);</span>
+<span class="fc" id="L222">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="fc" id="L223">        return SquareRootCalculator.sqrt(absPow2(), squareRootContext);</span>
     }
 
     /**
@@ -215,7 +228,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigInteger absPow2() {
-<span class="fc" id="L218">        return real.pow(2).add(imaginary.pow(2));</span>
+<span class="fc" id="L231">        return real.pow(2).add(imaginary.pow(2));</span>
     }
 
     /**
@@ -223,7 +236,7 @@ public final class SimpleComplexNumber
      */
     @Override
     public SimpleComplexNumber conjugate() {
-<span class="fc" id="L226">        return new SimpleComplexNumber(real, imaginary.negate());</span>
+<span class="fc" id="L239">        return new SimpleComplexNumber(real, imaginary.negate());</span>
     }
 
     /**
@@ -231,8 +244,8 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument() {
-<span class="fc bfc" id="L234" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc" id="L235">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L248">        return argument(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
     }
 
     /**
@@ -243,9 +256,9 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigDecimal argument(final MathContext mathContext) {
-<span class="fc bfc" id="L246" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc" id="L247">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="fc" id="L248">        return RealComplexNumber.of(this).argument(mathContext);</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L260">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="fc" id="L261">        return RealComplexNumber.of(this).argument(mathContext);</span>
     }
 
     /**
@@ -253,8 +266,8 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm() {
-<span class="fc bfc" id="L256" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc" id="L257">        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L270">        return polarForm(new MathContext(PolarForm.DEFAULT_PRECISION));</span>
     }
 
     /**
@@ -265,9 +278,9 @@ public final class SimpleComplexNumber
      */
     @Override
     public PolarForm polarForm(final MathContext mathContext) {
-<span class="fc bfc" id="L268" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
-<span class="fc" id="L269">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="fc" id="L270">        return RealComplexNumber.of(this).polarForm(mathContext);</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        checkState(!equals(ZERO), &quot;expected this != 0 but actual %s&quot;, this);</span>
+<span class="fc" id="L282">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="fc" id="L283">        return RealComplexNumber.of(this).polarForm(mathContext);</span>
     }
 
     /**
@@ -275,8 +288,8 @@ public final class SimpleComplexNumber
      */
     @Override
     public BigIntegerMatrix matrix() {
-<span class="fc" id="L278">        return BigIntegerMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)</span>
-<span class="fc" id="L279">            .put(2, 2, real).build();</span>
+<span class="fc" id="L291">        return BigIntegerMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)</span>
+<span class="fc" id="L292">            .put(2, 2, real).build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
