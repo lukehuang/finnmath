@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractContextVector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">finnMath Core</a> &gt; <a href="index.source.html" class="el_package">com.github.ltennstedt.finnmath.core.linear</a> &gt; <span class="el_source">AbstractContextVector.java</span></div><h1>AbstractContextVector.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2018 Lars Tennstedt
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.github.ltennstedt.finnmath.core.linear;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+
+import com.google.common.annotations.Beta;
+import com.google.common.collect.ImmutableMap;
+import java.math.MathContext;
+
+/**
+ *
+ * Base class for vectors
+ *
+ * @author Lars Tennstedt
+ *
+ * @param &lt;E&gt;
+ *            type of the elements
+ * @param &lt;V&gt;
+ *            type of the {@link AbstractVector}
+ * @param &lt;M&gt;
+ *            type of the {@link AbstractMatrix}
+ * @param &lt;N&gt;
+ *            type of the norm
+ * @param &lt;P&gt;
+ *            type of the inner product
+ * @param &lt;C&gt;
+ *            type of the context
+ * @since 1
+ */
+@Beta
+public abstract class AbstractContextVector&lt;E, V extends AbstractVector&lt;E, V, M, N, P&gt;,
+    M extends AbstractMatrix&lt;E, V, M, N, P&gt;, N, P, C&gt; extends AbstractVector&lt;E, V, M, N, P&gt; {
+    /**
+     * Required arguments constructor
+     *
+     * @param map
+     *            {@link ImmutableMap}
+     * @since 1
+     */
+    protected AbstractContextVector(final ImmutableMap&lt;Integer, E&gt; map) {
+<span class="fc" id="L57">        super(map);</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Returns the sum of this {@link AbstractVector} and the given one
+     *
+     * @param summand
+     *            summand
+     * @param mathContext
+     *            {@link MathContext}
+     * @return sum
+     * @since 1
+     */
+    protected abstract V add(V summand, MathContext mathContext);
+
+    /**
+     * Returns the difference of this {@link AbstractVector} and the given one
+     *
+     * @param subtrahend
+     *            subtrahend
+     * @param mathContext
+     *            {@link MathContext}
+     * @return difference
+     * @since 1
+     */
+    protected abstract V subtract(V subtrahend, MathContext mathContext);
+
+    /**
+     * Returns the dot product of this {@link AbstractVector} and the given one
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @param mathContext
+     *            {@link MathContext}
+     * @return dot product
+     * @since 1
+     */
+    protected abstract E dotProduct(V other, MathContext mathContext);
+
+    /**
+     * Returns the scalar product of the given scalar and this
+     * {@link AbstractVector}
+     *
+     * @param scalar
+     *            scalar
+     * @param mathContext
+     *            {@link MathContext}
+     * @return scalar product
+     * @since 1
+     */
+    protected abstract V scalarMultiply(E scalar, MathContext mathContext);
+
+    /**
+     * Returns the negated {@link AbstractVector} of this one
+     *
+     * @param mathContext
+     *            {@link MathContext}
+     * @return negated {@link AbstractVector}
+     * @since 1
+     */
+    protected abstract V negate(MathContext mathContext);
+
+    /**
+     * Returns if {@code this} is orthogonal to the other {@link AbstractVector}
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @param mathContext
+     *            {@link MathContext}
+     * @return {@code true} if {@code this} is orthogonal to the other
+     *         {@link AbstractVector}, {@code false} otherwise
+     * @since 1
+     */
+    protected abstract boolean orthogonalTo(V other, MathContext mathContext);
+
+    /**
+     * Returns the taxicab norm of this {@link AbstractVector}
+     *
+     * @param context
+     *            context
+     * @return taxicab norm
+     * @since 1
+     */
+    protected abstract N taxicabNorm(C context);
+
+    /**
+     * Returns the square of the euclidean norm of this {@link AbstractVector}
+     *
+     * @param mathContext
+     *            {@link MathContext}
+     * @return square of the euclidean norm
+     * @since 1
+     */
+    protected abstract P euclideanNormPow2(MathContext mathContext);
+
+    /**
+     * Returns the maximum norm of this {@link AbstractVector}
+     *
+     * @param context
+     *            context
+     * @return maximum norm
+     * @since 1
+     */
+    protected abstract P maxNorm(C context);
+
+    /**
+     * Returns the taxicab distance from this {@link AbstractVector} to the given
+     * one
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @param mathContext
+     *            {@link MathContext}
+     * @return taxicab distance
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    public final N taxicabDistance(final V other, final MathContext mathContext) {
+<span class="nc" id="L178">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc" id="L179">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L181">        return subtract(other, mathContext).taxicabNorm();</span>
+    }
+
+    /**
+     * Returns the square of the euclidean distance from this {@link AbstractVector}
+     * to the given one
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @param context
+     *            context
+     * @return square of the euclidean distance
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    public final P euclideanDistancePow2(final V other, final C context) {
+<span class="nc" id="L200">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc" id="L201">        requireNonNull(context, &quot;context&quot;);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L203">        return subtract(other).euclideanNormPow2();</span>
+    }
+
+    /**
+     * Returns the maximum distance from this {@link AbstractVector} to the given
+     * one
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @param mathContext
+     *            {@link MathContext}
+     * @return maximum distance
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    public final N maxDistance(final V other, final MathContext mathContext) {
+<span class="nc" id="L222">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L224">        return subtract(other).maxNorm();</span>
+    }
+
+    /**
+     * Returns the dyadic product of {@code this} {@link AbstractVector} and the
+     * other one
+     *
+     * @param other
+     *            other {@link AbstractVector}
+     * @param mathContext
+     *            {@link MathContext}
+     * @return dyadic product
+     * @since 1
+     */
+    protected abstract M dyadicProduct(V other, MathContext mathContext);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

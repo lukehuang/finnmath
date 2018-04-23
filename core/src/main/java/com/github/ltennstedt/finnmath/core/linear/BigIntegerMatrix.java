@@ -352,6 +352,16 @@ public final class BigIntegerMatrix
     /**
      * {@inheritDoc}
      *
+     * @since 1
+     */
+    @Override
+    public BigInteger frobeniusNormPow2() {
+        return table.values().stream().map(element -> element.pow(2)).reduce(BigInteger::add).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @throws NullPointerException
      *             if {@code squareRootContext == null}
      * @since 1
@@ -359,16 +369,6 @@ public final class BigIntegerMatrix
     @Override
     public BigDecimal frobeniusNorm(final SquareRootContext squareRootContext) {
         return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @since 1
-     */
-    @Override
-    public BigInteger frobeniusNormPow2() {
-        return table.values().stream().map(element -> element.pow(2)).reduce(BigInteger::add).get();
     }
 
     /**

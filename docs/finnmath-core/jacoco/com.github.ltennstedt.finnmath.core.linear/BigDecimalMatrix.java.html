@@ -41,11 +41,10 @@ import java.util.Optional;
  */
 @Beta
 public final class BigDecimalMatrix
-    extends AbstractMatrix&lt;BigDecimal, BigDecimalVector, BigDecimalMatrix, BigDecimal, BigDecimal&gt;
-    implements MathContextMatrix&lt;BigDecimal, BigDecimalVector, BigDecimalMatrix, BigDecimal, BigDecimal&gt; {
+    extends AbstractContextMatrix&lt;BigDecimal, BigDecimalVector, BigDecimalMatrix, BigDecimal, BigDecimal, MathContext&gt; {
     private BigDecimalMatrix(final ImmutableTable&lt;Integer, Integer, BigDecimal&gt; table) {
-<span class="fc" id="L47">        super(table);</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L46">        super(table);</span>
+<span class="fc" id="L47">    }</span>
 
     /**
      * {@inheritDoc}
@@ -60,35 +59,48 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimalMatrix add(final BigDecimalMatrix summand) {
-<span class="fc" id="L63">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == summand.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
-<span class="fc" id="L65">            table.rowKeySet().size(), summand.rowSize());</span>
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == summand.columnSize(),</span>
-<span class="fc" id="L67">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), summand.columnSize());</span>
-<span class="fc" id="L68">        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());</span>
-<span class="fc" id="L69">        table.cellSet().forEach(cell -&gt; {</span>
-<span class="fc" id="L70">            final Integer rowKey = cell.getRowKey();</span>
-<span class="fc" id="L71">            final Integer columnKey = cell.getColumnKey();</span>
-<span class="fc" id="L72">            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey)));</span>
-<span class="fc" id="L73">        });</span>
-<span class="fc" id="L74">        return builder.build();</span>
+<span class="fc" id="L62">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == summand.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="fc" id="L64">            table.rowKeySet().size(), summand.rowSize());</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == summand.columnSize(),</span>
+<span class="fc" id="L66">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), summand.columnSize());</span>
+<span class="fc" id="L67">        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="fc" id="L68">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L69">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L70">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc" id="L71">            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey)));</span>
+<span class="fc" id="L72">        });</span>
+<span class="fc" id="L73">        return builder.build();</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != summand.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != summand.columnSize}
+     * @since 1
+     */
     @Override
     public BigDecimalMatrix add(final BigDecimalMatrix summand, final MathContext mathContext) {
-<span class="nc" id="L79">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="nc" id="L80">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">        checkArgument(table.rowKeySet().size() == summand.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
-<span class="nc" id="L82">            table.rowKeySet().size(), summand.rowSize());</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">        checkArgument(table.columnKeySet().size() == summand.columnSize(),</span>
-<span class="nc" id="L84">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), summand.columnSize());</span>
-<span class="nc" id="L85">        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());</span>
-<span class="nc" id="L86">        table.cellSet().forEach(cell -&gt; {</span>
-<span class="nc" id="L87">            final Integer rowKey = cell.getRowKey();</span>
-<span class="nc" id="L88">            final Integer columnKey = cell.getColumnKey();</span>
-<span class="nc" id="L89">            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey), mathContext));</span>
-<span class="nc" id="L90">        });</span>
-<span class="nc" id="L91">        return builder.build();</span>
+<span class="nc" id="L91">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="nc" id="L92">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        checkArgument(table.rowKeySet().size() == summand.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="nc" id="L94">            table.rowKeySet().size(), summand.rowSize());</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        checkArgument(table.columnKeySet().size() == summand.columnSize(),</span>
+<span class="nc" id="L96">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), summand.columnSize());</span>
+<span class="nc" id="L97">        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="nc" id="L98">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="nc" id="L99">            final Integer rowKey = cell.getRowKey();</span>
+<span class="nc" id="L100">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="nc" id="L101">            builder.put(rowKey, columnKey, cell.getValue().add(summand.element(rowKey, columnKey), mathContext));</span>
+<span class="nc" id="L102">        });</span>
+<span class="nc" id="L103">        return builder.build();</span>
     }
 
     /**
@@ -104,36 +116,49 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimalMatrix subtract(final BigDecimalMatrix subtrahend) {
-<span class="fc" id="L107">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
-<span class="fc" id="L109">            table.rowKeySet().size(), subtrahend.rowSize());</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),</span>
-<span class="fc" id="L111">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), subtrahend.columnSize());</span>
-<span class="fc" id="L112">        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());</span>
-<span class="fc" id="L113">        table.cellSet().forEach(cell -&gt; {</span>
-<span class="fc" id="L114">            final Integer rowKey = cell.getRowKey();</span>
-<span class="fc" id="L115">            final Integer columnKey = cell.getColumnKey();</span>
-<span class="fc" id="L116">            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.element(rowKey, columnKey)));</span>
-<span class="fc" id="L117">        });</span>
-<span class="fc" id="L118">        return builder.build();</span>
+<span class="fc" id="L119">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="fc" id="L121">            table.rowKeySet().size(), subtrahend.rowSize());</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),</span>
+<span class="fc" id="L123">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), subtrahend.columnSize());</span>
+<span class="fc" id="L124">        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="fc" id="L125">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L126">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L127">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc" id="L128">            builder.put(rowKey, columnKey, cell.getValue().subtract(subtrahend.element(rowKey, columnKey)));</span>
+<span class="fc" id="L129">        });</span>
+<span class="fc" id="L130">        return builder.build();</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != subtrahend.rowSize}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != subtrahend.columnSize}
+     * @since 1
+     */
     @Override
     public BigDecimalMatrix subtract(final BigDecimalMatrix subtrahend, final MathContext mathContext) {
-<span class="nc" id="L123">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="nc" id="L124">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">        checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
-<span class="nc" id="L126">            table.rowKeySet().size(), subtrahend.rowSize());</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">        checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),</span>
-<span class="nc" id="L128">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), subtrahend.columnSize());</span>
-<span class="nc" id="L129">        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());</span>
-<span class="nc" id="L130">        table.cellSet().forEach(cell -&gt; {</span>
-<span class="nc" id="L131">            final Integer rowKey = cell.getRowKey();</span>
-<span class="nc" id="L132">            final Integer columnKey = cell.getColumnKey();</span>
-<span class="nc" id="L133">            builder.put(rowKey, columnKey,</span>
-<span class="nc" id="L134">                cell.getValue().subtract(subtrahend.element(rowKey, columnKey), mathContext));</span>
-<span class="nc" id="L135">        });</span>
-<span class="nc" id="L136">        return builder.build();</span>
+<span class="nc" id="L148">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="nc" id="L149">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        checkArgument(table.rowKeySet().size() == subtrahend.rowSize(), &quot;expected equal row sizes but actual %s != %s&quot;,</span>
+<span class="nc" id="L151">            table.rowKeySet().size(), subtrahend.rowSize());</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        checkArgument(table.columnKeySet().size() == subtrahend.columnSize(),</span>
+<span class="nc" id="L153">            &quot;expected equal column sizes but actual %s != %s&quot;, table.columnKeySet().size(), subtrahend.columnSize());</span>
+<span class="nc" id="L154">        final BigDecimalMatrixBuilder builder = builder(rowSize(), columnSize());</span>
+<span class="nc" id="L155">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="nc" id="L156">            final Integer rowKey = cell.getRowKey();</span>
+<span class="nc" id="L157">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="nc" id="L158">            builder.put(rowKey, columnKey,</span>
+<span class="nc" id="L159">                cell.getValue().subtract(subtrahend.element(rowKey, columnKey), mathContext));</span>
+<span class="nc" id="L160">        });</span>
+<span class="nc" id="L161">        return builder.build();</span>
     }
 
     /**
@@ -147,29 +172,40 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimalMatrix multiply(final BigDecimalMatrix factor) {
-<span class="fc" id="L150">        requireNonNull(factor, &quot;factor&quot;);</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == factor.rowSize(),</span>
-<span class="fc" id="L152">            &quot;expected columnSize == factor.rowSize but actual %s != %s&quot;, table.columnKeySet().size(), factor.rowSize());</span>
-<span class="fc" id="L153">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());</span>
-<span class="fc" id="L154">        table.rowMap().forEach((rowIndex, row) -&gt; factor.columns().forEach((columnIndex, column) -&gt; {</span>
-<span class="fc" id="L155">            final BigDecimal element = multiplyRowWithColumn(row, column);</span>
-<span class="fc" id="L156">            builder.put(rowIndex, columnIndex, element);</span>
-<span class="fc" id="L157">        }));</span>
-<span class="fc" id="L158">        return builder.build();</span>
+<span class="fc" id="L175">        requireNonNull(factor, &quot;factor&quot;);</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        checkArgument(table.columnKeySet().size() == factor.rowSize(),</span>
+<span class="fc" id="L177">            &quot;expected columnSize == factor.rowSize but actual %s != %s&quot;, table.columnKeySet().size(), factor.rowSize());</span>
+<span class="fc" id="L178">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());</span>
+<span class="fc" id="L179">        table.rowMap().forEach((rowIndex, row) -&gt; factor.columns().forEach((columnIndex, column) -&gt; {</span>
+<span class="fc" id="L180">            final BigDecimal element = multiplyRowWithColumn(row, column);</span>
+<span class="fc" id="L181">            builder.put(rowIndex, columnIndex, element);</span>
+<span class="fc" id="L182">        }));</span>
+<span class="fc" id="L183">        return builder.build();</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code factor == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code columnSize != factor.rowSize}
+     * @since 1
+     */
     @Override
     public BigDecimalMatrix multiply(final BigDecimalMatrix factor, final MathContext mathContext) {
-<span class="nc" id="L163">        requireNonNull(factor, &quot;factor&quot;);</span>
-<span class="nc" id="L164">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">        checkArgument(table.columnKeySet().size() == factor.rowSize(),</span>
-<span class="nc" id="L166">            &quot;expected columnSize == factor.rowSize but actual %s != %s&quot;, table.columnKeySet().size(), factor.rowSize());</span>
-<span class="nc" id="L167">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());</span>
-<span class="nc" id="L168">        table.rowMap().forEach((rowIndex, row) -&gt; factor.columns().forEach((columnIndex, column) -&gt; {</span>
-<span class="nc" id="L169">            final BigDecimal element = multiplyRowWithColumn(row, column, mathContext);</span>
-<span class="nc" id="L170">            builder.put(rowIndex, columnIndex, element);</span>
-<span class="nc" id="L171">        }));</span>
-<span class="nc" id="L172">        return builder.build();</span>
+<span class="nc" id="L199">        requireNonNull(factor, &quot;factor&quot;);</span>
+<span class="nc" id="L200">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        checkArgument(table.columnKeySet().size() == factor.rowSize(),</span>
+<span class="nc" id="L202">            &quot;expected columnSize == factor.rowSize but actual %s != %s&quot;, table.columnKeySet().size(), factor.rowSize());</span>
+<span class="nc" id="L203">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), factor.columnSize());</span>
+<span class="nc" id="L204">        table.rowMap().forEach((rowIndex, row) -&gt; factor.columns().forEach((columnIndex, column) -&gt; {</span>
+<span class="nc" id="L205">            final BigDecimal element = multiplyRowWithColumn(row, column, mathContext);</span>
+<span class="nc" id="L206">            builder.put(rowIndex, columnIndex, element);</span>
+<span class="nc" id="L207">        }));</span>
+<span class="nc" id="L208">        return builder.build();</span>
     }
 
     /**
@@ -183,64 +219,41 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimalVector multiplyVector(final BigDecimalVector vector) {
-<span class="fc" id="L186">        requireNonNull(vector, &quot;vector&quot;);</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        checkArgument(table.columnKeySet().size() == vector.size(),</span>
-<span class="fc" id="L188">            &quot;expected columnSize == vectorSize but actual %s != %s&quot;, table.columnKeySet().size(), vector.size());</span>
-<span class="nc" id="L189">        final BigDecimalVector.BigDecimalVectorBuilder builder = BigDecimalVector.builder(table.rowKeySet().size());</span>
-<span class="nc" id="L190">        table.rowMap().forEach((rowIndex, row) -&gt; row.forEach((columnIndex, matrixEntry) -&gt; {</span>
-<span class="nc bnc" id="L191" title="All 2 branches missed.">            final BigDecimal oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex) : BigDecimal.ZERO;</span>
-<span class="nc" id="L192">            builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));</span>
-<span class="nc" id="L193">        }));</span>
-<span class="nc" id="L194">        return builder.build();</span>
-    }
-
-    @Override
-    public BigDecimalVector multiplyVector(final BigDecimalVector vector, final MathContext mathContext) {
-<span class="nc" id="L199">        requireNonNull(vector, &quot;vector&quot;);</span>
-<span class="nc" id="L200">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">        checkArgument(table.columnKeySet().size() == vector.size(),</span>
-<span class="nc" id="L202">            &quot;expected columnSize == vectorSize but actual %s != %s&quot;, table.columnKeySet().size(), vector.size());</span>
-<span class="nc" id="L203">        final BigDecimalVector.BigDecimalVectorBuilder builder = BigDecimalVector.builder(table.rowKeySet().size());</span>
-<span class="nc" id="L204">        table.rowMap().forEach((rowIndex, row) -&gt; row.forEach((columnIndex, matrixEntry) -&gt; {</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">            final BigDecimal oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex) : BigDecimal.ZERO;</span>
-<span class="nc" id="L206">            builder.put(rowIndex,</span>
-<span class="nc" id="L207">                oldEntry.add(matrixEntry.multiply(vector.element(columnIndex), mathContext), mathContext));</span>
-<span class="nc" id="L208">        }));</span>
-<span class="nc" id="L209">        return builder.build();</span>
+<span class="fc" id="L222">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">        checkArgument(table.columnKeySet().size() == vector.size(),</span>
+<span class="fc" id="L224">            &quot;expected columnSize == vectorSize but actual %s != %s&quot;, table.columnKeySet().size(), vector.size());</span>
+<span class="nc" id="L225">        final BigDecimalVector.BigDecimalVectorBuilder builder = BigDecimalVector.builder(table.rowKeySet().size());</span>
+<span class="nc" id="L226">        table.rowMap().forEach((rowIndex, row) -&gt; row.forEach((columnIndex, matrixEntry) -&gt; {</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">            final BigDecimal oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex) : BigDecimal.ZERO;</span>
+<span class="nc" id="L228">            builder.put(rowIndex, oldEntry.add(matrixEntry.multiply(vector.element(columnIndex))));</span>
+<span class="nc" id="L229">        }));</span>
+<span class="nc" id="L230">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
      *
      * @throws NullPointerException
-     *             if {@code row == null}
+     *             if {@code vector == null}
      * @throws NullPointerException
-     *             if {@code column == null}
+     *             if {@code mathContext == null}
      * @throws IllegalArgumentException
-     *             if {@code rowSize != columnSize}
+     *             if {@code columnSize != vector.size}
      * @since 1
      */
     @Override
-    protected BigDecimal multiplyRowWithColumn(final Map&lt;Integer, BigDecimal&gt; row,
-        final Map&lt;Integer, BigDecimal&gt; column) {
-<span class="fc" id="L226">        requireNonNull(row, &quot;row&quot;);</span>
-<span class="fc" id="L227">        requireNonNull(column, &quot;column&quot;);</span>
-<span class="pc bpc" id="L228" title="1 of 2 branches missed.">        checkArgument(row.size() == column.size(), &quot;expected rowSize == columnSize but actual %s != %s&quot;, row.size(),</span>
-<span class="fc" id="L229">            column.size());</span>
-<span class="fc" id="L230">        return row.entrySet().stream().map(rowEntry -&gt; rowEntry.getValue().multiply(column.get(rowEntry.getKey())))</span>
-<span class="fc" id="L231">            .reduce(BigDecimal::add).get();</span>
-    }
-
-    protected BigDecimal multiplyRowWithColumn(final Map&lt;Integer, BigDecimal&gt; row,
-        final Map&lt;Integer, BigDecimal&gt; column, final MathContext mathContext) {
-<span class="nc" id="L236">        requireNonNull(row, &quot;row&quot;);</span>
-<span class="nc" id="L237">        requireNonNull(column, &quot;column&quot;);</span>
-<span class="nc" id="L238">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc bnc" id="L239" title="All 2 branches missed.">        checkArgument(row.size() == column.size(), &quot;expected rowSize == columnSize but actual %s != %s&quot;, row.size(),</span>
-<span class="nc" id="L240">            column.size());</span>
-<span class="nc" id="L241">        return row.entrySet().stream()</span>
-<span class="nc" id="L242">            .map(rowEntry -&gt; rowEntry.getValue().multiply(column.get(rowEntry.getKey()), mathContext))</span>
-<span class="nc" id="L243">            .reduce(BigDecimal::add).get();</span>
+    public BigDecimalVector multiplyVector(final BigDecimalVector vector, final MathContext mathContext) {
+<span class="nc" id="L246">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="nc" id="L247">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">        checkArgument(table.columnKeySet().size() == vector.size(),</span>
+<span class="nc" id="L249">            &quot;expected columnSize == vectorSize but actual %s != %s&quot;, table.columnKeySet().size(), vector.size());</span>
+<span class="nc" id="L250">        final BigDecimalVector.BigDecimalVectorBuilder builder = BigDecimalVector.builder(table.rowKeySet().size());</span>
+<span class="nc" id="L251">        table.rowMap().forEach((rowIndex, row) -&gt; row.forEach((columnIndex, matrixEntry) -&gt; {</span>
+<span class="nc bnc" id="L252" title="All 2 branches missed.">            final BigDecimal oldEntry = builder.element(rowIndex) != null ? builder.element(rowIndex) : BigDecimal.ZERO;</span>
+<span class="nc" id="L253">            builder.put(rowIndex,</span>
+<span class="nc" id="L254">                oldEntry.add(matrixEntry.multiply(vector.element(columnIndex), mathContext), mathContext));</span>
+<span class="nc" id="L255">        }));</span>
+<span class="nc" id="L256">        return builder.build();</span>
     }
 
     /**
@@ -252,21 +265,30 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimalMatrix scalarMultiply(final BigDecimal scalar) {
-<span class="fc" id="L255">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L256">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());</span>
-<span class="fc" id="L257">        table.cellSet()</span>
-<span class="fc" id="L258">            .forEach(cell -&gt; builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));</span>
-<span class="fc" id="L259">        return builder.build();</span>
+<span class="fc" id="L268">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="fc" id="L269">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());</span>
+<span class="fc" id="L270">        table.cellSet()</span>
+<span class="fc" id="L271">            .forEach(cell -&gt; builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue())));</span>
+<span class="fc" id="L272">        return builder.build();</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
     @Override
     public BigDecimalMatrix scalarMultiply(final BigDecimal scalar, final MathContext mathContext) {
-<span class="nc" id="L264">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="nc" id="L265">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L266">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());</span>
-<span class="nc" id="L267">        table.cellSet().forEach(</span>
-<span class="nc" id="L268">            cell -&gt; builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue(), mathContext)));</span>
-<span class="nc" id="L269">        return builder.build();</span>
+<span class="nc" id="L286">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="nc" id="L287">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L288">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size(), table.columnKeySet().size());</span>
+<span class="nc" id="L289">        table.cellSet().forEach(</span>
+<span class="nc" id="L290">            cell -&gt; builder.put(cell.getRowKey(), cell.getColumnKey(), scalar.multiply(cell.getValue(), mathContext)));</span>
+<span class="nc" id="L291">        return builder.build();</span>
     }
 
     /**
@@ -276,13 +298,21 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimalMatrix negate() {
-<span class="fc" id="L279">        return scalarMultiply(BigDecimal.ONE.negate());</span>
+<span class="fc" id="L301">        return scalarMultiply(BigDecimal.ONE.negate());</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     *
+     * @since 1
+     */
     @Override
     public BigDecimalMatrix negate(final MathContext mathContext) {
-<span class="nc" id="L284">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L285">        return scalarMultiply(BigDecimal.ONE.negate(mathContext), mathContext);</span>
+<span class="nc" id="L314">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L315">        return scalarMultiply(BigDecimal.ONE.negate(mathContext), mathContext);</span>
     }
 
     /**
@@ -294,19 +324,28 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimal trace() {
-<span class="fc" id="L297">        checkState(square(), &quot;expected square matrix but was a %sx%s matrix&quot;, table.rowKeySet().size(),</span>
-<span class="fc" id="L298">            table.columnKeySet().size());</span>
-<span class="fc bfc" id="L299" title="All 2 branches covered.">        return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="fc" id="L300">            .map(Cell::getValue).reduce(BigDecimal::add).get();</span>
+<span class="fc" id="L327">        checkState(square(), &quot;expected square matrix but was a %sx%s matrix&quot;, table.rowKeySet().size(),</span>
+<span class="fc" id="L328">            table.columnKeySet().size());</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">        return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="fc" id="L330">            .map(Cell::getValue).reduce(BigDecimal::add).get();</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalStateException
+     *             if this {@link BigDecimalMatrix} is not square
+     * @since 1
+     */
     @Override
     public BigDecimal trace(final MathContext mathContext) {
-<span class="nc" id="L305">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L306">        checkState(square(), &quot;expected square matrix but was a %sx%s matrix&quot;, table.rowKeySet().size(),</span>
-<span class="nc" id="L307">            table.columnKeySet().size());</span>
-<span class="nc bnc" id="L308" title="All 2 branches missed.">        return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="nc" id="L309">            .map(Cell::getValue).reduce((element, other) -&gt; element.add(other, mathContext)).get();</span>
+<span class="nc" id="L344">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L345">        checkState(square(), &quot;expected square matrix but was a %sx%s matrix&quot;, table.rowKeySet().size(),</span>
+<span class="nc" id="L346">            table.columnKeySet().size());</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">        return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="nc" id="L348">            .map(Cell::getValue).reduce((element, other) -&gt; element.add(other, mathContext)).get();</span>
     }
 
     /**
@@ -318,127 +357,53 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimal determinant() {
-<span class="fc" id="L321">        checkState(square(), &quot;expected square matrix but was a %sx%s matrix&quot;, table.rowKeySet().size(),</span>
-<span class="fc" id="L322">            table.columnKeySet().size());</span>
-<span class="fc bfc" id="L323" title="All 2 branches covered.">        if (triangular()) {</span>
-<span class="fc bfc" id="L324" title="All 2 branches covered.">            return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="fc" id="L325">                .map(Cell::getValue).reduce(BigDecimal::multiply).get();</span>
+<span class="fc" id="L360">        checkState(square(), &quot;expected square matrix but was a %sx%s matrix&quot;, table.rowKeySet().size(),</span>
+<span class="fc" id="L361">            table.columnKeySet().size());</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">        if (triangular()) {</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">            return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="fc" id="L364">                .map(Cell::getValue).reduce(BigDecimal::multiply).get();</span>
         }
-<span class="fc" id="L327">        final int rowSize = table.rowKeySet().size();</span>
-<span class="fc bfc" id="L328" title="All 2 branches covered.">        if (rowSize &gt; 3) {</span>
-<span class="fc" id="L329">            return leibnizFormula();</span>
+<span class="fc" id="L366">        final int rowSize = table.rowKeySet().size();</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">        if (rowSize &gt; 3) {</span>
+<span class="fc" id="L368">            return leibnizFormula();</span>
         }
-<span class="fc bfc" id="L331" title="All 2 branches covered.">        if (rowSize == 3) {</span>
-<span class="fc" id="L332">            return ruleOfSarrus();</span>
+<span class="fc bfc" id="L370" title="All 2 branches covered.">        if (rowSize == 3) {</span>
+<span class="fc" id="L371">            return ruleOfSarrus();</span>
         }
 
         // rowSize == 2
-<span class="fc" id="L336">        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));</span>
+<span class="fc" id="L375">        return table.get(1, 1).multiply(table.get(2, 2)).subtract(table.get(1, 2).multiply(table.get(2, 1)));</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalStateException
+     *             if this {@link BigDecimalMatrix} is not square
+     * @since 1
+     */
     @Override
     public BigDecimal determinant(final MathContext mathContext) {
-<span class="nc" id="L341">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L342">        checkState(square(), &quot;expected square matrix but was a %sx%s matrix&quot;, table.rowKeySet().size(),</span>
-<span class="nc" id="L343">            table.columnKeySet().size());</span>
-<span class="nc bnc" id="L344" title="All 2 branches missed.">        if (triangular()) {</span>
-<span class="nc bnc" id="L345" title="All 2 branches missed.">            return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="nc" id="L346">                .map(Cell::getValue).reduce((element, other) -&gt; element.multiply(other, mathContext)).get();</span>
+<span class="nc" id="L389">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L390">        checkState(square(), &quot;expected square matrix but was a %sx%s matrix&quot;, table.rowKeySet().size(),</span>
+<span class="nc" id="L391">            table.columnKeySet().size());</span>
+<span class="nc bnc" id="L392" title="All 2 branches missed.">        if (triangular()) {</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">            return table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="nc" id="L394">                .map(Cell::getValue).reduce((element, other) -&gt; element.multiply(other, mathContext)).get();</span>
         }
-<span class="nc" id="L348">        final int rowSize = table.rowKeySet().size();</span>
-<span class="nc bnc" id="L349" title="All 2 branches missed.">        if (rowSize &gt; 3) {</span>
-<span class="nc" id="L350">            return leibnizFormula(mathContext);</span>
+<span class="nc" id="L396">        final int rowSize = table.rowKeySet().size();</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">        if (rowSize &gt; 3) {</span>
+<span class="nc" id="L398">            return leibnizFormula(mathContext);</span>
         }
-<span class="nc bnc" id="L352" title="All 2 branches missed.">        if (rowSize == 3) {</span>
-<span class="nc" id="L353">            return ruleOfSarrus(mathContext);</span>
+<span class="nc bnc" id="L400" title="All 2 branches missed.">        if (rowSize == 3) {</span>
+<span class="nc" id="L401">            return ruleOfSarrus(mathContext);</span>
         }
 
         // rowSize == 2
-<span class="nc" id="L357">        return table.get(1, 1).multiply(table.get(2, 2), mathContext)</span>
-<span class="nc" id="L358">            .subtract(table.get(1, 2).multiply(table.get(2, 1), mathContext), mathContext);</span>
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @since 1
-     */
-    @Override
-    protected BigDecimal leibnizFormula() {
-<span class="fc" id="L368">        BigDecimal result = BigDecimal.ZERO;</span>
-<span class="fc bfc" id="L369" title="All 2 branches covered.">        for (final List&lt;Integer&gt; permutation : Collections2.permutations(table.rowKeySet())) {</span>
-<span class="fc" id="L370">            BigDecimal product = BigDecimal.ONE;</span>
-<span class="fc" id="L371">            int inversions = 0;</span>
-<span class="fc" id="L372">            final int size = table.rowKeySet().size();</span>
-<span class="fc bfc" id="L373" title="All 2 branches covered.">            for (int i = 0; i &lt; size; i++) {</span>
-<span class="fc" id="L374">                final Integer sigma = permutation.get(i);</span>
-<span class="fc bfc" id="L375" title="All 2 branches covered.">                for (int j = i + 1; j &lt; size; j++) {</span>
-<span class="fc bfc" id="L376" title="All 2 branches covered.">                    if (sigma &gt; permutation.get(j)) {</span>
-<span class="fc" id="L377">                        inversions++;</span>
-                    }
-                }
-<span class="fc" id="L380">                product = product.multiply(table.get(sigma, i + 1));</span>
-            }
-<span class="fc" id="L382">            result = result.add(BigDecimal.ONE.negate().pow(inversions).multiply(product));</span>
-<span class="fc" id="L383">        }</span>
-<span class="fc" id="L384">        return result;</span>
-    }
-
-    protected BigDecimal leibnizFormula(final MathContext mathContext) {
-<span class="nc" id="L388">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L389">        BigDecimal result = BigDecimal.ZERO;</span>
-<span class="nc bnc" id="L390" title="All 2 branches missed.">        for (final List&lt;Integer&gt; permutation : Collections2.permutations(table.rowKeySet())) {</span>
-<span class="nc" id="L391">            BigDecimal product = BigDecimal.ONE;</span>
-<span class="nc" id="L392">            int inversions = 0;</span>
-<span class="nc" id="L393">            final int size = table.rowKeySet().size();</span>
-<span class="nc bnc" id="L394" title="All 2 branches missed.">            for (int i = 0; i &lt; size; i++) {</span>
-<span class="nc" id="L395">                final Integer sigma = permutation.get(i);</span>
-<span class="nc bnc" id="L396" title="All 2 branches missed.">                for (int j = i + 1; j &lt; size; j++) {</span>
-<span class="nc bnc" id="L397" title="All 2 branches missed.">                    if (sigma &gt; permutation.get(j)) {</span>
-<span class="nc" id="L398">                        inversions++;</span>
-                    }
-                }
-<span class="nc" id="L401">                product = product.multiply(table.get(sigma, i + 1), mathContext);</span>
-            }
-<span class="nc" id="L403">            result = result.add(</span>
-<span class="nc" id="L404">                BigDecimal.ONE.negate(mathContext).pow(inversions, mathContext).multiply(product, mathContext),</span>
-                mathContext);
-<span class="nc" id="L406">        }</span>
-<span class="nc" id="L407">        return result;</span>
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @since 1
-     */
-    @Override
-    protected BigDecimal ruleOfSarrus() {
-<span class="fc" id="L417">        final BigDecimal first = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));</span>
-<span class="fc" id="L418">        final BigDecimal second = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));</span>
-<span class="fc" id="L419">        final BigDecimal third = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));</span>
-<span class="fc" id="L420">        final BigDecimal fourth = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3));</span>
-<span class="fc" id="L421">        final BigDecimal fifth = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1));</span>
-<span class="fc" id="L422">        final BigDecimal sixth = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2));</span>
-<span class="fc" id="L423">        return first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);</span>
-    }
-
-    protected BigDecimal ruleOfSarrus(final MathContext mathContext) {
-<span class="nc" id="L427">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L428">        final BigDecimal first =</span>
-<span class="nc" id="L429">            table.get(1, 1).multiply(table.get(2, 2), mathContext).multiply(table.get(3, 3), mathContext);</span>
-<span class="nc" id="L430">        final BigDecimal second =</span>
-<span class="nc" id="L431">            table.get(1, 2).multiply(table.get(2, 3), mathContext).multiply(table.get(3, 1), mathContext);</span>
-<span class="nc" id="L432">        final BigDecimal third =</span>
-<span class="nc" id="L433">            table.get(1, 3).multiply(table.get(2, 1), mathContext).multiply(table.get(3, 2), mathContext);</span>
-<span class="nc" id="L434">        final BigDecimal fourth =</span>
-<span class="nc" id="L435">            table.get(3, 1).multiply(table.get(2, 2), mathContext).multiply(table.get(1, 3), mathContext);</span>
-<span class="nc" id="L436">        final BigDecimal fifth =</span>
-<span class="nc" id="L437">            table.get(3, 2).multiply(table.get(2, 3), mathContext).multiply(table.get(1, 1), mathContext);</span>
-<span class="nc" id="L438">        final BigDecimal sixth =</span>
-<span class="nc" id="L439">            table.get(3, 3).multiply(table.get(2, 1), mathContext).multiply(table.get(1, 2), mathContext);</span>
-<span class="nc" id="L440">        return first.add(second, mathContext).add(third, mathContext).subtract(fourth, mathContext)</span>
-<span class="nc" id="L441">            .subtract(fifth, mathContext).subtract(sixth, mathContext);</span>
+<span class="nc" id="L405">        return table.get(1, 1).multiply(table.get(2, 2), mathContext)</span>
+<span class="nc" id="L406">            .subtract(table.get(1, 2).multiply(table.get(2, 1), mathContext), mathContext);</span>
     }
 
     /**
@@ -446,9 +411,9 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimalMatrix transpose() {
-<span class="fc" id="L449">        final BigDecimalMatrixBuilder builder = builder(table.columnKeySet().size(), table.rowKeySet().size());</span>
-<span class="fc" id="L450">        table.cellSet().forEach(cell -&gt; builder.put(cell.getColumnKey(), cell.getRowKey(), cell.getValue()));</span>
-<span class="fc" id="L451">        return builder.build();</span>
+<span class="fc" id="L414">        final BigDecimalMatrixBuilder builder = builder(table.columnKeySet().size(), table.rowKeySet().size());</span>
+<span class="fc" id="L415">        table.cellSet().forEach(cell -&gt; builder.put(cell.getColumnKey(), cell.getRowKey(), cell.getValue()));</span>
+<span class="fc" id="L416">        return builder.build();</span>
     }
 
     /**
@@ -466,23 +431,23 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimalMatrix minor(final Integer rowIndex, final Integer columnIndex) {
-<span class="fc" id="L469">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
-<span class="fc" id="L470">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
-<span class="fc" id="L471">        checkArgument(table.containsRow(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L472">            table.rowKeySet().size(), rowIndex);</span>
-<span class="fc" id="L473">        checkArgument(table.containsColumn(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L474">            table.columnKeySet().size(), columnIndex);</span>
-<span class="fc" id="L475">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);</span>
-<span class="fc" id="L476">        table.cellSet().forEach(cell -&gt; {</span>
-<span class="fc" id="L477">            final Integer rowKey = cell.getRowKey();</span>
-<span class="fc" id="L478">            final Integer columnKey = cell.getColumnKey();</span>
-<span class="fc bfc" id="L479" title="All 4 branches covered.">            if (rowKey.compareTo(rowIndex) != 0 &amp;&amp; columnKey.compareTo(columnIndex) != 0) {</span>
-<span class="fc bfc" id="L480" title="All 2 branches covered.">                final Integer newRowIndex = rowKey.compareTo(rowIndex) &gt; 0 ? rowKey - 1 : rowKey;</span>
-<span class="fc bfc" id="L481" title="All 2 branches covered.">                final Integer newColumnIndex = columnKey.compareTo(columnIndex) &gt; 0 ? columnKey - 1 : columnKey;</span>
-<span class="fc" id="L482">                builder.put(newRowIndex, newColumnIndex, cell.getValue());</span>
+<span class="fc" id="L434">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L435">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L436">        checkArgument(table.containsRow(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L437">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L438">        checkArgument(table.containsColumn(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L439">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L440">        final BigDecimalMatrixBuilder builder = builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);</span>
+<span class="fc" id="L441">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L442">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L443">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc bfc" id="L444" title="All 4 branches covered.">            if (rowKey.compareTo(rowIndex) != 0 &amp;&amp; columnKey.compareTo(columnIndex) != 0) {</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">                final Integer newRowIndex = rowKey.compareTo(rowIndex) &gt; 0 ? rowKey - 1 : rowKey;</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">                final Integer newColumnIndex = columnKey.compareTo(columnIndex) &gt; 0 ? columnKey - 1 : columnKey;</span>
+<span class="fc" id="L447">                builder.put(newRowIndex, newColumnIndex, cell.getValue());</span>
             }
-<span class="fc" id="L484">        });</span>
-<span class="fc" id="L485">        return builder.build();</span>
+<span class="fc" id="L449">        });</span>
+<span class="fc" id="L450">        return builder.build();</span>
     }
 
     /**
@@ -492,15 +457,50 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimal maxAbsColumnSumNorm() {
-<span class="fc" id="L495">        return table.columnMap().values().asList().stream()</span>
-<span class="fc" id="L496">            .map(column -&gt; column.values().stream().map(BigDecimal::abs).reduce(BigDecimal::add)).map(Optional::get)</span>
-<span class="fc" id="L497">            .reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L460">        return table.columnMap().values().asList().stream()</span>
+<span class="fc" id="L461">            .map(column -&gt; column.values().stream().map(BigDecimal::abs).reduce(BigDecimal::add)).map(Optional::get)</span>
+<span class="fc" id="L462">            .reduce(BigDecimal::max).get();</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
     @Override
     public BigDecimal maxAbsColumnSumNorm(final MathContext mathContext) {
+<span class="nc" id="L474">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L475">        return table.columnMap().values().asList().stream()</span>
+<span class="nc" id="L476">            .map(column -&gt; column.values().stream().map(element -&gt; element.abs(mathContext))</span>
+<span class="nc" id="L477">                .reduce((element, other) -&gt; element.add(other, mathContext)))</span>
+<span class="nc" id="L478">            .map(Optional::get).reduce(BigDecimal::max).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
+    @Override
+    public BigDecimal maxAbsRowSumNorm() {
+<span class="fc" id="L488">        return table.rowMap().values().asList().stream()</span>
+<span class="fc" id="L489">            .map(column -&gt; column.values().stream().map(BigDecimal::abs).reduce(BigDecimal::add)).map(Optional::get)</span>
+<span class="fc" id="L490">            .reduce(BigDecimal::max).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    @Override
+    public BigDecimal maxAbsRowSumNorm(final MathContext mathContext) {
 <span class="nc" id="L502">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L503">        return table.columnMap().values().asList().stream()</span>
+<span class="nc" id="L503">        return table.rowMap().values().asList().stream()</span>
 <span class="nc" id="L504">            .map(column -&gt; column.values().stream().map(element -&gt; element.abs(mathContext))</span>
 <span class="nc" id="L505">                .reduce((element, other) -&gt; element.add(other, mathContext)))</span>
 <span class="nc" id="L506">            .map(Optional::get).reduce(BigDecimal::max).get();</span>
@@ -512,19 +512,22 @@ public final class BigDecimalMatrix
      * @since 1
      */
     @Override
-    public BigDecimal maxAbsRowSumNorm() {
-<span class="fc" id="L516">        return table.rowMap().values().asList().stream()</span>
-<span class="fc" id="L517">            .map(column -&gt; column.values().stream().map(BigDecimal::abs).reduce(BigDecimal::add)).map(Optional::get)</span>
-<span class="fc" id="L518">            .reduce(BigDecimal::max).get();</span>
+    public BigDecimal frobeniusNormPow2() {
+<span class="fc" id="L516">        return table.values().stream().map(element -&gt; element.pow(2)).reduce(BigDecimal::add).get();</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
     @Override
-    public BigDecimal maxAbsRowSumNorm(final MathContext mathContext) {
-<span class="nc" id="L523">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L524">        return table.rowMap().values().asList().stream()</span>
-<span class="nc" id="L525">            .map(column -&gt; column.values().stream().map(element -&gt; element.abs(mathContext))</span>
-<span class="nc" id="L526">                .reduce((element, other) -&gt; element.add(other, mathContext)))</span>
-<span class="nc" id="L527">            .map(Optional::get).reduce(BigDecimal::max).get();</span>
+    public BigDecimal frobeniusNormPow2(final MathContext mathContext) {
+<span class="nc" id="L528">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L529">        return table.values().stream().map(element -&gt; element.pow(2, mathContext))</span>
+<span class="nc" id="L530">            .reduce((element, other) -&gt; element.add(other, mathContext)).get();</span>
     }
 
     /**
@@ -536,25 +539,8 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimal frobeniusNorm(final SquareRootContext squareRootContext) {
-<span class="nc" id="L539">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
-<span class="nc" id="L540">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);</span>
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @since 1
-     */
-    @Override
-    public BigDecimal frobeniusNormPow2() {
-<span class="fc" id="L550">        return table.values().stream().map(element -&gt; element.pow(2)).reduce(BigDecimal::add).get();</span>
-    }
-
-    @Override
-    public BigDecimal frobeniusNormPow2(final MathContext mathContext) {
-<span class="nc" id="L555">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L556">        return table.values().stream().map(element -&gt; element.pow(2, mathContext))</span>
-<span class="nc" id="L557">            .reduce((element, other) -&gt; element.add(other, mathContext)).get();</span>
+<span class="nc" id="L542">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="nc" id="L543">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);</span>
     }
 
     /**
@@ -564,13 +550,20 @@ public final class BigDecimalMatrix
      */
     @Override
     public BigDecimal maxNorm() {
-<span class="fc" id="L567">        return table.values().stream().map(BigDecimal::abs).reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L553">        return table.values().stream().map(BigDecimal::abs).reduce(BigDecimal::max).get();</span>
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
     @Override
     public BigDecimal maxNorm(final MathContext mathContext) {
-<span class="nc" id="L572">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc" id="L573">        return table.values().stream().map(element -&gt; element.abs(mathContext)).reduce(BigDecimal::max).get();</span>
+<span class="nc" id="L565">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L566">        return table.values().stream().map(element -&gt; element.abs(mathContext)).reduce(BigDecimal::max).get();</span>
     }
 
     /**
@@ -580,8 +573,8 @@ public final class BigDecimalMatrix
      */
     @Override
     public boolean upperTriangular() {
-<span class="fc bfc" id="L583" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0)</span>
-<span class="fc bfc" id="L584" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ZERO) != 0);</span>
+<span class="fc bfc" id="L576" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0)</span>
+<span class="fc bfc" id="L577" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ZERO) != 0);</span>
     }
 
     /**
@@ -591,8 +584,8 @@ public final class BigDecimalMatrix
      */
     @Override
     public boolean lowerTriangular() {
-<span class="fc bfc" id="L594" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0)</span>
-<span class="fc bfc" id="L595" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ZERO) != 0);</span>
+<span class="fc bfc" id="L587" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0)</span>
+<span class="fc bfc" id="L588" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ZERO) != 0);</span>
     }
 
     /**
@@ -602,9 +595,9 @@ public final class BigDecimalMatrix
      */
     @Override
     public boolean identity() {
-<span class="fc bfc" id="L605" title="All 2 branches covered.">        return diagonal()</span>
-<span class="fc bfc" id="L606" title="All 2 branches covered.">            &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="pc bpc" id="L607" title="2 of 4 branches missed.">                .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ONE) != 0);</span>
+<span class="fc bfc" id="L598" title="All 2 branches covered.">        return diagonal()</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">            &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="pc bpc" id="L600" title="2 of 4 branches missed.">                .map(Cell::getValue).anyMatch(value -&gt; value.compareTo(BigDecimal.ONE) != 0);</span>
     }
 
     /**
@@ -614,7 +607,154 @@ public final class BigDecimalMatrix
      */
     @Override
     public boolean invertible() {
-<span class="fc bfc" id="L617" title="All 4 branches covered.">        return square() &amp;&amp; determinant().compareTo(BigDecimal.ZERO) != 0;</span>
+<span class="fc bfc" id="L610" title="All 4 branches covered.">        return square() &amp;&amp; determinant().compareTo(BigDecimal.ZERO) != 0;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code row == null}
+     * @throws NullPointerException
+     *             if {@code column == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != columnSize}
+     * @since 1
+     */
+    @Override
+    protected BigDecimal multiplyRowWithColumn(final Map&lt;Integer, BigDecimal&gt; row,
+        final Map&lt;Integer, BigDecimal&gt; column) {
+<span class="fc" id="L627">        requireNonNull(row, &quot;row&quot;);</span>
+<span class="fc" id="L628">        requireNonNull(column, &quot;column&quot;);</span>
+<span class="pc bpc" id="L629" title="1 of 2 branches missed.">        checkArgument(row.size() == column.size(), &quot;expected rowSize == columnSize but actual %s != %s&quot;, row.size(),</span>
+<span class="fc" id="L630">            column.size());</span>
+<span class="fc" id="L631">        return row.entrySet().stream().map(rowEntry -&gt; rowEntry.getValue().multiply(column.get(rowEntry.getKey())))</span>
+<span class="fc" id="L632">            .reduce(BigDecimal::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code row == null}
+     * @throws NullPointerException
+     *             if {@code column == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code rowSize != columnSize}
+     * @since 1
+     */
+    @Override
+    protected BigDecimal multiplyRowWithColumn(final Map&lt;Integer, BigDecimal&gt; row,
+        final Map&lt;Integer, BigDecimal&gt; column, final MathContext mathContext) {
+<span class="nc" id="L651">        requireNonNull(row, &quot;row&quot;);</span>
+<span class="nc" id="L652">        requireNonNull(column, &quot;column&quot;);</span>
+<span class="nc" id="L653">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc bnc" id="L654" title="All 2 branches missed.">        checkArgument(row.size() == column.size(), &quot;expected rowSize == columnSize but actual %s != %s&quot;, row.size(),</span>
+<span class="nc" id="L655">            column.size());</span>
+<span class="nc" id="L656">        return row.entrySet().stream()</span>
+<span class="nc" id="L657">            .map(rowEntry -&gt; rowEntry.getValue().multiply(column.get(rowEntry.getKey()), mathContext))</span>
+<span class="nc" id="L658">            .reduce(BigDecimal::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
+    @Override
+    protected BigDecimal leibnizFormula() {
+<span class="fc" id="L668">        BigDecimal result = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L669" title="All 2 branches covered.">        for (final List&lt;Integer&gt; permutation : Collections2.permutations(table.rowKeySet())) {</span>
+<span class="fc" id="L670">            BigDecimal product = BigDecimal.ONE;</span>
+<span class="fc" id="L671">            int inversions = 0;</span>
+<span class="fc" id="L672">            final int size = table.rowKeySet().size();</span>
+<span class="fc bfc" id="L673" title="All 2 branches covered.">            for (int i = 0; i &lt; size; i++) {</span>
+<span class="fc" id="L674">                final Integer sigma = permutation.get(i);</span>
+<span class="fc bfc" id="L675" title="All 2 branches covered.">                for (int j = i + 1; j &lt; size; j++) {</span>
+<span class="fc bfc" id="L676" title="All 2 branches covered.">                    if (sigma &gt; permutation.get(j)) {</span>
+<span class="fc" id="L677">                        inversions++;</span>
+                    }
+                }
+<span class="fc" id="L680">                product = product.multiply(table.get(sigma, i + 1));</span>
+            }
+<span class="fc" id="L682">            result = result.add(BigDecimal.ONE.negate().pow(inversions).multiply(product));</span>
+<span class="fc" id="L683">        }</span>
+<span class="fc" id="L684">        return result;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    @Override
+    protected BigDecimal leibnizFormula(final MathContext mathContext) {
+<span class="nc" id="L696">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L697">        BigDecimal result = BigDecimal.ZERO;</span>
+<span class="nc bnc" id="L698" title="All 2 branches missed.">        for (final List&lt;Integer&gt; permutation : Collections2.permutations(table.rowKeySet())) {</span>
+<span class="nc" id="L699">            BigDecimal product = BigDecimal.ONE;</span>
+<span class="nc" id="L700">            int inversions = 0;</span>
+<span class="nc" id="L701">            final int size = table.rowKeySet().size();</span>
+<span class="nc bnc" id="L702" title="All 2 branches missed.">            for (int i = 0; i &lt; size; i++) {</span>
+<span class="nc" id="L703">                final Integer sigma = permutation.get(i);</span>
+<span class="nc bnc" id="L704" title="All 2 branches missed.">                for (int j = i + 1; j &lt; size; j++) {</span>
+<span class="nc bnc" id="L705" title="All 2 branches missed.">                    if (sigma &gt; permutation.get(j)) {</span>
+<span class="nc" id="L706">                        inversions++;</span>
+                    }
+                }
+<span class="nc" id="L709">                product = product.multiply(table.get(sigma, i + 1), mathContext);</span>
+            }
+<span class="nc" id="L711">            result = result.add(</span>
+<span class="nc" id="L712">                BigDecimal.ONE.negate(mathContext).pow(inversions, mathContext).multiply(product, mathContext),</span>
+                mathContext);
+<span class="nc" id="L714">        }</span>
+<span class="nc" id="L715">        return result;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @since 1
+     */
+    @Override
+    protected BigDecimal ruleOfSarrus() {
+<span class="fc" id="L725">        final BigDecimal first = table.get(1, 1).multiply(table.get(2, 2)).multiply(table.get(3, 3));</span>
+<span class="fc" id="L726">        final BigDecimal second = table.get(1, 2).multiply(table.get(2, 3)).multiply(table.get(3, 1));</span>
+<span class="fc" id="L727">        final BigDecimal third = table.get(1, 3).multiply(table.get(2, 1)).multiply(table.get(3, 2));</span>
+<span class="fc" id="L728">        final BigDecimal fourth = table.get(3, 1).multiply(table.get(2, 2)).multiply(table.get(1, 3));</span>
+<span class="fc" id="L729">        final BigDecimal fifth = table.get(3, 2).multiply(table.get(2, 3)).multiply(table.get(1, 1));</span>
+<span class="fc" id="L730">        final BigDecimal sixth = table.get(3, 3).multiply(table.get(2, 1)).multiply(table.get(1, 2));</span>
+<span class="fc" id="L731">        return first.add(second).add(third).subtract(fourth).subtract(fifth).subtract(sixth);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    @Override
+    protected BigDecimal ruleOfSarrus(final MathContext mathContext) {
+<span class="nc" id="L743">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc" id="L744">        final BigDecimal first =</span>
+<span class="nc" id="L745">            table.get(1, 1).multiply(table.get(2, 2), mathContext).multiply(table.get(3, 3), mathContext);</span>
+<span class="nc" id="L746">        final BigDecimal second =</span>
+<span class="nc" id="L747">            table.get(1, 2).multiply(table.get(2, 3), mathContext).multiply(table.get(3, 1), mathContext);</span>
+<span class="nc" id="L748">        final BigDecimal third =</span>
+<span class="nc" id="L749">            table.get(1, 3).multiply(table.get(2, 1), mathContext).multiply(table.get(3, 2), mathContext);</span>
+<span class="nc" id="L750">        final BigDecimal fourth =</span>
+<span class="nc" id="L751">            table.get(3, 1).multiply(table.get(2, 2), mathContext).multiply(table.get(1, 3), mathContext);</span>
+<span class="nc" id="L752">        final BigDecimal fifth =</span>
+<span class="nc" id="L753">            table.get(3, 2).multiply(table.get(2, 3), mathContext).multiply(table.get(1, 1), mathContext);</span>
+<span class="nc" id="L754">        final BigDecimal sixth =</span>
+<span class="nc" id="L755">            table.get(3, 3).multiply(table.get(2, 1), mathContext).multiply(table.get(1, 2), mathContext);</span>
+<span class="nc" id="L756">        return first.add(second, mathContext).add(third, mathContext).subtract(fourth, mathContext)</span>
+<span class="nc" id="L757">            .subtract(fifth, mathContext).subtract(sixth, mathContext);</span>
     }
 
     /**
@@ -632,9 +772,9 @@ public final class BigDecimalMatrix
      * @since 1
      */
     public static BigDecimalMatrixBuilder builder(final int rowSize, final int columnSize) {
-<span class="fc bfc" id="L635" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="fc bfc" id="L636" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="fc" id="L637">        return new BigDecimalMatrixBuilder(rowSize, columnSize);</span>
+<span class="fc bfc" id="L775" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L776" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L777">        return new BigDecimalMatrixBuilder(rowSize, columnSize);</span>
     }
 
     /**
@@ -646,8 +786,8 @@ public final class BigDecimalMatrix
     public static final class BigDecimalMatrixBuilder
         extends AbstractMatrixBuilder&lt;BigDecimal, BigDecimalMatrix, BigDecimalMatrixBuilder&gt; {
         private BigDecimalMatrixBuilder(final int rowSize, final int columnSize) {
-<span class="fc" id="L649">            super(rowSize, columnSize);</span>
-<span class="fc" id="L650">        }</span>
+<span class="fc" id="L789">            super(rowSize, columnSize);</span>
+<span class="fc" id="L790">        }</span>
 
         /**
          * {@inheritDoc}
@@ -658,8 +798,8 @@ public final class BigDecimalMatrix
          */
         @Override
         public BigDecimalMatrix build() {
-<span class="fc" id="L661">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
-<span class="fc" id="L662">            return new BigDecimalMatrix(ImmutableTable.copyOf(table));</span>
+<span class="fc" id="L801">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
+<span class="fc" id="L802">            return new BigDecimalMatrix(ImmutableTable.copyOf(table));</span>
         }
     }
 }

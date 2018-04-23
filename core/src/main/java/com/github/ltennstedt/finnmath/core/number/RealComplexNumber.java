@@ -602,22 +602,6 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
     }
 
     /**
-     * Determines if this {@link RealComplexNumber} is equal to the other
-     * {@link RealComplexNumber} using {@link BigDecimal#compareTo(BigDecimal)} for
-     * comparison of the parts
-     *
-     * @param other
-     *            other
-     * @return {@code true} if equality holds, {@code false} otherwise
-     * @throws NullPointerException
-     *             if {@code other == null}
-     */
-    public boolean isEqualToByComparingParts(final RealComplexNumber other) {
-        requireNonNull(other, "other");
-        return real.compareTo(other.getReal()) == 0 && imaginary.compareTo(other.getImaginary()) == 0;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -650,7 +634,7 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
             if (first.equals(second)) {
                 return 0;
             }
-            return first.isEqualToByComparingParts(second) ? 0 : 1;
+            return first.equalsByComparingFields(second) ? 0 : 1;
         }
     }
 }

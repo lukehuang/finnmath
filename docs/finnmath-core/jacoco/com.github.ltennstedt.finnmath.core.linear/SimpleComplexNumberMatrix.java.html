@@ -343,6 +343,14 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public BigInteger frobeniusNormPow2() {
+<span class="fc" id="L349">        return table.values().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();</span>
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @throws NullPointerException
      *             if {@code squareRootContext == null}
@@ -350,15 +358,7 @@ public final class SimpleComplexNumberMatrix extends
      */
     @Override
     public BigDecimal frobeniusNorm(final SquareRootContext squareRootContext) {
-<span class="nc" id="L353">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);</span>
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public BigInteger frobeniusNormPow2() {
-<span class="fc" id="L361">        return table.values().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();</span>
+<span class="nc" id="L361">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);</span>
     }
 
     /**

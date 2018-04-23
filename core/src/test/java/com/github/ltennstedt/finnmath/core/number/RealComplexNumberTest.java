@@ -482,31 +482,31 @@ public final class RealComplexNumberTest {
     }
 
     @Test
-    public void isEqualToByComparingPartsNullShouldThrowException() {
-        assertThatThrownBy(() -> RealComplexNumber.ZERO.isEqualToByComparingParts(null))
+    public void equalsByComparingFieldsNullShouldThrowException() {
+        assertThatThrownBy(() -> RealComplexNumber.ZERO.equalsByComparingFields(null))
             .isExactlyInstanceOf(NullPointerException.class).hasMessage("other");
     }
 
     @Test
-    public void isEqualToByComparingPartsRealPartsNotEqualShouldReturnFalse() {
-        complexNumbers.forEach(complexNumber -> assertThat(
-            complexNumber.isEqualToByComparingParts(complexNumber.add(RealComplexNumber.ONE))).isFalse());
+    public void equalsByComparingFieldsRealPartsNotEqualShouldReturnFalse() {
+        complexNumbers.forEach(
+            complexNumber -> assertThat(complexNumber.equalsByComparingFields(complexNumber.add(RealComplexNumber.ONE)))
+                .isFalse());
     }
 
     @Test
-    public void isEqualToByComparingPartsImaginaryPartsNotEqualShouldReturnFalse() {
+    public void equalsByComparingFieldsImaginaryPartsNotEqualShouldReturnFalse() {
         complexNumbers.forEach(complexNumber -> assertThat(
-            complexNumber.isEqualToByComparingParts(complexNumber.add(RealComplexNumber.IMAGINARY))).isFalse());
+            complexNumber.equalsByComparingFields(complexNumber.add(RealComplexNumber.IMAGINARY))).isFalse());
     }
 
     @Test
-    public void isEqualToByComparingPartsRealPartNotEqualShouldReturnFalse() {
+    public void equalsByComparingFieldsRealPartNotEqualShouldReturnFalse() {
         complexNumbers.forEach(complexNumber -> {
             final int otherScale = complexNumber.getReal().scale() + 1;
             final BigDecimal otherReal = complexNumber.getReal().setScale(otherScale, RoundingMode.HALF_UP);
             final BigDecimal otherImaginary = complexNumber.getImaginary().setScale(otherScale, RoundingMode.HALF_UP);
-            assertThat(complexNumber.isEqualToByComparingParts(RealComplexNumber.of(otherReal, otherImaginary)))
-                .isTrue();
+            assertThat(complexNumber.equalsByComparingFields(RealComplexNumber.of(otherReal, otherImaginary))).isTrue();
         });
     }
 

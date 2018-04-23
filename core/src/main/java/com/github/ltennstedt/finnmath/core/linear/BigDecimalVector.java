@@ -38,7 +38,7 @@ import java.util.stream.IntStream;
  */
 @Beta
 public final class BigDecimalVector
-    extends AbstractVector<BigDecimal, BigDecimalVector, BigDecimalMatrix, BigDecimal, BigDecimal> {
+    extends AbstractContextVector<BigDecimal, BigDecimalVector, BigDecimalMatrix, BigDecimal, BigDecimal, MathContext> {
     private BigDecimalVector(final ImmutableMap<Integer, BigDecimal> map) {
         super(map);
     }
@@ -79,6 +79,28 @@ public final class BigDecimalVector
      * {@inheritDoc}
      *
      * @throws NullPointerException
+     *             if {@code summand == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != summand.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimalVector add(final BigDecimalVector summand, final MathContext mathContext) {
+        requireNonNull(summand, "summand");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(map.size() == summand.size(), "expected equal sizes but actual %s != %s", map.size(),
+            summand.size());
+        final BigDecimalVectorBuilder builder = builder(map.size());
+        map.forEach((index, element) -> builder.put(element.add(summand.element(index), mathContext)));
+        return builder.build();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
      *             if {@code subtrahend == null}
      * @throws IllegalArgumentException
      *             if {@code size != subtrahend.size}
@@ -91,6 +113,28 @@ public final class BigDecimalVector
             subtrahend.size());
         final BigDecimalVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> builder.put(element.subtract(subtrahend.element(index))));
+        return builder.build();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code subtrahend == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != subtrahend.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimalVector subtract(final BigDecimalVector subtrahend, final MathContext mathContext) {
+        requireNonNull(subtrahend, "subtrahend");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(map.size() == subtrahend.size(), "expected equal sizes but actual %s != %s", map.size(),
+            subtrahend.size());
+        final BigDecimalVectorBuilder builder = builder(map.size());
+        map.forEach((index, element) -> builder.put(element.subtract(subtrahend.element(index), mathContext)));
         return builder.build();
     }
 
@@ -115,6 +159,27 @@ public final class BigDecimalVector
      * {@inheritDoc}
      *
      * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimal dotProduct(final BigDecimalVector other, final MathContext mathContext) {
+        requireNonNull(other, "other");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return map.entrySet().stream()
+            .map(entry -> entry.getValue().multiply(other.element(entry.getKey()), mathContext))
+            .reduce((element, otherElement) -> element.add(otherElement, mathContext)).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
      *             if {@code scalar == null}
      * @since 1
      */
@@ -129,11 +194,42 @@ public final class BigDecimalVector
     /**
      * {@inheritDoc}
      *
+     * @throws NullPointerException
+     *             if {@code scalar == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    @Override
+    public BigDecimalVector scalarMultiply(final BigDecimal scalar, final MathContext mathContext) {
+        requireNonNull(scalar, "scalar");
+        requireNonNull(mathContext, "mathContext");
+        final BigDecimalVectorBuilder builder = builder(map.size());
+        map.values().forEach(element -> builder.put(scalar.multiply(element, mathContext)));
+        return builder.build();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @since 1
      */
     @Override
     public BigDecimalVector negate() {
         return scalarMultiply(BigDecimal.ONE.negate());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    @Override
+    public BigDecimalVector negate(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return scalarMultiply(BigDecimal.ONE.negate(mathContext), mathContext);
     }
 
     /**
@@ -155,6 +251,25 @@ public final class BigDecimalVector
     /**
      * {@inheritDoc}
      *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public boolean orthogonalTo(final BigDecimalVector other, final MathContext mathContext) {
+        requireNonNull(other, "other");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return dotProduct(other, mathContext).compareTo(BigDecimal.ZERO) == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @since 1
      */
     @Override
@@ -165,11 +280,38 @@ public final class BigDecimalVector
     /**
      * {@inheritDoc}
      *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    @Override
+    public BigDecimal taxicabNorm(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return map.values().stream().map(element -> element.abs(mathContext))
+            .reduce((element, other) -> element.add(other, mathContext)).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @since 1
      */
     @Override
     public BigDecimal euclideanNormPow2() {
         return dotProduct(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanNormPow2(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return dotProduct(this, mathContext);
     }
 
     /**
@@ -211,6 +353,19 @@ public final class BigDecimalVector
      * {@inheritDoc}
      *
      * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @since 1
+     */
+    @Override
+    public BigDecimal maxNorm(final MathContext mathContext) {
+        requireNonNull(mathContext, "mathContext");
+        return map.values().stream().map(element -> element.abs(mathContext)).reduce(BigDecimal::max).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
      *             if {@code other == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
@@ -227,14 +382,8 @@ public final class BigDecimalVector
     }
 
     /**
-     * Returns the dyadic product of {@code this} {@link BigDecimalVector} and the
-     * other one
+     * {@inheritDoc}
      *
-     * @param other
-     *            other {@link BigDecimalVector}
-     * @param mathContext
-     *            {@link MathContext}
-     * @return dyadic product
      * @throws NullPointerException
      *             if {@code other == null}
      * @throws NullPointerException
@@ -243,6 +392,7 @@ public final class BigDecimalVector
      *             if {@code size != other.size}
      * @since 1
      */
+    @Override
     public BigDecimalMatrix dyadicProduct(final BigDecimalVector other, final MathContext mathContext) {
         requireNonNull(other, "other");
         requireNonNull(mathContext, "mathContext");

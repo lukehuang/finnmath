@@ -490,8 +490,8 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
      */
     @Override
     public boolean equalsByComparingFields(final RealComplexNumber other) {
-<span class="nc" id="L493">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L494" title="All 4 branches missed.">        return real.compareTo(other.getReal()) == 0 &amp;&amp; imaginary.compareTo(other.getImaginary()) == 0;</span>
+<span class="fc" id="L493">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="fc bfc" id="L494" title="All 4 branches covered.">        return real.compareTo(other.getReal()) == 0 &amp;&amp; imaginary.compareTo(other.getImaginary()) == 0;</span>
     }
 
     /**
@@ -602,28 +602,12 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
     }
 
     /**
-     * Determines if this {@link RealComplexNumber} is equal to the other
-     * {@link RealComplexNumber} using {@link BigDecimal#compareTo(BigDecimal)} for
-     * comparison of the parts
-     *
-     * @param other
-     *            other
-     * @return {@code true} if equality holds, {@code false} otherwise
-     * @throws NullPointerException
-     *             if {@code other == null}
-     */
-    public boolean isEqualToByComparingParts(final RealComplexNumber other) {
-<span class="fc" id="L616">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L617" title="All 4 branches covered.">        return real.compareTo(other.getReal()) == 0 &amp;&amp; imaginary.compareTo(other.getImaginary()) == 0;</span>
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public BigDecimalMatrix matrix() {
-<span class="fc" id="L625">        return BigDecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)</span>
-<span class="fc" id="L626">            .put(2, 2, real).build();</span>
+<span class="fc" id="L609">        return BigDecimalMatrix.builder(2, 2).put(1, 1, real).put(1, 2, imaginary.negate()).put(2, 1, imaginary)</span>
+<span class="fc" id="L610">            .put(2, 2, real).build();</span>
     }
 
     /**
@@ -641,16 +625,16 @@ public final class RealComplexNumber extends AbstractComplexNumber&lt;BigDecimal
          */
         @Override
         public int compare(final RealComplexNumber first, final RealComplexNumber second) {
-<span class="fc bfc" id="L644" title="All 2 branches covered.">            if (first == null) {</span>
-<span class="fc" id="L645">                return -1;</span>
+<span class="fc bfc" id="L628" title="All 2 branches covered.">            if (first == null) {</span>
+<span class="fc" id="L629">                return -1;</span>
             }
-<span class="fc bfc" id="L647" title="All 2 branches covered.">            if (second == null) {</span>
-<span class="fc" id="L648">                return 1;</span>
+<span class="fc bfc" id="L631" title="All 2 branches covered.">            if (second == null) {</span>
+<span class="fc" id="L632">                return 1;</span>
             }
-<span class="fc bfc" id="L650" title="All 2 branches covered.">            if (first.equals(second)) {</span>
-<span class="fc" id="L651">                return 0;</span>
+<span class="fc bfc" id="L634" title="All 2 branches covered.">            if (first.equals(second)) {</span>
+<span class="fc" id="L635">                return 0;</span>
             }
-<span class="fc bfc" id="L653" title="All 2 branches covered.">            return first.isEqualToByComparingParts(second) ? 0 : 1;</span>
+<span class="fc bfc" id="L637" title="All 2 branches covered.">            return first.equalsByComparingFields(second) ? 0 : 1;</span>
         }
     }
 }

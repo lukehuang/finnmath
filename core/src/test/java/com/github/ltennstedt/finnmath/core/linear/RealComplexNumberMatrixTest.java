@@ -85,7 +85,7 @@ public final class RealComplexNumberMatrixTest {
     private final RealComplexNumberMatrix nonSquareMatrix = matrices.get(0);
     private final BigDecimal tolerance = BigDecimal.valueOf(0.001D);
     private final Condition<RealComplexNumber> equalToZero =
-        new Condition<>(complexNumber -> complexNumber.isEqualToByComparingParts(RealComplexNumber.ZERO), "equal to 0");
+        new Condition<>(complexNumber -> complexNumber.equalsByComparingFields(RealComplexNumber.ZERO), "equal to 0");
 
     @Test
     public void addNullShouldThrowException() {

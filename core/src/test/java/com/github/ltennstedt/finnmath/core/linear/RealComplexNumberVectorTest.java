@@ -119,7 +119,7 @@ public final class RealComplexNumberVectorTest {
     @Test
     public void subtractSelfShouldBeEqualToZeroVector() {
         vectors.forEach(vector -> assertThat(vector.subtract(vector).elements())
-            .are(new Condition<>(element -> element.isEqualToByComparingParts(RealComplexNumber.ZERO), "equal to 0")));
+            .are(new Condition<>(element -> element.equalsByComparingFields(RealComplexNumber.ZERO), "equal to 0")));
     }
 
     @Test
@@ -161,7 +161,7 @@ public final class RealComplexNumberVectorTest {
     @Test
     public void scalarMultiplyWithZeroShouldBeEqualToZeroVector() {
         vectors.forEach(vector -> assertThat(vector.scalarMultiply(RealComplexNumber.ZERO).elements())
-            .are(new Condition<>(element -> element.isEqualToByComparingParts(RealComplexNumber.ZERO), "equal to 0")));
+            .are(new Condition<>(element -> element.equalsByComparingFields(RealComplexNumber.ZERO), "equal to 0")));
     }
 
     @Test
@@ -188,7 +188,7 @@ public final class RealComplexNumberVectorTest {
     @Test
     public void addNegatedShouldBeEqualToZeroMatrix() {
         vectors.forEach(vector -> assertThat(vector.add(vector.negate()).elements())
-            .are(new Condition<>(element -> element.isEqualToByComparingParts(RealComplexNumber.ZERO), "equal to 0")));
+            .are(new Condition<>(element -> element.equalsByComparingFields(RealComplexNumber.ZERO), "equal to 0")));
     }
 
     @Test

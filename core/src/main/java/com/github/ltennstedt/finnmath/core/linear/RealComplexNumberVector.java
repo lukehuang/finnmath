@@ -38,8 +38,8 @@ import java.util.stream.IntStream;
  * @since 1
  */
 @Beta
-public final class RealComplexNumberVector extends
-    AbstractVector<RealComplexNumber, RealComplexNumberVector, RealComplexNumberMatrix, BigDecimal, BigDecimal> {
+public final class RealComplexNumberVector extends AbstractContextVector<RealComplexNumber, RealComplexNumberVector,
+    RealComplexNumberMatrix, BigDecimal, BigDecimal, SquareRootContext> {
     private RealComplexNumberVector(final ImmutableMap<Integer, RealComplexNumber> map) {
         super(map);
     }
@@ -77,13 +77,8 @@ public final class RealComplexNumberVector extends
     }
 
     /**
-     * Returns the sum of this {@link AbstractVector} and the given one
+     * {@inheritDoc}
      *
-     * @param summand
-     *            summand
-     * @param mathContext
-     *            {@link MathContext}
-     * @return sum
      * @throws NullPointerException
      *             if {@code summand == null}
      * @throws NullPointerException
@@ -92,6 +87,7 @@ public final class RealComplexNumberVector extends
      *             if {@code size != summand.size}
      * @since 1
      */
+    @Override
     public RealComplexNumberVector add(final RealComplexNumberVector summand, final MathContext mathContext) {
         requireNonNull(summand, "summand");
         requireNonNull(mathContext, "mathContext");
@@ -122,13 +118,8 @@ public final class RealComplexNumberVector extends
     }
 
     /**
-     * Returns the difference of this {@link AbstractVector} and the given one
+     * {@inheritDoc}
      *
-     * @param subtrahend
-     *            subtrahend
-     * @param mathContext
-     *            {@link MathContext}
-     * @return difference
      * @throws NullPointerException
      *             if {@code subtrahend == null}
      * @throws NullPointerException
@@ -137,6 +128,7 @@ public final class RealComplexNumberVector extends
      *             if {@code size != subtrahend.size}
      * @since 1
      */
+    @Override
     public RealComplexNumberVector subtract(final RealComplexNumberVector subtrahend, final MathContext mathContext) {
         requireNonNull(subtrahend, "subtrahend");
         requireNonNull(mathContext, "mathContext");
@@ -145,6 +137,44 @@ public final class RealComplexNumberVector extends
         final RealComplexNumberVectorBuilder builder = builder(map.size());
         map.forEach((index, element) -> builder.put(element.subtract(subtrahend.element(index), mathContext)));
         return builder.build();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumber dotProduct(final RealComplexNumberVector other) {
+        requireNonNull(other, "other");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return map.entrySet().stream().map(entry -> entry.getValue().multiply(other.element(entry.getKey())))
+            .reduce(RealComplexNumber::add).get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumber dotProduct(final RealComplexNumberVector other, final MathContext mathContext) {
+        requireNonNull(other, "other");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return map.entrySet().stream()
+            .map(entry -> entry.getValue().multiply(other.element(entry.getKey()), mathContext))
+            .reduce((element, otherElement) -> element.add(otherElement, mathContext)).get();
     }
 
     /**
@@ -163,20 +193,15 @@ public final class RealComplexNumberVector extends
     }
 
     /**
-     * Returns the scalar product of the given scalar and this
-     * {@link AbstractVector}
+     * {@inheritDoc}
      *
-     * @param scalar
-     *            scalar
-     * @param mathContext
-     *            {@link MathContext}
-     * @return scalar product
      * @throws NullPointerException
      *             if {@code scalar == null}
      * @throws NullPointerException
      *             if {@code mathContext == null}
      * @since 1
      */
+    @Override
     public RealComplexNumberVector scalarMultiply(final RealComplexNumber scalar, final MathContext mathContext) {
         requireNonNull(scalar, "scalar");
         requireNonNull(mathContext, "mathContext");
@@ -196,15 +221,13 @@ public final class RealComplexNumberVector extends
     }
 
     /**
-     * Returns the negated {@link AbstractVector} of this one
+     * {@inheritDoc}
      *
-     * @param mathContext
-     *            {@link MathContext}
-     * @return negated {@link AbstractVector}
      * @throws NullPointerException
      *             if {@code mathContext == null}
      * @since 1
      */
+    @Override
     public RealComplexNumberVector negate(final MathContext mathContext) {
         requireNonNull(mathContext, "mathContext");
         return scalarMultiply(RealComplexNumber.ONE.negate(mathContext), mathContext);
@@ -223,7 +246,26 @@ public final class RealComplexNumberVector extends
     public boolean orthogonalTo(final RealComplexNumberVector other) {
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return dotProduct(other).isEqualToByComparingParts(RealComplexNumber.ZERO);
+        return dotProduct(other).equalsByComparingFields(RealComplexNumber.ZERO);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public boolean orthogonalTo(final RealComplexNumberVector other, final MathContext mathContext) {
+        requireNonNull(other, "other");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return dotProduct(other, mathContext).equalsByComparingFields(RealComplexNumber.ZERO);
     }
 
     /**
@@ -237,15 +279,13 @@ public final class RealComplexNumberVector extends
     }
 
     /**
-     * Returns the taxicab norm of this {@link AbstractVector}
+     * {@inheritDoc}
      *
-     * @param squareRootContext
-     *            {@link SquareRootContext}
-     * @return taxicab norm
      * @throws NullPointerException
      *             if {@code squareRootContext == null}
      * @since 1
      */
+    @Override
     public BigDecimal taxicabNorm(final SquareRootContext squareRootContext) {
         requireNonNull(squareRootContext, "squareRootContext");
         return map.values().stream().map(element -> element.abs(squareRootContext))
@@ -263,15 +303,13 @@ public final class RealComplexNumberVector extends
     }
 
     /**
-     * Returns the square of the euclidean norm of this {@link AbstractVector}
+     * {@inheritDoc}
      *
-     * @param mathContext
-     *            {@link MathContext}
-     * @return square of the euclidean norm
      * @throws NullPointerException
      *             if {@code mathContext == null}
      * @since 1
      */
+    @Override
     public BigDecimal euclideanNormPow2(final MathContext mathContext) {
         requireNonNull(mathContext, "mathContext");
         return map.values().stream().map(element -> element.absPow2(mathContext))
@@ -306,48 +344,6 @@ public final class RealComplexNumberVector extends
     /**
      * {@inheritDoc}
      *
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @since 1
-     */
-    @Override
-    public RealComplexNumber dotProduct(final RealComplexNumberVector other) {
-        requireNonNull(other, "other");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return map.entrySet().stream().map(entry -> entry.getValue().multiply(other.element(entry.getKey())))
-            .reduce(RealComplexNumber::add).get();
-    }
-
-    /**
-     * Returns the dot product of this {@link AbstractVector} and the given one
-     *
-     * @param other
-     *            other {@link AbstractVector}
-     * @param mathContext
-     *            {@link MathContext}
-     * @return dot product
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code mathContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
-     * @since 1
-     */
-    public RealComplexNumber dotProduct(final RealComplexNumberVector other, final MathContext mathContext) {
-        requireNonNull(other, "other");
-        requireNonNull(mathContext, "mathContext");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return map.entrySet().stream()
-            .map(entry -> entry.getValue().multiply(other.element(entry.getKey()), mathContext))
-            .reduce((element, otherElement) -> element.add(otherElement, mathContext)).get();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
      * @since 1
      */
     @Override
@@ -356,15 +352,13 @@ public final class RealComplexNumberVector extends
     }
 
     /**
-     * Returns the maximum norm of this {@link AbstractVector}
+     * {@inheritDoc}
      *
-     * @param squareRootContext
-     *            {@link SquareRootContext}
-     * @return maximum norm
      * @throws NullPointerException
      *             if {@code squareRootContext == null}
      * @since 1
      */
+    @Override
     public BigDecimal maxNorm(final SquareRootContext squareRootContext) {
         requireNonNull(squareRootContext, "squareRootContext");
         return map.values().stream().map(element -> element.abs(squareRootContext)).reduce(BigDecimal::max).get();
@@ -390,14 +384,8 @@ public final class RealComplexNumberVector extends
     }
 
     /**
-     * Returns the dyadic product of {@code this} {@link RealComplexNumberVector}
-     * and the other one
+     * {@inheritDoc}
      *
-     * @param other
-     *            other {@link RealComplexNumberVector}
-     * @param mathContext
-     *            {@link MathContext}
-     * @return dyadic product
      * @throws NullPointerException
      *             if {@code other == null}
      * @throws NullPointerException
@@ -406,6 +394,7 @@ public final class RealComplexNumberVector extends
      *             if {@code size != other.size}
      * @since 1
      */
+    @Override
     public RealComplexNumberMatrix dyadicProduct(final RealComplexNumberVector other, final MathContext mathContext) {
         requireNonNull(other, "other");
         requireNonNull(mathContext, "mathContext");
