@@ -298,6 +298,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public SimpleComplexNumberMatrix minor(final Integer rowIndex, final Integer columnIndex) {
@@ -323,6 +325,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsColumnSumNorm() {
@@ -333,6 +337,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsRowSumNorm() {
@@ -343,6 +349,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigInteger frobeniusNormPow2() {
@@ -363,6 +371,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxNorm() {
@@ -371,6 +381,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean upperTriangular() {
@@ -380,6 +392,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean lowerTriangular() {
@@ -389,6 +403,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean identity() {
@@ -399,6 +415,8 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean invertible() {
@@ -445,6 +463,8 @@ public final class SimpleComplexNumberMatrix extends
 
         /**
          * {@inheritDoc}
+         *
+         * @since 1
          */
         @Override
         public SimpleComplexNumberMatrix build() {

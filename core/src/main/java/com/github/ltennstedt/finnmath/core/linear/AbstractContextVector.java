@@ -45,7 +45,7 @@ import java.math.MathContext;
  */
 @Beta
 public abstract class AbstractContextVector<E, V extends AbstractVector<E, V, M, N, P>,
-    M extends AbstractMatrix<E, V, M, N, P>, N, P, C> extends AbstractVector<E, V, M, N, P> {
+    M extends AbstractContextMatrix<E, V, M, N, P, C>, N, P, C> extends AbstractVector<E, V, M, N, P> {
     /**
      * Required arguments constructor
      *

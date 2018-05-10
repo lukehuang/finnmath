@@ -298,55 +298,63 @@ public final class SimpleComplexNumberMatrix extends
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public SimpleComplexNumberMatrix minor(final Integer rowIndex, final Integer columnIndex) {
-<span class="fc" id="L304">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
-<span class="fc" id="L305">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
-<span class="fc" id="L306">        checkArgument(table.containsRow(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L307">            table.rowKeySet().size(), rowIndex);</span>
-<span class="fc" id="L308">        checkArgument(table.containsColumn(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
-<span class="fc" id="L309">            table.columnKeySet().size(), columnIndex);</span>
-<span class="fc" id="L310">        final SimpleComplexNumberMatrixBuilder builder =</span>
-<span class="fc" id="L311">            builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);</span>
-<span class="fc" id="L312">        table.cellSet().forEach(cell -&gt; {</span>
-<span class="fc" id="L313">            final Integer rowKey = cell.getRowKey();</span>
-<span class="fc" id="L314">            final Integer columnKey = cell.getColumnKey();</span>
-<span class="fc bfc" id="L315" title="All 4 branches covered.">            if (rowKey.compareTo(rowIndex) != 0 &amp;&amp; columnKey.compareTo(columnIndex) != 0) {</span>
-<span class="fc bfc" id="L316" title="All 2 branches covered.">                final Integer newRowIndex = rowKey.compareTo(rowIndex) &gt; 0 ? rowKey - 1 : rowKey;</span>
-<span class="fc bfc" id="L317" title="All 2 branches covered.">                final Integer newColumnIndex = columnKey.compareTo(columnIndex) &gt; 0 ? columnKey - 1 : columnKey;</span>
-<span class="fc" id="L318">                builder.put(newRowIndex, newColumnIndex, cell.getValue());</span>
+<span class="fc" id="L306">        requireNonNull(rowIndex, &quot;rowIndex&quot;);</span>
+<span class="fc" id="L307">        requireNonNull(columnIndex, &quot;columnIndex&quot;);</span>
+<span class="fc" id="L308">        checkArgument(table.containsRow(rowIndex), &quot;expected rowIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L309">            table.rowKeySet().size(), rowIndex);</span>
+<span class="fc" id="L310">        checkArgument(table.containsColumn(columnIndex), &quot;expected columnIndex in [1, %s] but actual %s&quot;,</span>
+<span class="fc" id="L311">            table.columnKeySet().size(), columnIndex);</span>
+<span class="fc" id="L312">        final SimpleComplexNumberMatrixBuilder builder =</span>
+<span class="fc" id="L313">            builder(table.rowKeySet().size() - 1, table.columnKeySet().size() - 1);</span>
+<span class="fc" id="L314">        table.cellSet().forEach(cell -&gt; {</span>
+<span class="fc" id="L315">            final Integer rowKey = cell.getRowKey();</span>
+<span class="fc" id="L316">            final Integer columnKey = cell.getColumnKey();</span>
+<span class="fc bfc" id="L317" title="All 4 branches covered.">            if (rowKey.compareTo(rowIndex) != 0 &amp;&amp; columnKey.compareTo(columnIndex) != 0) {</span>
+<span class="fc bfc" id="L318" title="All 2 branches covered.">                final Integer newRowIndex = rowKey.compareTo(rowIndex) &gt; 0 ? rowKey - 1 : rowKey;</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">                final Integer newColumnIndex = columnKey.compareTo(columnIndex) &gt; 0 ? columnKey - 1 : columnKey;</span>
+<span class="fc" id="L320">                builder.put(newRowIndex, newColumnIndex, cell.getValue());</span>
             }
-<span class="fc" id="L320">        });</span>
-<span class="fc" id="L321">        return builder.build();</span>
+<span class="fc" id="L322">        });</span>
+<span class="fc" id="L323">        return builder.build();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsColumnSumNorm() {
-<span class="fc" id="L329">        return table.columnMap().values().asList().stream()</span>
-<span class="fc" id="L330">            .map(column -&gt; column.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add))</span>
-<span class="fc" id="L331">            .map(Optional::get).reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L333">        return table.columnMap().values().asList().stream()</span>
+<span class="fc" id="L334">            .map(column -&gt; column.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add))</span>
+<span class="fc" id="L335">            .map(Optional::get).reduce(BigDecimal::max).get();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxAbsRowSumNorm() {
-<span class="fc" id="L339">        return table.rowMap().values().asList().stream()</span>
-<span class="fc" id="L340">            .map(column -&gt; column.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add))</span>
-<span class="fc" id="L341">            .map(Optional::get).reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L345">        return table.rowMap().values().asList().stream()</span>
+<span class="fc" id="L346">            .map(column -&gt; column.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add))</span>
+<span class="fc" id="L347">            .map(Optional::get).reduce(BigDecimal::max).get();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigInteger frobeniusNormPow2() {
-<span class="fc" id="L349">        return table.values().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();</span>
+<span class="fc" id="L357">        return table.values().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();</span>
     }
 
     /**
@@ -358,57 +366,67 @@ public final class SimpleComplexNumberMatrix extends
      */
     @Override
     public BigDecimal frobeniusNorm(final SquareRootContext squareRootContext) {
-<span class="nc" id="L361">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);</span>
+<span class="nc" id="L369">        return SquareRootCalculator.sqrt(frobeniusNormPow2(), squareRootContext);</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public BigDecimal maxNorm() {
-<span class="fc" id="L369">        return table.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::max).get();</span>
+<span class="fc" id="L379">        return table.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::max).get();</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean upperTriangular() {
-<span class="fc bfc" id="L377" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0)</span>
-<span class="fc bfc" id="L378" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; !value.equals(SimpleComplexNumber.ZERO));</span>
+<span class="fc bfc" id="L389" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &gt; 0)</span>
+<span class="fc bfc" id="L390" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; !value.equals(SimpleComplexNumber.ZERO));</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean lowerTriangular() {
-<span class="fc bfc" id="L386" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0)</span>
-<span class="fc bfc" id="L387" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; !value.equals(SimpleComplexNumber.ZERO));</span>
+<span class="fc bfc" id="L400" title="All 4 branches covered.">        return square() &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) &lt; 0)</span>
+<span class="fc bfc" id="L401" title="All 4 branches covered.">            .map(Cell::getValue).anyMatch(value -&gt; !value.equals(SimpleComplexNumber.ZERO));</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean identity() {
-<span class="fc bfc" id="L395" title="All 2 branches covered.">        return diagonal()</span>
-<span class="fc bfc" id="L396" title="All 2 branches covered.">            &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
-<span class="fc bfc" id="L397" title="All 4 branches covered.">                .map(Cell::getValue).anyMatch(value -&gt; !value.equals(SimpleComplexNumber.ONE));</span>
+<span class="fc bfc" id="L411" title="All 2 branches covered.">        return diagonal()</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">            &amp;&amp; !table.cellSet().stream().filter(cell -&gt; cell.getRowKey().compareTo(cell.getColumnKey()) == 0)</span>
+<span class="fc bfc" id="L413" title="All 4 branches covered.">                .map(Cell::getValue).anyMatch(value -&gt; !value.equals(SimpleComplexNumber.ONE));</span>
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean invertible() {
-<span class="fc bfc" id="L405" title="All 2 branches covered.">        if (square()) {</span>
-<span class="fc" id="L406">            final SimpleComplexNumber determinant = determinant();</span>
-<span class="fc bfc" id="L407" title="All 4 branches covered.">            return determinant.equals(SimpleComplexNumber.ONE) || determinant.equals(SimpleComplexNumber.ONE.negate())</span>
-<span class="pc bpc" id="L408" title="1 of 2 branches missed.">                || determinant.equals(SimpleComplexNumber.IMAGINARY)</span>
-<span class="pc bpc" id="L409" title="1 of 2 branches missed.">                || determinant.equals(SimpleComplexNumber.IMAGINARY.negate());</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">        if (square()) {</span>
+<span class="fc" id="L424">            final SimpleComplexNumber determinant = determinant();</span>
+<span class="fc bfc" id="L425" title="All 4 branches covered.">            return determinant.equals(SimpleComplexNumber.ONE) || determinant.equals(SimpleComplexNumber.ONE.negate())</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">                || determinant.equals(SimpleComplexNumber.IMAGINARY)</span>
+<span class="pc bpc" id="L427" title="1 of 2 branches missed.">                || determinant.equals(SimpleComplexNumber.IMAGINARY.negate());</span>
         }
-<span class="fc" id="L411">        return false;</span>
+<span class="fc" id="L429">        return false;</span>
     }
 
     /**
@@ -426,9 +444,9 @@ public final class SimpleComplexNumberMatrix extends
      * @since 1
      */
     public static SimpleComplexNumberMatrixBuilder builder(final int rowSize, final int columnSize) {
-<span class="fc bfc" id="L429" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
-<span class="fc bfc" id="L430" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
-<span class="fc" id="L431">        return new SimpleComplexNumberMatrixBuilder(rowSize, columnSize);</span>
+<span class="fc bfc" id="L447" title="All 2 branches covered.">        checkArgument(rowSize &gt; 0, &quot;expected rowSize &gt; 0 but actual %s&quot;, rowSize);</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">        checkArgument(columnSize &gt; 0, &quot;expected columnSize &gt; 0 but actual %s&quot;, columnSize);</span>
+<span class="fc" id="L449">        return new SimpleComplexNumberMatrixBuilder(rowSize, columnSize);</span>
     }
 
     /**
@@ -440,16 +458,18 @@ public final class SimpleComplexNumberMatrix extends
     public static final class SimpleComplexNumberMatrixBuilder extends
         AbstractMatrixBuilder&lt;SimpleComplexNumber, SimpleComplexNumberMatrix, SimpleComplexNumberMatrixBuilder&gt; {
         private SimpleComplexNumberMatrixBuilder(final int rowSize, final int columnSize) {
-<span class="fc" id="L443">            super(rowSize, columnSize);</span>
-<span class="fc" id="L444">        }</span>
+<span class="fc" id="L461">            super(rowSize, columnSize);</span>
+<span class="fc" id="L462">        }</span>
 
         /**
          * {@inheritDoc}
+         *
+         * @since 1
          */
         @Override
         public SimpleComplexNumberMatrix build() {
-<span class="fc" id="L451">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
-<span class="fc" id="L452">            return new SimpleComplexNumberMatrix(ImmutableTable.copyOf(table));</span>
+<span class="fc" id="L471">            table.cellSet().forEach(cell -&gt; requireNonNull(cell.getValue(), &quot;cell.value&quot;));</span>
+<span class="fc" id="L472">            return new SimpleComplexNumberMatrix(ImmutableTable.copyOf(table));</span>
         }
     }
 }

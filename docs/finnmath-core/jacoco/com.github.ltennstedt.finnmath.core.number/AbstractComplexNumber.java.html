@@ -43,7 +43,7 @@ import java.util.Objects;
  */
 @Beta
 public abstract class AbstractComplexNumber&lt;B, S extends AbstractComplexNumber&lt;B, S, M&gt;,
-    M extends AbstractMatrix&lt;B, ?, M, B, B&gt;&gt; implements MathNumber&lt;S, AbstractComplexNumber&lt;?, ?, ?&gt;, BigDecimal&gt; {
+    M extends AbstractMatrix&lt;B, ?, M, B, B&gt;&gt; implements MathNumber&lt;S, RealComplexNumber, BigDecimal&gt; {
     /**
      * Default {@link RoundingMode}
      *
@@ -89,26 +89,58 @@ public abstract class AbstractComplexNumber&lt;B, S extends AbstractComplexNumbe
 <span class="fc" id="L89">    }</span>
 
     /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws IllegalArgumentException
+     *             if {@code !divisor.invertible}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumber divide(final S divisor) {
+<span class="fc" id="L102">        requireNonNull(divisor, &quot;divisor&quot;);</span>
+<span class="fc" id="L103">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
+<span class="fc" id="L104">        return divide(divisor, DEFAULT_ROUNDING_MODE);</span>
+    }
+
+    /**
      * Returns the quotient of this {@link AbstractComplexNumber} and the given one
      *
      * @param divisor
      *            the divisor
-     * @return The quotient
-     * @throws NullPointerException
-     *             if {@code divisor == null}
-     * @throws IllegalArgumentException
-     *             if {@code divisor == 0}
-     * @see #invertible
+     * @param roundingMode
+     *            {@link RoundingMode}
+     * @return quotient
      * @since 1
      */
-    @Override
-    public final RealComplexNumber divide(final S divisor) {
-<span class="fc" id="L106">        requireNonNull(divisor, &quot;divisor&quot;);</span>
-<span class="fc" id="L107">        checkArgument(divisor.invertible(), &quot;expected divisor to be invertible but actual %s&quot;, divisor);</span>
-<span class="fc" id="L108">        return divide(divisor, DEFAULT_ROUNDING_MODE);</span>
-    }
-
     protected abstract RealComplexNumber divide(S divisor, RoundingMode roundingMode);
+
+    /**
+     * Returns the quotient of this {@link AbstractComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @param scale
+     *            scale
+     * @param roundingMode
+     *            {@link RoundingMode}
+     * @return quotient
+     * @since 1
+     */
+    protected abstract RealComplexNumber divide(S divisor, int scale, RoundingMode roundingMode);
+
+    /**
+     * Returns the quotient of this {@link RealComplexNumber} and the given one
+     *
+     * @param divisor
+     *            divisor
+     * @param mathContext
+     *            {@link MathContext}
+     * @return quotient
+     * @since 1
+     */
+    protected abstract RealComplexNumber divide(final S divisor, final MathContext mathContext);
 
     /**
      * {@inheritDoc}
@@ -118,7 +150,7 @@ public abstract class AbstractComplexNumber&lt;B, S extends AbstractComplexNumbe
      */
     @Override
     public final BigDecimal abs() {
-<span class="fc" id="L121">        return abs(DEFAULT_SQUARE_ROOT_CONTEXT);</span>
+<span class="fc" id="L153">        return abs(DEFAULT_SQUARE_ROOT_CONTEXT);</span>
     }
 
     /**
@@ -201,7 +233,7 @@ public abstract class AbstractComplexNumber&lt;B, S extends AbstractComplexNumbe
      */
     @Override
     public final int hashCode() {
-<span class="fc" id="L204">        return Objects.hash(real, imaginary);</span>
+<span class="fc" id="L236">        return Objects.hash(real, imaginary);</span>
     }
 
     /**
@@ -211,14 +243,14 @@ public abstract class AbstractComplexNumber&lt;B, S extends AbstractComplexNumbe
      */
     @Override
     public final boolean equals(final Object object) {
-<span class="fc bfc" id="L214" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L215">            return true;</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L247">            return true;</span>
         }
-<span class="fc bfc" id="L217" title="All 2 branches covered.">        if (!(object instanceof AbstractComplexNumber)) {</span>
-<span class="fc" id="L218">            return false;</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (!(object instanceof AbstractComplexNumber)) {</span>
+<span class="fc" id="L250">            return false;</span>
         }
-<span class="fc" id="L220">        final AbstractComplexNumber&lt;?, ?, ?&gt; other = (AbstractComplexNumber&lt;?, ?, ?&gt;) object;</span>
-<span class="fc bfc" id="L221" title="All 4 branches covered.">        return real.equals(other.getReal()) &amp;&amp; imaginary.equals(other.getImaginary());</span>
+<span class="fc" id="L252">        final AbstractComplexNumber&lt;?, ?, ?&gt; other = (AbstractComplexNumber&lt;?, ?, ?&gt;) object;</span>
+<span class="fc bfc" id="L253" title="All 4 branches covered.">        return real.equals(other.getReal()) &amp;&amp; imaginary.equals(other.getImaginary());</span>
     }
 
     /**
@@ -228,15 +260,27 @@ public abstract class AbstractComplexNumber&lt;B, S extends AbstractComplexNumbe
      */
     @Override
     public final String toString() {
-<span class="fc" id="L231">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary).toString();</span>
+<span class="fc" id="L263">        return MoreObjects.toStringHelper(this).add(&quot;real&quot;, real).add(&quot;imaginary&quot;, imaginary).toString();</span>
     }
 
+    /**
+     * Returns the real part
+     *
+     * @return real
+     * @since 1
+     */
     public final B getReal() {
-<span class="fc" id="L235">        return real;</span>
+<span class="fc" id="L273">        return real;</span>
     }
 
+    /**
+     * Returns the imaginary part
+     *
+     * @return imaginary part
+     * @since 1
+     */
     public final B getImaginary() {
-<span class="fc" id="L239">        return imaginary;</span>
+<span class="fc" id="L283">        return imaginary;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

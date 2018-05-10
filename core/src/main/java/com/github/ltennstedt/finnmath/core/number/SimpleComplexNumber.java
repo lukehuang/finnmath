@@ -147,6 +147,14 @@ public final class SimpleComplexNumber
 
     /**
      * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @throws IllegalArgumentException
+     *             if {@code !divisor.invertible}
+     * @since 1
      */
     @Override
     public RealComplexNumber divide(final SimpleComplexNumber divisor, final RoundingMode roundingMode) {
@@ -154,6 +162,48 @@ public final class SimpleComplexNumber
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
         requireNonNull(roundingMode, "roundingMode");
         return RealComplexNumber.of(this).divide(RealComplexNumber.of(divisor), roundingMode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws NullPointerException
+     *             if {@code roundingMode == null}
+     * @throws IllegalArgumentException
+     *             if {@code !divisor.invertible}
+     * @throws IllegalArgumentException
+     *             if {@code scale < 0}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumber divide(final SimpleComplexNumber divisor, final int scale,
+        final RoundingMode roundingMode) {
+        requireNonNull(divisor, "divisor");
+        requireNonNull(roundingMode, "roundingMode");
+        checkArgument(scale > -1, "expected scale > -1 but actual %s", scale);
+        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
+        return RealComplexNumber.of(this).divide(RealComplexNumber.of(divisor), scale, roundingMode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code divisor == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code !divisor.invertible}
+     * @since 1
+     */
+    @Override
+    public RealComplexNumber divide(final SimpleComplexNumber divisor, final MathContext mathContext) {
+        requireNonNull(divisor, "divisor");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
+        return RealComplexNumber.of(this).divide(RealComplexNumber.of(divisor), mathContext);
     }
 
     /**
@@ -218,7 +268,7 @@ public final class SimpleComplexNumber
      * @since 1
      */
     @Override
-    protected BigDecimal abs(final SquareRootContext squareRootContext) {
+    public BigDecimal abs(final SquareRootContext squareRootContext) {
         requireNonNull(squareRootContext, "squareRootContext");
         return SquareRootCalculator.sqrt(absPow2(), squareRootContext);
     }

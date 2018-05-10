@@ -44,7 +44,18 @@ public final class PolarForm {
      */
     public static final int DEFAULT_PRECISION = 100;
 
+    /**
+     * Radial coordinate
+     *
+     * @since 1
+     */
     private final BigDecimal radial;
+
+    /**
+     * Angular coordinate
+     *
+     * @since 1
+     */
     private final BigDecimal angular;
 
     /**
@@ -60,10 +71,10 @@ public final class PolarForm {
      *             if {@code angular == null}
      * @since 1
      */
-<span class="fc" id="L63">    public PolarForm(final BigDecimal radial, final BigDecimal angular) {</span>
-<span class="fc" id="L64">        this.radial = requireNonNull(radial, &quot;radial&quot;);</span>
-<span class="fc" id="L65">        this.angular = requireNonNull(angular, &quot;angular&quot;);</span>
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L74">    public PolarForm(final BigDecimal radial, final BigDecimal angular) {</span>
+<span class="fc" id="L75">        this.radial = requireNonNull(radial, &quot;radial&quot;);</span>
+<span class="fc" id="L76">        this.angular = requireNonNull(angular, &quot;angular&quot;);</span>
+<span class="fc" id="L77">    }</span>
 
     /**
      * Returns the correspondig complex number of this {@link PolarForm}
@@ -72,7 +83,7 @@ public final class PolarForm {
      * @since 1
      */
     public RealComplexNumber complexNumber() {
-<span class="fc" id="L75">        return complexNumer(BigFloat.context(DEFAULT_PRECISION));</span>
+<span class="fc" id="L86">        return complexNumer(BigFloat.context(DEFAULT_PRECISION));</span>
     }
 
     /**
@@ -87,15 +98,15 @@ public final class PolarForm {
      * @since 1
      */
     public RealComplexNumber complexNumber(final MathContext mathContext) {
-<span class="fc" id="L90">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="fc" id="L91">        return complexNumer(BigFloat.context(mathContext));</span>
+<span class="fc" id="L101">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="fc" id="L102">        return complexNumer(BigFloat.context(mathContext));</span>
     }
 
     private RealComplexNumber complexNumer(final Context context) {
-<span class="pc bpc" id="L95" title="2 of 4 branches missed.">        assert context != null;</span>
-<span class="fc" id="L96">        final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());</span>
-<span class="fc" id="L97">        final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());</span>
-<span class="fc" id="L98">        return RealComplexNumber.of(real, imaginary);</span>
+<span class="pc bpc" id="L106" title="2 of 4 branches missed.">        assert context != null;</span>
+<span class="fc" id="L107">        final BigDecimal real = radial.multiply(BigFloat.cos(context.valueOf(angular)).toBigDecimal());</span>
+<span class="fc" id="L108">        final BigDecimal imaginary = radial.multiply(BigFloat.sin(context.valueOf(angular)).toBigDecimal());</span>
+<span class="fc" id="L109">        return RealComplexNumber.of(real, imaginary);</span>
     }
 
     /**
@@ -105,7 +116,7 @@ public final class PolarForm {
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L108">        return Objects.hash(radial, angular);</span>
+<span class="fc" id="L119">        return Objects.hash(radial, angular);</span>
     }
 
     /**
@@ -115,14 +126,14 @@ public final class PolarForm {
      */
     @Override
     public boolean equals(final Object object) {
-<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (this == object) {</span>
-<span class="fc" id="L119">            return true;</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        if (this == object) {</span>
+<span class="fc" id="L130">            return true;</span>
         }
-<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (!(object instanceof PolarForm)) {</span>
-<span class="fc" id="L122">            return false;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (!(object instanceof PolarForm)) {</span>
+<span class="fc" id="L133">            return false;</span>
         }
-<span class="fc" id="L124">        final PolarForm other = (PolarForm) object;</span>
-<span class="fc bfc" id="L125" title="All 4 branches covered.">        return radial.equals(other.getRadial()) &amp;&amp; angular.equals(other.getAngular());</span>
+<span class="fc" id="L135">        final PolarForm other = (PolarForm) object;</span>
+<span class="fc bfc" id="L136" title="All 4 branches covered.">        return radial.equals(other.getRadial()) &amp;&amp; angular.equals(other.getAngular());</span>
     }
 
     /**
@@ -132,15 +143,27 @@ public final class PolarForm {
      */
     @Override
     public String toString() {
-<span class="fc" id="L135">        return MoreObjects.toStringHelper(this).add(&quot;radial&quot;, radial).add(&quot;angular&quot;, angular).toString();</span>
+<span class="fc" id="L146">        return MoreObjects.toStringHelper(this).add(&quot;radial&quot;, radial).add(&quot;angular&quot;, angular).toString();</span>
     }
 
+    /**
+     * Returns the radial coordinate
+     *
+     * @return radial coordinate
+     * @since 1
+     */
     public BigDecimal getRadial() {
-<span class="fc" id="L139">        return radial;</span>
+<span class="fc" id="L156">        return radial;</span>
     }
 
+    /**
+     * Returns the angular coordinate
+     *
+     * @return angular coordinate
+     * @since 1
+     */
     public BigDecimal getAngular() {
-<span class="fc" id="L143">        return angular;</span>
+<span class="fc" id="L166">        return angular;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

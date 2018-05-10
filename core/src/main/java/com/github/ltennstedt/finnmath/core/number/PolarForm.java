@@ -44,7 +44,18 @@ public final class PolarForm {
      */
     public static final int DEFAULT_PRECISION = 100;
 
+    /**
+     * Radial coordinate
+     *
+     * @since 1
+     */
     private final BigDecimal radial;
+
+    /**
+     * Angular coordinate
+     *
+     * @since 1
+     */
     private final BigDecimal angular;
 
     /**
@@ -135,10 +146,22 @@ public final class PolarForm {
         return MoreObjects.toStringHelper(this).add("radial", radial).add("angular", angular).toString();
     }
 
+    /**
+     * Returns the radial coordinate
+     *
+     * @return radial coordinate
+     * @since 1
+     */
     public BigDecimal getRadial() {
         return radial;
     }
 
+    /**
+     * Returns the angular coordinate
+     *
+     * @return angular coordinate
+     * @since 1
+     */
     public BigDecimal getAngular() {
         return angular;
     }

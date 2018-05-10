@@ -43,7 +43,7 @@ import java.util.Objects;
  */
 @Beta
 public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B, S, M>,
-    M extends AbstractMatrix<B, ?, M, B, B>> implements MathNumber<S, AbstractComplexNumber<?, ?, ?>, BigDecimal> {
+    M extends AbstractMatrix<B, ?, M, B, B>> implements MathNumber<S, RealComplexNumber, BigDecimal> {
     /**
      * Default {@link RoundingMode}
      *
@@ -89,26 +89,58 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
     }
 
     /**
-     * Returns the quotient of this {@link AbstractComplexNumber} and the given one
+     * {@inheritDoc}
      *
-     * @param divisor
-     *            the divisor
-     * @return The quotient
      * @throws NullPointerException
      *             if {@code divisor == null}
      * @throws IllegalArgumentException
-     *             if {@code divisor == 0}
-     * @see #invertible
+     *             if {@code !divisor.invertible}
      * @since 1
      */
     @Override
-    public final RealComplexNumber divide(final S divisor) {
+    public RealComplexNumber divide(final S divisor) {
         requireNonNull(divisor, "divisor");
         checkArgument(divisor.invertible(), "expected divisor to be invertible but actual %s", divisor);
         return divide(divisor, DEFAULT_ROUNDING_MODE);
     }
 
+    /**
+     * Returns the quotient of this {@link AbstractComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @param roundingMode
+     *            {@link RoundingMode}
+     * @return quotient
+     * @since 1
+     */
     protected abstract RealComplexNumber divide(S divisor, RoundingMode roundingMode);
+
+    /**
+     * Returns the quotient of this {@link AbstractComplexNumber} and the given one
+     *
+     * @param divisor
+     *            the divisor
+     * @param scale
+     *            scale
+     * @param roundingMode
+     *            {@link RoundingMode}
+     * @return quotient
+     * @since 1
+     */
+    protected abstract RealComplexNumber divide(S divisor, int scale, RoundingMode roundingMode);
+
+    /**
+     * Returns the quotient of this {@link RealComplexNumber} and the given one
+     *
+     * @param divisor
+     *            divisor
+     * @param mathContext
+     *            {@link MathContext}
+     * @return quotient
+     * @since 1
+     */
+    protected abstract RealComplexNumber divide(final S divisor, final MathContext mathContext);
 
     /**
      * {@inheritDoc}
@@ -231,10 +263,22 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
         return MoreObjects.toStringHelper(this).add("real", real).add("imaginary", imaginary).toString();
     }
 
+    /**
+     * Returns the real part
+     *
+     * @return real
+     * @since 1
+     */
     public final B getReal() {
         return real;
     }
 
+    /**
+     * Returns the imaginary part
+     *
+     * @return imaginary part
+     * @since 1
+     */
     public final B getImaginary() {
         return imaginary;
     }

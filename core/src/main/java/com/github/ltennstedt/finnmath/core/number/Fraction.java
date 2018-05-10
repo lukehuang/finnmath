@@ -53,9 +53,29 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
      */
     public static final Fraction ONE = new Fraction(BigInteger.ONE, BigInteger.ONE);
 
+    /**
+     * Numerator
+     *
+     * @since 1
+     */
     private final BigInteger numerator;
+
+    /**
+     * Denominator
+     *
+     * @since 1
+     */
     private final BigInteger denominator;
 
+    /**
+     * Required arguments constructor
+     *
+     * @param numerator
+     *            numerator
+     * @param denominator
+     *            denominator
+     * @since 1
+     */
     private Fraction(final BigInteger numerator, final BigInteger denominator) {
         assert numerator != null;
         assert denominator != null;
@@ -115,6 +135,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
      *
      * @throws NullPointerException
      *             if {@code summand == null}
+     * @since 1
      */
     @Override
     public Fraction add(final Fraction summand) {
@@ -130,6 +151,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
      *
      * @throws NullPointerException
      *             if {@code subtrahend == null}
+     * @since 1
      */
     @Override
     public Fraction subtract(final Fraction subtrahend) {
@@ -145,6 +167,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
      *
      * @throws NullPointerException
      *             if {@code factor == null}
+     * @since 1
      */
     @Override
     public Fraction multiply(final Fraction factor) {
@@ -161,6 +184,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
      *             if {@code divisor == null}
      * @throws IllegalArgumentException
      *             if {@code !divisor.invertible()}
+     * @since 1
      */
     @Override
     public Fraction divide(final Fraction divisor) {
@@ -171,6 +195,8 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public Fraction pow(final int exponent) {
@@ -185,6 +211,8 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public Fraction negate() {
@@ -193,6 +221,8 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public Fraction invert() {
@@ -202,6 +232,8 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public boolean invertible() {
@@ -210,6 +242,8 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
 
     /**
      * {@inheritDoc}
+     * 
+     * @since 1
      */
     @Override
     public Fraction abs() {
@@ -234,6 +268,7 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
      *
      * @throws NullPointerException
      *             if {@code other == null}
+     * @since 1
      */
     @Override
     public int compareTo(final Fraction other) {
@@ -413,6 +448,8 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public int hashCode() {
@@ -421,6 +458,8 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public boolean equals(final Object object) {
@@ -436,16 +475,30 @@ public final class Fraction implements MathNumber<Fraction, Fraction, Fraction>,
 
     /**
      * {@inheritDoc}
+     *
+     * @since 1
      */
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("numerator", numerator).add("denominator", denominator).toString();
     }
 
+    /**
+     * Returns the numerator
+     *
+     * @return numerator
+     * @since 1
+     */
     public BigInteger getNumerator() {
         return numerator;
     }
 
+    /**
+     * Returns the denominator
+     *
+     * @return denominator
+     * @since 1
+     */
     public BigInteger getDenominator() {
         return denominator;
     }

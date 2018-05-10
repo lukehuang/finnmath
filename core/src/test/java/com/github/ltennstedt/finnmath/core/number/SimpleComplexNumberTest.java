@@ -20,15 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.ltennstedt.finnmath.core.linear.BigIntegerMatrix;
-import com.github.ltennstedt.finnmath.core.sqrt.SquareRootCalculator;
 import com.github.ltennstedt.finnmath.core.util.MathRandom;
-import com.google.common.base.MoreObjects;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Objects;
 import org.junit.Test;
 
 public final class SimpleComplexNumberTest {
@@ -191,7 +188,7 @@ public final class SimpleComplexNumberTest {
 
     @Test
     public void divideWithRoundingModeNullShouldThrowException() {
-        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.divide(SimpleComplexNumber.ONE, null))
+        assertThatThrownBy(() -> SimpleComplexNumber.ZERO.divide(SimpleComplexNumber.ONE, (RoundingMode) null))
             .isExactlyInstanceOf(NullPointerException.class).hasMessage("roundingMode");
     }
 
@@ -361,12 +358,6 @@ public final class SimpleComplexNumberTest {
     }
 
     @Test
-    public void absShouldSucceed() {
-        complexNumbers.forEach(complexNumber -> assertThat(complexNumber.abs()).isExactlyInstanceOf(BigDecimal.class)
-            .isEqualTo(SquareRootCalculator.sqrt(complexNumber.absPow2())));
-    }
-
-    @Test
     public void conjugateShouldSucceed() {
         complexNumbers.forEach(
             complexNumber -> assertThat(complexNumber.conjugate()).isExactlyInstanceOf(SimpleComplexNumber.class)
@@ -492,62 +483,5 @@ public final class SimpleComplexNumberTest {
             assertThat(actual.getReal()).isEqualByComparingTo(real);
             assertThat(actual.getImaginary()).isEqualByComparingTo(imaginary);
         }));
-    }
-
-    @Test
-    public void hashCodeShouldSucceed() {
-        complexNumbers.forEach(complexNumber -> assertThat(complexNumber.hashCode())
-            .isEqualTo(Objects.hash(complexNumber.getReal(), complexNumber.getImaginary())));
-    }
-
-    @Test
-    public void equalsSelfShouldReturnTrue() {
-        complexNumbers.forEach(complexNumber -> assertThat(complexNumber.equals(complexNumber)).isTrue());
-    }
-
-    @Test
-    public void equalsNotSimpleComplexNumberShouldReturnFalse() {
-        assertThat(SimpleComplexNumber.ZERO.equals(new Object())).isFalse();
-    }
-
-    @Test
-    public void equalsRealNotEqualShouldReturnFalse() {
-        complexNumbers.forEach(complexNumber -> {
-            final BigInteger real = complexNumber.getReal().add(BigInteger.ONE);
-            final SimpleComplexNumber other = SimpleComplexNumber.of(real, complexNumber.getImaginary());
-            assertThat(complexNumber.equals(other)).isFalse();
-        });
-    }
-
-    @Test
-    public void equalsImaginaryNotEqualShouldReturnFalse() {
-        complexNumbers.forEach(complexNumber -> {
-            final BigInteger imaginary = complexNumber.getImaginary().add(BigInteger.ONE);
-            final SimpleComplexNumber other = SimpleComplexNumber.of(complexNumber.getReal(), imaginary);
-            assertThat(complexNumber.equals(other)).isFalse();
-        });
-    }
-
-    @Test
-    public void equalsEqualShouldReturnTrue() {
-        complexNumbers.forEach(complexNumber -> assertThat(
-            complexNumber.equals(SimpleComplexNumber.of(complexNumber.getReal(), complexNumber.getImaginary())))
-                .isTrue());
-    }
-
-    @Test
-    public void hashCodeEqualSimpleComplexNumbersShouldHaveEqualHashCodes() {
-        complexNumbers.forEach(complexNumber -> {
-            final SimpleComplexNumber other =
-                SimpleComplexNumber.of(complexNumber.getReal(), complexNumber.getImaginary());
-            assertThat(complexNumber.hashCode()).isEqualTo(other.hashCode());
-        });
-    }
-
-    @Test
-    public void toStringShouldSucceed() {
-        complexNumbers.forEach(
-            complexNumber -> assertThat(complexNumber.toString()).isEqualTo(MoreObjects.toStringHelper(complexNumber)
-                .add("real", complexNumber.getReal()).add("imaginary", complexNumber.getImaginary()).toString()));
     }
 }
