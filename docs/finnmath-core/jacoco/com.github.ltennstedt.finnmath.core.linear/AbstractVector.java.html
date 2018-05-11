@@ -260,7 +260,7 @@ public abstract class AbstractVector&lt;E, V extends AbstractVector&lt;E, V, M, 
     public final BigDecimal euclideanDistance(final V other, final SquareRootContext squareRootContext) {
 <span class="fc" id="L261">        requireNonNull(other, &quot;other&quot;);</span>
 <span class="fc" id="L262">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
-<span class="pc bpc" id="L263" title="1 of 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
 <span class="fc" id="L264">        return subtract(other).euclideanNorm(squareRootContext);</span>
     }
 

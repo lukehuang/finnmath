@@ -52,7 +52,7 @@ public final class BigIntegerVector
      * @since 1
      */
     public static BigIntegerVectorBuilder builder(final int size) {
-<span class="fc bfc" id="L55" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
 <span class="fc" id="L56">        return new BigIntegerVectorBuilder(size);</span>
     }
 
@@ -65,12 +65,12 @@ public final class BigIntegerVector
      */
     @Override
     public BigIntegerVector add(final BigIntegerVector summand) {
-<span class="fc" id="L68">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L70">            summand.size());</span>
-<span class="fc" id="L71">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L72">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
-<span class="fc" id="L73">        return builder.build();</span>
+<span class="nc" id="L68">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L70">            summand.size());</span>
+<span class="nc" id="L71">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L72">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="nc" id="L73">        return builder.build();</span>
     }
 
     /**
@@ -85,7 +85,7 @@ public final class BigIntegerVector
     @Override
     public BigIntegerVector subtract(final BigIntegerVector subtrahend) {
 <span class="fc" id="L87">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
 <span class="fc" id="L89">            subtrahend.size());</span>
 <span class="fc" id="L90">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
 <span class="fc" id="L91">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
@@ -101,10 +101,10 @@ public final class BigIntegerVector
      */
     @Override
     public BigIntegerVector scalarMultiply(final BigInteger scalar) {
-<span class="fc" id="L104">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L105">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L106">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
-<span class="fc" id="L107">        return builder.build();</span>
+<span class="nc" id="L104">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="nc" id="L105">        final BigIntegerVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L106">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="nc" id="L107">        return builder.build();</span>
     }
 
     /**
@@ -114,7 +114,7 @@ public final class BigIntegerVector
      */
     @Override
     public BigIntegerVector negate() {
-<span class="fc" id="L117">        return scalarMultiply(BigInteger.ONE.negate());</span>
+<span class="nc" id="L117">        return scalarMultiply(BigInteger.ONE.negate());</span>
     }
 
     /**
@@ -161,7 +161,7 @@ public final class BigIntegerVector
      */
     @Override
     public BigDecimal euclideanNorm() {
-<span class="nc" id="L164">        return SquareRootCalculator.sqrt(euclideanNormPow2());</span>
+<span class="fc" id="L164">        return SquareRootCalculator.sqrt(euclideanNormPow2());</span>
     }
 
     /**
@@ -189,10 +189,10 @@ public final class BigIntegerVector
      */
     @Override
     public BigInteger dotProduct(final BigIntegerVector other) {
-<span class="fc" id="L192">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L194">        return map.keySet().stream().map(index -&gt; map.get(index).multiply(other.element(index))).reduce(BigInteger::add)</span>
-<span class="fc" id="L195">            .get();</span>
+<span class="nc" id="L192">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L194">        return map.keySet().stream().map(index -&gt; map.get(index).multiply(other.element(index))).reduce(BigInteger::add)</span>
+<span class="nc" id="L195">            .get();</span>
     }
 
     /**

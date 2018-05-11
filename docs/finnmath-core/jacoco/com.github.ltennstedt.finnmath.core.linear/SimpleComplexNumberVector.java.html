@@ -52,7 +52,7 @@ public final class SimpleComplexNumberVector extends
      * @since 1
      */
     public static SimpleComplexNumberVectorBuilder builder(final int size) {
-<span class="fc bfc" id="L55" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
 <span class="fc" id="L56">        return new SimpleComplexNumberVectorBuilder(size);</span>
     }
 
@@ -66,12 +66,12 @@ public final class SimpleComplexNumberVector extends
      */
     @Override
     public SimpleComplexNumberVector add(final SimpleComplexNumberVector summand) {
-<span class="fc" id="L69">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L71">            summand.size());</span>
-<span class="fc" id="L72">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L73">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
-<span class="fc" id="L74">        return builder.build();</span>
+<span class="nc" id="L69">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L71">            summand.size());</span>
+<span class="nc" id="L72">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L73">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="nc" id="L74">        return builder.build();</span>
     }
 
     /**
@@ -85,12 +85,12 @@ public final class SimpleComplexNumberVector extends
      */
     @Override
     public SimpleComplexNumberVector subtract(final SimpleComplexNumberVector subtrahend) {
-<span class="fc" id="L88">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L90">            subtrahend.size());</span>
-<span class="fc" id="L91">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L92">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
-<span class="fc" id="L93">        return builder.build();</span>
+<span class="nc" id="L88">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L90">            subtrahend.size());</span>
+<span class="nc" id="L91">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L92">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
+<span class="nc" id="L93">        return builder.build();</span>
     }
 
     /**
@@ -102,10 +102,10 @@ public final class SimpleComplexNumberVector extends
      */
     @Override
     public SimpleComplexNumberVector scalarMultiply(final SimpleComplexNumber scalar) {
-<span class="fc" id="L105">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L106">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L107">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
-<span class="fc" id="L108">        return builder.build();</span>
+<span class="nc" id="L105">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="nc" id="L106">        final SimpleComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L107">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="nc" id="L108">        return builder.build();</span>
     }
 
     /**
@@ -115,7 +115,7 @@ public final class SimpleComplexNumberVector extends
      */
     @Override
     public SimpleComplexNumberVector negate() {
-<span class="fc" id="L118">        return scalarMultiply(SimpleComplexNumber.ONE.negate());</span>
+<span class="nc" id="L118">        return scalarMultiply(SimpleComplexNumber.ONE.negate());</span>
     }
 
     /**
@@ -141,7 +141,7 @@ public final class SimpleComplexNumberVector extends
      */
     @Override
     protected BigDecimal taxicabNorm() {
-<span class="fc" id="L144">        return map.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add).get();</span>
+<span class="nc" id="L144">        return map.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::add).get();</span>
     }
 
     /**
@@ -151,7 +151,7 @@ public final class SimpleComplexNumberVector extends
      */
     @Override
     public BigInteger euclideanNormPow2() {
-<span class="fc" id="L154">        return map.values().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();</span>
+<span class="nc" id="L154">        return map.values().stream().map(SimpleComplexNumber::absPow2).reduce(BigInteger::add).get();</span>
     }
 
     /**
@@ -190,10 +190,10 @@ public final class SimpleComplexNumberVector extends
      */
     @Override
     public SimpleComplexNumber dotProduct(final SimpleComplexNumberVector other) {
-<span class="fc" id="L193">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L195">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
-<span class="fc" id="L196">            .reduce(SimpleComplexNumber::add).get();</span>
+<span class="nc" id="L193">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L195">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
+<span class="nc" id="L196">            .reduce(SimpleComplexNumber::add).get();</span>
     }
 
     /**
@@ -203,7 +203,7 @@ public final class SimpleComplexNumberVector extends
      */
     @Override
     protected BigDecimal maxNorm() {
-<span class="fc" id="L206">        return map.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::max).get();</span>
+<span class="nc" id="L206">        return map.values().stream().map(SimpleComplexNumber::abs).reduce(BigDecimal::max).get();</span>
     }
 
     /**

@@ -17,12 +17,17 @@
 package com.github.ltennstedt.finnmath.core.linear;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
 
+import com.github.ltennstedt.finnmath.core.linear.BigIntegerVector.BigIntegerVectorBuilder;
+import com.github.ltennstedt.finnmath.core.linear.RealComplexNumberVector.RealComplexNumberVectorBuilder;
+import com.github.ltennstedt.finnmath.core.linear.SimpleComplexNumberVector.SimpleComplexNumberVectorBuilder;
 import com.github.ltennstedt.finnmath.core.number.RealComplexNumber;
 import com.github.ltennstedt.finnmath.core.number.SimpleComplexNumber;
 import com.google.common.annotations.Beta;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.stream.IntStream;
 
 /**
  * Utility class for building zero vectors
@@ -46,8 +51,8 @@ public final class Vectors {
      * @since 1
      */
     public static BigIntegerVector buildZeroBigIntegerVector(final int size) {
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L50">        return BigIntegerVector.builder(size).putAll(BigInteger.ZERO).build();</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L55">        return BigIntegerVector.builder(size).putAll(BigInteger.ZERO).build();</span>
     }
 
     /**
@@ -61,8 +66,8 @@ public final class Vectors {
      * @since 1
      */
     public static BigDecimalVector buildZeroBigDecimalVector(final int size) {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L65">        return BigDecimalVector.builder(size).putAll(BigDecimal.ZERO).build();</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L70">        return BigDecimalVector.builder(size).putAll(BigDecimal.ZERO).build();</span>
     }
 
     /**
@@ -76,8 +81,8 @@ public final class Vectors {
      * @since 1
      */
     public static SimpleComplexNumberVector buildZeroSimpleComplexNumberVector(final int size) {
-<span class="fc bfc" id="L79" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L80">        return SimpleComplexNumberVector.builder(size).putAll(SimpleComplexNumber.ZERO).build();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L85">        return SimpleComplexNumberVector.builder(size).putAll(SimpleComplexNumber.ZERO).build();</span>
     }
 
     /**
@@ -91,8 +96,59 @@ public final class Vectors {
      * @since 1
      */
     public static RealComplexNumberVector buildZeroRealComplexNumberVector(final int size) {
-<span class="fc bfc" id="L94" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
-<span class="fc" id="L95">        return RealComplexNumberVector.builder(size).putAll(RealComplexNumber.ZERO).build();</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="fc" id="L100">        return RealComplexNumberVector.builder(size).putAll(RealComplexNumber.ZERO).build();</span>
+    }
+
+    /**
+     * Returns a copy of the given {@link BigIntegerVector}
+     *
+     * @param vector
+     *            {@link BigIntegerVector}
+     * @return copy
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @since 1
+     */
+    public static BigIntegerVector copyOf(final BigIntegerVector vector) {
+<span class="fc" id="L114">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="fc" id="L115">        final BigIntegerVectorBuilder builder = BigIntegerVector.builder(vector.size());</span>
+<span class="fc" id="L116">        IntStream.rangeClosed(1, vector.size()).forEach(i -&gt; builder.put(vector.element(i)));</span>
+<span class="fc" id="L117">        return builder.build();</span>
+    }
+
+    /**
+     * Returns a copy of the given {@link SimpleComplexNumberVector}
+     *
+     * @param vector
+     *            {@link SimpleComplexNumberVector}
+     * @return copy
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @since 1
+     */
+    public static SimpleComplexNumberVector copyOf(final SimpleComplexNumberVector vector) {
+<span class="nc" id="L131">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="nc" id="L132">        final SimpleComplexNumberVectorBuilder builder = SimpleComplexNumberVector.builder(vector.size());</span>
+<span class="nc" id="L133">        IntStream.rangeClosed(1, vector.size()).forEach(i -&gt; builder.put(vector.element(i)));</span>
+<span class="nc" id="L134">        return builder.build();</span>
+    }
+
+    /**
+     * Returns a copy of the given {@link SimpleComplexNumberVector}
+     *
+     * @param vector
+     *            {@link SimpleComplexNumberVector}
+     * @return copy
+     * @throws NullPointerException
+     *             if {@code vector == null}
+     * @since 1
+     */
+    public static RealComplexNumberVector copyOf(final RealComplexNumberVector vector) {
+<span class="nc" id="L148">        requireNonNull(vector, &quot;vector&quot;);</span>
+<span class="nc" id="L149">        final RealComplexNumberVectorBuilder builder = RealComplexNumberVector.builder(vector.size());</span>
+<span class="nc" id="L150">        IntStream.rangeClosed(1, vector.size()).forEach(i -&gt; builder.put(vector.element(i)));</span>
+<span class="nc" id="L151">        return builder.build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

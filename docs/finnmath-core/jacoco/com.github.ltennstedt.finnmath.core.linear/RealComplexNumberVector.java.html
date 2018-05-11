@@ -53,7 +53,7 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      * @since 1
      */
     public static RealComplexNumberVectorBuilder builder(final int size) {
-<span class="fc bfc" id="L56" title="All 2 branches covered.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        checkArgument(size &gt; 0, &quot;expected size &gt; 0 but actual %s&quot;, size);</span>
 <span class="fc" id="L57">        return new RealComplexNumberVectorBuilder(size);</span>
     }
 
@@ -68,12 +68,12 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      */
     @Override
     public RealComplexNumberVector add(final RealComplexNumberVector summand) {
-<span class="fc" id="L71">        requireNonNull(summand, &quot;summand&quot;);</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L73">            summand.size());</span>
-<span class="fc" id="L74">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L75">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
-<span class="fc" id="L76">        return builder.build();</span>
+<span class="nc" id="L71">        requireNonNull(summand, &quot;summand&quot;);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        checkArgument(map.size() == summand.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L73">            summand.size());</span>
+<span class="nc" id="L74">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L75">        map.forEach((index, element) -&gt; builder.put(element.add(summand.element(index))));</span>
+<span class="nc" id="L76">        return builder.build();</span>
     }
 
     /**
@@ -109,12 +109,12 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      */
     @Override
     public RealComplexNumberVector subtract(final RealComplexNumberVector subtrahend) {
-<span class="fc" id="L112">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
-<span class="fc" id="L114">            subtrahend.size());</span>
-<span class="fc" id="L115">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L116">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
-<span class="fc" id="L117">        return builder.build();</span>
+<span class="nc" id="L112">        requireNonNull(subtrahend, &quot;subtrahend&quot;);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        checkArgument(map.size() == subtrahend.size(), &quot;equal sizes expected but actual %s != %s&quot;, map.size(),</span>
+<span class="nc" id="L114">            subtrahend.size());</span>
+<span class="nc" id="L115">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L116">        map.forEach((index, element) -&gt; builder.put(element.subtract(subtrahend.element(index))));</span>
+<span class="nc" id="L117">        return builder.build();</span>
     }
 
     /**
@@ -150,10 +150,10 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      */
     @Override
     public RealComplexNumber dotProduct(final RealComplexNumberVector other) {
-<span class="fc" id="L153">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="fc bfc" id="L154" title="All 2 branches covered.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="fc" id="L155">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
-<span class="fc" id="L156">            .reduce(RealComplexNumber::add).get();</span>
+<span class="nc" id="L153">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L155">        return map.entrySet().stream().map(entry -&gt; entry.getValue().multiply(other.element(entry.getKey())))</span>
+<span class="nc" id="L156">            .reduce(RealComplexNumber::add).get();</span>
     }
 
     /**
@@ -186,10 +186,10 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      */
     @Override
     public RealComplexNumberVector scalarMultiply(final RealComplexNumber scalar) {
-<span class="fc" id="L189">        requireNonNull(scalar, &quot;scalar&quot;);</span>
-<span class="fc" id="L190">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
-<span class="fc" id="L191">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
-<span class="fc" id="L192">        return builder.build();</span>
+<span class="nc" id="L189">        requireNonNull(scalar, &quot;scalar&quot;);</span>
+<span class="nc" id="L190">        final RealComplexNumberVectorBuilder builder = builder(map.size());</span>
+<span class="nc" id="L191">        map.values().forEach(element -&gt; builder.put(scalar.multiply(element)));</span>
+<span class="nc" id="L192">        return builder.build();</span>
     }
 
     /**
@@ -217,7 +217,7 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      */
     @Override
     public RealComplexNumberVector negate() {
-<span class="fc" id="L220">        return scalarMultiply(RealComplexNumber.ONE.negate());</span>
+<span class="nc" id="L220">        return scalarMultiply(RealComplexNumber.ONE.negate());</span>
     }
 
     /**
@@ -275,7 +275,7 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      */
     @Override
     public BigDecimal taxicabNorm() {
-<span class="fc" id="L278">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add).get();</span>
+<span class="nc" id="L278">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::add).get();</span>
     }
 
     /**
@@ -299,7 +299,7 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      */
     @Override
     public BigDecimal euclideanNormPow2() {
-<span class="fc" id="L302">        return map.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();</span>
+<span class="nc" id="L302">        return map.values().stream().map(RealComplexNumber::absPow2).reduce(BigDecimal::add).get();</span>
     }
 
     /**
@@ -348,7 +348,7 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      */
     @Override
     public BigDecimal maxNorm() {
-<span class="fc" id="L351">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();</span>
+<span class="nc" id="L351">        return map.values().stream().map(RealComplexNumber::abs).reduce(BigDecimal::max).get();</span>
     }
 
     /**
