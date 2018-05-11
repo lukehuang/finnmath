@@ -369,6 +369,47 @@ public final class RealComplexNumberVector extends AbstractContextVector<RealCom
      *
      * @throws NullPointerException
      *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistancePow2(final RealComplexNumberVector other,
+        final SquareRootContext squareRootContext) {
+        requireNonNull(other, "other");
+        requireNonNull(squareRootContext, "squareRootContext");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return subtract(other, squareRootContext.getMathContext())
+            .euclideanNormPow2(squareRootContext.getMathContext());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code squareRootContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistance(final RealComplexNumberVector other,
+        final SquareRootContext squareRootContext) {
+        requireNonNull(other, "other");
+        requireNonNull(squareRootContext, "squareRootContext");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return subtract(other, squareRootContext.getMathContext()).euclideanNorm(squareRootContext);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
      * @since 1

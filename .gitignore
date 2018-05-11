@@ -20,4 +20,6 @@
 **/*.iml
 **/.idea/
 **/target/
+**/.checkstyle
+**/.eclipse-pmd
 

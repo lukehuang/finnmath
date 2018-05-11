@@ -367,6 +367,44 @@ public final class BigDecimalVector
      *
      * @throws NullPointerException
      *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistancePow2(final BigDecimalVector other, final MathContext mathContext) {
+        requireNonNull(other, "other");
+        requireNonNull(mathContext, "mathContext");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return subtract(other, mathContext).euclideanNormPow2(mathContext);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code squareRootContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistance(final BigDecimalVector other, final SquareRootContext squareRootContext) {
+        requireNonNull(other, "other");
+        requireNonNull(squareRootContext, "squareRootContext");
+        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
+        return subtract(other, squareRootContext.getMathContext()).euclideanNorm(squareRootContext);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
      * @since 1

@@ -255,7 +255,7 @@ public abstract class AbstractMatrix<E, V extends AbstractVector<E, V, M, N, B>,
      * @return frobenius norm
      * @since 1
      */
-    protected abstract BigDecimal frobeniusNorm(final SquareRootContext squareRootContext);
+    protected abstract BigDecimal frobeniusNorm(SquareRootContext squareRootContext);
 
     /**
      * Returns the maximum norm of this {@link AbstractMatrix}

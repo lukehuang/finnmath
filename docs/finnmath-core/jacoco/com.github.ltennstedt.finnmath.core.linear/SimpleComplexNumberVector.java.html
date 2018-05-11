@@ -211,18 +211,38 @@ public final class SimpleComplexNumberVector extends
      *
      * @throws NullPointerException
      *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code squareRootContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistance(final SimpleComplexNumberVector other,
+        final SquareRootContext squareRootContext) {
+<span class="nc" id="L223">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc" id="L224">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L226">        return subtract(other).euclideanNorm(squareRootContext);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
      * @since 1
      */
     @Override
     public SimpleComplexNumberMatrix dyadicProduct(final SimpleComplexNumberVector other) {
-<span class="nc" id="L220">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L222">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(map.size(), other.size());</span>
-<span class="nc" id="L223">        map.entrySet().forEach(entry -&gt; other.entries().forEach(otherEntry -&gt; builder.put(entry.getKey(),</span>
-<span class="nc" id="L224">            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue()))));</span>
-<span class="nc" id="L225">        return builder.build();</span>
+<span class="nc" id="L240">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L242">        final SimpleComplexNumberMatrixBuilder builder = SimpleComplexNumberMatrix.builder(map.size(), other.size());</span>
+<span class="nc" id="L243">        map.entrySet().forEach(entry -&gt; other.entries().forEach(otherEntry -&gt; builder.put(entry.getKey(),</span>
+<span class="nc" id="L244">            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue()))));</span>
+<span class="nc" id="L245">        return builder.build();</span>
     }
 
     /**
@@ -235,8 +255,8 @@ public final class SimpleComplexNumberVector extends
     public static final class SimpleComplexNumberVectorBuilder extends
         AbstractVectorBuilder&lt;SimpleComplexNumber, SimpleComplexNumberVector, SimpleComplexNumberVectorBuilder&gt; {
         private SimpleComplexNumberVectorBuilder(final Integer size) {
-<span class="fc" id="L238">            super(size);</span>
-<span class="fc" id="L239">        }</span>
+<span class="fc" id="L258">            super(size);</span>
+<span class="fc" id="L259">        }</span>
 
         /**
          * {@inheritDoc}
@@ -247,10 +267,10 @@ public final class SimpleComplexNumberVector extends
          */
         @Override
         public SimpleComplexNumberVector build() {
-<span class="pc bpc" id="L250" title="1 of 2 branches missed.">            if (map.values().stream().anyMatch(Objects::isNull)) {</span>
-<span class="nc" id="L251">                throw new NullPointerException(&quot;element&quot;);</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">            if (map.values().stream().anyMatch(Objects::isNull)) {</span>
+<span class="nc" id="L271">                throw new NullPointerException(&quot;element&quot;);</span>
             }
-<span class="fc" id="L253">            return new SimpleComplexNumberVector(ImmutableMap.copyOf(map));</span>
+<span class="fc" id="L273">            return new SimpleComplexNumberVector(ImmutableMap.copyOf(map));</span>
         }
     }
 }

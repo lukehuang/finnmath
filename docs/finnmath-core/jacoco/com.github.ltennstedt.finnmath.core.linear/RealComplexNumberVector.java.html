@@ -369,18 +369,59 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      *
      * @throws NullPointerException
      *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code mathContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistancePow2(final RealComplexNumberVector other,
+        final SquareRootContext squareRootContext) {
+<span class="nc" id="L381">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc" id="L382">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L384">        return subtract(other, squareRootContext.getMathContext())</span>
+<span class="nc" id="L385">            .euclideanNormPow2(squareRootContext.getMathContext());</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
+     * @throws NullPointerException
+     *             if {@code squareRootContext == null}
+     * @throws IllegalArgumentException
+     *             if {@code size != other.size}
+     * @since 1
+     */
+    @Override
+    public BigDecimal euclideanDistance(final RealComplexNumberVector other,
+        final SquareRootContext squareRootContext) {
+<span class="nc" id="L402">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc" id="L403">        requireNonNull(squareRootContext, &quot;squareRootContext&quot;);</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L405">        return subtract(other, squareRootContext.getMathContext()).euclideanNorm(squareRootContext);</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @throws NullPointerException
+     *             if {@code other == null}
      * @throws IllegalArgumentException
      *             if {@code size != other.size}
      * @since 1
      */
     @Override
     public RealComplexNumberMatrix dyadicProduct(final RealComplexNumberVector other) {
-<span class="nc" id="L378">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc bnc" id="L379" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L380">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(map.size(), other.size());</span>
-<span class="nc" id="L381">        map.entrySet().forEach(entry -&gt; other.entries().forEach(otherEntry -&gt; builder.put(entry.getKey(),</span>
-<span class="nc" id="L382">            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue()))));</span>
-<span class="nc" id="L383">        return builder.build();</span>
+<span class="nc" id="L419">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc bnc" id="L420" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L421">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(map.size(), other.size());</span>
+<span class="nc" id="L422">        map.entrySet().forEach(entry -&gt; other.entries().forEach(otherEntry -&gt; builder.put(entry.getKey(),</span>
+<span class="nc" id="L423">            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue()))));</span>
+<span class="nc" id="L424">        return builder.build();</span>
     }
 
     /**
@@ -396,13 +437,13 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
      */
     @Override
     public RealComplexNumberMatrix dyadicProduct(final RealComplexNumberVector other, final MathContext mathContext) {
-<span class="nc" id="L399">        requireNonNull(other, &quot;other&quot;);</span>
-<span class="nc" id="L400">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
-<span class="nc bnc" id="L401" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
-<span class="nc" id="L402">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(map.size(), other.size());</span>
-<span class="nc" id="L403">        map.entrySet().forEach(entry -&gt; other.entries().forEach(otherEntry -&gt; builder.put(entry.getKey(),</span>
-<span class="nc" id="L404">            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue(), mathContext))));</span>
-<span class="nc" id="L405">        return builder.build();</span>
+<span class="nc" id="L440">        requireNonNull(other, &quot;other&quot;);</span>
+<span class="nc" id="L441">        requireNonNull(mathContext, &quot;mathContext&quot;);</span>
+<span class="nc bnc" id="L442" title="All 2 branches missed.">        checkArgument(map.size() == other.size(), &quot;expected equal sizes but actual %s != %s&quot;, map.size(), other.size());</span>
+<span class="nc" id="L443">        final RealComplexNumberMatrixBuilder builder = RealComplexNumberMatrix.builder(map.size(), other.size());</span>
+<span class="nc" id="L444">        map.entrySet().forEach(entry -&gt; other.entries().forEach(otherEntry -&gt; builder.put(entry.getKey(),</span>
+<span class="nc" id="L445">            otherEntry.getKey(), entry.getValue().multiply(otherEntry.getValue(), mathContext))));</span>
+<span class="nc" id="L446">        return builder.build();</span>
     }
 
     /**
@@ -415,8 +456,8 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
     public static final class RealComplexNumberVectorBuilder
         extends AbstractVectorBuilder&lt;RealComplexNumber, RealComplexNumberVector, RealComplexNumberVectorBuilder&gt; {
         private RealComplexNumberVectorBuilder(final Integer size) {
-<span class="fc" id="L418">            super(size);</span>
-<span class="fc" id="L419">        }</span>
+<span class="fc" id="L459">            super(size);</span>
+<span class="fc" id="L460">        }</span>
 
         /**
          * {@inheritDoc}
@@ -427,9 +468,9 @@ public final class RealComplexNumberVector extends AbstractContextVector&lt;Real
          */
         @Override
         public RealComplexNumberVector build() {
-<span class="fc" id="L430">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
-<span class="fc" id="L431">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
-<span class="fc" id="L432">            return new RealComplexNumberVector(ImmutableMap.copyOf(map));</span>
+<span class="fc" id="L471">            IntStream.rangeClosed(1, size).boxed().collect(Collectors.toList())</span>
+<span class="fc" id="L472">                .forEach(index -&gt; requireNonNull(map.get(index), &quot;map.value&quot;));</span>
+<span class="fc" id="L473">            return new RealComplexNumberVector(ImmutableMap.copyOf(map));</span>
         }
     }
 }

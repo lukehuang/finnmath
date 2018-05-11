@@ -270,68 +270,68 @@ public final class SquareRootCalculatorTest {
 
     @Test
     public void sqrtOfPerfectSquareNullShouldThrowException() {
-        assertThatThrownBy(() -> SquareRootCalculator.sqrtOfPerfectSquare(null))
+        assertThatThrownBy(() -> SquareRootCalculator.sqrtOfSquareNumber(null))
             .isExactlyInstanceOf(NullPointerException.class).hasMessage("integer");
     }
 
     @Test
     public void sqrtOfPerfectSquareNotPerfectSquareShouldThrowException() {
-        assertThatThrownBy(() -> SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(2)))
+        assertThatThrownBy(() -> SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(2)))
             .isExactlyInstanceOf(IllegalArgumentException.class).hasMessage("expected perfect square but actual 2");
     }
 
     @Test
     public void sqrtOfPerfectSquareZero() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.ZERO)).isEqualTo(BigInteger.ZERO);
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.ZERO)).isEqualTo(BigInteger.ZERO);
     }
 
     @Test
     public void sqrtOfPerfectSquareOne() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.ONE)).isEqualTo(BigInteger.ONE);
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.ONE)).isEqualTo(BigInteger.ONE);
     }
 
     @Test
     public void sqrtOfPerfectSquareFour() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(4))).isEqualTo(BigInteger.valueOf(2));
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(4))).isEqualTo(BigInteger.valueOf(2));
     }
 
     @Test
     public void sqrtOfPerfectSquareNine() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(9))).isEqualTo(BigInteger.valueOf(3));
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(9))).isEqualTo(BigInteger.valueOf(3));
     }
 
     @Test
     public void sqrtOfPerfectSquareSixteen() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(16))).isEqualTo(BigInteger.valueOf(4));
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(16))).isEqualTo(BigInteger.valueOf(4));
     }
 
     @Test
     public void sqrtOfPerfectSquareTwentyFive() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(25))).isEqualTo(BigInteger.valueOf(5));
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(25))).isEqualTo(BigInteger.valueOf(5));
     }
 
     @Test
     public void sqrtOfPerfectSquareThirtySix() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(36))).isEqualTo(BigInteger.valueOf(6));
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(36))).isEqualTo(BigInteger.valueOf(6));
     }
 
     @Test
     public void sqrtOfPerfectSquareFortyNine() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(49))).isEqualTo(BigInteger.valueOf(7));
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(49))).isEqualTo(BigInteger.valueOf(7));
     }
 
     @Test
     public void sqrtOfPerfectSquareSixtyFour() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(64))).isEqualTo(BigInteger.valueOf(8));
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(64))).isEqualTo(BigInteger.valueOf(8));
     }
 
     @Test
     public void sqrtOfPerfectSquareEightyOne() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(81))).isEqualTo(BigInteger.valueOf(9));
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(81))).isEqualTo(BigInteger.valueOf(9));
     }
 
     @Test
     public void sqrtOfPerfectSquareOneHundred() {
-        assertThat(SquareRootCalculator.sqrtOfPerfectSquare(BigInteger.valueOf(100))).isEqualTo(BigInteger.TEN);
+        assertThat(SquareRootCalculator.sqrtOfSquareNumber(BigInteger.valueOf(100))).isEqualTo(BigInteger.TEN);
     }
 }

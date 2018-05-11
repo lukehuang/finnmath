@@ -249,20 +249,9 @@ public abstract class AbstractVector<E, V extends AbstractVector<E, V, M, N, P>,
      * @param squareRootContext
      *            {@link SquareRootContext}
      * @return euclidean norm
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws NullPointerException
-     *             if {@code squareRootContext == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
      * @since 1
      */
-    public final BigDecimal euclideanDistance(final V other, final SquareRootContext squareRootContext) {
-        requireNonNull(other, "other");
-        requireNonNull(squareRootContext, "squareRootContext");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return subtract(other).euclideanNorm(squareRootContext);
-    }
+    protected abstract BigDecimal euclideanDistance(V other, SquareRootContext squareRootContext);
 
     /**
      * Returns the maximum distance from this {@link AbstractVector} to the given

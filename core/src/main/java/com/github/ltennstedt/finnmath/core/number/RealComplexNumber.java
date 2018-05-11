@@ -576,7 +576,7 @@ public final class RealComplexNumber extends AbstractComplexNumber<BigDecimal, R
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws IllegalStateException
      *             if {@code this == 0}
      * @since 1

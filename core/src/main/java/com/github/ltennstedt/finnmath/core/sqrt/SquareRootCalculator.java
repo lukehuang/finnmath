@@ -65,7 +65,8 @@ public final class SquareRootCalculator {
     public static BigDecimal sqrt(final BigInteger integer) {
         requireNonNull(integer, "integer");
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
-        return sqrt(new BigDecimal(integer), DEFAULT_SQUARE_ROOT_CONTEXT);
+        return squareNumber(integer) ? new BigDecimal(sqrtOfSquareNumber(integer))
+            : sqrt(new BigDecimal(integer), DEFAULT_SQUARE_ROOT_CONTEXT);
     }
 
     /**
@@ -89,7 +90,8 @@ public final class SquareRootCalculator {
         requireNonNull(integer, "integer");
         requireNonNull(squareRootContext, "squareRootContext");
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
-        return sqrt(new BigDecimal(integer), squareRootContext);
+        return squareNumber(integer) ? new BigDecimal(sqrtOfSquareNumber(integer))
+            : sqrt(new BigDecimal(integer), squareRootContext);
     }
 
     /**
@@ -136,30 +138,30 @@ public final class SquareRootCalculator {
     }
 
     /**
-     * Returns square root of given {@link BigInteger} which has to be a perfect
-     * square
+     * Returns square root of given {@link BigInteger} which has to be a square
+     * number
      *
      * @param integer
      *            perfect square whose square root is to be calculated
-     * @return square root of given perfect square
+     * @return square root of given square number
      * @throws NullPointerException
      *             if {@code integer == null}
      * @throws IllegalArgumentException
      *             if {@code integer < 0}
      * @throws IllegalArgumentException
      *             if {@code !perfectSquare}
-     * @see #perfectSquare
+     * @see #squareNumber
      * @since 1
      */
-    public static BigInteger sqrtOfPerfectSquare(final BigInteger integer) {
+    public static BigInteger sqrtOfSquareNumber(final BigInteger integer) {
         requireNonNull(integer, "integer");
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
-        checkArgument(perfectSquare(integer), "expected perfect square but actual %s", integer);
+        checkArgument(squareNumber(integer), "expected perfect square but actual %s", integer);
         return BigIntegerMath.sqrt(integer, RoundingMode.UNNECESSARY);
     }
 
     /**
-     * Returns if given {@link BigInteger} is a perfect square
+     * Returns if given {@link BigInteger} is a square number
      *
      * @param integer
      *            integer which should be checked
@@ -170,9 +172,12 @@ public final class SquareRootCalculator {
      *             if {@code integer < 0}
      * @since 1
      */
-    public static boolean perfectSquare(final BigInteger integer) {
+    public static boolean squareNumber(final BigInteger integer) {
         requireNonNull(integer, "integer");
         checkArgument(integer.compareTo(BigInteger.ZERO) > -1, "expected integer >= 0 but actual %s", integer);
+        if (integer.compareTo(BigInteger.ZERO) == 0) {
+            return true;
+        }
         BigInteger sum = BigInteger.ZERO;
         for (BigInteger odd = BigInteger.ONE; sum.compareTo(integer) < 0; odd = odd.add(BigInteger.valueOf(2))) {
             sum = sum.add(odd);

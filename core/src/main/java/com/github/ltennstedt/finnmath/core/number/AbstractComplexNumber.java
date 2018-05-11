@@ -140,7 +140,7 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
      * @return quotient
      * @since 1
      */
-    protected abstract RealComplexNumber divide(final S divisor, final MathContext mathContext);
+    protected abstract RealComplexNumber divide(S divisor, MathContext mathContext);
 
     /**
      * {@inheritDoc}
@@ -161,7 +161,7 @@ public abstract class AbstractComplexNumber<B, S extends AbstractComplexNumber<B
      * @return absolute value
      * @since 1
      */
-    protected abstract BigDecimal abs(final SquareRootContext squareRootContext);
+    protected abstract BigDecimal abs(SquareRootContext squareRootContext);
 
     /**
      * Returns the square of the absolute value of this

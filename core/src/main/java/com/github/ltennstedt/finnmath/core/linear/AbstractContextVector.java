@@ -190,18 +190,9 @@ public abstract class AbstractContextVector<E, V extends AbstractVector<E, V, M,
      * @param context
      *            context
      * @return square of the euclidean distance
-     * @throws NullPointerException
-     *             if {@code other == null}
-     * @throws IllegalArgumentException
-     *             if {@code size != other.size}
      * @since 1
      */
-    public final P euclideanDistancePow2(final V other, final C context) {
-        requireNonNull(other, "other");
-        requireNonNull(context, "context");
-        checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return subtract(other).euclideanNormPow2();
-    }
+    protected abstract P euclideanDistancePow2(V other, C context);
 
     /**
      * Returns the maximum distance from this {@link AbstractVector} to the given
@@ -221,7 +212,7 @@ public abstract class AbstractContextVector<E, V extends AbstractVector<E, V, M,
     public final N maxDistance(final V other, final MathContext mathContext) {
         requireNonNull(other, "other");
         checkArgument(map.size() == other.size(), "expected equal sizes but actual %s != %s", map.size(), other.size());
-        return subtract(other).maxNorm();
+        return subtract(other, mathContext).maxNorm();
     }
 
     /**
